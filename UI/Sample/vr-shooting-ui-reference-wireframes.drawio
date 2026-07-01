@@ -1,0 +1,860 @@
+<mxfile host="embed.diagrams.net" pages="22">
+  <diagram id="p01" name="01 通用视觉风格">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p01-bg" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p01-frame" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=4;fillColor=#0b1310;strokeColor=#2d4238;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="520" width="740" x="30" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="p01-title" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#111d18;strokeColor=#385447;align=left;verticalAlign=middle;fontColor=#e7f2eb;fontSize=24;fontStyle=1;spacing=8;" value="通用视觉风格概念图" vertex="1"><mxGeometry height="46" width="360" x="55" y="55" as="geometry" /></mxCell>
+        <mxCell id="p01-scene" parent="1" style="rounded=1;dashed=1;whiteSpace=wrap;html=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=16;align=center;verticalAlign=middle;" value="素材占位：训练基地大厅 / 全息沙盘背景" vertex="1">
+          <mxGeometry height="340" width="690" x="55" y="115" as="geometry" />
+        </mxCell>
+        <mxCell id="p01-hud1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;" value="左下状态面板
+玩家档案 / 训练等级 / 最近评级" vertex="1">
+          <mxGeometry height="82" width="200" x="75" y="355" as="geometry" />
+        </mxCell>
+        <mxCell id="p01-hud2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;" value="右侧信息栏
+任务入口 / 系统提示 / 状态数据" vertex="1">
+          <mxGeometry height="170" width="160" x="565" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="p01-note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=6;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=middle;spacing=10;" value="风格：深灰黑 + 青蓝 HUD + 橙色警示；素材可留空，保留 UI 边框结构。" vertex="1">
+          <mxGeometry height="48" width="560" x="120" y="475" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p02" name="02 游戏主界面">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p02-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p02-frame" parent="1" style="rounded=1;arcSize=4;fillColor=#0b1310;strokeColor=#2d4238;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="520" width="740" x="30" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="p02-scene" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=15;align=center;verticalAlign=middle;whiteSpace=wrap;html=1;" value="素材占位：基地大厅 + 全息任务台 + 武器墙" vertex="1">
+          <mxGeometry height="360" width="500" x="55" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="p02-title" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#111d18;strokeColor=#385447;align=center;verticalAlign=middle;fontColor=#e7f2eb;fontSize=27;fontStyle=1;spacing=8;" value="VR射击训练系统 DEMO" vertex="1"><mxGeometry height="54" width="350" x="150" y="194" as="geometry" /></mxCell>
+        <mxCell id="p02-profile" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="玩家档案
+训练等级：L03
+最近评级：良好" vertex="1">
+          <mxGeometry height="92" width="185" x="70" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="p02-menu" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=15;fontStyle=1;align=center;whiteSpace=wrap;html=1;" value="主菜单入口" vertex="1">
+          <mxGeometry height="34" width="145" x="585" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="p02-b1" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=14;fontStyle=1;whiteSpace=wrap;html=1;" value="100m精度射校靶" vertex="1">
+          <mxGeometry height="42" width="145" x="585" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="p02-b2" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;whiteSpace=wrap;html=1;" value="移动目标射击" vertex="1">
+          <mxGeometry height="42" width="145" x="585" y="198" as="geometry" />
+        </mxCell>
+        <mxCell id="p02-b3" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="堑壕射击" vertex="1">
+          <mxGeometry height="42" width="145" x="585" y="251" as="geometry" />
+        </mxCell>
+        <mxCell id="p02-b4" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="城镇攻防" vertex="1">
+          <mxGeometry height="42" width="145" x="585" y="304" as="geometry" />
+        </mxCell>
+        <mxCell id="p02-b5" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="武器库" vertex="1">
+          <mxGeometry height="42" width="145" x="585" y="357" as="geometry" />
+        </mxCell>
+        <mxCell id="p02-b6" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="设置" vertex="1">
+          <mxGeometry height="42" width="145" x="585" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="p02-bottom" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#8fa99b;fontSize=13;align=center;whiteSpace=wrap;html=1;" value="底部状态栏：网络 / 音量 / 用户 / 版本 / 提示" vertex="1">
+          <mxGeometry height="34" width="640" x="80" y="490" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p03" name="03 训练模式选择">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p03-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p03-frame" parent="1" style="rounded=1;arcSize=4;fillColor=#0b1310;strokeColor=#2d4238;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="520" width="740" x="30" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="p03-title" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#111d18;strokeColor=#385447;align=center;verticalAlign=middle;fontColor=#e7f2eb;fontSize=24;fontStyle=1;spacing=8;" value="训练模式选择" vertex="1"><mxGeometry height="44" width="300" x="250" y="55" as="geometry" /></mxCell>
+        <mxCell id="p03-c1" parent="1" style="rounded=1;arcSize=6;fillColor=#14251f;strokeColor=#c8ff6a;strokeWidth=2;fontColor=#e7f2eb;fontSize=14;align=center;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="100m精度射校靶
+
+素材占位：靶场预览
+距离 100m / 3轮评级" vertex="1">
+          <mxGeometry height="250" width="155" x="75" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="p03-c2" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=center;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="移动目标射击
+
+素材占位：跑步靶预览
+10发 / 昼夜速度" vertex="1">
+          <mxGeometry height="250" width="155" x="250" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="p03-c3" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=center;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="堑壕射击
+
+素材占位：堑壕地图
+敌人 3-5 / 小队" vertex="1">
+          <mxGeometry height="250" width="155" x="425" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="p03-c4" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=center;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="城镇攻防
+
+素材占位：楼房街道
+房间搜索 / 敌情" vertex="1">
+          <mxGeometry height="250" width="155" x="600" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="p03-ok" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=16;fontStyle=1;" value="确认进入" vertex="1">
+          <mxGeometry height="44" width="120" x="300" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="p03-back" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=16;fontStyle=1;" value="返回" vertex="1">
+          <mxGeometry height="44" width="110" x="455" y="440" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p04" name="04 100m任务说明">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p04-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p04-frame" parent="1" style="rounded=1;arcSize=4;fillColor=#0b1310;strokeColor=#2d4238;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="520" width="740" x="30" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="p04-scene" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="素材占位：100m室外靶场背景" vertex="1">
+          <mxGeometry height="400" width="690" x="55" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="p04-panel" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=15;align=left;verticalAlign=top;spacing=14;whiteSpace=wrap;html=1;" value="任务说明：100m精度射校靶
+
+射击距离：100m
+射击模式：单发射
+每轮3发，共3轮
+目标：50cm×50cm胸靶
+10环直径：10cm
+通过：3发全部进入10环" vertex="1">
+          <mxGeometry height="300" width="320" x="85" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="p04-target" parent="1" style="shape=mxgraph.basic.target;whiteSpace=wrap;html=1;fillColor=#14251f;strokeColor=#c8ff6a;fontColor=#e7f2eb;fontSize=14;" value="胸靶示意
+中心10环" vertex="1">
+          <mxGeometry height="220" width="150" x="505" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="p04-start" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=16;fontStyle=1;" value="开始射击" vertex="1">
+          <mxGeometry height="42" width="120" x="280" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="p04-back" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=16;fontStyle=1;" value="返回" vertex="1">
+          <mxGeometry height="42" width="110" x="430" y="455" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p05" name="05 100m射击HUD">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p05-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p05-view" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=16;align=center;verticalAlign=middle;whiteSpace=wrap;html=1;" value="素材占位：第一人称靶场画面" vertex="1">
+          <mxGeometry height="510" width="730" x="35" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p05-sight1" parent="1" style="ellipse;fillColor=none;strokeColor=#c8ff6a;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="140" width="140" x="330" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="p05-sight2" parent="1" style="ellipse;fillColor=none;strokeColor=#7ea08b;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="70" width="70" x="365" y="255" as="geometry" />
+        </mxCell>
+        <mxCell id="p05-top1" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="轮次 1/3" vertex="1">
+          <mxGeometry height="36" width="105" x="70" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p05-top2" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="距离 100m" vertex="1">
+          <mxGeometry height="36" width="110" x="345" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p05-top3" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="弹数 3/3" vertex="1">
+          <mxGeometry height="36" width="105" x="625" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p05-stable" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#c8ff6a;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="稳定度条
+稳定据枪" vertex="1">
+          <mxGeometry height="68" width="180" x="70" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="p05-record" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=center;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="弹着记录
+
+靶纸占位
+待记录 3 发" vertex="1">
+          <mxGeometry height="210" width="145" x="585" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="p05-hint" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=16;fontStyle=1;" value="稳定据枪" vertex="1">
+          <mxGeometry height="40" width="120" x="340" y="445" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p06" name="06 弹着分析">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p06-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p06-scene" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="素材占位：虚化靶场射击背景" vertex="1">
+          <mxGeometry height="500" width="730" x="35" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="p06-modal" parent="1" style="rounded=1;arcSize=6;fillColor=#0b1310;strokeColor=#2d9cff;strokeWidth=2;fontColor=#e7f2eb;fontSize=20;fontStyle=1;align=center;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="本轮弹着分析" vertex="1">
+          <mxGeometry height="390" width="480" x="160" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="p06-target" parent="1" style="shape=mxgraph.basic.target;whiteSpace=wrap;html=1;fillColor=#111d18;strokeColor=#c8ff6a;fontColor=#e7f2eb;fontSize=13;" value="50cm×50cm胸靶示意
+3个弹着点偏离中心" vertex="1">
+          <mxGeometry height="210" width="170" x="205" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="p06-data" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="垂直偏差：偏上 12cm
+水平偏差：偏左 8cm
+准星柱：逆时针调整 X°
+觇孔：向前调整 X 格
+说明：应用后进入下一轮" vertex="1">
+          <mxGeometry height="230" width="190" x="405" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="p06-apply" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=15;fontStyle=1;" value="应用调整" vertex="1">
+          <mxGeometry height="38" width="110" x="280" y="415" as="geometry" />
+        </mxCell>
+        <mxCell id="p06-next" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="进入下一轮" vertex="1">
+          <mxGeometry height="38" width="120" x="415" y="415" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p07" name="07 射校最终评级">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p07-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p07-scene" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="素材占位：靶场与胸靶背景" vertex="1">
+          <mxGeometry height="500" width="730" x="35" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="p07-panel" parent="1" style="rounded=1;arcSize=6;fillColor=#0b1310;strokeColor=#2d9cff;strokeWidth=2;fontColor=#e7f2eb;fontSize=20;fontStyle=1;align=center;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="100m射校 训练结算" vertex="1">
+          <mxGeometry height="390" width="540" x="130" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="p07-grade" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#f7b955;fontColor=#f7b955;fontSize=34;fontStyle=1;align=center;verticalAlign=middle;" value="优秀" vertex="1">
+          <mxGeometry height="120" width="150" x="165" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="p07-rounds" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="三轮射击记录
+第1轮：通过 / 3发进10环
+第2轮：未使用
+第3轮：未使用" vertex="1">
+          <mxGeometry height="140" width="270" x="345" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="p07-thumbs" parent="1" style="rounded=1;dashed=1;arcSize=6;fillColor=#111d18;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="弹着缩略图区域
+靶图 / 10环 / 命中点" vertex="1">
+          <mxGeometry height="70" width="270" x="345" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="p07-retry" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=15;fontStyle=1;" value="重新训练" vertex="1">
+          <mxGeometry height="38" width="110" x="270" y="415" as="geometry" />
+        </mxCell>
+        <mxCell id="p07-back" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="返回模式选择" vertex="1">
+          <mxGeometry height="38" width="130" x="405" y="415" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p08" name="08 移动靶设置">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p08-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p08-scene" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="素材占位：100m移动靶训练场" vertex="1">
+          <mxGeometry height="500" width="730" x="35" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="p08-panel" parent="1" style="rounded=1;arcSize=6;fillColor=#0b1310;strokeColor=#2d9cff;strokeWidth=2;fontColor=#e7f2eb;fontSize=20;fontStyle=1;align=center;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="移动目标射击：模式设置" vertex="1">
+          <mxGeometry height="365" width="500" x="150" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="p08-day" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=15;fontStyle=1;" value="白天模式" vertex="1">
+          <mxGeometry height="44" width="120" x="190" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="p08-night" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="夜晚模式" vertex="1">
+          <mxGeometry height="44" width="120" x="325" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="p08-speed" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=center;verticalAlign=middle;whiteSpace=wrap;html=1;" value="速度选择
+3m/s    4m/s    5m/s
+2m/s    2.5m/s  3m/s" vertex="1">
+          <mxGeometry height="95" width="255" x="190" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="p08-preview" parent="1" style="rounded=1;dashed=1;arcSize=6;fillColor=#111d18;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="素材占位：侧身跑步靶预览
+路线：右→左→右" vertex="1">
+          <mxGeometry height="185" width="145" x="470" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="p08-start" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=15;fontStyle=1;" value="开始训练" vertex="1">
+          <mxGeometry height="38" width="110" x="290" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="p08-back" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="返回" vertex="1">
+          <mxGeometry height="38" width="100" x="425" y="390" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p09" name="09 移动靶白天HUD">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p09-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p09-view" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=16;align=center;verticalAlign=middle;whiteSpace=wrap;html=1;" value="素材占位：白天移动靶第一人称画面" vertex="1">
+          <mxGeometry height="510" width="730" x="35" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p09-top1" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="弹药 10发" vertex="1">
+          <mxGeometry height="34" width="105" x="65" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p09-top2" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="点射模式" vertex="1">
+          <mxGeometry height="34" width="110" x="345" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p09-top3" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="命中 0/10" vertex="1">
+          <mxGeometry height="34" width="105" x="625" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p09-ret" parent="1" style="ellipse;fillColor=none;strokeColor=#c8ff6a;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="140" width="140" x="330" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="p09-target" parent="1" style="rounded=1;dashed=1;arcSize=6;fillColor=#111d18;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=13;align=center;whiteSpace=wrap;html=1;" value="素材占位：移动靶" vertex="1">
+          <mxGeometry height="80" width="100" x="485" y="245" as="geometry" />
+        </mxCell>
+        <mxCell id="p09-left" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="目标速度 4m/s
+方向 右→左
+状态：可射击" vertex="1">
+          <mxGeometry height="110" width="155" x="70" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="p09-rhythm" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#c8ff6a;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="底部点射节奏条：5次点射 / 端点停留禁射" vertex="1">
+          <mxGeometry height="44" width="460" x="170" y="455" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p10" name="10 移动靶夜晚HUD">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p10-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p10-view" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#03120d;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=16;align=center;verticalAlign=middle;whiteSpace=wrap;html=1;" value="素材占位：夜间靶场 + 微光瞄准镜画面" vertex="1">
+          <mxGeometry height="510" width="730" x="35" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p10-scope" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#082d18;strokeColor=#c8ff6a;fontColor=#c8ff6a;fontSize=14;align=center;" value="绿色微光镜视野" vertex="1">
+          <mxGeometry height="230" width="230" x="285" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="p10-top1" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="弹药 10发" vertex="1">
+          <mxGeometry height="34" width="105" x="65" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p10-top2" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="点射模式" vertex="1">
+          <mxGeometry height="34" width="110" x="345" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p10-top3" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="命中 0/10" vertex="1">
+          <mxGeometry height="34" width="105" x="625" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p10-left" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#f7b955;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="目标速度 2.5m/s
+方向 左→右
+端点停留：禁止射击" vertex="1">
+          <mxGeometry height="115" width="165" x="65" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="p10-route" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#8fa99b;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="路线 / 端点标识 / 发光插旗" vertex="1">
+          <mxGeometry height="70" width="165" x="560" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="p10-rhythm" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#c8ff6a;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="底部点射节奏条" vertex="1">
+          <mxGeometry height="44" width="460" x="170" y="455" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p11" name="11 移动靶结算">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p11-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p11-scene" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="素材占位：移动靶场背景" vertex="1">
+          <mxGeometry height="500" width="730" x="35" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="p11-panel" parent="1" style="rounded=1;arcSize=6;fillColor=#0b1310;strokeColor=#2d9cff;strokeWidth=2;fontColor=#e7f2eb;fontSize=20;fontStyle=1;align=center;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="移动目标射击 训练结算" vertex="1">
+          <mxGeometry height="390" width="560" x="120" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="p11-grade" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#f7b955;fontColor=#f7b955;fontSize=18;fontStyle=1;align=center;whiteSpace=wrap;html=1;" value="优秀
+命中 5/10
+消耗弹药 10发" vertex="1">
+          <mxGeometry height="130" width="140" x="155" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="p11-record" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="5次点射记录
+第1次：命中
+第2次：命中
+第3次：未命中
+第4次：命中
+第5次：命中" vertex="1">
+          <mxGeometry height="180" width="150" x="320" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="p11-route" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="路线命中时间点
+右→左→右
+●  ●  ×  ●  ●" vertex="1">
+          <mxGeometry height="180" width="145" x="500" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="p11-rule" parent="1" style="rounded=1;arcSize=6;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="评级规则：3发及格 / 4发良好 / 5发及以上优秀" vertex="1">
+          <mxGeometry height="45" width="440" x="180" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="p11-retry" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=15;fontStyle=1;" value="重新训练" vertex="1">
+          <mxGeometry height="38" width="110" x="275" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="p11-back" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="返回模式选择" vertex="1">
+          <mxGeometry height="38" width="130" x="410" y="420" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p12" name="12 堑壕地图选择">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p12-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p12-frame" parent="1" style="rounded=1;arcSize=4;fillColor=#0b1310;strokeColor=#2d4238;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="520" width="740" x="30" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="p12-title" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#111d18;strokeColor=#385447;align=center;verticalAlign=middle;fontColor=#e7f2eb;fontSize=24;fontStyle=1;spacing=8;" value="堑壕射击 地图选择" vertex="1"><mxGeometry height="44" width="300" x="250" y="55" as="geometry" /></mxCell>
+        <mxCell id="p12-a" parent="1" style="rounded=1;arcSize=6;fillColor=#14251f;strokeColor=#c8ff6a;strokeWidth=2;fontColor=#e7f2eb;fontSize=14;align=center;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="堑壕地图 A
+
+素材占位：俯视路线图
+复杂度：中
+敌人：3-5" vertex="1">
+          <mxGeometry height="260" width="210" x="80" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="p12-b" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=center;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="堑壕地图 B
+
+素材占位：俯视路线图
+复杂度：高
+敌人：3-5" vertex="1">
+          <mxGeometry height="260" width="210" x="315" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="p12-info" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="任务条件
+
+搜索完整堑壕
+消灭全部敌人
+失败：玩家死亡
+红色标记：敌人预估区域" vertex="1">
+          <mxGeometry height="260" width="165" x="555" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="p12-select" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=15;fontStyle=1;" value="选择地图" vertex="1">
+          <mxGeometry height="40" width="110" x="300" y="435" as="geometry" />
+        </mxCell>
+        <mxCell id="p12-back" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="返回" vertex="1">
+          <mxGeometry height="40" width="100" x="435" y="435" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p13" name="13 武器库武器墙">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p13-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p13-frame" parent="1" style="rounded=1;arcSize=4;fillColor=#0b1310;strokeColor=#2d4238;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="520" width="740" x="30" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="p13-title" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#111d18;strokeColor=#385447;align=center;verticalAlign=middle;fontColor=#e7f2eb;fontSize=24;fontStyle=1;spacing=8;" value="武器库 / 武器墙" vertex="1"><mxGeometry height="44" width="300" x="250" y="55" as="geometry" /></mxCell>
+        <mxCell id="p13-wall" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=15;align=center;whiteSpace=wrap;html=1;" value="素材占位：武器墙 / 四把武器模型" vertex="1">
+          <mxGeometry height="310" width="440" x="70" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="p13-w1" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;spacingLeft=12;" value="19-1自动步枪" vertex="1">
+          <mxGeometry height="44" width="360" x="105" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="p13-w2" parent="1" style="rounded=1;arcSize=6;fillColor=#14251f;strokeColor=#c8ff6a;strokeWidth=2;fontColor=#e7f2eb;fontSize=14;fontStyle=1;align=left;spacingLeft=12;" value="95-1自动步枪（选中）" vertex="1">
+          <mxGeometry height="50" width="360" x="105" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="p13-w3" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;spacingLeft=12;" value="QBS-09霰弹枪" vertex="1">
+          <mxGeometry height="44" width="360" x="105" y="283" as="geometry" />
+        </mxCell>
+        <mxCell id="p13-w4" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;spacingLeft=12;" value="QJB-201班用机枪" vertex="1">
+          <mxGeometry height="44" width="360" x="105" y="343" as="geometry" />
+        </mxCell>
+        <mxCell id="p13-prop" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="武器属性
+名称：95-1自动步枪
+类型：自动步枪
+弹匣容量：30发
+后坐力：中
+适用：堑壕/城镇" vertex="1">
+          <mxGeometry height="250" width="185" x="545" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="p13-equip" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=15;fontStyle=1;" value="装备" vertex="1">
+          <mxGeometry height="40" width="110" x="300" y="455" as="geometry" />
+        </mxCell>
+        <mxCell id="p13-back" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="返回" vertex="1">
+          <mxGeometry height="40" width="100" x="435" y="455" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p14" name="14 堑壕开场简报">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p14-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p14-view" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=16;align=center;whiteSpace=wrap;html=1;" value="素材占位：堑壕边缘 + 无人机起飞背景" vertex="1">
+          <mxGeometry height="510" width="730" x="35" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p14-title" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#2d9cff;fontColor=#e7f2eb;fontSize=20;fontStyle=1;align=center;" value="堑壕射击 开场任务" vertex="1">
+          <mxGeometry height="40" width="260" x="270" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="p14-map" parent="1" style="rounded=1;dashed=1;arcSize=6;fillColor=#111d18;strokeColor=#c8ff6a;fontColor=#8fa99b;fontSize=15;align=center;whiteSpace=wrap;html=1;" value="素材占位：空中投射堑壕平面图
+入口 / 队友 / 红色敌情区域" vertex="1">
+          <mxGeometry height="220" width="330" x="235" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="p14-squad" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="小队配置
+玩家：最前
+二号队友：后方掩护
+三号队友：朝后警戒" vertex="1">
+          <mxGeometry height="180" width="145" x="70" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="p14-obj" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="任务目标
+进入堑壕
+搜索路线
+消灭敌人
+保持小队队形" vertex="1">
+          <mxGeometry height="180" width="145" x="585" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="p14-controls" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;align=center;" value="开始进入 / 查看地图 / 返回武器库" vertex="1">
+          <mxGeometry height="42" width="290" x="255" y="430" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p15" name="15 堑壕第一人称HUD">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p15-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p15-view" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=16;align=center;whiteSpace=wrap;html=1;" value="素材占位：堑壕第一人称场景 / 拐角 / 队友 / 武器" vertex="1">
+          <mxGeometry height="510" width="730" x="35" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p15-map" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="小地图
+玩家 / 队友 / 敌人预估点" vertex="1">
+          <mxGeometry height="135" width="150" x="60" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p15-command" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="操作提示
+换肩：右肩
+拐角射击：可用
+队友：跟随" vertex="1">
+          <mxGeometry height="145" width="150" x="585" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p15-ammo" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#c8ff6a;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="弹药
+30 / 120
+当前弹匣 30
+备用弹匣 120" vertex="1">
+          <mxGeometry height="120" width="150" x="585" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="p15-squad" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="队友状态
+二号队友：正常
+三号队友：正常" vertex="1">
+          <mxGeometry height="95" width="160" x="60" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="p15-bottom" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;align=center;" value="姿态：蹲下     卧倒 / 蹲下 / 起立     左肩 / 右肩" vertex="1">
+          <mxGeometry height="42" width="330" x="235" y="470" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p16" name="16 队友指令环形菜单">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p16-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p16-view" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=16;align=center;whiteSpace=wrap;html=1;" value="素材占位：堑壕拐角战斗背景" vertex="1">
+          <mxGeometry height="510" width="730" x="35" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p16-map" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=center;" value="小地图" vertex="1">
+          <mxGeometry height="130" width="150" x="60" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p16-r0" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#111d18;strokeColor=#2d9cff;fontColor=#e7f2eb;fontSize=16;fontStyle=1;align=center;" value="队友指令" vertex="1">
+          <mxGeometry height="140" width="140" x="330" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="p16-r1" parent="1" style="rounded=1;arcSize=8;fillColor=#f7b955;strokeColor=none;fontColor=#07100d;fontSize=14;fontStyle=1;" value="手榴弹" vertex="1">
+          <mxGeometry height="38" width="100" x="350" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="p16-r2" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="火力支援" vertex="1">
+          <mxGeometry height="38" width="100" x="480" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="p16-r3" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="掩护换弹" vertex="1">
+          <mxGeometry height="38" width="110" x="430" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="p16-r4" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="前进" vertex="1">
+          <mxGeometry height="38" width="90" x="260" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="p16-r5" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="停止" vertex="1">
+          <mxGeometry height="38" width="90" x="220" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="p16-ammo" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="弹药 30/120
+队友状态：待命" vertex="1">
+          <mxGeometry height="90" width="145" x="590" y="380" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p17" name="17 堑壕任务结算">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p17-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p17-scene" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="素材占位：完成搜索后的堑壕场景" vertex="1">
+          <mxGeometry height="500" width="730" x="35" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="p17-panel" parent="1" style="rounded=1;arcSize=6;fillColor=#0b1310;strokeColor=#2d9cff;strokeWidth=2;fontColor=#e7f2eb;fontSize=20;fontStyle=1;align=center;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="堑壕射击 任务结算" vertex="1">
+          <mxGeometry height="395" width="580" x="110" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="p17-victory" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#f7b955;fontColor=#f7b955;fontSize=34;fontStyle=1;align=center;" value="胜利" vertex="1">
+          <mxGeometry height="110" width="130" x="150" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="p17-stats" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="地图：堑壕地图 A
+消灭敌人：5/5
+搜索完成度：100%
+剩余弹药：72
+队友状态：正常
+用时：08:36" vertex="1">
+          <mxGeometry height="150" width="180" x="150" y="275" as="geometry" />
+        </mxCell>
+        <mxCell id="p17-map" parent="1" style="rounded=1;dashed=1;arcSize=6;fillColor=#111d18;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=15;align=center;whiteSpace=wrap;html=1;" value="堑壕平面图
+已搜索区域：青蓝
+敌人位置：红色叉号" vertex="1">
+          <mxGeometry height="230" width="270" x="370" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="p17-retry" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=15;fontStyle=1;" value="重新开始" vertex="1">
+          <mxGeometry height="38" width="110" x="345" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="p17-back" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="返回主菜单" vertex="1">
+          <mxGeometry height="38" width="120" x="480" y="420" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p18" name="18 城镇地图选择">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p18-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p18-frame" parent="1" style="rounded=1;arcSize=4;fillColor=#0b1310;strokeColor=#2d4238;strokeWidth=2;" value="" vertex="1">
+          <mxGeometry height="520" width="740" x="30" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="p18-title" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#111d18;strokeColor=#385447;align=center;verticalAlign=middle;fontColor=#e7f2eb;fontSize=24;fontStyle=1;spacing=8;" value="城镇攻防 地图选择" vertex="1"><mxGeometry height="44" width="300" x="250" y="55" as="geometry" /></mxCell>
+        <mxCell id="p18-a" parent="1" style="rounded=1;arcSize=6;fillColor=#14251f;strokeColor=#c8ff6a;strokeWidth=2;fontColor=#e7f2eb;fontSize=14;align=center;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="城镇地图 A
+
+素材占位：街道 + 三层楼房预览
+街道敌人：1-2
+建筑敌人：3-6" vertex="1">
+          <mxGeometry height="270" width="220" x="80" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="p18-b" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=center;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="城镇地图 B
+
+素材占位：楼房线框预览
+房间：3-5
+敌情区域：红色" vertex="1">
+          <mxGeometry height="270" width="220" x="325" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="p18-info" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="任务信息
+搜索楼房
+消灭所有敌人
+队友保持纵队
+失败：玩家死亡" vertex="1">
+          <mxGeometry height="270" width="145" x="575" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="p18-select" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=15;fontStyle=1;" value="选择地图" vertex="1">
+          <mxGeometry height="40" width="110" x="305" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="p18-back" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="返回" vertex="1">
+          <mxGeometry height="40" width="100" x="440" y="445" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p19" name="19 城镇街道HUD">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p19-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p19-view" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=16;align=center;whiteSpace=wrap;html=1;" value="素材占位：城镇街道第一人称画面 / 可进入三层楼房" vertex="1">
+          <mxGeometry height="510" width="730" x="35" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p19-map" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="小地图
+玩家 / 队友 / 建筑入口
+红色敌情预估" vertex="1">
+          <mxGeometry height="145" width="170" x="60" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p19-obj" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="任务提示
+进入建筑
+搜索房间
+消灭敌人" vertex="1">
+          <mxGeometry height="135" width="140" x="595" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p19-ammo" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#c8ff6a;fontSize=16;fontStyle=1;align=center;" value="弹药 30 / 120" vertex="1">
+          <mxGeometry height="55" width="140" x="595" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="p19-bottom" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;align=center;" value="姿态：蹲下     换肩：右肩     拐角射击：可用" vertex="1">
+          <mxGeometry height="42" width="360" x="220" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="p19-entry" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#c8ff6a;fontColor=#e7f2eb;fontSize=14;align=center;" value="建筑入口 / 可交互提示" vertex="1">
+          <mxGeometry height="55" width="140" x="330" y="235" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p20" name="20 建筑搜索HUD">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p20-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p20-view" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=16;align=center;whiteSpace=wrap;html=1;" value="素材占位：楼房内部楼道拐角 / 房门 / 楼梯" vertex="1">
+          <mxGeometry height="510" width="730" x="35" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p20-floor" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="楼层小地图
+已搜索房间 / 未搜索房间
+队友 / 敌人可能区域" vertex="1">
+          <mxGeometry height="160" width="175" x="60" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p20-prompt" parent="1" style="rounded=1;arcSize=8;fillColor=#111d18;strokeColor=#c8ff6a;fontColor=#e7f2eb;fontSize=15;fontStyle=1;align=center;whiteSpace=wrap;html=1;" value="交互提示
+开门   观察   拐角伸枪射击" vertex="1">
+          <mxGeometry height="70" width="260" x="270" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="p20-danger" parent="1" style="rounded=1;arcSize=6;fillColor=#321c1b;strokeColor=#ff6a5f;fontColor=#ff6a5f;fontSize=15;fontStyle=1;align=center;" value="危险区域提示" vertex="1">
+          <mxGeometry height="45" width="120" x="340" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="p20-ammo" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#c8ff6a;fontSize=16;fontStyle=1;align=center;" value="弹药 30 / 120" vertex="1">
+          <mxGeometry height="55" width="140" x="595" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="p20-task" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="任务
+搜索房间
+清除敌情
+队友跟随" vertex="1">
+          <mxGeometry height="130" width="140" x="595" y="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p21" name="21 城镇任务结算">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p21-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p21-scene" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="素材占位：任务完成后三层楼房外景" vertex="1">
+          <mxGeometry height="500" width="730" x="35" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="p21-panel" parent="1" style="rounded=1;arcSize=6;fillColor=#0b1310;strokeColor=#2d9cff;strokeWidth=2;fontColor=#e7f2eb;fontSize=20;fontStyle=1;align=center;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="城镇攻防 任务结算" vertex="1">
+          <mxGeometry height="395" width="580" x="110" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="p21-victory" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#f7b955;fontColor=#f7b955;fontSize=34;fontStyle=1;align=center;" value="胜利" vertex="1">
+          <mxGeometry height="110" width="130" x="150" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="p21-stats" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=10;whiteSpace=wrap;html=1;" value="街道敌人清除：完成
+建筑搜索完成度：100%
+房间搜索：5/5
+消灭敌人：6/6
+剩余弹药：64
+队友状态：正常" vertex="1">
+          <mxGeometry height="150" width="200" x="150" y="275" as="geometry" />
+        </mxCell>
+        <mxCell id="p21-map" parent="1" style="rounded=1;dashed=1;arcSize=6;fillColor=#111d18;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=15;align=center;whiteSpace=wrap;html=1;" value="三层楼平面缩略图
+1F / 2F / 3F
+已搜索：青蓝
+敌人位置：红色叉号" vertex="1">
+          <mxGeometry height="230" width="250" x="390" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="p21-retry" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=15;fontStyle=1;" value="重新开始" vertex="1">
+          <mxGeometry height="38" width="110" x="345" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="p21-back" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="返回主菜单" vertex="1">
+          <mxGeometry height="38" width="120" x="480" y="420" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p22" name="22 设置界面">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p22-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="600" width="800" as="geometry" />
+        </mxCell>
+        <mxCell id="p22-scene" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="素材占位：虚化训练基地大厅背景" vertex="1">
+          <mxGeometry height="500" width="730" x="35" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="p22-panel" parent="1" style="rounded=1;arcSize=6;fillColor=#0b1310;strokeColor=#2d9cff;strokeWidth=2;fontColor=#e7f2eb;fontSize=22;fontStyle=1;align=center;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="设置" vertex="1">
+          <mxGeometry height="400" width="620" x="90" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="p22-list" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="设置项
+VR舒适度：中
+转向方式：平滑 / 分段
+移动方式：瞬移 / 连续
+画面亮度：滑条
+HUD透明度：滑条
+音效音量：滑条
+瞄准辅助：开 / 关
+语言：中文" vertex="1">
+          <mxGeometry height="260" width="270" x="125" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="p22-preview" parent="1" style="rounded=1;dashed=1;arcSize=6;fillColor=#111d18;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=15;align=center;whiteSpace=wrap;html=1;" value="HUD实时预览窗口
+素材占位：瞄具 / HUD / 弹量" vertex="1">
+          <mxGeometry height="210" width="240" x="430" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="p22-apply" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=15;fontStyle=1;" value="应用" vertex="1">
+          <mxGeometry height="38" width="95" x="255" y="425" as="geometry" />
+        </mxCell>
+        <mxCell id="p22-default" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="恢复默认" vertex="1">
+          <mxGeometry height="38" width="110" x="375" y="425" as="geometry" />
+        </mxCell>
+        <mxCell id="p22-back" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="返回" vertex="1">
+          <mxGeometry height="38" width="95" x="510" y="425" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
