@@ -1,0 +1,11 @@
+{
+  "name": "SimulatedShooting.Editor",
+  "rootNamespace": "SimulatedShooting.Editor",
+  "references": [
+    "SimulatedShooting.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": true
+}

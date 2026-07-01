@@ -1,0 +1,2134 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-Lenovo" at "2026-07-01T14:17:49.6848472Z"
+[Licensing::Client] Code 1 while verifying Licensing Client signature (process Id: 19468, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Error: HandshakeResponse reported an error:
+	ResponseCode: 505
+	ResponseStatus: Unsupported protocol version '1.16.2'.
+[Licensing::Module] Error: Failed to handshake to channel: "LicenseClient-Lenovo"
+[Licensing::IpcConnector] LicenseClient-Lenovo channel disconnected successfully.
+[Licensing::IpcConnector] Channel LicenseClient-Lenovo-2022.3.62 doesn't exist
+[Licensing::Module] Successfully launched the LicensingClient (PId: 39700)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-Lenovo-2022.3.62" at "2026-07-01T14:17:50.5579838Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 39700, path: "E:/2022.3.62f3c1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.16.2+bdef8f5
+  Session Id:              d0c95a0550a948c5be57c0426c850ca5
+  Correlation Id:          2037d04f36d2ce16152535eaa1a95390
+  External correlation Id: 5491621130608815030
+  Machine Id:              /Q9Sr0mW4IOv25KO8R+6WfPNXA0=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-Lenovo-2022.3.62" (connect: 0.85s, validation: 0.06s, handshake: 0.05s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-Lenovo-2022.3.62-notifications" at "2026-07-01T14:17:50.6630364Z"
+[Licensing::Module] Connected to LicensingClient (PId: 39700, launch time: 0.01, total connection time: 0.96s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully updated license
+Built from '2022.3/china_unity/release' branch; Version is '2022.3.62f3c1 (1623fc0bbb97) revision 1451004'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 11  (10.0.26200) 64bit CoreCountrySpecific' Language: 'zh' Physical Memory: 32492 MB
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Serial number assigned to: "F4-RAGR-2QUG-NV8F-HS6R-XXXX"
+BatchMode: 0, IsHumanControllingUs: 1, StartBugReporterOnCrash: 1, Is64bit: 1, IsPro: 0
+[Licensing::Client] Successfully resolved entitlement details
+
+COMMAND LINE ARGUMENTS:
+E:\2022.3.62f3c1\Editor\Unity.exe
+-projectPath
+E:\AI\project\SimulatedShooting
+-executeMethod
+SimulatedShooting.Editor.ZeroingRangeSceneBuilder.OpenAndPlay
+-logFile
+E:\AI\project\SimulatedShooting\unity-task004-run.log
+Successfully changed project path to: E:\AI\project\SimulatedShooting
+E:/AI/project/SimulatedShooting
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [40152]  Target information:
+
+Player connection [40152]  * "[IP] 192.168.117.1 [Port] 55504 [Flags] 2 [Guid] 3973556417 [EditorId] 3973556417 [Version] 1048832 [Id] WindowsEditor(7,Yangmird) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [40152]  * "[IP] 192.168.232.1 [Port] 55504 [Flags] 2 [Guid] 3973556417 [EditorId] 3973556417 [Version] 1048832 [Id] WindowsEditor(7,Yangmird) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [40152]  * "[IP] 192.168.3.13 [Port] 55504 [Flags] 2 [Guid] 3973556417 [EditorId] 3973556417 [Version] 1048832 [Id] WindowsEditor(7,Yangmird) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [40152] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [40152] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Package Manager] UpmClient::Connect -- Connected to IPC stream "Upm-23620" after 0.4 seconds.
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 63 packages:
+  Packages from [https://packages.unity.cn]:
+    com.unity.collab-proxy@2.12.4 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.collab-proxy@2.12.4)
+    com.unity.inputsystem@1.14.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.inputsystem@1.14.0)
+    com.unity.learn.iet-framework@4.0.4 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.learn.iet-framework@4.0.4)
+    com.unity.textmeshpro@3.0.9 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.textmeshpro@3.0.9)
+    com.unity.timeline@1.7.7 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.timeline@1.7.7)
+    com.unity.visualscripting@1.9.4 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.visualscripting@1.9.4)
+    com.unity.xr.interaction.toolkit@3.1.2 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.xr.interaction.toolkit@3.1.2)
+    com.unity.xr.management@4.5.1 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.xr.management@4.5.1)
+    com.unity.xr.openxr@1.14.3 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.xr.openxr@1.14.3)
+    com.unity.xr.core-utils@2.5.2 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.xr.core-utils@2.5.2)
+    com.unity.xr.legacyinputhelpers@2.1.12 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.xr.legacyinputhelpers@2.1.12)
+    com.unity.mathematics@1.2.6 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.mathematics@1.2.6)
+    com.unity.burst@1.8.21 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.burst@1.8.21)
+    com.unity.editorcoroutines@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.editorcoroutines@1.0.0)
+    com.unity.settings-manager@2.1.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.settings-manager@2.1.0)
+    com.unity.xr.oculus@4.5.1 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.xr.oculus@4.5.1)
+    com.unity.ide.visualstudio@2.0.22 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.ide.visualstudio@2.0.22)
+    com.unity.ide.rider@3.0.36 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.ide.rider@3.0.36)
+    com.unity.ide.vscode@1.2.5 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.ide.vscode@1.2.5)
+    com.unity.performance.profile-analyzer@1.2.3 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.performance.profile-analyzer@1.2.3)
+    com.unity.test-framework@1.1.33 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.test-framework@1.1.33)
+    com.unity.testtools.codecoverage@1.2.6 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.testtools.codecoverage@1.2.6)
+    com.unity.searcher@4.9.2 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.searcher@4.9.2)
+    com.unity.ext.nunit@1.0.6 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.ext.nunit@1.0.6)
+  Built-in packages:
+    com.unity.feature.development@1.0.1 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.feature.development@1.0.1)
+    com.unity.feature.vr@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.feature.vr@1.0.0)
+    com.unity.render-pipelines.universal@14.0.12 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.render-pipelines.universal@14.0.12)
+    com.unity.modules.ai@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.ai@1.0.0)
+    com.unity.modules.androidjni@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.androidjni@1.0.0)
+    com.unity.modules.animation@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.animation@1.0.0)
+    com.unity.modules.assetbundle@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.assetbundle@1.0.0)
+    com.unity.modules.audio@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.audio@1.0.0)
+    com.unity.modules.cloth@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.cloth@1.0.0)
+    com.unity.modules.director@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.director@1.0.0)
+    com.unity.modules.imageconversion@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.imageconversion@1.0.0)
+    com.unity.modules.imgui@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.imgui@1.0.0)
+    com.unity.modules.jsonserialize@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.jsonserialize@1.0.0)
+    com.unity.modules.particlesystem@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.particlesystem@1.0.0)
+    com.unity.modules.physics@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.physics@1.0.0)
+    com.unity.modules.physics2d@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.physics2d@1.0.0)
+    com.unity.modules.screencapture@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.screencapture@1.0.0)
+    com.unity.modules.terrain@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.terrain@1.0.0)
+    com.unity.modules.terrainphysics@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.terrainphysics@1.0.0)
+    com.unity.modules.tilemap@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.tilemap@1.0.0)
+    com.unity.modules.ui@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.ui@1.0.0)
+    com.unity.modules.uielements@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.uielements@1.0.0)
+    com.unity.modules.umbra@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.umbra@1.0.0)
+    com.unity.modules.unityanalytics@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.unityanalytics@1.0.0)
+    com.unity.modules.unitywebrequest@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.unitywebrequest@1.0.0)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle@1.0.0)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.unitywebrequestaudio@1.0.0)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.unitywebrequesttexture@1.0.0)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.unitywebrequestwww@1.0.0)
+    com.unity.modules.vehicles@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.vehicles@1.0.0)
+    com.unity.modules.video@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.video@1.0.0)
+    com.unity.modules.vr@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.vr@1.0.0)
+    com.unity.modules.wind@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.wind@1.0.0)
+    com.unity.modules.xr@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.xr@1.0.0)
+    com.unity.modules.subsystems@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.modules.subsystems@1.0.0)
+    com.unity.ugui@1.0.0 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.ugui@1.0.0)
+    com.unity.render-pipelines.core@14.0.12 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.render-pipelines.core@14.0.12)
+    com.unity.shadergraph@14.0.12 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.shadergraph@14.0.12)
+    com.unity.render-pipelines.universal-config@14.0.10 (location: E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.render-pipelines.universal-config@14.0.10)
+[Subsystems] Looking for new subsystems at path E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.xr.openxr@1.14.3
+[Subsystems] Novel subsystem found at Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json
+[Subsystems] Discovering subsystems at path E:/2022.3.62f3c1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path E:/AI/project/SimulatedShooting/Assets
+[Subsystems] Discovering subsystems at path E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.xr.openxr@1.14.3
+[Subsystems] No descriptors matched for  examples in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] 1 'inputs' descriptors matched in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json
+[Subsystems] 1 'displays' descriptors matched in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json
+[Subsystems] No descriptors matched for  meshings in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] Discovering subsystems at path E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.xr.oculus@4.5.1
+[Subsystems] No descriptors matched for  examples in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] 1 'inputs' descriptors matched in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json
+[Subsystems] 1 'displays' descriptors matched in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json
+[Subsystems] No descriptors matched for  meshings in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json.
+Package Manager log level set to [2]
+[Package Manager] Done registering packages in 0.13 seconds
+Artifact Garbage Collection - Removed 1 unused hashed content files
+Refreshing native plugins compatible for Editor in 28.32 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.85 ms.
+Initialize engine version: 2022.3.62f3c1 (1623fc0bbb97)
+[Subsystems] Discovering subsystems at path E:/2022.3.62f3c1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path E:/AI/project/SimulatedShooting/Assets
+[Subsystems] Discovering subsystems at path E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.xr.openxr@1.14.3
+[Subsystems] No descriptors matched for  examples in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] 1 'inputs' descriptors matched in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json
+[Subsystems] 1 'displays' descriptors matched in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json
+[Subsystems] No descriptors matched for  meshings in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] Discovering subsystems at path E:\AI\project\SimulatedShooting\Library\PackageCache\com.unity.xr.oculus@4.5.1
+[Subsystems] No descriptors matched for  examples in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] 1 'inputs' descriptors matched in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json
+[Subsystems] 1 'displays' descriptors matched in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json
+[Subsystems] No descriptors matched for  meshings in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json.
+GfxDevice: creating device client; threaded=1; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3060 Laptop GPU (ID=0x2560)
+    Vendor:   NVIDIA
+    VRAM:     6010 MB
+    Driver:   31.0.15.4630
+[Licensing::Client] Successfully resolved entitlement details
+Initialize mono
+Mono path[0] = 'E:/2022.3.62f3c1/Editor/Data/Managed'
+Mono path[1] = 'E:/2022.3.62f3c1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'E:/2022.3.62f3c1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56620
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: E:/2022.3.62f3c1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002659 seconds.
+- Loaded All Assemblies, in  0.314 seconds
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.234 seconds
+Domain Reload Profiling: 548ms
+	BeginReloadAssembly (109ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (33ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (45ms)
+	LoadAllAssembliesAndSetupDomain (118ms)
+		LoadAssemblies (109ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (116ms)
+			TypeCache.Refresh (115ms)
+				TypeCache.ScanAssembly (104ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (234ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (191ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (7ms)
+			SetLoadedEditorAssemblies (7ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (2ms)
+			ProcessInitializeOnLoadAttributes (127ms)
+			ProcessInitializeOnLoadMethodAttributes (47ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+Starting: E:\2022.3.62f3c1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: E:/AI/project/SimulatedShooting
+Starting: E:\2022.3.62f3c1\Editor\Data\Tools\netcorerun\netcorerun.exe "E:\2022.3.62f3c1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1900b0aE.dag.json" "Library/Bee/1900b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+ExitCode: 4 Duration: 1s230ms
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1900b0aE-inputdata.json
+[ 780/1023  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[ 781/1023  1s] Csc Library/Bee/artifacts/1900b0aE.dag/SimulatedShooting.Editor.dll (+2 others)
+*** Tundra requires additional run (1.19 seconds), 2 items updated, 779 evaluated
+WorkingDir: E:/AI/project/SimulatedShooting
+ExitCode: 0 Duration: 0s587ms
+Starting: E:\2022.3.62f3c1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --dagfilejson="Library\Bee\1900b0aE.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: E:/AI/project/SimulatedShooting
+ExitCode: 0 Duration: 0s852ms
+Finished compiling graph: 1026 nodes, 15152 flattened edges (11998 ToBuild, 172 ToUse), maximum node priority 1090
+[ 781/1023  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[1016/1023  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/SimulatedShooting.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/SimulatedShooting.Editor.dll, with 122 defines and 229 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1017/1023  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.Editor.pdb
+[1018/1023  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.Editor.dll
+[1019/1023  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll (+2 others)
+[1020/1023  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Assembly-CSharp.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll, with 124 defines and 280 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1021/1023  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.pdb
+[1022/1023  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.dll
+*** Tundra build success (0.83 seconds), 8 items updated, 1023 evaluated
+AssetDatabase: script compilation time: 3.268915s
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.692 seconds
+Refreshing native plugins compatible for Editor in 10.06 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.07 ms.
+Start importing Assets/SimulatedShooting/Editor/ZeroingRangeSceneBuilder.cs using Guid(4fca972209cfb6247b4bb8f6fba670ec) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'f1646d19049f829420329e14f7392b8a') in 0.007811 seconds
+Refreshing native plugins compatible for Editor in 9.66 ms, found 13 plugins.
+Native extension for WindowsStandalone target not found
+[XR] OculusXRPlugin: registering subsystems
+[Subsystems] OculusXRPlugin successfully registered Provider for oculus display
+[XR] Oculus Input lifecycle provider registered.
+[Subsystems] OculusXRPlugin successfully registered Provider for oculus input
+[Subsystems] OculusXRPlugin successfully registered Provider for oculus display
+[XR] OVRP version 1.92.0
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  2.611 seconds
+Domain Reload Profiling: 3303ms
+	BeginReloadAssembly (133ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (3ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (22ms)
+	RebuildCommonClasses (25ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (21ms)
+	LoadAllAssembliesAndSetupDomain (503ms)
+		LoadAssemblies (367ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (213ms)
+			TypeCache.Refresh (177ms)
+				TypeCache.ScanAssembly (163ms)
+			ScanForSourceGeneratedMonoScriptInfo (24ms)
+			ResolveRequiredComponents (10ms)
+	FinalizeReload (2612ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (2450ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (2ms)
+			SetLoadedEditorAssemblies (2ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (57ms)
+			ProcessInitializeOnLoadAttributes (2268ms)
+			ProcessInitializeOnLoadMethodAttributes (117ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (8ms)
+Start importing Assets/Settings/Project Configuration/Android Preset.asset using Guid(53a413327819a984d8ab1618c9e90a10) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '2da3fa1e539c091f723fd15ec9a79133') in 0.003274 seconds
+Start importing Assets/XR/Settings/Open XR Package Settings.asset using Guid(a9a6963505ddf7f4d886008c6dc86122) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '4768febc3e11c5e0aa0ce0921fb18bf7') in 0.003853 seconds
+Start importing Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Prefabs/Interactors/Teleport Interactor.prefab using Guid(c1800acf6366418a9b5f610249000331) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '872a2d5818cef7a844767226fe493654') in 0.025533 seconds
+Start importing Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Prefabs/XR Origin (XR Rig).prefab using Guid(f6336ac4ac8b4d34bc5072418cdc62a0) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '1ca890b8eb2fd1a503dc587f626b5e47') in 0.083188 seconds
+Start importing Assets/VRTemplateAssets/Prefabs/Setup/Complete XR Origin Set Up Variant.prefab using Guid(77e7c27b2c5525e4aa8cc9f99d654486) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '67d65684b958d97a6170fe7f0cf6e598') in 0.109870 seconds
+Refreshing native plugins compatible for Editor in 15.25 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.08 ms.
+Asset Pipeline Refresh (id=bcd40a9d20edc9041b7b1d5410c5cdf1): Total: 8.810 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=4 (actual=4, local cache=0, cache server=0)
+		Asset DB Process Time: managed=3 ms, native=1956 ms
+		Asset DB Callback time: managed=124 ms, native=19 ms
+		Scripting: domain reloads=1, domain reload time=3382 ms, compile time=3270 ms, other=52 ms
+		Project Asset Count: scripts=8403, non-scripts=2276
+		Asset File Changes: new=0, changed=6, moved=0, deleted=4
+		Scan Filter Count: 0
+	InvokeBeforeRefreshCallbacks: 0.398ms
+	ApplyChangesToAssetFolders: 0.055ms
+	Scan: 260.704ms
+	OnSourceAssetsModified: 1.966ms
+	UnregisterDeletedAssets: 0.006ms
+	GetAllGuidsForCategorization: 1.198ms
+	CategorizeAssets: 186.539ms
+	ImportOutOfDateAssets: 2935.951ms (-618.430ms without children)
+		ImportManagerImport: 252.127ms (15.892ms without children)
+			ImportInProcess: 236.148ms
+			UpdateCategorizedAssets: 0.086ms
+		CompileScripts: 3270.476ms
+		ReloadNativeAssets: 0.063ms
+		UnloadImportedAssets: 25.932ms
+		ReloadImportedAssets: 0.263ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 3.856ms
+		InitializingProgressBar: 0.013ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 1.650ms
+	PostProcessAllAssets: 122.657ms
+	Hotreload: 18.335ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.000ms
+	UnloadStreamsBegin: 0.214ms
+	PersistCurrentRevisions: 0.655ms
+	UnloadStreamsEnd: 0.077ms
+	GenerateScriptTypeHashes: 4.427ms
+	Untracked: 5280.909ms
+Application.AssetDatabase Initial Refresh End
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
+Scanning for USB devices : 3.159ms
+Initializing Unity extensions:
+[Licensing::Client] Successfully resolved entitlement details
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-VR
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ProgressiveSceneManager::Cancel()
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Unloading 76 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 222 unused Assets / (6.7 MB). Loaded Objects now: 7443.
+Memory consumption went from 226.2 MB to 219.5 MB.
+Total: 6.999300 ms (FindLiveObjects: 0.349000 ms CreateObjectMapping: 0.231900 ms MarkObjects: 4.127200 ms  DeleteObjects: 2.289900 ms)
+
+[LAYOUT] About to load C:/Users/Lenovo/AppData/Roaming/Unity/Editor-5.x/Preferences\Layouts\current\default-2022.dwlt, keepMainWindow=False
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[MODES] ModeService[default].InitializeCurrentMode
+[MODES] ModeService[default].RaiseModeChanged(default, default)
+Opening scene 'Assets/Scenes/ZeroingRangeScene.unity'
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Unloading 7 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Assets/Scenes/ZeroingRangeScene.unity'
+	Deserialize:            2.098 ms
+	Integration:            211.167 ms
+	Integration of assets:  0.003 ms
+	Thread Wait Time:       0.043 ms
+	Total Operation Time:   213.311 ms
+Unloading 7 unused Assets / (3.6 KB). Loaded Objects now: 9102.
+Memory consumption went from 206.7 MB to 206.7 MB.
+Total: 7.436600 ms (FindLiveObjects: 0.431800 ms CreateObjectMapping: 0.270900 ms MarkObjects: 6.694600 ms  DeleteObjects: 0.038300 ms)
+
+Running ZeroingRangeScene with the no-VR test camera.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+SimulatedShooting.Editor.ZeroingRangeSceneBuilder:OpenAndPlay () (at Assets/SimulatedShooting/Editor/ZeroingRangeSceneBuilder.cs:33)
+
+(Filename: Assets/SimulatedShooting/Editor/ZeroingRangeSceneBuilder.cs Line: 33)
+
+IsTimeToCheckForNewEditor: Update time 1782914722 current 1782915487
+<RI> Initializing input.
+Using Windows.Gaming.Input
+[Project] Loading completed in 18.330 seconds
+	Project init time: 				11.371 seconds
+		Template init time: 		0.000 seconds
+		Package Manager init time: 		0.374 seconds
+		Asset Database init time: 		0.300 seconds
+		Global illumination init time: 	0.004 seconds
+		Assemblies load time: 			0.559 seconds
+		Unity extensions init time: 	0.008 seconds
+		Asset Database refresh time: 	0.000 seconds
+	Scene opening time: 			0.783 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1782915488005,"processId":23620,"projectLoad":18.3299589,"projectInit":11.3712316,"templateInit":0.0,"packageManagerInit":0.3738221,"assetDatabaseInit":0.3002145,"globalIlluminationInit":0.0042297,"assembliesLoad":0.5591036,"unityExtensionsInit":0.0077384,"assetDatabaseRefresh":0.0,"sceneOpening":0.7826849}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1782915488005,"processId":23620,"editorVersion":"2022.3.62f3c1 (1623fc0bbb97)","branch":"2022.3/china_unity/release","buildType":"Release","platform":"Windows"}
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Asset Pipeline Refresh (id=3ea7d5c880b76a447a47228b61751b50): Total: 0.032 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Reloading assemblies for play mode.
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+- Loaded All Assemblies, in  0.577 seconds
+Refreshing native plugins compatible for Editor in 10.59 ms, found 13 plugins.
+Native extension for WindowsStandalone target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-VR
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.338 seconds
+Domain Reload Profiling: 1918ms
+	BeginReloadAssembly (461ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (36ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (316ms)
+	RebuildCommonClasses (21ms)
+	RebuildNativeTypeToScriptingClass (7ms)
+	initialDomainReloadingComplete (17ms)
+	LoadAllAssembliesAndSetupDomain (72ms)
+		LoadAssemblies (112ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (20ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (11ms)
+	FinalizeReload (1339ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (671ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (58ms)
+			ProcessInitializeOnLoadAttributes (530ms)
+			ProcessInitializeOnLoadMethodAttributes (75ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (382ms)
+Asset Pipeline Refresh (id=4f174d9bffa46b145a4ff417f88fddb6): Total: 2.294 seconds - Initiated by StopAssetImportingV2(ForceSynchronousImport | ForceDomainReload)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=322 ms
+		Asset DB Callback time: managed=9 ms, native=0 ms
+		Scripting: domain reloads=1, domain reload time=1959 ms, compile time=1 ms, other=0 ms
+		Project Asset Count: scripts=8403, non-scripts=2276
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeBeforeRefreshCallbacks: 0.377ms
+	ApplyChangesToAssetFolders: 0.060ms
+	Scan: 0.001ms
+	OnSourceAssetsModified: 0.001ms
+	GetAllGuidsForCategorization: 0.579ms
+	CategorizeAssets: 152.630ms
+	ImportOutOfDateAssets: 1382.896ms (1375.196ms without children)
+		CompileScripts: 1.448ms
+		CollectScriptTypesHashes: 0.658ms
+		ReloadNativeAssets: 0.536ms
+		UnloadImportedAssets: 0.910ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 2.272ms
+		InitializingProgressBar: 0.000ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 1.876ms
+	PostProcessAllAssets: 9.204ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.538ms
+	UnloadStreamsBegin: 0.072ms
+	PersistCurrentRevisions: 0.330ms
+	UnloadStreamsEnd: 0.087ms
+	GenerateScriptTypeHashes: 4.500ms
+	Untracked: 746.813ms
+<RI> Initialized touch support.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[XR] Time interace not found - delta time prediction disabled.
+[Subsystems] OpenXR XR Plugin successfully registered Provider for OpenXR Display
+[Subsystems] OculusXRPlugin successfully registered Provider for oculus input
+[Subsystems] OculusXRPlugin successfully registered Provider for oculus display
+[Subsystems] OpenXR XR Plugin successfully registered Provider for OpenXR Input
+[Subsystems] OpenXR XR Plugin successfully registered Provider for OpenXR Display
+[Subsystems] OculusXRPlugin successfully registered Provider for oculus input
+[Subsystems] OculusXRPlugin successfully registered Provider for oculus display
+The referenced script on this Behaviour (Game Object '<null>') is missing!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.XR.OpenXR.Features.FeatureHelpersInternal:GetAllFeatureInfo (UnityEditor.BuildTargetGroup) (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs:147)
+UnityEditor.XR.OpenXR.Features.OpenXRChooseRuntimeLibraries:GetLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/OpenXRChooseRuntimeLibraries.cs:17)
+UnityEditor.XR.OpenXR.OpenXRPackageSettings:GetActiveLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/OpenXRPackageSettings.cs:116)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:LoadOpenXRSymbols () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:546)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:InitializeInternal () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:233)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:Initialize () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:203)
+UnityEngine.XR.Management.XRManagerSettings:InitializeLoaderSync () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRManagerSettings.cs:190)
+UnityEngine.XR.Management.XRGeneralSettings:InitXRSDK () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:175)
+UnityEngine.XR.Management.XRGeneralSettings:AttemptInitializeXRSDKOnLoad () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:148)
+
+[./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs line 147]
+
+The referenced script (Unknown) on this Behaviour is missing!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.XR.OpenXR.Features.FeatureHelpersInternal:GetAllFeatureInfo (UnityEditor.BuildTargetGroup) (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs:147)
+UnityEditor.XR.OpenXR.Features.OpenXRChooseRuntimeLibraries:GetLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/OpenXRChooseRuntimeLibraries.cs:17)
+UnityEditor.XR.OpenXR.OpenXRPackageSettings:GetActiveLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/OpenXRPackageSettings.cs:116)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:LoadOpenXRSymbols () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:546)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:InitializeInternal () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:233)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:Initialize () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:203)
+UnityEngine.XR.Management.XRManagerSettings:InitializeLoaderSync () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRManagerSettings.cs:190)
+UnityEngine.XR.Management.XRGeneralSettings:InitXRSDK () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:175)
+UnityEngine.XR.Management.XRGeneralSettings:AttemptInitializeXRSDKOnLoad () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:148)
+
+[./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs line 147]
+
+The referenced script on this Behaviour (Game Object '<null>') is missing!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.XR.OpenXR.Features.FeatureHelpersInternal:GetAllFeatureInfo (UnityEditor.BuildTargetGroup) (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs:147)
+UnityEditor.XR.OpenXR.Features.OpenXRChooseRuntimeLibraries:GetLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/OpenXRChooseRuntimeLibraries.cs:17)
+UnityEditor.XR.OpenXR.OpenXRPackageSettings:GetActiveLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/OpenXRPackageSettings.cs:116)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:LoadOpenXRSymbols () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:546)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:InitializeInternal () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:233)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:Initialize () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:203)
+UnityEngine.XR.Management.XRManagerSettings:InitializeLoaderSync () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRManagerSettings.cs:190)
+UnityEngine.XR.Management.XRGeneralSettings:InitXRSDK () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:175)
+UnityEngine.XR.Management.XRGeneralSettings:AttemptInitializeXRSDKOnLoad () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:148)
+
+[./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs line 147]
+
+The referenced script on this Behaviour (Game Object '<null>') is missing!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.XR.OpenXR.Features.FeatureHelpersInternal:GetAllFeatureInfo (UnityEditor.BuildTargetGroup) (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs:147)
+UnityEditor.XR.OpenXR.Features.OpenXRChooseRuntimeLibraries:GetLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/OpenXRChooseRuntimeLibraries.cs:17)
+UnityEditor.XR.OpenXR.OpenXRPackageSettings:GetActiveLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/OpenXRPackageSettings.cs:116)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:LoadOpenXRSymbols () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:546)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:InitializeInternal () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:233)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:Initialize () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:203)
+UnityEngine.XR.Management.XRManagerSettings:InitializeLoaderSync () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRManagerSettings.cs:190)
+UnityEngine.XR.Management.XRGeneralSettings:InitXRSDK () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:175)
+UnityEngine.XR.Management.XRGeneralSettings:AttemptInitializeXRSDKOnLoad () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:148)
+
+[./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs line 147]
+
+[Subsystems] Loading plugin UnityOpenXR for subsystem OpenXR Display...
+[XR] [40152] [22:18:11.278][Info   ] Available Layers: (0)
+[XR] [40152] [22:18:16.782][Error  ] xrGetSystem: XR_ERROR_FORM_FACTOR_UNAVAILABLE
+[XR] [40152] [22:18:16.782][Info   ] 
+
+==== Start Unity OpenXR Diagnostic Report ====
+
+
+[XR] [40152] [22:18:16.782][Info   ] ==== Report Reason: Uncaught Exception ====
+
+
+[XR] [40152] [22:18:16.782][Info   ] ==== OpenXR Init Info ====
+[XR] [40152] [22:18:16.782][Info   ] 
+[XR] [40152] [22:18:16.782][Info   ] Stage 1 Missing Entry Points: (1)
+[XR] [40152] [22:18:16.782][Info   ]   xrInitializeLoaderKHR
+[XR] [40152] [22:18:16.782][Info   ] 
+[XR] [40152] [22:18:16.782][Info   ] ==== OpenXR Runtime Info ====
+[XR] [40152] [22:18:16.782][Info   ] 
+[XR] [40152] [22:18:16.782][Info   ] Available Runtime Extensions: (39)
+[XR] [40152] [22:18:16.782][Info   ]   XR_KHR_vulkan_enable: Version=9
+[XR] [40152] [22:18:16.782][Info   ]   XR_KHR_vulkan_enable2: Version=3
+[XR] [40152] [22:18:16.782][Info   ]   XR_KHR_D3D11_enable: Version=10
+[XR] [40152] [22:18:16.782][Info   ]   XR_KHR_D3D12_enable: Version=10
+[XR] [40152] [22:18:16.782][Info   ]   XR_KHR_opengl_enable: Version=11
+[XR] [40152] [22:18:16.782][Info   ]   XR_KHR_win32_convert_performance_counter_time: Version=1
+[XR] [40152] [22:18:16.782][Info   ]   XR_EXT_win32_appcontainer_compatible: Version=1
+[XR] [40152] [22:18:16.782][Info   ]   XR_KHR_binding_modification: Version=1
+[XR] [40152] [22:18:16.782][Info   ]   XR_KHR_composition_layer_depth: Version=6
+[XR] [40152] [22:18:16.782][Info   ]   XR_KHR_locate_spaces: Version=1
+[XR] [40152] [22:18:16.782][Info   ]   XR_KHR_visibility_mask: Version=2
+[XR] [40152] [22:18:16.782][Info   ]   XR_EXT_active_action_set_priority: Version=1
+[XR] [40152] [22:18:16.782][Info   ]   XR_EXT_dpad_binding: Version=1
+[XR] [40152] [22:18:16.782][Info   ]   XR_EXT_eye_gaze_interaction: Version=2
+[XR] [40152] [22:18:16.782][Info   ]   XR_EXT_frame_composition_report: Version=4
+[XR] [40152] [22:18:16.782][Info   ]   XR_EXT_hand_interaction: Version=2
+[XR] [40152] [22:18:16.782][Info   ]   XR_EXT_hand_tracking: Version=4
+[XR] [40152] [22:18:16.782][Info   ]   XR_EXT_hand_tracking_data_source: Version=1
+[XR] [40152] [22:18:16.782][Info   ]   XR_EXT_hand_joints_motion_range: Version=1
+[XR] [40152] [22:18:16.782][Info   ]   XR_EXT_hp_mixed_reality_controller: Version=1
+[XR] [40152] [22:18:16.782][Info   ]   XR_EXT_local_floor: Version=1
+[XR] [40152] [22:18:16.782][Info   ]   XR_EXT_palm_pose: Version=3
+[XR] [40152] [22:18:16.783][Info   ]   XR_EXT_uuid: Version=1
+[XR] [40152] [22:18:16.783][Info   ]   XR_EXT_user_presence: Version=1
+[XR] [40152] [22:18:16.783][Info   ]   XR_EXT_render_model: Version=1
+[XR] [40152] [22:18:16.783][Info   ]   XR_EXT_interaction_render_model: Version=1
+[XR] [40152] [22:18:16.783][Info   ]   XR_FB_display_refresh_rate: Version=1
+[XR] [40152] [22:18:16.783][Info   ]   XR_HTC_vive_cosmos_controller_interaction: Version=1
+[XR] [40152] [22:18:16.783][Info   ]   XR_HTC_vive_focus3_controller_interaction: Version=2
+[XR] [40152] [22:18:16.783][Info   ]   XR_HTC_vive_wrist_tracker_interaction: Version=1
+[XR] [40152] [22:18:16.783][Info   ]   XR_MND_headless: Version=3
+[XR] [40152] [22:18:16.783][Info   ]   XR_VALVE_analog_threshold: Version=2
+[XR] [40152] [22:18:16.783][Info   ]   XR_META_performance_metrics: Version=2
+[XR] [40152] [22:18:16.783][Info   ]   XR_VALVE_timing_utils: Version=1
+[XR] [40152] [22:18:16.783][Info   ]   XR_META_recommended_layer_resolution: Version=1
+[XR] [40152] [22:18:16.783][Info   ]   XR_HTCX_vive_tracker_interaction: Version=3
+[XR] [40152] [22:18:16.783][Info   ]   XR_KHR_generic_controller: Version=1
+[XR] [40152] [22:18:16.783][Info   ]   XR_VALVE_frame_controller_interaction: Version=1
+[XR] [40152] [22:18:16.783][Info   ]   XR_EXT_debug_utils: Version=5
+[XR] [40152] [22:18:16.783][Info   ] 
+[XR] [40152] [22:18:16.783][Info   ] Available Layers: (0)
+[XR] [40152] [22:18:16.783][Info   ] 
+[XR] [40152] [22:18:16.783][Info   ] Runtime Name: SteamVR/OpenXR
+[XR] [40152] [22:18:16.783][Info   ] Runtime Version: 2.15.6
+[XR] [40152] [22:18:16.783][Info   ] 
+[XR] [40152] [22:18:16.783][Info   ] ==== OpenXR Exception Thrown ====
+[XR] [40152] [22:18:16.783][Info   ] 
+[XR] [40152] [22:18:16.783][Info   ] Error: XrResult failure [XR_ERROR_FORM_FACTOR_UNAVAILABLE]
+[XR] [40152] [22:18:16.783][Info   ]     Origin: result
+[XR] [40152] [22:18:16.783][Info   ]     Source: C:\build\output\unity\xr.sdk.openxr\NativePlugin\Source\unity_session.cpp:281
+[XR] [40152] [22:18:16.783][Info   ] 
+[XR] [40152] [22:18:16.783][Info   ] 
+[XR] [40152] [22:18:16.783][Info   ] ==== Std Exception Thrown ====
+[XR] [40152] [22:18:16.783][Info   ] 
+[XR] [40152] [22:18:16.783][Info   ] Function: Display_Initialize
+[XR] [40152] [22:18:16.783][Info   ] Message: XrResult failure [XR_ERROR_FORM_FACTOR_UNAVAILABLE]
+[XR] [40152] [22:18:16.783][Info   ]     Origin: result
+[XR] [40152] [22:18:16.783][Info   ]     Source: C:\build\output\unity\xr.sdk.openxr\NativePlugin\Source\unity_session.cpp:281
+[XR] [40152] [22:18:16.783][Info   ] 
+[XR] [40152] [22:18:16.783][Info   ] ==== Last 20 non-XR_SUCCESS returns ====
+[XR] [40152] [22:18:16.783][Info   ] [FAILURE] xrGetSystem: XR_ERROR_FORM_FACTOR_UNAVAILABLE (1x)
+[XR] [40152] [22:18:16.783][Info   ] 
+[XR] [40152] [22:18:16.783][Info   ] ==== Last 20 Events ====
+[XR] [40152] [22:18:16.783][Info   ] 
+
+==== End Unity OpenXR Diagnostic Report ====
+
+
+[Subsystems] Failed to initialize subsystem OpenXR Display [error: 1]
+[XR] [40152] [22:18:16.785][Info   ] 
+
+==== Start Unity OpenXR Diagnostic Report ====
+
+
+[XR] [40152] [22:18:16.785][Info   ] ==== Report Reason: System Shutdown ====
+
+
+[XR] [40152] [22:18:16.785][Info   ] ==== OpenXR Init Info ====
+[XR] [40152] [22:18:16.785][Info   ] 
+[XR] [40152] [22:18:16.785][Info   ] Stage 1 Missing Entry Points: (1)
+[XR] [40152] [22:18:16.785][Info   ]   xrInitializeLoaderKHR
+[XR] [40152] [22:18:16.785][Info   ] 
+[XR] [40152] [22:18:16.785][Info   ] ==== OpenXR Runtime Info ====
+[XR] [40152] [22:18:16.785][Info   ] 
+[XR] [40152] [22:18:16.785][Info   ] Available Runtime Extensions: (39)
+[XR] [40152] [22:18:16.785][Info   ]   XR_KHR_vulkan_enable: Version=9
+[XR] [40152] [22:18:16.785][Info   ]   XR_KHR_vulkan_enable2: Version=3
+[XR] [40152] [22:18:16.785][Info   ]   XR_KHR_D3D11_enable: Version=10
+[XR] [40152] [22:18:16.785][Info   ]   XR_KHR_D3D12_enable: Version=10
+[XR] [40152] [22:18:16.785][Info   ]   XR_KHR_opengl_enable: Version=11
+[XR] [40152] [22:18:16.785][Info   ]   XR_KHR_win32_convert_performance_counter_time: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_win32_appcontainer_compatible: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_KHR_binding_modification: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_KHR_composition_layer_depth: Version=6
+[XR] [40152] [22:18:16.785][Info   ]   XR_KHR_locate_spaces: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_KHR_visibility_mask: Version=2
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_active_action_set_priority: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_dpad_binding: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_eye_gaze_interaction: Version=2
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_frame_composition_report: Version=4
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_hand_interaction: Version=2
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_hand_tracking: Version=4
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_hand_tracking_data_source: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_hand_joints_motion_range: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_hp_mixed_reality_controller: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_local_floor: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_palm_pose: Version=3
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_uuid: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_user_presence: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_render_model: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_interaction_render_model: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_FB_display_refresh_rate: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_HTC_vive_cosmos_controller_interaction: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_HTC_vive_focus3_controller_interaction: Version=2
+[XR] [40152] [22:18:16.785][Info   ]   XR_HTC_vive_wrist_tracker_interaction: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_MND_headless: Version=3
+[XR] [40152] [22:18:16.785][Info   ]   XR_VALVE_analog_threshold: Version=2
+[XR] [40152] [22:18:16.785][Info   ]   XR_META_performance_metrics: Version=2
+[XR] [40152] [22:18:16.785][Info   ]   XR_VALVE_timing_utils: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_META_recommended_layer_resolution: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_HTCX_vive_tracker_interaction: Version=3
+[XR] [40152] [22:18:16.785][Info   ]   XR_KHR_generic_controller: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_VALVE_frame_controller_interaction: Version=1
+[XR] [40152] [22:18:16.785][Info   ]   XR_EXT_debug_utils: Version=5
+[XR] [40152] [22:18:16.785][Info   ] 
+[XR] [40152] [22:18:16.785][Info   ] Available Layers: (0)
+[XR] [40152] [22:18:16.785][Info   ] 
+[XR] [40152] [22:18:16.785][Info   ] Runtime Name: SteamVR/OpenXR
+[XR] [40152] [22:18:16.785][Info   ] Runtime Version: 2.15.6
+[XR] [40152] [22:18:16.785][Info   ] 
+[XR] [40152] [22:18:16.785][Info   ] ==== OpenXR Exception Thrown ====
+[XR] [40152] [22:18:16.785][Info   ] 
+[XR] [40152] [22:18:16.785][Info   ] Error: XrResult failure [XR_ERROR_FORM_FACTOR_UNAVAILABLE]
+[XR] [40152] [22:18:16.785][Info   ]     Origin: result
+[XR] [40152] [22:18:16.785][Info   ]     Source: C:\build\output\unity\xr.sdk.openxr\NativePlugin\Source\unity_session.cpp:281
+[XR] [40152] [22:18:16.785][Info   ] 
+[XR] [40152] [22:18:16.785][Info   ] 
+[XR] [40152] [22:18:16.785][Info   ] ==== Std Exception Thrown ====
+[XR] [40152] [22:18:16.785][Info   ] 
+[XR] [40152] [22:18:16.785][Info   ] Function: Display_Initialize
+[XR] [40152] [22:18:16.785][Info   ] Message: XrResult failure [XR_ERROR_FORM_FACTOR_UNAVAILABLE]
+[XR] [40152] [22:18:16.785][Info   ]     Origin: result
+[XR] [40152] [22:18:16.785][Info   ]     Source: C:\build\output\unity\xr.sdk.openxr\NativePlugin\Source\unity_session.cpp:281
+[XR] [40152] [22:18:16.785][Info   ] 
+[XR] [40152] [22:18:16.785][Info   ] ==== Last 20 non-XR_SUCCESS returns ====
+[XR] [40152] [22:18:16.785][Info   ] [FAILURE] xrGetSystem: XR_ERROR_FORM_FACTOR_UNAVAILABLE (1x)
+[XR] [40152] [22:18:16.785][Info   ] 
+[XR] [40152] [22:18:16.785][Info   ] ==== Last 20 Events ====
+[XR] [40152] [22:18:16.785][Info   ] 
+
+==== End Unity OpenXR Diagnostic Report ====
+
+
+[XR] XR_META_performance_metrics: Attempted to stop before session ready
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            16.958 ms
+	Integration:            5778.028 ms
+	Integration of assets:  0.216 ms
+	Thread Wait Time:       -0.011 ms
+	Total Operation Time:   5795.190 ms
+EditorUpdateCheck: Failed The requested URL returned error: 404
+Created GICache directory at C:/Users/Lenovo/AppData/LocalLow/Unity/Caches/GiCache. Took: 0.050s, timestamps: [27.749 - 27.799]
+TrimDiskCacheJob: Current cache size 0mb
+Scanning for USB devices : 2.563ms
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Unloading 12 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            9.326 ms
+	Integration:            158.669 ms
+	Integration of assets:  0.015 ms
+	Thread Wait Time:       0.025 ms
+	Total Operation Time:   168.035 ms
+Unloading 236 unused Assets / (15.0 MB). Loaded Objects now: 9836.
+Memory consumption went from 232.6 MB to 217.5 MB.
+Total: 11.881000 ms (FindLiveObjects: 0.541900 ms CreateObjectMapping: 0.267100 ms MarkObjects: 8.714400 ms  DeleteObjects: 2.356800 ms)
+
+[Licensing::Client] Successfully resolved entitlement details
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+[Licensing::Client] Successfully updated the access token
+[Licensing::Module] Successfully updated access token: "L0OJXfXi"... (expires: 2027-07-01T14:19:00Z)
+gi::BakeBackendSwitch: switching bake backend from 3 to 1.
+[00:00:00] Builtin Sky manager started.
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+[Licensing::Client] Successfully resolved entitlement details
+[00:00:00] Finished 1 Bake Ambient Probe job (0.00s execute, 0.00s integrate, 0.06s wallclock)
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Starting cubemap convolution for '' (size 128)
+...took 0.054 seconds
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Reloading assemblies for play mode.
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.577 seconds
+Refreshing native plugins compatible for Editor in 9.96 ms, found 13 plugins.
+Native extension for WindowsStandalone target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-VR
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.239 seconds
+Domain Reload Profiling: 1819ms
+	BeginReloadAssembly (460ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (12ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (332ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (7ms)
+	initialDomainReloadingComplete (19ms)
+	LoadAllAssembliesAndSetupDomain (71ms)
+		LoadAssemblies (116ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (19ms)
+			TypeCache.Refresh (6ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (11ms)
+	FinalizeReload (1240ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (629ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (59ms)
+			ProcessInitializeOnLoadAttributes (490ms)
+			ProcessInitializeOnLoadMethodAttributes (71ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (314ms)
+Asset Pipeline Refresh (id=70b5072510ffff94789117bf74d65faf): Total: 2.185 seconds - Initiated by StopAssetImportingV2(ForceSynchronousImport | ForceDomainReload)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=317 ms
+		Asset DB Callback time: managed=9 ms, native=0 ms
+		Scripting: domain reloads=1, domain reload time=1857 ms, compile time=2 ms, other=0 ms
+		Project Asset Count: scripts=8403, non-scripts=2276
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeBeforeRefreshCallbacks: 0.373ms
+	ApplyChangesToAssetFolders: 0.072ms
+	Scan: 0.001ms
+	OnSourceAssetsModified: 0.001ms
+	GetAllGuidsForCategorization: 0.898ms
+	CategorizeAssets: 146.503ms
+	ImportOutOfDateAssets: 1280.734ms (1273.418ms without children)
+		CompileScripts: 1.550ms
+		CollectScriptTypesHashes: 0.102ms
+		ReloadNativeAssets: 0.558ms
+		UnloadImportedAssets: 0.940ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 2.083ms
+		InitializingProgressBar: 0.001ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 2.082ms
+	PostProcessAllAssets: 9.044ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.421ms
+	UnloadStreamsBegin: 1.009ms
+	PersistCurrentRevisions: 0.331ms
+	UnloadStreamsEnd: 0.066ms
+	GenerateScriptTypeHashes: 3.614ms
+	Untracked: 745.963ms
+<RI> Initialized touch support.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+The referenced script on this Behaviour (Game Object '<null>') is missing!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.XR.OpenXR.Features.FeatureHelpersInternal:GetAllFeatureInfo (UnityEditor.BuildTargetGroup) (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs:147)
+UnityEditor.XR.OpenXR.Features.OpenXRChooseRuntimeLibraries:GetLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/OpenXRChooseRuntimeLibraries.cs:17)
+UnityEditor.XR.OpenXR.OpenXRPackageSettings:GetActiveLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/OpenXRPackageSettings.cs:116)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:LoadOpenXRSymbols () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:546)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:InitializeInternal () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:233)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:Initialize () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:203)
+UnityEngine.XR.Management.XRManagerSettings:InitializeLoaderSync () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRManagerSettings.cs:190)
+UnityEngine.XR.Management.XRGeneralSettings:InitXRSDK () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:175)
+UnityEngine.XR.Management.XRGeneralSettings:AttemptInitializeXRSDKOnLoad () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:148)
+
+[./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs line 147]
+
+The referenced script (Unknown) on this Behaviour is missing!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.XR.OpenXR.Features.FeatureHelpersInternal:GetAllFeatureInfo (UnityEditor.BuildTargetGroup) (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs:147)
+UnityEditor.XR.OpenXR.Features.OpenXRChooseRuntimeLibraries:GetLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/OpenXRChooseRuntimeLibraries.cs:17)
+UnityEditor.XR.OpenXR.OpenXRPackageSettings:GetActiveLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/OpenXRPackageSettings.cs:116)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:LoadOpenXRSymbols () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:546)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:InitializeInternal () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:233)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:Initialize () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:203)
+UnityEngine.XR.Management.XRManagerSettings:InitializeLoaderSync () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRManagerSettings.cs:190)
+UnityEngine.XR.Management.XRGeneralSettings:InitXRSDK () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:175)
+UnityEngine.XR.Management.XRGeneralSettings:AttemptInitializeXRSDKOnLoad () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:148)
+
+[./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs line 147]
+
+The referenced script on this Behaviour (Game Object '<null>') is missing!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.XR.OpenXR.Features.FeatureHelpersInternal:GetAllFeatureInfo (UnityEditor.BuildTargetGroup) (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs:147)
+UnityEditor.XR.OpenXR.Features.OpenXRChooseRuntimeLibraries:GetLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/OpenXRChooseRuntimeLibraries.cs:17)
+UnityEditor.XR.OpenXR.OpenXRPackageSettings:GetActiveLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/OpenXRPackageSettings.cs:116)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:LoadOpenXRSymbols () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:546)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:InitializeInternal () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:233)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:Initialize () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:203)
+UnityEngine.XR.Management.XRManagerSettings:InitializeLoaderSync () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRManagerSettings.cs:190)
+UnityEngine.XR.Management.XRGeneralSettings:InitXRSDK () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:175)
+UnityEngine.XR.Management.XRGeneralSettings:AttemptInitializeXRSDKOnLoad () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:148)
+
+[./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs line 147]
+
+The referenced script on this Behaviour (Game Object '<null>') is missing!
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.XR.OpenXR.Features.FeatureHelpersInternal:GetAllFeatureInfo (UnityEditor.BuildTargetGroup) (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs:147)
+UnityEditor.XR.OpenXR.Features.OpenXRChooseRuntimeLibraries:GetLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/OpenXRChooseRuntimeLibraries.cs:17)
+UnityEditor.XR.OpenXR.OpenXRPackageSettings:GetActiveLoaderLibraryPath () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/OpenXRPackageSettings.cs:116)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:LoadOpenXRSymbols () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:546)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:InitializeInternal () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:233)
+UnityEngine.XR.OpenXR.OpenXRLoaderBase:Initialize () (at ./Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/OpenXRLoader.cs:203)
+UnityEngine.XR.Management.XRManagerSettings:InitializeLoaderSync () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRManagerSettings.cs:190)
+UnityEngine.XR.Management.XRGeneralSettings:InitXRSDK () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:175)
+UnityEngine.XR.Management.XRGeneralSettings:AttemptInitializeXRSDKOnLoad () (at ./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRGeneralSettings.cs:148)
+
+[./Library/PackageCache/com.unity.xr.openxr@1.14.3/Editor/FeatureSupport/FeatureHelpers.cs line 147]
+
+[Subsystems] Loading plugin UnityOpenXR for subsystem OpenXR Display...
+[XR] [40152] [22:19:10.724][Info   ] Available Layers: (0)
+[XR] [40152] [22:19:16.265][Error  ] xrGetSystem: XR_ERROR_FORM_FACTOR_UNAVAILABLE
+[XR] [40152] [22:19:16.265][Info   ] 
+
+==== Start Unity OpenXR Diagnostic Report ====
+
+
+[XR] [40152] [22:19:16.265][Info   ] ==== Report Reason: Uncaught Exception ====
+
+
+[XR] [40152] [22:19:16.265][Info   ] ==== OpenXR Init Info ====
+[XR] [40152] [22:19:16.265][Info   ] 
+[XR] [40152] [22:19:16.265][Info   ] Stage 1 Missing Entry Points: (1)
+[XR] [40152] [22:19:16.265][Info   ]   xrInitializeLoaderKHR
+[XR] [40152] [22:19:16.265][Info   ] 
+[XR] [40152] [22:19:16.265][Info   ] ==== OpenXR Runtime Info ====
+[XR] [40152] [22:19:16.266][Info   ] 
+[XR] [40152] [22:19:16.266][Info   ] Available Runtime Extensions: (39)
+[XR] [40152] [22:19:16.266][Info   ]   XR_KHR_vulkan_enable: Version=9
+[XR] [40152] [22:19:16.266][Info   ]   XR_KHR_vulkan_enable2: Version=3
+[XR] [40152] [22:19:16.266][Info   ]   XR_KHR_D3D11_enable: Version=10
+[XR] [40152] [22:19:16.266][Info   ]   XR_KHR_D3D12_enable: Version=10
+[XR] [40152] [22:19:16.266][Info   ]   XR_KHR_opengl_enable: Version=11
+[XR] [40152] [22:19:16.266][Info   ]   XR_KHR_win32_convert_performance_counter_time: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_win32_appcontainer_compatible: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_KHR_binding_modification: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_KHR_composition_layer_depth: Version=6
+[XR] [40152] [22:19:16.266][Info   ]   XR_KHR_locate_spaces: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_KHR_visibility_mask: Version=2
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_active_action_set_priority: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_dpad_binding: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_eye_gaze_interaction: Version=2
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_frame_composition_report: Version=4
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_hand_interaction: Version=2
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_hand_tracking: Version=4
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_hand_tracking_data_source: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_hand_joints_motion_range: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_hp_mixed_reality_controller: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_local_floor: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_palm_pose: Version=3
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_uuid: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_user_presence: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_render_model: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_interaction_render_model: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_FB_display_refresh_rate: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_HTC_vive_cosmos_controller_interaction: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_HTC_vive_focus3_controller_interaction: Version=2
+[XR] [40152] [22:19:16.266][Info   ]   XR_HTC_vive_wrist_tracker_interaction: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_MND_headless: Version=3
+[XR] [40152] [22:19:16.266][Info   ]   XR_VALVE_analog_threshold: Version=2
+[XR] [40152] [22:19:16.266][Info   ]   XR_META_performance_metrics: Version=2
+[XR] [40152] [22:19:16.266][Info   ]   XR_VALVE_timing_utils: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_META_recommended_layer_resolution: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_HTCX_vive_tracker_interaction: Version=3
+[XR] [40152] [22:19:16.266][Info   ]   XR_KHR_generic_controller: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_VALVE_frame_controller_interaction: Version=1
+[XR] [40152] [22:19:16.266][Info   ]   XR_EXT_debug_utils: Version=5
+[XR] [40152] [22:19:16.266][Info   ] 
+[XR] [40152] [22:19:16.266][Info   ] Available Layers: (0)
+[XR] [40152] [22:19:16.266][Info   ] 
+[XR] [40152] [22:19:16.266][Info   ] Runtime Name: SteamVR/OpenXR
+[XR] [40152] [22:19:16.266][Info   ] Runtime Version: 2.15.6
+[XR] [40152] [22:19:16.266][Info   ] 
+[XR] [40152] [22:19:16.266][Info   ] ==== OpenXR Exception Thrown ====
+[XR] [40152] [22:19:16.266][Info   ] 
+[XR] [40152] [22:19:16.266][Info   ] Error: XrResult failure [XR_ERROR_FORM_FACTOR_UNAVAILABLE]
+[XR] [40152] [22:19:16.266][Info   ]     Origin: result
+[XR] [40152] [22:19:16.266][Info   ]     Source: C:\build\output\unity\xr.sdk.openxr\NativePlugin\Source\unity_session.cpp:281
+[XR] [40152] [22:19:16.266][Info   ] 
+[XR] [40152] [22:19:16.266][Info   ] 
+[XR] [40152] [22:19:16.266][Info   ] ==== Std Exception Thrown ====
+[XR] [40152] [22:19:16.266][Info   ] 
+[XR] [40152] [22:19:16.266][Info   ] Function: Display_Initialize
+[XR] [40152] [22:19:16.266][Info   ] Message: XrResult failure [XR_ERROR_FORM_FACTOR_UNAVAILABLE]
+[XR] [40152] [22:19:16.266][Info   ]     Origin: result
+[XR] [40152] [22:19:16.266][Info   ]     Source: C:\build\output\unity\xr.sdk.openxr\NativePlugin\Source\unity_session.cpp:281
+[XR] [40152] [22:19:16.266][Info   ] 
+[XR] [40152] [22:19:16.266][Info   ] ==== Last 20 non-XR_SUCCESS returns ====
+[XR] [40152] [22:19:16.266][Info   ] [FAILURE] xrGetSystem: XR_ERROR_FORM_FACTOR_UNAVAILABLE (1x)
+[XR] [40152] [22:19:16.266][Info   ] 
+[XR] [40152] [22:19:16.266][Info   ] ==== Last 20 Events ====
+[XR] [40152] [22:19:16.267][Info   ] 
+
+==== End Unity OpenXR Diagnostic Report ====
+
+
+[Subsystems] Failed to initialize subsystem OpenXR Display [error: 1]
+[XR] [40152] [22:19:16.268][Info   ] 
+
+==== Start Unity OpenXR Diagnostic Report ====
+
+
+[XR] [40152] [22:19:16.268][Info   ] ==== Report Reason: System Shutdown ====
+
+
+[XR] [40152] [22:19:16.268][Info   ] ==== OpenXR Init Info ====
+[XR] [40152] [22:19:16.268][Info   ] 
+[XR] [40152] [22:19:16.268][Info   ] Stage 1 Missing Entry Points: (1)
+[XR] [40152] [22:19:16.268][Info   ]   xrInitializeLoaderKHR
+[XR] [40152] [22:19:16.268][Info   ] 
+[XR] [40152] [22:19:16.268][Info   ] ==== OpenXR Runtime Info ====
+[XR] [40152] [22:19:16.268][Info   ] 
+[XR] [40152] [22:19:16.268][Info   ] Available Runtime Extensions: (39)
+[XR] [40152] [22:19:16.268][Info   ]   XR_KHR_vulkan_enable: Version=9
+[XR] [40152] [22:19:16.268][Info   ]   XR_KHR_vulkan_enable2: Version=3
+[XR] [40152] [22:19:16.268][Info   ]   XR_KHR_D3D11_enable: Version=10
+[XR] [40152] [22:19:16.268][Info   ]   XR_KHR_D3D12_enable: Version=10
+[XR] [40152] [22:19:16.268][Info   ]   XR_KHR_opengl_enable: Version=11
+[XR] [40152] [22:19:16.268][Info   ]   XR_KHR_win32_convert_performance_counter_time: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_win32_appcontainer_compatible: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_KHR_binding_modification: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_KHR_composition_layer_depth: Version=6
+[XR] [40152] [22:19:16.268][Info   ]   XR_KHR_locate_spaces: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_KHR_visibility_mask: Version=2
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_active_action_set_priority: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_dpad_binding: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_eye_gaze_interaction: Version=2
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_frame_composition_report: Version=4
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_hand_interaction: Version=2
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_hand_tracking: Version=4
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_hand_tracking_data_source: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_hand_joints_motion_range: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_hp_mixed_reality_controller: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_local_floor: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_palm_pose: Version=3
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_uuid: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_user_presence: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_render_model: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_EXT_interaction_render_model: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_FB_display_refresh_rate: Version=1
+[XR] [40152] [22:19:16.268][Info   ]   XR_HTC_vive_cosmos_controller_interaction: Version=1
+[XR] [40152] [22:19:16.269][Info   ]   XR_HTC_vive_focus3_controller_interaction: Version=2
+[XR] [40152] [22:19:16.269][Info   ]   XR_HTC_vive_wrist_tracker_interaction: Version=1
+[XR] [40152] [22:19:16.269][Info   ]   XR_MND_headless: Version=3
+[XR] [40152] [22:19:16.269][Info   ]   XR_VALVE_analog_threshold: Version=2
+[XR] [40152] [22:19:16.269][Info   ]   XR_META_performance_metrics: Version=2
+[XR] [40152] [22:19:16.269][Info   ]   XR_VALVE_timing_utils: Version=1
+[XR] [40152] [22:19:16.269][Info   ]   XR_META_recommended_layer_resolution: Version=1
+[XR] [40152] [22:19:16.269][Info   ]   XR_HTCX_vive_tracker_interaction: Version=3
+[XR] [40152] [22:19:16.269][Info   ]   XR_KHR_generic_controller: Version=1
+[XR] [40152] [22:19:16.269][Info   ]   XR_VALVE_frame_controller_interaction: Version=1
+[XR] [40152] [22:19:16.269][Info   ]   XR_EXT_debug_utils: Version=5
+[XR] [40152] [22:19:16.269][Info   ] 
+[XR] [40152] [22:19:16.269][Info   ] Available Layers: (0)
+[XR] [40152] [22:19:16.269][Info   ] 
+[XR] [40152] [22:19:16.269][Info   ] Runtime Name: SteamVR/OpenXR
+[XR] [40152] [22:19:16.269][Info   ] Runtime Version: 2.15.6
+[XR] [40152] [22:19:16.269][Info   ] 
+[XR] [40152] [22:19:16.269][Info   ] ==== OpenXR Exception Thrown ====
+[XR] [40152] [22:19:16.269][Info   ] 
+[XR] [40152] [22:19:16.269][Info   ] Error: XrResult failure [XR_ERROR_FORM_FACTOR_UNAVAILABLE]
+[XR] [40152] [22:19:16.269][Info   ]     Origin: result
+[XR] [40152] [22:19:16.269][Info   ]     Source: C:\build\output\unity\xr.sdk.openxr\NativePlugin\Source\unity_session.cpp:281
+[XR] [40152] [22:19:16.269][Info   ] 
+[XR] [40152] [22:19:16.269][Info   ] 
+[XR] [40152] [22:19:16.269][Info   ] ==== Std Exception Thrown ====
+[XR] [40152] [22:19:16.269][Info   ] 
+[XR] [40152] [22:19:16.269][Info   ] Function: Display_Initialize
+[XR] [40152] [22:19:16.269][Info   ] Message: XrResult failure [XR_ERROR_FORM_FACTOR_UNAVAILABLE]
+[XR] [40152] [22:19:16.269][Info   ]     Origin: result
+[XR] [40152] [22:19:16.269][Info   ]     Source: C:\build\output\unity\xr.sdk.openxr\NativePlugin\Source\unity_session.cpp:281
+[XR] [40152] [22:19:16.269][Info   ] 
+[XR] [40152] [22:19:16.269][Info   ] ==== Last 20 non-XR_SUCCESS returns ====
+[XR] [40152] [22:19:16.269][Info   ] [FAILURE] xrGetSystem: XR_ERROR_FORM_FACTOR_UNAVAILABLE (1x)
+[XR] [40152] [22:19:16.269][Info   ] 
+[XR] [40152] [22:19:16.269][Info   ] ==== Last 20 Events ====
+[XR] [40152] [22:19:16.269][Info   ] 
+
+==== End Unity OpenXR Diagnostic Report ====
+
+
+[XR] XR_META_performance_metrics: Attempted to stop before session ready
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            15.153 ms
+	Integration:            5803.186 ms
+	Integration of assets:  0.021 ms
+	Thread Wait Time:       -0.001 ms
+	Total Operation Time:   5818.358 ms
+[Licensing::Client] Successfully resolved entitlement details
+<RI> Initialized touch support.
+Asset Pipeline Refresh (id=8a75e63f45e95e94eb09ff0771bd75ec): Total: 0.007 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=ad855698e035ba647b7373996af042a6): Total: 0.005 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=20882288cec24264bb2c17339c572b53): Total: 0.008 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=81cbf815266a04147b78eb507605a70d): Total: 0.007 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=ce0c2cd2a3b899e478a813c681414609): Total: 0.007 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            11.112 ms
+	Integration:            191.967 ms
+	Integration of assets:  0.018 ms
+	Thread Wait Time:       0.024 ms
+	Total Operation Time:   203.121 ms
+Unloading 187 unused Assets / (0.8 MB). Loaded Objects now: 9961.
+Memory consumption went from 223.4 MB to 222.6 MB.
+Total: 12.301000 ms (FindLiveObjects: 0.555900 ms CreateObjectMapping: 0.286700 ms MarkObjects: 10.848500 ms  DeleteObjects: 0.608800 ms)
+
+[Licensing::Client] Successfully resolved entitlement details
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Starting new worker id: 0 with log in E:/AI/project/SimulatedShooting/Logs/AssetImportWorker0.log
+Starting new worker id: 1 with log in E:/AI/project/SimulatedShooting/Logs/AssetImportWorker1.log
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Worker ready: AssetImportWorker1 1
+Worker ready: AssetImportWorker0 0
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Starting new worker id: 2 with log in E:/AI/project/SimulatedShooting/Logs/AssetImportWorker2.log
+[Worker1] Start importing Assets/Scenes/SampleScene/Lightmap-0_comp_shadowmask.png using Guid(5b272b86282919a4488341408a338239) Importer(815301076,1909f56bfc062723c751e8b465ee728b) 
+[Worker1] [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Worker1] [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Worker1]  -> (artifact id: '380f7f86abe41749fb7929f43e6f6249') in 0.069245 seconds
+[Worker0] Start importing Assets/Scenes/SampleScene/LightingData.asset using Guid(babed66f44e8b5445b185fac4e02e130) Importer(815301076,1909f56bfc062723c751e8b465ee728b) 
+[Worker0] [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Worker1] Start importing Assets/Scenes/SampleScene/ReflectionProbe-1.exr using Guid(fe92f018ab9184b43b46c80b2a02e522) Importer(815301076,1909f56bfc062723c751e8b465ee728b) 
+[Worker1] [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Worker1] [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Worker1] [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Worker0]  -> (artifact id: 'f580fbfc18c38bc19b268751b98e0e88') in 0.021432 seconds
+[Worker0] Start importing Assets/Scenes/SampleScene/Lightmap-0_comp_dir.png using Guid(1b208c9c64896bb41804f87a20a84fad) Importer(815301076,1909f56bfc062723c751e8b465ee728b) 
+[Worker0] [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Worker0] [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Worker0]  -> (artifact id: '24217e12d56e492f189707d163a9f3f7') in 0.068601 seconds
+[Worker0] Start importing Assets/Scenes/SampleScene/ReflectionProbe-0.exr using Guid(bfb8f0735ac8c9b43a2f0251aea88e11) Importer(815301076,1909f56bfc062723c751e8b465ee728b) 
+[Worker0] [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Worker0] [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Worker0] [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Worker1]  -> (artifact id: 'd7583570e0c81d9dd5067f8dc4fe442e') in 0.248012 seconds
+[Worker0]  -> (artifact id: 'c8f3c2a0918d98bcc0acc1def802e175') in 0.217451 seconds
+Worker ready: AssetImportWorker2 2
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Worker0] Start importing Assets/Scenes/BasicScene/Grid_Light_512x512.png using Guid(8685512c7856ffd40a4ad1859a7cb52c) Importer(815301076,1909f56bfc062723c751e8b465ee728b) 
+[Worker0] [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Worker0] [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Worker0]  -> (artifact id: 'f0df3551e1d284c25fc224e36e6c17c3') in 0.015911 seconds
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Asset Pipeline Refresh (id=82cf1043c52f81c40a54177fca95baba): Total: 0.008 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+TcpMessagingSession - receive error
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Asset Pipeline Refresh (id=5320fdb6168f5fc44b98a392b30935f9): Total: 0.008 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Asset Pipeline Refresh (id=a8bbb0ec6016cee42839b17e95aa0e0f): Total: 0.007 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Asset Pipeline Refresh (id=284e34af78bdb4840a4cd6144685b864): Total: 0.008 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+AssetDatabase: script compilation time: 0.001736s
+[Licensing::Client] Successfully resolved entitlement details
+Starting: E:\2022.3.62f3c1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: E:/AI/project/SimulatedShooting
+ExitCode: 0 Duration: 2s80ms
+[ 779/1023  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[1011/1023  1s] Csc Library/Bee/artifacts/1900b0aE.dag/SimulatedShooting.Editor.dll (+2 others)
+[1012/1023  1s] Csc Library/Bee/artifacts/1900b0aE.dag/SimulatedShooting.PlayModeTests.dll (+2 others)
+[1013/1023  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/SimulatedShooting.PlayModeTests.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/SimulatedShooting.PlayModeTests.dll, with 124 defines and 211 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1014/1023  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll
+[1015/1023  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.pdb
+[1016/1023  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/SimulatedShooting.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/SimulatedShooting.Editor.dll, with 122 defines and 229 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1017/1023  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.Editor.pdb
+[1018/1023  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.Editor.dll
+[1019/1023  0s] Csc Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll (+2 others)
+[1020/1023  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Assembly-CSharp.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll, with 124 defines and 280 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1021/1023  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.pdb
+[1022/1023  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.dll
+*** Tundra build success (2.03 seconds), 13 items updated, 1023 evaluated
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  1.114 seconds
+Start importing Assets/SimulatedShooting/Tests/PlayMode/ZeroingRangeSceneTests.cs using Guid(402f49db40bd8dd4aa0f59ba5e27120f) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'b43dca3a0b824f071351b9e515b203c6') in 0.015963 seconds
+Start importing Assets/SimulatedShooting/Editor/ZeroingRangeSceneBuilder.cs using Guid(4fca972209cfb6247b4bb8f6fba670ec) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '63db8b394be066e2039809b3583e4402') in 0.001873 seconds
+Refreshing native plugins compatible for Editor in 13.66 ms, found 13 plugins.
+Native extension for WindowsStandalone target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-VR
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.720 seconds
+Domain Reload Profiling: 2842ms
+	BeginReloadAssembly (918ms)
+		ExecutionOrderSort (1ms)
+		DisableScriptedObjects (38ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (1ms)
+		CreateAndSetChildDomain (552ms)
+	RebuildCommonClasses (28ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (22ms)
+	LoadAllAssembliesAndSetupDomain (145ms)
+		LoadAssemblies (157ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (64ms)
+			TypeCache.Refresh (15ms)
+				TypeCache.ScanAssembly (1ms)
+			ScanForSourceGeneratedMonoScriptInfo (33ms)
+			ResolveRequiredComponents (12ms)
+	FinalizeReload (1720ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (925ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (184ms)
+			ProcessInitializeOnLoadAttributes (634ms)
+			ProcessInitializeOnLoadMethodAttributes (98ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (373ms)
+Refreshing native plugins compatible for Editor in 14.01 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.08 ms.
+Asset Pipeline Refresh (id=037008752e3cbeb4c9f385dbbdbe1b73): Total: 6.098 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=3 ms, native=499 ms
+		Asset DB Callback time: managed=123 ms, native=20 ms
+		Scripting: domain reloads=1, domain reload time=2902 ms, compile time=2549 ms, other=0 ms
+		Project Asset Count: scripts=8403, non-scripts=2276
+		Asset File Changes: new=0, changed=2, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeBeforeRefreshCallbacks: 0.561ms
+	ApplyChangesToAssetFolders: 0.435ms
+	Scan: 4.037ms
+	OnSourceAssetsModified: 3.519ms
+	GetAllGuidsForCategorization: 1.450ms
+	CategorizeAssets: 226.800ms
+	ImportOutOfDateAssets: 1820.547ms (-772.266ms without children)
+		ImportManagerImport: 26.875ms (8.213ms without children)
+			ImportInProcess: 18.662ms
+		CompileScripts: 2548.533ms
+		CollectScriptTypesHashes: 2.423ms
+		ReloadNativeAssets: 0.678ms
+		UnloadImportedAssets: 3.687ms
+		ReloadImportedAssets: 0.646ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 3.575ms
+		InitializingProgressBar: 0.064ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 6.330ms
+	PostProcessAllAssets: 122.081ms
+	Hotreload: 17.693ms
+	GatherAllCurrentPrimaryArtifactRevisions: 1.489ms
+	UnloadStreamsBegin: 3.512ms
+	PersistCurrentRevisions: 0.460ms
+	UnloadStreamsEnd: 0.074ms
+	GenerateScriptTypeHashes: 4.643ms
+	Untracked: 3895.260ms
+[Licensing::Client] Successfully resolved entitlement details
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 987 unused Assets / (2.2 MB). Loaded Objects now: 8813.
+Memory consumption went from 341.6 MB to 339.4 MB.
+Total: 13.520600 ms (FindLiveObjects: 0.532300 ms CreateObjectMapping: 0.277900 ms MarkObjects: 9.766400 ms  DeleteObjects: 2.935400 ms)
+
+Start importing Assets/SimulatedShooting/Art/Materials/RangeEarth.mat using Guid(a207bf3f213e8a24081ca97f5b309775) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '5b7fbd3b0f21db236c8d0c6d797406f5') in 0.002800 seconds
+Refreshing native plugins compatible for Editor in 13.73 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.06 ms.
+Asset Pipeline Refresh (id=d4b4d105b0141b242ab88097dee850db): Total: 0.091 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/SimulatedShooting/Art/Materials/RangeFoliage.mat using Guid(8bfd9d382ce7ea244bc8a65df7db7102) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '9dcf72ff390e8bd5566e42b3fc7b6842') in 0.002023 seconds
+Refreshing native plugins compatible for Editor in 11.15 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.06 ms.
+Asset Pipeline Refresh (id=8aace164f7a8602489c6a9698886eff1): Total: 0.058 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/SimulatedShooting/Art/Materials/RangeLine.mat using Guid(176f3662c624a3f4282f53a732f2a0c8) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '281b87ca4258832923b20db9cfbbd592') in 0.001989 seconds
+Refreshing native plugins compatible for Editor in 12.92 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.07 ms.
+Asset Pipeline Refresh (id=50c94637b3ce9b34bb845a3b3f940ece): Total: 0.060 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/SimulatedShooting/Art/Materials/RangeDarkMetal.mat using Guid(a1b89bc92edf39746b6b48d0f3187d75) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '64e0b2725dc7c6fa614b7b24ebf746d9') in 0.002084 seconds
+Refreshing native plugins compatible for Editor in 13.15 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.06 ms.
+Asset Pipeline Refresh (id=cd5e92fea1ef1944b90748f35e07a152): Total: 0.055 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/SimulatedShooting/Art/Materials/RangeSandbag.mat using Guid(a6767ef5dfce3d4478fdc344b54d4f8e) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '8a17d4d31b3d03747a1557aa6696819f') in 0.002343 seconds
+Refreshing native plugins compatible for Editor in 13.19 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.07 ms.
+Asset Pipeline Refresh (id=2eeb7be2bc07623488684ca21783c6e2): Total: 0.054 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/SimulatedShooting/Art/Materials/TargetBoard.mat using Guid(aab020b83d448a14192266aef5d5d79d) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'e327741948e86fc4abac8ba46ff413ed') in 0.002352 seconds
+Refreshing native plugins compatible for Editor in 13.29 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.06 ms.
+Asset Pipeline Refresh (id=98e627fb5d99c6943bff5f6ac7664433): Total: 0.058 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/SimulatedShooting/Art/Materials/RangeSkybox.mat using Guid(45be7d2eeed379c43b76a3e25177c37b) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'fedfecacdbbda32d41528ac44a27175b') in 0.002036 seconds
+Refreshing native plugins compatible for Editor in 10.40 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.10 ms.
+Asset Pipeline Refresh (id=2a0ac9ee5e4daba4283844ea9e9a90b5): Total: 0.055 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/SimulatedShooting/Art/Materials/TargetDark.mat using Guid(41fbb3c10430ef24387cd2a5bb2a0a93) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '07c22dfb739b68ece5d6e8af544e1652') in 0.002133 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeDarkMetal.mat using Guid(a1b89bc92edf39746b6b48d0f3187d75) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '4111faea7d322e32aaef2d20e4b3d630') in 0.001971 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeEarth.mat using Guid(a207bf3f213e8a24081ca97f5b309775) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '910ea9d79ac64f7d7626c44e0450de53') in 0.001936 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/TargetTenRing.mat using Guid(d4e670674761acc4fbb7404fc5c9faca) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'fd17239951cbc461ea30bee58001b019') in 0.002117 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeSkybox.mat using Guid(45be7d2eeed379c43b76a3e25177c37b) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'd1dc7aed074923c304103dbc6bfe3fae') in 0.002180 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeSandbag.mat using Guid(a6767ef5dfce3d4478fdc344b54d4f8e) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'cc366eeca4dfc4f56bce462661ff5601') in 0.002155 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeConcrete.mat using Guid(d6cf7b407c8d8284a82291fbe708e5b0) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '5351365ab99562b4ba0dabfef24c4f5e') in 0.002568 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeLine.mat using Guid(176f3662c624a3f4282f53a732f2a0c8) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'e2263239ce831b8865f25a41ed86392e') in 0.001983 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeMarker.mat using Guid(57fad3f230a016f45ad9ff2641cbe189) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '7115770d7f83beaa37e53d6c39a915e6') in 0.001751 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeGround.mat using Guid(79102a5c96c5efb4d9616abaf335f53d) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '1832a088e08b82bb89ec661f7d1bca81') in 0.002317 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/TargetBoard.mat using Guid(aab020b83d448a14192266aef5d5d79d) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '60085c7be0821e0cb337377d536a2a71') in 0.001960 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeFoliage.mat using Guid(8bfd9d382ce7ea244bc8a65df7db7102) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'c7dddfbac5a1b66fd072efdc9eb2e459') in 0.001960 seconds
+Start importing Assets/XR/Settings/Open XR Package Settings.asset using Guid(a9a6963505ddf7f4d886008c6dc86122) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '7cebbdd8b230a48a70b3afa7f6df7f90') in 0.002851 seconds
+Refreshing native plugins compatible for Editor in 10.71 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.06 ms.
+Asset Pipeline Refresh (id=c3d68b2af535f6d409f7cbff5b8bdd25): Total: 0.101 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Scenes/ZeroingRangeScene.unity using Guid(693fcff55b1a9e14ca485ca7b1e9ca68) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '2bc0ecfaf8145f9a5fca5083e4ad122a') in 0.001034 seconds
+Refreshing native plugins compatible for Editor in 11.95 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.10 ms.
+Asset Pipeline Refresh (id=2375f6fb39d355c4d8a1686b1bfae1fa): Total: 0.049 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+LightingSettings: switching bake backend from 1 to 2.
+Task004 reference scene rebuilt and preview captured.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+SimulatedShooting.Editor.ZeroingRangeSceneBuilder/<>c:<RebuildTask004Once>b__2_0 () (at Assets/SimulatedShooting/Editor/ZeroingRangeSceneBuilder.cs:39)
+UnityEditor.EditorApplication:Internal_CallDelayFunctions ()
+
+(Filename: Assets/SimulatedShooting/Editor/ZeroingRangeSceneBuilder.cs Line: 39)
+
+Reloading assemblies due to reload request.
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.809 seconds
+Refreshing native plugins compatible for Editor in 12.55 ms, found 13 plugins.
+Native extension for WindowsStandalone target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-VR
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.542 seconds
+Domain Reload Profiling: 2358ms
+	BeginReloadAssembly (666ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (36ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (1ms)
+		CreateAndSetChildDomain (461ms)
+	RebuildCommonClasses (25ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (23ms)
+	LoadAllAssembliesAndSetupDomain (93ms)
+		LoadAssemblies (142ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (23ms)
+			TypeCache.Refresh (8ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (13ms)
+	FinalizeReload (1542ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (775ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (158ms)
+			ProcessInitializeOnLoadAttributes (521ms)
+			ProcessInitializeOnLoadMethodAttributes (86ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (389ms)
+Asset Pipeline Refresh (id=f12391725d07f434e9362cbdf7875143): Total: 2.805 seconds - Initiated by StopAssetImportingV2(ForceSynchronousImport | ForceDomainReload)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=398 ms
+		Asset DB Callback time: managed=12 ms, native=0 ms
+		Scripting: domain reloads=1, domain reload time=2391 ms, compile time=2 ms, other=0 ms
+		Project Asset Count: scripts=8403, non-scripts=2283
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeBeforeRefreshCallbacks: 0.652ms
+	ApplyChangesToAssetFolders: 0.084ms
+	Scan: 0.001ms
+	OnSourceAssetsModified: 0.001ms
+	GetAllGuidsForCategorization: 0.601ms
+	CategorizeAssets: 185.088ms
+	ImportOutOfDateAssets: 1578.334ms (1568.620ms without children)
+		CompileScripts: 1.720ms
+		CollectScriptTypesHashes: 0.365ms
+		ReloadNativeAssets: 0.823ms
+		UnloadImportedAssets: 0.704ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 2.924ms
+		InitializingProgressBar: 0.001ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 3.179ms
+	PostProcessAllAssets: 12.942ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.373ms
+	UnloadStreamsBegin: 2.106ms
+	PersistCurrentRevisions: 0.412ms
+	UnloadStreamsEnd: 0.098ms
+	GenerateScriptTypeHashes: 4.566ms
+	Untracked: 1024.036ms
+Asset Pipeline Refresh (id=263d7db38f9043b4998bbd911a5eed04): Total: 0.008 seconds - Initiated by RefreshV2(NoUpdateAssetOptions)
+[00:00:06] Finished 1 Bake Ambient Probe job (0.00s execute, 0.00s integrate, 1.53s wallclock)
+[Licensing::Client] Successfully resolved entitlement details
+Starting cubemap convolution for '' (size 128)
+...took 0.061 seconds
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Asset Pipeline Refresh (id=5a618b6ed37049d4bb8612522c6a15ba): Total: 0.013 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+Reloading assemblies for play mode.
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.832 seconds
+Refreshing native plugins compatible for Editor in 11.20 ms, found 13 plugins.
+Native extension for WindowsStandalone target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-VR
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.520 seconds
+Domain Reload Profiling: 2361ms
+	BeginReloadAssembly (696ms)
+		ExecutionOrderSort (1ms)
+		DisableScriptedObjects (39ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (1ms)
+		CreateAndSetChildDomain (497ms)
+	RebuildCommonClasses (27ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (21ms)
+	LoadAllAssembliesAndSetupDomain (89ms)
+		LoadAssemblies (136ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (23ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (13ms)
+	FinalizeReload (1520ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (736ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (5ms)
+			SetLoadedEditorAssemblies (5ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (71ms)
+			ProcessInitializeOnLoadAttributes (576ms)
+			ProcessInitializeOnLoadMethodAttributes (78ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (1ms)
+		AwakeInstancesAfterBackupRestoration (393ms)
+Asset Pipeline Refresh (id=b65811b02b68bcc489e5e05ebc32205d): Total: 2.795 seconds - Initiated by StopAssetImportingV2(ForceSynchronousImport | ForceDomainReload)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=392 ms
+		Asset DB Callback time: managed=11 ms, native=0 ms
+		Scripting: domain reloads=1, domain reload time=2387 ms, compile time=2 ms, other=0 ms
+		Project Asset Count: scripts=8403, non-scripts=2283
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeBeforeRefreshCallbacks: 0.485ms
+	ApplyChangesToAssetFolders: 0.162ms
+	Scan: 0.002ms
+	OnSourceAssetsModified: 0.003ms
+	GetAllGuidsForCategorization: 1.639ms
+	CategorizeAssets: 174.988ms
+	ImportOutOfDateAssets: 1549.606ms (1539.694ms without children)
+		CompileScripts: 2.226ms
+		CollectScriptTypesHashes: 0.370ms
+		ReloadNativeAssets: 0.743ms
+		UnloadImportedAssets: 0.248ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 2.243ms
+		InitializingProgressBar: 0.005ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 4.077ms
+	PostProcessAllAssets: 11.605ms
+	GatherAllCurrentPrimaryArtifactRevisions: 1.126ms
+	UnloadStreamsBegin: 1.619ms
+	PersistCurrentRevisions: 0.301ms
+	UnloadStreamsEnd: 0.070ms
+	GenerateScriptTypeHashes: 4.003ms
+	Untracked: 1053.068ms
+<RI> Initialized touch support.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[Subsystems] Loading plugin UnityOpenXR for subsystem OpenXR Display...
+[XR] [40152] [22:44:28.446][Info   ] Available Layers: (0)
+[XR] [40152] [22:44:34.125][Error  ] xrGetSystem: XR_ERROR_FORM_FACTOR_UNAVAILABLE
+[XR] [40152] [22:44:34.125][Info   ] 
+
+==== Start Unity OpenXR Diagnostic Report ====
+
+
+[XR] [40152] [22:44:34.125][Info   ] ==== Report Reason: Uncaught Exception ====
+
+
+[XR] [40152] [22:44:34.125][Info   ] ==== OpenXR Init Info ====
+[XR] [40152] [22:44:34.125][Info   ] 
+[XR] [40152] [22:44:34.125][Info   ] Stage 1 Missing Entry Points: (1)
+[XR] [40152] [22:44:34.125][Info   ]   xrInitializeLoaderKHR
+[XR] [40152] [22:44:34.125][Info   ] 
+[XR] [40152] [22:44:34.125][Info   ] ==== OpenXR Runtime Info ====
+[XR] [40152] [22:44:34.125][Info   ] 
+[XR] [40152] [22:44:34.125][Info   ] Available Runtime Extensions: (39)
+[XR] [40152] [22:44:34.125][Info   ]   XR_KHR_vulkan_enable: Version=9
+[XR] [40152] [22:44:34.125][Info   ]   XR_KHR_vulkan_enable2: Version=3
+[XR] [40152] [22:44:34.125][Info   ]   XR_KHR_D3D11_enable: Version=10
+[XR] [40152] [22:44:34.125][Info   ]   XR_KHR_D3D12_enable: Version=10
+[XR] [40152] [22:44:34.125][Info   ]   XR_KHR_opengl_enable: Version=11
+[XR] [40152] [22:44:34.125][Info   ]   XR_KHR_win32_convert_performance_counter_time: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_win32_appcontainer_compatible: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_KHR_binding_modification: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_KHR_composition_layer_depth: Version=6
+[XR] [40152] [22:44:34.125][Info   ]   XR_KHR_locate_spaces: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_KHR_visibility_mask: Version=2
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_active_action_set_priority: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_dpad_binding: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_eye_gaze_interaction: Version=2
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_frame_composition_report: Version=4
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_hand_interaction: Version=2
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_hand_tracking: Version=4
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_hand_tracking_data_source: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_hand_joints_motion_range: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_hp_mixed_reality_controller: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_local_floor: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_palm_pose: Version=3
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_uuid: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_user_presence: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_render_model: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_interaction_render_model: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_FB_display_refresh_rate: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_HTC_vive_cosmos_controller_interaction: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_HTC_vive_focus3_controller_interaction: Version=2
+[XR] [40152] [22:44:34.125][Info   ]   XR_HTC_vive_wrist_tracker_interaction: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_MND_headless: Version=3
+[XR] [40152] [22:44:34.125][Info   ]   XR_VALVE_analog_threshold: Version=2
+[XR] [40152] [22:44:34.125][Info   ]   XR_META_performance_metrics: Version=2
+[XR] [40152] [22:44:34.125][Info   ]   XR_VALVE_timing_utils: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_META_recommended_layer_resolution: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_HTCX_vive_tracker_interaction: Version=3
+[XR] [40152] [22:44:34.125][Info   ]   XR_KHR_generic_controller: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_VALVE_frame_controller_interaction: Version=1
+[XR] [40152] [22:44:34.125][Info   ]   XR_EXT_debug_utils: Version=5
+[XR] [40152] [22:44:34.125][Info   ] 
+[XR] [40152] [22:44:34.125][Info   ] Available Layers: (0)
+[XR] [40152] [22:44:34.125][Info   ] 
+[XR] [40152] [22:44:34.125][Info   ] Runtime Name: SteamVR/OpenXR
+[XR] [40152] [22:44:34.125][Info   ] Runtime Version: 2.15.6
+[XR] [40152] [22:44:34.126][Info   ] 
+[XR] [40152] [22:44:34.126][Info   ] ==== OpenXR Exception Thrown ====
+[XR] [40152] [22:44:34.126][Info   ] 
+[XR] [40152] [22:44:34.126][Info   ] Error: XrResult failure [XR_ERROR_FORM_FACTOR_UNAVAILABLE]
+[XR] [40152] [22:44:34.126][Info   ]     Origin: result
+[XR] [40152] [22:44:34.126][Info   ]     Source: C:\build\output\unity\xr.sdk.openxr\NativePlugin\Source\unity_session.cpp:281
+[XR] [40152] [22:44:34.126][Info   ] 
+[XR] [40152] [22:44:34.126][Info   ] 
+[XR] [40152] [22:44:34.126][Info   ] ==== Std Exception Thrown ====
+[XR] [40152] [22:44:34.126][Info   ] 
+[XR] [40152] [22:44:34.126][Info   ] Function: Display_Initialize
+[XR] [40152] [22:44:34.126][Info   ] Message: XrResult failure [XR_ERROR_FORM_FACTOR_UNAVAILABLE]
+[XR] [40152] [22:44:34.126][Info   ]     Origin: result
+[XR] [40152] [22:44:34.126][Info   ]     Source: C:\build\output\unity\xr.sdk.openxr\NativePlugin\Source\unity_session.cpp:281
+[XR] [40152] [22:44:34.126][Info   ] 
+[XR] [40152] [22:44:34.126][Info   ] ==== Last 20 non-XR_SUCCESS returns ====
+[XR] [40152] [22:44:34.126][Info   ] [FAILURE] xrGetSystem: XR_ERROR_FORM_FACTOR_UNAVAILABLE (1x)
+[XR] [40152] [22:44:34.126][Info   ] 
+[XR] [40152] [22:44:34.126][Info   ] ==== Last 20 Events ====
+[XR] [40152] [22:44:34.126][Info   ] 
+
+==== End Unity OpenXR Diagnostic Report ====
+
+
+[Subsystems] Failed to initialize subsystem OpenXR Display [error: 1]
+[XR] [40152] [22:44:34.128][Info   ] 
+
+==== Start Unity OpenXR Diagnostic Report ====
+
+
+[XR] [40152] [22:44:34.128][Info   ] ==== Report Reason: System Shutdown ====
+
+
+[XR] [40152] [22:44:34.128][Info   ] ==== OpenXR Init Info ====
+[XR] [40152] [22:44:34.128][Info   ] 
+[XR] [40152] [22:44:34.128][Info   ] Stage 1 Missing Entry Points: (1)
+[XR] [40152] [22:44:34.128][Info   ]   xrInitializeLoaderKHR
+[XR] [40152] [22:44:34.128][Info   ] 
+[XR] [40152] [22:44:34.128][Info   ] ==== OpenXR Runtime Info ====
+[XR] [40152] [22:44:34.128][Info   ] 
+[XR] [40152] [22:44:34.128][Info   ] Available Runtime Extensions: (39)
+[XR] [40152] [22:44:34.128][Info   ]   XR_KHR_vulkan_enable: Version=9
+[XR] [40152] [22:44:34.128][Info   ]   XR_KHR_vulkan_enable2: Version=3
+[XR] [40152] [22:44:34.128][Info   ]   XR_KHR_D3D11_enable: Version=10
+[XR] [40152] [22:44:34.128][Info   ]   XR_KHR_D3D12_enable: Version=10
+[XR] [40152] [22:44:34.128][Info   ]   XR_KHR_opengl_enable: Version=11
+[XR] [40152] [22:44:34.128][Info   ]   XR_KHR_win32_convert_performance_counter_time: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_win32_appcontainer_compatible: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_KHR_binding_modification: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_KHR_composition_layer_depth: Version=6
+[XR] [40152] [22:44:34.128][Info   ]   XR_KHR_locate_spaces: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_KHR_visibility_mask: Version=2
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_active_action_set_priority: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_dpad_binding: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_eye_gaze_interaction: Version=2
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_frame_composition_report: Version=4
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_hand_interaction: Version=2
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_hand_tracking: Version=4
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_hand_tracking_data_source: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_hand_joints_motion_range: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_hp_mixed_reality_controller: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_local_floor: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_palm_pose: Version=3
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_uuid: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_user_presence: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_render_model: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_EXT_interaction_render_model: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_FB_display_refresh_rate: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_HTC_vive_cosmos_controller_interaction: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_HTC_vive_focus3_controller_interaction: Version=2
+[XR] [40152] [22:44:34.128][Info   ]   XR_HTC_vive_wrist_tracker_interaction: Version=1
+[XR] [40152] [22:44:34.128][Info   ]   XR_MND_headless: Version=3
+[XR] [40152] [22:44:34.128][Info   ]   XR_VALVE_analog_threshold: Version=2
+[XR] [40152] [22:44:34.128][Info   ]   XR_META_performance_metrics: Version=2
+[XR] [40152] [22:44:34.129][Info   ]   XR_VALVE_timing_utils: Version=1
+[XR] [40152] [22:44:34.129][Info   ]   XR_META_recommended_layer_resolution: Version=1
+[XR] [40152] [22:44:34.129][Info   ]   XR_HTCX_vive_tracker_interaction: Version=3
+[XR] [40152] [22:44:34.129][Info   ]   XR_KHR_generic_controller: Version=1
+[XR] [40152] [22:44:34.129][Info   ]   XR_VALVE_frame_controller_interaction: Version=1
+[XR] [40152] [22:44:34.129][Info   ]   XR_EXT_debug_utils: Version=5
+[XR] [40152] [22:44:34.129][Info   ] 
+[XR] [40152] [22:44:34.129][Info   ] Available Layers: (0)
+[XR] [40152] [22:44:34.129][Info   ] 
+[XR] [40152] [22:44:34.129][Info   ] Runtime Name: SteamVR/OpenXR
+[XR] [40152] [22:44:34.129][Info   ] Runtime Version: 2.15.6
+[XR] [40152] [22:44:34.129][Info   ] 
+[XR] [40152] [22:44:34.129][Info   ] ==== OpenXR Exception Thrown ====
+[XR] [40152] [22:44:34.129][Info   ] 
+[XR] [40152] [22:44:34.129][Info   ] Error: XrResult failure [XR_ERROR_FORM_FACTOR_UNAVAILABLE]
+[XR] [40152] [22:44:34.129][Info   ]     Origin: result
+[XR] [40152] [22:44:34.129][Info   ]     Source: C:\build\output\unity\xr.sdk.openxr\NativePlugin\Source\unity_session.cpp:281
+[XR] [40152] [22:44:34.129][Info   ] 
+[XR] [40152] [22:44:34.129][Info   ] 
+[XR] [40152] [22:44:34.129][Info   ] ==== Std Exception Thrown ====
+[XR] [40152] [22:44:34.129][Info   ] 
+[XR] [40152] [22:44:34.129][Info   ] Function: Display_Initialize
+[XR] [40152] [22:44:34.129][Info   ] Message: XrResult failure [XR_ERROR_FORM_FACTOR_UNAVAILABLE]
+[XR] [40152] [22:44:34.129][Info   ]     Origin: result
+[XR] [40152] [22:44:34.129][Info   ]     Source: C:\build\output\unity\xr.sdk.openxr\NativePlugin\Source\unity_session.cpp:281
+[XR] [40152] [22:44:34.129][Info   ] 
+[XR] [40152] [22:44:34.129][Info   ] ==== Last 20 non-XR_SUCCESS returns ====
+[XR] [40152] [22:44:34.129][Info   ] [FAILURE] xrGetSystem: XR_ERROR_FORM_FACTOR_UNAVAILABLE (1x)
+[XR] [40152] [22:44:34.129][Info   ] 
+[XR] [40152] [22:44:34.129][Info   ] ==== Last 20 Events ====
+[XR] [40152] [22:44:34.129][Info   ] 
+
+==== End Unity OpenXR Diagnostic Report ====
+
+
+[XR] XR_META_performance_metrics: Attempted to stop before session ready
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            22.773 ms
+	Integration:            5975.674 ms
+	Integration of assets:  0.155 ms
+	Thread Wait Time:       -0.007 ms
+	Total Operation Time:   5998.595 ms
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Client] Successfully resolved entitlement details
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+Loaded scene 'Temp/__Backupscenes/0.backup'
+	Deserialize:            12.633 ms
+	Integration:            176.657 ms
+	Integration of assets:  0.019 ms
+	Thread Wait Time:       -0.009 ms
+	Total Operation Time:   189.300 ms
+Unloading 1285 unused Assets / (217.9 MB). Loaded Objects now: 11672.
+Memory consumption went from 0.51 GB to 302.4 MB.
+Total: 31.062400 ms (FindLiveObjects: 0.617400 ms CreateObjectMapping: 0.384100 ms MarkObjects: 26.104600 ms  DeleteObjects: 3.952300 ms)
+
+[Licensing::Client] Successfully resolved entitlement details
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+<RI> Initialized touch support.
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+AssetDatabase: script compilation time: 0.000965s
+Starting: E:\2022.3.62f3c1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: E:/AI/project/SimulatedShooting
+ExitCode: 0 Duration: 0s676ms
+[ 780/1023  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[1015/1023  0s] Csc Library/Bee/artifacts/1900b0aE.dag/SimulatedShooting.Editor.dll (+2 others)
+[1017/1023  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Assembly-CSharp.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll, with 124 defines and 280 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1018/1023  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/SimulatedShooting.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/SimulatedShooting.Editor.dll, with 122 defines and 229 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1021/1023  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.Editor.pdb
+[1022/1023  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.Editor.dll
+*** Tundra build success (0.63 seconds), 6 items updated, 1023 evaluated
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.955 seconds
+Start importing Assets/SimulatedShooting/Editor/ZeroingRangeSceneBuilder.cs using Guid(4fca972209cfb6247b4bb8f6fba670ec) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '20a30653fa16d8e5938d308109745a2e') in 0.015385 seconds
+Refreshing native plugins compatible for Editor in 12.54 ms, found 13 plugins.
+Native extension for WindowsStandalone target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-VR
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.579 seconds
+Domain Reload Profiling: 2537ms
+	BeginReloadAssembly (779ms)
+		ExecutionOrderSort (1ms)
+		DisableScriptedObjects (26ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (1ms)
+		CreateAndSetChildDomain (407ms)
+	RebuildCommonClasses (27ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (22ms)
+	LoadAllAssembliesAndSetupDomain (120ms)
+		LoadAssemblies (139ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (56ms)
+			TypeCache.Refresh (12ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (28ms)
+			ResolveRequiredComponents (12ms)
+	FinalizeReload (1579ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (791ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (166ms)
+			ProcessInitializeOnLoadAttributes (528ms)
+			ProcessInitializeOnLoadMethodAttributes (88ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (368ms)
+Refreshing native plugins compatible for Editor in 10.78 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.07 ms.
+Asset Pipeline Refresh (id=9636e95f15e85824cbf7671a2a3b7c65): Total: 4.069 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=2 ms, native=457 ms
+		Asset DB Callback time: managed=91 ms, native=14 ms
+		Scripting: domain reloads=1, domain reload time=2589 ms, compile time=914 ms, other=0 ms
+		Project Asset Count: scripts=8403, non-scripts=2283
+		Asset File Changes: new=0, changed=1, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeBeforeRefreshCallbacks: 0.471ms
+	ApplyChangesToAssetFolders: 0.096ms
+	Scan: 2.093ms
+	OnSourceAssetsModified: 2.662ms
+	GetAllGuidsForCategorization: 1.235ms
+	CategorizeAssets: 223.419ms
+	ImportOutOfDateAssets: 1656.671ms (711.568ms without children)
+		ImportManagerImport: 22.898ms (6.982ms without children)
+			ImportInProcess: 15.916ms
+		CompileScripts: 913.523ms
+		CollectScriptTypesHashes: 0.105ms
+		ReloadNativeAssets: 0.604ms
+		UnloadImportedAssets: 1.216ms
+		ReloadImportedAssets: 0.534ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 2.877ms
+		InitializingProgressBar: 0.001ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 3.345ms
+	PostProcessAllAssets: 90.515ms
+	Hotreload: 12.100ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.488ms
+	UnloadStreamsBegin: 1.417ms
+	PersistCurrentRevisions: 0.439ms
+	UnloadStreamsEnd: 0.071ms
+	GenerateScriptTypeHashes: 4.330ms
+	Untracked: 2077.289ms
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Asset Pipeline Refresh (id=51f9ef6a2dce17b42a1c500cc216359e): Total: 0.020 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+[Licensing::Client] Successfully resolved entitlement details
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 1839 unused Assets / (2.4 MB). Loaded Objects now: 8840.
+Memory consumption went from 510.0 MB to 507.5 MB.
+Total: 21.827000 ms (FindLiveObjects: 0.731300 ms CreateObjectMapping: 0.304000 ms MarkObjects: 15.210000 ms  DeleteObjects: 5.577900 ms)
+
+Start importing Assets/SimulatedShooting/Art/Materials/TargetDark.mat using Guid(41fbb3c10430ef24387cd2a5bb2a0a93) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'bd5dc45be726b0a2e4097be41970347a') in 0.002432 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeDarkMetal.mat using Guid(a1b89bc92edf39746b6b48d0f3187d75) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '834168fb4f5f225e1af7f5e3da00a661') in 0.001686 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeEarth.mat using Guid(a207bf3f213e8a24081ca97f5b309775) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '324c3a5b12bec377b2b0810041c8d99e') in 0.001695 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/TargetTenRing.mat using Guid(d4e670674761acc4fbb7404fc5c9faca) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'c81579d1511978868052ebefacbe3dd2') in 0.001640 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeSkybox.mat using Guid(45be7d2eeed379c43b76a3e25177c37b) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'd1dc7aed074923c304103dbc6bfe3fae') in 0.001796 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeSandbag.mat using Guid(a6767ef5dfce3d4478fdc344b54d4f8e) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '7654d659c0c789c97fe905493cb0bd90') in 0.001901 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeConcrete.mat using Guid(d6cf7b407c8d8284a82291fbe708e5b0) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '6b772931077695237d48b13ce1001173') in 0.001804 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeLine.mat using Guid(176f3662c624a3f4282f53a732f2a0c8) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'a0763a9b695b0dc79fb18589e02bee58') in 0.001770 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeMarker.mat using Guid(57fad3f230a016f45ad9ff2641cbe189) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '5a4c6e4633d70532914569468da32128') in 0.001720 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeGround.mat using Guid(79102a5c96c5efb4d9616abaf335f53d) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'bfeaa7c9a39ff6a6171b9d040db99ddd') in 0.002047 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/TargetBoard.mat using Guid(aab020b83d448a14192266aef5d5d79d) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: 'ae5cdbace1c2f891374161a0532e7715') in 0.001781 seconds
+Start importing Assets/SimulatedShooting/Art/Materials/RangeFoliage.mat using Guid(8bfd9d382ce7ea244bc8a65df7db7102) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '2db718f65800205cfc2697b2a6ae81cd') in 0.001723 seconds
+Start importing Assets/XR/Settings/Open XR Package Settings.asset using Guid(a9a6963505ddf7f4d886008c6dc86122) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '74a195b6b4db782fcbd0c1ea61cb9cd3') in 0.002204 seconds
+Refreshing native plugins compatible for Editor in 10.82 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.08 ms.
+Asset Pipeline Refresh (id=09e23d1dbca76814799df0460a9047df): Total: 0.115 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Start importing Assets/Scenes/ZeroingRangeScene.unity using Guid(693fcff55b1a9e14ca485ca7b1e9ca68) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '23dd3f83ea0f06a12cc8b48c23c4b6f8') in 0.001098 seconds
+Refreshing native plugins compatible for Editor in 10.17 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.06 ms.
+Asset Pipeline Refresh (id=26e9926e08e7d704db91336e5b3677ac): Total: 0.045 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+LightingSettings: switching bake backend from 1 to 2.
+Task004 reference scene rebuilt and preview captured.
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+SimulatedShooting.Editor.ZeroingRangeSceneBuilder/<>c:<RebuildTask004Once>b__2_0 () (at Assets/SimulatedShooting/Editor/ZeroingRangeSceneBuilder.cs:39)
+UnityEditor.EditorApplication:Internal_CallDelayFunctions ()
+
+(Filename: Assets/SimulatedShooting/Editor/ZeroingRangeSceneBuilder.cs Line: 39)
+
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+AssetDatabase: script compilation time: 0.001282s
+[Licensing::Client] Successfully resolved entitlement details
+Starting: E:\2022.3.62f3c1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1900b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: E:/AI/project/SimulatedShooting
+ExitCode: 0 Duration: 0s578ms
+[ 780/1023  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[1015/1023  0s] Csc Library/Bee/artifacts/1900b0aE.dag/SimulatedShooting.Editor.dll (+2 others)
+[1017/1023  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/SimulatedShooting.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/SimulatedShooting.Editor.dll, with 122 defines and 229 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1018/1023  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.Editor.pdb
+[1019/1023  0s] ILPostProcess Library/Bee/artifacts/1900b0aE.dag/post-processed/Assembly-CSharp.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1900b0aE.dag/Assembly-CSharp.dll, with 124 defines and 280 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1022/1023  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.Editor.dll
+*** Tundra build success (0.53 seconds), 6 items updated, 1023 evaluated
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  1.308 seconds
+Start importing Assets/SimulatedShooting/Editor/ZeroingRangeSceneBuilder.cs using Guid(4fca972209cfb6247b4bb8f6fba670ec) Importer(-1,00000000000000000000000000000000) [PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+ -> (artifact id: '38a2b513f1597f76a7d067eca2269a80') in 0.015706 seconds
+Refreshing native plugins compatible for Editor in 11.02 ms, found 13 plugins.
+Native extension for WindowsStandalone target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-VR
+[PhysX] Initialized MultithreadedTaskDispatcher with 20 workers.
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  1.695 seconds
+Domain Reload Profiling: 3013ms
+	BeginReloadAssembly (1128ms)
+		ExecutionOrderSort (1ms)
+		DisableScriptedObjects (87ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (1ms)
+		CreateAndSetChildDomain (693ms)
+	RebuildCommonClasses (27ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (22ms)
+	LoadAllAssembliesAndSetupDomain (133ms)
+		LoadAssemblies (140ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (61ms)
+			TypeCache.Refresh (12ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (33ms)
+			ResolveRequiredComponents (13ms)
+	FinalizeReload (1695ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (872ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (188ms)
+			ProcessInitializeOnLoadAttributes (584ms)
+			ProcessInitializeOnLoadMethodAttributes (90ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (380ms)
+Refreshing native plugins compatible for Editor in 12.84 ms, found 13 plugins.
+Preloading 1 native plugins for Editor in 0.06 ms.
+Asset Pipeline Refresh (id=2774a02ff9bd35d4ea35a3909f8338a9): Total: 4.658 seconds - Initiated by RefreshV2(AllowForceSynchronousImport)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=3 ms, native=467 ms
+		Asset DB Callback time: managed=114 ms, native=17 ms
+		Scripting: domain reloads=1, domain reload time=3052 ms, compile time=1003 ms, other=0 ms
+		Project Asset Count: scripts=8403, non-scripts=2283
+		Asset File Changes: new=0, changed=1, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeBeforeRefreshCallbacks: 0.479ms
+	ApplyChangesToAssetFolders: 0.085ms
+	Scan: 2.630ms
+	OnSourceAssetsModified: 1.735ms
+	GetAllGuidsForCategorization: 0.910ms
+	CategorizeAssets: 225.014ms
+	ImportOutOfDateAssets: 1761.090ms (724.560ms without children)
+		ImportManagerImport: 22.999ms (6.968ms without children)
+			ImportInProcess: 16.031ms
+		CompileScripts: 1003.146ms
+		CollectScriptTypesHashes: 0.550ms
+		ReloadNativeAssets: 0.830ms
+		UnloadImportedAssets: 0.980ms
+		ReloadImportedAssets: 0.322ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 3.716ms
+		InitializingProgressBar: 0.001ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.001ms
+		OnDemandSchedulerStart: 3.984ms
+	PostProcessAllAssets: 115.187ms
+	Hotreload: 14.898ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.369ms
+	UnloadStreamsBegin: 2.190ms
+	PersistCurrentRevisions: 0.447ms
+	UnloadStreamsEnd: 0.088ms
+	GenerateScriptTypeHashes: 5.029ms
+	Untracked: 2532.605ms
+[Licensing::Client] Successfully resolved entitlement details
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error 35: Cert verify failed. Certificate could not be verified (either omitted or unsupported). UnityTls error code: 7
+Curl error limit reached: 100 consecutive messages printed
