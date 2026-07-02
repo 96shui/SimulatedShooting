@@ -1,4 +1,4 @@
-namespace BaseUtil
+namespace VRShooting.Infrastructure
 {
     /// <summary>
     /// 管理器基类。继承 <typeparamref name="T"/> 的子类自动获得单例访问能力。

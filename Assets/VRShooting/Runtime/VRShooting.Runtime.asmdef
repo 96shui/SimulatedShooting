@@ -1,7 +1,9 @@
 {
     "name": "VRShooting.Runtime",
     "rootNamespace": "VRShooting",
-    "references": [],
+    "references": [
+        "Unity.InputSystem"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

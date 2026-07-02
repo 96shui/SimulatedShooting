@@ -12,6 +12,13 @@ namespace VRShooting
     /// <item><description>docs/接口文档/02-训练Session数据模型.md — TrainingMode、SessionState、ResultGrade、PlayerPosture、ShoulderSide、AmmoDto</description></item>
     /// <item><description>docs/接口文档/11-Unity场景与Prefab约定.md — UITestId</description></item>
     /// </list>
+    /// 目录约定：
+    /// <list type="bullet">
+    /// <item><description>Runtime/Infrastructure — 通用基础设施</description></item>
+    /// <item><description>Runtime/Application — 应用服务（路由、Session 等）</description></item>
+    /// <item><description>Runtime/Unity — MonoBehaviour 与场景绑定脚本</description></item>
+    /// <item><description>Config — ScriptableObject 与静态配置资源</description></item>
+    /// </list>
     /// </remarks>
     public static class P1ContractScope
     {
