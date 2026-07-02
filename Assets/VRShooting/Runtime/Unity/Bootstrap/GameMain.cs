@@ -10,6 +10,8 @@ namespace VRShooting.Unity.Bootstrap
     {
         public static GameMain Instance { get; private set; }
 
+        public ApplicationServices Services { get; private set; }
+
         public GameStateManager GameState { get; private set; }
 
         void Awake()
@@ -28,6 +30,7 @@ namespace VRShooting.Unity.Bootstrap
 
         void InitManagers()
         {
+            Services = ApplicationServices.CreateDefault();
             GameState = GameStateManager.Instance;
         }
 
@@ -39,6 +42,7 @@ namespace VRShooting.Unity.Bootstrap
             }
 
             GameStateManager.DestroyInstance();
+            Services = null;
             GameState = null;
             Instance = null;
         }

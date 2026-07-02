@@ -23,6 +23,7 @@ namespace VRShooting
     public static class P1ContractScope
     {
         public const string TaskId = "task001";
+        public const string Task002Id = "task002";
         public const string RuntimeAssembly = "VRShooting.Runtime";
         public const string EditModeTestsAssembly = "VRShooting.Runtime.EditModeTests";
         public const string PlayModeTestsAssembly = "VRShooting.Runtime.PlayModeTests";
