@@ -141,6 +141,6 @@ public readonly struct TrainingResultDto
 - `Mode` 创建后不可变。
 - `MapId` 对堑壕和城镇必填；100m 和移动靶可为空或使用默认训练场 ID。
 - `WeaponId` 对堑壕和城镇必填；100m 和移动靶可使用系统指定训练武器。
-- `ElapsedSeconds` 由后端统一计时，UI 不自行累加。
+- `ElapsedSeconds` 由玩法服务层统一计时，UI 不自行累加。
 - 所有结算页必须使用 `TrainingResultDto` 或对应模式结果 DTO。
 

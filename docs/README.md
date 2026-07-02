@@ -9,7 +9,7 @@
 3. [BDD 总览](BDD/README.md)
 4. [BDD 页面规格](BDD/screens)
 5. [接口文档总览](接口文档/README.md)
-6. [后端开发交付清单](接口文档/12-后端开发交付清单.md)
+6. [玩法服务层开发交付清单](接口文档/12-玩法服务层开发交付清单.md)
 7. [任务规格与分工](任务规格/README.md)
 8. [UI 线框图](../UI/Sample/vr-shooting-ui-reference-wireframes.drawio)
 
@@ -18,7 +18,7 @@
 - 产品范围和阶段优先级以 `需求/阶段化整体需求说明书.md` 为准。
 - 原始玩法规则以 `需求/VR射击游戏需求文档_汇总版.md` 为基础。
 - 行为验收以 `BDD/` 为准。
-- 前后端数据交互、DTO、事件、服务方法以 `接口文档/` 为准。
+- UI 与玩法服务层的数据交互、DTO、事件、服务方法以 `接口文档/` 为准。
 - UI 页面结构以 `../UI/Sample/vr-shooting-ui-reference-wireframes.drawio` 为准。
 
 ## BDD 工作流
