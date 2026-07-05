@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="11" result="Passed" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-07-05 07:31:51Z" end-time="2026-07-05 07:31:53Z" duration="2.1581504">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-07-05 07:31:51Z" end-time="2026-07-05 07:31:53Z" duration="2.158150" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1013" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/AI/project/SimulatedShooting/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-07-05 07:31:51Z" end-time="2026-07-05 07:31:53Z" duration="2.152125" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="24060" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1014" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-07-05 07:31:51Z" end-time="2026-07-05 07:31:53Z" duration="2.151385" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1015" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-07-05 07:31:51Z" end-time="2026-07-05 07:31:53Z" duration="2.151094" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1016" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-07-05 07:31:51Z" end-time="2026-07-05 07:31:53Z" duration="2.150288" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="ZeroingRangeSceneTests" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-07-05 07:31:51Z" end-time="2026-07-05 07:31:53Z" duration="2.149252" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1005" name="Task004_FirstPersonCompositionFramesTargetThroughRangeLane" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_FirstPersonCompositionFramesTargetThroughRangeLane" methodname="Task004_FirstPersonCompositionFramesTargetThroughRangeLane" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1813499390" result="Passed" start-time="2026-07-05 07:31:51Z" end-time="2026-07-05 07:31:51Z" duration="0.218857" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1002" name="Task004_SceneContainsStableTrainingAnchorsForVrAndNoVr" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_SceneContainsStableTrainingAnchorsForVrAndNoVr" methodname="Task004_SceneContainsStableTrainingAnchorsForVrAndNoVr" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="815421544" result="Passed" start-time="2026-07-05 07:31:51Z" end-time="2026-07-05 07:31:51Z" duration="0.197497" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1004" name="Task004_TargetCanBeHitFromShootingPosition" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_TargetCanBeHitFromShootingPosition" methodname="Task004_TargetCanBeHitFromShootingPosition" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1707256211" result="Passed" start-time="2026-07-05 07:31:51Z" end-time="2026-07-05 07:31:52Z" duration="0.189157" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1003" name="Task004_TargetHasSpecifiedDimensionsAtOneHundredMetres" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_TargetHasSpecifiedDimensionsAtOneHundredMetres" methodname="Task004_TargetHasSpecifiedDimensionsAtOneHundredMetres" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="174945558" result="Passed" start-time="2026-07-05 07:31:52Z" end-time="2026-07-05 07:31:52Z" duration="0.186147" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1007" name="Task012_ImpactCoordinatesUseCentimetresAndMatchVisualMarker" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task012_ImpactCoordinatesUseCentimetresAndMatchVisualMarker" methodname="Task012_ImpactCoordinatesUseCentimetresAndMatchVisualMarker" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="188123754" result="Passed" start-time="2026-07-05 07:31:52Z" end-time="2026-07-05 07:31:52Z" duration="0.190567" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1008" name="Task012_ImpactOutsideFiftyCentimetreFaceIsRejected" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task012_ImpactOutsideFiftyCentimetreFaceIsRejected" methodname="Task012_ImpactOutsideFiftyCentimetreFaceIsRejected" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="187617007" result="Passed" start-time="2026-07-05 07:31:52Z" end-time="2026-07-05 07:31:52Z" duration="0.195191" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1006" name="Task012_RaycastHitReturnsStableImpactCoordinates" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task012_RaycastHitReturnsStableImpactCoordinates" methodname="Task012_RaycastHitReturnsStableImpactCoordinates" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1522816777" result="Passed" start-time="2026-07-05 07:31:52Z" end-time="2026-07-05 07:31:52Z" duration="0.187304" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1012" name="Task016_NoVrCameraHasClearTargetSightlineAndVrSafeSettings" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_NoVrCameraHasClearTargetSightlineAndVrSafeSettings" methodname="Task016_NoVrCameraHasClearTargetSightlineAndVrSafeSettings" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1846981914" result="Passed" start-time="2026-07-05 07:31:52Z" end-time="2026-07-05 07:31:52Z" duration="0.183553" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1011" name="Task016_SceneStaysWithinPrototypeRenderingBudget" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_SceneStaysWithinPrototypeRenderingBudget" methodname="Task016_SceneStaysWithinPrototypeRenderingBudget" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1737339008" result="Passed" start-time="2026-07-05 07:31:52Z" end-time="2026-07-05 07:31:53Z" duration="0.208735" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1009" name="Task016_VisualPolishKeepsTargetAndShootingBayRecognisable" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_VisualPolishKeepsTargetAndShootingBayRecognisable" methodname="Task016_VisualPolishKeepsTargetAndShootingBayRecognisable" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="967093226" result="Passed" start-time="2026-07-05 07:31:53Z" end-time="2026-07-05 07:31:53Z" duration="0.192300" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1010" name="Task016_WeaponCrateAppearsInLowerLeftWithoutBlockingTarget" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_WeaponCrateAppearsInLowerLeftWithoutBlockingTarget" methodname="Task016_WeaponCrateAppearsInLowerLeftWithoutBlockingTarget" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1310483046" result="Passed" start-time="2026-07-05 07:31:53Z" end-time="2026-07-05 07:31:53Z" duration="0.189449" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

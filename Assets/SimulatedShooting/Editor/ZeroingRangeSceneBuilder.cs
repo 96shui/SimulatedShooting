@@ -45,11 +45,14 @@ namespace SimulatedShooting.Editor
             var target = GetMaterial("TargetDark", new Color(0.035f, 0.04f, 0.035f));
             var targetBoard = GetMaterial("TargetBoard", new Color(0.76f, 0.74f, 0.65f));
             var ring = GetMaterial("TargetTenRing", new Color(0.88f, 0.86f, 0.75f));
+            var impactMarker = GetMaterial("TargetImpactMarker", new Color(0.55f, 0.03f, 0.02f));
             var marker = GetMaterial("RangeMarker", new Color(0.70f, 0.58f, 0.18f));
+            var crate = GetMaterial("RangeWeaponCrate", new Color(0.17f, 0.20f, 0.10f));
 
             CreateEnvironment(root, ground, concrete, earth, foliage, line, marker, darkMetal, sandbag);
+            CreateVisualPolish(root, darkMetal, marker, line, crate);
             CreateAnchors(root, darkMetal);
-            CreateTarget(root, target, targetBoard, ring, concrete);
+            CreateTarget(root, target, targetBoard, ring, impactMarker, concrete);
             CreateLighting(root);
         }
 
@@ -91,6 +94,68 @@ namespace SimulatedShooting.Editor
                 CreateDistanceMarker(environment, -6.2f, distance, marker, darkMetal);
                 CreateDistanceMarker(environment, 6.2f, distance, marker, darkMetal);
             }
+
+            MarkRenderersStatic(environment);
+        }
+
+        private static void CreateVisualPolish(Transform root, Material darkMetal, Material marker, Material line,
+            Material crateMaterial)
+        {
+            var visual = new GameObject("VisualPolish").transform;
+            visual.SetParent(root);
+            AddTestId(visual.gameObject, "ZeroingRange.Visual.Root");
+
+            var rangeGate = CreateAnchor("RangeGate", visual, new Vector3(0f, 0f, 4.5f));
+            AddTestId(rangeGate.gameObject, "ZeroingRange.Visual.RangeGate");
+            CreateCube("GatePost_Left", rangeGate, new Vector3(-5.6f, 2f, 0f),
+                new Vector3(0.18f, 4f, 0.18f), darkMetal, false);
+            CreateCube("GatePost_Right", rangeGate, new Vector3(5.6f, 2f, 0f),
+                new Vector3(0.18f, 4f, 0.18f), darkMetal, false);
+            CreateCube("GateHeader", rangeGate, new Vector3(0f, 4f, 0f),
+                new Vector3(11.4f, 0.22f, 0.22f), darkMetal, false);
+            CreateCube("GateIdentificationStrip", rangeGate, new Vector3(0f, 3.82f, -0.02f),
+                new Vector3(4.2f, 0.08f, 0.04f), marker, false);
+
+            var targetFrame = CreateAnchor("TargetIdentificationFrame", visual, Vector3.zero);
+            AddTestId(targetFrame.gameObject, "ZeroingRange.Visual.TargetFrame");
+            CreateCube("TargetFrame_Left", targetFrame, new Vector3(-0.72f, 1.5f, 99.9f),
+                new Vector3(0.08f, 1.7f, 0.08f), darkMetal, false);
+            CreateCube("TargetFrame_Right", targetFrame, new Vector3(0.72f, 1.5f, 99.9f),
+                new Vector3(0.08f, 1.7f, 0.08f), darkMetal, false);
+            CreateCube("TargetFrame_Top", targetFrame, new Vector3(0f, 2.35f, 99.9f),
+                new Vector3(1.52f, 0.08f, 0.08f), marker, false);
+            CreateCube("TargetFrame_Bottom", targetFrame, new Vector3(0f, 0.65f, 99.9f),
+                new Vector3(1.52f, 0.08f, 0.08f), darkMetal, false);
+
+            var safetyBoundary = CreateAnchor("SafetyBoundary", visual, Vector3.zero);
+            AddTestId(safetyBoundary.gameObject, "ZeroingRange.Visual.SafetyBoundary");
+            CreateCube("SafetyBoundary_Left", safetyBoundary, new Vector3(-5.2f, 0.13f, 0f),
+                new Vector3(3.8f, 0.025f, 0.12f), marker, false);
+            CreateCube("SafetyBoundary_Right", safetyBoundary, new Vector3(5.2f, 0.13f, 0f),
+                new Vector3(3.8f, 0.025f, 0.12f), marker, false);
+            CreateCube("ShootingDirectionGuide", safetyBoundary, new Vector3(0f, 0.125f, 8f),
+                new Vector3(0.08f, 0.02f, 10f), line, false);
+
+            CreateWeaponCrate(visual, crateMaterial, darkMetal, marker);
+            MarkRenderersStatic(visual);
+        }
+
+        private static void CreateWeaponCrate(Transform parent, Material crateMaterial, Material metal, Material marker)
+        {
+            var crate = CreateAnchor("WeaponCrate_Left", parent, new Vector3(-1f, 0.38f, 2.4f));
+            AddTestId(crate.gameObject, "ZeroingRange.Visual.WeaponCrate.Left");
+
+            CreateCube("CrateBody", crate, Vector3.zero, new Vector3(1.1f, 0.68f, 0.72f), crateMaterial);
+            CreateCube("CrateLid", crate, new Vector3(0f, 0.38f, 0f),
+                new Vector3(1.16f, 0.09f, 0.78f), crateMaterial, false);
+            CreateCube("CrateBand_Left", crate, new Vector3(-0.42f, 0.02f, -0.37f),
+                new Vector3(0.08f, 0.72f, 0.035f), metal, false);
+            CreateCube("CrateBand_Right", crate, new Vector3(0.42f, 0.02f, -0.37f),
+                new Vector3(0.08f, 0.72f, 0.035f), metal, false);
+            CreateCube("CrateHandle", crate, new Vector3(0f, 0.02f, -0.405f),
+                new Vector3(0.32f, 0.08f, 0.035f), metal, false);
+            CreateCube("CrateIdentificationStrip", crate, new Vector3(0f, 0.2f, -0.407f),
+                new Vector3(0.48f, 0.08f, 0.02f), marker, false);
         }
 
         private static void CreateAnchors(Transform root, Material darkMetal)
@@ -111,6 +176,9 @@ namespace SimulatedShooting.Editor
             camera.fieldOfView = 48f;
             camera.nearClipPlane = 0.05f;
             camera.farClipPlane = 250f;
+            camera.allowHDR = false;
+            camera.allowMSAA = true;
+            camera.useOcclusionCulling = true;
             AddTestId(noVrCamera, "ZeroingRange.Camera.NoVR");
 
             var weaponReference = new GameObject("WeaponReference_Blockout").transform;
@@ -129,7 +197,7 @@ namespace SimulatedShooting.Editor
         }
 
         private static void CreateTarget(Transform root, Material targetMaterial, Material boardMaterial,
-            Material ringMaterial, Material supportMaterial)
+            Material ringMaterial, Material impactMarkerMaterial, Material supportMaterial)
         {
             var target = CreateAnchor("Target_Primary_100m", root, new Vector3(0f, 1.5f, 100f));
             AddTestId(target.gameObject, "ZeroingRange.Target.Primary");
@@ -138,13 +206,21 @@ namespace SimulatedShooting.Editor
             var face = CreateCube("TargetFace_50cm", target, Vector3.zero, new Vector3(0.5f, 0.5f, 0.02f), boardMaterial);
             AddTestId(face, "ZeroingRange.Target.Face");
 
+            var targetCenter = CreateAnchor("TargetCenter", target, new Vector3(0f, 0f, -0.012f));
+            AddTestId(targetCenter.gameObject, "ZeroingRange.Target.Center");
+            var impactMarkers = CreateAnchor("ImpactMarkers", target, Vector3.zero);
+            AddTestId(impactMarkers.gameObject, "ZeroingRange.Target.ImpactMarkers");
+
+            var impactSurface = face.AddComponent<TargetImpactSurface>();
+            impactSurface.Configure(face.GetComponent<Collider>(), targetCenter, impactMarkers, impactMarkerMaterial);
+
             CreateCube("TargetSilhouette_Torso", target, new Vector3(0f, -0.06f, -0.013f),
                 new Vector3(0.32f, 0.34f, 0.008f), targetMaterial, false);
             CreateCylinder("TargetSilhouette_Head", target, new Vector3(0f, 0.17f, -0.014f),
                 new Vector3(0.13f, 0.003f, 0.13f), targetMaterial, Quaternion.Euler(90f, 0f, 0f), false);
 
             var tenRing = CreateCylinder("TenRing_10cm", target, new Vector3(0f, 0f, -0.019f),
-                new Vector3(0.1f, 0.0025f, 0.1f), ringMaterial, Quaternion.Euler(90f, 0f, 0f));
+                new Vector3(0.1f, 0.0025f, 0.1f), ringMaterial, Quaternion.Euler(90f, 0f, 0f), false);
             AddTestId(tenRing, "ZeroingRange.Target.TenRing");
 
             CreateCube("TargetPost_Left", target, new Vector3(-0.18f, -0.95f, 0.08f),
@@ -222,11 +298,14 @@ namespace SimulatedShooting.Editor
             var lightObject = new GameObject("RangeSun", typeof(Light));
             lightObject.transform.SetParent(root);
             lightObject.transform.rotation = Quaternion.Euler(48f, -32f, 0f);
+            AddTestId(lightObject, "ZeroingRange.Lighting.Sun");
             var light = lightObject.GetComponent<Light>();
             light.type = LightType.Directional;
             light.color = new Color(1f, 0.94f, 0.82f);
             light.intensity = 1.1f;
             light.shadows = LightShadows.Soft;
+            light.shadowResolution = UnityEngine.Rendering.LightShadowResolution.Medium;
+            light.shadowStrength = 0.8f;
 
             RenderSettings.skybox = GetSkyboxMaterial();
             RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Trilight;
@@ -291,6 +370,15 @@ namespace SimulatedShooting.Editor
         private static void AddTestId(GameObject gameObject, string id)
         {
             gameObject.AddComponent<SceneTestId>().Id = id;
+        }
+
+        private static void MarkRenderersStatic(Transform root)
+        {
+            var flags = StaticEditorFlags.BatchingStatic |
+                        StaticEditorFlags.OccludeeStatic |
+                        StaticEditorFlags.ReflectionProbeStatic;
+            foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
+                GameObjectUtility.SetStaticEditorFlags(renderer.gameObject, flags);
         }
 
         private static Material GetMaterial(string name, Color color)
