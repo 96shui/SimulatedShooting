@@ -13,7 +13,7 @@
 - `docs/需求/阶段化整体需求说明书.md`
 - `docs/BDD/README.md`
 - `docs/BDD/测试实现建议-Unity.md`
-- `docs/接口文档/00-前后端交互总约束.md`
+- `docs/接口文档/00-UI与玩法服务层交互总约束.md`
 - `docs/接口文档/02-训练Session数据模型.md`
 - `docs/接口文档/11-Unity场景与Prefab约定.md`
 

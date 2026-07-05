@@ -2,7 +2,7 @@
 
 ## 目标
 
-约束 Unity 后端开发时的场景、Prefab、Canvas、UI 对象名和测试 ID，保证接口文档、BDD 和实现可互相追踪。
+约束 Unity 场景与 Prefab 开发时的场景、Canvas、UI 对象名和测试 ID，保证接口文档、BDD 和实现可互相追踪。
 
 ## 场景建议
 
@@ -50,7 +50,7 @@ public sealed class UITestId : MonoBehaviour
 | HUD | CanvasGroup、Presenter 绑定脚本、UITestId |
 | Radial Menu | 输入保持检测、选项高亮、取消逻辑 |
 
-## 后端服务挂载建议
+## 玩法服务挂载建议
 
 | 服务 | 生命周期 |
 |---|---|

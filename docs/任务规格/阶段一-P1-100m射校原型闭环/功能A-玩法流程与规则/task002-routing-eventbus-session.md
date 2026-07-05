@@ -14,7 +14,7 @@
 - `docs/BDD/screens/04-100m任务说明.feature.md`
 - `docs/接口文档/01-页面导航与UI事件.md`
 - `docs/接口文档/02-训练Session数据模型.md`
-- `docs/接口文档/00-前后端交互总约束.md`
+- `docs/接口文档/00-UI与玩法服务层交互总约束.md`
 
 ## 交付内容
 

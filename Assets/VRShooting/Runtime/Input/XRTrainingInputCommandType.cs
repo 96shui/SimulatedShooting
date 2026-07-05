@@ -1,0 +1,13 @@
+namespace VRShooting.Input
+{
+    public enum XRTrainingInputCommandType
+    {
+        Confirm = 0,
+        Back,
+        Trigger,
+        Reload,
+        SwitchShoulder,
+        CommandMenuHeld
+    }
+}
+
