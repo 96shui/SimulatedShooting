@@ -1,5 +1,6 @@
 using UnityEngine;
 using VRShooting.Application;
+using VRShooting.Unity.Player;
 
 namespace VRShooting.Unity.Bootstrap
 {
@@ -32,6 +33,19 @@ namespace VRShooting.Unity.Bootstrap
         {
             Services = ApplicationServices.CreateDefault();
             GameState = GameStateManager.Instance;
+            PersistSceneObject("XR Interaction Manager");
+            PlayerFollowCamera.EnsureExists();
+        }
+
+        static void PersistSceneObject(string objectName)
+        {
+            var sceneObject = GameObject.Find(objectName);
+            if (sceneObject == null)
+            {
+                return;
+            }
+
+            DontDestroyOnLoad(sceneObject);
         }
 
         void OnDestroy()

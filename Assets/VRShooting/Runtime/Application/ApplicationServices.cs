@@ -1,3 +1,5 @@
+using VRShooting.Input;
+
 namespace VRShooting.Application
 {
     /// <summary>
@@ -8,11 +10,13 @@ namespace VRShooting.Application
         ApplicationServices(
             IGameEventBus eventBus,
             IUIRouter router,
-            ITrainingSessionService trainingSessions)
+            ITrainingSessionService trainingSessions,
+            IXRTrainingInput trainingInput)
         {
             EventBus = eventBus;
             Router = router;
             TrainingSessions = trainingSessions;
+            TrainingInput = trainingInput;
         }
 
         public IGameEventBus EventBus { get; }
@@ -21,12 +25,15 @@ namespace VRShooting.Application
 
         public ITrainingSessionService TrainingSessions { get; }
 
+        public IXRTrainingInput TrainingInput { get; }
+
         public static ApplicationServices CreateDefault()
         {
             var eventBus = new GameEventBus();
             var router = new UIRouter(eventBus);
             var trainingSessions = new TrainingSessionService(eventBus);
-            return new ApplicationServices(eventBus, router, trainingSessions);
+            var trainingInput = new InputSystemXRTrainingInput();
+            return new ApplicationServices(eventBus, router, trainingSessions, trainingInput);
         }
     }
 }

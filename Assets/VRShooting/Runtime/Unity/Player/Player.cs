@@ -1,68 +1,85 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityScene = UnityEngine.SceneManagement.Scene;
+using VRShooting.Input;
+using VRShooting.Unity.Bootstrap;
 
 namespace VRShooting.Unity.Player
 {
     /// <summary>
-    /// 无 VR 设备时的键鼠移动替身，供 Editor 调试使用。
+    /// 无 VR 设备时的玩家移动替身，移动输入来自 task003 的 <see cref="IXRTrainingInput.MoveAxis"/>。
     /// </summary>
+    [DisallowMultipleComponent]
     public class Player : MonoBehaviour
     {
+        const string ZeroingRangeSceneName = "ZeroingRangeScene";
+        const string ShootingPositionName = "ShootingPosition";
+
+        static Player instance;
+
         [SerializeField] float moveSpeed = 2f;
         [SerializeField] Transform headTransform;
 
+        IXRTrainingInput trainingInput;
+
+        CharacterController characterController;
+
+        public static Player Instance => instance;
+
         void Awake()
         {
-            if (headTransform != null)
+            if (instance != null && instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+
+            characterController = GetComponent<CharacterController>();
+
+            ResolveTrainingInput();
+            DisableBuiltInCameras();
+            BindFollowCamera();
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        void OnDestroy()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+
+            if (instance == this)
+            {
+                instance = null;
+            }
+        }
+
+        void OnSceneLoaded(UnityScene scene, LoadSceneMode mode)
+        {
+            if (instance != this)
             {
                 return;
             }
 
-            var camera = GetComponentInChildren<Camera>();
-            if (camera != null)
-            {
-                headTransform = camera.transform;
-            }
+            ResolveTrainingInput();
+            BindFollowCamera();
+            AlignToSceneSpawn(scene);
         }
 
         void Update()
         {
-            var keyboard = Keyboard.current;
-            if (keyboard == null)
-            {
-                return;
-            }
-
-            var input = Vector2.zero;
-            if (keyboard.wKey.isPressed)
-            {
-                input.y += 1f;
-            }
-
-            if (keyboard.sKey.isPressed)
-            {
-                input.y -= 1f;
-            }
-
-            if (keyboard.dKey.isPressed)
-            {
-                input.x += 1f;
-            }
-
-            if (keyboard.aKey.isPressed)
-            {
-                input.x -= 1f;
-            }
-
+            ResolveTrainingInput();
+            var input = trainingInput.MoveAxis;
             if (input.sqrMagnitude < 0.01f)
             {
                 return;
             }
 
-            input.Normalize();
-
-            var forward = headTransform != null ? headTransform.forward : transform.forward;
-            var right = headTransform != null ? headTransform.right : transform.right;
+            var viewTransform = ResolveHeadTransform();
+            var forward = viewTransform != null ? viewTransform.forward : transform.forward;
+            var right = viewTransform != null ? viewTransform.right : transform.right;
 
             forward.y = 0f;
             right.y = 0f;
@@ -70,7 +87,123 @@ namespace VRShooting.Unity.Player
             right.Normalize();
 
             var moveDirection = forward * input.y + right * input.x;
-            transform.position += moveDirection * (moveSpeed * Time.deltaTime);
+            var motion = moveDirection * (moveSpeed * Time.deltaTime);
+
+            if (characterController != null && characterController.enabled)
+            {
+                characterController.Move(motion);
+                return;
+            }
+
+            transform.position += motion;
+        }
+
+        void ResolveTrainingInput()
+        {
+            if (GameMain.Instance?.Services?.TrainingInput != null)
+            {
+                trainingInput = GameMain.Instance.Services.TrainingInput;
+                return;
+            }
+
+            trainingInput ??= new InputSystemXRTrainingInput();
+        }
+
+        void BindFollowCamera()
+        {
+            var followCamera = PlayerFollowCamera.EnsureExists();
+            followCamera.FollowTarget = transform;
+            headTransform = followCamera.transform;
+        }
+
+        Transform ResolveHeadTransform()
+        {
+            if (headTransform != null)
+            {
+                return headTransform;
+            }
+
+            return PlayerFollowCamera.Instance != null
+                ? PlayerFollowCamera.Instance.transform
+                : transform;
+        }
+
+        void DisableBuiltInCameras()
+        {
+            foreach (var camera in GetComponentsInChildren<Camera>(true))
+            {
+                camera.enabled = false;
+
+                if (camera.TryGetComponent<AudioListener>(out var listener))
+                {
+                    listener.enabled = false;
+                }
+            }
+        }
+
+        void AlignToSceneSpawn(UnityScene scene)
+        {
+            if (scene.name != ZeroingRangeSceneName)
+            {
+                return;
+            }
+
+            var spawn = FindTransformInScene(scene, ShootingPositionName);
+            if (spawn == null)
+            {
+                return;
+            }
+
+            TeleportTo(spawn.position, spawn.rotation);
+        }
+
+        void TeleportTo(Vector3 position, Quaternion rotation)
+        {
+            var hadController = characterController != null && characterController.enabled;
+            if (characterController != null)
+            {
+                characterController.enabled = false;
+            }
+
+            transform.SetPositionAndRotation(position, rotation);
+
+            if (characterController != null && hadController)
+            {
+                characterController.enabled = true;
+            }
+        }
+
+        static Transform FindTransformInScene(UnityScene scene, string objectName)
+        {
+            foreach (var root in scene.GetRootGameObjects())
+            {
+                var match = FindTransformRecursive(root.transform, objectName);
+                if (match != null)
+                {
+                    return match;
+                }
+            }
+
+            return null;
+        }
+
+        static Transform FindTransformRecursive(Transform parent, string objectName)
+        {
+            if (parent.name == objectName)
+            {
+                return parent;
+            }
+
+            for (var i = 0; i < parent.childCount; i++)
+            {
+                var match = FindTransformRecursive(parent.GetChild(i), objectName);
+                if (match != null)
+                {
+                    return match;
+                }
+            }
+
+            return null;
         }
     }
 }

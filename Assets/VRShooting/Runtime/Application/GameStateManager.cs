@@ -22,7 +22,7 @@ namespace VRShooting.Application
     public class GameStateManager : BaseManager<GameStateManager>
     {
         const string MainSceneName = "MainScene";
-        const string GameSceneName = "GameScene";
+        const string GameSceneName = "ZeroingRangeScene";
 
         public GameState CurrentState { get; private set; }
 
