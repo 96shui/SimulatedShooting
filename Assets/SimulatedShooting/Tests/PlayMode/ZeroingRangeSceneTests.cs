@@ -5,6 +5,8 @@ using SimulatedShooting.Scene;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using VRShooting.Common;
+using VRShooting.Unity.Weapons;
 
 namespace SimulatedShooting.Tests.PlayMode
 {
@@ -175,6 +177,79 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(hudAnchor, Is.Not.Null);
             Assert.That(Physics.Raycast(camera.transform.position, direction, out var hit, 101f), Is.True);
             Assert.That(hit.transform == target || hit.transform.IsChildOf(target), Is.True);
+        }
+
+        [Test]
+        public void Task005_FirstPersonTrainingWeaponHasRequiredVisibleBindings()
+        {
+            var playerRoot = Find("ZeroingRange.Weapon.PlayerRoot");
+            var weapon = Find("ZeroingRange.Weapon.TrainingRifle");
+            Assert.That(playerRoot, Is.Not.Null);
+            Assert.That(weapon, Is.Not.Null);
+
+            var controller = playerRoot.GetComponent<FirstPersonTrainingWeaponController>();
+            var binding = weapon.GetComponent<WeaponPrefabBinding>();
+            Assert.That(controller, Is.Not.Null);
+            Assert.That(binding, Is.Not.Null);
+            Assert.That(binding.HasRequiredBinding, Is.True);
+            Assert.That(controller.HasVrPoseSources, Is.True);
+            Assert.That(Find("ZeroingRange.Weapon.Grip.RearHand"), Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Weapon.Grip.FrontHand"), Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Weapon.Muzzle"), Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Weapon.AimLine"), Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Weapon.TracerRoot"), Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Origin.VR.HeadPose"), Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Origin.VR.RearHandPose"), Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Origin.VR.FrontHandPose"), Is.Not.Null);
+        }
+
+        [Test]
+        public void Task005_NoVrFirstPersonWeaponFiresVisibleTracerAndTargetImpact()
+        {
+            var controller = Find("ZeroingRange.Weapon.PlayerRoot").GetComponent<FirstPersonTrainingWeaponController>();
+            var surface = Find("ZeroingRange.Target.Face").GetComponent<TargetImpactSurface>();
+            var initialImpacts = surface.Impacts.Count;
+
+            Assert.That(controller.InitializeForTests(), Is.True);
+            var fired = controller.FireOnceForTests();
+            Physics.SyncTransforms();
+
+            Assert.That(fired, Is.True);
+            Assert.That(controller.CurrentMagazine, Is.EqualTo(2));
+            Assert.That(controller.LastShotWasValid, Is.True);
+            Assert.That(controller.TracerCount, Is.EqualTo(1));
+            Assert.That(surface.Impacts.Count, Is.EqualTo(initialImpacts + 1));
+            Assert.That(Find("ZeroingRange.Weapon.Tracer"), Is.Not.Null);
+        }
+
+        [Test]
+        public void Task005_AdsViewAlignsToGunLineAndFrontHandChangesAimDirection()
+        {
+            var controller = Find("ZeroingRange.Weapon.PlayerRoot").GetComponent<FirstPersonTrainingWeaponController>();
+            var camera = Find("ZeroingRange.Camera.NoVR").GetComponent<Camera>();
+            Assert.That(controller.InitializeForTests(), Is.True);
+            var before = controller.CurrentAimDirection;
+
+            controller.AdjustFrontHandForTests(new Vector2(0.12f, 0.08f));
+            var after = controller.CurrentAimDirection;
+            controller.SetAimModeForTests(WeaponAimMode.AimDownSights);
+
+            Assert.That(Vector3.Angle(before, after), Is.GreaterThan(1f));
+            Assert.That(controller.CurrentAimMode, Is.EqualTo(WeaponAimMode.AimDownSights));
+            Assert.That(Vector3.Angle(camera.transform.forward, controller.CurrentAimDirection), Is.LessThan(0.5f));
+        }
+
+        [Test]
+        public void Task005_ShoulderSwitchUpdatesNoVrWeaponState()
+        {
+            var controller = Find("ZeroingRange.Weapon.PlayerRoot").GetComponent<FirstPersonTrainingWeaponController>();
+
+            Assert.That(controller.InitializeForTests(), Is.True);
+            Assert.That(controller.FireOnceForTests(), Is.True);
+            controller.ToggleShoulderForTests();
+
+            Assert.That(controller.CurrentMagazine, Is.EqualTo(2));
+            Assert.That(controller.CurrentShoulder, Is.EqualTo(ShoulderSide.Left));
         }
 
         private static GameObject Find(string id)

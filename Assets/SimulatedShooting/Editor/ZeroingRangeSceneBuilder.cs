@@ -3,6 +3,7 @@ using SimulatedShooting.Scene;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using VRShooting.Unity.Weapons;
 
 namespace SimulatedShooting.Editor
 {
@@ -49,6 +50,7 @@ namespace SimulatedShooting.Editor
             var marker = GetMaterial("RangeMarker", new Color(0.70f, 0.58f, 0.18f));
             var crate = GetMaterial("RangeWeaponCrate", new Color(0.17f, 0.20f, 0.10f));
 
+            TrainingRiflePrefabBuilder.EnsurePrefab();
             CreateEnvironment(root, ground, concrete, earth, foliage, line, marker, darkMetal, sandbag);
             CreateVisualPolish(root, darkMetal, marker, line, crate);
             CreateAnchors(root, darkMetal);
@@ -193,7 +195,62 @@ namespace SimulatedShooting.Editor
             xrOrigin.transform.SetParent(anchors);
             xrOrigin.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
             AddTestId(xrOrigin, "ZeroingRange.Origin.VR");
+
+            CreateFirstPersonTrainingWeapon(anchors, camera, xrOrigin.transform);
             xrOrigin.SetActive(false);
+        }
+
+        private static void CreateFirstPersonTrainingWeapon(Transform anchors, Camera noVrCamera, Transform xrOrigin)
+        {
+            var playerRoot = CreateAnchor("WeaponPlayerRoot", anchors, Vector3.zero);
+            AddTestId(playerRoot.gameObject, "ZeroingRange.Weapon.PlayerRoot");
+
+            var tracerRoot = CreateAnchor("TracerRoot_training-rifle", playerRoot, Vector3.zero);
+            AddTestId(tracerRoot.gameObject, "ZeroingRange.Weapon.TracerRoot");
+            var debugInput = CreateAnchor("WeaponDebugInput", playerRoot, Vector3.zero);
+            AddTestId(debugInput.gameObject, "ZeroingRange.Weapon.DebugInput");
+
+            var prefab = TrainingRiflePrefabBuilder.EnsurePrefab();
+            var weaponObject = prefab == null
+                ? new GameObject("Weapon_training-rifle_Blockout")
+                : (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+            weaponObject.name = "Weapon_training-rifle_Blockout";
+            weaponObject.transform.SetParent(playerRoot, false);
+
+            var binding = weaponObject.GetComponent<WeaponPrefabBinding>();
+            var controller = playerRoot.gameObject.AddComponent<FirstPersonTrainingWeaponController>();
+            controller.ConfigureForScene(noVrCamera, binding, null, tracerRoot);
+            ConfigureVrPoseSources(controller, xrOrigin);
+        }
+
+        private static void ConfigureVrPoseSources(FirstPersonTrainingWeaponController controller, Transform xrOrigin)
+        {
+            var headPose = xrOrigin != null
+                ? xrOrigin.GetComponentsInChildren<Camera>(true).FirstOrDefault()?.transform
+                : null;
+            var rearHandPose = FindChildByNameTokens(xrOrigin, "Right", "Controller");
+            var frontHandPose = FindChildByNameTokens(xrOrigin, "Left", "Controller");
+
+            if (headPose != null)
+                AddTestIdIfMissing(headPose.gameObject, "ZeroingRange.Origin.VR.HeadPose");
+            if (rearHandPose != null)
+                AddTestIdIfMissing(rearHandPose.gameObject, "ZeroingRange.Origin.VR.RearHandPose");
+            if (frontHandPose != null)
+                AddTestIdIfMissing(frontHandPose.gameObject, "ZeroingRange.Origin.VR.FrontHandPose");
+
+            controller.ConfigureVrPoseSources(headPose, rearHandPose, frontHandPose);
+        }
+
+        private static Transform FindChildByNameTokens(Transform root, params string[] tokens)
+        {
+            if (root == null)
+            {
+                return null;
+            }
+
+            return root.GetComponentsInChildren<Transform>(true)
+                .FirstOrDefault(transform => tokens.All(token =>
+                    transform.name.IndexOf(token, System.StringComparison.OrdinalIgnoreCase) >= 0));
         }
 
         private static void CreateTarget(Transform root, Material targetMaterial, Material boardMaterial,
@@ -370,6 +427,21 @@ namespace SimulatedShooting.Editor
         private static void AddTestId(GameObject gameObject, string id)
         {
             gameObject.AddComponent<SceneTestId>().Id = id;
+        }
+
+        private static void AddTestIdIfMissing(GameObject gameObject, string id)
+        {
+            var testId = gameObject.GetComponent<SceneTestId>();
+            if (testId == null)
+            {
+                AddTestId(gameObject, id);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(testId.Id))
+            {
+                testId.Id = id;
+            }
         }
 
         private static void MarkRenderersStatic(Transform root)

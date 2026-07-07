@@ -7,6 +7,8 @@ namespace VRShooting.Input
         Trigger,
         Reload,
         SwitchShoulder,
+        AimPressed,
+        AimHeld,
         CommandMenuHeld
     }
 }

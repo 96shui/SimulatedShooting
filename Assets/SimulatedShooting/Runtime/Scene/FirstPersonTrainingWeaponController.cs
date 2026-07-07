@@ -1,0 +1,595 @@
+using System;
+using UnityEngine;
+using VRShooting.Application;
+using VRShooting.Application.Weapons;
+using VRShooting.Common;
+using VRShooting.Input;
+using VRShooting.Unity.Weapons;
+
+namespace SimulatedShooting.Scene
+{
+    [DisallowMultipleComponent]
+    public sealed class FirstPersonTrainingWeaponController : MonoBehaviour
+    {
+        const string SessionId = "task005-zeroing-range";
+        const float MaxShotDistance = 150f;
+
+        [SerializeField] private Camera viewCamera;
+        [SerializeField] private WeaponPrefabBinding weaponBinding;
+        [SerializeField] private TargetImpactSurface targetSurface;
+        [SerializeField] private Transform tracerRoot;
+        [SerializeField] private Transform headPoseSource;
+        [SerializeField] private Transform rearHandPoseSource;
+        [SerializeField] private Transform frontHandPoseSource;
+        [SerializeField] private bool preferVrPoseSources;
+        [SerializeField] private float hipFieldOfView = 48f;
+        [SerializeField] private float adsFieldOfView = 36f;
+        [SerializeField] private float lookDegreesPerSecond = 82f;
+        [SerializeField] private float frontHandAdjustSpeed = 0.28f;
+        [SerializeField] private bool showDebugOverlay = true;
+
+        readonly Vector3 rightShoulderLocal = new Vector3(0.22f, -0.26f, 0.42f);
+        readonly Vector3 leftShoulderLocal = new Vector3(-0.22f, -0.26f, 0.42f);
+
+        IGameEventBus eventBus;
+        WeaponControlService weaponService;
+        IXRTrainingInput input;
+        XRTrainingInputCommandDispatcher dispatcher;
+        IDisposable inputSubscription;
+        Material tracerMaterial;
+
+        WeaponControlStateDto currentState;
+        WeaponShotResultDto lastShot;
+        Vector3 headPosition;
+        Vector2 frontHandOffset;
+        float yaw;
+        float pitch;
+        float recoilPitch;
+        Vector3 recoilOffset;
+        int tracerCounter;
+        bool initialized;
+        bool hasCurrentState;
+
+        public bool IsInitialized => initialized;
+        public bool HasRequiredWeaponBinding => weaponBinding != null && weaponBinding.HasRequiredBinding;
+        public int CurrentMagazine => hasCurrentState ? currentState.CurrentMagazine : 0;
+        public int ReserveAmmo => hasCurrentState ? currentState.ReserveAmmo : 0;
+        public bool CanShoot => hasCurrentState && currentState.CanShoot;
+        public ShoulderSide CurrentShoulder => hasCurrentState ? currentState.ShoulderSide : ShoulderSide.Right;
+        public WeaponAimMode CurrentAimMode => hasCurrentState ? currentState.AimMode : WeaponAimMode.HipFire;
+        public bool TwoHandGripActive => hasCurrentState && currentState.TwoHandGripActive;
+        public float Stability01 => hasCurrentState ? currentState.Stability01 : 0f;
+        public int TracerCount => tracerCounter;
+        public bool LastShotWasValid => lastShot.IsValidShot;
+        public Vector3 CurrentAimDirection => ResolveAimDirection();
+        public bool HasVrPoseSources => headPoseSource != null && rearHandPoseSource != null && frontHandPoseSource != null;
+        public bool UsingVrPoseSources => ShouldUseVrPoseSources();
+
+        public void ConfigureForScene(
+            Camera camera,
+            WeaponPrefabBinding binding,
+            TargetImpactSurface impactSurface,
+            Transform tracerContainer)
+        {
+            viewCamera = camera;
+            weaponBinding = binding;
+            targetSurface = impactSurface;
+            tracerRoot = tracerContainer;
+        }
+
+        public void ConfigureVrPoseSources(Transform headPose, Transform rearHandPose, Transform frontHandPose)
+        {
+            headPoseSource = headPose;
+            rearHandPoseSource = rearHandPose;
+            frontHandPoseSource = frontHandPose;
+            preferVrPoseSources = headPose != null && rearHandPose != null && frontHandPose != null;
+        }
+
+        private void Awake()
+        {
+            ResolveSceneReferences();
+        }
+
+        private void OnEnable()
+        {
+            EnsureInitialized();
+        }
+
+        private void OnDisable()
+        {
+            inputSubscription?.Dispose();
+            inputSubscription = null;
+        }
+
+        private void Update()
+        {
+            EnsureInitialized();
+            if (!initialized)
+            {
+                return;
+            }
+
+            UpdateNoVrPose(Time.deltaTime);
+            UpdateGripState();
+            UpdateAimModeFromInput();
+            dispatcher.ProcessFrame(new XRTrainingInputDispatchContext
+            {
+                SourceScreen = ScreenId.ZeroingHud
+            });
+            DecayRecoil(Time.deltaTime);
+        }
+
+        public bool FireOnceForTests()
+        {
+            EnsureInitialized();
+            if (!initialized)
+            {
+                return false;
+            }
+
+            UpdateNoVrPose(0f);
+            return FireCurrentWeapon();
+        }
+
+        public bool InitializeForTests()
+        {
+            EnsureInitialized();
+            return initialized;
+        }
+
+        public void SetAimModeForTests(WeaponAimMode aimMode)
+        {
+            EnsureInitialized();
+            if (!initialized)
+            {
+                return;
+            }
+
+            ApplyStateResult(weaponService.SetAimMode(SessionId, aimMode));
+            UpdateNoVrPose(0f);
+        }
+
+        public void ToggleShoulderForTests()
+        {
+            EnsureInitialized();
+            if (!initialized)
+            {
+                return;
+            }
+
+            ApplyStateResult(weaponService.ToggleShoulder(SessionId));
+            UpdateNoVrPose(0f);
+        }
+
+        public void AdjustFrontHandForTests(Vector2 delta)
+        {
+            frontHandOffset = ClampFrontHandOffset(frontHandOffset + delta);
+            EnsureInitialized();
+            if (!initialized)
+            {
+                return;
+            }
+
+            UpdateNoVrPose(0f);
+            UpdateGripState();
+        }
+
+        void EnsureInitialized()
+        {
+            if (initialized)
+            {
+                return;
+            }
+
+            ResolveSceneReferences();
+            if (viewCamera == null || weaponBinding == null || !weaponBinding.HasRequiredBinding)
+            {
+                return;
+            }
+
+            eventBus = new GameEventBus();
+            weaponService = new WeaponControlService(eventBus);
+            input = new InputSystemXRTrainingInput();
+            dispatcher = new XRTrainingInputCommandDispatcher(input, eventBus);
+            inputSubscription = eventBus.Subscribe<XRTrainingInputCommandEvent>(HandleInputCommand);
+
+            var start = weaponService.StartSession(SessionId, weaponBinding.WeaponId, TrainingMode.Zeroing100m);
+            if (!start.Success)
+            {
+                Debug.LogError($"Failed to start task005 weapon session: {start.Message}", this);
+                return;
+            }
+
+            currentState = start.Data;
+            hasCurrentState = true;
+            headPosition = viewCamera.transform.position;
+            yaw = viewCamera.transform.eulerAngles.y;
+            pitch = NormalizePitch(viewCamera.transform.eulerAngles.x);
+            tracerMaterial = CreateTracerMaterial();
+            initialized = true;
+            UpdateNoVrPose(0f);
+            UpdateGripState();
+        }
+
+        void ResolveSceneReferences()
+        {
+            if (viewCamera == null)
+            {
+                viewCamera = Camera.main != null ? Camera.main : FindObjectOfType<Camera>();
+            }
+
+            if (weaponBinding == null)
+            {
+                weaponBinding = GetComponentInChildren<WeaponPrefabBinding>(true);
+            }
+
+            if (targetSurface == null)
+            {
+                targetSurface = FindObjectOfType<TargetImpactSurface>();
+            }
+
+            if (tracerRoot == null)
+            {
+                var root = new GameObject("TracerRoot_training-rifle").transform;
+                root.SetParent(transform, false);
+                root.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.TracerRoot";
+                tracerRoot = root;
+            }
+        }
+
+        void HandleInputCommand(XRTrainingInputCommandEvent evt)
+        {
+            if (evt.SourceScreen != ScreenId.ZeroingHud)
+            {
+                return;
+            }
+
+            switch (evt.CommandType)
+            {
+                case XRTrainingInputCommandType.Trigger:
+                    FireCurrentWeapon();
+                    break;
+                case XRTrainingInputCommandType.Reload:
+                    ApplyStateResult(weaponService.Reload(SessionId));
+                    break;
+                case XRTrainingInputCommandType.SwitchShoulder:
+                    ApplyStateResult(weaponService.ToggleShoulder(SessionId));
+                    break;
+            }
+        }
+
+        void UpdateAimModeFromInput()
+        {
+            if (input == null || !hasCurrentState)
+            {
+                return;
+            }
+
+            var desired = input.AimHeld ? WeaponAimMode.AimDownSights : WeaponAimMode.HipFire;
+            if (desired != currentState.AimMode)
+            {
+                ApplyStateResult(weaponService.SetAimMode(SessionId, desired));
+            }
+        }
+
+        void UpdateGripState()
+        {
+            if (weaponService == null)
+            {
+                return;
+            }
+
+            var twoHandGripActive = ResolveTwoHandGripActive();
+            var stability = ResolveGripStability(twoHandGripActive);
+            ApplyStateResult(weaponService.SetGripState(SessionId, twoHandGripActive, stability));
+        }
+
+        void UpdateNoVrPose(float deltaTime)
+        {
+            if (!initialized || viewCamera == null || weaponBinding == null || !hasCurrentState)
+            {
+                return;
+            }
+
+            if (ShouldUseVrPoseSources())
+            {
+                UpdateVrPose();
+                return;
+            }
+
+            var isAds = currentState.AimMode == WeaponAimMode.AimDownSights;
+            if (!isAds)
+            {
+                var turnAxis = input != null ? input.TurnAxis : Vector2.zero;
+                yaw += turnAxis.x * lookDegreesPerSecond * deltaTime;
+                pitch = Mathf.Clamp(pitch - turnAxis.y * lookDegreesPerSecond * deltaTime, -55f, 70f);
+            }
+
+            var moveAxis = input != null ? input.MoveAxis : Vector2.zero;
+            frontHandOffset = ClampFrontHandOffset(frontHandOffset + moveAxis * frontHandAdjustSpeed * deltaTime);
+
+            var baseRotation = Quaternion.Euler(pitch, yaw, 0f);
+            var shoulderLocal = currentState.ShoulderSide == ShoulderSide.Right ? rightShoulderLocal : leftShoulderLocal;
+            var rearHand = headPosition + baseRotation * shoulderLocal;
+            var frontHand = rearHand + baseRotation * new Vector3(frontHandOffset.x, frontHandOffset.y, 0.78f);
+            var direction = (frontHand - rearHand).sqrMagnitude > 0.0001f
+                ? (frontHand - rearHand).normalized
+                : baseRotation * Vector3.forward;
+
+            var weaponRotation = Quaternion.LookRotation(direction, Vector3.up) * Quaternion.Euler(-recoilPitch, 0f, 0f);
+            weaponBinding.transform.SetPositionAndRotation(rearHand + recoilOffset, weaponRotation);
+
+            if (isAds && weaponBinding.AimLinePoint != null)
+            {
+                var aim = weaponBinding.AimLinePoint;
+                viewCamera.transform.SetPositionAndRotation(
+                    aim.position - aim.forward * 0.08f + aim.up * 0.012f,
+                    Quaternion.LookRotation(aim.forward, aim.up));
+                viewCamera.fieldOfView = Mathf.Lerp(viewCamera.fieldOfView, adsFieldOfView, 0.35f);
+            }
+            else
+            {
+                viewCamera.transform.SetPositionAndRotation(headPosition, baseRotation);
+                viewCamera.fieldOfView = Mathf.Lerp(viewCamera.fieldOfView, hipFieldOfView, 0.35f);
+            }
+        }
+
+        void UpdateVrPose()
+        {
+            var headCamera = headPoseSource.GetComponent<Camera>();
+            if (headCamera != null && headCamera.gameObject.activeInHierarchy)
+            {
+                viewCamera = headCamera;
+            }
+
+            headPosition = headPoseSource.position;
+            var rearHand = rearHandPoseSource.position;
+            var frontHand = frontHandPoseSource.position;
+            var direction = (frontHand - rearHand).sqrMagnitude > 0.0001f
+                ? (frontHand - rearHand).normalized
+                : headPoseSource.forward;
+
+            var up = Vector3.ProjectOnPlane(headPoseSource.up, direction);
+            if (up.sqrMagnitude < 0.0001f)
+            {
+                up = Vector3.up;
+            }
+
+            var weaponRotation = Quaternion.LookRotation(direction, up.normalized) * Quaternion.Euler(-recoilPitch, 0f, 0f);
+            weaponBinding.transform.SetPositionAndRotation(rearHand + recoilOffset, weaponRotation);
+
+            if (currentState.AimMode == WeaponAimMode.AimDownSights && weaponBinding.AimLinePoint != null)
+            {
+                var aim = weaponBinding.AimLinePoint;
+                viewCamera.transform.SetPositionAndRotation(
+                    aim.position - aim.forward * 0.08f + aim.up * 0.012f,
+                    Quaternion.LookRotation(aim.forward, aim.up));
+                viewCamera.fieldOfView = Mathf.Lerp(viewCamera.fieldOfView, adsFieldOfView, 0.35f);
+            }
+            else
+            {
+                viewCamera.transform.SetPositionAndRotation(headPoseSource.position, headPoseSource.rotation);
+                viewCamera.fieldOfView = Mathf.Lerp(viewCamera.fieldOfView, hipFieldOfView, 0.35f);
+            }
+        }
+
+        bool ShouldUseVrPoseSources()
+        {
+            return preferVrPoseSources &&
+                   headPoseSource != null &&
+                   rearHandPoseSource != null &&
+                   frontHandPoseSource != null &&
+                   headPoseSource.gameObject.activeInHierarchy &&
+                   rearHandPoseSource.gameObject.activeInHierarchy &&
+                   frontHandPoseSource.gameObject.activeInHierarchy;
+        }
+
+        bool ResolveTwoHandGripActive()
+        {
+            if (!ShouldUseVrPoseSources())
+            {
+                return true;
+            }
+
+            return rearHandPoseSource.gameObject.activeInHierarchy && frontHandPoseSource.gameObject.activeInHierarchy;
+        }
+
+        float ResolveGripStability(bool twoHandGripActive)
+        {
+            if (!twoHandGripActive)
+            {
+                return 0.35f;
+            }
+
+            if (ShouldUseVrPoseSources())
+            {
+                var handDistance = Vector3.Distance(rearHandPoseSource.position, frontHandPoseSource.position);
+                return Mathf.Clamp01(1f - Mathf.Abs(handDistance - 0.78f) / 0.45f);
+            }
+
+            return Mathf.Clamp01(1f - frontHandOffset.magnitude / 0.32f);
+        }
+
+        bool FireCurrentWeapon()
+        {
+            if (weaponBinding == null || weaponBinding.MuzzlePoint == null)
+            {
+                return false;
+            }
+
+            var muzzle = weaponBinding.MuzzlePoint.position;
+            var direction = ResolveAimDirection();
+            var hit = Physics.Raycast(muzzle, direction, out var raycastHit, MaxShotDistance);
+            var hitPoint = hit ? raycastHit.point : muzzle + direction * 100f;
+            var hitObjectId = hit ? ResolveTestId(raycastHit.collider.transform) : string.Empty;
+
+            var fire = weaponService.Fire(new WeaponFireInputDto
+            {
+                SessionId = SessionId,
+                MuzzlePosition = muzzle,
+                WeaponPosition = weaponBinding.transform.position,
+                AimDirection = direction,
+                Stability01 = currentState.Stability01,
+                TwoHandGripActive = currentState.TwoHandGripActive,
+                AimMode = currentState.AimMode,
+                ShoulderSide = currentState.ShoulderSide,
+                Hit = hit,
+                HitPoint = hitPoint,
+                HitObjectId = hitObjectId
+            });
+
+            lastShot = fire.Data;
+            var state = weaponService.GetState(SessionId);
+            if (state.Success)
+            {
+                currentState = state.Data;
+            }
+
+            if (!fire.Success)
+            {
+                return false;
+            }
+
+            SpawnTracer(muzzle, hitPoint);
+            RecordImpactIfNeeded(raycastHit, hit);
+            ApplyRecoil();
+            return true;
+        }
+
+        void RecordImpactIfNeeded(RaycastHit raycastHit, bool hit)
+        {
+            if (!hit)
+            {
+                return;
+            }
+
+            var surface = raycastHit.collider.GetComponent<TargetImpactSurface>();
+            if (surface == null && targetSurface != null && raycastHit.collider.transform == targetSurface.transform)
+            {
+                surface = targetSurface;
+            }
+
+            if (surface != null)
+            {
+                surface.TryRecordWorldPoint(raycastHit.point, out _);
+            }
+        }
+
+        Vector3 ResolveAimDirection()
+        {
+            if (weaponBinding != null && weaponBinding.AimLinePoint != null)
+            {
+                return weaponBinding.AimLinePoint.forward.normalized;
+            }
+
+            if (weaponBinding != null && weaponBinding.MuzzlePoint != null)
+            {
+                return weaponBinding.MuzzlePoint.forward.normalized;
+            }
+
+            return viewCamera != null ? viewCamera.transform.forward : Vector3.forward;
+        }
+
+        void SpawnTracer(Vector3 start, Vector3 end)
+        {
+            if (tracerRoot == null)
+            {
+                return;
+            }
+
+            var tracer = new GameObject($"Tracer_training-rifle_{++tracerCounter:000}");
+            tracer.transform.SetParent(tracerRoot, true);
+            tracer.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Tracer";
+            var line = tracer.AddComponent<LineRenderer>();
+            line.useWorldSpace = true;
+            line.positionCount = 2;
+            line.SetPosition(0, start);
+            line.SetPosition(1, end);
+            line.startWidth = 0.025f;
+            line.endWidth = 0.006f;
+            line.numCapVertices = 4;
+            line.material = tracerMaterial;
+            line.startColor = new Color(1f, 0.86f, 0.28f, 1f);
+            line.endColor = new Color(1f, 0.22f, 0.06f, 0.2f);
+            tracer.AddComponent<TimedSelfDestruct>().Configure(0.18f);
+        }
+
+        void ApplyRecoil()
+        {
+            recoilPitch = Mathf.Min(recoilPitch + 3.2f, 8f);
+            recoilOffset += -weaponBinding.transform.forward * 0.025f + Vector3.up * 0.012f;
+        }
+
+        void DecayRecoil(float deltaTime)
+        {
+            recoilPitch = Mathf.MoveTowards(recoilPitch, 0f, deltaTime * 18f);
+            recoilOffset = Vector3.MoveTowards(recoilOffset, Vector3.zero, deltaTime * 0.32f);
+        }
+
+        void ApplyStateResult(VRShooting.Contracts.ServiceResult<WeaponControlStateDto> result)
+        {
+            if (result.Success)
+            {
+                currentState = result.Data;
+                hasCurrentState = true;
+            }
+        }
+
+        static Vector2 ClampFrontHandOffset(Vector2 value)
+        {
+            value.x = Mathf.Clamp(value.x, -0.18f, 0.18f);
+            value.y = Mathf.Clamp(value.y, -0.14f, 0.14f);
+            return value;
+        }
+
+        static float NormalizePitch(float value)
+        {
+            return value > 180f ? value - 360f : value;
+        }
+
+        static string ResolveTestId(Transform transform)
+        {
+            var current = transform;
+            while (current != null)
+            {
+                var id = current.GetComponent<SceneTestId>();
+                if (id != null)
+                {
+                    return id.Id;
+                }
+
+                current = current.parent;
+            }
+
+            return transform.name;
+        }
+
+        static Material CreateTracerMaterial()
+        {
+            var shader = Shader.Find("Sprites/Default") ?? Shader.Find("Universal Render Pipeline/Unlit") ?? Shader.Find("Standard");
+            var material = new Material(shader) { name = "Runtime_Tracer_training-rifle" };
+            material.color = new Color(1f, 0.72f, 0.12f, 1f);
+            return material;
+        }
+
+        private void OnGUI()
+        {
+            if (!showDebugOverlay || !initialized)
+            {
+                return;
+            }
+
+            const int width = 420;
+            GUI.Box(new Rect(12, 12, width, 124), string.Empty);
+            GUI.Label(new Rect(24, 22, width - 20, 22), "TASK005 FIRST PERSON WEAPON");
+            GUI.Label(new Rect(24, 44, width - 20, 22),
+                $"MAG {currentState.CurrentMagazine}/3  RES {currentState.ReserveAmmo}  READY {currentState.CanShoot}");
+            GUI.Label(new Rect(24, 66, width - 20, 22),
+                $"MODE {currentState.AimMode}  SHOULDER {currentState.ShoulderSide}  STABILITY {currentState.Stability01:0.00}");
+            GUI.Label(new Rect(24, 88, width - 20, 22),
+                "Mouse/Arrows look, WASD front hand, RMB/Shift ADS, LMB/F fire, R reload, Q shoulder");
+            GUI.Label(new Rect(24, 110, width - 20, 22),
+                lastShot.IsValidShot ? $"LAST SHOT {(lastShot.Hit ? "HIT" : "MISS")} {lastShot.HitObjectId}" : "LAST SHOT none");
+        }
+    }
+}
