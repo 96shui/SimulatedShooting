@@ -17,6 +17,7 @@ namespace VRShooting.Application
         readonly IAmmoService ammo;
         readonly IWeaponControlService weaponControl;
         readonly List<WeaponShotResultDto> impactRecords = new List<WeaponShotResultDto>();
+        int currentRound = 1;
 
         public ZeroingHudService(
             IGameEventBus eventBus,
@@ -36,6 +37,7 @@ namespace VRShooting.Application
             eventBus.Subscribe<ShoulderChangedEvent>(evt => PublishIfCurrent(evt.SessionId));
             eventBus.Subscribe<WeaponStateChangedEvent>(evt => PublishIfCurrent(evt.State.SessionId));
             eventBus.Subscribe<WeaponShotResultEvent>(OnShotResult);
+            eventBus.Subscribe<ZeroingRoundStartedEvent>(OnZeroingRoundStarted);
         }
 
         public event Action<HudDto> HudUpdated;
@@ -95,7 +97,15 @@ namespace VRShooting.Application
             }
 
             impactRecords.Clear();
+            currentRound = 1;
             PublishIfCurrent(evt.Session.SessionId);
+        }
+
+        void OnZeroingRoundStarted(ZeroingRoundStartedEvent evt)
+        {
+            currentRound = evt.Session.CurrentRound;
+            impactRecords.Clear();
+            PublishIfCurrent(evt.SessionId);
         }
 
         void OnShotResult(WeaponShotResultEvent evt)
@@ -142,7 +152,7 @@ namespace VRShooting.Application
         {
             return new[]
             {
-                Line("round", "轮次", "1/" + TotalRounds, HudSeverity.Normal),
+                Line("round", "轮次", currentRound + "/" + TotalRounds, HudSeverity.Normal),
                 Line("distance", "距离", DistanceLabel, HudSeverity.Info),
                 Line("ammo", "弹数", FormatAmmo(ammoDto), ammoDto.CurrentMagazine == 0 ? HudSeverity.Warning : HudSeverity.Normal),
                 Line("stability", "稳定度", Math.Round(Clamp01(stability01) * 100f) + "%", stability01 >= 0.7f ? HudSeverity.Success : HudSeverity.Warning),

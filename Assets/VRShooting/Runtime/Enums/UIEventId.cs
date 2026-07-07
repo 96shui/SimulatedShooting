@@ -17,6 +17,8 @@ namespace VRShooting.Common
         Mode_SelectUrban,
         Mode_Confirm,
         Zeroing_Start,
+        Zeroing_ApplyAdjustment,
+        Zeroing_NextRound,
         Common_Back,
         Common_Retry,
         Common_Apply,
