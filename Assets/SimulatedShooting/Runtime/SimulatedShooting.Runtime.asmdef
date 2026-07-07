@@ -1,0 +1,6 @@
+{
+  "name": "SimulatedShooting.Runtime",
+  "rootNamespace": "SimulatedShooting",
+  "references": [],
+  "autoReferenced": true
+}

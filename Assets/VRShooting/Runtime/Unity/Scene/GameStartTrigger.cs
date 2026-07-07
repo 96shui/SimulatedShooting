@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using VRShooting.Application;
+using PlayerBehaviour = VRShooting.Unity.Player.Player;
 
 namespace VRShooting.Unity.Scene
 {
@@ -45,6 +46,11 @@ namespace VRShooting.Unity.Scene
 
         void OnTriggerEnter(Collider other)
         {
+            if (!IsPlayerCollider(other))
+            {
+                return;
+            }
+
             isPlayerInside = true;
 
             if (canvasChild != null)
@@ -55,12 +61,28 @@ namespace VRShooting.Unity.Scene
 
         void OnTriggerExit(Collider other)
         {
+            if (!IsPlayerCollider(other))
+            {
+                return;
+            }
+
             isPlayerInside = false;
 
             if (canvasChild != null)
             {
                 canvasChild.SetActive(false);
             }
+        }
+
+        static bool IsPlayerCollider(Collider other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return other.GetComponentInParent<PlayerBehaviour>() != null
+                || other.GetComponent<CharacterController>() != null;
         }
     }
 }
