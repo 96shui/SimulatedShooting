@@ -15,7 +15,8 @@ namespace VRShooting.Application
             IXRTrainingInput trainingInput,
             IWeaponControlService weaponControl,
             IWeaponService weapons,
-            IAmmoService ammo)
+            IAmmoService ammo,
+            IHUDService hud)
         {
             EventBus = eventBus;
             Router = router;
@@ -24,6 +25,7 @@ namespace VRShooting.Application
             WeaponControl = weaponControl;
             Weapons = weapons;
             Ammo = ammo;
+            Hud = hud;
         }
 
         public IGameEventBus EventBus { get; }
@@ -40,6 +42,8 @@ namespace VRShooting.Application
 
         public IAmmoService Ammo { get; }
 
+        public IHUDService Hud { get; }
+
         public static ApplicationServices CreateDefault()
         {
             var eventBus = new GameEventBus();
@@ -47,6 +51,7 @@ namespace VRShooting.Application
             var trainingSessions = new TrainingSessionService(eventBus);
             var trainingInput = new InputSystemXRTrainingInput();
             var weaponControl = new WeaponControlService(eventBus);
+            var hud = new ZeroingHudService(eventBus, trainingSessions, weaponControl, weaponControl);
             return new ApplicationServices(
                 eventBus,
                 router,
@@ -54,7 +59,8 @@ namespace VRShooting.Application
                 trainingInput,
                 weaponControl,
                 weaponControl,
-                weaponControl);
+                weaponControl,
+                hud);
         }
     }
 }

@@ -1,6 +1,8 @@
 using System;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
+using UnityEngine.TextCore.LowLevel;
 using UnityEngine.UI;
 using VRShooting.Application;
 using VRShooting.Application.Events;
@@ -21,14 +23,29 @@ namespace VRShooting.Unity.UI
         [SerializeField]
         bool buildOnAwake = true;
 
+        [SerializeField]
+        TMP_FontAsset fontAsset;
+
         ApplicationServices services;
         IDisposable screenSubscription;
         RectTransform mainMenuScreen;
         RectTransform zeroingBriefingScreen;
+        RectTransform zeroingHudScreen;
+        RectTransform zeroingStabilityFill;
         Button openZeroingButton;
         Button startButton;
         Button backButton;
-        static TMP_FontAsset uiFont;
+        TextMeshProUGUI zeroingRoundText;
+        TextMeshProUGUI zeroingDistanceText;
+        TextMeshProUGUI zeroingAmmoText;
+        TextMeshProUGUI zeroingStabilityText;
+        TextMeshProUGUI zeroingImpactRecordText;
+        TextMeshProUGUI zeroingShoulderText;
+        TextMeshProUGUI zeroingPromptText;
+        Image zeroingPromptBackground;
+#if UNITY_EDITOR
+        static TMP_FontAsset generatedEditorFontAsset;
+#endif
 
         public ScreenId ActiveScreen { get; private set; } = ScreenId.MainMenu;
 
@@ -53,6 +70,10 @@ namespace VRShooting.Unity.UI
         void OnDestroy()
         {
             screenSubscription?.Dispose();
+            if (services?.Hud != null)
+            {
+                services.Hud.HudUpdated -= RenderHud;
+            }
         }
 
         public void Initialize(ApplicationServices applicationServices)
@@ -63,6 +84,7 @@ namespace VRShooting.Unity.UI
             ClearChildren(transform);
             BuildCanvas();
             SubscribeRouter();
+            SubscribeHud();
             ShowScreen(services.Router.Current);
         }
 
@@ -70,6 +92,12 @@ namespace VRShooting.Unity.UI
         {
             screenSubscription?.Dispose();
             screenSubscription = services.EventBus.Subscribe<ScreenChangedEvent>(evt => ShowScreen(evt.CurrentScreen));
+        }
+
+        void SubscribeHud()
+        {
+            services.Hud.HudUpdated -= RenderHud;
+            services.Hud.HudUpdated += RenderHud;
         }
 
         void BuildCanvas()
@@ -106,12 +134,22 @@ namespace VRShooting.Unity.UI
 
             zeroingBriefingScreen = CreateScreen("Screen_ZeroingBriefing");
             BuildZeroingBriefing(zeroingBriefingScreen);
+
+            zeroingHudScreen = CreateHudScreen("Screen_ZeroingHud");
+            BuildZeroingHud(zeroingHudScreen);
         }
 
         RectTransform CreateScreen(string name)
         {
             var screen = CreateRect(name, transform as RectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             AddImage(screen.gameObject, new Color32(7, 16, 13, 242));
+            AddTestId(screen.gameObject, name);
+            return screen;
+        }
+
+        RectTransform CreateHudScreen(string name)
+        {
+            var screen = CreateRect(name, transform as RectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             AddTestId(screen.gameObject, name);
             return screen;
         }
@@ -183,6 +221,63 @@ namespace VRShooting.Unity.UI
             AddLabel(parent, "Text_ZeroingBriefing_TargetSize", "50cm x 50cm", 20, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(930, 700), new Vector2(1230, 740), new Color32(77, 213, 255, 255));
         }
 
+        void BuildZeroingHud(RectTransform parent)
+        {
+            AddPanel(parent, "Panel_ZeroingHud_Round", new Vector2(60, 60), new Vector2(350, 175), new Color32(12, 28, 36, 205), new Color32(45, 156, 255, 255));
+            AddLabel(parent, "Text_ZeroingHud_RoundIcon", "◎", 46, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(85, 82), new Vector2(150, 150), new Color32(143, 217, 255, 255));
+            zeroingRoundText = AddLabel(parent, "Text_ZeroingHud_Round", "轮次 1/3", 30, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(150, 78), new Vector2(325, 155), new Color32(231, 242, 235, 255));
+
+            AddPanel(parent, "Panel_ZeroingHud_Distance", new Vector2(810, 75), new Vector2(1110, 155), new Color32(12, 28, 36, 205), new Color32(45, 156, 255, 255));
+            zeroingDistanceText = AddLabel(parent, "Text_ZeroingHud_Distance", "距离 100m", 30, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(835, 88), new Vector2(1085, 145), new Color32(143, 217, 255, 255));
+
+            AddPanel(parent, "Panel_ZeroingHud_Ammo", new Vector2(1530, 60), new Vector2(1810, 175), new Color32(12, 28, 36, 205), new Color32(45, 156, 255, 255));
+            zeroingAmmoText = AddLabel(parent, "Text_ZeroingHud_Ammo", "弹数 3/3", 30, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(1555, 78), new Vector2(1730, 155), new Color32(231, 242, 235, 255));
+            AddLabel(parent, "Text_ZeroingHud_AmmoIcon", "|||", 36, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(1725, 82), new Vector2(1792, 150), new Color32(143, 217, 255, 255));
+
+            var stabilityPanel = AddPanel(parent, "Hud_Zeroing_Stability", new Vector2(80, 785), new Vector2(555, 905), new Color32(12, 28, 36, 200), new Color32(45, 156, 255, 255));
+            AddLabel(stabilityPanel, "Text_ZeroingHud_StabilityLabel", "稳定度", 24, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(28, 14), new Vector2(-28, -70), new Color32(231, 242, 235, 255), true);
+            zeroingStabilityText = AddLabel(stabilityPanel, "Text_ZeroingHud_StabilityValue", "100%", 20, FontStyles.Bold, TextAlignmentOptions.Right, new Vector2(28, 14), new Vector2(-28, -70), new Color32(200, 255, 106, 255), true);
+            var stabilityBar = CreateRect("Hud_Zeroing_StabilityBar", stabilityPanel, Vector2.zero, Vector2.zero, new Vector2(28, 70), new Vector2(420, 92));
+            AddTestId(stabilityBar.gameObject, "Hud_Zeroing_StabilityBar");
+            AddImage(stabilityBar.gameObject, new Color32(33, 64, 75, 230));
+            zeroingStabilityFill = CreateRect("Hud_Zeroing_StabilityFill", stabilityBar, Vector2.zero, new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
+            AddTestId(zeroingStabilityFill.gameObject, "Hud_Zeroing_StabilityFill");
+            AddImage(zeroingStabilityFill.gameObject, new Color32(89, 224, 255, 245));
+
+            var recordPanel = AddPanel(parent, "Hud_Zeroing_ImpactRecord", new Vector2(1430, 300), new Vector2(1840, 845), new Color32(12, 28, 36, 190), new Color32(45, 156, 255, 255));
+            AddLabel(recordPanel, "Text_ZeroingHud_ImpactTitle", "弹着记录", 30, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(35, 25), new Vector2(-35, -465), new Color32(143, 217, 255, 255), true);
+            BuildHudTargetPlaceholder(recordPanel);
+            zeroingImpactRecordText = AddLabel(recordPanel, "Text_ZeroingHud_ImpactRecord", "待记录 3 发", 26, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(35, 430), new Vector2(-35, -28), new Color32(77, 213, 255, 255), true);
+
+            AddPanel(parent, "Panel_ZeroingHud_Shoulder", new Vector2(80, 925), new Vector2(390, 995), new Color32(12, 28, 36, 190), new Color32(56, 84, 71, 255));
+            zeroingShoulderText = AddLabel(parent, "Text_ZeroingHud_Shoulder", "肩侧 右肩", 24, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(95, 936), new Vector2(375, 985), new Color32(231, 242, 235, 255));
+
+            var promptPanel = AddPanel(parent, "Panel_ZeroingHud_Prompt", new Vector2(760, 880), new Vector2(1160, 960), new Color32(200, 255, 106, 230), new Color32(247, 185, 85, 255));
+            zeroingPromptBackground = promptPanel.GetComponent<Image>();
+            zeroingPromptText = AddLabel(promptPanel, "Text_ZeroingHud_Prompt", "稳定据枪", 42, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(18, 10), new Vector2(-18, -10), new Color32(7, 16, 13, 255), true);
+        }
+
+        void BuildHudTargetPlaceholder(RectTransform parent)
+        {
+            var target = CreateRect("Placeholder_ZeroingHud_TargetPaper", parent, Vector2.zero, Vector2.zero, new Vector2(65, 105), new Vector2(345, 395));
+            AddTestId(target.gameObject, "Placeholder_ZeroingHud_TargetPaper");
+            AddImage(target.gameObject, new Color32(7, 16, 13, 145));
+            var outline = target.gameObject.AddComponent<Outline>();
+            outline.effectColor = new Color32(231, 242, 235, 180);
+            outline.effectDistance = new Vector2(2f, -2f);
+
+            var center = new Vector2(140f, 145f);
+            var sizes = new[] { 210f, 165f, 120f, 78f, 38f };
+            for (var i = 0; i < sizes.Length; i++)
+            {
+                var ring = CreateRect("Image_ZeroingHud_TargetRing_" + i, target, Vector2.zero, Vector2.zero, center - new Vector2(sizes[i] * 0.5f, sizes[i] * 0.5f), center + new Vector2(sizes[i] * 0.5f, sizes[i] * 0.5f));
+                AddImage(ring.gameObject, i == sizes.Length - 1 ? new Color32(231, 242, 235, 230) : new Color32(0, 0, 0, 0));
+                var ringOutline = ring.gameObject.AddComponent<Outline>();
+                ringOutline.effectColor = new Color32(231, 242, 235, 180);
+                ringOutline.effectDistance = new Vector2(1.5f, 1.5f);
+            }
+        }
+
         void OnOpenZeroingClicked()
         {
             var result = services.Router.HandleUIEvent(UIEventId.MainMenu_OpenZeroing, ScreenId.MainMenu);
@@ -214,6 +309,13 @@ namespace VRShooting.Unity.UI
             if (!start.Success)
             {
                 LastError = start.Message;
+                return;
+            }
+
+            var weapon = services.WeaponControl.StartSession(start.Data.SessionId, start.Data.WeaponId, start.Data.Mode);
+            if (!weapon.Success)
+            {
+                LastError = weapon.Message;
                 return;
             }
 
@@ -251,6 +353,122 @@ namespace VRShooting.Unity.UI
             {
                 zeroingBriefingScreen.gameObject.SetActive(screen == ScreenId.ZeroingBriefing);
             }
+
+            if (zeroingHudScreen != null)
+            {
+                zeroingHudScreen.gameObject.SetActive(screen == ScreenId.ZeroingHud);
+            }
+
+            if (screen == ScreenId.ZeroingHud)
+            {
+                RefreshHud();
+            }
+        }
+
+        void RefreshHud()
+        {
+            if (services == null || !services.TrainingSessions.HasActiveSession)
+            {
+                return;
+            }
+
+            var result = services.Hud.GetHud(services.TrainingSessions.Current.SessionId);
+            if (result.Success)
+            {
+                RenderHud(result.Data);
+            }
+        }
+
+        void RenderHud(HudDto hud)
+        {
+            if (hud.HudType != HudType.Zeroing)
+            {
+                return;
+            }
+
+            var round = FindLine(hud, "round");
+            var distance = FindLine(hud, "distance");
+            var ammo = FindLine(hud, "ammo");
+            var stability = FindLine(hud, "stability");
+            var impactRecord = FindLine(hud, "impactRecord");
+            var shoulder = FindLine(hud, "shoulder");
+
+            SetLabel(zeroingRoundText, round, "轮次 1/3");
+            SetLabel(zeroingDistanceText, distance, "距离 100m");
+            SetLabel(zeroingAmmoText, ammo, "弹数 3/3");
+            SetLabel(zeroingStabilityText, stability, "100%", false);
+            SetLabel(zeroingImpactRecordText, impactRecord, "待记录 3 发", false);
+            SetLabel(zeroingShoulderText, shoulder, "肩侧 右肩");
+
+            var ratio = ParsePercent01(stability.Value);
+            if (zeroingStabilityFill != null)
+            {
+                zeroingStabilityFill.anchorMax = new Vector2(ratio, 1f);
+            }
+
+            var prompt = hud.Prompts != null && hud.Prompts.Count > 0 ? hud.Prompts[0].Text : (hud.CanShoot ? "稳定据枪" : "禁止射击");
+            if (zeroingPromptText != null)
+            {
+                zeroingPromptText.text = prompt;
+                zeroingPromptText.color = hud.CanShoot ? new Color32(7, 16, 13, 255) : new Color32(255, 225, 180, 255);
+            }
+
+            if (zeroingPromptBackground != null)
+            {
+                zeroingPromptBackground.color = hud.CanShoot
+                    ? new Color32(200, 255, 106, 230)
+                    : new Color32(50, 28, 24, 230);
+            }
+        }
+
+        static HudTextLineDto FindLine(HudDto hud, string key)
+        {
+            if (hud.TextLines == null)
+            {
+                return default;
+            }
+
+            for (var i = 0; i < hud.TextLines.Count; i++)
+            {
+                if (hud.TextLines[i].Key == key)
+                {
+                    return hud.TextLines[i];
+                }
+            }
+
+            return default;
+        }
+
+        static void SetLabel(TextMeshProUGUI label, HudTextLineDto line, string fallback, bool includeLabel = true)
+        {
+            if (label == null)
+            {
+                return;
+            }
+
+            if (string.IsNullOrEmpty(line.Key))
+            {
+                label.text = fallback;
+                return;
+            }
+
+            label.text = includeLabel ? line.Label + " " + line.Value : line.Value;
+        }
+
+        static float ParsePercent01(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return 1f;
+            }
+
+            var normalized = value.Trim().TrimEnd('%');
+            if (!float.TryParse(normalized, NumberStyles.Float, CultureInfo.InvariantCulture, out var percent))
+            {
+                return 1f;
+            }
+
+            return Mathf.Clamp01(percent / 100f);
         }
 
         static RectTransform CreateRect(string name, Transform parent, Vector2 anchorMin, Vector2 anchorMax, Vector2 offsetMin, Vector2 offsetMax)
@@ -288,7 +506,7 @@ namespace VRShooting.Unity.UI
             testId.SetId(id);
         }
 
-        static RectTransform AddPanel(RectTransform parent, string id, Vector2 min, Vector2 max, Color fill, Color stroke, string text = "")
+        RectTransform AddPanel(RectTransform parent, string id, Vector2 min, Vector2 max, Color fill, Color stroke, string text = "")
         {
             var panel = CreateRect(id, parent, Vector2.zero, Vector2.zero, min, max);
             AddImage(panel.gameObject, fill);
@@ -309,58 +527,143 @@ namespace VRShooting.Unity.UI
             return panel;
         }
 
-        static TextMeshProUGUI AddLabel(RectTransform parent, string id, string text, float size, FontStyles style, TextAlignmentOptions alignment, Vector2 min, Vector2 max, Color color, bool stretchOffsets = false)
+        TextMeshProUGUI AddLabel(RectTransform parent, string id, string text, float size, FontStyles style, TextAlignmentOptions alignment, Vector2 min, Vector2 max, Color color, bool stretchOffsets = false)
         {
             var label = CreateRect(id, parent, stretchOffsets ? Vector2.zero : Vector2.zero, stretchOffsets ? Vector2.one : Vector2.zero, min, max);
             AddTestId(label.gameObject, id);
             var tmp = label.gameObject.AddComponent<TextMeshProUGUI>();
-            var font = GetUIFont();
-            if (font != null)
+            var resolvedFont = ResolveFontAsset();
+            if (resolvedFont != null)
             {
-                tmp.font = font;
+                tmp.font = resolvedFont;
             }
 
             tmp.text = text;
             tmp.fontSize = size;
-            tmp.fontStyle = style;
+            // Synthetic bold on dense CJK SDF atlases can create blocky white halos.
+            tmp.fontStyle = style & ~FontStyles.Bold;
+            tmp.fontWeight = FontWeight.Regular;
             tmp.alignment = alignment;
             tmp.color = color;
+            tmp.extraPadding = true;
+            ResetTextMaterialEffects(tmp);
             tmp.enableWordWrapping = true;
             tmp.overflowMode = TextOverflowModes.Ellipsis;
             return tmp;
         }
 
-        static TMP_FontAsset GetUIFont()
+        static void ResetTextMaterialEffects(TextMeshProUGUI tmp)
         {
-            if (uiFont != null)
+            var sourceMaterial = tmp.fontSharedMaterial;
+            if (sourceMaterial == null)
             {
-                return uiFont;
+                return;
             }
 
-            var font = Font.CreateDynamicFontFromOSFont(new[]
+            var material = new Material(sourceMaterial)
             {
-                "Microsoft YaHei UI",
-                "Microsoft YaHei",
-                "SimHei",
-                "Noto Sans CJK SC",
-                "Arial Unicode MS"
-            }, 90);
+                name = sourceMaterial.name + " P1Clean"
+            };
 
-            if (font == null)
+            if (material.HasProperty(ShaderUtilities.ID_OutlineWidth))
+            {
+                material.SetFloat(ShaderUtilities.ID_OutlineWidth, 0f);
+            }
+
+            if (material.HasProperty(ShaderUtilities.ID_UnderlayOffsetX))
+            {
+                material.SetFloat(ShaderUtilities.ID_UnderlayOffsetX, 0f);
+            }
+
+            if (material.HasProperty(ShaderUtilities.ID_UnderlayOffsetY))
+            {
+                material.SetFloat(ShaderUtilities.ID_UnderlayOffsetY, 0f);
+            }
+
+            if (material.HasProperty(ShaderUtilities.ID_UnderlayDilate))
+            {
+                material.SetFloat(ShaderUtilities.ID_UnderlayDilate, 0f);
+            }
+
+            if (material.HasProperty(ShaderUtilities.ID_UnderlaySoftness))
+            {
+                material.SetFloat(ShaderUtilities.ID_UnderlaySoftness, 0f);
+            }
+
+            material.DisableKeyword(ShaderUtilities.Keyword_Outline);
+            material.DisableKeyword(ShaderUtilities.Keyword_Underlay);
+            tmp.fontSharedMaterial = material;
+            tmp.outlineWidth = 0f;
+        }
+
+        TMP_FontAsset ResolveFontAsset()
+        {
+#if UNITY_EDITOR
+            if (fontAsset == null)
+            {
+                fontAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/VRShooting/Art/Fonts/MSYH SDF.asset");
+            }
+
+            if (fontAsset == null || fontAsset.atlasPadding < 4)
+            {
+                var generatedFont = ResolveGeneratedEditorFontAsset();
+                if (generatedFont != null)
+                {
+                    return generatedFont;
+                }
+            }
+#endif
+
+            if (fontAsset != null)
+            {
+                return fontAsset;
+            }
+
+            return null;
+        }
+
+#if UNITY_EDITOR
+        static TMP_FontAsset ResolveGeneratedEditorFontAsset()
+        {
+            if (generatedEditorFontAsset != null)
+            {
+                return generatedEditorFontAsset;
+            }
+
+            var sourceFont = UnityEditor.AssetDatabase.LoadAssetAtPath<Font>("Assets/VRShooting/Art/Fonts/MSYH.TTC");
+            if (sourceFont == null)
+            {
+                sourceFont = Font.CreateDynamicFontFromOSFont(new[]
+                {
+                    "Microsoft YaHei UI",
+                    "Microsoft YaHei",
+                    "SimHei",
+                    "Noto Sans CJK SC",
+                    "Arial Unicode MS"
+                }, 90);
+            }
+
+            if (sourceFont == null)
             {
                 return null;
             }
 
-            uiFont = TMP_FontAsset.CreateFontAsset(font);
-            if (uiFont != null)
-            {
-                uiFont.atlasPopulationMode = AtlasPopulationMode.Dynamic;
-            }
-
-            return uiFont;
+            generatedEditorFontAsset = TMP_FontAsset.CreateFontAsset(
+                sourceFont,
+                90,
+                9,
+                GlyphRenderMode.SDFAA,
+                4096,
+                4096,
+                AtlasPopulationMode.Dynamic,
+                true);
+            generatedEditorFontAsset.name = "MSYH Runtime SDF";
+            generatedEditorFontAsset.atlasPopulationMode = AtlasPopulationMode.Dynamic;
+            return generatedEditorFontAsset;
         }
+#endif
 
-        static Button AddButton(RectTransform parent, string id, string label, Vector2 min, Vector2 max, bool primary)
+        Button AddButton(RectTransform parent, string id, string label, Vector2 min, Vector2 max, bool primary)
         {
             var rect = CreateRect(id, parent, Vector2.zero, Vector2.zero, min, max);
             AddTestId(rect.gameObject, id);
