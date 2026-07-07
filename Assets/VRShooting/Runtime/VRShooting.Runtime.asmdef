@@ -2,7 +2,9 @@
     "name": "VRShooting.Runtime",
     "rootNamespace": "VRShooting",
     "references": [
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "Unity.TextMeshPro",
+        "Unity.ugui"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -139,6 +139,9 @@ namespace VRShooting.Application
                         ReturnToScreen = ScreenId.MainMenu.ToString()
                     });
 
+                case UIEventId.Zeroing_Start:
+                    return Open(ScreenId.ZeroingHud, args);
+
                 case UIEventId.Common_Back:
                     return Back();
 

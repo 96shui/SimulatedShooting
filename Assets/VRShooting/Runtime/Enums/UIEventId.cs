@@ -16,6 +16,7 @@ namespace VRShooting.Common
         Mode_SelectTrench,
         Mode_SelectUrban,
         Mode_Confirm,
+        Zeroing_Start,
         Common_Back,
         Common_Retry,
         Common_Apply,
