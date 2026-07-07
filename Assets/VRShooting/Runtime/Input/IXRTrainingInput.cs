@@ -14,6 +14,10 @@ namespace VRShooting.Input
 
         bool SwitchShoulderPressed { get; }
 
+        bool AimPressed { get; }
+
+        bool AimHeld { get; }
+
         bool CommandMenuHeld { get; }
 
         Vector2 TurnAxis { get; }

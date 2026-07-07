@@ -27,6 +27,40 @@
 | HUD 元素 | `Hud_<HudType>_<Name>` | `Hud_Trench_Ammo` |
 | 素材占位 | `Placeholder_<ScreenId>_<Asset>` | `Placeholder_Armory_WeaponWall` |
 
+## 武器 Prefab 与场景绑定
+
+P1 训练武器必须在第一人称视角中可见，并提供稳定绑定点供 XR、无 VR 调试输入和 PlayMode Test 使用。
+
+| 类型 | 命名格式 | 示例 |
+|---|---|---|
+| 武器 Prefab | `Weapon_<WeaponId>_<Name>` | `Weapon_training-rifle_Blockout` |
+| 武器根节点 | `WeaponRoot_<WeaponId>` | `WeaponRoot_training-rifle` |
+| 后手握把 | `Grip_<WeaponId>_RearHand` | `Grip_training-rifle_RearHand` |
+| 前手握把 | `Grip_<WeaponId>_FrontHand` | `Grip_training-rifle_FrontHand` |
+| 枪托/肩托 | `Stock_<WeaponId>` | `Stock_training-rifle` |
+| 枪口 | `Muzzle_<WeaponId>` | `Muzzle_training-rifle` |
+| 瞄准线参考 | `AimLine_<WeaponId>` | `AimLine_training-rifle` |
+| 弹匣位置 | `Magazine_<WeaponId>` | `Magazine_training-rifle` |
+| 左肩参考点 | `Shoulder_<WeaponId>_Left` | `Shoulder_training-rifle_Left` |
+| 右肩参考点 | `Shoulder_<WeaponId>_Right` | `Shoulder_training-rifle_Right` |
+| 弹道/曳光实例 | `Tracer_<WeaponId>_<ShotIndex>` | `Tracer_training-rifle_001` |
+| 弹着反馈 | `Impact_<TargetId>_<ShotIndex>` | `Impact_ZeroingTarget_001` |
+
+关键武器对象必须带稳定测试 ID：
+
+- `ZeroingRange.Weapon.PlayerRoot`
+- `ZeroingRange.Weapon.TrainingRifle`
+- `ZeroingRange.Weapon.Grip.RearHand`
+- `ZeroingRange.Weapon.Grip.FrontHand`
+- `ZeroingRange.Weapon.Muzzle`
+- `ZeroingRange.Weapon.AimLine`
+- `ZeroingRange.Weapon.Shoulder.Left`
+- `ZeroingRange.Weapon.Shoulder.Right`
+- `ZeroingRange.Weapon.DebugInput`
+- `ZeroingRange.Weapon.TracerRoot`
+
+武器 Prefab 必须提供一个绑定脚本或等效组件，序列化引用枪口、瞄准线、前后手握把、肩侧参考点和弹匣位置。PlayMode Test 不应通过对象名猜测这些引用，而应读取绑定组件验证完整性。
+
 ## 测试 ID
 
 每个可交互 UI 和关键文本必须提供稳定测试 ID：
@@ -73,18 +107,37 @@ public interface IXRTrainingInput
     bool TriggerPressed { get; }
     bool ReloadPressed { get; }
     bool SwitchShoulderPressed { get; }
+    bool AimPressed { get; }
+    bool AimHeld { get; }
     bool CommandMenuHeld { get; }
     Vector2 TurnAxis { get; }
     Vector2 MoveAxis { get; }
 }
 ```
 
+第一人称武器姿态由场景层通过可替换姿态来源提供，不由玩法服务直接读取硬件设备：
+
+```csharp
+public interface IWeaponPoseInput
+{
+    bool RearHandActive { get; }
+    bool FrontHandActive { get; }
+    Pose HeadPose { get; }
+    Pose RearHandPose { get; }
+    Pose FrontHandPose { get; }
+}
+```
+
+`IXRTrainingInput` 负责按钮和轴命令，`IWeaponPoseInput` 负责头、后手、前手姿态。真实 XR、XR Device Simulator 和无 VR 调试替身都应能适配到这两个抽象入口。
+
 输入适配是 P1 基础能力：
 
 - 模拟输入、XR Device Simulator、键鼠调试输入和真实 XR 输入都必须适配到同一接口。
 - 服务层只消费抽象输入事件或命令，不直接读取具体手柄按键、键盘按键或设备 API。
-- PlayMode Test 必须能注入测试输入，覆盖确认、返回、扳机、换弹和左右肩切换。
+- PlayMode Test 必须能注入测试输入，覆盖确认、返回、扳机、换弹、左右肩切换和瞄准模式。
 - 真实 VR 设备到位前，无 VR 输入替身路径必须可完成 P1 100m 射校闭环。
+- 无 VR 调试输入必须能在 Editor Play Mode 中模拟头部视角、后手姿态、前手姿态和枪线变化。
+- 瞄准模式下，视觉相机或 ADS 代理必须对齐 `AimLine_*`，有效射击方向、可见弹道和命中计算必须使用同一枪线。
 
 ## 验收约束
 

@@ -13,6 +13,8 @@ namespace VRShooting.Input
 
         public Vector2 TurnAxis { get; init; }
 
+        public bool AimHeld { get; init; }
+
         public bool CommandMenuHeld { get; init; }
     }
 }

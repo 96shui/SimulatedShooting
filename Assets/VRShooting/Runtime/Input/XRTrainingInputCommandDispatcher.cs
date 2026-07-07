@@ -77,6 +77,18 @@ namespace VRShooting.Input
                 commandCount++;
             }
 
+            if (input.AimPressed)
+            {
+                Publish(XRTrainingInputCommandType.AimPressed, sourceScreen);
+                commandCount++;
+            }
+
+            if (input.AimHeld)
+            {
+                Publish(XRTrainingInputCommandType.AimHeld, sourceScreen);
+                commandCount++;
+            }
+
             if (input.CommandMenuHeld)
             {
                 Publish(XRTrainingInputCommandType.CommandMenuHeld, sourceScreen);
@@ -104,6 +116,7 @@ namespace VRShooting.Input
                 SourceScreen = sourceScreen,
                 MoveAxis = input.MoveAxis,
                 TurnAxis = input.TurnAxis,
+                AimHeld = input.AimHeld,
                 CommandMenuHeld = input.CommandMenuHeld
             });
         }

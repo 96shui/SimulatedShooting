@@ -1,6 +1,8 @@
 {
   "name": "SimulatedShooting.Runtime",
   "rootNamespace": "SimulatedShooting",
-  "references": [],
+  "references": [
+    "VRShooting.Runtime"
+  ],
   "autoReferenced": true
 }

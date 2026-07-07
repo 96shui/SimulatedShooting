@@ -79,5 +79,33 @@ namespace VRShooting.Tests.PlayMode.Input
                 },
                 received);
         }
+
+        [UnityTest]
+        public IEnumerator Screen05_NoVrInputSubstitute_AimInput_IsPublishedForWeaponControl()
+        {
+            var input = new ManualXRTrainingInput();
+            var bus = new GameEventBus();
+            var dispatcher = new XRTrainingInputCommandDispatcher(input, bus);
+            var received = new List<XRTrainingInputCommandType>();
+            bus.Subscribe<XRTrainingInputCommandEvent>(evt => received.Add(evt.CommandType));
+
+            input.Press(XRTrainingInputButton.Aim);
+            var result = dispatcher.ProcessFrame(new XRTrainingInputDispatchContext
+            {
+                SourceScreen = ScreenId.ZeroingHud
+            });
+            input.AdvanceFrame();
+
+            yield return null;
+
+            Assert.IsTrue(result.Success);
+            CollectionAssert.AreEqual(
+                new[]
+                {
+                    XRTrainingInputCommandType.AimPressed,
+                    XRTrainingInputCommandType.AimHeld
+                },
+                received);
+        }
     }
 }
