@@ -23,6 +23,7 @@ namespace VRShooting.Tests.EditMode.Input
             input.Press(XRTrainingInputButton.Trigger);
             input.Press(XRTrainingInputButton.Reload);
             input.Press(XRTrainingInputButton.SwitchShoulder);
+            input.Press(XRTrainingInputButton.Aim);
             input.Press(XRTrainingInputButton.CommandMenu);
             input.SetAxes(new Vector2(0.25f, 0.5f), new Vector2(-0.5f, 0.75f));
 
@@ -31,6 +32,8 @@ namespace VRShooting.Tests.EditMode.Input
             Assert.IsTrue(input.TriggerPressed);
             Assert.IsTrue(input.ReloadPressed);
             Assert.IsTrue(input.SwitchShoulderPressed);
+            Assert.IsTrue(input.AimPressed);
+            Assert.IsTrue(input.AimHeld);
             Assert.IsTrue(input.CommandMenuHeld);
             Assert.AreEqual(new Vector2(0.25f, 0.5f), input.MoveAxis);
             Assert.AreEqual(new Vector2(-0.5f, 0.75f), input.TurnAxis);
@@ -42,6 +45,8 @@ namespace VRShooting.Tests.EditMode.Input
             Assert.IsFalse(input.TriggerPressed);
             Assert.IsFalse(input.ReloadPressed);
             Assert.IsFalse(input.SwitchShoulderPressed);
+            Assert.IsFalse(input.AimPressed);
+            Assert.IsFalse(input.AimHeld);
             Assert.IsFalse(input.CommandMenuHeld);
             Assert.AreEqual(Vector2.zero, input.MoveAxis);
             Assert.AreEqual(Vector2.zero, input.TurnAxis);
@@ -114,6 +119,29 @@ namespace VRShooting.Tests.EditMode.Input
             dispatcher.ProcessFrame(new XRTrainingInputDispatchContext { SourceScreen = ScreenId.ZeroingHud });
 
             Assert.AreEqual(1, triggerCount);
+        }
+
+        [Test]
+        public void Screen05_NoVrInputSubstitute_AimButtonPublishesAimCommands()
+        {
+            var input = new ManualXRTrainingInput();
+            var bus = new GameEventBus();
+            var dispatcher = new XRTrainingInputCommandDispatcher(input, bus);
+            var received = new List<XRTrainingInputCommandEvent>();
+            bus.Subscribe<XRTrainingInputCommandEvent>(received.Add);
+
+            input.Press(XRTrainingInputButton.Aim);
+
+            var result = dispatcher.ProcessFrame(new XRTrainingInputDispatchContext
+            {
+                SourceScreen = ScreenId.ZeroingHud
+            });
+
+            Assert.IsTrue(result.Success);
+            Assert.AreEqual(2, result.Data);
+            Assert.AreEqual(XRTrainingInputCommandType.AimPressed, received[0].CommandType);
+            Assert.AreEqual(XRTrainingInputCommandType.AimHeld, received[1].CommandType);
+            Assert.IsTrue(received[1].AimHeld);
         }
     }
 }

@@ -10,6 +10,7 @@ namespace VRShooting.Input
         bool triggerHeld;
         bool reloadHeld;
         bool switchShoulderHeld;
+        bool aimHeld;
         bool commandMenuHeld;
 
         bool confirmPressed;
@@ -17,6 +18,7 @@ namespace VRShooting.Input
         bool triggerPressed;
         bool reloadPressed;
         bool switchShoulderPressed;
+        bool aimPressed;
 
         public bool ConfirmPressed => confirmPressed;
 
@@ -27,6 +29,10 @@ namespace VRShooting.Input
         public bool ReloadPressed => reloadPressed;
 
         public bool SwitchShoulderPressed => switchShoulderPressed;
+
+        public bool AimPressed => aimPressed;
+
+        public bool AimHeld => aimHeld;
 
         public bool CommandMenuHeld => commandMenuHeld;
 
@@ -63,6 +69,9 @@ namespace VRShooting.Input
                 case XRTrainingInputButton.SwitchShoulder:
                     SetEdgeState(ref switchShoulderHeld, ref switchShoulderPressed, isHeld);
                     break;
+                case XRTrainingInputButton.Aim:
+                    SetEdgeState(ref aimHeld, ref aimPressed, isHeld);
+                    break;
                 case XRTrainingInputButton.CommandMenu:
                     commandMenuHeld = isHeld;
                     break;
@@ -94,6 +103,7 @@ namespace VRShooting.Input
             triggerPressed = false;
             reloadPressed = false;
             switchShoulderPressed = false;
+            aimPressed = false;
         }
 
         public void Clear()
@@ -103,6 +113,7 @@ namespace VRShooting.Input
             triggerHeld = false;
             reloadHeld = false;
             switchShoulderHeld = false;
+            aimHeld = false;
             commandMenuHeld = false;
             AdvanceFrame();
             TurnAxis = Vector2.zero;
