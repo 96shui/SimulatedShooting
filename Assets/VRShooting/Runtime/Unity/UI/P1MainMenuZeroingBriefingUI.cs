@@ -25,13 +25,9 @@ namespace VRShooting.Unity.UI
         bool buildOnAwake = true;
 
         [SerializeField]
-        bool useReferenceArtwork = true;
-
-        [SerializeField]
-        bool showGeneratedWireframeOverlay;
-
-        [SerializeField]
         TMP_FontAsset fontAsset;
+
+        readonly Dictionary<string, Sprite> generatedSpriteCache = new Dictionary<string, Sprite>();
 
         ApplicationServices services;
         IDisposable screenSubscription;
@@ -183,119 +179,79 @@ namespace VRShooting.Unity.UI
             return screen;
         }
 
-        void AddReferenceArtwork(RectTransform parent, string resourcePath, string id)
+        Sprite LoadGeneratedSprite(string spriteName)
         {
-            if (!useReferenceArtwork)
+            if (string.IsNullOrEmpty(spriteName))
+            {
+                return null;
+            }
+
+            if (generatedSpriteCache.TryGetValue(spriteName, out var cached))
+            {
+                return cached;
+            }
+
+            var sprite = Resources.Load<Sprite>("UI/P1Generated/Sprites/" + spriteName);
+            generatedSpriteCache[spriteName] = sprite;
+            return sprite;
+        }
+
+        static void ApplySlicedSprite(Image image, Sprite sprite)
+        {
+            if (image == null || sprite == null)
             {
                 return;
             }
 
-            var texture = Resources.Load<Texture2D>(resourcePath);
-            if (texture == null)
+            image.sprite = sprite;
+            image.type = Image.Type.Sliced;
+            image.color = Color.white;
+            image.raycastTarget = false;
+            image.pixelsPerUnitMultiplier = 1f;
+        }
+
+        Sprite ResolvePanelSprite(string id, Vector2 min, Vector2 max)
+        {
+            var width = Mathf.Abs(max.x - min.x);
+            var height = Mathf.Abs(max.y - min.y);
+
+            if (id.IndexOf("Status", StringComparison.OrdinalIgnoreCase) >= 0 || id.IndexOf("Bottom", StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                return;
+                return LoadGeneratedSprite(width > 700f ? "status_strip_long" : "status_strip_short");
             }
 
-            var rect = CreateRect(id, parent, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
-            rect.SetAsFirstSibling();
+            if (id.IndexOf("Prompt", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return LoadGeneratedSprite("button_primary_orange");
+            }
+
+            if (height <= 130f)
+            {
+                return LoadGeneratedSprite(width > 520f ? "status_strip_long" : "hud_capsule");
+            }
+
+            return LoadGeneratedSprite(width > 700f || height > 260f ? "panel_holo_large" : "panel_holo_medium");
+        }
+
+        Image AddIcon(RectTransform parent, string id, string spriteName, Vector2 min, Vector2 max)
+        {
+            var rect = CreateRect(id, parent, Vector2.zero, Vector2.zero, min, max);
             AddTestId(rect.gameObject, id);
-
-            var rawImage = rect.gameObject.AddComponent<RawImage>();
-            rawImage.texture = texture;
-            rawImage.color = Color.white;
-            rawImage.raycastTarget = false;
-        }
-
-        void AlignReferenceButton(Button button, Vector2 min, Vector2 max)
-        {
-            if (!useReferenceArtwork || button == null)
+            var image = AddImage(rect.gameObject, Color.white);
+            var sprite = LoadGeneratedSprite(spriteName);
+            if (sprite != null)
             {
-                return;
+                image.sprite = sprite;
+                image.type = Image.Type.Simple;
+                image.preserveAspect = true;
+                image.raycastTarget = false;
             }
 
-            var rect = button.transform as RectTransform;
-            if (rect == null)
-            {
-                return;
-            }
-
-            rect.anchorMin = Vector2.zero;
-            rect.anchorMax = Vector2.zero;
-            rect.offsetMin = min;
-            rect.offsetMax = max;
-        }
-
-        void ApplyReferenceArtworkLayer(RectTransform screen)
-        {
-            if (!useReferenceArtwork || showGeneratedWireframeOverlay || screen == null || !HasReferenceArtwork(screen))
-            {
-                return;
-            }
-
-            var transparent = new Color(1f, 1f, 1f, 0f);
-            var graphics = screen.GetComponentsInChildren<Graphic>(true);
-            for (var i = 0; i < graphics.Length; i++)
-            {
-                if (IsReferenceArtwork(graphics[i].gameObject))
-                {
-                    continue;
-                }
-
-                var color = graphics[i].color;
-                color.a = 0f;
-                graphics[i].color = color;
-            }
-
-            var outlines = screen.GetComponentsInChildren<Outline>(true);
-            for (var i = 0; i < outlines.Length; i++)
-            {
-                var color = outlines[i].effectColor;
-                color.a = 0f;
-                outlines[i].effectColor = color;
-            }
-
-            var buttons = screen.GetComponentsInChildren<Button>(true);
-            for (var i = 0; i < buttons.Length; i++)
-            {
-                var colors = buttons[i].colors;
-                colors.normalColor = transparent;
-                colors.highlightedColor = transparent;
-                colors.pressedColor = transparent;
-                colors.selectedColor = transparent;
-                colors.disabledColor = transparent;
-                buttons[i].colors = colors;
-
-                if (buttons[i].targetGraphic != null)
-                {
-                    var color = buttons[i].targetGraphic.color;
-                    color.a = 0f;
-                    buttons[i].targetGraphic.color = color;
-                }
-            }
-        }
-
-        static bool HasReferenceArtwork(RectTransform screen)
-        {
-            for (var i = 0; i < screen.childCount; i++)
-            {
-                if (IsReferenceArtwork(screen.GetChild(i).gameObject))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        static bool IsReferenceArtwork(GameObject go)
-        {
-            return go != null && go.name.StartsWith("Image_ReferenceArtwork_", StringComparison.Ordinal);
+            return image;
         }
 
         void BuildMainMenu(RectTransform parent)
         {
-            AddReferenceArtwork(parent, "UI/Sample/vr-shooting-main-menu-ui", "Image_ReferenceArtwork_MainMenu");
-
             AddPanel(parent, "Panel_MainMenu_Frame", new Vector2(60, 60), new Vector2(-60, -60), new Color32(11, 19, 16, 220), new Color32(45, 66, 56, 255));
             AddPanel(parent, "Placeholder_MainMenu_BaseHall", new Vector2(130, 170), new Vector2(1220, 690), new Color32(10, 21, 18, 160), new Color32(73, 107, 90, 255), "素材占位：基地大厅 / 全息任务台 / 武器墙");
             AddLabel(parent, "Text_MainMenu_Title", "VR射击训练系统 DEMO", 42, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(360, 360), new Vector2(1120, 440), new Color32(231, 242, 235, 255));
@@ -317,14 +273,10 @@ namespace VRShooting.Unity.UI
             AddPanel(parent, "Panel_MainMenu_BottomStatus", new Vector2(120, 985), new Vector2(1800, 1032), new Color32(17, 29, 24, 210), new Color32(56, 84, 71, 255),
                 "底部状态栏：网络 / 音量 / 用户 / 版本 / 提示");
 
-            AlignReferenceButton(openZeroingButton, new Vector2(1480, 820), new Vector2(1880, 940));
-            ApplyReferenceArtworkLayer(parent);
         }
 
         void BuildZeroingBriefing(RectTransform parent)
         {
-            AddReferenceArtwork(parent, "UI/Sample/vr-shooting-100m-zeroing-briefing-ui", "Image_ReferenceArtwork_ZeroingBriefing");
-
             AddPanel(parent, "Panel_ZeroingBriefing_Frame", new Vector2(110, 60), new Vector2(1390, 820), new Color32(11, 19, 16, 215), new Color32(45, 156, 255, 255));
             AddPanel(parent, "Placeholder_ZeroingBriefing_Range", new Vector2(1390, 100), new Vector2(1840, 790), new Color32(10, 21, 18, 120), new Color32(73, 107, 90, 255), "素材占位：100m室外靶场背景");
             AddLabel(parent, "Text_ZeroingBriefing_Header", "任务简报  MISSION BRIEFING", 26, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(180, 95), new Vector2(780, 145), new Color32(231, 242, 235, 255));
@@ -348,9 +300,6 @@ namespace VRShooting.Unity.UI
             AddPanel(parent, "Panel_ZeroingBriefing_Status", new Vector2(960, 980), new Vector2(1815, 1030), new Color32(17, 29, 24, 230), new Color32(56, 84, 71, 255),
                 "当前轮次  1 / 3        历史最佳  0环        预计用时  00:10:00");
 
-            AlignReferenceButton(startButton, new Vector2(505, 150), new Vector2(820, 245));
-            AlignReferenceButton(backButton, new Vector2(855, 150), new Vector2(1190, 245));
-            ApplyReferenceArtworkLayer(parent);
         }
 
         void BuildTargetDiagram(RectTransform parent)
@@ -372,10 +321,8 @@ namespace VRShooting.Unity.UI
 
         void BuildZeroingHud(RectTransform parent)
         {
-            AddReferenceArtwork(parent, "UI/Sample/vr-shooting-100m-zeroing-first-person-hud-ui", "Image_ReferenceArtwork_ZeroingHud");
-
             AddPanel(parent, "Panel_ZeroingHud_Round", new Vector2(60, 60), new Vector2(350, 175), new Color32(12, 28, 36, 205), new Color32(45, 156, 255, 255));
-            AddLabel(parent, "Text_ZeroingHud_RoundIcon", "◎", 46, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(85, 82), new Vector2(150, 150), new Color32(143, 217, 255, 255));
+            AddIcon(parent, "Icon_ZeroingHud_Round", "icon_reticle", new Vector2(82, 80), new Vector2(152, 150));
             zeroingRoundText = AddLabel(parent, "Text_ZeroingHud_Round", "轮次 1/3", 30, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(150, 78), new Vector2(325, 155), new Color32(231, 242, 235, 255));
 
             AddPanel(parent, "Panel_ZeroingHud_Distance", new Vector2(810, 75), new Vector2(1110, 155), new Color32(12, 28, 36, 205), new Color32(45, 156, 255, 255));
@@ -383,7 +330,7 @@ namespace VRShooting.Unity.UI
 
             AddPanel(parent, "Panel_ZeroingHud_Ammo", new Vector2(1530, 60), new Vector2(1810, 175), new Color32(12, 28, 36, 205), new Color32(45, 156, 255, 255));
             zeroingAmmoText = AddLabel(parent, "Text_ZeroingHud_Ammo", "弹数 3/3", 30, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(1555, 78), new Vector2(1730, 155), new Color32(231, 242, 235, 255));
-            AddLabel(parent, "Text_ZeroingHud_AmmoIcon", "|||", 36, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(1725, 82), new Vector2(1792, 150), new Color32(143, 217, 255, 255));
+            AddIcon(parent, "Icon_ZeroingHud_Ammo", "icon_bullets", new Vector2(1725, 82), new Vector2(1792, 150));
 
             var stabilityPanel = AddPanel(parent, "Hud_Zeroing_Stability", new Vector2(80, 785), new Vector2(555, 905), new Color32(12, 28, 36, 200), new Color32(45, 156, 255, 255));
             AddLabel(stabilityPanel, "Text_ZeroingHud_StabilityLabel", "稳定度", 24, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(28, 14), new Vector2(-28, -70), new Color32(231, 242, 235, 255), true);
@@ -406,14 +353,10 @@ namespace VRShooting.Unity.UI
             var promptPanel = AddPanel(parent, "Panel_ZeroingHud_Prompt", new Vector2(760, 880), new Vector2(1160, 960), new Color32(200, 255, 106, 230), new Color32(247, 185, 85, 255));
             zeroingPromptBackground = promptPanel.GetComponent<Image>();
             zeroingPromptText = AddLabel(promptPanel, "Text_ZeroingHud_Prompt", "稳定据枪", 42, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(18, 10), new Vector2(-18, -10), new Color32(7, 16, 13, 255), true);
-
-            ApplyReferenceArtworkLayer(parent);
         }
 
         void BuildZeroingImpactAnalysis(RectTransform parent)
         {
-            AddReferenceArtwork(parent, "UI/Sample/vr-shooting-100m-impact-analysis-ui", "Image_ReferenceArtwork_ZeroingImpactAnalysis");
-
             AddPanel(parent, "Placeholder_ZeroingImpactAnalysis_BlurredRange", DrawioMin(35, 45, 730, 500), DrawioMax(35, 45, 730, 500), new Color32(10, 21, 18, 165), new Color32(73, 107, 90, 255), "素材占位：虚化靶场射击背景");
             AddPanel(parent, "Panel_ZeroingImpactAnalysis_Modal", DrawioMin(160, 85, 480, 390), DrawioMax(160, 85, 480, 390), new Color32(11, 19, 16, 235), new Color32(45, 156, 255, 255));
             AddLabel(parent, "Text_ZeroingImpactAnalysis_Title", "本轮弹着分析", 40, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(210, 100, 380, 45), DrawioMax(210, 100, 380, 45), new Color32(231, 242, 235, 255));
@@ -434,10 +377,6 @@ namespace VRShooting.Unity.UI
             applyAdjustmentButton.onClick.AddListener(OnApplyAdjustmentClicked);
             nextRoundButton = AddButton(parent, "Button_ZeroingImpactAnalysis_NextRound", "进入下一轮", DrawioMin(415, 415, 120, 38), DrawioMax(415, 415, 120, 38), false);
             nextRoundButton.onClick.AddListener(OnNextRoundClicked);
-
-            AlignReferenceButton(applyAdjustmentButton, new Vector2(550, 95), new Vector2(900, 180));
-            AlignReferenceButton(nextRoundButton, new Vector2(988, 95), new Vector2(1364, 180));
-            ApplyReferenceArtworkLayer(parent);
         }
 
         void BuildAnalysisTargetDiagram(RectTransform parent)
@@ -570,25 +509,6 @@ namespace VRShooting.Unity.UI
             {
                 RefreshImpactAnalysis();
             }
-
-            ApplyReferenceArtworkLayer(CurrentScreenRoot(screen));
-        }
-
-        RectTransform CurrentScreenRoot(ScreenId screen)
-        {
-            switch (screen)
-            {
-                case ScreenId.MainMenu:
-                    return mainMenuScreen;
-                case ScreenId.ZeroingBriefing:
-                    return zeroingBriefingScreen;
-                case ScreenId.ZeroingHud:
-                    return zeroingHudScreen;
-                case ScreenId.ZeroingImpactAnalysis:
-                    return zeroingImpactAnalysisScreen;
-                default:
-                    return null;
-            }
         }
 
         void OnZeroingRoundCompleted(ZeroingRoundCompletedEvent evt)
@@ -665,12 +585,10 @@ namespace VRShooting.Unity.UI
 
             if (zeroingPromptBackground != null)
             {
-                zeroingPromptBackground.color = hud.CanShoot
-                    ? new Color32(200, 255, 106, 230)
-                    : new Color32(50, 28, 24, 230);
+                zeroingPromptBackground.color = zeroingPromptBackground.sprite != null
+                    ? (hud.CanShoot ? Color.white : new Color32(255, 120, 92, 255))
+                    : (hud.CanShoot ? new Color32(200, 255, 106, 230) : new Color32(50, 28, 24, 230));
             }
-
-            ApplyReferenceArtworkLayer(zeroingHudScreen);
         }
 
         void RefreshImpactAnalysis()
@@ -726,7 +644,6 @@ namespace VRShooting.Unity.UI
             }
 
             RenderImpactDots(analysis);
-            ApplyReferenceArtworkLayer(zeroingImpactAnalysisScreen);
         }
 
         void RenderImpactDots(ZeroingRoundAnalysisDto analysis)
@@ -974,12 +891,20 @@ namespace VRShooting.Unity.UI
         RectTransform AddPanel(RectTransform parent, string id, Vector2 min, Vector2 max, Color fill, Color stroke, string text = "")
         {
             var panel = CreateRect(id, parent, Vector2.zero, Vector2.zero, min, max);
-            AddImage(panel.gameObject, fill);
+            var image = AddImage(panel.gameObject, fill);
             AddTestId(panel.gameObject, id);
 
-            var outline = panel.gameObject.AddComponent<Outline>();
-            outline.effectColor = stroke;
-            outline.effectDistance = new Vector2(2f, -2f);
+            var panelSprite = ResolvePanelSprite(id, min, max);
+            if (panelSprite != null)
+            {
+                ApplySlicedSprite(image, panelSprite);
+            }
+            else
+            {
+                var outline = panel.gameObject.AddComponent<Outline>();
+                outline.effectColor = stroke;
+                outline.effectDistance = new Vector2(2f, -2f);
+            }
 
             if (!string.IsNullOrEmpty(text))
             {
@@ -1133,19 +1058,50 @@ namespace VRShooting.Unity.UI
             var rect = CreateRect(id, parent, Vector2.zero, Vector2.zero, min, max);
             AddTestId(rect.gameObject, id);
             var image = AddImage(rect.gameObject, primary ? new Color32(200, 255, 106, 235) : new Color32(20, 37, 31, 235));
-            var outline = rect.gameObject.AddComponent<Outline>();
-            outline.effectColor = primary ? new Color32(247, 185, 85, 255) : new Color32(107, 138, 119, 255);
-            outline.effectDistance = new Vector2(2f, -2f);
+            var normalSprite = LoadGeneratedSprite(primary ? "button_primary_orange" : "button_secondary_cyan");
+            if (normalSprite != null)
+            {
+                ApplySlicedSprite(image, normalSprite);
+                image.raycastTarget = true;
+            }
+            else
+            {
+                var outline = rect.gameObject.AddComponent<Outline>();
+                outline.effectColor = primary ? new Color32(247, 185, 85, 255) : new Color32(107, 138, 119, 255);
+                outline.effectDistance = new Vector2(2f, -2f);
+            }
 
             var button = rect.gameObject.AddComponent<Button>();
             button.targetGraphic = image;
-            var colors = button.colors;
-            colors.normalColor = image.color;
-            colors.highlightedColor = primary ? new Color32(220, 255, 150, 255) : new Color32(35, 62, 54, 255);
-            colors.pressedColor = primary ? new Color32(170, 220, 70, 255) : new Color32(10, 24, 20, 255);
-            button.colors = colors;
+            if (normalSprite != null)
+            {
+                button.transition = Selectable.Transition.SpriteSwap;
+                button.spriteState = new SpriteState
+                {
+                    highlightedSprite = LoadGeneratedSprite(primary ? "button_primary_orange_highlighted" : "button_secondary_cyan_highlighted"),
+                    pressedSprite = LoadGeneratedSprite(primary ? "button_primary_orange_pressed" : "button_secondary_cyan_pressed"),
+                    selectedSprite = LoadGeneratedSprite(primary ? "button_primary_orange_highlighted" : "button_secondary_cyan_highlighted"),
+                    disabledSprite = normalSprite
+                };
 
-            AddLabel(rect, id.Replace("Button_", "Text_"), label, 24, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(8, 8), new Vector2(-8, -8), primary ? new Color32(7, 16, 13, 255) : new Color32(231, 242, 235, 255), true);
+                var colors = button.colors;
+                colors.normalColor = Color.white;
+                colors.highlightedColor = Color.white;
+                colors.pressedColor = Color.white;
+                colors.selectedColor = Color.white;
+                colors.disabledColor = new Color(1f, 1f, 1f, 0.35f);
+                button.colors = colors;
+            }
+            else
+            {
+                var colors = button.colors;
+                colors.normalColor = image.color;
+                colors.highlightedColor = primary ? new Color32(220, 255, 150, 255) : new Color32(35, 62, 54, 255);
+                colors.pressedColor = primary ? new Color32(170, 220, 70, 255) : new Color32(10, 24, 20, 255);
+                button.colors = colors;
+            }
+
+            AddLabel(rect, id.Replace("Button_", "Text_"), label, 24, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(8, 8), new Vector2(-8, -8), primary ? new Color32(255, 202, 92, 255) : new Color32(231, 242, 235, 255), true);
             return button;
         }
 
