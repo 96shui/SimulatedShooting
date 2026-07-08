@@ -54,6 +54,28 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
+        public void Screen04_ZeroingStart_GoesToZeroingHudWithSession()
+        {
+            var bus = new GameEventBus();
+            var router = new UIRouter(bus, ScreenId.ZeroingBriefing);
+            ScreenChangedEvent? received = null;
+            bus.Subscribe<ScreenChangedEvent>(evt => received = evt);
+
+            var result = router.HandleUIEvent(UIEventId.Zeroing_Start, ScreenId.ZeroingBriefing, new NavigationArgs
+            {
+                Mode = TrainingMode.Zeroing100m,
+                SessionId = "session-001",
+                ReturnToScreen = ScreenId.ZeroingBriefing.ToString()
+            });
+
+            Assert.IsTrue(result.Success);
+            Assert.AreEqual(ScreenId.ZeroingHud, router.Current);
+            Assert.IsTrue(received.HasValue);
+            Assert.AreEqual("session-001", received.Value.Args.SessionId);
+            Assert.AreEqual(TrainingMode.Zeroing100m, router.SelectedMode);
+        }
+
+        [Test]
         public void Screen02_RouterOpenSameScreen_IsIdempotent()
         {
             var bus = new GameEventBus();

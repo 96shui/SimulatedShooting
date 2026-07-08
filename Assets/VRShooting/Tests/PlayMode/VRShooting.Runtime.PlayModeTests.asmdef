@@ -2,7 +2,9 @@
     "name": "VRShooting.Runtime.PlayModeTests",
     "rootNamespace": "VRShooting.Tests.PlayMode",
     "references": [
-        "VRShooting.Runtime"
+        "VRShooting.Runtime",
+        "Unity.TextMeshPro",
+        "Unity.ugui"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

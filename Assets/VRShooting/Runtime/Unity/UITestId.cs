@@ -12,5 +12,10 @@ namespace VRShooting.Unity
         string id = string.Empty;
 
         public string Id => id ?? string.Empty;
+
+        public void SetId(string value)
+        {
+            id = value ?? string.Empty;
+        }
     }
 }
