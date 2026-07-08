@@ -265,6 +265,7 @@ namespace VRShooting.Application
                     State = State,
                     MapId = MapId ?? string.Empty,
                     WeaponId = WeaponId ?? string.Empty,
+                    Seed = Seed,
                     ElapsedSeconds = GetElapsedSeconds(DateTime.UtcNow),
                     Ammo = Ammo,
                     Player = Player,

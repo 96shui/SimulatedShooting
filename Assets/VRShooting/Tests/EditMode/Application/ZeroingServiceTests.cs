@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using VRShooting.Application;
+using VRShooting.Application.Events;
 using VRShooting.Application.Weapons;
 using VRShooting.Common;
 using VRShooting.Contracts;
@@ -25,13 +26,21 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
+        public void StartSession_FixedSeed_ProducesReproducibleOffset()
+        {
+            var first = StartZeroingSession(RandomSeed.Fixed(100));
+            var secondSession = StartZeroingSession(RandomSeed.Fixed(100));
+
+            Assert.AreEqual(first.FixedImpactOffsetCm.x, secondSession.FixedImpactOffsetCm.x, 0.0001f);
+            Assert.AreEqual(first.FixedImpactOffsetCm.y, secondSession.FixedImpactOffsetCm.y, 0.0001f);
+        }
+
+        [Test]
         public void CompleteRound_CalculatesOffsetDirectionsAndAdjustmentAmounts()
         {
             var session = StartZeroingSession();
 
-            Fire(session.SessionId, new Vector3(-8f, 12f, 100f));
-            Fire(session.SessionId, new Vector3(-8f, 12f, 100f));
-            Fire(session.SessionId, new Vector3(-8f, 12f, 100f));
+            RecordThreeImpacts(session.SessionId, new Vector2(-8f, 12f));
 
             var analysis = zeroing.CompleteRound(session.SessionId);
 
@@ -51,9 +60,7 @@ namespace VRShooting.Tests.EditMode.Application
         {
             var session = StartZeroingSession();
 
-            Fire(session.SessionId, new Vector3(-8f, 12f, 100f));
-            Fire(session.SessionId, new Vector3(-8f, 12f, 100f));
-            Fire(session.SessionId, new Vector3(-8f, 12f, 100f));
+            RecordThreeImpacts(session.SessionId, new Vector2(-8f, 12f));
             var analysis = zeroing.CompleteRound(session.SessionId);
 
             var first = zeroing.ApplyAdjustment(session.SessionId, analysis.Data.RoundIndex);
@@ -68,9 +75,185 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.AreEqual(4, state.Data.CurrentAdjustment.RearSightClicks);
         }
 
-        ZeroingSessionDto StartZeroingSession()
+        [Test]
+        public void RecordShot_AcceptsUpToThreeShotsPerRound()
         {
-            var start = zeroing.StartSession(RandomSeed.Fixed(100), WeaponControlService.TrainingRifleId);
+            var session = StartZeroingSession();
+
+            Assert.IsTrue(RecordImpact(session.SessionId, Vector2.zero).Success);
+            Assert.IsTrue(RecordImpact(session.SessionId, Vector2.zero).Success);
+            Assert.IsTrue(RecordImpact(session.SessionId, Vector2.zero).Success);
+        }
+
+        [Test]
+        public void RecordShot_FourthShot_ReturnsInvalidState()
+        {
+            var session = StartZeroingSession();
+            RecordThreeImpacts(session.SessionId, Vector2.zero);
+
+            var fourth = RecordImpact(session.SessionId, Vector2.zero);
+
+            Assert.IsFalse(fourth.Success);
+            Assert.AreEqual(ErrorCode.InvalidState, fourth.ErrorCode);
+        }
+
+        [Test]
+        public void CompleteRound_BeforeThreeShots_ReturnsInvalidState()
+        {
+            var session = StartZeroingSession();
+            RecordImpact(session.SessionId, Vector2.zero);
+
+            var analysis = zeroing.CompleteRound(session.SessionId);
+
+            Assert.IsFalse(analysis.Success);
+            Assert.AreEqual(ErrorCode.InvalidState, analysis.ErrorCode);
+        }
+
+        [Test]
+        public void RecordShot_AllInsideTenRing_PassedTenRingTrue()
+        {
+            var session = StartZeroingSession();
+            RecordThreeImpacts(session.SessionId, new Vector2(1f, 1f));
+
+            var analysis = zeroing.CompleteRound(session.SessionId);
+
+            Assert.IsTrue(analysis.Success, analysis.Message);
+            Assert.IsTrue(analysis.Data.PassedTenRing);
+        }
+
+        [Test]
+        public void GetFinalResult_PassRound1_ReturnsExcellent()
+        {
+            var session = StartZeroingSession();
+            CompleteRoundWithImpacts(session.SessionId, new Vector2(1f, 1f));
+            zeroing.ApplyAdjustment(session.SessionId, 1);
+
+            var result = zeroing.GetFinalResult(session.SessionId);
+
+            Assert.IsTrue(result.Success, result.Message);
+            Assert.AreEqual(ResultGrade.Excellent, result.Data.Grade);
+            Assert.AreEqual(1, result.Data.PassedRoundIndex);
+        }
+
+        [Test]
+        public void GetFinalResult_PassRound2_ReturnsGood()
+        {
+            var session = StartZeroingSession();
+            CompleteRoundWithImpacts(session.SessionId, new Vector2(-8f, 12f));
+            zeroing.ApplyAdjustment(session.SessionId, 1);
+            zeroing.ContinueAfterAnalysis(session.SessionId);
+            CompleteRoundWithImpacts(session.SessionId, new Vector2(1f, 1f));
+            zeroing.ApplyAdjustment(session.SessionId, 2);
+
+            var result = zeroing.GetFinalResult(session.SessionId);
+
+            Assert.IsTrue(result.Success, result.Message);
+            Assert.AreEqual(ResultGrade.Good, result.Data.Grade);
+            Assert.AreEqual(2, result.Data.PassedRoundIndex);
+        }
+
+        [Test]
+        public void GetFinalResult_PassRound3_ReturnsPass()
+        {
+            var session = StartZeroingSession();
+            FailRound(session.SessionId);
+            FailRound(session.SessionId);
+            CompleteRoundWithImpacts(session.SessionId, new Vector2(1f, 1f));
+            zeroing.ApplyAdjustment(session.SessionId, 3);
+
+            var result = zeroing.GetFinalResult(session.SessionId);
+
+            Assert.IsTrue(result.Success, result.Message);
+            Assert.AreEqual(ResultGrade.Pass, result.Data.Grade);
+            Assert.AreEqual(3, result.Data.PassedRoundIndex);
+        }
+
+        [Test]
+        public void GetFinalResult_AllRoundsFail_ReturnsFail()
+        {
+            var session = StartZeroingSession();
+            FailRound(session.SessionId);
+            FailRound(session.SessionId);
+            FailRound(session.SessionId);
+
+            var result = zeroing.GetFinalResult(session.SessionId);
+
+            Assert.IsTrue(result.Success, result.Message);
+            Assert.AreEqual(ResultGrade.Fail, result.Data.Grade);
+            Assert.AreEqual(0, result.Data.PassedRoundIndex);
+        }
+
+        [Test]
+        public void ContinueAfterAnalysis_WithoutApply_ReturnsInvalidState()
+        {
+            var session = StartZeroingSession();
+            CompleteRoundWithImpacts(session.SessionId, new Vector2(-8f, 12f));
+
+            var next = zeroing.ContinueAfterAnalysis(session.SessionId);
+
+            Assert.IsFalse(next.Success);
+            Assert.AreEqual(ErrorCode.InvalidState, next.ErrorCode);
+        }
+
+        [Test]
+        public void ContinueAfterAnalysis_StartsNextRound_ResetsShotsToThree()
+        {
+            var session = StartZeroingSession();
+            CompleteRoundWithImpacts(session.SessionId, new Vector2(-8f, 12f));
+            zeroing.ApplyAdjustment(session.SessionId, 1);
+
+            var next = zeroing.ContinueAfterAnalysis(session.SessionId);
+            var state = zeroing.GetSession(session.SessionId);
+
+            Assert.IsTrue(next.Success, next.Message);
+            Assert.AreEqual(2, state.Data.CurrentRound);
+            Assert.AreEqual(3, state.Data.ShotsRemainingInRound);
+            Assert.IsTrue(state.Data.CanShoot);
+        }
+
+        [Test]
+        public void GetSession_NotFound_ReturnsNotFound()
+        {
+            var result = zeroing.GetSession("missing-session");
+
+            Assert.IsFalse(result.Success);
+            Assert.AreEqual(ErrorCode.NotFound, result.ErrorCode);
+        }
+
+        [Test]
+        public void WeaponShotResultEvent_RecordsShotUsingTargetOffsetConvention()
+        {
+            var session = StartZeroingSession();
+            var offset = session.FixedImpactOffsetCm;
+            var aim = new Vector2(-8f, 12f) - offset;
+
+            eventBus.Publish(new WeaponShotResultEvent
+            {
+                Result = new WeaponShotResultDto
+                {
+                    SessionId = session.SessionId,
+                    IsValidShot = true,
+                    Hit = true,
+                    HitPoint = new Vector3(aim.x, aim.y, ZeroingRules.DistanceMeters),
+                    AimDirection = Vector3.forward,
+                    MuzzlePosition = Vector3.zero
+                }
+            });
+
+            var state = zeroing.GetSession(session.SessionId);
+            Assert.IsTrue(state.Success, state.Message);
+            Assert.AreEqual(2, state.Data.ShotsRemainingInRound);
+            Assert.AreEqual(1, state.Data.CurrentRound);
+        }
+
+        ZeroingSessionDto StartZeroingSession(RandomSeed? seed = null)
+        {
+            if (trainingSessions.HasActiveSession)
+            {
+                trainingSessions.End(trainingSessions.Current.SessionId, SessionEndReason.Completed);
+            }
+
+            var start = zeroing.StartSession(seed ?? RandomSeed.Fixed(100), WeaponControlService.TrainingRifleId);
             Assert.IsTrue(start.Success, start.Message);
             var training = trainingSessions.Current;
             var weapon = weaponControl.StartSession(training.SessionId, training.WeaponId, training.Mode);
@@ -78,24 +261,43 @@ namespace VRShooting.Tests.EditMode.Application
             return start.Data;
         }
 
-        void Fire(string sessionId, Vector3 hitPoint)
+        void CompleteRoundWithImpacts(string sessionId, Vector2 impactCm)
         {
-            var result = weaponControl.Fire(new WeaponFireInputDto
-            {
-                SessionId = sessionId,
-                MuzzlePosition = Vector3.zero,
-                AimDirection = Vector3.forward,
-                WeaponPosition = Vector3.zero,
-                Stability01 = 0.95f,
-                TwoHandGripActive = true,
-                AimMode = WeaponAimMode.AimDownSights,
-                ShoulderSide = ShoulderSide.Right,
-                Hit = true,
-                HitPoint = hitPoint,
-                HitObjectId = "Target_100m"
-            });
+            RecordThreeImpacts(sessionId, impactCm);
+            var analysis = zeroing.CompleteRound(sessionId);
+            Assert.IsTrue(analysis.Success, analysis.Message);
+        }
 
-            Assert.IsTrue(result.Success, result.Message);
+        void FailRound(string sessionId)
+        {
+            CompleteRoundWithImpacts(sessionId, new Vector2(-8f, 12f));
+            var round = zeroing.GetSession(sessionId).Data.CurrentRound;
+            zeroing.ApplyAdjustment(sessionId, round);
+            if (round < 3)
+            {
+                var next = zeroing.ContinueAfterAnalysis(sessionId);
+                Assert.IsTrue(next.Success, next.Message);
+            }
+        }
+
+        void RecordThreeImpacts(string sessionId, Vector2 impactCm)
+        {
+            var offset = zeroing.GetSession(sessionId).Data.FixedImpactOffsetCm;
+            var aim = impactCm - offset;
+            Assert.IsTrue(RecordImpact(sessionId, aim).Success);
+            Assert.IsTrue(RecordImpact(sessionId, aim).Success);
+            Assert.IsTrue(RecordImpact(sessionId, aim).Success);
+        }
+
+        ServiceResult<ZeroingShotDto> RecordImpact(string sessionId, Vector2 aimCm)
+        {
+            return zeroing.RecordShot(sessionId, new ShotInputDto
+            {
+                WeaponPosition = Vector3.zero,
+                AimDirection = new Vector3(aimCm.x, aimCm.y, ZeroingRules.DistanceMeters),
+                WeaponStability = 0.95f,
+                FireTime = 0d
+            });
         }
     }
 }

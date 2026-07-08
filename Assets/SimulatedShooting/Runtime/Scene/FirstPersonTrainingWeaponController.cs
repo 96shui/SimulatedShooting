@@ -3,7 +3,9 @@ using UnityEngine;
 using VRShooting.Application;
 using VRShooting.Application.Weapons;
 using VRShooting.Common;
+using VRShooting.Contracts;
 using VRShooting.Input;
+using VRShooting.Unity.Bootstrap;
 using VRShooting.Unity.Weapons;
 
 namespace SimulatedShooting.Scene
@@ -11,7 +13,6 @@ namespace SimulatedShooting.Scene
     [DisallowMultipleComponent]
     public sealed class FirstPersonTrainingWeaponController : MonoBehaviour
     {
-        const string SessionId = "task005-zeroing-range";
         const float MaxShotDistance = 150f;
 
         [SerializeField] private Camera viewCamera;
@@ -32,7 +33,8 @@ namespace SimulatedShooting.Scene
         readonly Vector3 leftShoulderLocal = new Vector3(-0.22f, -0.26f, 0.42f);
 
         IGameEventBus eventBus;
-        WeaponControlService weaponService;
+        ApplicationServices services;
+        IWeaponControlService weaponService;
         IXRTrainingInput input;
         XRTrainingInputCommandDispatcher dispatcher;
         IDisposable inputSubscription;
@@ -65,6 +67,13 @@ namespace SimulatedShooting.Scene
         public bool HasVrPoseSources => headPoseSource != null && rearHandPoseSource != null && frontHandPoseSource != null;
         public bool UsingVrPoseSources => ShouldUseVrPoseSources();
 
+        public string SessionId =>
+            services != null && services.TrainingSessions.HasActiveSession
+                ? services.TrainingSessions.Current.SessionId
+                : string.Empty;
+
+        public ApplicationServices Services => services;
+
         public void ConfigureForScene(
             Camera camera,
             WeaponPrefabBinding binding,
@@ -85,6 +94,48 @@ namespace SimulatedShooting.Scene
             preferVrPoseSources = headPose != null && rearHandPose != null && frontHandPose != null;
         }
 
+        public void ConfigureServices(ApplicationServices applicationServices, IXRTrainingInput trainingInput = null)
+        {
+            TearDownInputSubscription();
+            services = applicationServices;
+            eventBus = applicationServices?.EventBus;
+            weaponService = applicationServices?.WeaponControl;
+            input = trainingInput ?? applicationServices?.TrainingInput;
+            initialized = false;
+            hasCurrentState = false;
+        }
+
+        public void ConfigureInput(IXRTrainingInput trainingInput)
+        {
+            TearDownInputSubscription();
+            input = trainingInput;
+            initialized = false;
+        }
+
+        public bool ReloadOnceForTests()
+        {
+            EnsureInitialized();
+            if (!initialized || string.IsNullOrEmpty(SessionId))
+            {
+                return false;
+            }
+
+            ApplyStateResult(weaponService.Reload(SessionId));
+            return true;
+        }
+
+        private void OnDestroy()
+        {
+            TearDownInputSubscription();
+        }
+
+        void TearDownInputSubscription()
+        {
+            inputSubscription?.Dispose();
+            inputSubscription = null;
+            dispatcher = null;
+        }
+
         private void Awake()
         {
             ResolveSceneReferences();
@@ -97,8 +148,7 @@ namespace SimulatedShooting.Scene
 
         private void OnDisable()
         {
-            inputSubscription?.Dispose();
-            inputSubscription = null;
+            TearDownInputSubscription();
         }
 
         private void Update()
@@ -187,16 +237,38 @@ namespace SimulatedShooting.Scene
                 return;
             }
 
-            eventBus = new GameEventBus();
-            weaponService = new WeaponControlService(eventBus);
-            input = new InputSystemXRTrainingInput();
-            dispatcher = new XRTrainingInputCommandDispatcher(input, eventBus);
-            inputSubscription = eventBus.Subscribe<XRTrainingInputCommandEvent>(HandleInputCommand);
+            if (!EnsureSharedServices())
+            {
+                return;
+            }
 
-            var start = weaponService.StartSession(SessionId, weaponBinding.WeaponId, TrainingMode.Zeroing100m);
+            var sessionId = SessionId;
+            if (string.IsNullOrEmpty(sessionId))
+            {
+                return;
+            }
+
+            if (input == null)
+            {
+                input = services.TrainingInput ?? new InputSystemXRTrainingInput();
+            }
+
+            if (dispatcher == null && eventBus != null)
+            {
+                dispatcher = new XRTrainingInputCommandDispatcher(input, eventBus);
+                inputSubscription = eventBus.Subscribe<XRTrainingInputCommandEvent>(HandleInputCommand);
+            }
+
+            weaponService = services.WeaponControl;
+            var start = weaponService.GetState(sessionId);
             if (!start.Success)
             {
-                Debug.LogError($"Failed to start task005 weapon session: {start.Message}", this);
+                start = weaponService.StartSession(sessionId, weaponBinding.WeaponId, TrainingMode.Zeroing100m);
+            }
+
+            if (!start.Success)
+            {
+                Debug.LogError($"Failed to start weapon session: {start.Message}", this);
                 return;
             }
 
@@ -209,6 +281,46 @@ namespace SimulatedShooting.Scene
             initialized = true;
             UpdateNoVrPose(0f);
             UpdateGripState();
+        }
+
+        bool EnsureSharedServices()
+        {
+            if (services != null && eventBus != null)
+            {
+                if (!services.TrainingSessions.HasActiveSession)
+                {
+                    var bootstrap = FindObjectOfType<ZeroingRangeSessionBootstrap>();
+                    if (bootstrap != null)
+                    {
+                        bootstrap.EnsureZeroingSession();
+                    }
+                }
+
+                return services.TrainingSessions.HasActiveSession;
+            }
+
+            var sceneBootstrap = FindObjectOfType<ZeroingRangeSessionBootstrap>();
+            if (sceneBootstrap != null)
+            {
+                services = sceneBootstrap.EnsureServices();
+                sceneBootstrap.EnsureZeroingSession();
+                eventBus = services.EventBus;
+                return services.TrainingSessions.HasActiveSession;
+            }
+
+            if (GameMain.Instance != null)
+            {
+                services = GameMain.Instance.Services;
+                eventBus = services.EventBus;
+                if (!services.TrainingSessions.HasActiveSession)
+                {
+                    services.Zeroing.StartSession(RandomSeed.Fixed(100), WeaponControlService.TrainingRifleId);
+                }
+
+                return services.TrainingSessions.HasActiveSession;
+            }
+
+            return false;
         }
 
         void ResolveSceneReferences()
@@ -412,20 +524,21 @@ namespace SimulatedShooting.Scene
 
         bool FireCurrentWeapon()
         {
-            if (weaponBinding == null || weaponBinding.MuzzlePoint == null)
+            if (weaponBinding == null || weaponBinding.MuzzlePoint == null || string.IsNullOrEmpty(SessionId))
             {
                 return false;
             }
 
+            var sessionId = SessionId;
             var muzzle = weaponBinding.MuzzlePoint.position;
             var direction = ResolveAimDirection();
             var hit = Physics.Raycast(muzzle, direction, out var raycastHit, MaxShotDistance);
-            var hitPoint = hit ? raycastHit.point : muzzle + direction * 100f;
+            var hitPoint = ResolveHitPointForService(raycastHit, hit, muzzle, direction);
             var hitObjectId = hit ? ResolveTestId(raycastHit.collider.transform) : string.Empty;
 
             var fire = weaponService.Fire(new WeaponFireInputDto
             {
-                SessionId = SessionId,
+                SessionId = sessionId,
                 MuzzlePosition = muzzle,
                 WeaponPosition = weaponBinding.transform.position,
                 AimDirection = direction,
@@ -439,7 +552,7 @@ namespace SimulatedShooting.Scene
             });
 
             lastShot = fire.Data;
-            var state = weaponService.GetState(SessionId);
+            var state = weaponService.GetState(sessionId);
             if (state.Success)
             {
                 currentState = state.Data;
@@ -454,6 +567,27 @@ namespace SimulatedShooting.Scene
             RecordImpactIfNeeded(raycastHit, hit);
             ApplyRecoil();
             return true;
+        }
+
+        Vector3 ResolveHitPointForService(RaycastHit raycastHit, bool hit, Vector3 muzzle, Vector3 direction)
+        {
+            if (!hit)
+            {
+                return muzzle + direction * ZeroingRules.DistanceMeters;
+            }
+
+            var surface = raycastHit.collider.GetComponent<TargetImpactSurface>();
+            if (surface == null && targetSurface != null && raycastHit.collider.transform == targetSurface.transform)
+            {
+                surface = targetSurface;
+            }
+
+            if (surface != null && surface.TryComputeOffsetCm(raycastHit.point, out var offsetCm))
+            {
+                return new Vector3(offsetCm.x, offsetCm.y, ZeroingRules.DistanceMeters);
+            }
+
+            return raycastHit.point;
         }
 
         void RecordImpactIfNeeded(RaycastHit raycastHit, bool hit)

@@ -48,12 +48,12 @@ namespace VRShooting.Application
 
         public IZeroingService Zeroing { get; }
 
-        public static ApplicationServices CreateDefault()
+        public static ApplicationServices CreateDefault(IXRTrainingInput trainingInput = null)
         {
             var eventBus = new GameEventBus();
             var router = new UIRouter(eventBus);
             var trainingSessions = new TrainingSessionService(eventBus);
-            var trainingInput = new InputSystemXRTrainingInput();
+            var input = trainingInput ?? new InputSystemXRTrainingInput();
             var weaponControl = new WeaponControlService(eventBus);
             var zeroing = new ZeroingService(eventBus, trainingSessions, weaponControl);
             var hud = new ZeroingHudService(eventBus, trainingSessions, weaponControl, weaponControl);
@@ -61,7 +61,7 @@ namespace VRShooting.Application
                 eventBus,
                 router,
                 trainingSessions,
-                trainingInput,
+                input,
                 weaponControl,
                 weaponControl,
                 weaponControl,

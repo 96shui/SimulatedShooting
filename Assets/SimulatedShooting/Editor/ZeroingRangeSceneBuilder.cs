@@ -20,6 +20,7 @@ namespace SimulatedShooting.Editor
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var root = new GameObject("ZeroingRange");
             AddTestId(root, "ZeroingRange.Root");
+            root.AddComponent<ZeroingRangeSessionBootstrap>();
             CreateScene(root.transform);
             EditorSceneManager.SaveScene(scene, ScenePath);
             AddSceneToBuildSettings();

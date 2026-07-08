@@ -62,22 +62,14 @@ namespace SimulatedShooting.Scene
 
         public bool TryRecordWorldPoint(Vector3 worldPoint, out TargetImpactPoint impact)
         {
-            if (targetCenter == null || impactMarkerRoot == null)
+            if (targetCenter == null || impactMarkerRoot == null || !TryComputeOffsetCm(worldPoint, out var offsetCm))
             {
                 impact = default;
                 return false;
             }
 
-            var localPoint = targetCenter.InverseTransformPoint(worldPoint);
-            if (Mathf.Abs(localPoint.x) > faceWidthMetres * 0.5f ||
-                Mathf.Abs(localPoint.y) > faceHeightMetres * 0.5f)
-            {
-                impact = default;
-                return false;
-            }
-
-            var offsetCm = new Vector2(localPoint.x, localPoint.y) * 100f;
-            var pointOnFace = targetCenter.TransformPoint(new Vector3(localPoint.x, localPoint.y, 0f));
+            var localPoint = new Vector3(offsetCm.x * 0.01f, offsetCm.y * 0.01f, 0f);
+            var pointOnFace = targetCenter.TransformPoint(localPoint);
             impact = new TargetImpactPoint(
                 pointOnFace,
                 offsetCm,
@@ -86,6 +78,25 @@ namespace SimulatedShooting.Scene
             impacts.Add(impact);
             CreateImpactMarker(impact);
             ImpactRecorded?.Invoke(impact);
+            return true;
+        }
+
+        public bool TryComputeOffsetCm(Vector3 worldPoint, out Vector2 offsetCm)
+        {
+            offsetCm = default;
+            if (targetCenter == null)
+            {
+                return false;
+            }
+
+            var localPoint = targetCenter.InverseTransformPoint(worldPoint);
+            if (Mathf.Abs(localPoint.x) > faceWidthMetres * 0.5f ||
+                Mathf.Abs(localPoint.y) > faceHeightMetres * 0.5f)
+            {
+                return false;
+            }
+
+            offsetCm = new Vector2(localPoint.x, localPoint.y) * 100f;
             return true;
         }
 

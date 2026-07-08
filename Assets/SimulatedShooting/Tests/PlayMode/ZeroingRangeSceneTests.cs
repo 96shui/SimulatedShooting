@@ -17,6 +17,21 @@ namespace SimulatedShooting.Tests.PlayMode
         {
             yield return SceneManager.LoadSceneAsync("ZeroingRangeScene", LoadSceneMode.Single);
             Physics.SyncTransforms();
+            EnsureBootstrap();
+        }
+
+        static void EnsureBootstrap()
+        {
+            if (Object.FindObjectOfType<ZeroingRangeSessionBootstrap>() != null)
+            {
+                return;
+            }
+
+            var root = GameObject.Find("ZeroingRange") ?? new GameObject("ZeroingRange");
+            if (root.GetComponent<ZeroingRangeSessionBootstrap>() == null)
+            {
+                root.AddComponent<ZeroingRangeSessionBootstrap>();
+            }
         }
 
         [Test]
@@ -250,6 +265,37 @@ namespace SimulatedShooting.Tests.PlayMode
 
             Assert.That(controller.CurrentMagazine, Is.EqualTo(2));
             Assert.That(controller.CurrentShoulder, Is.EqualTo(ShoulderSide.Left));
+        }
+
+        [Test]
+        public void Task005_ReloadRestoresMagazineAfterSpendingAmmo()
+        {
+            var controller = Find("ZeroingRange.Weapon.PlayerRoot").GetComponent<FirstPersonTrainingWeaponController>();
+
+            Assert.That(controller.InitializeForTests(), Is.True);
+            Assert.That(controller.FireOnceForTests(), Is.True);
+            Assert.That(controller.FireOnceForTests(), Is.True);
+            Assert.That(controller.FireOnceForTests(), Is.True);
+            Assert.That(controller.CurrentMagazine, Is.EqualTo(0));
+            Assert.That(controller.ReloadOnceForTests(), Is.True);
+            Assert.That(controller.CurrentMagazine, Is.EqualTo(3));
+        }
+
+        [Test]
+        public void Task005_006_FireUpdatesSharedZeroingSession()
+        {
+            var bootstrap = Object.FindObjectOfType<ZeroingRangeSessionBootstrap>();
+            var controller = Find("ZeroingRange.Weapon.PlayerRoot").GetComponent<FirstPersonTrainingWeaponController>();
+
+            Assert.That(bootstrap, Is.Not.Null);
+            Assert.That(bootstrap.HasActiveSession, Is.True);
+            Assert.That(controller.InitializeForTests(), Is.True);
+            Assert.That(controller.FireOnceForTests(), Is.True);
+
+            var zeroing = bootstrap.Services.Zeroing.GetSession(bootstrap.ActiveSessionId);
+            Assert.That(zeroing.Success, Is.True, zeroing.Message);
+            Assert.That(zeroing.Data.ShotsRemainingInRound, Is.EqualTo(2));
+            Assert.That(zeroing.Data.CurrentRound, Is.EqualTo(1));
         }
 
         private static GameObject Find(string id)

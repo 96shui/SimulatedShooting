@@ -71,14 +71,47 @@ namespace VRShooting.Unity.UI
 
         public Button BackButton => backButton;
 
+        public bool IsInitialized => services != null;
+
         void Awake()
         {
+            if (!P1PersistentUIHost.TryAdoptUi(this))
+            {
+                return;
+            }
+
             if (!buildOnAwake)
             {
                 return;
             }
 
-            Initialize(GameMain.Instance != null ? GameMain.Instance.Services : ApplicationServices.CreateDefault());
+            TryInitializeFromGameMain();
+        }
+
+        void Start()
+        {
+            if (!buildOnAwake || services != null)
+            {
+                return;
+            }
+
+            TryInitializeFromGameMain();
+        }
+
+        void TryInitializeFromGameMain()
+        {
+            if (services != null)
+            {
+                return;
+            }
+
+            var gameMain = GameMain.Instance;
+            if (gameMain == null || gameMain.Services == null)
+            {
+                return;
+            }
+
+            Initialize(gameMain.Services);
         }
 
         void OnDestroy()
@@ -95,6 +128,12 @@ namespace VRShooting.Unity.UI
         {
             services = applicationServices ?? ApplicationServices.CreateDefault();
             LastError = string.Empty;
+
+            if (mainMenuScreen != null)
+            {
+                ShowScreen(services.Router.Current);
+                return;
+            }
 
             ClearChildren(transform);
             BuildCanvas();
@@ -465,6 +504,13 @@ namespace VRShooting.Unity.UI
             if (!route.Success)
             {
                 LastError = route.Message;
+                return;
+            }
+
+            var gameMain = GameMain.Instance;
+            if (gameMain?.GameState != null)
+            {
+                gameMain.GameState.ChangeState(GameState.InGame);
             }
         }
 

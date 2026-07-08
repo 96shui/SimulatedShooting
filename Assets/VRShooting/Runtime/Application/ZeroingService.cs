@@ -9,13 +9,6 @@ namespace VRShooting.Application
 {
     public sealed class ZeroingService : IZeroingService
     {
-        const int MaxRounds = 3;
-        const int ShotsPerRound = 3;
-        const float DistanceMeters = 100f;
-        const float TenRingRadiusCm = 5f;
-        const float CmPerRearSightClick = 2f;
-        const float CmPerFrontSightDegree = 0.064f;
-
         readonly IGameEventBus eventBus;
         readonly ITrainingSessionService trainingSessions;
         readonly IWeaponControlService weaponControl;
@@ -72,21 +65,7 @@ namespace VRShooting.Application
                 return ServiceResult<ZeroingShotDto>.Fail(failure, "zeroing session not found");
             }
 
-            if (record.CurrentShots.Count >= ShotsPerRound)
-            {
-                return ServiceResult<ZeroingShotDto>.Fail(ErrorCode.InvalidState, "round is already complete");
-            }
-
-            var impact = record.FixedImpactOffsetCm;
-            var shot = record.AddShot(impact, Mathf.Clamp01(input.WeaponStability));
-            eventBus.Publish(new ZeroingShotRecordedEvent { SessionId = record.SessionId, Shot = shot });
-
-            if (record.CurrentShots.Count == ShotsPerRound)
-            {
-                CompleteRoundInternal(record, true);
-            }
-
-            return ServiceResult<ZeroingShotDto>.Ok(shot);
+            return RecordShotInternal(record, input);
         }
 
         public ServiceResult<ZeroingRoundAnalysisDto> CompleteRound(string sessionId)
@@ -96,7 +75,7 @@ namespace VRShooting.Application
                 return ServiceResult<ZeroingRoundAnalysisDto>.Fail(failure, "zeroing session not found", ZeroingRoundAnalysisDto.Empty);
             }
 
-            if (record.CurrentShots.Count < ShotsPerRound)
+            if (record.CurrentShots.Count < ZeroingRules.ShotsPerRound)
             {
                 return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState, "round requires 3 shots", ZeroingRoundAnalysisDto.Empty);
             }
@@ -111,6 +90,11 @@ namespace VRShooting.Application
                 return ServiceResult<ZeroingRoundAnalysisDto>.Fail(failure, "zeroing session not found", ZeroingRoundAnalysisDto.Empty);
             }
 
+            if (record.CurrentShots.Count < ZeroingRules.ShotsPerRound)
+            {
+                return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState, "round requires 3 shots", ZeroingRoundAnalysisDto.Empty);
+            }
+
             var analysis = CompleteRoundInternal(record, false);
             if (analysis.RoundIndex != roundIndex)
             {
@@ -119,11 +103,7 @@ namespace VRShooting.Application
 
             if (!analysis.AdjustmentApplied)
             {
-                record.CurrentAdjustment = new SightAdjustmentDto
-                {
-                    FrontSightDegrees = record.CurrentAdjustment.FrontSightDegrees + analysis.FrontSightDegreesToAdjust,
-                    RearSightClicks = record.CurrentAdjustment.RearSightClicks + analysis.RearSightClicksToAdjust
-                };
+                record.CurrentAdjustment = ZeroingRules.ApplyAdjustment(record.CurrentAdjustment, analysis);
                 record.AppliedRounds.Add(roundIndex);
                 analysis = record.BuildAnalysis();
                 record.UpsertAnalysis(analysis);
@@ -146,7 +126,7 @@ namespace VRShooting.Application
                 return ServiceResult<ZeroingSessionDto>.Fail(ErrorCode.InvalidState, "adjustment must be applied first", record.ToSessionDto());
             }
 
-            if (analysis.PassedTenRing || record.CurrentRound >= MaxRounds)
+            if (analysis.PassedTenRing || record.CurrentRound >= ZeroingRules.MaxRounds)
             {
                 return ServiceResult<ZeroingSessionDto>.Ok(record.ToSessionDto());
             }
@@ -166,34 +146,11 @@ namespace VRShooting.Application
                 return ServiceResult<ZeroingResultDto>.Fail(failure, "zeroing session not found");
             }
 
-            var passedRound = 0;
-            for (var i = 0; i < record.Analyses.Count; i++)
-            {
-                if (record.Analyses[i].PassedTenRing)
-                {
-                    passedRound = record.Analyses[i].RoundIndex;
-                    break;
-                }
-            }
-
-            var grade = ResultGrade.Fail;
-            if (passedRound == 1)
-            {
-                grade = ResultGrade.Excellent;
-            }
-            else if (passedRound == 2)
-            {
-                grade = ResultGrade.Good;
-            }
-            else if (passedRound == 3)
-            {
-                grade = ResultGrade.Pass;
-            }
-
+            var passedRound = ZeroingRules.ResolvePassedRoundIndex(record.Analyses);
             return ServiceResult<ZeroingResultDto>.Ok(new ZeroingResultDto
             {
                 SessionId = record.SessionId,
-                Grade = grade,
+                Grade = ZeroingRules.ComputeFinalGrade(passedRound),
                 PassedRoundIndex = passedRound,
                 Rounds = record.Analyses.ToArray()
             });
@@ -216,19 +173,36 @@ namespace VRShooting.Application
                 return;
             }
 
-            if (record.CurrentShots.Count >= ShotsPerRound)
+            var aimPoint = ZeroingRules.ResolveAimPointFromWeaponShot(evt.Result);
+            var input = new ShotInputDto
             {
-                return;
+                WeaponPosition = evt.Result.MuzzlePosition,
+                AimDirection = new Vector3(aimPoint.x, aimPoint.y, ZeroingRules.DistanceMeters),
+                WeaponStability = ResolveWeaponStability(evt.Result.SessionId),
+                FireTime = 0d
+            };
+
+            RecordShotInternal(record, input);
+        }
+
+        ServiceResult<ZeroingShotDto> RecordShotInternal(ZeroingSessionRecord record, ShotInputDto input)
+        {
+            if (record.CurrentShots.Count >= ZeroingRules.ShotsPerRound)
+            {
+                return ServiceResult<ZeroingShotDto>.Fail(ErrorCode.InvalidState, "round is already complete");
             }
 
-            var impact = new Vector2(evt.Result.HitPoint.x, evt.Result.HitPoint.y) + record.FixedImpactOffsetCm;
-            var shot = record.AddShot(impact, 1f);
+            var aimPoint = ZeroingRules.ResolveAimPointCm(input.AimDirection);
+            var impact = ZeroingRules.ComputeImpactPoint(aimPoint, record.FixedImpactOffsetCm);
+            var shot = record.AddShot(impact, Mathf.Clamp01(input.WeaponStability));
             eventBus.Publish(new ZeroingShotRecordedEvent { SessionId = record.SessionId, Shot = shot });
 
-            if (record.CurrentShots.Count == ShotsPerRound)
+            if (record.CurrentShots.Count == ZeroingRules.ShotsPerRound)
             {
                 CompleteRoundInternal(record, true);
             }
+
+            return ServiceResult<ZeroingShotDto>.Ok(shot);
         }
 
         ZeroingRoundAnalysisDto CompleteRoundInternal(ZeroingSessionRecord record, bool publish)
@@ -243,6 +217,12 @@ namespace VRShooting.Application
             return analysis;
         }
 
+        float ResolveWeaponStability(string sessionId)
+        {
+            var state = weaponControl.GetState(sessionId);
+            return state.Success ? state.Data.Stability01 : 1f;
+        }
+
         ZeroingSessionRecord EnsureRecord(TrainingSessionDto session)
         {
             if (sessions.TryGetValue(session.SessionId, out var existing))
@@ -254,7 +234,7 @@ namespace VRShooting.Application
             {
                 SessionId = session.SessionId,
                 CurrentRound = 1,
-                FixedImpactOffsetCm = Vector2.zero
+                FixedImpactOffsetCm = ZeroingRules.GenerateFixedOffset(session.Seed)
             };
             sessions[session.SessionId] = record;
             return record;
@@ -296,7 +276,7 @@ namespace VRShooting.Application
                     ShotIndex = CurrentShots.Count + 1,
                     ImpactPointCm = impactPointCm,
                     WeaponStability = stability,
-                    InsideTenRing = impactPointCm.magnitude <= TenRingRadiusCm
+                    InsideTenRing = ZeroingRules.IsInsideTenRing(impactPointCm)
                 };
                 CurrentShots.Add(shot);
                 return shot;
@@ -308,47 +288,22 @@ namespace VRShooting.Application
                 {
                     SessionId = SessionId ?? string.Empty,
                     CurrentRound = CurrentRound,
-                    MaxRounds = MaxRounds,
-                    ShotsRemainingInRound = Math.Max(0, ShotsPerRound - CurrentShots.Count),
-                    DistanceMeters = DistanceMeters,
+                    MaxRounds = ZeroingRules.MaxRounds,
+                    ShotsRemainingInRound = Math.Max(0, ZeroingRules.ShotsPerRound - CurrentShots.Count),
+                    DistanceMeters = ZeroingRules.DistanceMeters,
                     FixedImpactOffsetCm = FixedImpactOffsetCm,
-                    CanShoot = CurrentShots.Count < ShotsPerRound,
+                    CanShoot = CurrentShots.Count < ZeroingRules.ShotsPerRound,
                     CurrentAdjustment = CurrentAdjustment
                 };
             }
 
             public ZeroingRoundAnalysisDto BuildAnalysis()
             {
-                var average = Vector2.zero;
-                for (var i = 0; i < CurrentShots.Count; i++)
-                {
-                    average += CurrentShots[i].ImpactPointCm;
-                }
-
-                if (CurrentShots.Count > 0)
-                {
-                    average /= CurrentShots.Count;
-                }
-
-                var passed = CurrentShots.Count == ShotsPerRound;
-                for (var i = 0; i < CurrentShots.Count; i++)
-                {
-                    passed &= CurrentShots[i].InsideTenRing;
-                }
-
-                return new ZeroingRoundAnalysisDto
-                {
-                    SessionId = SessionId ?? string.Empty,
-                    RoundIndex = CurrentRound,
-                    Shots = CurrentShots.ToArray(),
-                    AverageOffsetCm = average,
-                    VerticalDirection = ResolveVertical(average.y),
-                    FrontSightDegreesToAdjust = Mathf.Ceil(Mathf.Abs(average.y) / CmPerFrontSightDegree),
-                    HorizontalDirection = ResolveHorizontal(average.x),
-                    RearSightClicksToAdjust = Mathf.CeilToInt(Mathf.Abs(average.x) / CmPerRearSightClick),
-                    PassedTenRing = passed,
-                    AdjustmentApplied = AppliedRounds.Contains(CurrentRound)
-                };
+                return ZeroingRules.BuildRoundAnalysis(
+                    SessionId,
+                    CurrentRound,
+                    CurrentShots,
+                    AppliedRounds.Contains(CurrentRound));
             }
 
             public bool UpsertAnalysis(ZeroingRoundAnalysisDto analysis)
@@ -364,26 +319,6 @@ namespace VRShooting.Application
 
                 Analyses.Add(analysis);
                 return true;
-            }
-
-            static VerticalAdjustmentDirection ResolveVertical(float y)
-            {
-                if (Mathf.Abs(y) < 0.001f)
-                {
-                    return VerticalAdjustmentDirection.None;
-                }
-
-                return y > 0f ? VerticalAdjustmentDirection.CounterClockwise : VerticalAdjustmentDirection.Clockwise;
-            }
-
-            static HorizontalAdjustmentDirection ResolveHorizontal(float x)
-            {
-                if (Mathf.Abs(x) < 0.001f)
-                {
-                    return HorizontalAdjustmentDirection.None;
-                }
-
-                return x < 0f ? HorizontalAdjustmentDirection.Forward : HorizontalAdjustmentDirection.Backward;
             }
         }
     }

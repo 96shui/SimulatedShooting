@@ -1,3 +1,5 @@
+using VRShooting.Contracts;
+
 namespace VRShooting.Common
 {
     /// <summary>
@@ -10,6 +12,7 @@ namespace VRShooting.Common
         public SessionState State { get; init; }
         public string MapId { get; init; }
         public string WeaponId { get; init; }
+        public RandomSeed Seed { get; init; }
         public float ElapsedSeconds { get; init; }
         public AmmoDto Ammo { get; init; }
         public PlayerStatusDto Player { get; init; }
