@@ -56,9 +56,9 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.IsTrue(FindById("Image_ZeroingImpactAnalysis_Impact_2").activeSelf);
             Assert.IsTrue(FindById("Image_ZeroingImpactAnalysis_Impact_3").activeSelf);
             Assert.That(FindText("Text_ZeroingImpactAnalysis_VerticalOffset").text, Does.Contain("偏上"));
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_HorizontalOffset").text, Does.Contain("偏左"));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_HorizontalOffset").text, Does.Contain("水平偏差"));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("逆时针"));
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain("向前"));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain("觇孔"));
         }
 
         [UnityTest]
@@ -79,6 +79,51 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.AreEqual(ScreenId.ZeroingHud, services.Router.Current);
             Assert.That(FindText("Text_ZeroingHud_Round").text, Does.Contain("2/3"));
             Assert.That(FindText("Text_ZeroingHud_Ammo").text, Does.Contain("3/3"));
+        }
+
+        [UnityTest]
+        public IEnumerator Screen06_BackToMainMenuButtonReturnsToMainMenu()
+        {
+            yield return OpenHudAndCompleteRound();
+
+            FindButton("Button_ZeroingImpactAnalysis_BackToMainMenu").onClick.Invoke();
+            yield return null;
+
+            Assert.AreEqual(ScreenId.MainMenu, services.Router.Current);
+            Assert.IsTrue(FindById("Screen_MainMenu").activeSelf);
+        }
+
+        [UnityTest]
+        public IEnumerator Screen06_ThirdRoundPrimaryActionBecomesBackToMainMenu()
+        {
+            yield return OpenHudAndCompleteRound();
+            ApplyAndNext();
+            yield return null;
+
+            Fire(new Vector3(-8f, 12f, 100f));
+            Fire(new Vector3(-8f, 12f, 100f));
+            Fire(new Vector3(-8f, 12f, 100f));
+            yield return null;
+            ApplyAndNext();
+            yield return null;
+
+            Fire(new Vector3(-8f, 12f, 100f));
+            Fire(new Vector3(-8f, 12f, 100f));
+            Fire(new Vector3(-8f, 12f, 100f));
+            yield return null;
+
+            var apply = FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment");
+            apply.onClick.Invoke();
+            yield return null;
+
+            var next = FindButton("Button_ZeroingImpactAnalysis_NextRound");
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_NextRound").text, Does.Contain("返回主菜单"));
+
+            next.onClick.Invoke();
+            yield return null;
+
+            Assert.AreEqual(ScreenId.MainMenu, services.Router.Current);
+            Assert.IsTrue(FindById("Screen_MainMenu").activeSelf);
         }
 
         IEnumerator OpenHudAndCompleteRound()
@@ -114,6 +159,12 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.IsTrue(result.Success, result.Message);
         }
 
+        void ApplyAndNext()
+        {
+            FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment").onClick.Invoke();
+            FindButton("Button_ZeroingImpactAnalysis_NextRound").onClick.Invoke();
+        }
+
         Button FindButton(string id)
         {
             var go = FindById(id);
@@ -134,7 +185,7 @@ namespace VRShooting.Tests.PlayMode.UI
 
         GameObject FindById(string id)
         {
-            var allIds = Object.FindObjectsOfType<UITestId>(true);
+            var allIds = root.GetComponentsInChildren<UITestId>(true);
             for (var i = 0; i < allIds.Length; i++)
             {
                 if (allIds[i].Id == id)

@@ -96,7 +96,7 @@ namespace VRShooting.Tests.PlayMode.UI
             yield return null;
 
             Assert.That(FindText("Text_ZeroingHud_Ammo").text, Does.Contain("0/3"));
-            Assert.That(FindText("Text_ZeroingHud_Prompt").text, Does.Contain("禁止射击"));
+            Assert.That(FindText("Text_ZeroingHud_Prompt").text, Does.Contain("本轮射击已完成"));
         }
 
         IEnumerator StartZeroingHud()
