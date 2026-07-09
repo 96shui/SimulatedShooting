@@ -36,6 +36,7 @@ namespace VRShooting.Unity.UI
         RectTransform zeroingBriefingScreen;
         RectTransform zeroingHudScreen;
         RectTransform zeroingImpactAnalysisScreen;
+        RectTransform zeroingFinalRatingScreen;
         RectTransform zeroingStabilityFill;
         readonly List<RectTransform> zeroingImpactDots = new List<RectTransform>();
         Button openZeroingButton;
@@ -43,6 +44,9 @@ namespace VRShooting.Unity.UI
         Button backButton;
         Button applyAdjustmentButton;
         Button nextRoundButton;
+        Button impactBackToMainMenuButton;
+        Button finalRetryButton;
+        Button finalBackToModeSelectionButton;
         TextMeshProUGUI zeroingRoundText;
         TextMeshProUGUI zeroingDistanceText;
         TextMeshProUGUI zeroingAmmoText;
@@ -56,6 +60,9 @@ namespace VRShooting.Unity.UI
         TextMeshProUGUI zeroingAnalysisRearSightText;
         TextMeshProUGUI zeroingAnalysisSuggestionText;
         TextMeshProUGUI zeroingAnalysisAppliedText;
+        TextMeshProUGUI zeroingFinalGradeText;
+        TextMeshProUGUI zeroingFinalRoundsText;
+        TextMeshProUGUI zeroingFinalThumbnailsText;
         Image zeroingPromptBackground;
 #if UNITY_EDITOR
         static TMP_FontAsset generatedEditorFontAsset;
@@ -201,6 +208,9 @@ namespace VRShooting.Unity.UI
 
             zeroingImpactAnalysisScreen = CreateHudScreen("Screen_ZeroingImpactAnalysis");
             BuildZeroingImpactAnalysis(zeroingImpactAnalysisScreen);
+
+            zeroingFinalRatingScreen = CreateHudScreen("Screen_ZeroingFinalRating");
+            BuildZeroingFinalRating(zeroingFinalRatingScreen);
         }
 
         RectTransform CreateScreen(string name)
@@ -416,6 +426,29 @@ namespace VRShooting.Unity.UI
             applyAdjustmentButton.onClick.AddListener(OnApplyAdjustmentClicked);
             nextRoundButton = AddButton(parent, "Button_ZeroingImpactAnalysis_NextRound", "进入下一轮", DrawioMin(415, 415, 120, 38), DrawioMax(415, 415, 120, 38), false);
             nextRoundButton.onClick.AddListener(OnNextRoundClicked);
+            impactBackToMainMenuButton = AddButton(parent, "Button_ZeroingImpactAnalysis_BackToMainMenu", "返回主菜单", DrawioMin(545, 415, 90, 38), DrawioMax(545, 415, 90, 38), false);
+            impactBackToMainMenuButton.onClick.AddListener(OnImpactBackToMainMenuClicked);
+        }
+
+        void BuildZeroingFinalRating(RectTransform parent)
+        {
+            AddPanel(parent, "Placeholder_ZeroingFinalRating_Range", DrawioMin(35, 45, 730, 500), DrawioMax(35, 45, 730, 500), new Color32(10, 21, 18, 165), new Color32(73, 107, 90, 255), "素材占位：靶场与胸靶背景");
+            AddPanel(parent, "Panel_ZeroingFinalRating_Panel", DrawioMin(130, 85, 540, 390), DrawioMax(130, 85, 540, 390), new Color32(11, 19, 16, 235), new Color32(45, 156, 255, 255));
+            AddLabel(parent, "Text_ZeroingFinalRating_Title", "100m射校 训练结算", 38, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(205, 98, 390, 48), DrawioMax(205, 98, 390, 48), new Color32(231, 242, 235, 255));
+
+            AddPanel(parent, "Panel_ZeroingFinalRating_Grade", DrawioMin(165, 160, 150, 120), DrawioMax(165, 160, 150, 120), new Color32(17, 29, 24, 230), new Color32(247, 185, 85, 255));
+            zeroingFinalGradeText = AddLabel(parent, "Text_ZeroingFinalRating_Grade", "--", 56, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(172, 182, 136, 76), DrawioMax(172, 182, 136, 76), new Color32(247, 185, 85, 255));
+
+            var rounds = AddPanel(parent, "Panel_ZeroingFinalRating_Rounds", DrawioMin(345, 150, 270, 140), DrawioMax(345, 150, 270, 140), new Color32(17, 29, 24, 225), new Color32(56, 84, 71, 255));
+            zeroingFinalRoundsText = AddLabel(rounds, "Text_ZeroingFinalRating_Rounds", "三轮射击记录", 22, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(28, 24), new Vector2(620, 230), new Color32(231, 242, 235, 255));
+
+            var thumbs = AddPanel(parent, "Placeholder_ZeroingFinalRating_ImpactThumbnails", DrawioMin(345, 310, 270, 70), DrawioMax(345, 310, 270, 70), new Color32(17, 29, 24, 210), new Color32(73, 107, 90, 255));
+            zeroingFinalThumbnailsText = AddLabel(thumbs, "Text_ZeroingFinalRating_ImpactThumbnails", "弹着缩略图区域", 20, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(20, 16), new Vector2(628, 108), new Color32(143, 217, 255, 255));
+
+            finalRetryButton = AddButton(parent, "Button_ZeroingFinalRating_Retry", "重新训练", DrawioMin(270, 415, 110, 38), DrawioMax(270, 415, 110, 38), true);
+            finalRetryButton.onClick.AddListener(OnFinalRetryClicked);
+            finalBackToModeSelectionButton = AddButton(parent, "Button_ZeroingFinalRating_BackToModeSelection", "返回模式选择", DrawioMin(405, 415, 130, 38), DrawioMax(405, 415, 130, 38), false);
+            finalBackToModeSelectionButton.onClick.AddListener(OnFinalBackToModeSelectionClicked);
         }
 
         void BuildAnalysisTargetDiagram(RectTransform parent)
@@ -546,6 +579,11 @@ namespace VRShooting.Unity.UI
                 zeroingImpactAnalysisScreen.gameObject.SetActive(screen == ScreenId.ZeroingImpactAnalysis);
             }
 
+            if (zeroingFinalRatingScreen != null)
+            {
+                zeroingFinalRatingScreen.gameObject.SetActive(screen == ScreenId.ZeroingFinalRating);
+            }
+
             if (screen == ScreenId.ZeroingHud)
             {
                 RefreshHud();
@@ -554,6 +592,11 @@ namespace VRShooting.Unity.UI
             if (screen == ScreenId.ZeroingImpactAnalysis)
             {
                 RefreshImpactAnalysis();
+            }
+
+            if (screen == ScreenId.ZeroingFinalRating)
+            {
+                RefreshFinalRating();
             }
         }
 
@@ -687,6 +730,7 @@ namespace VRShooting.Unity.UI
             if (nextRoundButton != null)
             {
                 nextRoundButton.interactable = analysis.AdjustmentApplied;
+                SetButtonLabel(nextRoundButton, ResolveImpactPrimaryActionLabel(analysis));
             }
 
             RenderImpactDots(analysis);
@@ -738,6 +782,20 @@ namespace VRShooting.Unity.UI
             RenderImpactAnalysis(applied.Data);
         }
 
+        void OnImpactBackToMainMenuClicked()
+        {
+            EndCurrentSession(SessionEndReason.Cancelled);
+            var route = services.Router.HandleUIEvent(UIEventId.Zeroing_BackToMainMenu, ScreenId.ZeroingImpactAnalysis, new NavigationArgs
+            {
+                ReturnToScreen = ScreenId.MainMenu.ToString()
+            });
+
+            if (!route.Success)
+            {
+                LastError = route.Message;
+            }
+        }
+
         void OnNextRoundClicked()
         {
             if (!services.TrainingSessions.HasActiveSession)
@@ -752,6 +810,24 @@ namespace VRShooting.Unity.UI
                 return;
             }
 
+            if (analysis.Data.RoundIndex >= 3)
+            {
+                EndCurrentSession(SessionEndReason.Completed);
+                var back = services.Router.HandleUIEvent(UIEventId.Zeroing_NextRound, ScreenId.ZeroingImpactAnalysis, new NavigationArgs
+                {
+                    Mode = TrainingMode.Zeroing100m,
+                    SessionId = analysis.Data.SessionId,
+                    ReturnToScreen = ScreenId.MainMenu.ToString()
+                });
+
+                if (!back.Success)
+                {
+                    LastError = back.Message;
+                }
+
+                return;
+            }
+
             var next = services.Zeroing.ContinueAfterAnalysis(analysis.Data.SessionId);
             if (!next.Success)
             {
@@ -759,7 +835,7 @@ namespace VRShooting.Unity.UI
                 return;
             }
 
-            var final = analysis.Data.PassedTenRing || analysis.Data.RoundIndex >= 3;
+            var final = analysis.Data.PassedTenRing;
             var route = services.Router.HandleUIEvent(UIEventId.Zeroing_NextRound, ScreenId.ZeroingImpactAnalysis, new NavigationArgs
             {
                 Mode = TrainingMode.Zeroing100m,
@@ -771,6 +847,201 @@ namespace VRShooting.Unity.UI
             {
                 LastError = route.Message;
             }
+        }
+
+        void RefreshFinalRating()
+        {
+            if (services == null || !services.TrainingSessions.HasActiveSession)
+            {
+                return;
+            }
+
+            var result = services.Zeroing.GetFinalResult(services.TrainingSessions.Current.SessionId);
+            if (!result.Success)
+            {
+                LastError = result.Message;
+                return;
+            }
+
+            RenderFinalRating(result.Data);
+        }
+
+        void RenderFinalRating(ZeroingResultDto result)
+        {
+            if (zeroingFinalGradeText != null)
+            {
+                zeroingFinalGradeText.text = FormatGrade(result.Grade);
+            }
+
+            if (zeroingFinalRoundsText != null)
+            {
+                zeroingFinalRoundsText.text = FormatRoundRecords(result);
+            }
+
+            if (zeroingFinalThumbnailsText != null)
+            {
+                zeroingFinalThumbnailsText.text = FormatThumbnailSummary(result);
+            }
+        }
+
+        void OnFinalRetryClicked()
+        {
+            EndCurrentSession(SessionEndReason.Cancelled);
+            var route = services.Router.HandleUIEvent(UIEventId.Zeroing_Retry, ScreenId.ZeroingFinalRating, new NavigationArgs
+            {
+                Mode = TrainingMode.Zeroing100m,
+                ReturnToScreen = ScreenId.ZeroingBriefing.ToString()
+            });
+
+            if (!route.Success)
+            {
+                LastError = route.Message;
+            }
+        }
+
+        void OnFinalBackToModeSelectionClicked()
+        {
+            EndCurrentSession(SessionEndReason.Completed);
+            var route = services.Router.HandleUIEvent(UIEventId.Zeroing_BackToModeSelection, ScreenId.ZeroingFinalRating, new NavigationArgs
+            {
+                ReturnToScreen = ScreenId.MainMenu.ToString()
+            });
+
+            if (!route.Success)
+            {
+                LastError = route.Message;
+            }
+        }
+
+        void EndCurrentSession(SessionEndReason reason)
+        {
+            if (services == null || !services.TrainingSessions.HasActiveSession)
+            {
+                return;
+            }
+
+            var result = services.TrainingSessions.End(services.TrainingSessions.Current.SessionId, reason);
+            if (!result.Success)
+            {
+                LastError = result.Message;
+            }
+        }
+
+        static void SetButtonLabel(Button button, string text)
+        {
+            var label = button != null ? button.GetComponentInChildren<TextMeshProUGUI>(true) : null;
+            if (label != null)
+            {
+                label.text = text;
+            }
+        }
+
+        static string ResolveImpactPrimaryActionLabel(ZeroingRoundAnalysisDto analysis)
+        {
+            if (!analysis.AdjustmentApplied)
+            {
+                return "进入下一轮";
+            }
+
+            if (analysis.RoundIndex >= 3)
+            {
+                return "返回主菜单";
+            }
+
+            return analysis.PassedTenRing ? "查看评级" : "进入下一轮";
+        }
+
+        static string FormatGrade(ResultGrade grade)
+        {
+            switch (grade)
+            {
+                case ResultGrade.Excellent:
+                    return "优秀";
+                case ResultGrade.Good:
+                    return "良好";
+                case ResultGrade.Pass:
+                    return "及格";
+                case ResultGrade.Fail:
+                    return "不及格";
+                default:
+                    return "未评级";
+            }
+        }
+
+        static string FormatRoundRecords(ZeroingResultDto result)
+        {
+            var lines = new List<string> { "三轮射击记录" };
+            for (var round = 1; round <= 3; round++)
+            {
+                var analysis = FindAnalysis(result, round);
+                if (!analysis.HasValue)
+                {
+                    lines.Add("第" + round + "轮：未使用");
+                    continue;
+                }
+
+                var shots = analysis.Value.Shots != null ? analysis.Value.Shots.Count : 0;
+                lines.Add("第" + round + "轮：" + (analysis.Value.PassedTenRing ? "通过" : "未通过") + " / " + shots + "发 / 平均偏差 " + FormatOffsetPair(analysis.Value.AverageOffsetCm));
+            }
+
+            return string.Join("\n", lines);
+        }
+
+        static string FormatThumbnailSummary(ZeroingResultDto result)
+        {
+            var lines = new List<string> { "弹着缩略图摘要" };
+            for (var round = 1; round <= 3; round++)
+            {
+                var analysis = FindAnalysis(result, round);
+                if (!analysis.HasValue)
+                {
+                    continue;
+                }
+
+                lines.Add("第" + round + "轮：" + FormatImpactDots(analysis.Value));
+            }
+
+            return lines.Count == 1 ? "弹着缩略图区域\n暂无弹着记录" : string.Join("\n", lines);
+        }
+
+        static string FormatImpactDots(ZeroingRoundAnalysisDto analysis)
+        {
+            if (analysis.Shots == null || analysis.Shots.Count == 0)
+            {
+                return "暂无";
+            }
+
+            var parts = new List<string>();
+            for (var i = 0; i < analysis.Shots.Count; i++)
+            {
+                parts.Add("#" + analysis.Shots[i].ShotIndex + " " + FormatOffsetPair(analysis.Shots[i].ImpactPointCm));
+            }
+
+            return string.Join("；", parts);
+        }
+
+        static ZeroingRoundAnalysisDto? FindAnalysis(ZeroingResultDto result, int round)
+        {
+            if (result.Rounds == null)
+            {
+                return null;
+            }
+
+            for (var i = 0; i < result.Rounds.Count; i++)
+            {
+                if (result.Rounds[i].RoundIndex == round)
+                {
+                    return result.Rounds[i];
+                }
+            }
+
+            return null;
+        }
+
+        static string FormatOffsetPair(Vector2 offset)
+        {
+            return "(" + offset.x.ToString("0.#", CultureInfo.InvariantCulture) + "cm, "
+                + offset.y.ToString("0.#", CultureInfo.InvariantCulture) + "cm)";
         }
 
         static HudTextLineDto FindLine(HudDto hud, string key)

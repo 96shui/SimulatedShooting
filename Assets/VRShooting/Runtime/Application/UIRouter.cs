@@ -148,9 +148,23 @@ namespace VRShooting.Application
                         : ServiceResult<ScreenId>.Fail(ErrorCode.InvalidState, "apply adjustment is only valid on impact analysis");
 
                 case UIEventId.Zeroing_NextRound:
+                    if (args.ReturnToScreen == ScreenId.MainMenu.ToString())
+                    {
+                        return Open(ScreenId.MainMenu, args);
+                    }
+
                     return Open(args.ReturnToScreen == ScreenId.ZeroingFinalRating.ToString()
                         ? ScreenId.ZeroingFinalRating
                         : ScreenId.ZeroingHud, args);
+
+                case UIEventId.Zeroing_BackToMainMenu:
+                    return Open(ScreenId.MainMenu, args);
+
+                case UIEventId.Zeroing_Retry:
+                    return Open(ScreenId.ZeroingBriefing, args);
+
+                case UIEventId.Zeroing_BackToModeSelection:
+                    return Open(ScreenId.MainMenu, args);
 
                 case UIEventId.Common_Back:
                     return Back();
