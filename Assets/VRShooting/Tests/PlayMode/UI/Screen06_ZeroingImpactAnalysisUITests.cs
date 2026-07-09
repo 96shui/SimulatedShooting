@@ -94,7 +94,7 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
-        public IEnumerator Screen06_ThirdRoundPrimaryActionBecomesBackToMainMenu()
+        public IEnumerator Screen06_ThirdRoundPrimaryActionOpensFinalRating()
         {
             yield return OpenHudAndCompleteRound();
             ApplyAndNext();
@@ -117,13 +117,13 @@ namespace VRShooting.Tests.PlayMode.UI
             yield return null;
 
             var next = FindButton("Button_ZeroingImpactAnalysis_NextRound");
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_NextRound").text, Does.Contain("返回主菜单"));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_NextRound").text, Does.Contain("查看评级"));
 
             next.onClick.Invoke();
             yield return null;
 
-            Assert.AreEqual(ScreenId.MainMenu, services.Router.Current);
-            Assert.IsTrue(FindById("Screen_MainMenu").activeSelf);
+            Assert.AreEqual(ScreenId.ZeroingFinalRating, services.Router.Current);
+            Assert.IsTrue(FindById("Screen_ZeroingFinalRating").activeSelf);
         }
 
         IEnumerator OpenHudAndCompleteRound()

@@ -812,17 +812,16 @@ namespace VRShooting.Unity.UI
 
             if (analysis.Data.RoundIndex >= 3)
             {
-                EndCurrentSession(SessionEndReason.Completed);
-                var back = services.Router.HandleUIEvent(UIEventId.Zeroing_NextRound, ScreenId.ZeroingImpactAnalysis, new NavigationArgs
+                var finalRoute = services.Router.HandleUIEvent(UIEventId.Zeroing_NextRound, ScreenId.ZeroingImpactAnalysis, new NavigationArgs
                 {
                     Mode = TrainingMode.Zeroing100m,
                     SessionId = analysis.Data.SessionId,
-                    ReturnToScreen = ScreenId.MainMenu.ToString()
+                    ReturnToScreen = ScreenId.ZeroingFinalRating.ToString()
                 });
 
-                if (!back.Success)
+                if (!finalRoute.Success)
                 {
-                    LastError = back.Message;
+                    LastError = finalRoute.Message;
                 }
 
                 return;
@@ -945,7 +944,7 @@ namespace VRShooting.Unity.UI
 
             if (analysis.RoundIndex >= 3)
             {
-                return "返回主菜单";
+                return "查看评级";
             }
 
             return analysis.PassedTenRing ? "查看评级" : "进入下一轮";
