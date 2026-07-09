@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.LowLevel;
 using UnityEngine.UI;
 using VRShooting.Application;
@@ -14,9 +15,44 @@ using VRShooting.Unity.Bootstrap;
 namespace VRShooting.Unity.UI
 {
     /// <summary>
-    /// P1 主菜单与 100m 任务说明 UI。追溯 task008 与 docs/BDD/screens/02、04。
+    /// Main scene UI for mode entry and 100m zeroing briefing.
     /// </summary>
-    public sealed class P1MainMenuZeroingBriefingUI : MonoBehaviour
+    public sealed class MainMenuUI : TrainingUIRoot
+    {
+        protected override TrainingUIScreenGroup ScreenGroup => TrainingUIScreenGroup.MainMenu;
+
+        protected override string RootObjectName => nameof(MainMenuUI);
+
+        public static MainMenuUI EnsureExistsInScene(ApplicationServices applicationServices = null)
+        {
+            var ui = FindObjectOfType<MainMenuUI>(true);
+            if (ui == null)
+            {
+                var uiRoot = new GameObject(nameof(MainMenuUI), typeof(RectTransform));
+                ui = uiRoot.AddComponent<MainMenuUI>();
+            }
+
+            var services = applicationServices ?? GameMain.Instance?.Services;
+            if (services != null && !ui.IsInitialized)
+            {
+                ui.Initialize(services);
+            }
+
+            return ui;
+        }
+    }
+
+    [Flags]
+    public enum TrainingUIScreenGroup
+    {
+        MainMenu = 1,
+        ZeroingRange = 2
+    }
+
+    /// <summary>
+    /// Shared generated UI implementation for scene-owned training screens.
+    /// </summary>
+    public abstract class TrainingUIRoot : MonoBehaviour
     {
         const string ZeroingMapId = "zeroing-range-100m";
         const string ZeroingWeaponId = "training-rifle";
@@ -64,9 +100,14 @@ namespace VRShooting.Unity.UI
         TextMeshProUGUI zeroingFinalRoundsText;
         TextMeshProUGUI zeroingFinalThumbnailsText;
         Image zeroingPromptBackground;
+        bool isBuilt;
 #if UNITY_EDITOR
         static TMP_FontAsset generatedEditorFontAsset;
 #endif
+
+        protected abstract TrainingUIScreenGroup ScreenGroup { get; }
+
+        protected abstract string RootObjectName { get; }
 
         public ScreenId ActiveScreen { get; private set; } = ScreenId.MainMenu;
 
@@ -82,11 +123,7 @@ namespace VRShooting.Unity.UI
 
         void Awake()
         {
-            if (!P1PersistentUIHost.TryAdoptUi(this))
-            {
-                return;
-            }
-
+            TrainingUIHost.EnsureExists();
             if (!buildOnAwake)
             {
                 return;
@@ -136,7 +173,7 @@ namespace VRShooting.Unity.UI
             services = applicationServices ?? ApplicationServices.CreateDefault();
             LastError = string.Empty;
 
-            if (mainMenuScreen != null)
+            if (isBuilt)
             {
                 ShowScreen(services.Router.Current);
                 return;
@@ -147,6 +184,7 @@ namespace VRShooting.Unity.UI
             SubscribeRouter();
             SubscribeHud();
             SubscribeZeroing();
+            isBuilt = true;
             ShowScreen(services.Router.Current);
         }
 
@@ -194,23 +232,29 @@ namespace VRShooting.Unity.UI
                 gameObject.AddComponent<GraphicRaycaster>();
             }
 
-            gameObject.name = "P1_MainMenuZeroingBriefingUI";
-            AddTestId(gameObject, "P1_MainMenuZeroingBriefingUI");
+            gameObject.name = RootObjectName;
+            AddTestId(gameObject, RootObjectName);
 
-            mainMenuScreen = CreateScreen("Screen_MainMenu");
-            BuildMainMenu(mainMenuScreen);
+            if ((ScreenGroup & TrainingUIScreenGroup.MainMenu) != 0)
+            {
+                mainMenuScreen = CreateScreen("Screen_MainMenu");
+                BuildMainMenu(mainMenuScreen);
 
-            zeroingBriefingScreen = CreateScreen("Screen_ZeroingBriefing");
-            BuildZeroingBriefing(zeroingBriefingScreen);
+                zeroingBriefingScreen = CreateScreen("Screen_ZeroingBriefing");
+                BuildZeroingBriefing(zeroingBriefingScreen);
+            }
 
-            zeroingHudScreen = CreateHudScreen("Screen_ZeroingHud");
-            BuildZeroingHud(zeroingHudScreen);
+            if ((ScreenGroup & TrainingUIScreenGroup.ZeroingRange) != 0)
+            {
+                zeroingHudScreen = CreateHudScreen("Screen_ZeroingHud");
+                BuildZeroingHud(zeroingHudScreen);
 
-            zeroingImpactAnalysisScreen = CreateHudScreen("Screen_ZeroingImpactAnalysis");
-            BuildZeroingImpactAnalysis(zeroingImpactAnalysisScreen);
+                zeroingImpactAnalysisScreen = CreateHudScreen("Screen_ZeroingImpactAnalysis");
+                BuildZeroingImpactAnalysis(zeroingImpactAnalysisScreen);
 
-            zeroingFinalRatingScreen = CreateHudScreen("Screen_ZeroingFinalRating");
-            BuildZeroingFinalRating(zeroingFinalRatingScreen);
+                zeroingFinalRatingScreen = CreateHudScreen("Screen_ZeroingFinalRating");
+                BuildZeroingFinalRating(zeroingFinalRatingScreen);
+            }
         }
 
         RectTransform CreateScreen(string name)
@@ -240,7 +284,7 @@ namespace VRShooting.Unity.UI
                 return cached;
             }
 
-            var sprite = Resources.Load<Sprite>("UI/P1Generated/Sprites/" + spriteName);
+            var sprite = Resources.Load<Sprite>("UI/TrainingGenerated/Sprites/" + spriteName);
             generatedSpriteCache[spriteName] = sprite;
             return sprite;
         }
@@ -621,6 +665,7 @@ namespace VRShooting.Unity.UI
             if (!route.Success)
             {
                 LastError = route.Message;
+                return;
             }
         }
 
@@ -793,7 +838,10 @@ namespace VRShooting.Unity.UI
             if (!route.Success)
             {
                 LastError = route.Message;
+                return;
             }
+
+            ReturnToMainSceneIfNeeded();
         }
 
         void OnNextRoundClicked()
@@ -845,6 +893,7 @@ namespace VRShooting.Unity.UI
             if (!route.Success)
             {
                 LastError = route.Message;
+                return;
             }
         }
 
@@ -895,7 +944,10 @@ namespace VRShooting.Unity.UI
             if (!route.Success)
             {
                 LastError = route.Message;
+                return;
             }
+
+            ReturnToMainSceneIfNeeded();
         }
 
         void OnFinalBackToModeSelectionClicked()
@@ -909,6 +961,28 @@ namespace VRShooting.Unity.UI
             if (!route.Success)
             {
                 LastError = route.Message;
+                return;
+            }
+
+            ReturnToMainSceneIfNeeded();
+        }
+
+        void ReturnToMainSceneIfNeeded()
+        {
+            if (transform.parent != null)
+            {
+                return;
+            }
+
+            if (SceneManager.GetActiveScene().name != "ZeroingRangeScene")
+            {
+                return;
+            }
+
+            var gameMain = GameMain.Instance;
+            if (gameMain?.GameState != null)
+            {
+                gameMain.GameState.ChangeState(GameState.MainMenu);
             }
         }
 
@@ -1268,7 +1342,7 @@ namespace VRShooting.Unity.UI
 
             var material = new Material(sourceMaterial)
             {
-                name = sourceMaterial.name + " P1Clean"
+                name = sourceMaterial.name + " TrainingUIClean"
             };
 
             if (material.HasProperty(ShaderUtilities.ID_OutlineWidth))

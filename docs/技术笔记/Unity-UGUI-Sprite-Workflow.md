@@ -27,7 +27,7 @@ Canvas 多分辨率适配应使用 `CanvasScaler.ScaleWithScreenSize` 和统一�
 ## 本项目应用规范
 
 - 参考分辨率：1920 x 1080。
-- 资产目录：`Assets/VRShooting/Art/UI/P1Generated/`。
+- 资产目录：`Assets/VRShooting/Art/UI/TrainingGenerated/`。
 - 运行时加载：优先通过 Editor 导入设置和序列化引用；当前脚本生成 UI 可用 `AssetDatabase.LoadAssetAtPath<Sprite>`（Editor）加 `Resources.Load<Sprite>` 兜底。
 - 面板类 Sprite：
   - `Image.type = Sliced`

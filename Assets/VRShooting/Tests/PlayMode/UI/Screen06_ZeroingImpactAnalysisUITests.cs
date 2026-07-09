@@ -17,7 +17,8 @@ namespace VRShooting.Tests.PlayMode.UI
     {
         GameObject root;
         ApplicationServices services;
-        P1MainMenuZeroingBriefingUI ui;
+        MainMenuUI mainMenuUi;
+        ZeroingRangeUI zeroingRangeUi;
 
         [SetUp]
         public void SetUp()
@@ -25,12 +26,11 @@ namespace VRShooting.Tests.PlayMode.UI
             services = ApplicationServices.CreateDefault();
             root = new GameObject("Test_ZeroingImpactAnalysisUI", typeof(RectTransform));
             root.SetActive(false);
-            ui = root.AddComponent<P1MainMenuZeroingBriefingUI>();
-            typeof(P1MainMenuZeroingBriefingUI)
-                .GetField("buildOnAwake", BindingFlags.Instance | BindingFlags.NonPublic)
-                .SetValue(ui, false);
+            mainMenuUi = CreateUiRoot<MainMenuUI>("MainMenuUI");
+            zeroingRangeUi = CreateUiRoot<ZeroingRangeUI>("ZeroingRangeUI");
             root.SetActive(true);
-            ui.Initialize(services);
+            mainMenuUi.Initialize(services);
+            zeroingRangeUi.Initialize(services);
         }
 
         [UnityTearDown]
@@ -42,6 +42,17 @@ namespace VRShooting.Tests.PlayMode.UI
             }
 
             yield return null;
+        }
+
+        T CreateUiRoot<T>(string objectName) where T : TrainingUIRoot
+        {
+            var go = new GameObject(objectName, typeof(RectTransform));
+            go.transform.SetParent(root.transform, false);
+            var ui = go.AddComponent<T>();
+            typeof(TrainingUIRoot)
+                .GetField("buildOnAwake", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(ui, false);
+            return ui;
         }
 
         [UnityTest]
