@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using VRShooting.Application.Events;
 using VRShooting.Common;
 using VRShooting.Contracts;
@@ -8,25 +9,25 @@ namespace VRShooting.Application
 {
     public sealed class ZeroingHudService : IHUDService
     {
-        const int TotalRounds = 3;
-        const int ShotsPerRound = 3;
         const string DistanceLabel = "100m";
 
         readonly IGameEventBus eventBus;
         readonly ITrainingSessionService trainingSessions;
+        readonly IZeroingService zeroing;
         readonly IAmmoService ammo;
         readonly IWeaponControlService weaponControl;
-        readonly List<WeaponShotResultDto> impactRecords = new List<WeaponShotResultDto>();
-        int currentRound = 1;
+        readonly List<ZeroingShotDto> currentRoundShots = new List<ZeroingShotDto>();
 
         public ZeroingHudService(
             IGameEventBus eventBus,
             ITrainingSessionService trainingSessions,
+            IZeroingService zeroing,
             IAmmoService ammo,
             IWeaponControlService weaponControl)
         {
             this.eventBus = eventBus;
             this.trainingSessions = trainingSessions;
+            this.zeroing = zeroing;
             this.ammo = ammo;
             this.weaponControl = weaponControl;
 
@@ -36,8 +37,9 @@ namespace VRShooting.Application
             eventBus.Subscribe<ReloadCompletedEvent>(evt => PublishIfCurrent(evt.SessionId));
             eventBus.Subscribe<ShoulderChangedEvent>(evt => PublishIfCurrent(evt.SessionId));
             eventBus.Subscribe<WeaponStateChangedEvent>(evt => PublishIfCurrent(evt.State.SessionId));
-            eventBus.Subscribe<WeaponShotResultEvent>(OnShotResult);
+            eventBus.Subscribe<ZeroingShotRecordedEvent>(OnZeroingShotRecorded);
             eventBus.Subscribe<ZeroingRoundStartedEvent>(OnZeroingRoundStarted);
+            eventBus.Subscribe<ZeroingRoundCompletedEvent>(evt => PublishIfCurrent(evt.SessionId));
         }
 
         public event Action<HudDto> HudUpdated;
@@ -60,9 +62,10 @@ namespace VRShooting.Application
                 return ServiceResult<HudDto>.Fail(ErrorCode.InvalidInput, "hud only supports zeroing mode", HudDto.Empty);
             }
 
+            var zeroingSession = ResolveZeroingSession(sessionId);
             var ammoDto = ResolveAmmo(session);
             var weaponState = ResolveWeaponState(session.SessionId);
-            var canShoot = weaponState.HasValue ? weaponState.Value.CanShoot : ammoDto.CurrentMagazine > 0 && !ammoDto.IsReloading;
+            var canShoot = ResolveCanShoot(zeroingSession, ammoDto, weaponState);
             var shoulder = weaponState.HasValue ? weaponState.Value.ShoulderSide : session.Player.Shoulder;
             var stability01 = weaponState.HasValue ? weaponState.Value.Stability01 : 1f;
 
@@ -81,8 +84,8 @@ namespace VRShooting.Application
                     CornerShootingAvailable = session.Player.CornerShootingAvailable
                 },
                 MiniMap = MiniMapDto.Hidden,
-                TextLines = BuildTextLines(ammoDto, shoulder, stability01, canShoot),
-                Prompts = BuildPrompts(ammoDto, stability01, canShoot),
+                TextLines = BuildTextLines(zeroingSession, ammoDto, shoulder, stability01, canShoot),
+                Prompts = BuildPrompts(zeroingSession, ammoDto, stability01, canShoot),
                 CanShoot = canShoot
             };
 
@@ -96,28 +99,26 @@ namespace VRShooting.Application
                 return;
             }
 
-            impactRecords.Clear();
-            currentRound = 1;
+            currentRoundShots.Clear();
             PublishIfCurrent(evt.Session.SessionId);
         }
 
         void OnZeroingRoundStarted(ZeroingRoundStartedEvent evt)
         {
-            currentRound = evt.Session.CurrentRound;
-            impactRecords.Clear();
+            currentRoundShots.Clear();
             PublishIfCurrent(evt.SessionId);
         }
 
-        void OnShotResult(WeaponShotResultEvent evt)
+        void OnZeroingShotRecorded(ZeroingShotRecordedEvent evt)
         {
-            if (!evt.Result.IsValidShot)
+            if (evt.Shot.RoundIndex > 0 && currentRoundShots.Count > 0 &&
+                currentRoundShots[0].RoundIndex != evt.Shot.RoundIndex)
             {
-                PublishIfCurrent(evt.Result.SessionId);
-                return;
+                currentRoundShots.Clear();
             }
 
-            impactRecords.Add(evt.Result);
-            PublishIfCurrent(evt.Result.SessionId);
+            currentRoundShots.Add(evt.Shot);
+            PublishIfCurrent(evt.SessionId);
         }
 
         void PublishIfCurrent(string sessionId)
@@ -132,6 +133,12 @@ namespace VRShooting.Application
             eventBus.Publish(new HudUpdatedEvent { Hud = result.Data });
         }
 
+        ZeroingSessionDto ResolveZeroingSession(string sessionId)
+        {
+            var result = zeroing.GetSession(sessionId);
+            return result.Success ? result.Data : ZeroingSessionDto.Empty;
+        }
+
         AmmoDto ResolveAmmo(TrainingSessionDto session)
         {
             var result = ammo.GetAmmo(session.SessionId);
@@ -144,25 +151,51 @@ namespace VRShooting.Application
             return result.Success ? result.Data : (WeaponControlStateDto?)null;
         }
 
+        static bool ResolveCanShoot(
+            ZeroingSessionDto zeroingSession,
+            AmmoDto ammoDto,
+            WeaponControlStateDto? weaponState)
+        {
+            if (!zeroingSession.CanShoot)
+            {
+                return false;
+            }
+
+            if (ammoDto.IsReloading || ammoDto.CurrentMagazine <= 0)
+            {
+                return false;
+            }
+
+            return !weaponState.HasValue || weaponState.Value.CanShoot;
+        }
+
         IReadOnlyList<HudTextLineDto> BuildTextLines(
+            ZeroingSessionDto zeroingSession,
             AmmoDto ammoDto,
             ShoulderSide shoulder,
             float stability01,
             bool canShoot)
         {
+            var maxRounds = zeroingSession.MaxRounds > 0 ? zeroingSession.MaxRounds : ZeroingRules.MaxRounds;
+            var currentRound = zeroingSession.CurrentRound > 0 ? zeroingSession.CurrentRound : 1;
+
             return new[]
             {
-                Line("round", "轮次", currentRound + "/" + TotalRounds, HudSeverity.Normal),
-                Line("distance", "距离", DistanceLabel, HudSeverity.Info),
+                Line("round", "轮次", currentRound + "/" + maxRounds, HudSeverity.Normal),
+                Line("distance", "距离", FormatDistance(zeroingSession), HudSeverity.Info),
                 Line("ammo", "弹数", FormatAmmo(ammoDto), ammoDto.CurrentMagazine == 0 ? HudSeverity.Warning : HudSeverity.Normal),
                 Line("stability", "稳定度", Math.Round(Clamp01(stability01) * 100f) + "%", stability01 >= 0.7f ? HudSeverity.Success : HudSeverity.Warning),
-                Line("impactRecord", "弹着记录", FormatImpactRecord(), HudSeverity.Normal),
+                Line("impactRecord", "弹着记录", FormatImpactRecord(currentRoundShots), HudSeverity.Normal),
                 Line("shoulder", "肩侧", shoulder == ShoulderSide.Left ? "左肩" : "右肩", HudSeverity.Info),
                 Line("shootState", "射击状态", canShoot ? "可射击" : "禁止射击", canShoot ? HudSeverity.Success : HudSeverity.Warning)
             };
         }
 
-        IReadOnlyList<HudPromptDto> BuildPrompts(AmmoDto ammoDto, float stability01, bool canShoot)
+        IReadOnlyList<HudPromptDto> BuildPrompts(
+            ZeroingSessionDto zeroingSession,
+            AmmoDto ammoDto,
+            float stability01,
+            bool canShoot)
         {
             var text = "稳定据枪";
             var enabled = true;
@@ -172,9 +205,19 @@ namespace VRShooting.Application
                 text = "换弹中";
                 enabled = false;
             }
-            else if (!canShoot)
+            else if (!zeroingSession.CanShoot)
+            {
+                text = "本轮射击已完成";
+                enabled = false;
+            }
+            else if (ammoDto.CurrentMagazine <= 0)
             {
                 text = "禁止射击：弹数为0";
+                enabled = false;
+            }
+            else if (!canShoot)
+            {
+                text = "禁止射击";
                 enabled = false;
             }
             else if (stability01 < 0.7f)
@@ -194,17 +237,31 @@ namespace VRShooting.Application
             };
         }
 
-        string FormatImpactRecord()
+        static string FormatDistance(ZeroingSessionDto zeroingSession)
         {
-            if (impactRecords.Count == 0)
+            if (zeroingSession.DistanceMeters <= 0f)
+            {
+                return DistanceLabel;
+            }
+
+            return Mathf.Approximately(zeroingSession.DistanceMeters, 100f)
+                ? DistanceLabel
+                : zeroingSession.DistanceMeters + "m";
+        }
+
+        static string FormatImpactRecord(IReadOnlyList<ZeroingShotDto> shots)
+        {
+            if (shots == null || shots.Count == 0)
             {
                 return "待记录 3 发";
             }
 
-            var lines = new List<string> { $"已记录 {Math.Min(impactRecords.Count, ShotsPerRound)}/{ShotsPerRound}" };
-            for (var i = 0; i < impactRecords.Count && i < ShotsPerRound; i++)
+            var lines = new List<string> { $"已记录 {Math.Min(shots.Count, ZeroingRules.ShotsPerRound)}/{ZeroingRules.ShotsPerRound}" };
+            for (var i = 0; i < shots.Count && i < ZeroingRules.ShotsPerRound; i++)
             {
-                lines.Add($"#{i + 1:00} {(impactRecords[i].Hit ? "命中" : "未命中")}");
+                var shot = shots[i];
+                var label = shot.InsideTenRing ? "10环" : "命中";
+                lines.Add($"#{shot.ShotIndex:00} {label}");
             }
 
             return string.Join("\n", lines);
@@ -212,7 +269,7 @@ namespace VRShooting.Application
 
         static string FormatAmmo(AmmoDto ammoDto)
         {
-            var capacity = ammoDto.MagazineCapacity > 0 ? ammoDto.MagazineCapacity : ShotsPerRound;
+            var capacity = ammoDto.MagazineCapacity > 0 ? ammoDto.MagazineCapacity : ZeroingRules.ShotsPerRound;
             return ammoDto.CurrentMagazine + "/" + capacity;
         }
 

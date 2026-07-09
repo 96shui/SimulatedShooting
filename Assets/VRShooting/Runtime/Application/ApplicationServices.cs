@@ -56,7 +56,7 @@ namespace VRShooting.Application
             var input = trainingInput ?? new InputSystemXRTrainingInput();
             var weaponControl = new WeaponControlService(eventBus);
             var zeroing = new ZeroingService(eventBus, trainingSessions, weaponControl);
-            var hud = new ZeroingHudService(eventBus, trainingSessions, weaponControl, weaponControl);
+            var hud = new ZeroingHudService(eventBus, trainingSessions, zeroing, weaponControl, weaponControl);
             return new ApplicationServices(
                 eventBus,
                 router,

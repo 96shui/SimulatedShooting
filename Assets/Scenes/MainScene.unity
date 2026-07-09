@@ -1067,6 +1067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildOnAwake: 1
+  fontAsset: {fileID: 0}
 --- !u!4 &1764497033
 Transform:
   m_ObjectHideFlags: 0
