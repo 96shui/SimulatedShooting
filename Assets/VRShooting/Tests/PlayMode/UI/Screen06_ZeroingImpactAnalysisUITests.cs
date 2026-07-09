@@ -17,7 +17,8 @@ namespace VRShooting.Tests.PlayMode.UI
     {
         GameObject root;
         ApplicationServices services;
-        P1MainMenuZeroingBriefingUI ui;
+        MainMenuUI mainMenuUi;
+        ZeroingRangeUI zeroingRangeUi;
 
         [SetUp]
         public void SetUp()
@@ -25,12 +26,11 @@ namespace VRShooting.Tests.PlayMode.UI
             services = ApplicationServices.CreateDefault();
             root = new GameObject("Test_ZeroingImpactAnalysisUI", typeof(RectTransform));
             root.SetActive(false);
-            ui = root.AddComponent<P1MainMenuZeroingBriefingUI>();
-            typeof(P1MainMenuZeroingBriefingUI)
-                .GetField("buildOnAwake", BindingFlags.Instance | BindingFlags.NonPublic)
-                .SetValue(ui, false);
+            mainMenuUi = CreateUiRoot<MainMenuUI>("MainMenuUI");
+            zeroingRangeUi = CreateUiRoot<ZeroingRangeUI>("ZeroingRangeUI");
             root.SetActive(true);
-            ui.Initialize(services);
+            mainMenuUi.Initialize(services);
+            zeroingRangeUi.Initialize(services);
         }
 
         [UnityTearDown]
@@ -42,6 +42,17 @@ namespace VRShooting.Tests.PlayMode.UI
             }
 
             yield return null;
+        }
+
+        T CreateUiRoot<T>(string objectName) where T : TrainingUIRoot
+        {
+            var go = new GameObject(objectName, typeof(RectTransform));
+            go.transform.SetParent(root.transform, false);
+            var ui = go.AddComponent<T>();
+            typeof(TrainingUIRoot)
+                .GetField("buildOnAwake", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(ui, false);
+            return ui;
         }
 
         [UnityTest]
@@ -94,7 +105,7 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
-        public IEnumerator Screen06_ThirdRoundPrimaryActionBecomesBackToMainMenu()
+        public IEnumerator Screen06_ThirdRoundPrimaryActionOpensFinalRating()
         {
             yield return OpenHudAndCompleteRound();
             ApplyAndNext();
@@ -117,13 +128,13 @@ namespace VRShooting.Tests.PlayMode.UI
             yield return null;
 
             var next = FindButton("Button_ZeroingImpactAnalysis_NextRound");
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_NextRound").text, Does.Contain("返回主菜单"));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_NextRound").text, Does.Contain("查看评级"));
 
             next.onClick.Invoke();
             yield return null;
 
-            Assert.AreEqual(ScreenId.MainMenu, services.Router.Current);
-            Assert.IsTrue(FindById("Screen_MainMenu").activeSelf);
+            Assert.AreEqual(ScreenId.ZeroingFinalRating, services.Router.Current);
+            Assert.IsTrue(FindById("Screen_ZeroingFinalRating").activeSelf);
         }
 
         IEnumerator OpenHudAndCompleteRound()

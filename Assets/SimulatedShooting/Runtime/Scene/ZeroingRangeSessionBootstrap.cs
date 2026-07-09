@@ -54,14 +54,16 @@ namespace SimulatedShooting.Scene
             if (GameMain.Instance != null)
             {
                 services = GameMain.Instance.Services;
-                P1PersistentUIHost.EnsureExists();
+                TrainingUIHost.EnsureExists();
+                ZeroingRangeUI.EnsureExistsInScene(services);
                 return services;
             }
 
             var gameMainObject = new GameObject("GameMain");
             gameMainObject.AddComponent<GameMain>();
             services = GameMain.Instance.Services;
-            P1PersistentUIHost.EnsureExists();
+            TrainingUIHost.EnsureExists();
+            ZeroingRangeUI.EnsureExistsInScene(services);
             ownsServices = false;
             return services;
         }

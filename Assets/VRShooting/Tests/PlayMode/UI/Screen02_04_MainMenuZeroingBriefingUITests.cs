@@ -21,16 +21,16 @@ namespace VRShooting.Tests.PlayMode.UI
     {
         GameObject root;
         ApplicationServices services;
-        P1MainMenuZeroingBriefingUI ui;
+        MainMenuUI ui;
 
         [SetUp]
         public void SetUp()
         {
             services = ApplicationServices.CreateDefault();
-            root = new GameObject("Test_P1MainMenuZeroingBriefingUI", typeof(RectTransform));
+            root = new GameObject("Test_MainMenuUI", typeof(RectTransform));
             root.SetActive(false);
-            ui = root.AddComponent<P1MainMenuZeroingBriefingUI>();
-            typeof(P1MainMenuZeroingBriefingUI)
+            ui = root.AddComponent<MainMenuUI>();
+            typeof(TrainingUIRoot)
                 .GetField("buildOnAwake", BindingFlags.Instance | BindingFlags.NonPublic)
                 .SetValue(ui, false);
             root.SetActive(true);

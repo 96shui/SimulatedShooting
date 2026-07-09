@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using VRShooting.Application;
 using VRShooting.Unity.Player;
 using VRShooting.Unity.UI;
@@ -11,6 +12,9 @@ namespace VRShooting.Unity.Bootstrap
     [DefaultExecutionOrder(-1000)]
     public class GameMain : MonoBehaviour
     {
+        const string MainSceneName = "MainScene";
+        const string ZeroingRangeSceneName = "ZeroingRangeScene";
+
         public static GameMain Instance { get; private set; }
 
         public ApplicationServices Services { get; private set; }
@@ -29,6 +33,8 @@ namespace VRShooting.Unity.Bootstrap
             DontDestroyOnLoad(gameObject);
 
             InitManagers();
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            EnsureSceneUi(SceneManager.GetActiveScene());
         }
 
         void InitManagers()
@@ -37,7 +43,25 @@ namespace VRShooting.Unity.Bootstrap
             GameState = GameStateManager.Instance;
             PersistSceneObject("XR Interaction Manager");
             PlayerFollowCamera.EnsureExists();
-            P1PersistentUIHost.EnsureExists();
+            TrainingUIHost.EnsureExists();
+        }
+
+        void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
+        {
+            EnsureSceneUi(scene);
+        }
+
+        void EnsureSceneUi(UnityEngine.SceneManagement.Scene scene)
+        {
+            if (scene.name == MainSceneName && Services != null)
+            {
+                MainMenuUI.EnsureExistsInScene(Services);
+            }
+
+            if (scene.name == ZeroingRangeSceneName && Services != null)
+            {
+                ZeroingRangeUI.EnsureExistsInScene(Services);
+            }
         }
 
         static void PersistSceneObject(string objectName)
@@ -59,6 +83,7 @@ namespace VRShooting.Unity.Bootstrap
             }
 
             GameStateManager.DestroyInstance();
+            SceneManager.sceneLoaded -= OnSceneLoaded;
             Services = null;
             GameState = null;
             Instance = null;

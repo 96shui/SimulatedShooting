@@ -1048,7 +1048,7 @@ GameObject:
   - component: {fileID: 1764497033}
   - component: {fileID: 1764497032}
   m_Layer: 0
-  m_Name: P1_MainMenuZeroingBriefingUI
+  m_Name: MainMenuUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
