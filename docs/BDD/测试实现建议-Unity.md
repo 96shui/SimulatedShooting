@@ -39,6 +39,13 @@ public interface IXRTrainingInput
 {
     bool ConfirmPressed { get; }
     bool BackPressed { get; }
+    bool RightGripPressed { get; }
+    bool RightGripHeld { get; }
+    bool RightGripReleased { get; }
+    bool LeftGripPressed { get; }
+    bool LeftGripHeld { get; }
+    bool LeftGripReleased { get; }
+    float RightTriggerValue { get; }
     bool TriggerPressed { get; }
     bool ReloadPressed { get; }
     bool SwitchShoulderPressed { get; }
@@ -49,6 +56,8 @@ public interface IXRTrainingInput
 ```
 
 自动化测试中使用假输入对象驱动场景，避免依赖真实头显硬件。真实 XR 输入、XR Device Simulator、键鼠调试输入和 PlayMode 测试输入都应适配到同一接口，业务服务只消费抽象输入事件或命令。
+
+100m 射校的武器测试替身还必须提供头部、右手、左手姿态和跟踪有效性，按“右手进入后握把范围并按 Grip → 左手进入前握把范围并按 Grip → 右手 Trigger”驱动完整链路。不得只调用测试专用开火方法跳过拾枪和双手持枪状态机。
 
 ## UI 元素命名建议
 

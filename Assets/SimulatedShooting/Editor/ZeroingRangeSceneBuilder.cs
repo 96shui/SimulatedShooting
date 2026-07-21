@@ -3,6 +3,10 @@ using SimulatedShooting.Scene;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using VRShooting.Unity.Weapons;
 
 namespace SimulatedShooting.Editor
@@ -167,8 +171,9 @@ namespace SimulatedShooting.Editor
             anchors.SetParent(root);
             var shootingPosition = CreateAnchor("ShootingPosition", anchors, new Vector3(0f, 1.5f, 0f));
             AddTestId(shootingPosition.gameObject, "ZeroingRange.ShootingPosition");
-            AddTestId(CreateAnchor("WeaponSpawnPoint", anchors, new Vector3(0f, 1.25f, 0.35f)).gameObject,
-                "ZeroingRange.WeaponSpawn");
+            var weaponSpawn = CreateAnchor("WeaponSpawnPoint", anchors, new Vector3(0.70f, 1.30f, 0.75f));
+            weaponSpawn.localRotation = Quaternion.Euler(0f, -90f, 0f);
+            AddTestId(weaponSpawn.gameObject, "ZeroingRange.WeaponSpawn");
             AddTestId(CreateAnchor("HudAnchor", anchors, new Vector3(0f, 1.55f, 1.5f)).gameObject,
                 "ZeroingRange.HudAnchor");
 
@@ -176,6 +181,7 @@ namespace SimulatedShooting.Editor
             noVrCamera.transform.SetParent(anchors);
             noVrCamera.transform.SetPositionAndRotation(shootingPosition.position, Quaternion.identity);
             var camera = noVrCamera.GetComponent<Camera>();
+            noVrCamera.tag = "MainCamera";
             camera.fieldOfView = 48f;
             camera.nearClipPlane = 0.05f;
             camera.farClipPlane = 250f;
@@ -197,8 +203,11 @@ namespace SimulatedShooting.Editor
             xrOrigin.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
             AddTestId(xrOrigin, "ZeroingRange.Origin.VR");
 
+            ConfigureDirectInteractors(xrOrigin.transform, darkMetal);
+
             CreateFirstPersonTrainingWeapon(anchors, camera, xrOrigin.transform);
-            xrOrigin.SetActive(false);
+            var modeController = anchors.gameObject.AddComponent<ZeroingRangeXRModeController>();
+            modeController.Configure(xrOrigin, camera);
         }
 
         private static void CreateFirstPersonTrainingWeapon(Transform anchors, Camera noVrCamera, Transform xrOrigin)
@@ -217,6 +226,11 @@ namespace SimulatedShooting.Editor
                 : (GameObject)PrefabUtility.InstantiatePrefab(prefab);
             weaponObject.name = "Weapon_training-rifle_Blockout";
             weaponObject.transform.SetParent(playerRoot, false);
+            var weaponSpawn = anchors.Find("WeaponSpawnPoint");
+            if (weaponSpawn != null)
+            {
+                weaponObject.transform.SetPositionAndRotation(weaponSpawn.position, weaponSpawn.rotation);
+            }
 
             var binding = weaponObject.GetComponent<WeaponPrefabBinding>();
             var controller = playerRoot.gameObject.AddComponent<FirstPersonTrainingWeaponController>();
@@ -229,8 +243,8 @@ namespace SimulatedShooting.Editor
             var headPose = xrOrigin != null
                 ? xrOrigin.GetComponentsInChildren<Camera>(true).FirstOrDefault()?.transform
                 : null;
-            var rearHandPose = FindChildByNameTokens(xrOrigin, "Right", "Controller");
-            var frontHandPose = FindChildByNameTokens(xrOrigin, "Left", "Controller");
+            var rearHandPose = FindController(xrOrigin, "Right");
+            var frontHandPose = FindController(xrOrigin, "Left");
 
             if (headPose != null)
                 AddTestIdIfMissing(headPose.gameObject, "ZeroingRange.Origin.VR.HeadPose");
@@ -240,6 +254,96 @@ namespace SimulatedShooting.Editor
                 AddTestIdIfMissing(frontHandPose.gameObject, "ZeroingRange.Origin.VR.FrontHandPose");
 
             controller.ConfigureVrPoseSources(headPose, rearHandPose, frontHandPose);
+        }
+
+        private static void ConfigureDirectInteractors(Transform xrOrigin, Material handMaterial)
+        {
+            if (xrOrigin == null)
+            {
+                return;
+            }
+
+            if (xrOrigin.GetComponentInChildren<XRInteractionManager>(true) == null)
+            {
+                xrOrigin.gameObject.AddComponent<XRInteractionManager>();
+            }
+
+            DisableUnusedGazeInteractors(xrOrigin);
+
+            CreateDirectInteractor(FindController(xrOrigin, "Right"), InteractorHandedness.Right,
+                "<XRController>{RightHand}/gripPressed", handMaterial);
+            CreateDirectInteractor(FindController(xrOrigin, "Left"), InteractorHandedness.Left,
+                "<XRController>{LeftHand}/gripPressed", handMaterial);
+        }
+
+        private static void DisableUnusedGazeInteractors(Transform xrOrigin)
+        {
+            var behaviours = xrOrigin.GetComponentsInChildren<MonoBehaviour>(true);
+            foreach (var behaviour in behaviours)
+            {
+                if (behaviour == null)
+                {
+                    continue;
+                }
+
+                var typeName = behaviour.GetType().Name;
+                if (typeName == "GazeInputManager" || typeName == "XRGazeInteractor")
+                {
+                    behaviour.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        private static void CreateDirectInteractor(
+            Transform controller,
+            InteractorHandedness handedness,
+            string selectBinding,
+            Material handMaterial)
+        {
+            if (controller == null)
+            {
+                return;
+            }
+
+            var suffix = handedness == InteractorHandedness.Right ? "Right" : "Left";
+            var directObject = new GameObject($"DirectInteractor_{suffix}");
+            directObject.transform.SetParent(controller, false);
+            AddTestId(directObject, $"ZeroingRange.Origin.VR.{suffix}DirectInteractor");
+            var collider = directObject.AddComponent<SphereCollider>();
+            collider.radius = 0.11f;
+            collider.isTrigger = true;
+
+            var direct = directObject.AddComponent<XRDirectInteractor>();
+            direct.handedness = handedness;
+            direct.selectActionTrigger = XRBaseInputInteractor.InputTriggerType.StateChange;
+            direct.selectInput = new XRInputButtonReader("Grip Select")
+            {
+                inputSourceMode = XRInputButtonReader.InputSourceMode.InputAction,
+                inputActionPerformed = new InputAction("Grip Select", InputActionType.Button, selectBinding)
+            };
+
+            var hand = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            hand.name = $"VirtualHand_{suffix}";
+            hand.transform.SetParent(controller, false);
+            hand.transform.localPosition = new Vector3(0f, -0.025f, 0.08f);
+            hand.transform.localRotation = Quaternion.Euler(8f, 0f, 0f);
+            hand.transform.localScale = new Vector3(0.085f, 0.045f, 0.18f);
+            Object.DestroyImmediate(hand.GetComponent<Collider>());
+            hand.GetComponent<Renderer>().sharedMaterial = handMaterial;
+            AddTestId(hand, $"ZeroingRange.Origin.VR.VirtualHand.{suffix}");
+        }
+
+        private static Transform FindController(Transform root, string handedness)
+        {
+            if (root == null)
+            {
+                return null;
+            }
+
+            var expectedName = $"{handedness} Controller";
+            return root.GetComponentsInChildren<Transform>(true)
+                       .FirstOrDefault(transform => transform.name == expectedName) ??
+                   FindChildByNameTokens(root, handedness, "Controller");
         }
 
         private static Transform FindChildByNameTokens(Transform root, params string[] tokens)

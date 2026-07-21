@@ -42,7 +42,11 @@ namespace VRShooting.Unity.Bootstrap
             Services = ApplicationServices.CreateDefault();
             GameState = GameStateManager.Instance;
             PersistSceneObject("XR Interaction Manager");
-            PlayerFollowCamera.EnsureExists();
+            if (SceneManager.GetActiveScene().name != ZeroingRangeSceneName)
+            {
+                PlayerFollowCamera.EnsureExists();
+            }
+
             TrainingUIHost.EnsureExists();
         }
 
@@ -55,6 +59,7 @@ namespace VRShooting.Unity.Bootstrap
         {
             if (scene.name == MainSceneName && Services != null)
             {
+                PlayerFollowCamera.EnsureExists();
                 MainMenuUI.EnsureExistsInScene(Services);
             }
 

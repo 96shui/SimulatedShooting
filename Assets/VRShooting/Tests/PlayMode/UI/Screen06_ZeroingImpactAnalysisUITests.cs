@@ -152,10 +152,20 @@ namespace VRShooting.Tests.PlayMode.UI
 
         void Fire(Vector3 hitPoint)
         {
+            var sessionId = services.TrainingSessions.Current.SessionId;
+            Assert.IsTrue(services.WeaponControl.SetGripState(new WeaponGripStateInputDto
+            {
+                SessionId = sessionId,
+                HoldState = WeaponHoldState.TwoHandHeld,
+                RearHandTracked = true,
+                FrontHandTracked = true,
+                Stability01 = 0.95f
+            }).Success);
             var result = services.WeaponControl.Fire(new WeaponFireInputDto
             {
-                SessionId = services.TrainingSessions.Current.SessionId,
+                SessionId = sessionId,
                 MuzzlePosition = Vector3.zero,
+                RawAimDirection = Vector3.forward,
                 AimDirection = Vector3.forward,
                 WeaponPosition = Vector3.zero,
                 Stability01 = 0.95f,

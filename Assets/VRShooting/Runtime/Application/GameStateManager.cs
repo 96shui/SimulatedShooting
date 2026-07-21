@@ -29,6 +29,14 @@ namespace VRShooting.Application
         protected override void Init()
         {
             base.Init();
+
+            if (SceneManager.GetActiveScene().name == GameSceneName)
+            {
+                CurrentState = GameState.InGame;
+                Debug.Log($"[{nameof(GameStateManager)}] 状态初始化为: {CurrentState}");
+                return;
+            }
+
             ChangeState(GameState.MainMenu);
         }
 

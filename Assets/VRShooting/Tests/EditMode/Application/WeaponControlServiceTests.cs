@@ -15,14 +15,16 @@ namespace VRShooting.Tests.EditMode.Application
         [Test]
         public void Task005_StartSession_ProvidesTrainingRifleState()
         {
-            var service = CreateStartedService();
+            var service = CreateStartedService(twoHandHeld: false);
 
             var state = service.GetState(SessionId).Data;
 
             Assert.That(state.WeaponId, Is.EqualTo(WeaponControlService.TrainingRifleId));
             Assert.That(state.CurrentMagazine, Is.EqualTo(3));
             Assert.That(state.ReserveAmmo, Is.EqualTo(6));
-            Assert.That(state.CanShoot, Is.True);
+            Assert.That(state.CanShoot, Is.False);
+            Assert.That(state.HoldState, Is.EqualTo(WeaponHoldState.OnRack));
+            Assert.That(state.TwoHandGripActive, Is.False);
             Assert.That(state.ShoulderSide, Is.EqualTo(ShoulderSide.Right));
             Assert.That(state.AimMode, Is.EqualTo(WeaponAimMode.HipFire));
         }
@@ -102,21 +104,90 @@ namespace VRShooting.Tests.EditMode.Application
         [Test]
         public void Task005_SetGripState_TracksTwoHandStability()
         {
-            var service = CreateStartedService();
+            var service = CreateStartedService(twoHandHeld: false);
 
-            var result = service.SetGripState(SessionId, true, 0.72f);
+            var result = service.SetGripState(CreateGripInput(WeaponHoldState.TwoHandHeld, 0.72f));
 
             Assert.That(result.Success, Is.True);
             Assert.That(result.Data.TwoHandGripActive, Is.True);
             Assert.That(result.Data.Stability01, Is.EqualTo(0.72f).Within(0.001f));
         }
 
-        static WeaponControlService CreateStartedService()
+        [Test]
+        public void Task013_Fire_RequiresTrackedTwoHandHold()
+        {
+            var service = CreateStartedService(twoHandHeld: false);
+            var rearHand = service.SetGripState(CreateGripInput(WeaponHoldState.RearHandHeld, 0.4f));
+
+            var blocked = service.Fire(CreateFireInput());
+
+            Assert.That(rearHand.Success, Is.True);
+            Assert.That(rearHand.Data.CanShoot, Is.False);
+            Assert.That(blocked.Success, Is.False);
+            Assert.That(blocked.ErrorCode, Is.EqualTo(ErrorCode.InvalidState));
+            Assert.That(blocked.Data.HoldState, Is.EqualTo(WeaponHoldState.RearHandHeld));
+            Assert.That(service.GetState(SessionId).Data.CurrentMagazine, Is.EqualTo(3));
+        }
+
+        [Test]
+        public void Task013_Fire_SnapshotsGripStabilityAndDeterministicRecoil()
+        {
+            var first = CreateStartedService();
+            var firstShot = first.Fire(CreateFireInput());
+            var second = CreateStartedService();
+            var repeatedShot = second.Fire(CreateFireInput());
+
+            Assert.That(firstShot.Success, Is.True);
+            Assert.That(firstShot.Data.Stability01, Is.EqualTo(0.82f).Within(0.001f));
+            Assert.That(firstShot.Data.ShotSequence, Is.EqualTo(1));
+            Assert.That(firstShot.Data.RecoilImpulse.PitchDegrees, Is.InRange(2.5f, 4f));
+            Assert.That(firstShot.Data.RecoilImpulse.RearwardMeters, Is.InRange(0.02f, 0.04f));
+            Assert.That(firstShot.Data.RecoilImpulse.YawDegrees,
+                Is.EqualTo(repeatedShot.Data.RecoilImpulse.YawDegrees).Within(0.0001f));
+        }
+
+        [Test]
+        public void Task013_SetGripState_RejectsImpossibleHandTrackingCombination()
+        {
+            var service = CreateStartedService(twoHandHeld: false);
+
+            var result = service.SetGripState(new WeaponGripStateInputDto
+            {
+                SessionId = SessionId,
+                HoldState = WeaponHoldState.TwoHandHeld,
+                RearHandTracked = true,
+                FrontHandTracked = false,
+                Stability01 = 1f
+            });
+
+            Assert.That(result.Success, Is.False);
+            Assert.That(result.ErrorCode, Is.EqualTo(ErrorCode.InvalidInput));
+            Assert.That(service.GetState(SessionId).Data.HoldState, Is.EqualTo(WeaponHoldState.OnRack));
+        }
+
+        static WeaponControlService CreateStartedService(bool twoHandHeld = true)
         {
             var service = new WeaponControlService(new GameEventBus());
             var result = service.StartSession(SessionId, WeaponControlService.TrainingRifleId, TrainingMode.Zeroing100m);
             Assert.That(result.Success, Is.True);
+            if (twoHandHeld)
+            {
+                Assert.That(service.SetGripState(CreateGripInput(WeaponHoldState.TwoHandHeld, 0.82f)).Success, Is.True);
+            }
+
             return service;
+        }
+
+        static WeaponGripStateInputDto CreateGripInput(WeaponHoldState holdState, float stability)
+        {
+            return new WeaponGripStateInputDto
+            {
+                SessionId = SessionId,
+                HoldState = holdState,
+                RearHandTracked = holdState == WeaponHoldState.RearHandHeld || holdState == WeaponHoldState.TwoHandHeld,
+                FrontHandTracked = holdState == WeaponHoldState.TwoHandHeld,
+                Stability01 = stability
+            };
         }
 
         static WeaponFireInputDto CreateFireInput(bool hit = false)
@@ -126,6 +197,7 @@ namespace VRShooting.Tests.EditMode.Application
                 SessionId = SessionId,
                 MuzzlePosition = Vector3.zero,
                 WeaponPosition = Vector3.zero,
+                RawAimDirection = Vector3.forward,
                 AimDirection = Vector3.forward,
                 Stability01 = 0.9f,
                 TwoHandGripActive = true,

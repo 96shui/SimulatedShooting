@@ -9,6 +9,9 @@ namespace VRShooting.Common
         public bool CanShoot { get; init; }
         public ShoulderSide ShoulderSide { get; init; }
         public WeaponAimMode AimMode { get; init; }
+        public WeaponHoldState HoldState { get; init; }
+        public bool RearHandTracked { get; init; }
+        public bool FrontHandTracked { get; init; }
         public bool TwoHandGripActive { get; init; }
         public float Stability01 { get; init; }
     }

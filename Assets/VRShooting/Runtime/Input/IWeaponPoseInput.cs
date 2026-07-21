@@ -4,8 +4,9 @@ namespace VRShooting.Input
 {
     public interface IWeaponPoseInput
     {
-        bool RearHandActive { get; }
-        bool FrontHandActive { get; }
+        bool HeadTracked { get; }
+        bool RearHandTracked { get; }
+        bool FrontHandTracked { get; }
         Pose HeadPose { get; }
         Pose RearHandPose { get; }
         Pose FrontHandPose { get; }

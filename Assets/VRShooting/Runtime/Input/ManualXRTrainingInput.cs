@@ -12,6 +12,8 @@ namespace VRShooting.Input
         bool switchShoulderHeld;
         bool aimHeld;
         bool commandMenuHeld;
+        bool rightGripHeld;
+        bool leftGripHeld;
 
         bool confirmPressed;
         bool backPressed;
@@ -19,12 +21,30 @@ namespace VRShooting.Input
         bool reloadPressed;
         bool switchShoulderPressed;
         bool aimPressed;
+        bool rightGripPressed;
+        bool rightGripReleased;
+        bool leftGripPressed;
+        bool leftGripReleased;
 
         public bool ConfirmPressed => confirmPressed;
 
         public bool BackPressed => backPressed;
 
         public bool TriggerPressed => triggerPressed;
+
+        public float RightTriggerValue { get; private set; }
+
+        public bool RightGripPressed => rightGripPressed;
+
+        public bool RightGripHeld => rightGripHeld;
+
+        public bool RightGripReleased => rightGripReleased;
+
+        public bool LeftGripPressed => leftGripPressed;
+
+        public bool LeftGripHeld => leftGripHeld;
+
+        public bool LeftGripReleased => leftGripReleased;
 
         public bool ReloadPressed => reloadPressed;
 
@@ -62,6 +82,7 @@ namespace VRShooting.Input
                     break;
                 case XRTrainingInputButton.Trigger:
                     SetEdgeState(ref triggerHeld, ref triggerPressed, isHeld);
+                    RightTriggerValue = isHeld ? 1f : 0f;
                     break;
                 case XRTrainingInputButton.Reload:
                     SetEdgeState(ref reloadHeld, ref reloadPressed, isHeld);
@@ -74,6 +95,12 @@ namespace VRShooting.Input
                     break;
                 case XRTrainingInputButton.CommandMenu:
                     commandMenuHeld = isHeld;
+                    break;
+                case XRTrainingInputButton.RightGrip:
+                    SetEdgeState(ref rightGripHeld, ref rightGripPressed, ref rightGripReleased, isHeld);
+                    break;
+                case XRTrainingInputButton.LeftGrip:
+                    SetEdgeState(ref leftGripHeld, ref leftGripPressed, ref leftGripReleased, isHeld);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(button), button, "unsupported input button");
@@ -96,6 +123,20 @@ namespace VRShooting.Input
             TurnAxis = turnAxis;
         }
 
+        public void SetRightTriggerValue(float value)
+        {
+            RightTriggerValue = Mathf.Clamp01(value);
+            if (!triggerHeld && RightTriggerValue >= 0.75f)
+            {
+                triggerHeld = true;
+                triggerPressed = true;
+            }
+            else if (triggerHeld && RightTriggerValue <= 0.25f)
+            {
+                triggerHeld = false;
+            }
+        }
+
         public void AdvanceFrame()
         {
             confirmPressed = false;
@@ -104,6 +145,10 @@ namespace VRShooting.Input
             reloadPressed = false;
             switchShoulderPressed = false;
             aimPressed = false;
+            rightGripPressed = false;
+            rightGripReleased = false;
+            leftGripPressed = false;
+            leftGripReleased = false;
         }
 
         public void Clear()
@@ -115,6 +160,9 @@ namespace VRShooting.Input
             switchShoulderHeld = false;
             aimHeld = false;
             commandMenuHeld = false;
+            rightGripHeld = false;
+            leftGripHeld = false;
+            RightTriggerValue = 0f;
             AdvanceFrame();
             TurnAxis = Vector2.zero;
             MoveAxis = Vector2.zero;
@@ -133,6 +181,21 @@ namespace VRShooting.Input
                 return;
             }
 
+            held = false;
+            pressed = false;
+        }
+
+        static void SetEdgeState(ref bool held, ref bool pressed, ref bool released, bool isHeld)
+        {
+            if (isHeld)
+            {
+                pressed = !held;
+                released = false;
+                held = true;
+                return;
+            }
+
+            released = held;
             held = false;
             pressed = false;
         }

@@ -3,7 +3,9 @@
   "rootNamespace": "SimulatedShooting.Editor",
   "references": [
     "SimulatedShooting.Runtime",
-    "VRShooting.Runtime"
+    "VRShooting.Runtime",
+    "Unity.XR.Interaction.Toolkit",
+    "Unity.InputSystem"
   ],
   "includePlatforms": [
     "Editor"

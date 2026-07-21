@@ -8,7 +8,9 @@ namespace VRShooting.Input
         Reload,
         SwitchShoulder,
         Aim,
-        CommandMenu
+        CommandMenu,
+        RightGrip,
+        LeftGrip
     }
 }
 

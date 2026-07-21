@@ -1,11 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.XR;
 
 namespace VRShooting.Input
 {
     public sealed class InputSystemXRTrainingInput : IXRTrainingInput
     {
+        int lastXrFrame = -1;
+        bool xrTriggerHeld;
+        bool xrTriggerPressed;
+
         public bool ConfirmPressed =>
             WasPressedThisFrame(Keyboard.current?.enterKey) ||
             WasPressedThisFrame(Keyboard.current?.spaceKey) ||
@@ -16,9 +21,38 @@ namespace VRShooting.Input
             WasPressedThisFrame(Gamepad.current?.buttonEast);
 
         public bool TriggerPressed =>
+            ReadXrTriggerPressed() ||
             WasPressedThisFrame(Mouse.current?.leftButton) ||
             WasPressedThisFrame(Keyboard.current?.fKey) ||
             WasPressedThisFrame(Gamepad.current?.rightTrigger);
+
+        public float RightTriggerValue => Mathf.Max(
+            ReadXrAxis(XRController.rightHand, "trigger"),
+            Gamepad.current != null ? Gamepad.current.rightTrigger.ReadValue() : 0f);
+
+        public bool RightGripPressed =>
+            WasPressedThisFrame(ReadXrButton(XRController.rightHand, "gripPressed")) ||
+            WasPressedThisFrame(Keyboard.current?.eKey);
+
+        public bool RightGripHeld =>
+            IsPressed(ReadXrButton(XRController.rightHand, "gripPressed")) ||
+            IsPressed(Keyboard.current?.eKey);
+
+        public bool RightGripReleased =>
+            WasReleasedThisFrame(ReadXrButton(XRController.rightHand, "gripPressed")) ||
+            WasReleasedThisFrame(Keyboard.current?.eKey);
+
+        public bool LeftGripPressed =>
+            WasPressedThisFrame(ReadXrButton(XRController.leftHand, "gripPressed")) ||
+            WasPressedThisFrame(Keyboard.current?.gKey);
+
+        public bool LeftGripHeld =>
+            IsPressed(ReadXrButton(XRController.leftHand, "gripPressed")) ||
+            IsPressed(Keyboard.current?.gKey);
+
+        public bool LeftGripReleased =>
+            WasReleasedThisFrame(ReadXrButton(XRController.leftHand, "gripPressed")) ||
+            WasReleasedThisFrame(Keyboard.current?.gKey);
 
         public bool ReloadPressed =>
             WasPressedThisFrame(Keyboard.current?.rKey) ||
@@ -84,6 +118,55 @@ namespace VRShooting.Input
         static bool IsPressed(ButtonControl control)
         {
             return control != null && control.isPressed;
+        }
+
+        static bool WasReleasedThisFrame(ButtonControl control)
+        {
+            return control != null && control.wasReleasedThisFrame;
+        }
+
+        bool ReadXrTriggerPressed()
+        {
+            UpdateXrTriggerState();
+            return xrTriggerPressed;
+        }
+
+        void UpdateXrTriggerState()
+        {
+            if (lastXrFrame == Time.frameCount)
+            {
+                return;
+            }
+
+            lastXrFrame = Time.frameCount;
+            xrTriggerPressed = false;
+            var value = ReadXrAxis(XRController.rightHand, "trigger");
+            if (!xrTriggerHeld && value >= 0.75f)
+            {
+                xrTriggerHeld = true;
+                xrTriggerPressed = true;
+            }
+            else if (xrTriggerHeld && value <= 0.25f)
+            {
+                xrTriggerHeld = false;
+            }
+        }
+
+        static ButtonControl ReadXrButton(XRController controller, string controlName)
+        {
+            return controller?.TryGetChildControl<ButtonControl>(controlName);
+        }
+
+        static float ReadXrAxis(XRController controller, string controlName)
+        {
+            var axis = controller?.TryGetChildControl<AxisControl>(controlName);
+            if (axis != null)
+            {
+                return Mathf.Clamp01(axis.ReadValue());
+            }
+
+            var button = ReadXrButton(controller, controlName + "Pressed");
+            return button != null ? button.ReadValue() : 0f;
         }
 
         static Vector2 ReadKeyboardMoveAxis()

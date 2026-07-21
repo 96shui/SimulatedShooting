@@ -12,6 +12,15 @@ namespace VRShooting.Application.Events
         public WeaponControlStateDto State { get; init; }
     }
 
+    public readonly struct WeaponHoldStateChangedEvent
+    {
+        public string SessionId { get; init; }
+        public WeaponHoldState PreviousState { get; init; }
+        public WeaponHoldState CurrentState { get; init; }
+        public bool RearHandTracked { get; init; }
+        public bool FrontHandTracked { get; init; }
+    }
+
     public readonly struct WeaponShotResultEvent
     {
         public WeaponShotResultDto Result { get; init; }

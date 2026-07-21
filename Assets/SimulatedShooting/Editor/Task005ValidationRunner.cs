@@ -64,12 +64,21 @@ namespace SimulatedShooting.Editor
             var start = service.StartSession("task005-validation", WeaponControlService.TrainingRifleId, TrainingMode.Zeroing100m);
             Require(start.Success, "weapon service failed to start session");
             Require(start.Data.CurrentMagazine == 3, "training rifle magazine should start at 3");
+            Require(service.SetGripState(new WeaponGripStateInputDto
+            {
+                SessionId = "task005-validation",
+                HoldState = WeaponHoldState.TwoHandHeld,
+                RearHandTracked = true,
+                FrontHandTracked = true,
+                Stability01 = 0.9f
+            }).Success, "weapon service failed to enter two-hand held state");
 
             var fire = service.Fire(new WeaponFireInputDto
             {
                 SessionId = "task005-validation",
                 MuzzlePosition = Vector3.zero,
                 WeaponPosition = Vector3.zero,
+                RawAimDirection = Vector3.forward,
                 AimDirection = Vector3.forward,
                 Stability01 = 0.9f,
                 TwoHandGripActive = true,

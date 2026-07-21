@@ -3,7 +3,8 @@
   "rootNamespace": "SimulatedShooting.Tests.PlayMode",
   "references": [
     "SimulatedShooting.Runtime",
-    "VRShooting.Runtime"
+    "VRShooting.Runtime",
+    "Unity.XR.Interaction.Toolkit"
   ],
   "optionalUnityReferences": [
     "TestAssemblies"

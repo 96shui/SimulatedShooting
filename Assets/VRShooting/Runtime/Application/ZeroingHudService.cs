@@ -85,7 +85,7 @@ namespace VRShooting.Application
                 },
                 MiniMap = MiniMapDto.Hidden,
                 TextLines = BuildTextLines(zeroingSession, ammoDto, shoulder, stability01, canShoot),
-                Prompts = BuildPrompts(zeroingSession, ammoDto, stability01, canShoot),
+                Prompts = BuildPrompts(zeroingSession, ammoDto, weaponState, stability01, canShoot),
                 CanShoot = canShoot
             };
 
@@ -194,6 +194,7 @@ namespace VRShooting.Application
         IReadOnlyList<HudPromptDto> BuildPrompts(
             ZeroingSessionDto zeroingSession,
             AmmoDto ammoDto,
+            WeaponControlStateDto? weaponState,
             float stability01,
             bool canShoot)
         {
@@ -214,6 +215,16 @@ namespace VRShooting.Application
             {
                 text = "禁止射击：弹数为0";
                 enabled = false;
+            }
+            else if (weaponState.HasValue &&
+                     (weaponState.Value.HoldState == WeaponHoldState.OnRack ||
+                      weaponState.Value.HoldState == WeaponHoldState.Dropped))
+            {
+                text = "靠近后握把，按住右手 Grip 拾取";
+            }
+            else if (weaponState.HasValue && weaponState.Value.HoldState == WeaponHoldState.RearHandHeld)
+            {
+                text = "左手靠近前握把并按住 Grip";
             }
             else if (!canShoot)
             {

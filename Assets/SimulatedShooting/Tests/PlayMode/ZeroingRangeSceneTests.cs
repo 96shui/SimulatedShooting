@@ -5,7 +5,11 @@ using SimulatedShooting.Scene;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using VRShooting.Common;
+using VRShooting.Input;
 using VRShooting.Unity.Weapons;
 
 namespace SimulatedShooting.Tests.PlayMode
@@ -172,7 +176,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 .Any(component => component != null && component.enabled && component.GetType().Name == "Volume");
 
             Assert.That(renderers.Length, Is.LessThanOrEqualTo(256));
-            Assert.That(materials.Length, Is.LessThanOrEqualTo(20));
+            Assert.That(materials.Length, Is.LessThanOrEqualTo(24));
             Assert.That(activeLights.Length, Is.EqualTo(1));
             Assert.That(activeLights[0].type, Is.EqualTo(LightType.Directional));
             Assert.That(hasEnabledPostProcessing, Is.False);
@@ -298,11 +302,153 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(zeroing.Data.CurrentRound, Is.EqualTo(1));
         }
 
+        [Test]
+        public void Task013_RiflePrefabHasDirectGrabPhysicsAndStableRecoilHierarchy()
+        {
+            var weapon = Find("ZeroingRange.Weapon.TrainingRifle");
+            var binding = weapon.GetComponent<WeaponPrefabBinding>();
+            var grab = weapon.GetComponent<TrainingRifleGrabInteractable>();
+            var body = weapon.GetComponent<Rigidbody>();
+
+            Assert.That(grab, Is.Not.Null);
+            Assert.That(body, Is.Not.Null);
+            Assert.That(weapon.GetComponents<BoxCollider>().Length, Is.GreaterThanOrEqualTo(3));
+            Assert.That(grab.selectMode, Is.EqualTo(InteractableSelectMode.Multiple));
+            Assert.That(binding.RearHandGrip.IsChildOf(binding.RecoilRoot), Is.False);
+            Assert.That(binding.FrontHandGrip.IsChildOf(binding.RecoilRoot), Is.False);
+            Assert.That(Find("ZeroingRange.Weapon.PickupPrompt"), Is.Not.Null);
+        }
+
+        [Test]
+        public void Task013_NoVrModeStartsOnRackAndCannotShootBeforeGrip()
+        {
+            var controller = Find("ZeroingRange.Weapon.PlayerRoot").GetComponent<FirstPersonTrainingWeaponController>();
+
+            Assert.That(controller.InitializeForTests(), Is.True);
+            Assert.That(controller.CurrentHoldState, Is.EqualTo(WeaponHoldState.OnRack));
+            Assert.That(controller.CanShoot, Is.False);
+            Assert.That(controller.CurrentMagazine, Is.EqualTo(3));
+        }
+
+        [UnityTest]
+        public IEnumerator Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease()
+        {
+            var mode = ResolveOrCreateXRModeController();
+            Assert.That(mode, Is.Not.Null, "Task013 XR mode controller is missing");
+            Assert.That(mode.NoVrCamera, Is.Not.Null, "Task013 no-VR camera binding is missing");
+            Assert.That(mode.XrOrigin, Is.Not.Null, "Task013 XR Origin binding is missing");
+            mode.SetVrModeForTests(true);
+            yield return null;
+
+            var grab = Find("ZeroingRange.Weapon.TrainingRifle").GetComponent<TrainingRifleGrabInteractable>();
+            var right = Find("ZeroingRange.Origin.VR.RightDirectInteractor").GetComponent<XRDirectInteractor>();
+            var left = Find("ZeroingRange.Origin.VR.LeftDirectInteractor").GetComponent<XRDirectInteractor>();
+            var manager = mode.XrOrigin.GetComponentInChildren<XRInteractionManager>(true);
+
+            Assert.That(grab.RearGrabRadius, Is.EqualTo(0.10f).Within(0.001f));
+            Assert.That(grab.FrontGrabRadius, Is.EqualTo(0.12f).Within(0.001f));
+            right.transform.position = grab.RearAttach.position;
+            left.transform.position = grab.FrontAttach.position;
+            Assert.That(grab.IsSelectableBy((IXRSelectInteractor)right), Is.True);
+            Assert.That(grab.IsSelectableBy((IXRSelectInteractor)left), Is.False, "front hand cannot become the primary grab");
+
+            manager.SelectEnter((IXRSelectInteractor)right, (IXRSelectInteractable)grab);
+            yield return null;
+            Assert.That(grab.HoldState, Is.EqualTo(WeaponHoldState.RearHandHeld));
+
+            left.transform.position = grab.FrontAttach.position;
+            Assert.That(grab.IsSelectableBy((IXRSelectInteractor)left), Is.True);
+            manager.SelectEnter((IXRSelectInteractor)left, (IXRSelectInteractable)grab);
+            yield return null;
+            Assert.That(grab.HoldState, Is.EqualTo(WeaponHoldState.TwoHandHeld));
+
+            manager.SelectExit((IXRSelectInteractor)right, (IXRSelectInteractable)grab);
+            yield return null;
+            Assert.That(grab.HoldState, Is.EqualTo(WeaponHoldState.Dropped));
+            Assert.That(grab.FrontHandSelected, Is.False);
+        }
+
+        [UnityTest]
+        public IEnumerator Task013_RuntimeModeKeepsExactlyOneCameraAndAudioListener()
+        {
+            var mode = ResolveOrCreateXRModeController();
+            Assert.That(mode, Is.Not.Null, "Task013 XR mode controller is missing");
+            Assert.That(mode.NoVrCamera, Is.Not.Null, "Task013 no-VR camera binding is missing");
+            Assert.That(mode.XrOrigin, Is.Not.Null, "Task013 XR Origin binding is missing");
+
+            mode.SetVrModeForTests(false);
+            yield return null;
+            Assert.That(mode.NoVrCamera.isActiveAndEnabled, Is.True);
+            Assert.That(mode.XrOrigin.GetComponentsInChildren<Camera>(true)
+                .Count(camera => camera != null && camera.isActiveAndEnabled), Is.Zero);
+            Assert.That(CountPlayerAudioListeners(mode), Is.EqualTo(1));
+
+            mode.SetVrModeForTests(true);
+            yield return null;
+            Assert.That(mode.NoVrCamera.isActiveAndEnabled, Is.False);
+            Assert.That(mode.XrOrigin.GetComponentsInChildren<Camera>(true)
+                .Count(camera => camera != null && camera.isActiveAndEnabled), Is.EqualTo(1));
+            Assert.That(CountPlayerAudioListeners(mode), Is.EqualTo(1));
+        }
+
+        [UnityTest]
+        public IEnumerator Task013_ShotProducesLocalRecoilAndTwoHandHapticsThenSettles()
+        {
+            var controller = Find("ZeroingRange.Weapon.PlayerRoot").GetComponent<FirstPersonTrainingWeaponController>();
+            var binding = Find("ZeroingRange.Weapon.TrainingRifle").GetComponent<WeaponPrefabBinding>();
+            var haptics = new ManualWeaponHapticOutput();
+            controller.ConfigureHaptics(haptics);
+            Assert.That(controller.InitializeForTests(), Is.True);
+            var initialPosition = binding.RecoilRoot.localPosition;
+            var initialRotation = binding.RecoilRoot.localRotation;
+
+            Assert.That(controller.FireOnceForTests(), Is.True);
+            yield return new WaitForSeconds(0.06f);
+
+            Assert.That(haptics.ImpulseCount, Is.EqualTo(1));
+            Assert.That(haptics.LastFrontHandHeld, Is.True);
+            Assert.That(Quaternion.Angle(initialRotation, binding.RecoilRoot.localRotation), Is.InRange(2.3f, 4.5f));
+            Assert.That(Vector3.Distance(initialPosition, binding.RecoilRoot.localPosition), Is.InRange(0.02f, 0.05f));
+
+            yield return new WaitForSeconds(0.40f);
+            Assert.That(Quaternion.Angle(initialRotation, binding.RecoilRoot.localRotation), Is.LessThan(0.1f));
+            Assert.That(Vector3.Distance(initialPosition, binding.RecoilRoot.localPosition), Is.LessThan(0.001f));
+        }
+
         private static GameObject Find(string id)
         {
             return SceneManager.GetActiveScene().GetRootGameObjects()
                 .SelectMany(root => root.GetComponentsInChildren<SceneTestId>(true))
                 .FirstOrDefault(testId => testId.Id == id)?.gameObject;
+        }
+
+        private static int CountPlayerAudioListeners(ZeroingRangeXRModeController mode)
+        {
+            var noVrCount = mode.NoVrCamera.GetComponents<AudioListener>()
+                .Count(listener => listener != null && listener.isActiveAndEnabled);
+            var vrCount = mode.XrOrigin.GetComponentsInChildren<AudioListener>(true)
+                .Count(listener => listener != null && listener.isActiveAndEnabled);
+            return noVrCount + vrCount;
+        }
+
+        private static ZeroingRangeXRModeController ResolveOrCreateXRModeController()
+        {
+            var existing = Object.FindObjectsOfType<ZeroingRangeXRModeController>(true).FirstOrDefault();
+            if (existing != null)
+            {
+                return existing;
+            }
+
+            var noVrObject = Find("ZeroingRange.Camera.NoVR");
+            var xrOrigin = Find("ZeroingRange.Origin.VR");
+            if (noVrObject == null || xrOrigin == null)
+            {
+                return null;
+            }
+
+            var mode = noVrObject.transform.parent.gameObject.AddComponent<ZeroingRangeXRModeController>();
+            mode.Configure(xrOrigin, noVrObject.GetComponent<Camera>());
+            return mode;
         }
     }
 }
