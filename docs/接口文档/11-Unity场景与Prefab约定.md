@@ -35,8 +35,15 @@ P1 训练武器必须在第一人称视角中可见，并提供稳定绑定点�
 |---|---|---|
 | 武器 Prefab | `Weapon_<WeaponId>_<Name>` | `Weapon_training-rifle_Blockout` |
 | 武器根节点 | `WeaponRoot_<WeaponId>` | `WeaponRoot_training-rifle` |
+| 枪架/武器台插槽 | `Socket_<WeaponId>_Rack` | `Socket_training-rifle_Rack` |
 | 后手握把 | `Grip_<WeaponId>_RearHand` | `Grip_training-rifle_RearHand` |
 | 前手握把 | `Grip_<WeaponId>_FrontHand` | `Grip_training-rifle_FrontHand` |
+| 后手近距抓取区 | `GrabZone_<WeaponId>_RearHand` | `GrabZone_training-rifle_RearHand` |
+| 前手近距抓取区 | `GrabZone_<WeaponId>_FrontHand` | `GrabZone_training-rifle_FrontHand` |
+| 后手附着姿态 | `Attach_<WeaponId>_RearHand` | `Attach_training-rifle_RearHand` |
+| 前手附着姿态 | `Attach_<WeaponId>_FrontHand` | `Attach_training-rifle_FrontHand` |
+| 近距拾取提示 | `Prompt_<WeaponId>_Pickup` | `Prompt_training-rifle_Pickup` |
+| 后坐力表现根节点 | `RecoilRoot_<WeaponId>` | `RecoilRoot_training-rifle` |
 | 枪托/肩托 | `Stock_<WeaponId>` | `Stock_training-rifle` |
 | 枪口 | `Muzzle_<WeaponId>` | `Muzzle_training-rifle` |
 | 瞄准线参考 | `AimLine_<WeaponId>` | `AimLine_training-rifle` |
@@ -50,16 +57,36 @@ P1 训练武器必须在第一人称视角中可见，并提供稳定绑定点�
 
 - `ZeroingRange.Weapon.PlayerRoot`
 - `ZeroingRange.Weapon.TrainingRifle`
+- `ZeroingRange.Weapon.RackSocket`
 - `ZeroingRange.Weapon.Grip.RearHand`
 - `ZeroingRange.Weapon.Grip.FrontHand`
+- `ZeroingRange.Weapon.GrabZone.RearHand`
+- `ZeroingRange.Weapon.GrabZone.FrontHand`
+- `ZeroingRange.Weapon.Attach.RearHand`
+- `ZeroingRange.Weapon.Attach.FrontHand`
+- `ZeroingRange.Weapon.Prompt.Pickup`
+- `ZeroingRange.Weapon.RecoilRoot`
 - `ZeroingRange.Weapon.Muzzle`
 - `ZeroingRange.Weapon.AimLine`
 - `ZeroingRange.Weapon.Shoulder.Left`
 - `ZeroingRange.Weapon.Shoulder.Right`
 - `ZeroingRange.Weapon.DebugInput`
 - `ZeroingRange.Weapon.TracerRoot`
+- `ZeroingRange.Origin.VR.HeadPose`
+- `ZeroingRange.Origin.VR.Hand.Right`
+- `ZeroingRange.Origin.VR.Hand.Left`
+- `ZeroingRange.Origin.VR.Interactor.Direct.Right`
+- `ZeroingRange.Origin.VR.Interactor.Direct.Left`
 
-武器 Prefab 必须提供一个绑定脚本或等效组件，序列化引用枪口、瞄准线、前后手握把、肩侧参考点和弹匣位置。PlayMode Test 不应通过对象名猜测这些引用，而应读取绑定组件验证完整性。
+武器 Prefab 必须提供一个绑定脚本或等效组件，序列化引用 Rigidbody、物理 Collider、枪口、瞄准线、前后手握把、前后手近距抓取区、前后手附着姿态、后坐力表现根节点、肩侧参考点和弹匣位置。PlayMode Test 不应通过对象名猜测这些引用，而应读取绑定组件验证完整性。
+
+P1 训练步枪必须使用 `XRGrabInteractable`、可支持主/副手选择的组合 Interactable，或等效的可测试实现：
+
+- 后手抓取区只接受右手 Direct Interactor，前手抓取区只接受左手 Direct Interactor；不得用远距 Ray Interactor 隔空吸枪。
+- 后手是主选择，负责武器持有生命周期；前手只能在后手已选择时接入。
+- 武器在架时由枪架/武器台插槽稳定放置；被抓取后由双手枪体解算接管；后手释放后恢复 Rigidbody、重力和场景碰撞。
+- 后坐力只作用于 `RecoilRoot_*` 或等效局部表现层，不直接移动 HMD、XR Origin、Interactor 或跟踪姿态源。
+- 虚拟手网格可以为握把姿势对齐，但控制器和 HMD Transform 始终是输入权威，不能反向被枪械脚本改写。
 
 ## 测试 ID
 
@@ -104,6 +131,13 @@ public interface IXRTrainingInput
 {
     bool ConfirmPressed { get; }
     bool BackPressed { get; }
+    bool RightGripPressed { get; }
+    bool RightGripHeld { get; }
+    bool RightGripReleased { get; }
+    bool LeftGripPressed { get; }
+    bool LeftGripHeld { get; }
+    bool LeftGripReleased { get; }
+    float RightTriggerValue { get; }
     bool TriggerPressed { get; }
     bool ReloadPressed { get; }
     bool SwitchShoulderPressed { get; }
@@ -120,24 +154,43 @@ public interface IXRTrainingInput
 ```csharp
 public interface IWeaponPoseInput
 {
-    bool RearHandActive { get; }
-    bool FrontHandActive { get; }
+    bool HeadTracked { get; }
+    bool RearHandTracked { get; }
+    bool FrontHandTracked { get; }
     Pose HeadPose { get; }
     Pose RearHandPose { get; }
     Pose FrontHandPose { get; }
 }
 ```
 
-`IXRTrainingInput` 负责按钮和轴命令，`IWeaponPoseInput` 负责头、后手、前手姿态。真实 XR、XR Device Simulator 和无 VR 调试替身都应能适配到这两个抽象入口。
+`IXRTrainingInput` 负责按钮、模拟扳机和轴命令，`IWeaponPoseInput` 负责头、后手、前手姿态与跟踪有效性。真实 XR、XR Device Simulator 和无 VR 调试替身都应能适配到这两个抽象入口。
+
+P1 默认 Input Action 映射如下，允许按设备 Profile 覆盖绑定，但不得改变语义：
+
+| 语义 | XRI Action | 默认控制器 |
+|---|---|---|
+| 后握把拾取/保持 | `XRI RightHand Interaction/Select` | 右手 Grip |
+| 前握把选择/保持 | `XRI LeftHand Interaction/Select` | 左手 Grip |
+| 单发击发 | `XRI RightHand Interaction/Activate` | 右手 Trigger |
+
+Grip 必须暴露按下、保持、释放三种状态；Trigger 必须暴露 `0-1` 模拟量，并由适配层以可配置迟滞阈值生成一次性 `TriggerPressed`。场景脚本不得同时读取该 Action 和硬件按钮，避免一发触发两次。
 
 输入适配是 P1 基础能力：
 
 - 模拟输入、XR Device Simulator、键鼠调试输入和真实 XR 输入都必须适配到同一接口。
 - 服务层只消费抽象输入事件或命令，不直接读取具体手柄按键、键盘按键或设备 API。
-- PlayMode Test 必须能注入测试输入，覆盖确认、返回、扳机、换弹、左右肩切换和瞄准模式。
+- PlayMode Test 必须能注入测试输入，覆盖确认、返回、左右手 Grip 按下/保持/释放、右手模拟扳机、换弹、左右肩切换和无 VR 瞄准模式。
 - 真实 VR 设备到位前，无 VR 输入替身路径必须可完成 P1 100m 射校闭环。
 - 无 VR 调试输入必须能在 Editor Play Mode 中模拟头部视角、后手姿态、前手姿态和枪线变化。
-- 瞄准模式下，视觉相机或 ADS 代理必须对齐 `AimLine_*`，有效射击方向、可见弹道和命中计算必须使用同一枪线。
+- 无 VR 瞄准模式下，视觉相机或 ADS 代理可对齐 `AimLine_*`；真实 VR 不使用代理相机或 FOV 缩放，而由玩家自然对齐 HMD 与机械瞄具。两条路径的有效射击方向、可见弹道和命中计算都必须使用同一枪线。
+
+## XR 与无 VR 运行时视角切换
+
+- OpenXR Loader 启动且 HMD 可用时：启用 `XR Origin`、HMD Camera、XR Controller、左右虚拟手和 Direct Interactor；禁用 `Camera_NoVR`、其 `AudioListener` 和键鼠视角驱动。
+- XR 不可用时：禁用 XR Camera/AudioListener 和设备交互输出，启用 `Camera_NoVR`、无 VR 姿态及输入替身。
+- 任一时刻最多一个活动玩家 Camera 和一个活动 `AudioListener`。不得依赖人工切换 Hierarchy 作为正常启动步骤。
+- 真实 VR 中禁止武器、ADS、切肩或后坐力逻辑写入 HMD Camera、XR Origin 或 XR 投影/FOV；HMD 姿态只来自跟踪系统。
+- 枪械和虚拟手在 `OnBeforeRender`、XRI Dynamic/Late 更新或等效低延迟阶段消费最新控制器姿态，额外显示延迟不超过一个显示帧。
 
 ## 验收约束
 
@@ -145,4 +198,7 @@ public interface IWeaponPoseInput
 - 所有 HUD 必填字段必须存在对应 `Text_*` 或 `Hud_*` 测试 ID。
 - PlayMode Test 应能通过测试 ID 找到控件并模拟点击。
 - 场景加载期间路由应进入 Busy 状态，避免重复点击。
+- PlayMode Test 必须通过绑定组件验证枪架插槽、前后抓取区、前后附着姿态、Rigidbody、碰撞体和后坐力表现根节点完整。
+- 真实 VR 实机必须验证右手近距 Grip 拾取、左手前握把选择、右手 Trigger 单发、放手掉落和再次拾取；范围外不得隔空抓取。
+- VR 模式必须验证唯一活动相机/AudioListener、HMD 姿态未被武器逻辑改写、自然机瞄无 FOV 跳变以及枪体/虚拟手没有明显跟踪延迟。
 

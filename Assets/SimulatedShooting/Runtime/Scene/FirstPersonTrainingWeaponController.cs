@@ -17,6 +17,7 @@ namespace SimulatedShooting.Scene
 
         [SerializeField] private Camera viewCamera;
         [SerializeField] private WeaponPrefabBinding weaponBinding;
+        [SerializeField] private TrainingRifleGrabInteractable grabInteractable;
         [SerializeField] private TargetImpactSurface targetSurface;
         [SerializeField] private Transform tracerRoot;
         [SerializeField] private Transform headPoseSource;
@@ -36,6 +37,7 @@ namespace SimulatedShooting.Scene
         ApplicationServices services;
         IWeaponControlService weaponService;
         IXRTrainingInput input;
+        IWeaponHapticOutput hapticOutput;
         XRTrainingInputCommandDispatcher dispatcher;
         IDisposable inputSubscription;
         Material tracerMaterial;
@@ -46,11 +48,17 @@ namespace SimulatedShooting.Scene
         Vector2 frontHandOffset;
         float yaw;
         float pitch;
-        float recoilPitch;
-        Vector3 recoilOffset;
+        Vector3 recoilRootBasePosition;
+        Quaternion recoilRootBaseRotation = Quaternion.identity;
+        WeaponRecoilImpulseDto activeRecoil;
+        float recoilElapsed;
+        bool recoilActive;
+        bool simulatedRearGripHeld;
+        bool simulatedFrontGripHeld;
         int tracerCounter;
         bool initialized;
         bool hasCurrentState;
+        bool grabSubscribed;
 
         public bool IsInitialized => initialized;
         public bool HasRequiredWeaponBinding => weaponBinding != null && weaponBinding.HasRequiredBinding;
@@ -60,12 +68,14 @@ namespace SimulatedShooting.Scene
         public ShoulderSide CurrentShoulder => hasCurrentState ? currentState.ShoulderSide : ShoulderSide.Right;
         public WeaponAimMode CurrentAimMode => hasCurrentState ? currentState.AimMode : WeaponAimMode.HipFire;
         public bool TwoHandGripActive => hasCurrentState && currentState.TwoHandGripActive;
+        public WeaponHoldState CurrentHoldState => hasCurrentState ? currentState.HoldState : WeaponHoldState.OnRack;
         public float Stability01 => hasCurrentState ? currentState.Stability01 : 0f;
         public int TracerCount => tracerCounter;
         public bool LastShotWasValid => lastShot.IsValidShot;
         public Vector3 CurrentAimDirection => ResolveAimDirection();
         public bool HasVrPoseSources => headPoseSource != null && rearHandPoseSource != null && frontHandPoseSource != null;
         public bool UsingVrPoseSources => ShouldUseVrPoseSources();
+        public TrainingRifleGrabInteractable GrabInteractable => grabInteractable;
 
         public string SessionId =>
             services != null && services.TrainingSessions.HasActiveSession
@@ -82,6 +92,7 @@ namespace SimulatedShooting.Scene
         {
             viewCamera = camera;
             weaponBinding = binding;
+            grabInteractable = binding != null ? binding.GetComponent<TrainingRifleGrabInteractable>() : null;
             targetSurface = impactSurface;
             tracerRoot = tracerContainer;
         }
@@ -101,6 +112,7 @@ namespace SimulatedShooting.Scene
             eventBus = applicationServices?.EventBus;
             weaponService = applicationServices?.WeaponControl;
             input = trainingInput ?? applicationServices?.TrainingInput;
+            hapticOutput = new InputSystemWeaponHapticOutput();
             initialized = false;
             hasCurrentState = false;
         }
@@ -110,6 +122,11 @@ namespace SimulatedShooting.Scene
             TearDownInputSubscription();
             input = trainingInput;
             initialized = false;
+        }
+
+        public void ConfigureHaptics(IWeaponHapticOutput output)
+        {
+            hapticOutput = output;
         }
 
         public bool ReloadOnceForTests()
@@ -126,6 +143,7 @@ namespace SimulatedShooting.Scene
 
         private void OnDestroy()
         {
+            UnsubscribeGrabInteractable();
             TearDownInputSubscription();
         }
 
@@ -144,10 +162,12 @@ namespace SimulatedShooting.Scene
         private void OnEnable()
         {
             EnsureInitialized();
+            SubscribeGrabInteractable();
         }
 
         private void OnDisable()
         {
+            UnsubscribeGrabInteractable();
             TearDownInputSubscription();
         }
 
@@ -166,7 +186,7 @@ namespace SimulatedShooting.Scene
             {
                 SourceScreen = ScreenId.ZeroingHud
             });
-            DecayRecoil(Time.deltaTime);
+            UpdateRecoil(Time.deltaTime);
         }
 
         public bool FireOnceForTests()
@@ -177,6 +197,8 @@ namespace SimulatedShooting.Scene
                 return false;
             }
 
+            UpdateNoVrPose(0f);
+            ForceTwoHandGripForTests();
             UpdateNoVrPose(0f);
             return FireCurrentWeapon();
         }
@@ -220,6 +242,7 @@ namespace SimulatedShooting.Scene
                 return;
             }
 
+            ForceTwoHandGripForTests();
             UpdateNoVrPose(0f);
             UpdateGripState();
         }
@@ -278,7 +301,10 @@ namespace SimulatedShooting.Scene
             yaw = viewCamera.transform.eulerAngles.y;
             pitch = NormalizePitch(viewCamera.transform.eulerAngles.x);
             tracerMaterial = CreateTracerMaterial();
+            CacheRecoilRootPose();
+            hapticOutput ??= new InputSystemWeaponHapticOutput();
             initialized = true;
+            SubscribeGrabInteractable();
             UpdateNoVrPose(0f);
             UpdateGripState();
         }
@@ -335,6 +361,11 @@ namespace SimulatedShooting.Scene
                 weaponBinding = GetComponentInChildren<WeaponPrefabBinding>(true);
             }
 
+            if (grabInteractable == null && weaponBinding != null)
+            {
+                grabInteractable = weaponBinding.GetComponent<TrainingRifleGrabInteractable>();
+            }
+
             if (targetSurface == null)
             {
                 targetSurface = FindObjectOfType<TargetImpactSurface>();
@@ -367,6 +398,35 @@ namespace SimulatedShooting.Scene
                 case XRTrainingInputCommandType.SwitchShoulder:
                     ApplyStateResult(weaponService.ToggleShoulder(SessionId));
                     break;
+                case XRTrainingInputCommandType.RightGripPressed:
+                    if (!ShouldUseVrPoseSources())
+                    {
+                        simulatedRearGripHeld = true;
+                        UpdateGripState();
+                    }
+                    break;
+                case XRTrainingInputCommandType.RightGripReleased:
+                    if (!ShouldUseVrPoseSources())
+                    {
+                        simulatedRearGripHeld = false;
+                        simulatedFrontGripHeld = false;
+                        UpdateGripState();
+                    }
+                    break;
+                case XRTrainingInputCommandType.LeftGripPressed:
+                    if (!ShouldUseVrPoseSources() && simulatedRearGripHeld)
+                    {
+                        simulatedFrontGripHeld = true;
+                        UpdateGripState();
+                    }
+                    break;
+                case XRTrainingInputCommandType.LeftGripReleased:
+                    if (!ShouldUseVrPoseSources())
+                    {
+                        simulatedFrontGripHeld = false;
+                        UpdateGripState();
+                    }
+                    break;
             }
         }
 
@@ -391,9 +451,21 @@ namespace SimulatedShooting.Scene
                 return;
             }
 
-            var twoHandGripActive = ResolveTwoHandGripActive();
-            var stability = ResolveGripStability(twoHandGripActive);
-            ApplyStateResult(weaponService.SetGripState(SessionId, twoHandGripActive, stability));
+            var useVr = ShouldUseVrPoseSources();
+            var holdState = useVr && grabInteractable != null
+                ? grabInteractable.HoldState
+                : ResolveSimulatedHoldState();
+            var rearTracked = holdState == WeaponHoldState.RearHandHeld || holdState == WeaponHoldState.TwoHandHeld;
+            var frontTracked = holdState == WeaponHoldState.TwoHandHeld;
+            var stability = ResolveGripStability(frontTracked);
+            ApplyStateResult(weaponService.SetGripState(new WeaponGripStateInputDto
+            {
+                SessionId = SessionId,
+                HoldState = holdState,
+                RearHandTracked = rearTracked,
+                FrontHandTracked = frontTracked,
+                Stability01 = stability
+            }));
         }
 
         void UpdateNoVrPose(float deltaTime)
@@ -405,7 +477,7 @@ namespace SimulatedShooting.Scene
 
             if (ShouldUseVrPoseSources())
             {
-                UpdateVrPose();
+                UpdateVrReferencesOnly();
                 return;
             }
 
@@ -421,6 +493,13 @@ namespace SimulatedShooting.Scene
             frontHandOffset = ClampFrontHandOffset(frontHandOffset + moveAxis * frontHandAdjustSpeed * deltaTime);
 
             var baseRotation = Quaternion.Euler(pitch, yaw, 0f);
+            if (currentState.HoldState == WeaponHoldState.OnRack || currentState.HoldState == WeaponHoldState.Dropped)
+            {
+                viewCamera.transform.SetPositionAndRotation(headPosition, baseRotation * ResolveNoVrCameraRecoil());
+                viewCamera.fieldOfView = Mathf.Lerp(viewCamera.fieldOfView, hipFieldOfView, 0.35f);
+                return;
+            }
+
             var shoulderLocal = currentState.ShoulderSide == ShoulderSide.Right ? rightShoulderLocal : leftShoulderLocal;
             var rearHand = headPosition + baseRotation * shoulderLocal;
             var frontHand = rearHand + baseRotation * new Vector3(frontHandOffset.x, frontHandOffset.y, 0.78f);
@@ -428,60 +507,30 @@ namespace SimulatedShooting.Scene
                 ? (frontHand - rearHand).normalized
                 : baseRotation * Vector3.forward;
 
-            var weaponRotation = Quaternion.LookRotation(direction, Vector3.up) * Quaternion.Euler(-recoilPitch, 0f, 0f);
-            weaponBinding.transform.SetPositionAndRotation(rearHand + recoilOffset, weaponRotation);
+            var weaponRotation = Quaternion.LookRotation(direction, Vector3.up);
+            weaponBinding.transform.SetPositionAndRotation(rearHand, weaponRotation);
 
             if (isAds && weaponBinding.AimLinePoint != null)
             {
                 var aim = weaponBinding.AimLinePoint;
                 viewCamera.transform.SetPositionAndRotation(
                     aim.position - aim.forward * 0.08f + aim.up * 0.012f,
-                    Quaternion.LookRotation(aim.forward, aim.up));
+                    Quaternion.LookRotation(aim.forward, aim.up) * ResolveNoVrCameraRecoil());
                 viewCamera.fieldOfView = Mathf.Lerp(viewCamera.fieldOfView, adsFieldOfView, 0.35f);
             }
             else
             {
-                viewCamera.transform.SetPositionAndRotation(headPosition, baseRotation);
+                viewCamera.transform.SetPositionAndRotation(headPosition, baseRotation * ResolveNoVrCameraRecoil());
                 viewCamera.fieldOfView = Mathf.Lerp(viewCamera.fieldOfView, hipFieldOfView, 0.35f);
             }
         }
 
-        void UpdateVrPose()
+        void UpdateVrReferencesOnly()
         {
             var headCamera = headPoseSource.GetComponent<Camera>();
             if (headCamera != null && headCamera.gameObject.activeInHierarchy)
             {
                 viewCamera = headCamera;
-            }
-
-            headPosition = headPoseSource.position;
-            var rearHand = rearHandPoseSource.position;
-            var frontHand = frontHandPoseSource.position;
-            var direction = (frontHand - rearHand).sqrMagnitude > 0.0001f
-                ? (frontHand - rearHand).normalized
-                : headPoseSource.forward;
-
-            var up = Vector3.ProjectOnPlane(headPoseSource.up, direction);
-            if (up.sqrMagnitude < 0.0001f)
-            {
-                up = Vector3.up;
-            }
-
-            var weaponRotation = Quaternion.LookRotation(direction, up.normalized) * Quaternion.Euler(-recoilPitch, 0f, 0f);
-            weaponBinding.transform.SetPositionAndRotation(rearHand + recoilOffset, weaponRotation);
-
-            if (currentState.AimMode == WeaponAimMode.AimDownSights && weaponBinding.AimLinePoint != null)
-            {
-                var aim = weaponBinding.AimLinePoint;
-                viewCamera.transform.SetPositionAndRotation(
-                    aim.position - aim.forward * 0.08f + aim.up * 0.012f,
-                    Quaternion.LookRotation(aim.forward, aim.up));
-                viewCamera.fieldOfView = Mathf.Lerp(viewCamera.fieldOfView, adsFieldOfView, 0.35f);
-            }
-            else
-            {
-                viewCamera.transform.SetPositionAndRotation(headPoseSource.position, headPoseSource.rotation);
-                viewCamera.fieldOfView = Mathf.Lerp(viewCamera.fieldOfView, hipFieldOfView, 0.35f);
             }
         }
 
@@ -496,14 +545,14 @@ namespace SimulatedShooting.Scene
                    frontHandPoseSource.gameObject.activeInHierarchy;
         }
 
-        bool ResolveTwoHandGripActive()
+        WeaponHoldState ResolveSimulatedHoldState()
         {
-            if (!ShouldUseVrPoseSources())
+            if (simulatedRearGripHeld && simulatedFrontGripHeld)
             {
-                return true;
+                return WeaponHoldState.TwoHandHeld;
             }
 
-            return rearHandPoseSource.gameObject.activeInHierarchy && frontHandPoseSource.gameObject.activeInHierarchy;
+            return simulatedRearGripHeld ? WeaponHoldState.RearHandHeld : WeaponHoldState.OnRack;
         }
 
         float ResolveGripStability(bool twoHandGripActive)
@@ -522,6 +571,105 @@ namespace SimulatedShooting.Scene
             return Mathf.Clamp01(1f - frontHandOffset.magnitude / 0.32f);
         }
 
+        void SubscribeGrabInteractable()
+        {
+            if (grabSubscribed || grabInteractable == null)
+            {
+                return;
+            }
+
+            grabInteractable.HoldStateChanged += HandleGrabHoldStateChanged;
+            grabSubscribed = true;
+        }
+
+        void UnsubscribeGrabInteractable()
+        {
+            if (!grabSubscribed || grabInteractable == null)
+            {
+                return;
+            }
+
+            grabInteractable.HoldStateChanged -= HandleGrabHoldStateChanged;
+            grabSubscribed = false;
+        }
+
+        void HandleGrabHoldStateChanged(WeaponHoldState _, bool __, bool ___)
+        {
+            if (initialized)
+            {
+                UpdateGripState();
+            }
+        }
+
+        void ForceTwoHandGripForTests()
+        {
+            simulatedRearGripHeld = true;
+            simulatedFrontGripHeld = true;
+            ApplyStateResult(weaponService.SetGripState(new WeaponGripStateInputDto
+            {
+                SessionId = SessionId,
+                HoldState = WeaponHoldState.TwoHandHeld,
+                RearHandTracked = true,
+                FrontHandTracked = true,
+                Stability01 = ResolveGripStability(true)
+            }));
+        }
+
+        void CacheRecoilRootPose()
+        {
+            var recoilRoot = weaponBinding != null ? weaponBinding.RecoilRoot : null;
+            if (recoilRoot == null)
+            {
+                return;
+            }
+
+            recoilRootBasePosition = recoilRoot.localPosition;
+            recoilRootBaseRotation = recoilRoot.localRotation;
+        }
+
+        Quaternion ResolveNoVrCameraRecoil()
+        {
+            if (!recoilActive)
+            {
+                return Quaternion.identity;
+            }
+
+            var response = ResolveRecoilResponse(activeRecoil, recoilElapsed);
+            return Quaternion.Euler(
+                -activeRecoil.NoVrCameraPitchDegrees * response,
+                activeRecoil.NoVrCameraYawDegrees * response,
+                0f);
+        }
+
+        static float ResolveRecoilResponse(WeaponRecoilImpulseDto impulse, float elapsed)
+        {
+            if (!impulse.HasImpulse)
+            {
+                return 0f;
+            }
+
+            var kickDuration = Mathf.Max(0.001f, impulse.KickDurationSeconds);
+            if (elapsed <= kickDuration)
+            {
+                return Mathf.SmoothStep(0f, 1f, elapsed / kickDuration);
+            }
+
+            var settleDuration = Mathf.Max(0.001f, impulse.SettleDurationSeconds);
+            var settle = Mathf.Clamp01((elapsed - kickDuration) / settleDuration);
+            return 1f - Mathf.SmoothStep(0f, 1f, settle);
+        }
+
+        static float ResolveAimMotionOffsetCm(Vector3 rawDirection, Vector3 effectiveDirection)
+        {
+            if (rawDirection.sqrMagnitude <= 0.0001f || effectiveDirection.sqrMagnitude <= 0.0001f)
+            {
+                return 0f;
+            }
+
+            var angleRadians = Vector3.Angle(rawDirection, effectiveDirection) * Mathf.Deg2Rad;
+            return Mathf.Abs(Mathf.Tan(angleRadians) * ZeroingRules.DistanceMeters * 100f);
+        }
+
         bool FireCurrentWeapon()
         {
             if (weaponBinding == null || weaponBinding.MuzzlePoint == null || string.IsNullOrEmpty(SessionId))
@@ -532,6 +680,8 @@ namespace SimulatedShooting.Scene
             var sessionId = SessionId;
             var muzzle = weaponBinding.MuzzlePoint.position;
             var direction = ResolveAimDirection();
+            var rawDirection = weaponBinding.transform.forward.normalized;
+            var aimMotionOffsetCm = ResolveAimMotionOffsetCm(rawDirection, direction);
             var hit = Physics.Raycast(muzzle, direction, out var raycastHit, MaxShotDistance);
             var hitPoint = ResolveHitPointForService(raycastHit, hit, muzzle, direction);
             var hitObjectId = hit ? ResolveTestId(raycastHit.collider.transform) : string.Empty;
@@ -541,7 +691,9 @@ namespace SimulatedShooting.Scene
                 SessionId = sessionId,
                 MuzzlePosition = muzzle,
                 WeaponPosition = weaponBinding.transform.position,
+                RawAimDirection = rawDirection,
                 AimDirection = direction,
+                AimMotionOffsetCm = aimMotionOffsetCm,
                 Stability01 = currentState.Stability01,
                 TwoHandGripActive = currentState.TwoHandGripActive,
                 AimMode = currentState.AimMode,
@@ -565,7 +717,8 @@ namespace SimulatedShooting.Scene
 
             SpawnTracer(muzzle, hitPoint);
             RecordImpactIfNeeded(raycastHit, hit);
-            ApplyRecoil();
+            ApplyRecoil(fire.Data.RecoilImpulse);
+            hapticOutput?.SendShotImpulse(fire.Data.RecoilImpulse, fire.Data.FrontHandTracked);
             return true;
         }
 
@@ -648,16 +801,41 @@ namespace SimulatedShooting.Scene
             tracer.AddComponent<TimedSelfDestruct>().Configure(0.18f);
         }
 
-        void ApplyRecoil()
+        void ApplyRecoil(WeaponRecoilImpulseDto impulse)
         {
-            recoilPitch = Mathf.Min(recoilPitch + 3.2f, 8f);
-            recoilOffset += -weaponBinding.transform.forward * 0.025f + Vector3.up * 0.012f;
+            activeRecoil = impulse;
+            recoilElapsed = 0f;
+            recoilActive = impulse.HasImpulse;
         }
 
-        void DecayRecoil(float deltaTime)
+        void UpdateRecoil(float deltaTime)
         {
-            recoilPitch = Mathf.MoveTowards(recoilPitch, 0f, deltaTime * 18f);
-            recoilOffset = Vector3.MoveTowards(recoilOffset, Vector3.zero, deltaTime * 0.32f);
+            var recoilRoot = weaponBinding != null ? weaponBinding.RecoilRoot : null;
+            if (recoilRoot == null)
+            {
+                return;
+            }
+
+            if (!recoilActive)
+            {
+                recoilRoot.localPosition = recoilRootBasePosition;
+                recoilRoot.localRotation = recoilRootBaseRotation;
+                return;
+            }
+
+            recoilElapsed += Mathf.Max(0f, deltaTime);
+            var response = ResolveRecoilResponse(activeRecoil, recoilElapsed);
+            var position = new Vector3(0f, activeRecoil.UpwardMeters, -activeRecoil.RearwardMeters) * response;
+            var rotation = new Vector3(-activeRecoil.PitchDegrees, activeRecoil.YawDegrees, activeRecoil.RollDegrees) * response;
+            recoilRoot.localPosition = recoilRootBasePosition + position;
+            recoilRoot.localRotation = recoilRootBaseRotation * Quaternion.Euler(rotation);
+
+            if (response <= 0f && recoilElapsed >= activeRecoil.KickDurationSeconds + activeRecoil.SettleDurationSeconds)
+            {
+                recoilActive = false;
+                recoilRoot.localPosition = recoilRootBasePosition;
+                recoilRoot.localRotation = recoilRootBaseRotation;
+            }
         }
 
         void ApplyStateResult(VRShooting.Contracts.ServiceResult<WeaponControlStateDto> result)

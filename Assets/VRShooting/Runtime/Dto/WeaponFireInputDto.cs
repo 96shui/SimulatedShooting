@@ -6,8 +6,10 @@ namespace VRShooting.Common
     {
         public string SessionId { get; init; }
         public Vector3 MuzzlePosition { get; init; }
+        public Vector3 RawAimDirection { get; init; }
         public Vector3 AimDirection { get; init; }
         public Vector3 WeaponPosition { get; init; }
+        public float AimMotionOffsetCm { get; init; }
         public float Stability01 { get; init; }
         public bool TwoHandGripActive { get; init; }
         public WeaponAimMode AimMode { get; init; }

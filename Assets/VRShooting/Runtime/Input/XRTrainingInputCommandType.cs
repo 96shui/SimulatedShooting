@@ -9,7 +9,11 @@ namespace VRShooting.Input
         SwitchShoulder,
         AimPressed,
         AimHeld,
-        CommandMenuHeld
+        CommandMenuHeld,
+        RightGripPressed,
+        RightGripReleased,
+        LeftGripPressed,
+        LeftGripReleased
     }
 }
 

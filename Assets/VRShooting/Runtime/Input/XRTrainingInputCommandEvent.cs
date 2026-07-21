@@ -16,6 +16,12 @@ namespace VRShooting.Input
         public bool AimHeld { get; init; }
 
         public bool CommandMenuHeld { get; init; }
+
+        public float RightTriggerValue { get; init; }
+
+        public bool RightGripHeld { get; init; }
+
+        public bool LeftGripHeld { get; init; }
     }
 }
 

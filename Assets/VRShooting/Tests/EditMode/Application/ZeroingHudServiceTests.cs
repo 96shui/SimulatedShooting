@@ -184,6 +184,7 @@ namespace VRShooting.Tests.EditMode.Application
             var training = trainingSessions.Current;
             var weapon = weaponControl.StartSession(training.SessionId, training.WeaponId, training.Mode);
             Assert.IsTrue(weapon.Success, weapon.Message);
+            Assert.IsTrue(weaponControl.SetGripState(CreateTwoHandGrip(training.SessionId)).Success);
             return start.Data;
         }
 
@@ -220,6 +221,7 @@ namespace VRShooting.Tests.EditMode.Application
             {
                 SessionId = sessionId,
                 MuzzlePosition = Vector3.zero,
+                RawAimDirection = Vector3.forward,
                 AimDirection = Vector3.forward,
                 WeaponPosition = Vector3.zero,
                 Stability01 = 0.95f,
@@ -230,6 +232,18 @@ namespace VRShooting.Tests.EditMode.Application
                 HitPoint = new Vector3(0f, 0f, ZeroingRules.DistanceMeters),
                 HitObjectId = "Target_100m"
             });
+        }
+
+        static WeaponGripStateInputDto CreateTwoHandGrip(string sessionId)
+        {
+            return new WeaponGripStateInputDto
+            {
+                SessionId = sessionId,
+                HoldState = WeaponHoldState.TwoHandHeld,
+                RearHandTracked = true,
+                FrontHandTracked = true,
+                Stability01 = 0.95f
+            };
         }
 
         static HudTextLineDto FindLine(HudDto hud, string key)

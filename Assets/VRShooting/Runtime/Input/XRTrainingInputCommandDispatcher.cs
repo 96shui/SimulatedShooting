@@ -95,7 +95,39 @@ namespace VRShooting.Input
                 commandCount++;
             }
 
+            commandCount += PublishGripEdges(sourceScreen);
+
             return ServiceResult<int>.Ok(commandCount);
+        }
+
+        int PublishGripEdges(ScreenId sourceScreen)
+        {
+            var commandCount = 0;
+            if (input.RightGripPressed)
+            {
+                Publish(XRTrainingInputCommandType.RightGripPressed, sourceScreen);
+                commandCount++;
+            }
+
+            if (input.RightGripReleased)
+            {
+                Publish(XRTrainingInputCommandType.RightGripReleased, sourceScreen);
+                commandCount++;
+            }
+
+            if (input.LeftGripPressed)
+            {
+                Publish(XRTrainingInputCommandType.LeftGripPressed, sourceScreen);
+                commandCount++;
+            }
+
+            if (input.LeftGripReleased)
+            {
+                Publish(XRTrainingInputCommandType.LeftGripReleased, sourceScreen);
+                commandCount++;
+            }
+
+            return commandCount;
         }
 
         ScreenId ResolveSourceScreen(XRTrainingInputDispatchContext context)
@@ -117,7 +149,10 @@ namespace VRShooting.Input
                 MoveAxis = input.MoveAxis,
                 TurnAxis = input.TurnAxis,
                 AimHeld = input.AimHeld,
-                CommandMenuHeld = input.CommandMenuHeld
+                CommandMenuHeld = input.CommandMenuHeld,
+                RightTriggerValue = input.RightTriggerValue,
+                RightGripHeld = input.RightGripHeld,
+                LeftGripHeld = input.LeftGripHeld
             });
         }
     }

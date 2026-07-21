@@ -12,6 +12,6 @@ namespace VRShooting.Application
         ServiceResult<WeaponControlStateDto> SetShoulder(string sessionId, ShoulderSide shoulderSide);
         ServiceResult<WeaponControlStateDto> ToggleShoulder(string sessionId);
         ServiceResult<WeaponControlStateDto> SetAimMode(string sessionId, WeaponAimMode aimMode);
-        ServiceResult<WeaponControlStateDto> SetGripState(string sessionId, bool twoHandGripActive, float stability01);
+        ServiceResult<WeaponControlStateDto> SetGripState(WeaponGripStateInputDto input);
     }
 }

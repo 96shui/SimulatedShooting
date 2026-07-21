@@ -143,5 +143,46 @@ namespace VRShooting.Tests.EditMode.Input
             Assert.AreEqual(XRTrainingInputCommandType.AimHeld, received[1].CommandType);
             Assert.IsTrue(received[1].AimHeld);
         }
+
+        [Test]
+        public void Task013_NoVrInputSubstitute_GripEdgesAreObservable()
+        {
+            var input = new ManualXRTrainingInput();
+
+            input.Press(XRTrainingInputButton.RightGrip);
+            input.Press(XRTrainingInputButton.LeftGrip);
+
+            Assert.IsTrue(input.RightGripPressed);
+            Assert.IsTrue(input.RightGripHeld);
+            Assert.IsTrue(input.LeftGripPressed);
+            Assert.IsTrue(input.LeftGripHeld);
+
+            input.AdvanceFrame();
+            input.Release(XRTrainingInputButton.LeftGrip);
+
+            Assert.IsFalse(input.LeftGripHeld);
+            Assert.IsTrue(input.LeftGripReleased);
+            Assert.IsTrue(input.RightGripHeld);
+        }
+
+        [Test]
+        public void Task013_NoVrInputSubstitute_TriggerUsesHysteresis()
+        {
+            var input = new ManualXRTrainingInput();
+
+            input.SetRightTriggerValue(0.74f);
+            Assert.IsFalse(input.TriggerPressed);
+            input.SetRightTriggerValue(0.76f);
+            Assert.IsTrue(input.TriggerPressed);
+
+            input.AdvanceFrame();
+            input.SetRightTriggerValue(0.5f);
+            input.SetRightTriggerValue(0.8f);
+            Assert.IsFalse(input.TriggerPressed, "trigger must stay latched until it returns below the release threshold");
+
+            input.SetRightTriggerValue(0.2f);
+            input.SetRightTriggerValue(0.8f);
+            Assert.IsTrue(input.TriggerPressed);
+        }
     }
 }

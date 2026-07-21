@@ -178,7 +178,7 @@ namespace VRShooting.Application
             {
                 WeaponPosition = evt.Result.MuzzlePosition,
                 AimDirection = new Vector3(aimPoint.x, aimPoint.y, ZeroingRules.DistanceMeters),
-                WeaponStability = ResolveWeaponStability(evt.Result.SessionId),
+                WeaponStability = evt.Result.Stability01,
                 FireTime = 0d
             };
 
@@ -215,12 +215,6 @@ namespace VRShooting.Application
             }
 
             return analysis;
-        }
-
-        float ResolveWeaponStability(string sessionId)
-        {
-            var state = weaponControl.GetState(sessionId);
-            return state.Success ? state.Data.Stability01 : 1f;
         }
 
         ZeroingSessionRecord EnsureRecord(TrainingSessionDto session)

@@ -810,14 +810,14 @@ MonoBehaviour:
   - {fileID: -4478006660784508864}
   - {fileID: -6081641041439107477}
   - {fileID: 32361891232910083}
-  - {fileID: -34596358968032513}
-  - {fileID: -8732650259347650135}
+  - {fileID: 1727173055597128861}
+  - {fileID: -5941725581135416239}
   - {fileID: -4647824206626811188}
   - {fileID: 4025793028449617705}
   - {fileID: 1507748248788215057}
   - {fileID: 6841333374066517713}
   - {fileID: -4454024988132797082}
-  - {fileID: -8895518590110429109}
+  - {fileID: 154189092879288027}
   - {fileID: -4731438336562001402}
   - {fileID: 4890582492822650874}
   - {fileID: -5611916350011621528}
@@ -910,39 +910,6 @@ MonoBehaviour:
   company: Unity
   priority: 0
   required: 0
---- !u!114 &-1557233674024107270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: DPadInteraction Standalone
-  m_EditorClassIdentifier: Unity.XR.OpenXR:UnityEngine.XR.OpenXR.Features.Interactions:DPadInteraction
-  m_enabled: 0
-  nameUi: D-Pad Binding
-  version: 0.0.1
-  featureIdInternal: com.unity.openxr.feature.input.dpadinteraction
-  openxrExtensionStrings: XR_KHR_binding_modification XR_EXT_dpad_binding
-  company: Unity
-  priority: 0
-  required: 0
-  forceThresholdLeft: 0.5
-  forceThresholdReleaseLeft: 0.4
-  centerRegionLeft: 0.5
-  wedgeAngleLeft: 1.5707964
-  isStickyLeft: 0
-  forceThresholdRight: 0.5
-  forceThresholdReleaseRight: 0.4
-  centerRegionRight: 0.5
-  wedgeAngleRight: 1.5707964
-  isStickyRight: 0
-  extensionStrings:
-  - XR_KHR_binding_modification
-  - XR_EXT_dpad_binding
 --- !u!114 &-1448224327297059716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1669,26 +1636,6 @@ MonoBehaviour:
   extensionStrings:
   - XR_KHR_binding_modification
   - XR_EXT_dpad_binding
---- !u!114 &3125381194089690783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96efa89124dda0941802f28ad8249b87, type: 3}
-  m_Name: MockDriver Standalone
-  m_EditorClassIdentifier: 
-  m_enabled: 0
-  nameUi: Mock Driver
-  version: 0.0.1
-  featureIdInternal: com.unity.openxr.feature.mockdriver
-  openxrExtensionStrings: XR_UNITY_mock_driver
-  company: Unity
-  priority: 0
-  required: 0
 --- !u!114 &3335534256868400719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1892,26 +1839,6 @@ MonoBehaviour:
   m_spacewarpMotionVectorTextureFormat: 0
   m_optimizeBufferDiscards: 0
   m_symmetricProjection: 0
---- !u!114 &4451366187881382638
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: PalmPoseInteraction Standalone
-  m_EditorClassIdentifier: Unity.XR.OpenXR:UnityEngine.XR.OpenXR.Features.Interactions:PalmPoseInteraction
-  m_enabled: 0
-  nameUi: Palm Pose
-  version: 0.0.1
-  featureIdInternal: com.unity.openxr.feature.input.palmpose
-  openxrExtensionStrings: XR_EXT_palm_pose
-  company: Unity
-  priority: 0
-  required: 0
 --- !u!114 &4558146342148851349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2459,35 +2386,3 @@ MonoBehaviour:
   company: Unity
   priority: 0
   required: 0
---- !u!114 &9102471286040768883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: Standalone
-  m_EditorClassIdentifier: Unity.XR.OpenXR:UnityEngine.XR.OpenXR:OpenXRSettings
-  features:
-  - {fileID: 8221564594354640495}
-  - {fileID: 9096479736163431129}
-  - {fileID: -34596358968032513}
-  - {fileID: 928296757526069075}
-  - {fileID: -4314466618941312080}
-  - {fileID: -2513858183220632965}
-  - {fileID: 6841333374066517713}
-  - {fileID: -4454024988132797082}
-  - {fileID: -8895518590110429109}
-  - {fileID: 4890582492822650874}
-  - {fileID: -7494486358618572369}
-  m_renderMode: 1
-  m_autoColorSubmissionMode: 1
-  m_colorSubmissionModes:
-    m_List: 00000000
-  m_depthSubmissionMode: 0
-  m_spacewarpMotionVectorTextureFormat: 0
-  m_optimizeBufferDiscards: 0
-  m_symmetricProjection: 0

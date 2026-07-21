@@ -26,7 +26,9 @@ namespace SimulatedShooting.Editor
             EnsureFolder(MaterialFolder);
 
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
-            if (prefab != null && !rebuild && prefab.GetComponent<WeaponPrefabBinding>()?.HasRequiredBinding == true)
+            if (prefab != null && !rebuild &&
+                prefab.GetComponent<WeaponPrefabBinding>()?.HasRequiredBinding == true &&
+                prefab.GetComponent<TrainingRifleGrabInteractable>() != null)
             {
                 return prefab;
             }
@@ -43,6 +45,14 @@ namespace SimulatedShooting.Editor
             var root = new GameObject("Weapon_training-rifle_Blockout");
             root.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.TrainingRifle";
             var binding = root.AddComponent<WeaponPrefabBinding>();
+            var rigidbody = root.AddComponent<Rigidbody>();
+            rigidbody.mass = 3.6f;
+            rigidbody.drag = 0.08f;
+            rigidbody.angularDrag = 0.12f;
+            rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            rigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+            rigidbody.isKinematic = true;
+            rigidbody.useGravity = false;
 
             var visualRoot = CreateAnchor("WeaponRoot_training-rifle", root.transform, Vector3.zero);
             var recoilRoot = CreateAnchor("RecoilRoot_training-rifle", visualRoot, Vector3.zero);
@@ -63,18 +73,18 @@ namespace SimulatedShooting.Editor
             CreateCube("FrontHandGrip_Visual", recoilRoot, new Vector3(0f, -0.20f, 0.90f), new Vector3(0.075f, 0.23f, 0.075f), polymer, Quaternion.Euler(8f, 0f, 0f));
             CreateCube("Magazine_training-rifle", recoilRoot, new Vector3(0f, -0.25f, 0.56f), new Vector3(0.12f, 0.30f, 0.09f), polymer, Quaternion.Euler(-8f, 0f, 0f));
 
-            var rearGrip = CreateAnchor("Grip_training-rifle_RearHand", recoilRoot, new Vector3(0f, -0.18f, 0.25f));
+            var rearGrip = CreateAnchor("Grip_training-rifle_RearHand", visualRoot, new Vector3(0f, -0.18f, 0.25f));
             rearGrip.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Grip.RearHand";
-            var frontGrip = CreateAnchor("Grip_training-rifle_FrontHand", recoilRoot, new Vector3(0f, -0.16f, 0.90f));
+            var frontGrip = CreateAnchor("Grip_training-rifle_FrontHand", visualRoot, new Vector3(0f, -0.16f, 0.90f));
             frontGrip.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Grip.FrontHand";
             var muzzle = CreateAnchor("Muzzle_training-rifle", recoilRoot, new Vector3(0f, 0.045f, 1.96f));
             muzzle.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Muzzle";
             var aimLine = CreateAnchor("AimLine_training-rifle", recoilRoot, new Vector3(0f, 0.14f, 0.34f));
             aimLine.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.AimLine";
             var magazine = recoilRoot.Find("Magazine_training-rifle");
-            var leftShoulder = CreateAnchor("Shoulder_training-rifle_Left", recoilRoot, new Vector3(-0.18f, -0.02f, -0.16f));
+            var leftShoulder = CreateAnchor("Shoulder_training-rifle_Left", visualRoot, new Vector3(-0.18f, -0.02f, -0.16f));
             leftShoulder.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Shoulder.Left";
-            var rightShoulder = CreateAnchor("Shoulder_training-rifle_Right", recoilRoot, new Vector3(0.18f, -0.02f, -0.16f));
+            var rightShoulder = CreateAnchor("Shoulder_training-rifle_Right", visualRoot, new Vector3(0.18f, -0.02f, -0.16f));
             rightShoulder.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Shoulder.Right";
 
             binding.Configure(
@@ -88,7 +98,45 @@ namespace SimulatedShooting.Editor
                 magazine,
                 leftShoulder,
                 rightShoulder);
+
+            AddWeaponColliders(root);
+            var prompt = CreatePickupPrompt(root.transform);
+            var grabInteractable = root.AddComponent<TrainingRifleGrabInteractable>();
+            grabInteractable.Configure(binding, prompt);
             return root;
+        }
+
+        static void AddWeaponColliders(GameObject root)
+        {
+            var receiver = root.AddComponent<BoxCollider>();
+            receiver.center = new Vector3(0f, -0.03f, 0.52f);
+            receiver.size = new Vector3(0.20f, 0.19f, 0.68f);
+
+            var stock = root.AddComponent<BoxCollider>();
+            stock.center = new Vector3(0f, -0.04f, -0.02f);
+            stock.size = new Vector3(0.17f, 0.16f, 0.42f);
+
+            var handguard = root.AddComponent<BoxCollider>();
+            handguard.center = new Vector3(0f, -0.04f, 1.13f);
+            handguard.size = new Vector3(0.19f, 0.17f, 0.90f);
+        }
+
+        static GameObject CreatePickupPrompt(Transform parent)
+        {
+            var prompt = new GameObject("Prompt_training-rifle_Pickup");
+            prompt.transform.SetParent(parent, false);
+            prompt.transform.localPosition = new Vector3(0f, 0.30f, 0.28f);
+            prompt.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            prompt.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.PickupPrompt";
+            var text = prompt.AddComponent<TextMesh>();
+            text.text = "GRIP TO PICK UP";
+            text.anchor = TextAnchor.MiddleCenter;
+            text.alignment = TextAlignment.Center;
+            text.fontSize = 48;
+            text.characterSize = 0.012f;
+            text.color = new Color(1f, 0.88f, 0.22f, 1f);
+            prompt.SetActive(false);
+            return prompt;
         }
 
         static Transform CreateAnchor(string name, Transform parent, Vector3 localPosition)

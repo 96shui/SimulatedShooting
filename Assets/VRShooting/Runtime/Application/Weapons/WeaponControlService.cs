@@ -103,8 +103,8 @@ namespace VRShooting.Application.Weapons
                 ReserveAmmo = weaponResult.Data.MaxReserveAmmo,
                 ShoulderSide = ShoulderSide.Right,
                 AimMode = WeaponAimMode.HipFire,
-                Stability01 = 1f,
-                TwoHandGripActive = false
+                HoldState = WeaponHoldState.OnRack,
+                Stability01 = 0f
             };
             sessions[sessionId] = state;
 
@@ -133,8 +133,6 @@ namespace VRShooting.Application.Weapons
 
             state.AimMode = input.AimMode;
             state.ShoulderSide = input.ShoulderSide;
-            state.TwoHandGripActive = input.TwoHandGripActive;
-            state.Stability01 = Mathf.Clamp01(input.Stability01);
 
             var aimDirection = input.AimDirection;
             if (!IsFinite(input.MuzzlePosition) || !IsFinite(aimDirection) || aimDirection.sqrMagnitude <= 0.0001f)
@@ -153,7 +151,13 @@ namespace VRShooting.Application.Weapons
             }
 
             state.CurrentMagazine--;
-            var result = BuildShotResult(input, state, true, ErrorCode.None, string.Empty);
+            state.ShotSequence++;
+            var recoil = WeaponRecoilRules.Compute(
+                state.SessionId,
+                state.ShotSequence,
+                state.Stability01,
+                state.Weapon.Recoil);
+            var result = BuildShotResult(input, state, true, ErrorCode.None, string.Empty, recoil);
             eventBus?.Publish(new AmmoChangedEvent { SessionId = state.SessionId, Ammo = ToAmmoDto(state) });
             eventBus?.Publish(new WeaponStateChangedEvent { State = ToStateDto(state) });
             eventBus?.Publish(new WeaponShotResultEvent { Result = result });
@@ -226,22 +230,45 @@ namespace VRShooting.Application.Weapons
             return ServiceResult<WeaponControlStateDto>.Ok(dto);
         }
 
-        public ServiceResult<WeaponControlStateDto> SetGripState(string sessionId, bool twoHandGripActive, float stability01)
+        public ServiceResult<WeaponControlStateDto> SetGripState(WeaponGripStateInputDto input)
         {
-            if (!TryGetSession(sessionId, out var state, out var failure))
+            if (!TryGetSession(input.SessionId, out var state, out var failure))
             {
                 return ServiceResult<WeaponControlStateDto>.Fail(failure.ErrorCode, failure.Message);
             }
 
-            var nextStability = Mathf.Clamp01(stability01);
-            if (state.TwoHandGripActive == twoHandGripActive && Mathf.Approximately(state.Stability01, nextStability))
+            if (!IsValidGripState(input, out var validationMessage))
+            {
+                return ServiceResult<WeaponControlStateDto>.Fail(ErrorCode.InvalidInput, validationMessage);
+            }
+
+            var nextStability = input.HoldState == WeaponHoldState.TwoHandHeld
+                ? Mathf.Clamp01(input.Stability01)
+                : input.HoldState == WeaponHoldState.RearHandHeld
+                    ? Mathf.Clamp(input.Stability01, 0f, 0.45f)
+                    : 0f;
+            if (state.HoldState == input.HoldState &&
+                state.RearHandTracked == input.RearHandTracked &&
+                state.FrontHandTracked == input.FrontHandTracked &&
+                Mathf.Approximately(state.Stability01, nextStability))
             {
                 return ServiceResult<WeaponControlStateDto>.Ok(ToStateDto(state));
             }
 
-            state.TwoHandGripActive = twoHandGripActive;
+            var previousState = state.HoldState;
+            state.HoldState = input.HoldState;
+            state.RearHandTracked = input.RearHandTracked;
+            state.FrontHandTracked = input.FrontHandTracked;
             state.Stability01 = nextStability;
             var dto = ToStateDto(state);
+            eventBus?.Publish(new WeaponHoldStateChangedEvent
+            {
+                SessionId = state.SessionId,
+                PreviousState = previousState,
+                CurrentState = state.HoldState,
+                RearHandTracked = state.RearHandTracked,
+                FrontHandTracked = state.FrontHandTracked
+            });
             eventBus?.Publish(new WeaponStateChangedEvent { State = dto });
             return ServiceResult<WeaponControlStateDto>.Ok(dto);
         }
@@ -404,7 +431,11 @@ namespace VRShooting.Application.Weapons
 
         static bool CanShoot(SessionWeaponState state)
         {
-            return state.CurrentMagazine > 0 && !state.IsReloading;
+            return state.CurrentMagazine > 0 &&
+                   !state.IsReloading &&
+                   state.HoldState == WeaponHoldState.TwoHandHeld &&
+                   state.RearHandTracked &&
+                   state.FrontHandTracked;
         }
 
         static WeaponShotResultDto BuildShotResult(
@@ -412,9 +443,13 @@ namespace VRShooting.Application.Weapons
             SessionWeaponState state,
             bool isValidShot,
             ErrorCode errorCode,
-            string message)
+            string message,
+            WeaponRecoilImpulseDto recoilImpulse = default)
         {
             var direction = input.AimDirection.sqrMagnitude > 0.0001f ? input.AimDirection.normalized : Vector3.zero;
+            var rawDirection = input.RawAimDirection.sqrMagnitude > 0.0001f
+                ? input.RawAimDirection.normalized
+                : direction;
             return new WeaponShotResultDto
             {
                 SessionId = state.SessionId,
@@ -423,12 +458,21 @@ namespace VRShooting.Application.Weapons
                 CurrentMagazine = state.CurrentMagazine,
                 ReserveAmmo = state.ReserveAmmo,
                 MuzzlePosition = input.MuzzlePosition,
+                RawAimDirection = rawDirection,
                 AimDirection = direction,
+                AimMotionOffsetCm = Mathf.Max(0f, input.AimMotionOffsetCm),
+                Stability01 = state.Stability01,
+                ShotSequence = state.ShotSequence,
                 Hit = isValidShot && input.Hit,
                 HitPoint = input.HitPoint,
                 HitObjectId = input.HitObjectId ?? string.Empty,
                 AimMode = state.AimMode,
                 ShoulderSide = state.ShoulderSide,
+                HoldState = state.HoldState,
+                RearHandTracked = state.RearHandTracked,
+                FrontHandTracked = state.FrontHandTracked,
+                TwoHandGripActive = state.HoldState == WeaponHoldState.TwoHandHeld,
+                RecoilImpulse = recoilImpulse,
                 ErrorCode = errorCode,
                 Message = message ?? string.Empty
             };
@@ -445,9 +489,50 @@ namespace VRShooting.Application.Weapons
                 CanShoot = CanShoot(state),
                 ShoulderSide = state.ShoulderSide,
                 AimMode = state.AimMode,
-                TwoHandGripActive = state.TwoHandGripActive,
+                HoldState = state.HoldState,
+                RearHandTracked = state.RearHandTracked,
+                FrontHandTracked = state.FrontHandTracked,
+                TwoHandGripActive = state.HoldState == WeaponHoldState.TwoHandHeld,
                 Stability01 = state.Stability01
             };
+        }
+
+        static bool IsValidGripState(WeaponGripStateInputDto input, out string message)
+        {
+            switch (input.HoldState)
+            {
+                case WeaponHoldState.OnRack:
+                case WeaponHoldState.Dropped:
+                    if (input.RearHandTracked || input.FrontHandTracked)
+                    {
+                        message = "an unheld weapon cannot report tracked grip hands";
+                        return false;
+                    }
+
+                    break;
+                case WeaponHoldState.RearHandHeld:
+                    if (!input.RearHandTracked || input.FrontHandTracked)
+                    {
+                        message = "rear-hand hold requires only the rear hand";
+                        return false;
+                    }
+
+                    break;
+                case WeaponHoldState.TwoHandHeld:
+                    if (!input.RearHandTracked || !input.FrontHandTracked)
+                    {
+                        message = "two-hand hold requires both tracked hands";
+                        return false;
+                    }
+
+                    break;
+                default:
+                    message = "unsupported weapon hold state";
+                    return false;
+            }
+
+            message = string.Empty;
+            return true;
         }
 
         static AmmoDto ToAmmoDto(SessionWeaponState state)
@@ -480,8 +565,11 @@ namespace VRShooting.Application.Weapons
             public bool IsReloading;
             public ShoulderSide ShoulderSide;
             public WeaponAimMode AimMode;
-            public bool TwoHandGripActive;
+            public WeaponHoldState HoldState;
+            public bool RearHandTracked;
+            public bool FrontHandTracked;
             public float Stability01;
+            public int ShotSequence;
         }
 
         readonly struct ServiceFailure
