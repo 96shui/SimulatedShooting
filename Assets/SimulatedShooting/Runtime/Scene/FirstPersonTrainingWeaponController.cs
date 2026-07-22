@@ -72,6 +72,10 @@ namespace SimulatedShooting.Scene
         public float Stability01 => hasCurrentState ? currentState.Stability01 : 0f;
         public int TracerCount => tracerCounter;
         public bool LastShotWasValid => lastShot.IsValidShot;
+        public bool LastShotHit => lastShot.Hit;
+        public string LastHitObjectId => lastShot.HitObjectId ?? string.Empty;
+        public Vector3 LastShotHitPoint => lastShot.HitPoint;
+        public Vector3 LastShotMuzzlePosition => lastShot.MuzzlePosition;
         public Vector3 CurrentAimDirection => ResolveAimDirection();
         public bool HasVrPoseSources => headPoseSource != null && rearHandPoseSource != null && frontHandPoseSource != null;
         public bool UsingVrPoseSources => ShouldUseVrPoseSources();
@@ -502,13 +506,20 @@ namespace SimulatedShooting.Scene
 
             var shoulderLocal = currentState.ShoulderSide == ShoulderSide.Right ? rightShoulderLocal : leftShoulderLocal;
             var rearHand = headPosition + baseRotation * shoulderLocal;
-            var frontHand = rearHand + baseRotation * new Vector3(frontHandOffset.x, frontHandOffset.y, 0.78f);
+            var frontHand = rearHand + baseRotation * new Vector3(
+                frontHandOffset.x,
+                frontHandOffset.y,
+                ResolveGripDistance());
             var direction = (frontHand - rearHand).sqrMagnitude > 0.0001f
                 ? (frontHand - rearHand).normalized
                 : baseRotation * Vector3.forward;
 
             var weaponRotation = Quaternion.LookRotation(direction, Vector3.up);
             weaponBinding.transform.SetPositionAndRotation(rearHand, weaponRotation);
+            if (weaponBinding.RearHandGrip != null)
+            {
+                weaponBinding.transform.position += rearHand - weaponBinding.RearHandGrip.position;
+            }
 
             if (isAds && weaponBinding.AimLinePoint != null)
             {
@@ -565,10 +576,23 @@ namespace SimulatedShooting.Scene
             if (ShouldUseVrPoseSources())
             {
                 var handDistance = Vector3.Distance(rearHandPoseSource.position, frontHandPoseSource.position);
-                return Mathf.Clamp01(1f - Mathf.Abs(handDistance - 0.78f) / 0.45f);
+                var expectedDistance = ResolveGripDistance();
+                var tolerance = Mathf.Max(0.18f, expectedDistance * 0.65f);
+                return Mathf.Clamp01(1f - Mathf.Abs(handDistance - expectedDistance) / tolerance);
             }
 
             return Mathf.Clamp01(1f - frontHandOffset.magnitude / 0.32f);
+        }
+
+        float ResolveGripDistance()
+        {
+            if (weaponBinding != null && weaponBinding.RearHandGrip != null && weaponBinding.FrontHandGrip != null)
+            {
+                return Mathf.Max(0.20f,
+                    Vector3.Distance(weaponBinding.RearHandGrip.position, weaponBinding.FrontHandGrip.position));
+            }
+
+            return 0.32f;
         }
 
         void SubscribeGrabInteractable()

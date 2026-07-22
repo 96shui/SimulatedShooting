@@ -224,6 +224,44 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [Test]
+        public void Task005_TrainingRifleUsesLicensedQbz191Visual()
+        {
+            var weapon = Find("ZeroingRange.Weapon.TrainingRifle");
+            var binding = weapon.GetComponent<WeaponPrefabBinding>();
+            var model = binding.RecoilRoot.Find("Model_QBZ191");
+
+            Assert.That(model, Is.Not.Null, "The procedural blockout should be replaced by the QBZ-191 model");
+            Assert.That(Find("ZeroingRange.Weapon.Visual.QBZ191"), Is.EqualTo(model.gameObject));
+
+            var filters = model.GetComponentsInChildren<MeshFilter>(true);
+            var renderers = model.GetComponentsInChildren<Renderer>(true);
+            var triangleCount = filters.Sum(filter =>
+            {
+                var mesh = filter.sharedMesh;
+                if (mesh == null)
+                {
+                    return 0L;
+                }
+
+                return Enumerable.Range(0, mesh.subMeshCount)
+                    .Sum(subMesh => (long)mesh.GetIndexCount(subMesh) / 3L);
+            });
+
+            Assert.That(filters.Length, Is.GreaterThan(0));
+            Assert.That(renderers.Length, Is.GreaterThan(0));
+            Assert.That(triangleCount, Is.GreaterThan(35000), "The first-person model lost its expected visual detail");
+            Assert.That(renderers.SelectMany(renderer => renderer.sharedMaterials)
+                .All(material => material != null && material.mainTexture != null), Is.True);
+            Assert.That(Vector3.Distance(binding.RearHandGrip.localPosition,
+                new Vector3(0.006f, -0.10f, -0.135f)), Is.LessThan(0.001f));
+            Assert.That(Vector3.Distance(binding.FrontHandGrip.localPosition,
+                new Vector3(0.006f, -0.015f, 0.18f)), Is.LessThan(0.001f));
+            Assert.That(Vector3.Distance(binding.RearHandGrip.position, binding.FrontHandGrip.position),
+                Is.InRange(0.30f, 0.35f));
+            Assert.That(binding.RecoilRoot.Find("Receiver"), Is.Null, "Legacy blockout geometry is still present");
+        }
+
+        [Test]
         public void Task005_NoVrFirstPersonWeaponFiresVisibleTracerAndTargetImpact()
         {
             var controller = Find("ZeroingRange.Weapon.PlayerRoot").GetComponent<FirstPersonTrainingWeaponController>();
@@ -238,7 +276,10 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(controller.CurrentMagazine, Is.EqualTo(2));
             Assert.That(controller.LastShotWasValid, Is.True);
             Assert.That(controller.TracerCount, Is.EqualTo(1));
-            Assert.That(surface.Impacts.Count, Is.EqualTo(initialImpacts + 1));
+            Assert.That(surface.Impacts.Count, Is.EqualTo(initialImpacts + 1),
+                $"Shot hit={controller.LastShotHit}, object='{controller.LastHitObjectId}', " +
+                $"muzzle={controller.LastShotMuzzlePosition}, hitPoint={controller.LastShotHitPoint}, " +
+                $"aim={controller.CurrentAimDirection}");
             Assert.That(Find("ZeroingRange.Weapon.Tracer"), Is.Not.Null);
         }
 
