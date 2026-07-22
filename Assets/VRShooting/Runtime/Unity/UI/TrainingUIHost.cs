@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 namespace VRShooting.Unity.UI
 {
@@ -83,8 +83,9 @@ namespace VRShooting.Unity.UI
                 var eventSystemRoot = new GameObject("EventSystem");
                 eventSystemRoot.transform.SetParent(transform, false);
                 ownedEventSystem = eventSystemRoot.AddComponent<EventSystem>();
-                eventSystemRoot.AddComponent<InputSystemUIInputModule>();
             }
+
+            EnsureXrInputModule(ownedEventSystem);
 
             var allEventSystems = FindObjectsOfType<EventSystem>(true);
             for (var i = 0; i < allEventSystems.Length; i++)
@@ -94,11 +95,42 @@ namespace VRShooting.Unity.UI
                     continue;
                 }
 
-                DestroyObject(allEventSystems[i].gameObject);
+                allEventSystems[i].gameObject.SetActive(false);
+                DestroyUnityObject(allEventSystems[i].gameObject);
             }
+
+            ownedEventSystem.gameObject.SetActive(true);
         }
 
-        static void DestroyObject(GameObject target)
+        static void EnsureXrInputModule(EventSystem eventSystem)
+        {
+            var inputModule = eventSystem.GetComponent<XRUIInputModule>();
+            var modules = eventSystem.GetComponents<BaseInputModule>();
+            for (var index = 0; index < modules.Length; index++)
+            {
+                if (modules[index] == inputModule)
+                {
+                    continue;
+                }
+
+                modules[index].enabled = false;
+                DestroyUnityObject(modules[index]);
+            }
+
+            if (inputModule == null)
+            {
+                inputModule = eventSystem.gameObject.AddComponent<XRUIInputModule>();
+            }
+
+            inputModule.enableXRInput = true;
+            inputModule.enableMouseInput = true;
+            inputModule.enableTouchInput = true;
+            inputModule.enableGamepadInput = true;
+            inputModule.enableJoystickInput = true;
+            inputModule.enableBuiltinActionsAsFallback = true;
+        }
+
+        static void DestroyUnityObject(Object target)
         {
             if (target == null)
             {

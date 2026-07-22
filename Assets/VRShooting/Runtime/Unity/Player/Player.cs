@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR;
 using UnityScene = UnityEngine.SceneManagement.Scene;
 using VRShooting.Input;
 using VRShooting.Unity.Bootstrap;
@@ -23,6 +25,7 @@ namespace VRShooting.Unity.Player
         IXRTrainingInput trainingInput;
 
         CharacterController characterController;
+        readonly List<XRDisplaySubsystem> displays = new List<XRDisplaySubsystem>();
 
         public static Player Instance => instance;
 
@@ -35,12 +38,10 @@ namespace VRShooting.Unity.Player
             }
 
             instance = this;
-            DontDestroyOnLoad(gameObject);
 
             characterController = GetComponent<CharacterController>();
 
             ResolveTrainingInput();
-            DisableBuiltInCameras();
             BindFollowCamera();
 
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -111,6 +112,17 @@ namespace VRShooting.Unity.Player
 
         void BindFollowCamera()
         {
+            if (IsVrDisplayRunning())
+            {
+                var hmdCamera = GetComponentInChildren<Camera>(true);
+                if (hmdCamera != null)
+                {
+                    headTransform = hmdCamera.transform;
+                }
+
+                return;
+            }
+
             var followCamera = PlayerFollowCamera.EnsureExists();
             followCamera.FollowTarget = transform;
             headTransform = followCamera.transform;
@@ -128,17 +140,19 @@ namespace VRShooting.Unity.Player
                 : transform;
         }
 
-        void DisableBuiltInCameras()
+        bool IsVrDisplayRunning()
         {
-            foreach (var camera in GetComponentsInChildren<Camera>(true))
+            displays.Clear();
+            SubsystemManager.GetInstances(displays);
+            for (var index = 0; index < displays.Count; index++)
             {
-                camera.enabled = false;
-
-                if (camera.TryGetComponent<AudioListener>(out var listener))
+                if (displays[index] != null && displays[index].running)
                 {
-                    listener.enabled = false;
+                    return true;
                 }
             }
+
+            return false;
         }
 
         void AlignToSceneSpawn(UnityScene scene)

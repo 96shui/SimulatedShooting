@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using VRShooting.Common;
@@ -338,12 +339,17 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(mode.NoVrCamera, Is.Not.Null, "Task013 no-VR camera binding is missing");
             Assert.That(mode.XrOrigin, Is.Not.Null, "Task013 XR Origin binding is missing");
             mode.SetVrModeForTests(true);
-            yield return null;
 
             var grab = Find("ZeroingRange.Weapon.TrainingRifle").GetComponent<TrainingRifleGrabInteractable>();
             var right = Find("ZeroingRange.Origin.VR.RightDirectInteractor").GetComponent<XRDirectInteractor>();
             var left = Find("ZeroingRange.Origin.VR.LeftDirectInteractor").GetComponent<XRDirectInteractor>();
             var manager = mode.XrOrigin.GetComponentInChildren<XRInteractionManager>(true);
+
+            // This test drives selection through the manager, so hardware actions must stay on the
+            // deterministic no-device path while the interaction manager processes strength values.
+            right.selectInput.inputSourceMode = XRInputButtonReader.InputSourceMode.ManualValue;
+            left.selectInput.inputSourceMode = XRInputButtonReader.InputSourceMode.ManualValue;
+            yield return null;
 
             Assert.That(grab.RearGrabRadius, Is.EqualTo(0.10f).Within(0.001f));
             Assert.That(grab.FrontGrabRadius, Is.EqualTo(0.12f).Within(0.001f));

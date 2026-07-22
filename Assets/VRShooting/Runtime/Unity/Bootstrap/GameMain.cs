@@ -21,8 +21,12 @@ namespace VRShooting.Unity.Bootstrap
 
         public GameStateManager GameState { get; private set; }
 
+        MainMenuXRModeController mainMenuXrModeController;
+
         void Awake()
         {
+            ActivateSceneObject("XR Interaction Manager", gameObject.scene);
+
             if (Instance != null && Instance != this)
             {
                 Destroy(gameObject);
@@ -41,8 +45,14 @@ namespace VRShooting.Unity.Bootstrap
         {
             Services = ApplicationServices.CreateDefault();
             GameState = GameStateManager.Instance;
-            PersistSceneObject("XR Interaction Manager");
-            if (SceneManager.GetActiveScene().name != ZeroingRangeSceneName)
+            mainMenuXrModeController = MainMenuXRModeController.EnsureExists(gameObject);
+
+            var activeScene = SceneManager.GetActiveScene();
+            if (activeScene.name == MainSceneName)
+            {
+                mainMenuXrModeController.RefreshForScene(activeScene);
+            }
+            else if (activeScene.name != ZeroingRangeSceneName)
             {
                 PlayerFollowCamera.EnsureExists();
             }
@@ -53,13 +63,13 @@ namespace VRShooting.Unity.Bootstrap
         void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
         {
             EnsureSceneUi(scene);
+            mainMenuXrModeController?.RefreshForScene(scene);
         }
 
         void EnsureSceneUi(UnityEngine.SceneManagement.Scene scene)
         {
             if (scene.name == MainSceneName && Services != null)
             {
-                PlayerFollowCamera.EnsureExists();
                 MainMenuUI.EnsureExistsInScene(Services);
             }
 
@@ -69,15 +79,20 @@ namespace VRShooting.Unity.Bootstrap
             }
         }
 
-        static void PersistSceneObject(string objectName)
+        static void ActivateSceneObject(string objectName, UnityEngine.SceneManagement.Scene scene)
         {
-            var sceneObject = GameObject.Find(objectName);
-            if (sceneObject == null)
+            var candidates = Resources.FindObjectsOfTypeAll<GameObject>();
+            for (var index = 0; index < candidates.Length; index++)
             {
+                var candidate = candidates[index];
+                if (candidate == null || candidate.name != objectName || candidate.scene != scene)
+                {
+                    continue;
+                }
+
+                candidate.SetActive(true);
                 return;
             }
-
-            DontDestroyOnLoad(sceneObject);
         }
 
         void OnDestroy()

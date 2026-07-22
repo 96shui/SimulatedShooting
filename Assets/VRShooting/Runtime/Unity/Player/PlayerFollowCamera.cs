@@ -17,6 +17,8 @@ namespace VRShooting.Unity.Player
         [SerializeField] Vector3 eyeOffset = new Vector3(0f, 1.6f, 0f);
 
         Camera cameraComponent;
+        AudioListener audioListener;
+        bool outputEnabled = true;
 
         public static PlayerFollowCamera Instance => instance;
 
@@ -25,6 +27,8 @@ namespace VRShooting.Unity.Player
             get => followTarget;
             set => followTarget = value;
         }
+
+        public bool OutputEnabled => outputEnabled;
 
         public static PlayerFollowCamera EnsureExists()
         {
@@ -55,13 +59,13 @@ namespace VRShooting.Unity.Player
             DontDestroyOnLoad(gameObject);
 
             cameraComponent = GetComponent<Camera>();
-            cameraComponent.tag = "MainCamera";
 
-            if (!TryGetComponent<AudioListener>(out _))
+            if (!TryGetComponent(out audioListener))
             {
-                gameObject.AddComponent<AudioListener>();
+                audioListener = gameObject.AddComponent<AudioListener>();
             }
 
+            SetOutputEnabled(true);
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
@@ -77,7 +81,7 @@ namespace VRShooting.Unity.Player
 
         void LateUpdate()
         {
-            if (followTarget == null)
+            if (!outputEnabled || followTarget == null)
             {
                 return;
             }
@@ -89,7 +93,34 @@ namespace VRShooting.Unity.Player
 
         void OnSceneLoaded(UnityScene scene, LoadSceneMode mode)
         {
+            if (!outputEnabled)
+            {
+                return;
+            }
+
             DisableSceneCameras(scene);
+        }
+
+        public void SetOutputEnabled(bool enabled)
+        {
+            outputEnabled = enabled;
+            if (cameraComponent == null)
+            {
+                cameraComponent = GetComponent<Camera>();
+            }
+
+            if (audioListener == null)
+            {
+                audioListener = GetComponent<AudioListener>();
+            }
+
+            cameraComponent.enabled = enabled;
+            if (audioListener != null)
+            {
+                audioListener.enabled = enabled;
+            }
+
+            gameObject.tag = enabled ? "MainCamera" : "Untagged";
         }
 
         void DisableSceneCameras(UnityScene scene)
@@ -99,7 +130,7 @@ namespace VRShooting.Unity.Player
                 return;
             }
 
-            cameraComponent.enabled = true;
+            cameraComponent.enabled = outputEnabled;
 
             foreach (var root in scene.GetRootGameObjects())
             {

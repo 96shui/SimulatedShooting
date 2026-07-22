@@ -4,7 +4,8 @@
     "references": [
         "VRShooting.Runtime",
         "Unity.TextMeshPro",
-        "Unity.ugui"
+        "Unity.ugui",
+        "Unity.XR.Interaction.Toolkit"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
