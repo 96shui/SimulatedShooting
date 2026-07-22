@@ -40,6 +40,13 @@
 3. 在任务说明页点击开始与返回，确认 hover、press 和页面切换正常。
 4. 确认头显画面没有桌面相机争抢、黑屏、双 AudioListener 或重复 EventSystem 警告。
 
+## 2026-07-23 实机反馈修正
+
+- 用户进入 MainScene 后发现一个白色方块遮挡主菜单。
+- 根因是旧版 `Cube → canvas → Image/Text` 提示物仍处于激活状态；其白色 Image 位于 HMD 初始相机附近，与新的 `MainMenuUI` 无关。
+- MainScene 已将该根节点重命名为 `LegacyMainMenuPrompt_Disabled` 并禁用，同时增加 PlayMode 断言，防止遗留提示物再次覆盖 HMD 视野。
+- 修改场景文件时项目正在另一个 Unity Editor 实例中运行，因此需要退出 Play Mode 并重新进入 MainScene 后复验；最终批处理回归需在该 Editor 关闭后执行。
+
 ## 评审重点
 
 - 检查 XR Display 热切换时 Canvas、HMD Camera 和桌面相机的互斥生命周期。

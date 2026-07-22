@@ -109,6 +109,11 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(adapter.TrackedRaycaster.enabled, Is.True);
             Assert.That(eventSystem.GetComponent<XRUIInputModule>(), Is.Not.Null);
 
+            var legacyPrompt = FindSceneRoot("LegacyMainMenuPrompt_Disabled");
+            Assert.That(legacyPrompt, Is.Not.Null, "The obsolete cube-based menu prompt should remain identifiable in MainScene.");
+            Assert.That(legacyPrompt.activeSelf, Is.False,
+                "The obsolete cube-based menu prompt must stay disabled so it cannot cover the HMD view.");
+
             var uiInteractors = Object.FindObjectsOfType<NearFarInteractor>(true)
                 .Where(interactor => interactor.gameObject.scene == SceneManager.GetActiveScene())
                 .ToArray();
@@ -159,6 +164,13 @@ namespace VRShooting.Tests.PlayMode.UI
                 .GetRootGameObjects()
                 .SelectMany(root => root.GetComponentsInChildren<T>(true))
                 .ToArray();
+        }
+
+        static GameObject FindSceneRoot(string objectName)
+        {
+            return SceneManager.GetActiveScene()
+                .GetRootGameObjects()
+                .SingleOrDefault(root => root.name == objectName);
         }
     }
 }
