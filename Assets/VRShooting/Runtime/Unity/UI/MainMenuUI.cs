@@ -227,10 +227,13 @@ namespace VRShooting.Unity.UI
             scaler.referenceResolution = new Vector2(1920f, 1080f);
             scaler.matchWidthOrHeight = 0.5f;
 
-            if (gameObject.GetComponent<GraphicRaycaster>() == null)
+            var canvasAdapter = gameObject.GetComponent<TrainingUICanvasAdapter>();
+            if (canvasAdapter == null)
             {
-                gameObject.AddComponent<GraphicRaycaster>();
+                canvasAdapter = gameObject.AddComponent<TrainingUICanvasAdapter>();
             }
+
+            canvasAdapter.Configure(canvas);
 
             gameObject.name = RootObjectName;
             AddTestId(gameObject, RootObjectName);

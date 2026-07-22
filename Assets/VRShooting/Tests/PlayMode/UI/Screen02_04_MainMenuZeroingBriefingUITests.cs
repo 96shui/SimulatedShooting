@@ -1,9 +1,13 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 using UnityEngine.TestTools;
 using VRShooting.Application;
 using VRShooting.Application.Events;
@@ -20,6 +24,7 @@ namespace VRShooting.Tests.PlayMode.UI
     public class Screen02_04_MainMenuZeroingBriefingUITests
     {
         GameObject root;
+        GameObject vrCameraRoot;
         ApplicationServices services;
         MainMenuUI ui;
 
@@ -45,7 +50,87 @@ namespace VRShooting.Tests.PlayMode.UI
                 Object.Destroy(root);
             }
 
+            if (vrCameraRoot != null)
+            {
+                Object.Destroy(vrCameraRoot);
+            }
+
             yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator Screen02_InputInfrastructure_SupportsDesktopAndXrPointers()
+        {
+            yield return null;
+
+            var canvas = root.GetComponent<Canvas>();
+            var adapter = root.GetComponent<TrainingUICanvasAdapter>();
+            Assert.That(canvas, Is.Not.Null);
+            Assert.That(adapter, Is.Not.Null);
+            Assert.That(canvas.renderMode, Is.EqualTo(RenderMode.ScreenSpaceOverlay));
+            Assert.That(adapter.DesktopRaycaster, Is.Not.Null);
+            Assert.That(adapter.DesktopRaycaster.enabled, Is.True);
+            Assert.That(adapter.TrackedRaycaster, Is.Not.Null);
+            Assert.That(adapter.TrackedRaycaster.enabled, Is.False);
+
+            var activeEventSystems = Object.FindObjectsOfType<EventSystem>(true)
+                .Where(candidate => candidate.gameObject.activeInHierarchy)
+                .ToArray();
+            Assert.That(activeEventSystems, Has.Length.EqualTo(1));
+            Assert.That(activeEventSystems[0].GetComponent<XRUIInputModule>(), Is.Not.Null);
+            Assert.That(activeEventSystems[0].GetComponents<BaseInputModule>().Count(module => module.enabled), Is.EqualTo(1));
+        }
+
+        [UnityTest]
+        public IEnumerator Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton()
+        {
+            vrCameraRoot = new GameObject("XR Origin (Test)");
+            var cameraObject = new GameObject("Main Camera (Test)");
+            cameraObject.transform.SetParent(vrCameraRoot.transform, false);
+            var vrCamera = cameraObject.AddComponent<Camera>();
+            vrCamera.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+
+            var canvas = root.GetComponent<Canvas>();
+            var adapter = root.GetComponent<TrainingUICanvasAdapter>();
+            adapter.SetVrModeForTests(true, vrCamera);
+            adapter.ForcePlacementForTests();
+            yield return null;
+            Canvas.ForceUpdateCanvases();
+
+            Assert.That(canvas.renderMode, Is.EqualTo(RenderMode.WorldSpace));
+            Assert.That(canvas.worldCamera, Is.SameAs(vrCamera));
+            Assert.That(adapter.DesktopRaycaster.enabled, Is.False);
+            Assert.That(adapter.TrackedRaycaster.enabled, Is.True);
+
+            var button = FindButton("Button_MainMenu_OpenZeroing");
+            var buttonRect = button.transform as RectTransform;
+            var buttonCenter = buttonRect.TransformPoint(buttonRect.rect.center);
+            var rayDirection = (buttonCenter - vrCamera.transform.position).normalized;
+            var eventSystem = Object.FindObjectsOfType<EventSystem>(true)
+                .First(candidate => candidate.gameObject.activeInHierarchy);
+            var eventData = new TrackedDeviceEventData(eventSystem)
+            {
+                button = PointerEventData.InputButton.Left,
+                layerMask = ~0,
+                rayPoints = new List<Vector3>
+                {
+                    vrCamera.transform.position,
+                    vrCamera.transform.position + rayDirection * 5f
+                }
+            };
+            var results = new List<RaycastResult>();
+
+            adapter.TrackedRaycaster.Raycast(eventData, results);
+
+            Assert.That(results.Any(result =>
+                result.gameObject == button.gameObject || result.gameObject.transform.IsChildOf(button.transform)), Is.True,
+                "The tracked XR ray should hit the 100m main-menu button or one of its graphics.");
+
+            ExecuteEvents.Execute(button.gameObject, eventData, ExecuteEvents.pointerClickHandler);
+            yield return null;
+
+            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.ZeroingBriefing));
+            Assert.That(FindById("Screen_ZeroingBriefing").activeSelf, Is.True);
         }
 
         [UnityTest]
@@ -148,7 +233,7 @@ namespace VRShooting.Tests.PlayMode.UI
 
         GameObject FindById(string id)
         {
-            var allIds = Object.FindObjectsOfType<UITestId>(true);
+            var allIds = root.GetComponentsInChildren<UITestId>(true);
             for (var i = 0; i < allIds.Length; i++)
             {
                 if (allIds[i].Id == id)

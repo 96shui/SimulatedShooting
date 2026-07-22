@@ -26,6 +26,9 @@ UI
 - 所有按钮禁用/Busy 状态检查。
 - HUD 不遮挡靶标和瞄准点。
 - UI 文本不溢出、不重叠。
+- MainScene 在无 VR 时保留屏幕空间 UI 和鼠标/测试替身交互，在 OpenXR 运行时自动切换为头显前方的 World Space Canvas。
+- VR Canvas 使用 `TrackedDeviceGraphicRaycaster`，全局 EventSystem 使用支持桌面与 XR 的 `XRUIInputModule`；左右手 Near-Far/Ray Interactor 的 UI 射线可悬停并确认按钮。
+- MainScene 根据 XR Display 运行状态在桌面跟随相机和 HMD Camera 间自动切换，任一时刻只保留一个活动 Camera 和一个 AudioListener。
 - 提供 P1 UI 验收截图或说明。
 
 ## 不包含
@@ -50,10 +53,14 @@ UI
   - 通过测试 ID 找到所有 P1 关键控件。
   - Busy 状态下重复点击无效。
   - HUD 字段随 DTO 更新。
+  - 无 VR 模式下 Canvas 为 `ScreenSpaceOverlay`，桌面 Graphic Raycaster 可用。
+  - VR 输入替身模式下 Canvas 为 World Space，绑定 HMD Camera，且 Tracked Device Graphic Raycaster 能命中 `Button_MainMenu_OpenZeroing`。
+  - MainScene 的 VR/无 VR 模式切换后分别只有一个活动 Camera 和一个 AudioListener。
+  - EventSystem 只有一个活动输入模块，并使用 `XRUIInputModule` 同时承接桌面和 XR 输入。
 
 ## 验收标准
 
 - P1 UI 与参考图主要结构和风格一致。
 - 所有 P1 BDD 中出现的按钮和关键文本可由测试 ID 定位。
-- 无 VR 测试和 VR 视角下核心信息可读。
+- 无 VR 测试和 VR 视角下核心信息可读；真实 VR 中可用任一手柄射线悬停并点击主菜单与任务说明按钮。
 - PlayMode UI 测试通过。

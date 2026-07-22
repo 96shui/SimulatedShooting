@@ -172,7 +172,7 @@ namespace VRShooting.Tests.PlayMode.UI
 
         GameObject FindById(string id)
         {
-            var allIds = Object.FindObjectsOfType<UITestId>(true);
+            var allIds = root.GetComponentsInChildren<UITestId>(true);
             for (var i = 0; i < allIds.Length; i++)
             {
                 if (allIds[i].Id == id)

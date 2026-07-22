@@ -11,6 +11,61 @@ namespace SimulatedShooting.Editor
         public const string PrefabPath = "Assets/SimulatedShooting/Prefabs/Weapons/Weapon_training-rifle_Blockout.prefab";
 
         const string MaterialFolder = "Assets/SimulatedShooting/Art/Materials";
+        const string QbzRoot = "Assets/SimulatedShooting/Prefabs/Weapons/QBC-191";
+        const string QbzModelPath = QbzRoot + "/source/QBZ-191.obj";
+        const string QbzTextureFolder = QbzRoot + "/textures";
+        const string QbzMaterialFolder = QbzRoot + "/materials";
+        const string QbzBodyMaterialPath = QbzMaterialFolder + "/QBZ191_Body_URP.mat";
+        const string QbzMagazineMaterialPath = QbzMaterialFolder + "/QBZ191_Magazine_URP.mat";
+        static readonly Vector3 QbzRearGripPosition = new Vector3(0.006f, -0.10f, -0.135f);
+        static readonly Vector3 QbzFrontGripPosition = new Vector3(0.006f, -0.015f, 0.18f);
+
+        [InitializeOnLoadMethod]
+        static void QueueQbzVisualUpgrade()
+        {
+            EditorApplication.delayCall += UpgradeLegacyVisualIfNeeded;
+        }
+
+        static void UpgradeLegacyVisualIfNeeded()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                EditorApplication.playModeStateChanged -= HandlePlayModeChanged;
+                EditorApplication.playModeStateChanged += HandlePlayModeChanged;
+                return;
+            }
+
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
+            var model = AssetDatabase.LoadAssetAtPath<GameObject>(QbzModelPath);
+            if (prefab == null || model == null || !NeedsQbzPrefabUpgrade(prefab))
+            {
+                return;
+            }
+
+            EnsurePrefab(rebuild: true);
+            Debug.Log("[TrainingRiflePrefabBuilder] Replaced the legacy blockout visual with the licensed QBZ-191 model.");
+        }
+
+        static bool NeedsQbzPrefabUpgrade(GameObject prefab)
+        {
+            var model = prefab.transform.Find("WeaponRoot_training-rifle/RecoilRoot_training-rifle/Model_QBZ191");
+            var rearGrip = prefab.transform.Find("WeaponRoot_training-rifle/Grip_training-rifle_RearHand");
+            var frontGrip = prefab.transform.Find("WeaponRoot_training-rifle/Grip_training-rifle_FrontHand");
+            return model == null || rearGrip == null || frontGrip == null ||
+                   Vector3.Distance(rearGrip.localPosition, QbzRearGripPosition) > 0.0001f ||
+                   Vector3.Distance(frontGrip.localPosition, QbzFrontGripPosition) > 0.0001f;
+        }
+
+        static void HandlePlayModeChanged(PlayModeStateChange state)
+        {
+            if (state != PlayModeStateChange.EnteredEditMode)
+            {
+                return;
+            }
+
+            EditorApplication.playModeStateChanged -= HandlePlayModeChanged;
+            EditorApplication.delayCall += UpgradeLegacyVisualIfNeeded;
+        }
 
         [MenuItem("Tools/Simulated Shooting/Build Training Rifle Prefab")]
         public static void BuildMenuItem()
@@ -24,6 +79,7 @@ namespace SimulatedShooting.Editor
             EnsureFolder("Assets/SimulatedShooting/Prefabs/Weapons");
             EnsureFolder("Assets/SimulatedShooting/Art");
             EnsureFolder(MaterialFolder);
+            EnsureFolder(QbzMaterialFolder);
 
             var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabPath);
             if (prefab != null && !rebuild &&
@@ -33,6 +89,7 @@ namespace SimulatedShooting.Editor
                 return prefab;
             }
 
+            ConfigureQbzImportSettings();
             var root = BuildPrefabInstance();
             prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
             Object.DestroyImmediate(root);
@@ -56,35 +113,22 @@ namespace SimulatedShooting.Editor
 
             var visualRoot = CreateAnchor("WeaponRoot_training-rifle", root.transform, Vector3.zero);
             var recoilRoot = CreateAnchor("RecoilRoot_training-rifle", visualRoot, Vector3.zero);
-            var dark = GetMaterial("TrainingRifleDarkMetal", new Color(0.035f, 0.045f, 0.04f));
-            var polymer = GetMaterial("TrainingRiflePolymer", new Color(0.09f, 0.11f, 0.08f));
-            var sight = GetMaterial("TrainingRifleSightPaint", new Color(0.78f, 0.66f, 0.22f));
+            recoilRoot.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.RecoilRoot";
+            CreateQbzVisual(recoilRoot);
 
-            CreateCube("Receiver", recoilRoot, new Vector3(0f, -0.03f, 0.50f), new Vector3(0.18f, 0.15f, 0.62f), dark);
-            CreateCube("Stock_training-rifle", recoilRoot, new Vector3(0f, -0.04f, -0.02f), new Vector3(0.15f, 0.13f, 0.42f), polymer);
-            CreateCube("Handguard", recoilRoot, new Vector3(0f, -0.05f, 0.96f), new Vector3(0.17f, 0.12f, 0.52f), polymer);
-            CreateCylinder("Barrel", recoilRoot, new Vector3(0f, 0.045f, 1.42f), new Vector3(0.022f, 0.48f, 0.022f), dark, Quaternion.Euler(90f, 0f, 0f));
-            CreateCylinder("MuzzleDevice", recoilRoot, new Vector3(0f, 0.045f, 1.88f), new Vector3(0.035f, 0.08f, 0.035f), dark, Quaternion.Euler(90f, 0f, 0f));
-            CreateCube("RearSight_Base", recoilRoot, new Vector3(0f, 0.08f, 0.34f), new Vector3(0.16f, 0.035f, 0.08f), dark);
-            CreateCube("RearSight_Notch_Left", recoilRoot, new Vector3(-0.055f, 0.135f, 0.34f), new Vector3(0.025f, 0.08f, 0.03f), dark);
-            CreateCube("RearSight_Notch_Right", recoilRoot, new Vector3(0.055f, 0.135f, 0.34f), new Vector3(0.025f, 0.08f, 0.03f), dark);
-            CreateCube("FrontSight_Post", recoilRoot, new Vector3(0f, 0.14f, 1.68f), new Vector3(0.025f, 0.16f, 0.028f), sight);
-            CreateCube("RearHandGrip_Visual", recoilRoot, new Vector3(0f, -0.23f, 0.26f), new Vector3(0.085f, 0.25f, 0.085f), polymer, Quaternion.Euler(-12f, 0f, 0f));
-            CreateCube("FrontHandGrip_Visual", recoilRoot, new Vector3(0f, -0.20f, 0.90f), new Vector3(0.075f, 0.23f, 0.075f), polymer, Quaternion.Euler(8f, 0f, 0f));
-            CreateCube("Magazine_training-rifle", recoilRoot, new Vector3(0f, -0.25f, 0.56f), new Vector3(0.12f, 0.30f, 0.09f), polymer, Quaternion.Euler(-8f, 0f, 0f));
-
-            var rearGrip = CreateAnchor("Grip_training-rifle_RearHand", visualRoot, new Vector3(0f, -0.18f, 0.25f));
+            // Grip anchors remain outside RecoilRoot so visual recoil never pulls the tracked hands.
+            var rearGrip = CreateAnchor("Grip_training-rifle_RearHand", visualRoot, QbzRearGripPosition);
             rearGrip.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Grip.RearHand";
-            var frontGrip = CreateAnchor("Grip_training-rifle_FrontHand", visualRoot, new Vector3(0f, -0.16f, 0.90f));
+            var frontGrip = CreateAnchor("Grip_training-rifle_FrontHand", visualRoot, QbzFrontGripPosition);
             frontGrip.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Grip.FrontHand";
-            var muzzle = CreateAnchor("Muzzle_training-rifle", recoilRoot, new Vector3(0f, 0.045f, 1.96f));
+            var muzzle = CreateAnchor("Muzzle_training-rifle", recoilRoot, new Vector3(0.006f, -0.004f, 0.451f));
             muzzle.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Muzzle";
-            var aimLine = CreateAnchor("AimLine_training-rifle", recoilRoot, new Vector3(0f, 0.14f, 0.34f));
+            var aimLine = CreateAnchor("AimLine_training-rifle", recoilRoot, new Vector3(0.006f, 0.047f, -0.118f));
             aimLine.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.AimLine";
-            var magazine = recoilRoot.Find("Magazine_training-rifle");
-            var leftShoulder = CreateAnchor("Shoulder_training-rifle_Left", visualRoot, new Vector3(-0.18f, -0.02f, -0.16f));
+            var magazine = CreateAnchor("Magazine_training-rifle", recoilRoot, new Vector3(-0.008f, -0.17f, 0.042f));
+            var leftShoulder = CreateAnchor("Shoulder_training-rifle_Left", visualRoot, new Vector3(-0.18f, -0.02f, -0.30f));
             leftShoulder.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Shoulder.Left";
-            var rightShoulder = CreateAnchor("Shoulder_training-rifle_Right", visualRoot, new Vector3(0.18f, -0.02f, -0.16f));
+            var rightShoulder = CreateAnchor("Shoulder_training-rifle_Right", visualRoot, new Vector3(0.18f, -0.02f, -0.30f));
             rightShoulder.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Shoulder.Right";
 
             binding.Configure(
@@ -106,26 +150,176 @@ namespace SimulatedShooting.Editor
             return root;
         }
 
+        static void ConfigureQbzImportSettings()
+        {
+            ConfigureTexture(QbzTextureFolder + "/QBZ_DefaultMaterial_BaseColor.png", TextureImporterType.Default, true);
+            ConfigureTexture(QbzTextureFolder + "/QBZ_DefaultMaterial_Normal.png", TextureImporterType.NormalMap, false);
+            ConfigureTexture(QbzTextureFolder + "/QBZ191_Body_MetallicSmoothness.png", TextureImporterType.Default, false);
+            ConfigureTexture(QbzTextureFolder + "/Magazine_Material.001_BaseColor.png", TextureImporterType.Default, true);
+            ConfigureTexture(QbzTextureFolder + "/Magazine_Material.001_Normal.png", TextureImporterType.NormalMap, false);
+            ConfigureTexture(QbzTextureFolder + "/QBZ191_Magazine_MetallicSmoothness.png", TextureImporterType.Default, false);
+
+            var importer = AssetImporter.GetAtPath(QbzModelPath) as ModelImporter;
+            if (importer == null)
+            {
+                throw new System.InvalidOperationException($"QBZ-191 model could not be imported from {QbzModelPath}");
+            }
+
+            var changed = importer.globalScale != 1f ||
+                          importer.materialImportMode != ModelImporterMaterialImportMode.None || importer.isReadable ||
+                          importer.meshCompression != ModelImporterMeshCompression.Medium ||
+                          importer.importNormals != ModelImporterNormals.Import ||
+                          importer.importTangents != ModelImporterTangents.CalculateMikk;
+            if (!changed)
+            {
+                return;
+            }
+
+            importer.globalScale = 1f;
+            importer.materialImportMode = ModelImporterMaterialImportMode.None;
+            importer.isReadable = false;
+            importer.meshCompression = ModelImporterMeshCompression.Medium;
+            importer.importNormals = ModelImporterNormals.Import;
+            importer.importTangents = ModelImporterTangents.CalculateMikk;
+            importer.importAnimation = false;
+            importer.importCameras = false;
+            importer.importLights = false;
+            importer.SaveAndReimport();
+        }
+
+        static void ConfigureTexture(string path, TextureImporterType type, bool sRgb)
+        {
+            var importer = AssetImporter.GetAtPath(path) as TextureImporter;
+            if (importer == null)
+            {
+                throw new System.InvalidOperationException($"QBZ-191 texture could not be imported from {path}");
+            }
+
+            var changed = importer.textureType != type || importer.sRGBTexture != sRgb ||
+                          importer.maxTextureSize != 2048 ||
+                          importer.textureCompression != TextureImporterCompression.CompressedHQ;
+            if (!changed)
+            {
+                return;
+            }
+
+            importer.textureType = type;
+            importer.sRGBTexture = sRgb;
+            importer.maxTextureSize = 2048;
+            importer.textureCompression = TextureImporterCompression.CompressedHQ;
+            importer.mipmapEnabled = true;
+            importer.SaveAndReimport();
+        }
+
+        static void CreateQbzVisual(Transform recoilRoot)
+        {
+            var modelAsset = AssetDatabase.LoadAssetAtPath<GameObject>(QbzModelPath);
+            if (modelAsset == null)
+            {
+                throw new System.InvalidOperationException($"QBZ-191 model is missing at {QbzModelPath}");
+            }
+
+            var model = PrefabUtility.InstantiatePrefab(modelAsset) as GameObject;
+            if (model == null)
+            {
+                throw new System.InvalidOperationException("QBZ-191 model could not be instantiated");
+            }
+
+            model.name = "Model_QBZ191";
+            model.transform.SetParent(recoilRoot, false);
+            model.transform.localPosition = Vector3.zero;
+            model.transform.localRotation = Quaternion.identity;
+            model.transform.localScale = Vector3.one;
+            model.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Visual.QBZ191";
+
+            var bodyMaterial = GetQbzMaterial(
+                QbzBodyMaterialPath,
+                "QBZ191_Body_URP",
+                QbzTextureFolder + "/QBZ_DefaultMaterial_BaseColor.png",
+                QbzTextureFolder + "/QBZ_DefaultMaterial_Normal.png",
+                QbzTextureFolder + "/QBZ191_Body_MetallicSmoothness.png");
+            var magazineMaterial = GetQbzMaterial(
+                QbzMagazineMaterialPath,
+                "QBZ191_Magazine_URP",
+                QbzTextureFolder + "/Magazine_Material.001_BaseColor.png",
+                QbzTextureFolder + "/Magazine_Material.001_Normal.png",
+                QbzTextureFolder + "/QBZ191_Magazine_MetallicSmoothness.png");
+
+            foreach (var renderer in model.GetComponentsInChildren<Renderer>(true))
+            {
+                var sourceSlots = renderer.sharedMaterials;
+                var slotCount = Mathf.Max(1, sourceSlots.Length);
+                var materials = new Material[slotCount];
+                for (var index = 0; index < slotCount; index++)
+                {
+                    var sourceName = index < sourceSlots.Length && sourceSlots[index] != null
+                        ? sourceSlots[index].name
+                        : string.Empty;
+                    materials[index] = index == 1 || sourceName.Contains("Material.001") ||
+                                       renderer.name.Contains("Magazine")
+                        ? magazineMaterial
+                        : bodyMaterial;
+                }
+
+                renderer.sharedMaterials = materials;
+            }
+        }
+
+        static Material GetQbzMaterial(string materialPath, string materialName, string baseMapPath,
+            string normalMapPath, string metallicSmoothnessPath)
+        {
+            var material = AssetDatabase.LoadAssetAtPath<Material>(materialPath);
+            if (material == null)
+            {
+                var shader = Shader.Find("Universal Render Pipeline/Lit") ?? Shader.Find("Standard");
+                material = new Material(shader) { name = materialName };
+                AssetDatabase.CreateAsset(material, materialPath);
+            }
+
+            material.SetTexture("_BaseMap", LoadTexture(baseMapPath));
+            material.SetColor("_BaseColor", Color.white);
+            material.SetTexture("_BumpMap", LoadTexture(normalMapPath));
+            material.SetFloat("_BumpScale", 1f);
+            material.EnableKeyword("_NORMALMAP");
+            material.SetTexture("_MetallicGlossMap", LoadTexture(metallicSmoothnessPath));
+            material.SetFloat("_Metallic", 1f);
+            material.SetFloat("_Smoothness", 1f);
+            material.EnableKeyword("_METALLICSPECGLOSSMAP");
+            EditorUtility.SetDirty(material);
+            return material;
+        }
+
+        static Texture2D LoadTexture(string path)
+        {
+            var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            if (texture == null)
+            {
+                throw new System.InvalidOperationException($"QBZ-191 texture is missing at {path}");
+            }
+
+            return texture;
+        }
+
         static void AddWeaponColliders(GameObject root)
         {
             var receiver = root.AddComponent<BoxCollider>();
-            receiver.center = new Vector3(0f, -0.03f, 0.52f);
-            receiver.size = new Vector3(0.20f, 0.19f, 0.68f);
+            receiver.center = new Vector3(0f, -0.03f, -0.04f);
+            receiver.size = new Vector3(0.09f, 0.16f, 0.34f);
 
             var stock = root.AddComponent<BoxCollider>();
-            stock.center = new Vector3(0f, -0.04f, -0.02f);
-            stock.size = new Vector3(0.17f, 0.16f, 0.42f);
+            stock.center = new Vector3(0f, -0.03f, -0.24f);
+            stock.size = new Vector3(0.09f, 0.15f, 0.20f);
 
             var handguard = root.AddComponent<BoxCollider>();
-            handguard.center = new Vector3(0f, -0.04f, 1.13f);
-            handguard.size = new Vector3(0.19f, 0.17f, 0.90f);
+            handguard.center = new Vector3(0f, 0f, 0.27f);
+            handguard.size = new Vector3(0.09f, 0.12f, 0.38f);
         }
 
         static GameObject CreatePickupPrompt(Transform parent)
         {
             var prompt = new GameObject("Prompt_training-rifle_Pickup");
             prompt.transform.SetParent(parent, false);
-            prompt.transform.localPosition = new Vector3(0f, 0.30f, 0.28f);
+            prompt.transform.localPosition = new Vector3(0f, 0.18f, -0.04f);
             prompt.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
             prompt.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.PickupPrompt";
             var text = prompt.AddComponent<TextMesh>();
@@ -145,54 +339,6 @@ namespace SimulatedShooting.Editor
             anchor.SetParent(parent, false);
             anchor.localPosition = localPosition;
             return anchor;
-        }
-
-        static GameObject CreateCube(string name, Transform parent, Vector3 localPosition, Vector3 scale, Material material,
-            Quaternion? rotation = null)
-        {
-            return CreatePrimitive(PrimitiveType.Cube, name, parent, localPosition, scale, material, rotation ?? Quaternion.identity);
-        }
-
-        static GameObject CreateCylinder(string name, Transform parent, Vector3 localPosition, Vector3 scale,
-            Material material, Quaternion rotation)
-        {
-            return CreatePrimitive(PrimitiveType.Cylinder, name, parent, localPosition, scale, material, rotation);
-        }
-
-        static GameObject CreatePrimitive(PrimitiveType type, string name, Transform parent, Vector3 localPosition,
-            Vector3 scale, Material material, Quaternion rotation)
-        {
-            var gameObject = GameObject.CreatePrimitive(type);
-            gameObject.name = name;
-            gameObject.transform.SetParent(parent, false);
-            gameObject.transform.localPosition = localPosition;
-            gameObject.transform.localRotation = rotation;
-            gameObject.transform.localScale = scale;
-            gameObject.GetComponent<Renderer>().sharedMaterial = material;
-            Object.DestroyImmediate(gameObject.GetComponent<Collider>());
-            return gameObject;
-        }
-
-        static Material GetMaterial(string name, Color color)
-        {
-            var path = $"{MaterialFolder}/{name}.mat";
-            var material = AssetDatabase.LoadAssetAtPath<Material>(path);
-            if (material != null)
-            {
-                material.color = color;
-                EditorUtility.SetDirty(material);
-                return material;
-            }
-
-            var shader = Shader.Find("Universal Render Pipeline/Lit") ?? Shader.Find("Standard");
-            material = new Material(shader) { name = name, color = color };
-            if (material.HasProperty("_Smoothness"))
-            {
-                material.SetFloat("_Smoothness", 0.24f);
-            }
-
-            AssetDatabase.CreateAsset(material, path);
-            return material;
         }
 
         static void EnsureFolder(string path)
