@@ -5,6 +5,7 @@
     "SimulatedShooting.Runtime",
     "VRShooting.Runtime",
     "Unity.XR.Interaction.Toolkit",
+    "Unity.XR.CoreUtils",
     "Unity.InputSystem"
   ],
   "includePlatforms": [

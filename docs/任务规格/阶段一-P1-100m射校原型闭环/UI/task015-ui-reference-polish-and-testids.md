@@ -29,6 +29,8 @@ UI
 - MainScene 在无 VR 时保留屏幕空间 UI 和鼠标/测试替身交互，在 OpenXR 运行时自动切换为头显前方的 World Space Canvas。
 - VR Canvas 使用 `TrackedDeviceGraphicRaycaster`，全局 EventSystem 使用支持桌面与 XR 的 `XRUIInputModule`；左右手 Near-Far/Ray Interactor 的 UI 射线可悬停并确认按钮。
 - MainScene 根据 XR Display 运行状态在桌面跟随相机和 HMD Camera 间自动切换，任一时刻只保留一个活动 Camera 和一个 AudioListener。
+- VR World Space Canvas 在跟踪姿态稳定窗口内随最新 HMD 水平方向重新摆放，默认距离 1.2m 至 1.5m、中心略低于水平视线，水平可读视角不小于 65°。
+- 场景地面只作为 UI 下沿安全约束；画布下沿不得低于地面 0.10m，低位跟踪姿态不得让主菜单或 HUD 陷入地面。
 - 提供 P1 UI 验收截图或说明。
 
 ## 不包含
@@ -56,6 +58,8 @@ UI
   - 无 VR 模式下 Canvas 为 `ScreenSpaceOverlay`，桌面 Graphic Raycaster 可用。
   - VR 输入替身模式下 Canvas 为 World Space，绑定 HMD Camera，且 Tracked Device Graphic Raycaster 能命中 `Button_MainMenu_OpenZeroing`。
   - MainScene 的 VR/无 VR 模式切换后分别只有一个活动 Camera 和一个 AudioListener。
+  - VR 相机使用显式 Floor Tracking Origin，Camera Y Offset 与 Camera Floor Offset Object 初始 Y 均为 0m，不叠加固定站立眼高。
+  - HMD 输入替身从启动低位姿态移动到站立姿态后，主菜单和靶场 UI 会在稳定窗口内重新摆放；画布距离为 1.2m 至 1.5m、水平可读视角不小于 65°、下沿不低于地面 0.10m。
   - EventSystem 只有一个活动输入模块，并使用 `XRUIInputModule` 同时承接桌面和 XR 输入。
 
 ## 验收标准

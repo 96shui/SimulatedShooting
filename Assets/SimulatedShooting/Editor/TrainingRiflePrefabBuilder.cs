@@ -19,6 +19,7 @@ namespace SimulatedShooting.Editor
         const string QbzMagazineMaterialPath = QbzMaterialFolder + "/QBZ191_Magazine_URP.mat";
         static readonly Vector3 QbzRearGripPosition = new Vector3(0.006f, -0.10f, -0.135f);
         static readonly Vector3 QbzFrontGripPosition = new Vector3(0.006f, -0.015f, 0.18f);
+        static readonly Vector3 QbzMagazinePosition = new Vector3(-0.008f, -0.136f, 0.042f);
 
         [InitializeOnLoadMethod]
         static void QueueQbzVisualUpgrade()
@@ -51,9 +52,29 @@ namespace SimulatedShooting.Editor
             var model = prefab.transform.Find("WeaponRoot_training-rifle/RecoilRoot_training-rifle/Model_QBZ191");
             var rearGrip = prefab.transform.Find("WeaponRoot_training-rifle/Grip_training-rifle_RearHand");
             var frontGrip = prefab.transform.Find("WeaponRoot_training-rifle/Grip_training-rifle_FrontHand");
-            return model == null || rearGrip == null || frontGrip == null ||
+            var magazine = prefab.transform.Find(
+                "WeaponRoot_training-rifle/RecoilRoot_training-rifle/Magazine_training-rifle");
+            return model == null || rearGrip == null || frontGrip == null || magazine == null ||
+                   !HasQbzMagazineMaterial(model) ||
                    Vector3.Distance(rearGrip.localPosition, QbzRearGripPosition) > 0.0001f ||
-                   Vector3.Distance(frontGrip.localPosition, QbzFrontGripPosition) > 0.0001f;
+                   Vector3.Distance(frontGrip.localPosition, QbzFrontGripPosition) > 0.0001f ||
+                   Vector3.Distance(magazine.localPosition, QbzMagazinePosition) > 0.0001f;
+        }
+
+        static bool HasQbzMagazineMaterial(Transform model)
+        {
+            foreach (var renderer in model.GetComponentsInChildren<Renderer>(true))
+            {
+                foreach (var material in renderer.sharedMaterials)
+                {
+                    if (material != null && material.name.Contains("QBZ191_Magazine"))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         static void HandlePlayModeChanged(PlayModeStateChange state)
@@ -125,7 +146,7 @@ namespace SimulatedShooting.Editor
             muzzle.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Muzzle";
             var aimLine = CreateAnchor("AimLine_training-rifle", recoilRoot, new Vector3(0.006f, 0.047f, -0.118f));
             aimLine.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.AimLine";
-            var magazine = CreateAnchor("Magazine_training-rifle", recoilRoot, new Vector3(-0.008f, -0.17f, 0.042f));
+            var magazine = CreateAnchor("Magazine_training-rifle", recoilRoot, QbzMagazinePosition);
             var leftShoulder = CreateAnchor("Shoulder_training-rifle_Left", visualRoot, new Vector3(-0.18f, -0.02f, -0.30f));
             leftShoulder.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Shoulder.Left";
             var rightShoulder = CreateAnchor("Shoulder_training-rifle_Right", visualRoot, new Vector3(0.18f, -0.02f, -0.30f));
@@ -166,7 +187,8 @@ namespace SimulatedShooting.Editor
             }
 
             var changed = importer.globalScale != 1f ||
-                          importer.materialImportMode != ModelImporterMaterialImportMode.None || importer.isReadable ||
+                          importer.materialImportMode != ModelImporterMaterialImportMode.ImportViaMaterialDescription ||
+                          importer.isReadable ||
                           importer.meshCompression != ModelImporterMeshCompression.Medium ||
                           importer.importNormals != ModelImporterNormals.Import ||
                           importer.importTangents != ModelImporterTangents.CalculateMikk;
@@ -176,7 +198,9 @@ namespace SimulatedShooting.Editor
             }
 
             importer.globalScale = 1f;
-            importer.materialImportMode = ModelImporterMaterialImportMode.None;
+            // Keep the OBJ usemtl boundaries so the magazine remains an independent
+            // submesh. The builder replaces the imported slots with project URP materials.
+            importer.materialImportMode = ModelImporterMaterialImportMode.ImportViaMaterialDescription;
             importer.isReadable = false;
             importer.meshCompression = ModelImporterMeshCompression.Medium;
             importer.importNormals = ModelImporterNormals.Import;
@@ -255,7 +279,8 @@ namespace SimulatedShooting.Editor
                     var sourceName = index < sourceSlots.Length && sourceSlots[index] != null
                         ? sourceSlots[index].name
                         : string.Empty;
-                    materials[index] = index == 1 || sourceName.Contains("Material.001") ||
+                    materials[index] = IsQbzMagazineSubmesh(renderer, index) ||
+                                       index == 1 || sourceName.Contains("Material.001") ||
                                        renderer.name.Contains("Magazine")
                         ? magazineMaterial
                         : bodyMaterial;
@@ -263,6 +288,25 @@ namespace SimulatedShooting.Editor
 
                 renderer.sharedMaterials = materials;
             }
+        }
+
+        static bool IsQbzMagazineSubmesh(Renderer renderer, int materialIndex)
+        {
+            var meshFilter = renderer.GetComponent<MeshFilter>();
+            if (meshFilter == null || meshFilter.sharedMesh == null ||
+                materialIndex < 0 || materialIndex >= meshFilter.sharedMesh.subMeshCount)
+            {
+                return false;
+            }
+
+            // Fall back to the stable local-space envelope if material names or slot order
+            // change in a future Unity/importer version.
+            var bounds = meshFilter.sharedMesh.GetSubMesh(materialIndex).bounds;
+            return bounds.size.x < 0.05f &&
+                   bounds.size.y > 0.17f && bounds.size.y < 0.21f &&
+                   bounds.size.z > 0.10f && bounds.size.z < 0.14f &&
+                   Mathf.Abs(bounds.center.x + 0.0075f) < 0.015f &&
+                   Mathf.Abs(bounds.center.z - 0.042f) < 0.025f;
         }
 
         static Material GetQbzMaterial(string materialPath, string materialName, string baseMapPath,

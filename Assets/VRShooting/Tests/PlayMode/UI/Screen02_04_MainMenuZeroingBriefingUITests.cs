@@ -40,6 +40,7 @@ namespace VRShooting.Tests.PlayMode.UI
                 .SetValue(ui, false);
             root.SetActive(true);
             ui.Initialize(services);
+            root.GetComponent<TrainingUICanvasAdapter>().SetVrModeForTests(false);
         }
 
         [UnityTearDown]
@@ -93,7 +94,8 @@ namespace VRShooting.Tests.PlayMode.UI
             var canvas = root.GetComponent<Canvas>();
             var adapter = root.GetComponent<TrainingUICanvasAdapter>();
             adapter.SetVrModeForTests(true, vrCamera);
-            adapter.ForcePlacementForTests();
+            vrCamera.transform.SetPositionAndRotation(new Vector3(0f, 1.62f, 0f), Quaternion.identity);
+            yield return null;
             yield return null;
             Canvas.ForceUpdateCanvases();
 
@@ -101,6 +103,20 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(canvas.worldCamera, Is.SameAs(vrCamera));
             Assert.That(adapter.DesktopRaycaster.enabled, Is.False);
             Assert.That(adapter.TrackedRaycaster.enabled, Is.True);
+            var canvasRect = root.transform as RectTransform;
+            var canvasBottom = canvasRect.position.y -
+                canvasRect.rect.height * Mathf.Abs(canvasRect.lossyScale.y) * 0.5f;
+            var horizontalDistance = Vector3.ProjectOnPlane(
+                canvasRect.position - vrCamera.transform.position, Vector3.up).magnitude;
+            var worldWidth = canvasRect.rect.width * Mathf.Abs(canvasRect.lossyScale.x);
+            var angularWidth = 2f * Mathf.Atan(worldWidth * 0.5f / horizontalDistance) * Mathf.Rad2Deg;
+            Assert.That(canvasBottom, Is.GreaterThanOrEqualTo(0.10f),
+                "A low or temporarily invalid HMD pose must not place the menu below the floor.");
+            Assert.That(horizontalDistance, Is.InRange(1.2f, 1.5f));
+            Assert.That(angularWidth, Is.GreaterThanOrEqualTo(65f),
+                "The VR menu should occupy a large readable portion of the headset view.");
+            Assert.That(canvasRect.position.y - vrCamera.transform.position.y, Is.InRange(-0.15f, -0.04f),
+                "The menu should follow the stabilized HMD pose and sit only slightly below eye level.");
 
             var button = FindButton("Button_MainMenu_OpenZeroing");
             var buttonRect = button.transform as RectTransform;

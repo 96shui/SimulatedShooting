@@ -51,6 +51,11 @@ P1 训练武器必须在第一人称视角中可见，并提供稳定绑定点�
 | 左肩参考点 | `Shoulder_<WeaponId>_Left` | `Shoulder_training-rifle_Left` |
 | 右肩参考点 | `Shoulder_<WeaponId>_Right` | `Shoulder_training-rifle_Right` |
 | 弹道/曳光实例 | `Tracer_<WeaponId>_<ShotIndex>` | `Tracer_training-rifle_001` |
+| 弹体视觉 | `ProjectileVisual_<WeaponId>_<ShotIndex>` | `ProjectileVisual_training-rifle_001` |
+| 枪口焰 | `MuzzleFlash_<WeaponId>` | `MuzzleFlash_training-rifle` |
+| 武器反馈音源 | `Audio_<WeaponId>_Feedback` | `Audio_training-rifle_Feedback` |
+| 左右虚拟手视觉 | `VirtualHand_<Hand>` | `VirtualHand_Right` |
+| 玩家脚步音源 | `Audio_Player_Footsteps` | `Audio_Player_Footsteps` |
 | 弹着反馈 | `Impact_<TargetId>_<ShotIndex>` | `Impact_ZeroingTarget_001` |
 
 关键武器对象必须带稳定测试 ID：
@@ -72,9 +77,14 @@ P1 训练武器必须在第一人称视角中可见，并提供稳定绑定点�
 - `ZeroingRange.Weapon.Shoulder.Right`
 - `ZeroingRange.Weapon.DebugInput`
 - `ZeroingRange.Weapon.TracerRoot`
+- `ZeroingRange.Weapon.Feedback`
+- `ZeroingRange.Weapon.MuzzleFlash`
+- `ZeroingRange.Player.Footsteps`
 - `ZeroingRange.Origin.VR.HeadPose`
 - `ZeroingRange.Origin.VR.Hand.Right`
 - `ZeroingRange.Origin.VR.Hand.Left`
+- `ZeroingRange.Origin.VR.HandVisual.Right`
+- `ZeroingRange.Origin.VR.HandVisual.Left`
 - `ZeroingRange.Origin.VR.Interactor.Direct.Right`
 - `ZeroingRange.Origin.VR.Interactor.Direct.Left`
 
@@ -87,6 +97,8 @@ P1 训练步枪必须使用 `XRGrabInteractable`、可支持主/副手选择的�
 - 武器在架时由枪架/武器台插槽稳定放置；被抓取后由双手枪体解算接管；后手释放后恢复 Rigidbody、重力和场景碰撞。
 - 后坐力只作用于 `RecoilRoot_*` 或等效局部表现层，不直接移动 HMD、XR Origin、Interactor 或跟踪姿态源。
 - 虚拟手网格可以为握把姿势对齐，但控制器和 HMD Transform 始终是输入权威，不能反向被枪械脚本改写。
+- 虚拟手必须使用手部网格或清晰的控制器手替身，不得以立方体作为最终视觉；握持时只在 `VirtualHand_*` 视觉子树内切换手指姿势和握把对齐。
+- 枪口焰、移动弹体/曳光、命中 VFX 与空间音效必须由有效射击结果驱动，不得在视觉组件中重新决定弹药消耗或命中。
 
 ## 测试 ID
 
@@ -189,6 +201,11 @@ Grip 必须暴露按下、保持、释放三种状态；Trigger 必须暴露 `0-
 - OpenXR Loader 启动且 HMD 可用时：启用 `XR Origin`、HMD Camera、XR Controller、左右虚拟手和 Direct Interactor；禁用 `Camera_NoVR`、其 `AudioListener` 和键鼠视角驱动。
 - XR 不可用时：禁用 XR Camera/AudioListener 和设备交互输出，启用 `Camera_NoVR`、无 VR 姿态及输入替身。
 - 任一时刻最多一个活动玩家 Camera 和一个活动 `AudioListener`。不得依赖人工切换 Hierarchy 作为正常启动步骤。
+- P1 站立训练场景的 `XR Origin` 必须显式请求 `Floor` Tracking Origin，`Camera Y Offset` 与 `Camera Floor Offset Object` 的编辑态初始 Y 均为 `0m`；真实眼高只使用 OpenXR Runtime 或 XR Device Simulator 相对于地面的跟踪姿态，禁止再次叠加固定站立眼高。
+- 运行时不得直接改写 HMD Camera 或 XR Origin 的跟踪姿态来修正玩家高度；若 Runtime 无法提供 Floor 模式，应由独立兼容层降级处理，不得同时使用真实 HMD 高度和固定 Y Offset。
+- VR World Space Canvas 默认位于 HMD 水平方向前方 `1.2m` 至 `1.5m`、中心略低于水平视线，参考分辨率画布的水平可读视角应不小于 `65°`；首次启用后应在短暂的跟踪稳定窗口内根据最新 HMD 姿态重新摆放，避免使用启动首帧的无效低位姿态。
+- 场景地面 `Y=0m` 是 World Space Canvas 的下沿安全约束而不是默认对齐目标；画布下沿不得低于地面 `0.10m`，低头、蹲下或暂时返回低位姿态时只允许调整 UI，不反向移动 HMD 或 XR Origin。
+- 靶场初始步枪应位于玩家右前方 `0.5m` 至 `0.8m` 的自然伸手范围，后握把处于地面上方约 `1.0m` 至 `1.2m`；枪械不得依赖相机高度偏移来取得舒适位置。
 - 真实 VR 中禁止武器、ADS、切肩或后坐力逻辑写入 HMD Camera、XR Origin 或 XR 投影/FOV；HMD 姿态只来自跟踪系统。
 - 枪械和虚拟手在 `OnBeforeRender`、XRI Dynamic/Late 更新或等效低延迟阶段消费最新控制器姿态，额外显示延迟不超过一个显示帧。
 

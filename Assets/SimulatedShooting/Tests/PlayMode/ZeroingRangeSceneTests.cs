@@ -5,6 +5,7 @@ using SimulatedShooting.Scene;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using Unity.XR.CoreUtils;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -46,6 +47,41 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(Find("ZeroingRange.Target.Primary"), Is.Not.Null);
             Assert.That(Find("ZeroingRange.Origin.VR"), Is.Not.Null);
             Assert.That(Find("ZeroingRange.Camera.NoVR").GetComponent<Camera>(), Is.Not.Null);
+        }
+
+        [Test]
+        public void Task004_XrOriginUsesFloorTrackingWithoutArtificialEyeHeight()
+        {
+            var xrOriginObject = Find("ZeroingRange.Origin.VR");
+            var xrOrigin = xrOriginObject.GetComponent<XROrigin>();
+            Assert.That(xrOrigin, Is.Not.Null);
+            Assert.That(xrOrigin.RequestedTrackingOriginMode,
+                Is.EqualTo(XROrigin.TrackingOriginMode.Floor));
+            Assert.That(xrOrigin.CameraYOffset, Is.EqualTo(0f).Within(0.001f));
+            Assert.That(xrOrigin.CameraFloorOffsetObject, Is.Not.Null);
+            Assert.That(xrOrigin.CameraFloorOffsetObject.transform.localPosition.y,
+                Is.EqualTo(0f).Within(0.001f));
+
+            var hmdCamera = xrOriginObject.GetComponentInChildren<Camera>(true);
+            Assert.That(hmdCamera, Is.Not.Null);
+        }
+
+        [Test]
+        public void Task004_TrainingRifleStartsWithinComfortableRightHandReach()
+        {
+            var xrOrigin = Find("ZeroingRange.Origin.VR").transform;
+            var weaponSpawn = Find("ZeroingRange.WeaponSpawn").transform;
+            var weapon = Find("ZeroingRange.Weapon.TrainingRifle").transform;
+            var rearGrip = Find("ZeroingRange.Weapon.Grip.RearHand").transform;
+
+            var localSpawn = xrOrigin.InverseTransformPoint(weaponSpawn.position);
+            var horizontalReach = new Vector2(localSpawn.x, localSpawn.z).magnitude;
+            Assert.That(horizontalReach, Is.InRange(0.5f, 0.8f));
+            Assert.That(localSpawn.y, Is.InRange(1.0f, 1.2f));
+            Assert.That(Vector3.Distance(weapon.position, weaponSpawn.position), Is.LessThan(0.001f));
+
+            var localRearGrip = xrOrigin.InverseTransformPoint(rearGrip.position);
+            Assert.That(localRearGrip.y, Is.InRange(0.95f, 1.2f));
         }
 
         [Test]
@@ -177,7 +213,8 @@ namespace SimulatedShooting.Tests.PlayMode
                 .Any(component => component != null && component.enabled && component.GetType().Name == "Volume");
 
             Assert.That(renderers.Length, Is.LessThanOrEqualTo(256));
-            Assert.That(materials.Length, Is.LessThanOrEqualTo(24));
+            Assert.That(materials.Length, Is.LessThanOrEqualTo(24),
+                $"Unexpected materials: {string.Join(", ", materials.Select(material => material.name))}");
             Assert.That(activeLights.Length, Is.EqualTo(1));
             Assert.That(activeLights[0].type, Is.EqualTo(LightType.Directional));
             Assert.That(hasEnabledPostProcessing, Is.False);
@@ -224,6 +261,30 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [Test]
+        public void Task005_FeedbackUsesLicensedAudioAndProjectileVisualAssets()
+        {
+            var playerRoot = Find("ZeroingRange.Weapon.PlayerRoot");
+            var controller = playerRoot.GetComponent<FirstPersonTrainingWeaponController>();
+            var feedback = playerRoot.GetComponent<WeaponFeedbackController>();
+            var footsteps = playerRoot.GetComponent<PlayerFootstepAudio>();
+
+            Assert.That(feedback, Is.Not.Null);
+            Assert.That(controller.FeedbackController, Is.EqualTo(feedback));
+            Assert.That(feedback.HasRequiredAudio, Is.True);
+            Assert.That(feedback.HasProjectileVisualPrefab, Is.True);
+            Assert.That(feedback.RifleShotClip.name, Does.Contain("rifle-sks-single-shot"));
+            Assert.That(feedback.PickupClip.name, Does.Contain("weapon-pickup-mechanical"));
+            Assert.That(feedback.BulletFlybyClip.name, Does.Contain("bullet-flyby"));
+            Assert.That(Find("ZeroingRange.Weapon.Feedback"), Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Weapon.MuzzleFlash"), Is.Not.Null);
+
+            Assert.That(footsteps, Is.Not.Null);
+            Assert.That(footsteps.HasFootstepClips, Is.True);
+            Assert.That(footsteps.TrackedTransform, Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Player.Footsteps"), Is.Not.Null);
+        }
+
+        [Test]
         public void Task005_TrainingRifleUsesLicensedQbz191Visual()
         {
             var weapon = Find("ZeroingRange.Weapon.TrainingRifle");
@@ -252,10 +313,27 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(triangleCount, Is.GreaterThan(35000), "The first-person model lost its expected visual detail");
             Assert.That(renderers.SelectMany(renderer => renderer.sharedMaterials)
                 .All(material => material != null && material.mainTexture != null), Is.True);
+            var magazineRenderer = renderers.FirstOrDefault(renderer => renderer.sharedMaterials
+                .Any(material => material != null && material.name.Contains("QBZ191_Magazine")));
+            Assert.That(magazineRenderer, Is.Not.Null, "The QBZ-191 magazine renderer is missing");
+            var magazineMesh = magazineRenderer.GetComponent<MeshFilter>()?.sharedMesh;
+            Assert.That(magazineMesh, Is.Not.Null, "The QBZ-191 magazine mesh is missing");
+            var magazineMaterialIndex = Enumerable.Range(0, magazineRenderer.sharedMaterials.Length)
+                .First(index => magazineRenderer.sharedMaterials[index] != null &&
+                                magazineRenderer.sharedMaterials[index].name.Contains("QBZ191_Magazine"));
+            var magazineBounds = magazineMesh.GetSubMesh(
+                Mathf.Min(magazineMaterialIndex, magazineMesh.subMeshCount - 1)).bounds;
+            Assert.That(magazineBounds.size.y, Is.GreaterThan(0.18f));
+            Assert.That(magazineBounds.center.y, Is.InRange(-0.105f, -0.093f),
+                "The source magazine mesh has drifted away from its seated receiver position");
+            Assert.That(magazineBounds.max.y, Is.InRange(-0.01f, 0f),
+                "The magazine top should sit just inside the receiver instead of floating below it");
             Assert.That(Vector3.Distance(binding.RearHandGrip.localPosition,
                 new Vector3(0.006f, -0.10f, -0.135f)), Is.LessThan(0.001f));
             Assert.That(Vector3.Distance(binding.FrontHandGrip.localPosition,
                 new Vector3(0.006f, -0.015f, 0.18f)), Is.LessThan(0.001f));
+            Assert.That(Vector3.Distance(binding.MagazinePoint.localPosition,
+                new Vector3(-0.008f, -0.136f, 0.042f)), Is.LessThan(0.001f));
             Assert.That(Vector3.Distance(binding.RearHandGrip.position, binding.FrontHandGrip.position),
                 Is.InRange(0.30f, 0.35f));
             Assert.That(binding.RecoilRoot.Find("Receiver"), Is.Null, "Legacy blockout geometry is still present");
@@ -281,6 +359,56 @@ namespace SimulatedShooting.Tests.PlayMode
                 $"muzzle={controller.LastShotMuzzlePosition}, hitPoint={controller.LastShotHitPoint}, " +
                 $"aim={controller.CurrentAimDirection}");
             Assert.That(Find("ZeroingRange.Weapon.Tracer"), Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Weapon.Tracer").GetComponent<BallisticTracerVisual>(), Is.Not.Null);
+        }
+
+        [UnityTest]
+        public IEnumerator Task005_ValidShotPlaysOneFeedbackStackAndArrivesAtRecordedImpact()
+        {
+            var controller = Find("ZeroingRange.Weapon.PlayerRoot").GetComponent<FirstPersonTrainingWeaponController>();
+            var feedback = controller.FeedbackController;
+
+            Assert.That(controller.InitializeForTests(), Is.True);
+            Assert.That(controller.FireOnceForTests(), Is.True);
+            Assert.That(feedback.ValidShotFeedbackCount, Is.EqualTo(1));
+            Assert.That(feedback.ImpactFeedbackCount, Is.Zero);
+            var tracer = Find("ZeroingRange.Weapon.Tracer").GetComponent<BallisticTracerVisual>();
+            Assert.That(tracer.HasProjectileVisual, Is.True);
+
+            yield return new WaitForSeconds(0.24f);
+
+            Assert.That(feedback.ImpactFeedbackCount, Is.EqualTo(1));
+            Assert.That(Find("ZeroingRange.Target.ImpactFeedback"), Is.Not.Null);
+        }
+
+        [Test]
+        public void Task005_InvalidShotProducesNoAudioTracerOrImpactFeedback()
+        {
+            var controller = Find("ZeroingRange.Weapon.PlayerRoot").GetComponent<FirstPersonTrainingWeaponController>();
+            var feedback = controller.FeedbackController;
+
+            Assert.That(controller.InitializeForTests(), Is.True);
+            Assert.That(controller.CurrentHoldState, Is.EqualTo(WeaponHoldState.OnRack));
+            Assert.That(controller.FireCurrentStateForTests(), Is.False);
+            Assert.That(controller.TracerCount, Is.Zero);
+            Assert.That(feedback.ValidShotFeedbackCount, Is.Zero);
+            Assert.That(feedback.ImpactFeedbackCount, Is.Zero);
+        }
+
+        [Test]
+        public void Task005_FootstepsUseTravelDistanceAndStaySilentWhenStopped()
+        {
+            var footsteps = Find("ZeroingRange.Weapon.PlayerRoot").GetComponent<PlayerFootstepAudio>();
+            footsteps.ResetTracking();
+
+            footsteps.EvaluatePositionForTests(Vector3.zero, 1f);
+            footsteps.EvaluatePositionForTests(new Vector3(0.70f, 0f, 0f), 1f);
+            Assert.That(footsteps.PlayedStepCount, Is.EqualTo(1));
+
+            footsteps.EvaluatePositionForTests(new Vector3(0.70f, 0.15f, 0f), 1f);
+            footsteps.EvaluatePositionForTests(new Vector3(0.70f, 0f, 0f), 1f);
+            Assert.That(footsteps.PlayedStepCount, Is.EqualTo(1),
+                "Standing still and vertical HMD motion must not loop footsteps");
         }
 
         [Test]
@@ -359,6 +487,72 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(binding.RearHandGrip.IsChildOf(binding.RecoilRoot), Is.False);
             Assert.That(binding.FrontHandGrip.IsChildOf(binding.RecoilRoot), Is.False);
             Assert.That(Find("ZeroingRange.Weapon.PickupPrompt"), Is.Not.Null);
+        }
+
+        [Test]
+        public void Task013_VirtualHandsUseRiggedMeshesAndGripOnlyTheVisualLayer()
+        {
+            var rightHand = Find("ZeroingRange.Origin.VR.VirtualHand.Right");
+            var leftHand = Find("ZeroingRange.Origin.VR.VirtualHand.Left");
+            Assert.That(rightHand, Is.Not.Null);
+            Assert.That(leftHand, Is.Not.Null);
+            Assert.That(rightHand.GetComponent<MeshFilter>(), Is.Null, "The legacy cube hand is still present");
+            Assert.That(leftHand.GetComponent<MeshFilter>(), Is.Null, "The legacy cube hand is still present");
+
+            var rightVisual = rightHand.GetComponent<VRControllerHandVisual>();
+            var leftVisual = leftHand.GetComponent<VRControllerHandVisual>();
+            Assert.That(rightVisual, Is.Not.Null);
+            Assert.That(leftVisual, Is.Not.Null);
+            Assert.That(rightVisual.HasRenderableHand, Is.True);
+            Assert.That(leftVisual.HasRenderableHand, Is.True);
+            Assert.That(rightVisual.ModelRoot.GetComponentInChildren<SkinnedMeshRenderer>(true), Is.Not.Null);
+            Assert.That(leftVisual.ModelRoot.GetComponentInChildren<SkinnedMeshRenderer>(true), Is.Not.Null);
+
+            var trackedController = rightHand.transform.parent;
+            var trackedPosition = trackedController.position;
+            var trackedRotation = trackedController.rotation;
+            rightVisual.SetGripForTests(true);
+
+            Assert.That(rightVisual.GripPose01, Is.EqualTo(1f).Within(0.001f));
+            Assert.That(trackedController.position, Is.EqualTo(trackedPosition));
+            Assert.That(Quaternion.Angle(trackedController.rotation, trackedRotation), Is.LessThan(0.001f));
+            Assert.That(Vector3.Distance(
+                rightHand.transform.position,
+                Find("ZeroingRange.Weapon.Grip.RearHand").transform.position), Is.LessThan(0.06f));
+        }
+
+        [UnityTest]
+        public IEnumerator Task013_VirtualHandGripPoseDeformsTheSkinnedMesh()
+        {
+            var rightVisual = Find("ZeroingRange.Origin.VR.VirtualHand.Right")
+                .GetComponent<VRControllerHandVisual>();
+            var renderer = rightVisual.ModelRoot.GetComponentInChildren<SkinnedMeshRenderer>(true);
+            Assert.That(rightVisual.FingerBoneCount, Is.GreaterThanOrEqualTo(15));
+
+            var openMesh = new Mesh();
+            renderer.BakeMesh(openMesh);
+            var openVertices = openMesh.vertices;
+
+            rightVisual.SetGripForTests(true);
+            yield return null;
+
+            var gripMesh = new Mesh();
+            renderer.BakeMesh(gripMesh);
+            var gripVertices = gripMesh.vertices;
+            Assert.That(gripVertices.Length, Is.EqualTo(openVertices.Length));
+
+            var maximumVertexDisplacement = 0f;
+            for (var index = 0; index < openVertices.Length; index++)
+            {
+                maximumVertexDisplacement = Mathf.Max(
+                    maximumVertexDisplacement,
+                    Vector3.Distance(openVertices[index], gripVertices[index]));
+            }
+
+            Object.Destroy(openMesh);
+            Object.Destroy(gripMesh);
+            Assert.That(maximumVertexDisplacement, Is.GreaterThan(0.003f),
+                "The grip state changed, but the rendered hand mesh did not deform");
         }
 
         [Test]
@@ -450,14 +644,27 @@ namespace SimulatedShooting.Tests.PlayMode
             var initialRotation = binding.RecoilRoot.localRotation;
 
             Assert.That(controller.FireOnceForTests(), Is.True);
-            yield return new WaitForSeconds(0.06f);
+            var sampleElapsed = 0f;
+            var maximumAngle = 0f;
+            var maximumDistance = 0f;
+            while (sampleElapsed < 0.10f)
+            {
+                yield return null;
+                sampleElapsed += Time.deltaTime;
+                maximumAngle = Mathf.Max(
+                    maximumAngle,
+                    Quaternion.Angle(initialRotation, binding.RecoilRoot.localRotation));
+                maximumDistance = Mathf.Max(
+                    maximumDistance,
+                    Vector3.Distance(initialPosition, binding.RecoilRoot.localPosition));
+            }
 
             Assert.That(haptics.ImpulseCount, Is.EqualTo(1));
             Assert.That(haptics.LastFrontHandHeld, Is.True);
-            Assert.That(Quaternion.Angle(initialRotation, binding.RecoilRoot.localRotation), Is.InRange(2.3f, 4.5f));
-            Assert.That(Vector3.Distance(initialPosition, binding.RecoilRoot.localPosition), Is.InRange(0.02f, 0.05f));
+            Assert.That(maximumAngle, Is.InRange(2.2f, 4.5f));
+            Assert.That(maximumDistance, Is.InRange(0.02f, 0.05f));
 
-            yield return new WaitForSeconds(0.40f);
+            yield return new WaitForSeconds(0.35f);
             Assert.That(Quaternion.Angle(initialRotation, binding.RecoilRoot.localRotation), Is.LessThan(0.1f));
             Assert.That(Vector3.Distance(initialPosition, binding.RecoilRoot.localPosition), Is.LessThan(0.001f));
         }

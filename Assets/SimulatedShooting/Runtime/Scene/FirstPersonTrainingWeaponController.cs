@@ -20,6 +20,7 @@ namespace SimulatedShooting.Scene
         [SerializeField] private TrainingRifleGrabInteractable grabInteractable;
         [SerializeField] private TargetImpactSurface targetSurface;
         [SerializeField] private Transform tracerRoot;
+        [SerializeField] private WeaponFeedbackController feedbackController;
         [SerializeField] private Transform headPoseSource;
         [SerializeField] private Transform rearHandPoseSource;
         [SerializeField] private Transform frontHandPoseSource;
@@ -80,6 +81,7 @@ namespace SimulatedShooting.Scene
         public bool HasVrPoseSources => headPoseSource != null && rearHandPoseSource != null && frontHandPoseSource != null;
         public bool UsingVrPoseSources => ShouldUseVrPoseSources();
         public TrainingRifleGrabInteractable GrabInteractable => grabInteractable;
+        public WeaponFeedbackController FeedbackController => feedbackController;
 
         public string SessionId =>
             services != null && services.TrainingSessions.HasActiveSession
@@ -107,6 +109,11 @@ namespace SimulatedShooting.Scene
             rearHandPoseSource = rearHandPose;
             frontHandPoseSource = frontHandPose;
             preferVrPoseSources = headPose != null && rearHandPose != null && frontHandPose != null;
+        }
+
+        public void ConfigureFeedback(WeaponFeedbackController feedback)
+        {
+            feedbackController = feedback;
         }
 
         public void ConfigureServices(ApplicationServices applicationServices, IXRTrainingInput trainingInput = null)
@@ -205,6 +212,12 @@ namespace SimulatedShooting.Scene
             ForceTwoHandGripForTests();
             UpdateNoVrPose(0f);
             return FireCurrentWeapon();
+        }
+
+        public bool FireCurrentStateForTests()
+        {
+            EnsureInitialized();
+            return initialized && FireCurrentWeapon();
         }
 
         public bool InitializeForTests()
@@ -381,6 +394,11 @@ namespace SimulatedShooting.Scene
                 root.SetParent(transform, false);
                 root.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.TracerRoot";
                 tracerRoot = root;
+            }
+
+            if (feedbackController == null)
+            {
+                feedbackController = GetComponent<WeaponFeedbackController>();
             }
         }
 
@@ -739,7 +757,8 @@ namespace SimulatedShooting.Scene
                 return false;
             }
 
-            SpawnTracer(muzzle, hitPoint);
+            var visualEnd = hit ? raycastHit.point : muzzle + direction * MaxShotDistance;
+            SpawnTracer(muzzle, visualEnd, hit, raycastHit);
             RecordImpactIfNeeded(raycastHit, hit);
             ApplyRecoil(fire.Data.RecoilImpulse);
             hapticOutput?.SendShotImpulse(fire.Data.RecoilImpulse, fire.Data.FrontHandTracked);
@@ -801,28 +820,31 @@ namespace SimulatedShooting.Scene
             return viewCamera != null ? viewCamera.transform.forward : Vector3.forward;
         }
 
-        void SpawnTracer(Vector3 start, Vector3 end)
+        void SpawnTracer(Vector3 start, Vector3 end, bool hit, RaycastHit raycastHit)
         {
             if (tracerRoot == null)
             {
                 return;
             }
 
-            var tracer = new GameObject($"Tracer_training-rifle_{++tracerCounter:000}");
+            tracerCounter++;
+            if (feedbackController != null)
+            {
+                feedbackController.PlayValidShot(
+                    tracerCounter,
+                    start,
+                    end,
+                    hit,
+                    hit ? raycastHit.point : end,
+                    hit ? raycastHit.normal : Vector3.zero);
+                return;
+            }
+
+            var tracer = new GameObject($"Tracer_training-rifle_{tracerCounter:000}");
             tracer.transform.SetParent(tracerRoot, true);
             tracer.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Tracer";
-            var line = tracer.AddComponent<LineRenderer>();
-            line.useWorldSpace = true;
-            line.positionCount = 2;
-            line.SetPosition(0, start);
-            line.SetPosition(1, end);
-            line.startWidth = 0.025f;
-            line.endWidth = 0.006f;
-            line.numCapVertices = 4;
-            line.material = tracerMaterial;
-            line.startColor = new Color(1f, 0.86f, 0.28f, 1f);
-            line.endColor = new Color(1f, 0.22f, 0.06f, 0.2f);
-            tracer.AddComponent<TimedSelfDestruct>().Configure(0.18f);
+            var visual = tracer.AddComponent<BallisticTracerVisual>();
+            visual.Configure(start, end, null, null, tracerMaterial, null, tracerCounter, null);
         }
 
         void ApplyRecoil(WeaponRecoilImpulseDto impulse)

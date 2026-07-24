@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.UI;
+using Unity.XR.CoreUtils;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit.UI;
 using VRShooting.Unity;
@@ -120,6 +121,45 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(uiInteractors.Length, Is.GreaterThanOrEqualTo(2));
             Assert.That(uiInteractors.All(interactor => interactor.enableUIInteraction), Is.True);
             AssertSinglePlayerView();
+        }
+
+        [UnityTest]
+        public IEnumerator Screen02_MainScene_VrUsesFloorTrackingAndReadableStabilizedMenu()
+        {
+            var origin = Object.FindObjectOfType<XROrigin>(true);
+            Assert.That(origin, Is.Not.Null, "MainScene must contain an XR Origin.");
+            Assert.That(origin.RequestedTrackingOriginMode, Is.EqualTo(XROrigin.TrackingOriginMode.Floor));
+            Assert.That(origin.CameraYOffset, Is.EqualTo(0f).Within(0.001f));
+            Assert.That(origin.CameraFloorOffsetObject, Is.Not.Null);
+            Assert.That(origin.CameraFloorOffsetObject.transform.localPosition.y,
+                Is.EqualTo(0f).Within(0.001f));
+
+            xrModeController.SetVrModeForTests(true);
+            var vrCamera = xrModeController.VrCamera;
+            vrCamera.transform.SetPositionAndRotation(
+                new Vector3(vrCamera.transform.position.x, 1.65f, vrCamera.transform.position.z),
+                Quaternion.identity);
+            yield return null;
+            yield return null;
+            Canvas.ForceUpdateCanvases();
+
+            var mainMenu = Object.FindObjectOfType<MainMenuUI>(true);
+            var menuRect = mainMenu.transform as RectTransform;
+            var horizontalDistance = Vector3.ProjectOnPlane(
+                menuRect.position - vrCamera.transform.position, Vector3.up).magnitude;
+            var worldWidth = menuRect.rect.width * Mathf.Abs(menuRect.lossyScale.x);
+            var angularWidth = 2f * Mathf.Atan(worldWidth * 0.5f / horizontalDistance) * Mathf.Rad2Deg;
+
+            Assert.That(ResolveCanvasBottomHeight(menuRect), Is.GreaterThanOrEqualTo(0.10f));
+            Assert.That(horizontalDistance, Is.InRange(1.2f, 1.5f));
+            Assert.That(angularWidth, Is.GreaterThanOrEqualTo(65f));
+            Assert.That(menuRect.position.y - vrCamera.transform.position.y, Is.InRange(-0.15f, -0.04f));
+        }
+
+        static float ResolveCanvasBottomHeight(RectTransform rectTransform)
+        {
+            var worldHeight = rectTransform.rect.height * Mathf.Abs(rectTransform.lossyScale.y);
+            return rectTransform.position.y - worldHeight * 0.5f;
         }
 
         static void AssertSinglePlayerView()

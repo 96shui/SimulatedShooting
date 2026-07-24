@@ -17,13 +17,19 @@ namespace VRShooting.Unity.UI
         static readonly Vector2 ReferenceResolution = new Vector2(1920f, 1080f);
 
         [SerializeField]
-        float vrDistance = 1.75f;
+        float vrDistance = 1.30f;
 
         [SerializeField]
-        float vrWorldScale = 0.0009f;
+        float vrWorldScale = 0.00105f;
 
         [SerializeField]
-        float vrVerticalOffset = -0.05f;
+        float vrVerticalOffset = -0.08f;
+
+        [SerializeField]
+        float vrMinimumCanvasBottomHeight = 0.10f;
+
+        [SerializeField]
+        float vrPlacementStabilizationSeconds = 1.5f;
 
         readonly List<XRDisplaySubsystem> displays = new List<XRDisplaySubsystem>();
 
@@ -36,6 +42,7 @@ namespace VRShooting.Unity.UI
         bool initialized;
         bool lastVrMode;
         bool placementPending;
+        float placementStabilizationRemaining;
 
         public bool IsVrMode => initialized && lastVrMode;
 
@@ -63,9 +70,14 @@ namespace VRShooting.Unity.UI
             var vrCamera = vrMode ? ResolveVrCamera() : null;
             ApplyMode(vrMode, vrCamera, false);
 
-            if (vrMode && placementPending && vrCamera != null)
+            if (vrMode && vrCamera != null &&
+                (placementPending || placementStabilizationRemaining > 0f))
             {
                 PlaceCanvasInFrontOf(vrCamera);
+                placementPending = false;
+                placementStabilizationRemaining = Mathf.Max(
+                    0f,
+                    placementStabilizationRemaining - Time.unscaledDeltaTime);
             }
         }
 
@@ -212,6 +224,9 @@ namespace VRShooting.Unity.UI
                 }
 
                 placementPending = vrCamera != null;
+                placementStabilizationRemaining = vrCamera != null
+                    ? Mathf.Max(0f, vrPlacementStabilizationSeconds)
+                    : 0f;
                 if (vrCamera != null)
                 {
                     PlaceCanvasInFrontOf(vrCamera);
@@ -225,6 +240,7 @@ namespace VRShooting.Unity.UI
             desktopRaycaster.enabled = true;
             trackedRaycaster.enabled = false;
             placementPending = false;
+            placementStabilizationRemaining = 0f;
 
             if (rectTransform != null)
             {
@@ -239,13 +255,24 @@ namespace VRShooting.Unity.UI
             var forward = Vector3.ProjectOnPlane(vrCamera.transform.forward, Vector3.up);
             if (forward.sqrMagnitude < 0.0001f)
             {
-                forward = vrCamera.transform.forward;
+                forward = Vector3.ProjectOnPlane(vrCamera.transform.up, Vector3.up);
+            }
+
+            if (forward.sqrMagnitude < 0.0001f)
+            {
+                forward = Vector3.forward;
             }
 
             forward.Normalize();
             var position = vrCamera.transform.position + forward * vrDistance + Vector3.up * vrVerticalOffset;
+            var rectTransform = transform as RectTransform;
+            var halfWorldHeight = rectTransform != null
+                ? rectTransform.rect.height * Mathf.Abs(rectTransform.lossyScale.y) * 0.5f
+                : ReferenceResolution.y * vrWorldScale * 0.5f;
+            position.y = Mathf.Max(
+                position.y,
+                Mathf.Max(0f, vrMinimumCanvasBottomHeight) + halfWorldHeight);
             transform.SetPositionAndRotation(position, Quaternion.LookRotation(forward, Vector3.up));
-            placementPending = false;
         }
 
         static bool IsUnderXrOrigin(Transform candidate)
