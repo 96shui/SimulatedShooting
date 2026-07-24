@@ -4,7 +4,8 @@
   "references": [
     "SimulatedShooting.Runtime",
     "VRShooting.Runtime",
-    "Unity.XR.Interaction.Toolkit"
+    "Unity.XR.Interaction.Toolkit",
+    "Unity.XR.CoreUtils"
   ],
   "optionalUnityReferences": [
     "TestAssemblies"

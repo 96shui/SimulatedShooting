@@ -15,6 +15,25 @@ namespace SimulatedShooting.Editor
     {
         private const string ScenePath = "Assets/Scenes/ZeroingRangeScene.unity";
         private const string MaterialFolder = "Assets/SimulatedShooting/Art/Materials";
+        private const string LeftHandModelPath =
+            "Assets/SimulatedShooting/Art/Hands/UnityXRHands/LeftHand.fbx";
+        private const string RightHandModelPath =
+            "Assets/SimulatedShooting/Art/Hands/UnityXRHands/RightHand.fbx";
+        private const string ProjectileModelPath =
+            "Assets/SimulatedShooting/Art/Ballistics/PichuliruFlatAmmunition/Projectile_556x45.fbx";
+        private const string RifleShotPath =
+            "Assets/SimulatedShooting/Audio/Weapons/rifle-sks-single-shot.wav";
+        private const string PickupPath =
+            "Assets/SimulatedShooting/Audio/Weapons/weapon-pickup-mechanical.wav";
+        private const string FlybyPath =
+            "Assets/SimulatedShooting/Audio/Weapons/bullet-flyby-cc0-hq.mp3";
+        private const string ImpactThudPath =
+            "Assets/SimulatedShooting/Audio/Impacts/target-impact-metal-thud.wav";
+        private const string ImpactClinkPath =
+            "Assets/SimulatedShooting/Audio/Impacts/target-impact-metal-clink.wav";
+        private const string FootstepFolder =
+            "Assets/SimulatedShooting/Audio/Footsteps";
+        private static readonly Vector3 ComfortableWeaponSpawnPosition = new Vector3(0.40f, 1.10f, 0.55f);
 
         [MenuItem("Tools/Simulated Shooting/Build Zeroing Range Scene")]
         public static void Build()
@@ -37,6 +56,46 @@ namespace SimulatedShooting.Editor
             EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
             EditorApplication.isPlaying = true;
             Debug.Log("Running ZeroingRangeScene with the no-VR test camera.");
+        }
+
+        [MenuItem("Tools/Simulated Shooting/Upgrade Zeroing Range Hands and Feedback")]
+        public static void UpgradeHandsAndFeedback()
+        {
+            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+            if (scene.path != ScenePath)
+            {
+                scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+            }
+
+            var playerRoot = FindByTestId("ZeroingRange.Weapon.PlayerRoot");
+            var weapon = FindByTestId("ZeroingRange.Weapon.TrainingRifle");
+            var xrOriginObject = FindByTestId("ZeroingRange.Origin.VR");
+            if (playerRoot == null || weapon == null || xrOriginObject == null)
+            {
+                Debug.LogError("[ZeroingRangeSceneBuilder] Cannot upgrade feedback: required scene anchors are missing.");
+                return;
+            }
+
+            var binding = weapon.GetComponent<WeaponPrefabBinding>();
+            var controller = playerRoot.GetComponent<FirstPersonTrainingWeaponController>();
+            var tracerRoot = FindByTestId("ZeroingRange.Weapon.TracerRoot")?.transform;
+            if (binding == null || controller == null || tracerRoot == null)
+            {
+                Debug.LogError("[ZeroingRangeSceneBuilder] Cannot upgrade feedback: weapon binding is incomplete.");
+                return;
+            }
+
+            var gloveMaterial = GetMaterial("RangeSandbag", new Color(0.24f, 0.25f, 0.17f));
+            P1XrFloorOriginUpgrader.ConfigureFloorOrigin(xrOriginObject);
+            ConfigureComfortableWeaponSpawn(
+                FindByTestId("ZeroingRange.WeaponSpawn")?.transform,
+                weapon.transform);
+            ConfigureHandVisuals(xrOriginObject.transform, binding, gloveMaterial);
+            ConfigureWeaponFeedback(playerRoot.transform, binding, tracerRoot, xrOriginObject.transform, controller);
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+            AssetDatabase.SaveAssets();
+            Debug.Log("[ZeroingRangeSceneBuilder] Upgraded virtual hands, weapon audio, footsteps, and ballistic feedback.");
         }
 
         private static void CreateScene(Transform root)
@@ -171,7 +230,7 @@ namespace SimulatedShooting.Editor
             anchors.SetParent(root);
             var shootingPosition = CreateAnchor("ShootingPosition", anchors, new Vector3(0f, 1.5f, 0f));
             AddTestId(shootingPosition.gameObject, "ZeroingRange.ShootingPosition");
-            var weaponSpawn = CreateAnchor("WeaponSpawnPoint", anchors, new Vector3(0.70f, 1.30f, 0.75f));
+            var weaponSpawn = CreateAnchor("WeaponSpawnPoint", anchors, ComfortableWeaponSpawnPosition);
             weaponSpawn.localRotation = Quaternion.Euler(0f, -90f, 0f);
             AddTestId(weaponSpawn.gameObject, "ZeroingRange.WeaponSpawn");
             AddTestId(CreateAnchor("HudAnchor", anchors, new Vector3(0f, 1.55f, 1.5f)).gameObject,
@@ -201,9 +260,11 @@ namespace SimulatedShooting.Editor
             xrOrigin.name = "XR Origin (VR)";
             xrOrigin.transform.SetParent(anchors);
             xrOrigin.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            P1XrFloorOriginUpgrader.ConfigureFloorOrigin(xrOrigin);
             AddTestId(xrOrigin, "ZeroingRange.Origin.VR");
 
-            ConfigureDirectInteractors(xrOrigin.transform, darkMetal);
+            var gloveMaterial = GetMaterial("RangeSandbag", new Color(0.24f, 0.25f, 0.17f));
+            ConfigureDirectInteractors(xrOrigin.transform, gloveMaterial);
 
             CreateFirstPersonTrainingWeapon(anchors, camera, xrOrigin.transform);
             var modeController = anchors.gameObject.AddComponent<ZeroingRangeXRModeController>();
@@ -229,13 +290,37 @@ namespace SimulatedShooting.Editor
             var weaponSpawn = anchors.Find("WeaponSpawnPoint");
             if (weaponSpawn != null)
             {
-                weaponObject.transform.SetPositionAndRotation(weaponSpawn.position, weaponSpawn.rotation);
+                ConfigureComfortableWeaponSpawn(weaponSpawn, weaponObject.transform);
             }
 
             var binding = weaponObject.GetComponent<WeaponPrefabBinding>();
             var controller = playerRoot.gameObject.AddComponent<FirstPersonTrainingWeaponController>();
             controller.ConfigureForScene(noVrCamera, binding, null, tracerRoot);
             ConfigureVrPoseSources(controller, xrOrigin);
+            ConfigureHandVisuals(xrOrigin, binding,
+                GetMaterial("RangeSandbag", new Color(0.24f, 0.25f, 0.17f)));
+            ConfigureWeaponFeedback(playerRoot, binding, tracerRoot, xrOrigin, controller);
+        }
+
+        private static void ConfigureComfortableWeaponSpawn(Transform spawn, Transform weapon)
+        {
+            if (spawn == null)
+            {
+                return;
+            }
+
+            spawn.localPosition = ComfortableWeaponSpawnPosition;
+            spawn.localRotation = Quaternion.Euler(0f, -90f, 0f);
+            EditorUtility.SetDirty(spawn);
+
+            if (weapon == null)
+            {
+                return;
+            }
+
+            weapon.SetPositionAndRotation(spawn.position, spawn.rotation);
+            EditorUtility.SetDirty(weapon);
+            PrefabUtility.RecordPrefabInstancePropertyModifications(weapon);
         }
 
         private static void ConfigureVrPoseSources(FirstPersonTrainingWeaponController controller, Transform xrOrigin)
@@ -322,15 +407,191 @@ namespace SimulatedShooting.Editor
                 inputActionPerformed = new InputAction("Grip Select", InputActionType.Button, selectBinding)
             };
 
-            var hand = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            hand.name = $"VirtualHand_{suffix}";
-            hand.transform.SetParent(controller, false);
+            EnsureHandVisualRoot(controller, handedness, handMaterial);
+        }
+
+        private static void ConfigureHandVisuals(
+            Transform xrOrigin,
+            WeaponPrefabBinding binding,
+            Material handMaterial)
+        {
+            if (xrOrigin == null || binding == null)
+            {
+                return;
+            }
+
+            var grab = binding.GetComponent<TrainingRifleGrabInteractable>();
+            ConfigureHandVisual(
+                FindController(xrOrigin, "Right"),
+                InteractorHandedness.Right,
+                binding.RearHandGrip,
+                grab,
+                handMaterial);
+            ConfigureHandVisual(
+                FindController(xrOrigin, "Left"),
+                InteractorHandedness.Left,
+                binding.FrontHandGrip,
+                grab,
+                handMaterial);
+        }
+
+        private static GameObject EnsureHandVisualRoot(
+            Transform controller,
+            InteractorHandedness handedness,
+            Material handMaterial)
+        {
+            if (controller == null)
+            {
+                return null;
+            }
+
+            var suffix = handedness == InteractorHandedness.Right ? "Right" : "Left";
+            var hand = controller.Find($"VirtualHand_{suffix}")?.gameObject;
+            if (hand == null)
+            {
+                hand = new GameObject($"VirtualHand_{suffix}");
+                hand.transform.SetParent(controller, false);
+            }
+
             hand.transform.localPosition = new Vector3(0f, -0.025f, 0.08f);
             hand.transform.localRotation = Quaternion.Euler(8f, 0f, 0f);
-            hand.transform.localScale = new Vector3(0.085f, 0.045f, 0.18f);
-            Object.DestroyImmediate(hand.GetComponent<Collider>());
-            hand.GetComponent<Renderer>().sharedMaterial = handMaterial;
-            AddTestId(hand, $"ZeroingRange.Origin.VR.VirtualHand.{suffix}");
+            hand.transform.localScale = Vector3.one;
+
+            var rootFilter = hand.GetComponent<MeshFilter>();
+            if (rootFilter != null)
+                Object.DestroyImmediate(rootFilter);
+            var rootRenderer = hand.GetComponent<MeshRenderer>();
+            if (rootRenderer != null)
+                Object.DestroyImmediate(rootRenderer);
+            var rootCollider = hand.GetComponent<Collider>();
+            if (rootCollider != null)
+                Object.DestroyImmediate(rootCollider);
+            AddTestIdIfMissing(hand, $"ZeroingRange.Origin.VR.VirtualHand.{suffix}");
+
+            var modelName = $"Model_{suffix}Hand";
+            var model = hand.transform.Find(modelName)?.gameObject;
+            if (model == null)
+            {
+                var modelPath = handedness == InteractorHandedness.Right
+                    ? RightHandModelPath
+                    : LeftHandModelPath;
+                var modelAsset = AssetDatabase.LoadAssetAtPath<GameObject>(modelPath);
+                if (modelAsset == null)
+                {
+                    Debug.LogError($"[ZeroingRangeSceneBuilder] Missing virtual hand model: {modelPath}");
+                    return hand;
+                }
+
+                model = PrefabUtility.InstantiatePrefab(modelAsset) as GameObject;
+                if (model == null)
+                {
+                    Debug.LogError($"[ZeroingRangeSceneBuilder] Could not instantiate virtual hand model: {modelPath}");
+                    return hand;
+                }
+
+                model.name = modelName;
+                model.transform.SetParent(hand.transform, false);
+                model.transform.localPosition = Vector3.zero;
+                model.transform.localRotation = Quaternion.identity;
+                model.transform.localScale = Vector3.one;
+                AddTestId(model, $"ZeroingRange.Origin.VR.HandVisual.{suffix}");
+            }
+
+            foreach (var renderer in model.GetComponentsInChildren<Renderer>(true))
+            {
+                var materials = renderer.sharedMaterials;
+                for (var index = 0; index < materials.Length; index++)
+                {
+                    materials[index] = handMaterial;
+                }
+
+                renderer.sharedMaterials = materials;
+            }
+
+            return hand;
+        }
+
+        private static void ConfigureHandVisual(
+            Transform controller,
+            InteractorHandedness handedness,
+            Transform gripAnchor,
+            TrainingRifleGrabInteractable grab,
+            Material handMaterial)
+        {
+            var hand = EnsureHandVisualRoot(controller, handedness, handMaterial);
+            if (hand == null)
+            {
+                return;
+            }
+
+            var suffix = handedness == InteractorHandedness.Right ? "Right" : "Left";
+            var model = hand.transform.Find($"Model_{suffix}Hand");
+            if (model == null)
+            {
+                return;
+            }
+
+            var visual = hand.GetComponent<VRControllerHandVisual>() ??
+                         hand.AddComponent<VRControllerHandVisual>();
+            var side = handedness == InteractorHandedness.Right
+                ? VirtualHandSide.Right
+                : VirtualHandSide.Left;
+            var positionOffset = handedness == InteractorHandedness.Right
+                ? new Vector3(0.002f, -0.018f, -0.025f)
+                : new Vector3(-0.002f, -0.012f, -0.018f);
+            var rotationOffset = handedness == InteractorHandedness.Right
+                ? new Vector3(4f, 0f, -5f)
+                : new Vector3(2f, 0f, 5f);
+            visual.Configure(side, model, grab, gripAnchor, positionOffset, rotationOffset);
+        }
+
+        private static void ConfigureWeaponFeedback(
+            Transform playerRoot,
+            WeaponPrefabBinding binding,
+            Transform tracerRoot,
+            Transform xrOrigin,
+            FirstPersonTrainingWeaponController controller)
+        {
+            if (playerRoot == null || binding == null || controller == null)
+            {
+                return;
+            }
+
+            var projectile = AssetDatabase.LoadAssetAtPath<GameObject>(ProjectileModelPath);
+            var shot = AssetDatabase.LoadAssetAtPath<AudioClip>(RifleShotPath);
+            var pickup = AssetDatabase.LoadAssetAtPath<AudioClip>(PickupPath);
+            var flyby = AssetDatabase.LoadAssetAtPath<AudioClip>(FlybyPath);
+            var impacts = new[]
+            {
+                AssetDatabase.LoadAssetAtPath<AudioClip>(ImpactThudPath),
+                AssetDatabase.LoadAssetAtPath<AudioClip>(ImpactClinkPath)
+            };
+            var grab = binding.GetComponent<TrainingRifleGrabInteractable>();
+            var feedback = playerRoot.GetComponent<WeaponFeedbackController>() ??
+                           playerRoot.gameObject.AddComponent<WeaponFeedbackController>();
+            feedback.Configure(
+                binding.MuzzlePoint,
+                tracerRoot,
+                binding.transform,
+                grab,
+                projectile,
+                shot,
+                pickup,
+                flyby,
+                impacts);
+            controller.ConfigureFeedback(feedback);
+
+            var footsteps = playerRoot.GetComponent<PlayerFootstepAudio>() ??
+                            playerRoot.gameObject.AddComponent<PlayerFootstepAudio>();
+            var headPose = xrOrigin != null
+                ? xrOrigin.GetComponentsInChildren<Camera>(true).FirstOrDefault()?.transform
+                : null;
+            var footstepClips = Enumerable.Range(1, 6)
+                .Select(index => AssetDatabase.LoadAssetAtPath<AudioClip>(
+                    $"{FootstepFolder}/footstep-concrete-{index:00}.ogg"))
+                .Where(clip => clip != null)
+                .ToArray();
+            footsteps.Configure(headPose, footstepClips);
         }
 
         private static Transform FindController(Transform root, string handedness)
@@ -344,6 +605,12 @@ namespace SimulatedShooting.Editor
             return root.GetComponentsInChildren<Transform>(true)
                        .FirstOrDefault(transform => transform.name == expectedName) ??
                    FindChildByNameTokens(root, handedness, "Controller");
+        }
+
+        private static GameObject FindByTestId(string id)
+        {
+            return Object.FindObjectsOfType<SceneTestId>(true)
+                .FirstOrDefault(candidate => candidate.Id == id)?.gameObject;
         }
 
         private static Transform FindChildByNameTokens(Transform root, params string[] tokens)

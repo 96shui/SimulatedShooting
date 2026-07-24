@@ -8,5 +8,5 @@
 - Download archive: `QBC-191/source/Final test.zip`
 - Imported model: `QBC-191/source/QBZ-191.obj`
 - Original content: one 37.9k-triangle OBJ with body and magazine material slots, plus 4K base-color, normal, metallic and roughness textures
-- Project processing: runtime texture import is capped at 2K; metallic and inverse-roughness are packed into URP metallic/smoothness textures; the standalone magazine vertex group is moved 10 mm upward to remove the visible receiver gap
-- Integration: `TrainingRiflePrefabBuilder` replaces only the visual layer and preserves the `training-rifle` service ID, XR grab component, recoil root, colliders, muzzle, aim line, grip, shoulder and test-ID bindings
+- Project processing: runtime texture import is capped at 2K; metallic and inverse-roughness are packed into URP metallic/smoothness textures; the standalone magazine vertex group is moved 44 mm upward to correct the source model's detached reload pose and seat its top just inside the receiver
+- Integration: the archive did not contain the MTL referenced by the OBJ, so a minimal local `QBZ-191.mtl` restores the `Qbz` and `Material.001` submesh boundaries before `TrainingRiflePrefabBuilder` assigns the two project URP materials; the builder replaces only the visual layer and preserves the `training-rifle` service ID, XR grab component, recoil root, colliders, muzzle, aim line, grip, shoulder and test-ID bindings
