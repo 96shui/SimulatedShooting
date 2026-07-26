@@ -181,6 +181,36 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [Test]
+        public void Task016_TreeBillboardsFillBothSidesWithoutBlockingTheLane()
+        {
+            var left = Find("ZeroingRange.Environment.TreeLine.Left");
+            var right = Find("ZeroingRange.Environment.TreeLine.Right");
+
+            Assert.That(left, Is.Not.Null);
+            Assert.That(right, Is.Not.Null);
+            Assert.That(left.transform.childCount, Is.EqualTo(6));
+            Assert.That(right.transform.childCount, Is.EqualTo(6));
+            Assert.That(left.GetComponentsInChildren<Renderer>().Length, Is.EqualTo(24));
+            Assert.That(right.GetComponentsInChildren<Renderer>().Length, Is.EqualTo(24));
+            Assert.That(left.GetComponentsInChildren<Collider>(), Is.Empty);
+            Assert.That(right.GetComponentsInChildren<Collider>(), Is.Empty);
+            Assert.That(left.GetComponentsInChildren<Renderer>().All(renderer => renderer.bounds.max.x < -12f),
+                Is.True);
+            Assert.That(right.GetComponentsInChildren<Renderer>().All(renderer => renderer.bounds.min.x > 12f),
+                Is.True);
+        }
+
+        [Test]
+        public void Task016_LegacyPrimitiveTreeCrownsAreAbsent()
+        {
+            var crownCount = SceneManager.GetActiveScene().GetRootGameObjects()
+                .SelectMany(root => root.GetComponentsInChildren<Transform>(true))
+                .Count(child => child.name.StartsWith("Crown_"));
+
+            Assert.That(crownCount, Is.Zero);
+        }
+
+        [Test]
         public void Task016_WeaponCrateAppearsInLowerLeftWithoutBlockingTarget()
         {
             var camera = Find("ZeroingRange.Camera.NoVR").GetComponent<Camera>();
