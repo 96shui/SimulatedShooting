@@ -15,6 +15,8 @@ namespace SimulatedShooting.Editor
     {
         private const string ScenePath = "Assets/Scenes/ZeroingRangeScene.unity";
         private const string MaterialFolder = "Assets/SimulatedShooting/Art/Materials";
+        private const string TreeTexturePath =
+            "Assets/SimulatedShooting/Art/Vegetation/RangeTree_Broadleaf.png";
         private const string LeftHandModelPath =
             "Assets/SimulatedShooting/Art/Hands/UnityXRHands/LeftHand.fbx";
         private const string RightHandModelPath =
@@ -48,6 +50,49 @@ namespace SimulatedShooting.Editor
             EditorSceneManager.SaveScene(scene, ScenePath);
             AddSceneToBuildSettings();
             AssetDatabase.SaveAssets();
+        }
+
+        [MenuItem("Tools/Simulated Shooting/Refresh Range Skybox And Trees")]
+        public static void RefreshEnvironmentVisuals()
+        {
+            var scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+            var environment = GameObject.Find("ZeroingRange/Environment")?.transform;
+            if (environment == null)
+                throw new System.InvalidOperationException("ZeroingRange/Environment was not found.");
+
+            foreach (var sideName in new[] { "Left", "Right" })
+            {
+                var existing = environment.Find($"TreeLine_{sideName}");
+                if (existing != null)
+                    Object.DestroyImmediate(existing.gameObject);
+                CreateBillboardTreeLine(environment, sideName == "Left" ? -1f : 1f, sideName);
+            }
+
+            MarkRenderersStatic(environment);
+            PostWarSkyboxInstaller.ApplyEnvironment(GetSkyboxMaterial());
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+            AssetDatabase.SaveAssets();
+            Debug.Log("[ZeroingRangeSceneBuilder] Refreshed the 4K skybox and side tree lines.");
+        }
+
+        [MenuItem("Tools/Simulated Shooting/Remove Legacy Tree Crowns")]
+        public static void RemoveLegacyTreeCrowns()
+        {
+            var scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Single);
+            var environment = GameObject.Find("ZeroingRange/Environment")?.transform;
+            if (environment == null)
+                throw new System.InvalidOperationException("ZeroingRange/Environment was not found.");
+
+            var crowns = environment.GetComponentsInChildren<Transform>(true)
+                .Where(child => child.name.StartsWith("Crown_"))
+                .ToArray();
+            foreach (var crown in crowns)
+                Object.DestroyImmediate(crown.gameObject);
+
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+            Debug.Log($"[ZeroingRangeSceneBuilder] Removed {crowns.Length} legacy tree crowns.");
         }
 
         [MenuItem("Tools/Simulated Shooting/Run Zeroing Range Scene")]
@@ -672,6 +717,9 @@ namespace SimulatedShooting.Editor
                 var height = 2.6f + index % 4 * 0.35f;
                 CreateTree($"Tree_{index:00}", parent, new Vector3(x, 3.3f, z), height, foliage);
             }
+
+            CreateBillboardTreeLine(parent, -1f, "Left");
+            CreateBillboardTreeLine(parent, 1f, "Right");
         }
 
         private static void CreateForeground(Transform parent, Material darkMetal, Material sandbag)
@@ -716,10 +764,34 @@ namespace SimulatedShooting.Editor
             tree.localPosition = position;
             CreateCylinder("Trunk", tree, Vector3.zero, new Vector3(0.15f, height * 0.3f, 0.15f), material,
                 Quaternion.identity, false);
-            for (var layer = 0; layer < 3; layer++)
-                CreateSphere($"Crown_{layer}", tree, new Vector3(0f, layer * height * 0.22f, 0f),
-                    new Vector3(height * (0.55f - layer * 0.10f), height * 0.42f,
-                        height * (0.55f - layer * 0.10f)), material);
+        }
+
+        private static void CreateBillboardTreeLine(Transform parent, float side, string sideName)
+        {
+            var material = GetTreeBillboardMaterial();
+            var line = CreateAnchor($"TreeLine_{sideName}", parent, Vector3.zero);
+            AddTestId(line.gameObject, $"ZeroingRange.Environment.TreeLine.{sideName}");
+
+            for (var index = 0; index < 6; index++)
+            {
+                var height = 7.5f + index % 3 * 1.1f;
+                var x = side * (16.5f + index % 2 * 1.8f);
+                var z = 12f + index * 16f;
+                var tree = CreateAnchor($"Broadleaf_{sideName}_{index:00}", line, new Vector3(x, 3.85f, z));
+                var size = new Vector3(height * 0.67f, height, 1f);
+                var centre = new Vector3(0f, height * 0.5f, 0f);
+
+                foreach (var angle in new[] { 0f, 90f, 180f, 270f })
+                {
+                    var billboard = CreatePrimitive(PrimitiveType.Quad, $"Billboard_{angle:0}", tree, centre,
+                        size, material, Quaternion.Euler(0f, angle, 0f), false);
+                    var renderer = billboard.GetComponent<Renderer>();
+                    renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                    renderer.receiveShadows = false;
+                    renderer.lightProbeUsage = UnityEngine.Rendering.LightProbeUsage.Off;
+                    renderer.reflectionProbeUsage = UnityEngine.Rendering.ReflectionProbeUsage.Off;
+                }
+            }
         }
 
         private static void CreateLighting(Transform root)
@@ -736,16 +808,7 @@ namespace SimulatedShooting.Editor
             light.shadowResolution = UnityEngine.Rendering.LightShadowResolution.Medium;
             light.shadowStrength = 0.8f;
 
-            RenderSettings.skybox = GetSkyboxMaterial();
-            RenderSettings.ambientMode = UnityEngine.Rendering.AmbientMode.Trilight;
-            RenderSettings.ambientSkyColor = new Color(0.42f, 0.50f, 0.58f);
-            RenderSettings.ambientEquatorColor = new Color(0.30f, 0.32f, 0.28f);
-            RenderSettings.ambientGroundColor = new Color(0.12f, 0.13f, 0.10f);
-            RenderSettings.fog = true;
-            RenderSettings.fogMode = FogMode.Linear;
-            RenderSettings.fogColor = new Color(0.46f, 0.57f, 0.65f);
-            RenderSettings.fogStartDistance = 90f;
-            RenderSettings.fogEndDistance = 210f;
+            PostWarSkyboxInstaller.ApplyEnvironment(GetSkyboxMaterial());
         }
 
         private static GameObject CreateCube(string name, Transform parent, Vector3 position, Vector3 scale,
@@ -848,18 +911,48 @@ namespace SimulatedShooting.Editor
 
         private static Material GetSkyboxMaterial()
         {
-            var path = $"{MaterialFolder}/RangeSkybox.mat";
+            return PostWarSkyboxInstaller.GetOrCreateMaterial();
+        }
+
+        private static Material GetTreeBillboardMaterial()
+        {
+            var importer = AssetImporter.GetAtPath(TreeTexturePath) as TextureImporter;
+            if (importer == null)
+                throw new System.InvalidOperationException($"Tree texture was not imported: {TreeTexturePath}");
+
+            importer.textureType = TextureImporterType.Default;
+            importer.sRGBTexture = true;
+            importer.alphaSource = TextureImporterAlphaSource.FromInput;
+            importer.alphaIsTransparency = true;
+            importer.mipmapEnabled = true;
+            importer.mipMapsPreserveCoverage = true;
+            importer.alphaTestReferenceValue = 0.35f;
+            importer.npotScale = TextureImporterNPOTScale.None;
+            importer.wrapMode = TextureWrapMode.Clamp;
+            importer.filterMode = FilterMode.Bilinear;
+            importer.maxTextureSize = 2048;
+            importer.textureCompression = TextureImporterCompression.CompressedHQ;
+            importer.SaveAndReimport();
+
+            var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(TreeTexturePath);
+            var path = $"{MaterialFolder}/RangeTreeBillboard.mat";
             var material = AssetDatabase.LoadAssetAtPath<Material>(path);
+            var shader = Shader.Find("Unlit/Transparent Cutout");
+            if (shader == null)
+                throw new System.InvalidOperationException("Unity shader 'Unlit/Transparent Cutout' is unavailable.");
+
             if (material == null)
             {
-                material = new Material(Shader.Find("Skybox/Procedural")) { name = "RangeSkybox" };
+                material = new Material(shader) { name = "RangeTreeBillboard" };
                 AssetDatabase.CreateAsset(material, path);
             }
+            else
+            {
+                material.shader = shader;
+            }
 
-            material.SetColor("_SkyTint", new Color(0.42f, 0.62f, 0.82f));
-            material.SetColor("_GroundColor", new Color(0.24f, 0.24f, 0.19f));
-            material.SetFloat("_AtmosphereThickness", 0.8f);
-            material.SetFloat("_Exposure", 1.15f);
+            material.mainTexture = texture;
+            material.SetFloat("_Cutoff", 0.35f);
             EditorUtility.SetDirty(material);
             return material;
         }
