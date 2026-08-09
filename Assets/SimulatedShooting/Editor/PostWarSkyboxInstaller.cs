@@ -127,7 +127,7 @@ namespace SimulatedShooting.Editor
             RenderSettings.ambientMode = AmbientMode.Trilight;
             RenderSettings.ambientSkyColor = new Color(0.40f, 0.43f, 0.46f);
             RenderSettings.ambientEquatorColor = new Color(0.34f, 0.33f, 0.30f);
-            RenderSettings.ambientGroundColor = new Color(0.15f, 0.14f, 0.12f);
+            RenderSettings.ambientGroundColor = new Color(0.24f, 0.22f, 0.19f);
             RenderSettings.defaultReflectionMode = DefaultReflectionMode.Skybox;
             RenderSettings.reflectionIntensity = 0.7f;
             RenderSettings.fog = true;
