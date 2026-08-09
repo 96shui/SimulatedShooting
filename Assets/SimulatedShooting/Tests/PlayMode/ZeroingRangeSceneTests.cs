@@ -677,6 +677,74 @@ namespace SimulatedShooting.Tests.PlayMode
                 Find("ZeroingRange.Weapon.Grip.RearHand").transform.position), Is.LessThan(0.06f));
         }
 
+        [Test]
+        public void Task013_VirtualHandGripPoseUsesUprightRearGripAndPalmUpFrontSupport()
+        {
+            // BDD: 05-100m射击HUD / 虚拟手使用手部网格并在持枪时切换握持姿势
+            var rightVisual = Find("ZeroingRange.Origin.VR.VirtualHand.Right")
+                .GetComponent<VRControllerHandVisual>();
+            var leftVisual = Find("ZeroingRange.Origin.VR.VirtualHand.Left")
+                .GetComponent<VRControllerHandVisual>();
+            var rearGrip = Find("ZeroingRange.Weapon.Grip.RearHand").transform;
+            var frontGrip = Find("ZeroingRange.Weapon.Grip.FrontHand").transform;
+
+            rightVisual.SetGripForTests(true);
+            leftVisual.SetGripForTests(true);
+
+            Assert.That(Vector3.Dot(rightVisual.transform.forward, rearGrip.up), Is.GreaterThan(0.95f),
+                "The rear-hand wrist axis should be upright along the pistol grip");
+            Assert.That(Vector3.Dot(-leftVisual.transform.up, frontGrip.up), Is.GreaterThan(0.95f),
+                "The front-hand palm normal should face upward beneath the handguard");
+            Assert.That(Vector3.Distance(leftVisual.transform.position, frontGrip.position), Is.LessThan(0.06f));
+        }
+
+        [Test]
+        public void Task013_RifleGripUsesStraightTriggerFingerAndOpenFrontHandWrap()
+        {
+            // BDD: 05-100m射击HUD / 虚拟手使用手部网格并在持枪时切换握持姿势
+            var rightVisual = Find("ZeroingRange.Origin.VR.VirtualHand.Right")
+                .GetComponent<VRControllerHandVisual>();
+            var leftVisual = Find("ZeroingRange.Origin.VR.VirtualHand.Left")
+                .GetComponent<VRControllerHandVisual>();
+
+            Transform Joint(VRControllerHandVisual visual, string finger, string segment) =>
+                visual.ModelRoot.GetComponentsInChildren<Transform>(true).First(transform =>
+                    transform.name.IndexOf(finger, System.StringComparison.OrdinalIgnoreCase) >= 0 &&
+                    transform.name.EndsWith(segment, System.StringComparison.OrdinalIgnoreCase));
+
+            var rightIndexProximal = Joint(rightVisual, "Index", "Proximal");
+            var rightIndexIntermediate = Joint(rightVisual, "Index", "Intermediate");
+            var rightMiddleIntermediate = Joint(rightVisual, "Middle", "Intermediate");
+            var leftIndexIntermediate = Joint(leftVisual, "Index", "Intermediate");
+            var leftIndexDistal = Joint(leftVisual, "Index", "Distal");
+            var leftThumbProximal = Joint(leftVisual, "Thumb", "Proximal");
+
+            rightVisual.SetGripForTests(false);
+            leftVisual.SetGripForTests(false);
+            var rightIndexProximalOpen = rightIndexProximal.localRotation;
+            var rightIndexIntermediateOpen = rightIndexIntermediate.localRotation;
+            var rightMiddleIntermediateOpen = rightMiddleIntermediate.localRotation;
+            var leftIndexIntermediateOpen = leftIndexIntermediate.localRotation;
+            var leftIndexDistalOpen = leftIndexDistal.localRotation;
+            var leftThumbProximalOpen = leftThumbProximal.localRotation;
+
+            rightVisual.SetGripForTests(true);
+            leftVisual.SetGripForTests(true);
+
+            Assert.That(Quaternion.Angle(rightIndexProximalOpen, rightIndexProximal.localRotation),
+                Is.InRange(65f, 95f), "The trigger finger should turn toward the trigger at its base joint");
+            Assert.That(Quaternion.Angle(rightIndexIntermediateOpen, rightIndexIntermediate.localRotation),
+                Is.LessThan(20f), "The trigger finger should remain relatively straight");
+            Assert.That(Quaternion.Angle(rightMiddleIntermediateOpen, rightMiddleIntermediate.localRotation),
+                Is.InRange(55f, 80f), "The lower fingers should naturally wrap the rear grip");
+            Assert.That(Quaternion.Angle(leftIndexIntermediateOpen, leftIndexIntermediate.localRotation),
+                Is.InRange(20f, 40f), "The support fingers should only bend gently upward");
+            Assert.That(Quaternion.Angle(leftIndexDistalOpen, leftIndexDistal.localRotation),
+                Is.LessThan(20f), "The support fingertips should not hook through the handguard");
+            Assert.That(Quaternion.Angle(leftThumbProximalOpen, leftThumbProximal.localRotation),
+                Is.InRange(5f, 25f), "The support thumb should keep an open web with the index finger");
+        }
+
         [UnityTest]
         public IEnumerator Task013_VirtualHandGripPoseDeformsTheSkinnedMesh()
         {
