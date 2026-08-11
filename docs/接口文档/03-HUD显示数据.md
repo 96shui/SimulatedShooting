@@ -23,8 +23,7 @@ public readonly struct HudDto
 public enum HudType
 {
     Zeroing,
-    MovingTargetDay,
-    MovingTargetNight,
+    MovingTarget,
     Trench,
     UrbanStreet,
     UrbanBuilding
@@ -107,8 +106,7 @@ public interface IHUDService
 | HUD | 必填显示 |
 |---|---|
 | Zeroing | 轮次、距离 100m、弹数、稳定度、弹着记录、CanShoot |
-| MovingTargetDay | 弹药 10 发、点射模式、命中数、速度、方向、可射击状态 |
-| MovingTargetNight | 弹药 10 发、点射模式、命中数、速度、方向、端点禁射提示、微光镜状态 |
+| MovingTarget | 弹药、点射模式、命中数、速度、方向、端点禁射提示、可射击状态 |
 | Trench | 小地图、弹药、队友状态、姿态、换肩、拐角射击 |
 | UrbanStreet | 小地图、任务提示、弹药、姿态、换肩、建筑入口提示 |
 | UrbanBuilding | 楼层小地图、房间状态、危险区域、交互提示、弹药、任务进度 |

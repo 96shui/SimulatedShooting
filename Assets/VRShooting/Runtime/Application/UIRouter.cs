@@ -127,18 +127,6 @@ namespace VRShooting.Application
                         ReturnToScreen = ScreenId.MainMenu.ToString()
                     });
 
-                case UIEventId.MainMenu_OpenArmory:
-                    return Open(ScreenId.Armory, new NavigationArgs
-                    {
-                        ReturnToScreen = ScreenId.MainMenu.ToString()
-                    });
-
-                case UIEventId.MainMenu_OpenSettings:
-                    return Open(ScreenId.Settings, new NavigationArgs
-                    {
-                        ReturnToScreen = ScreenId.MainMenu.ToString()
-                    });
-
                 case UIEventId.Zeroing_Start:
                     return Open(ScreenId.ZeroingHud, args);
 

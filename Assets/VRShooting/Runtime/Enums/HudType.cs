@@ -3,8 +3,7 @@ namespace VRShooting.Common
     public enum HudType
     {
         Zeroing,
-        MovingTargetDay,
-        MovingTargetNight,
+        MovingTarget,
         Trench,
         UrbanStreet,
         UrbanBuilding

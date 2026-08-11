@@ -76,6 +76,7 @@ namespace VRShooting.Unity.UI
         RectTransform zeroingStabilityFill;
         readonly List<RectTransform> zeroingImpactDots = new List<RectTransform>();
         Button openZeroingButton;
+        Button openMovingTargetButton;
         Button startButton;
         Button backButton;
         Button applyAdjustmentButton;
@@ -114,6 +115,8 @@ namespace VRShooting.Unity.UI
         public string LastError { get; private set; } = string.Empty;
 
         public Button OpenZeroingButton => openZeroingButton;
+
+        public Button OpenMovingTargetButton => openMovingTargetButton;
 
         public Button StartButton => startButton;
 
@@ -360,7 +363,8 @@ namespace VRShooting.Unity.UI
             openZeroingButton = AddButton(parent, "Button_MainMenu_OpenZeroing", "100m精度射校靶", new Vector2(1390, 205), new Vector2(1700, 275), true);
             openZeroingButton.onClick.AddListener(OnOpenZeroingClicked);
 
-            DisableButton(AddButton(parent, "Button_MainMenu_MovingTarget_Disabled", "移动目标射击", new Vector2(1390, 300), new Vector2(1700, 370), false));
+            openMovingTargetButton = AddButton(parent, "Button_MainMenu_OpenMovingTarget", "移动目标射击", new Vector2(1390, 300), new Vector2(1700, 370), true);
+            openMovingTargetButton.onClick.AddListener(OnOpenMovingTargetClicked);
             DisableButton(AddButton(parent, "Button_MainMenu_Trench_Disabled", "堑壕射击", new Vector2(1390, 395), new Vector2(1700, 465), false));
             DisableButton(AddButton(parent, "Button_MainMenu_Urban_Disabled", "城镇攻防", new Vector2(1390, 490), new Vector2(1700, 560), false));
             DisableButton(AddButton(parent, "Button_MainMenu_Armory_Disabled", "武器库", new Vector2(1390, 585), new Vector2(1700, 655), false));
@@ -555,6 +559,24 @@ namespace VRShooting.Unity.UI
             }
         }
 
+        void OnOpenMovingTargetClicked()
+        {
+            LastError = string.Empty;
+
+            var result = services.Router.HandleUIEvent(UIEventId.MainMenu_OpenMovingTarget, ScreenId.MainMenu);
+            if (!result.Success)
+            {
+                LastError = result.Message;
+                return;
+            }
+
+            var gameMain = GameMain.Instance;
+            if (gameMain?.GameState != null)
+            {
+                gameMain.GameState.ChangeState(GameState.InGame, GameStateManager.MovingTargetSceneName);
+            }
+        }
+
         void OnStartZeroingClicked()
         {
             LastError = string.Empty;
@@ -590,7 +612,7 @@ namespace VRShooting.Unity.UI
             var gameMain = GameMain.Instance;
             if (gameMain?.GameState != null)
             {
-                gameMain.GameState.ChangeState(GameState.InGame);
+                gameMain.GameState.ChangeState(GameState.InGame, GameStateManager.ZeroingRangeSceneName);
             }
         }
 

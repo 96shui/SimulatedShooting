@@ -14,6 +14,7 @@ namespace VRShooting.Unity.Bootstrap
     {
         const string MainSceneName = "MainScene";
         const string ZeroingRangeSceneName = "ZeroingRangeScene";
+        const string MovingTargetSceneName = GameStateManager.MovingTargetSceneName;
 
         public static GameMain Instance { get; private set; }
 
@@ -52,7 +53,7 @@ namespace VRShooting.Unity.Bootstrap
             {
                 mainMenuXrModeController.RefreshForScene(activeScene);
             }
-            else if (activeScene.name != ZeroingRangeSceneName)
+            else if (activeScene.name != ZeroingRangeSceneName && activeScene.name != MovingTargetSceneName)
             {
                 PlayerFollowCamera.EnsureExists();
             }

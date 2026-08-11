@@ -13,11 +13,9 @@ namespace VRShooting.Common
         ZeroingImpactAnalysis,
         ZeroingFinalRating,
         MovingTargetSettings,
-        MovingTargetDayHud,
-        MovingTargetNightHud,
+        MovingTargetHud,
         MovingTargetResults,
         TrenchMapSelection,
-        Armory,
         TrenchBriefing,
         TrenchHud,
         SquadCommandRadial,
@@ -25,7 +23,6 @@ namespace VRShooting.Common
         UrbanMapSelection,
         UrbanStreetHud,
         UrbanBuildingHud,
-        UrbanResults,
-        Settings
+        UrbanResults
     }
 }

@@ -9,8 +9,6 @@ namespace VRShooting.Common
         MainMenu_OpenMovingTarget,
         MainMenu_OpenTrench,
         MainMenu_OpenUrban,
-        MainMenu_OpenArmory,
-        MainMenu_OpenSettings,
         Mode_SelectZeroing,
         Mode_SelectMovingTarget,
         Mode_SelectTrench,
@@ -22,9 +20,10 @@ namespace VRShooting.Common
         Zeroing_BackToMainMenu,
         Zeroing_Retry,
         Zeroing_BackToModeSelection,
+        MovingTarget_Start,
+        MovingTarget_Retry,
+        MovingTarget_BackToModeSelection,
         Common_Back,
-        Common_Retry,
-        Common_Apply,
-        Common_ResetDefault
+        Common_Retry
     }
 }

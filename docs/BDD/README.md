@@ -1,4 +1,4 @@
-# VR射击训练游戏 BDD 文档
+﻿# VR射击训练游戏 BDD 文档
 
 本目录根据 `../../UI/Sample/vr-shooting-ui-reference-wireframes.drawio` 中的 22 个 UI 页面、`../需求/VR射击游戏需求文档_汇总版.md`、`../需求/阶段化整体需求说明书.md` 以及当前 Unity 项目结构整理。文档面向策划、Unity 开发、QA 和自动化测试团队，用行为示例描述系统应如何响应玩家操作。
 
@@ -17,10 +17,9 @@
 | 标签 | 范围 | 完成口径 |
 |---|---|---|
 | P1 | 100m 射校闭环、基础输入、基础武器、100m HUD、弹着分析、射校结算 | Unity Editor 无 VR 可跑通；VR 设备到位后可实机验证同流程 |
-| P2 | 移动靶、武器库原型、设置原型、弹药/HUD 共用系统 | 在 P1 稳定基础上扩展第二个训练模式 |
+| P2 | 移动靶闭环（速度选择、点射、端点禁射、结算；沿用 P1 武器/HUD/弹药） | 在 P1 稳定基础上扩展第二个训练模式 |
 | P3 | 小型堑壕、小型城镇、简单敌人 AI、3 人纵队、简单血量 | 先做小地图和简单战斗闭环，不追求高级战术 AI |
-| Later | 高级敌人 AI、高级队友 AI、真实弹匣插拔、拉机柄、保险、医疗救援、复杂战术指令 | 仅作为远期目标，不进入 P1/P2 完成范围 |
- 
+
 未标注阶段的新增 BDD 默认不得进入实现，必须先补阶段标签和验收口径。
 
 ## 文档索引
@@ -34,12 +33,10 @@
 | 05 100m射击HUD | [05-100m射击HUD.feature.md](screens/05-100m射击HUD.feature.md) | 据枪稳定、弹数、轮次、弹着记录 |
 | 06 弹着分析 | [06-弹着分析.feature.md](screens/06-弹着分析.feature.md) | 偏差计算、应用调整、下一轮 |
 | 07 射校最终评级 | [07-射校最终评级.feature.md](screens/07-射校最终评级.feature.md) | 最终评级、三轮记录、重训 |
-| 08 移动靶设置 | [08-移动靶设置.feature.md](screens/08-移动靶设置.feature.md) | 昼夜模式、速度选择、开始训练 |
-| 09 移动靶白天HUD | [09-移动靶白天HUD.feature.md](screens/09-移动靶白天HUD.feature.md) | 白天移动靶、点射、命中统计 |
-| 10 移动靶夜晚HUD | [10-移动靶夜晚HUD.feature.md](screens/10-移动靶夜晚HUD.feature.md) | 夜晚微光镜、端点禁射、命中统计 |
+| 08 移动靶设置 | [08-移动靶设置.feature.md](screens/08-移动靶设置.feature.md) | 速度选择、开始训练 |
+| 09 移动靶 HUD | [09-移动靶HUD.feature.md](screens/09-移动靶HUD.feature.md) | 移动靶 HUD、点射、命中统计 |
 | 11 移动靶结算 | [11-移动靶结算.feature.md](screens/11-移动靶结算.feature.md) | 命中评级、路线记录、重训 |
 | 12 堑壕地图选择 | [12-堑壕地图选择.feature.md](screens/12-堑壕地图选择.feature.md) | 地图卡片、任务条件、确认 |
-| 13 武器库武器墙 | [13-武器库武器墙.feature.md](screens/13-武器库武器墙.feature.md) | 武器选择、属性、装备 |
 | 14 堑壕开场简报 | [14-堑壕开场简报.feature.md](screens/14-堑壕开场简报.feature.md) | 无人机简报、小队配置、进入堑壕 |
 | 15 堑壕第一人称HUD | [15-堑壕第一人称HUD.feature.md](screens/15-堑壕第一人称HUD.feature.md) | 堑壕战斗 HUD、姿态、弹药、队友 |
 | 16 队友指令环形菜单 | [16-队友指令环形菜单.feature.md](screens/16-队友指令环形菜单.feature.md) | 指令菜单、手榴弹、火力支援、掩护 |
@@ -48,7 +45,8 @@
 | 19 城镇街道HUD | [19-城镇街道HUD.feature.md](screens/19-城镇街道HUD.feature.md) | 街道进入、建筑入口、HUD 状态 |
 | 20 建筑搜索HUD | [20-建筑搜索HUD.feature.md](screens/20-建筑搜索HUD.feature.md) | 开门、观察、拐角伸枪、房间搜索 |
 | 21 城镇任务结算 | [21-城镇任务结算.feature.md](screens/21-城镇任务结算.feature.md) | 城镇胜负、房间搜索、重开 |
-| 22 设置界面 | [22-设置界面.feature.md](screens/22-设置界面.feature.md) | 舒适度、转向、移动、HUD、音量、应用 |
+
+> 已删除且不做：原 10 夜晚 HUD、13 武器库、22 设置界面。线框图若仍含对应页面，实现时忽略。
 
 ## 统一验收口径
 

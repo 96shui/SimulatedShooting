@@ -26,6 +26,19 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
+        public void Screen02_MainMenuOpenMovingTarget_GoesToMovingTargetSettings()
+        {
+            var bus = new GameEventBus();
+            var router = new UIRouter(bus);
+
+            var result = router.HandleUIEvent(UIEventId.MainMenu_OpenMovingTarget, ScreenId.MainMenu);
+
+            Assert.IsTrue(result.Success);
+            Assert.AreEqual(ScreenId.MovingTargetSettings, router.Current);
+            Assert.AreEqual(TrainingMode.MovingTarget, router.SelectedMode);
+        }
+
+        [Test]
         public void Screen02_RouterOpen_PublishesScreenChangedEvent()
         {
             var bus = new GameEventBus();

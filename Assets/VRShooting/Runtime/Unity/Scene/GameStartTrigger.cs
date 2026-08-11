@@ -41,7 +41,7 @@ namespace VRShooting.Unity.Scene
                 return;
             }
 
-            GameStateManager.Instance.ChangeState(GameState.InGame);
+            GameStateManager.Instance.ChangeState(GameState.InGame, GameStateManager.ZeroingRangeSceneName);
         }
 
         void OnTriggerEnter(Collider other)

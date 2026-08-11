@@ -21,17 +21,23 @@ namespace VRShooting.Application
     /// </summary>
     public class GameStateManager : BaseManager<GameStateManager>
     {
-        const string MainSceneName = "MainScene";
-        const string GameSceneName = "ZeroingRangeScene";
+        public const string MainSceneName = "MainScene";
+        public const string ZeroingRangeSceneName = "ZeroingRangeScene";
+        /// <summary>移动靶场景资源名（仓库当前文件名为 MovingargetScene）。</summary>
+        public const string MovingTargetSceneName = "MovingargetScene";
 
         public GameState CurrentState { get; private set; }
+
+        string activeTrainingSceneName = ZeroingRangeSceneName;
 
         protected override void Init()
         {
             base.Init();
 
-            if (SceneManager.GetActiveScene().name == GameSceneName)
+            var activeSceneName = SceneManager.GetActiveScene().name;
+            if (activeSceneName == ZeroingRangeSceneName || activeSceneName == MovingTargetSceneName)
             {
+                activeTrainingSceneName = activeSceneName;
                 CurrentState = GameState.InGame;
                 Debug.Log($"[{nameof(GameStateManager)}] 状态初始化为: {CurrentState}");
                 return;
@@ -42,6 +48,19 @@ namespace VRShooting.Application
 
         public void ChangeState(GameState newState)
         {
+            ChangeState(newState, null);
+        }
+
+        /// <summary>
+        /// 切换游戏状态。进入 InGame 时可指定训练场景名；未指定时沿用最近一次训练场景。
+        /// </summary>
+        public void ChangeState(GameState newState, string trainingSceneName)
+        {
+            if (newState == GameState.InGame && !string.IsNullOrWhiteSpace(trainingSceneName))
+            {
+                activeTrainingSceneName = trainingSceneName;
+            }
+
             CurrentState = newState;
             Debug.Log($"[{nameof(GameStateManager)}] 状态改变为: {newState}");
 
@@ -51,7 +70,9 @@ namespace VRShooting.Application
                     LoadSceneIfNeeded(MainSceneName);
                     break;
                 case GameState.InGame:
-                    LoadSceneIfNeeded(GameSceneName);
+                    LoadSceneIfNeeded(string.IsNullOrWhiteSpace(activeTrainingSceneName)
+                        ? ZeroingRangeSceneName
+                        : activeTrainingSceneName);
                     break;
             }
         }

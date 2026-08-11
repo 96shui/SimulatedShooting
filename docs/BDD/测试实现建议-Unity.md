@@ -27,8 +27,7 @@
 - `TrainingSession` 保存当前模式、地图、武器、回合、弹药、命中、用时和结算数据。
 - `UIRouter` 负责打开和关闭 Canvas 页面，不直接计算游戏规则。
 - `HUDPresenter` 只负责把 `TrainingSession` 的状态渲染为 TMP 文本和进度条。
-- `WeaponLoadoutService` 管理已选择武器、弹匣容量、备用弹药和可用场景。
-- `SettingsService` 管理 VR 舒适度、转向、移动、亮度、HUD 透明度、音量、语言，并负责持久化。
+- `WeaponService` / `IAmmoService` 管理训练主武器、弹匣容量、备用弹药。
 
 ## XR 输入测试替身
 

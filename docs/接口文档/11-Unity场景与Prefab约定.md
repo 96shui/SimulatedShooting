@@ -8,9 +8,9 @@
 
 | SceneId | 场景用途 | 关联页面 |
 |---|---|---|
-| MainMenuScene | 主菜单、模式选择、武器库、设置 | 02、03、13、22 |
+| MainMenuScene | 主菜单、模式选择 | 02、03 |
 | ZeroingRangeScene | 100m 射校任务说明、HUD、分析、结算 | 04-07 |
-| MovingTargetRangeScene | 移动靶设置、HUD、结算 | 08-11 |
+| MovingTargetRangeScene | 移动靶设置、HUD、结算 | 08、09、11 |
 | TrenchScene | 堑壕地图、简报、HUD、结算 | 12、14-17 |
 | UrbanScene | 城镇地图、街道、建筑、结算 | 18-21 |
 
@@ -25,7 +25,7 @@
 | 按钮 | `Button_<ScreenId>_<Action>` | `Button_MainMenu_OpenZeroing` |
 | 文本 | `Text_<ScreenId>_<Data>` | `Text_ZeroingHud_Round` |
 | HUD 元素 | `Hud_<HudType>_<Name>` | `Hud_Trench_Ammo` |
-| 素材占位 | `Placeholder_<ScreenId>_<Asset>` | `Placeholder_Armory_WeaponWall` |
+| 素材占位 | `Placeholder_<ScreenId>_<Asset>` | `Placeholder_MovingTargetSettings_Preview` |
 
 ## 武器 Prefab 与场景绑定
 
@@ -132,8 +132,7 @@ public sealed class UITestId : MonoBehaviour
 | UIRouter | 全局单例或场景持久对象 |
 | TrainingSessionService | 全局单例，切场景不丢失当前 Session |
 | HUDService | 每个训练场景创建，订阅当前 Session |
-| WeaponService | 全局单例，保存当前装备 |
-| SettingsService | 全局单例，负责持久化 |
+| WeaponService | 全局单例，保存当前训练主武器状态 |
 | SquadCommandService | 战斗场景创建，随 Session 销毁 |
 
 ## 输入适配
