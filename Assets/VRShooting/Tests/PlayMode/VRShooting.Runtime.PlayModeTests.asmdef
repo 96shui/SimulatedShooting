@@ -3,6 +3,7 @@
     "rootNamespace": "VRShooting.Tests.PlayMode",
     "references": [
         "VRShooting.Runtime",
+        "SimulatedShooting.Runtime",
         "Unity.TextMeshPro",
         "Unity.ugui",
         "Unity.XR.Interaction.Toolkit",

@@ -59,3 +59,12 @@
 - P1 核心 PlayMode 流程测试通过。
 - 失败用例能明确提示缺失的页面、服务、场景对象或输入事件。
 - 该任务完成后，P1 其余任务才能进入最终收口。
+
+## 实现落点
+
+- PlayMode 门禁夹具：`Assets/VRShooting/Tests/PlayMode/Flow/P1FlowPlayModeGateTests.cs`
+- 用例：
+  - `P1Flow_InputStub_Round1Pass_ShowsExcellentFinalRating`（BDD 02/04/05/06/07，第 1 轮通过 → 优秀）
+  - `P1Flow_InputStub_ThreeRoundsFail_ShowsFailFinalRating`（BDD 07 未通过 → 不及格）
+  - `P1Flow_SceneOwned_MainMenuToRange_Round1PassShowsExcellent`（MainScene → ZeroingRangeScene 场景联调 + 优秀结算）
+- 驱动方式：`ManualXRTrainingInput` 确认进入 100m；`WeaponControl.Fire` 注入固定弹着；断言消息带 `[UI]` / `[场景]` / `[功能A]` / `[功能B]` 责任前缀。
