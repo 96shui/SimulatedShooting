@@ -52,6 +52,9 @@ public readonly struct TrainingSessionDto
     public float ElapsedSeconds { get; init; }
     public AmmoDto Ammo { get; init; }
     public PlayerStatusDto Player { get; init; }
+    public TrainingPostureMode PostureMode { get; init; }
+    public string FiringStationId { get; init; }
+    public bool ArtificialLocomotionAllowed { get; init; }
     public SquadStatusDto Squad { get; init; }
     public ResultGrade CurrentGrade { get; init; }
     public string FailureReason { get; init; }
@@ -143,4 +146,6 @@ public readonly struct TrainingResultDto
 - `WeaponId` 对堑壕和城镇必填；100m 和移动靶可使用系统指定训练武器。
 - `ElapsedSeconds` 由玩法服务层统一计时，UI 不自行累加。
 - 所有结算页必须使用 `TrainingResultDto` 或对应模式结果 DTO。
+- P1/P2 的 `PostureMode` 固定为 `ProneFixed`，`ArtificialLocomotionAllowed=false`，并由 `13-P1P2卧姿射击与界面显隐契约.md` 约束；P3 的姿态与移动另行定义。
+- `FiringStationId` 是玩法对场景射击位的稳定逻辑引用，不得保存或传递 Unity `Transform`。
 

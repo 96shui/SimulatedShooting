@@ -29,7 +29,7 @@
 
 ## 武器 Prefab 与场景绑定
 
-P1 训练武器必须在第一人称视角中可见，并提供稳定绑定点供 XR、无 VR 调试输入和 PlayMode Test 使用。
+P1/P2 训练武器必须在卧姿射击点正前方可见，并提供稳定绑定点供 XR、无 VR 调试输入和 PlayMode Test 使用。
 
 | 类型 | 命名格式 | 示例 |
 |---|---|---|
@@ -152,6 +152,8 @@ public interface IXRTrainingInput
     bool LeftGripReleased { get; }
     float RightTriggerValue { get; }
     bool TriggerPressed { get; }
+    bool TriggerHeld { get; }
+    bool TriggerReleased { get; }
     bool ReloadPressed { get; }
     bool SwitchShoulderPressed { get; }
     bool AimPressed { get; }
@@ -186,13 +188,13 @@ P1 默认 Input Action 映射如下，允许按设备 Profile 覆盖绑定，但
 | 前握把选择/保持 | `XRI LeftHand Interaction/Select` | 左手 Grip |
 | 单发击发 | `XRI RightHand Interaction/Activate` | 右手 Trigger |
 
-Grip 必须暴露按下、保持、释放三种状态；Trigger 必须暴露 `0-1` 模拟量，并由适配层以可配置迟滞阈值生成一次性 `TriggerPressed`。场景脚本不得同时读取该 Action 和硬件按钮，避免一发触发两次。
+Grip 和 Trigger 都必须暴露按下、保持、释放三种状态。Trigger 还必须暴露 `0-1` 模拟量，并由适配层以可配置迟滞阈值生成 `TriggerPressed/TriggerHeld/TriggerReleased`。P1 只消费按下边沿执行单发；P2 使用完整状态执行两发起射和长按连射。场景脚本不得同时读取该 Action 和硬件按钮，避免重复击发。
 
 输入适配是 P1 基础能力：
 
 - 模拟输入、XR Device Simulator、键鼠调试输入和真实 XR 输入都必须适配到同一接口。
 - 服务层只消费抽象输入事件或命令，不直接读取具体手柄按键、键盘按键或设备 API。
-- PlayMode Test 必须能注入测试输入，覆盖确认、返回、左右手 Grip 按下/保持/释放、右手模拟扳机、换弹、左右肩切换和无 VR 瞄准模式。
+- PlayMode Test 必须能注入测试输入，覆盖确认、返回、左右手 Grip 按下/保持/释放、右手 Trigger 按下/保持/释放、换弹、左右肩切换和无 VR 瞄准模式。
 - 真实 VR 设备到位前，无 VR 输入替身路径必须可完成 P1 100m 射校闭环。
 - 无 VR 调试输入必须能在 Editor Play Mode 中模拟头部视角、后手姿态、前手姿态和枪线变化。
 - 无 VR 瞄准模式下，视觉相机或 ADS 代理可对齐 `AimLine_*`；真实 VR 不使用代理相机或 FOV 缩放，而由玩家自然对齐 HMD 与机械瞄具。两条路径的有效射击方向、可见弹道和命中计算都必须使用同一枪线。
@@ -202,11 +204,12 @@ Grip 必须暴露按下、保持、释放三种状态；Trigger 必须暴露 `0-
 - OpenXR Loader 启动且 HMD 可用时：启用 `XR Origin`、HMD Camera、XR Controller、左右虚拟手和 Direct Interactor；禁用 `Camera_NoVR`、其 `AudioListener` 和键鼠视角驱动。
 - XR 不可用时：禁用 XR Camera/AudioListener 和设备交互输出，启用 `Camera_NoVR`、无 VR 姿态及输入替身。
 - 任一时刻最多一个活动玩家 Camera 和一个活动 `AudioListener`。不得依赖人工切换 Hierarchy 作为正常启动步骤。
-- P1 站立训练场景的 `XR Origin` 必须显式请求 `Floor` Tracking Origin，`Camera Y Offset` 与 `Camera Floor Offset Object` 的编辑态初始 Y 均为 `0m`；真实眼高只使用 OpenXR Runtime 或 XR Device Simulator 相对于地面的跟踪姿态，禁止再次叠加固定站立眼高。
+- P1/P2 卧姿训练场景的 `XR Origin` 必须显式请求 `Floor` Tracking Origin，`Camera Y Offset` 与 `Camera Floor Offset Object` 的编辑态初始 Y 均为 `0m`；真实头部高度只使用 OpenXR Runtime 或 XR Device Simulator 相对于地面的跟踪姿态，禁止叠加固定站立眼高或用脚本锁死 HMD。
 - 运行时不得直接改写 HMD Camera 或 XR Origin 的跟踪姿态来修正玩家高度；若 Runtime 无法提供 Floor 模式，应由独立兼容层降级处理，不得同时使用真实 HMD 高度和固定 Y Offset。
-- VR World Space Canvas 默认位于 HMD 水平方向前方 `1.2m` 至 `1.5m`、中心略低于水平视线，参考分辨率画布的水平可读视角应不小于 `65°`；首次启用后应在短暂的跟踪稳定窗口内根据最新 HMD 姿态重新摆放，避免使用启动首帧的无效低位姿态。
-- 场景地面 `Y=0m` 是 World Space Canvas 的下沿安全约束而不是默认对齐目标；画布下沿不得低于地面 `0.10m`，低头、蹲下或暂时返回低位姿态时只允许调整 UI，不反向移动 HMD 或 XR Origin。
-- 靶场初始步枪应位于玩家右前方 `0.5m` 至 `0.8m` 的自然伸手范围，后握把处于地面上方约 `1.0m` 至 `1.2m`；枪械不得依赖相机高度偏移来取得舒适位置。
+- P1/P2 大型 World Space UI 由场景 `LargeUiAnchor` 放在卧姿视线正前方；具体距离和尺寸集中在射击位配置中，并以真实 VR 舒适验收为准。首次启用后只允许调整 UI 表现根，不得移动 HMD 或 XR Origin。
+- 场景地面 `Y=0m` 是 UI/武器安全约束；大型 UI 和武器不得进入地面或要求玩家起身/行走。低头或房间尺度微动只改变观察关系，不移动固定玩家根。
+- 靶场初始步枪应位于 `WeaponRackAnchor` 的卧姿自然伸手范围；枪械不得依赖相机高度偏移来取得舒适位置。
+- P1/P2 禁用连续移动、传送、攀爬和人工平移；允许真实 HMD/双手跟踪。无 VR 调试相机允许观察/瞄准但不得用 WASD 改变固定射击点。
 - 真实 VR 中禁止武器、ADS、切肩或后坐力逻辑写入 HMD Camera、XR Origin 或 XR 投影/FOV；HMD 姿态只来自跟踪系统。
 - 枪械和虚拟手在 `OnBeforeRender`、XRI Dynamic/Late 更新或等效低延迟阶段消费最新控制器姿态，额外显示延迟不超过一个显示帧。
 
@@ -217,6 +220,15 @@ Grip 必须暴露按下、保持、释放三种状态；Trigger 必须暴露 `0-
 - PlayMode Test 应能通过测试 ID 找到控件并模拟点击。
 - 场景加载期间路由应进入 Busy 状态，避免重复点击。
 - PlayMode Test 必须通过绑定组件验证枪架插槽、前后抓取区、前后附着姿态、Rigidbody、碰撞体和后坐力表现根节点完整。
-- 真实 VR 实机必须验证右手近距 Grip 拾取、左手前握把选择、右手 Trigger 单发、放手掉落和再次拾取；范围外不得隔空抓取。
+- 真实 VR 实机必须验证右手近距 Grip 拾取、左手前握把选择、P1 Trigger 单发、P2 快速扣动两发、P2 长按连射、放手掉落和再次拾取；范围外不得隔空抓取。
 - VR 模式必须验证唯一活动相机/AudioListener、HMD 姿态未被武器逻辑改写、自然机瞄无 FOV 跳变以及枪体/虚拟手没有明显跟踪延迟。
+
+## P1/P2 卧姿射击位绑定
+
+P1/P2 场景必须提供 `TrainingRangeSceneBindings` 或等效组件，序列化引用 PlayerRoot、ProneHeadReference、AimForward、LargeUiAnchor、MinimalHudAnchor、WeaponRackAnchor 和 TargetRoot。完整字段、测试 ID、责任边界与错误处理见 `13-P1P2卧姿射击与界面显隐契约.md`。
+
+- UI 负责人只制作可挂到锚点的 Prefab/Presenter，不直接引用场景文件。
+- 场景负责人只提供锚点、碰撞体、相机/XR 根和视觉驱动器，不引用具体 Presenter 或业务服务。
+- 玩法功能负责人只发布 DTO/事件，不引用 `TrainingRangeSceneBindings` 或 Transform。
+- 组合与真实性验证由审核测试与优化负责人按 P2 阶段审核清单完成，不建立审核类 task。
 

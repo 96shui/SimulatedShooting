@@ -18,6 +18,7 @@ public readonly struct HudDto
     public IReadOnlyList<HudTextLineDto> TextLines { get; init; }
     public IReadOnlyList<HudPromptDto> Prompts { get; init; }
     public bool CanShoot { get; init; }
+    public WeaponFireSequenceStateDto? FireSequence { get; init; }
 }
 
 public enum HudType
@@ -106,10 +107,18 @@ public interface IHUDService
 | HUD | 必填显示 |
 |---|---|
 | Zeroing | 轮次、距离 100m、弹数、稳定度、弹着记录、CanShoot |
-| MovingTarget | 弹药、点射模式、命中数、速度、方向、端点禁射提示、可射击状态 |
+| MovingTarget | 弹药、两发起射/长按连射模式、当前连射状态、命中数、速度、方向、端点禁射提示、可射击状态 |
 | Trench | 小地图、弹药、队友状态、姿态、换肩、拐角射击 |
 | UrbanStreet | 小地图、任务提示、弹药、姿态、换肩、建筑入口提示 |
 | UrbanBuilding | 楼层小地图、房间状态、危险区域、交互提示、弹药、任务进度 |
+
+## P1/P2 大型交互 UI 与最小 HUD
+
+- `TrainingPresentationDto.LargePanelVisible` 控制任务说明、速度设置、弹着分析和结算等大型交互 UI。
+- 玩家确认开始且有效拾枪后，大型交互 UI 隐藏；P1 轮次结束或 P1/P2 Session 完成后自动显示。
+- `HudDto` 只驱动实弹阶段允许保留的最小只读 HUD。它可以显示弹药、轮次/命中和禁射原因，但不得包含会改变训练状态的按钮。
+- 大型交互 UI 隐藏不等于停止 Presenter 或销毁 Session；重新显示时必须能从当前 DTO 恢复完整内容。
+- UI 不得通过 Canvas 是否激活反推 Session 阶段；显隐状态只来自 `ITrainingPresentationService`。
 
 ## 阶段最小字段
 
