@@ -16,6 +16,9 @@ namespace VRShooting.Common
         public float ElapsedSeconds { get; init; }
         public AmmoDto Ammo { get; init; }
         public PlayerStatusDto Player { get; init; }
+        public TrainingPostureMode PostureMode { get; init; }
+        public string FiringStationId { get; init; }
+        public bool ArtificialLocomotionAllowed { get; init; }
         public SquadStatusDto Squad { get; init; }
         public ResultGrade CurrentGrade { get; init; }
         public string FailureReason { get; init; }

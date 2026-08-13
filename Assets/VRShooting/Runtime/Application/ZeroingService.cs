@@ -13,6 +13,7 @@ namespace VRShooting.Application
         readonly ITrainingSessionService trainingSessions;
         readonly IWeaponControlService weaponControl;
         readonly Dictionary<string, ZeroingSessionRecord> sessions = new Dictionary<string, ZeroingSessionRecord>();
+        readonly Dictionary<string, bool> presentationShootingAllowed = new Dictionary<string, bool>();
 
         public ZeroingService(
             IGameEventBus eventBus,
@@ -25,6 +26,7 @@ namespace VRShooting.Application
 
             eventBus.Subscribe<SessionStartedEvent>(OnSessionStarted);
             eventBus.Subscribe<WeaponShotResultEvent>(OnWeaponShotResult);
+            eventBus.Subscribe<TrainingPresentationChangedEvent>(OnPresentationChanged);
         }
 
         public ServiceResult<ZeroingSessionDto> StartSession(RandomSeed seed, string weaponId)
@@ -45,7 +47,7 @@ namespace VRShooting.Application
             }
 
             var record = EnsureRecord(startResult.Data);
-            return ServiceResult<ZeroingSessionDto>.Ok(record.ToSessionDto());
+            return ServiceResult<ZeroingSessionDto>.Ok(record.ToSessionDto(AllowsRecording(record.SessionId)));
         }
 
         public ServiceResult<ZeroingSessionDto> GetSession(string sessionId)
@@ -55,7 +57,7 @@ namespace VRShooting.Application
                 return ServiceResult<ZeroingSessionDto>.Fail(failure, "zeroing session not found", ZeroingSessionDto.Empty);
             }
 
-            return ServiceResult<ZeroingSessionDto>.Ok(record.ToSessionDto());
+            return ServiceResult<ZeroingSessionDto>.Ok(record.ToSessionDto(AllowsRecording(record.SessionId)));
         }
 
         public ServiceResult<ZeroingShotDto> RecordShot(string sessionId, ShotInputDto input)
@@ -123,18 +125,18 @@ namespace VRShooting.Application
             var analysis = CompleteRoundInternal(record, false);
             if (!analysis.AdjustmentApplied)
             {
-                return ServiceResult<ZeroingSessionDto>.Fail(ErrorCode.InvalidState, "adjustment must be applied first", record.ToSessionDto());
+                return ServiceResult<ZeroingSessionDto>.Fail(ErrorCode.InvalidState, "adjustment must be applied first", record.ToSessionDto(AllowsRecording(record.SessionId)));
             }
 
             if (analysis.PassedTenRing || record.CurrentRound >= ZeroingRules.MaxRounds)
             {
-                return ServiceResult<ZeroingSessionDto>.Ok(record.ToSessionDto());
+                return ServiceResult<ZeroingSessionDto>.Ok(record.ToSessionDto(AllowsRecording(record.SessionId)));
             }
 
             record.CurrentRound++;
             record.CurrentShots.Clear();
             weaponControl.Reload(sessionId);
-            var dto = record.ToSessionDto();
+            var dto = record.ToSessionDto(AllowsRecording(record.SessionId));
             eventBus.Publish(new ZeroingRoundStartedEvent { SessionId = sessionId, Session = dto });
             return ServiceResult<ZeroingSessionDto>.Ok(dto);
         }
@@ -185,8 +187,37 @@ namespace VRShooting.Application
             RecordShotInternal(record, input);
         }
 
+        void OnPresentationChanged(TrainingPresentationChangedEvent evt)
+        {
+            var dto = evt.Presentation;
+            if (string.IsNullOrEmpty(dto.SessionId))
+            {
+                return;
+            }
+
+            if (dto.Phase == TrainingPresentationPhase.Exiting)
+            {
+                presentationShootingAllowed.Remove(dto.SessionId);
+                return;
+            }
+
+            presentationShootingAllowed[dto.SessionId] = dto.ShootingAllowed;
+        }
+
+        bool AllowsRecording(string sessionId)
+        {
+            return !presentationShootingAllowed.TryGetValue(sessionId, out var allowed) || allowed;
+        }
+
         ServiceResult<ZeroingShotDto> RecordShotInternal(ZeroingSessionRecord record, ShotInputDto input)
         {
+            if (!AllowsRecording(record.SessionId))
+            {
+                return ServiceResult<ZeroingShotDto>.Fail(
+                    ErrorCode.InvalidState,
+                    "shooting is not allowed in the current presentation phase");
+            }
+
             if (record.CurrentShots.Count >= ZeroingRules.ShotsPerRound)
             {
                 return ServiceResult<ZeroingShotDto>.Fail(ErrorCode.InvalidState, "round is already complete");
@@ -276,7 +307,7 @@ namespace VRShooting.Application
                 return shot;
             }
 
-            public ZeroingSessionDto ToSessionDto()
+            public ZeroingSessionDto ToSessionDto(bool presentationAllowsShooting = true)
             {
                 return new ZeroingSessionDto
                 {
@@ -286,7 +317,7 @@ namespace VRShooting.Application
                     ShotsRemainingInRound = Math.Max(0, ZeroingRules.ShotsPerRound - CurrentShots.Count),
                     DistanceMeters = ZeroingRules.DistanceMeters,
                     FixedImpactOffsetCm = FixedImpactOffsetCm,
-                    CanShoot = CurrentShots.Count < ZeroingRules.ShotsPerRound,
+                    CanShoot = presentationAllowsShooting && CurrentShots.Count < ZeroingRules.ShotsPerRound,
                     CurrentAdjustment = CurrentAdjustment
                 };
             }

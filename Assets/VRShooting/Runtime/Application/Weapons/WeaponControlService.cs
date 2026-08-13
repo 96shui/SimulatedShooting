@@ -269,6 +269,16 @@ namespace VRShooting.Application.Weapons
                 RearHandTracked = state.RearHandTracked,
                 FrontHandTracked = state.FrontHandTracked
             });
+            if (previousState != state.HoldState)
+            {
+                eventBus?.Publish(new TrainingWeaponPickupEvent
+                {
+                    SessionId = state.SessionId,
+                    WeaponId = state.Weapon.WeaponId,
+                    PreviousState = previousState,
+                    CurrentState = state.HoldState
+                });
+            }
             eventBus?.Publish(new WeaponStateChangedEvent { State = dto });
             return ServiceResult<WeaponControlStateDto>.Ok(dto);
         }
@@ -367,12 +377,12 @@ namespace VRShooting.Application.Weapons
             yield return new WeaponDefinitionDto
             {
                 WeaponId = TrainingRifleId,
-                DisplayName = "P1 100m training rifle",
+                DisplayName = "P1/P2 training rifle",
                 Type = WeaponType.AssaultRifle,
                 MagazineCapacity = 3,
                 MaxReserveAmmo = 6,
                 Recoil = RecoilLevel.Medium,
-                ApplicableModes = new[] { TrainingMode.Zeroing100m }
+                ApplicableModes = new[] { TrainingMode.Zeroing100m, TrainingMode.MovingTarget }
             };
             yield return new WeaponDefinitionDto
             {

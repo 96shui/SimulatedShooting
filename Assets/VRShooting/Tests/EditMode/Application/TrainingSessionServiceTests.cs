@@ -108,5 +108,24 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.AreEqual(SessionState.Running, resumeResult.Data.State);
             Assert.AreEqual(sessionId, resumeResult.Data.SessionId);
         }
+
+        [TestCase(TrainingMode.Zeroing100m, TrainingPresentationRules.ZeroingFiringStationId)]
+        [TestCase(TrainingMode.MovingTarget, TrainingPresentationRules.MovingTargetFiringStationId)]
+        public void Screen04_CreateP1P2Session_LocksProneFixedAndDisablesArtificialLocomotion(
+            TrainingMode mode,
+            string expectedStationId)
+        {
+            var bus = new GameEventBus();
+            var sessions = new TrainingSessionService(bus);
+
+            var result = sessions.Create(mode, string.Empty, string.Empty, RandomSeed.Fixed(1));
+
+            Assert.IsTrue(result.Success, result.Message);
+            Assert.AreEqual(TrainingPostureMode.ProneFixed, result.Data.PostureMode);
+            Assert.AreEqual(PlayerPosture.Prone, result.Data.Player.Posture);
+            Assert.IsFalse(result.Data.ArtificialLocomotionAllowed);
+            Assert.AreEqual(expectedStationId, result.Data.FiringStationId);
+            Assert.AreEqual("training-rifle", result.Data.WeaponId);
+        }
     }
 }

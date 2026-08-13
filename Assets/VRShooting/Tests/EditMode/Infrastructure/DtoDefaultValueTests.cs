@@ -29,6 +29,8 @@ namespace VRShooting.Tests.EditMode.Infrastructure
             Assert.AreEqual(ResultGrade.None, default(ResultGrade));
             Assert.AreEqual(PlayerPosture.Standing, default(PlayerPosture));
             Assert.AreEqual(ShoulderSide.Left, default(ShoulderSide));
+            Assert.AreEqual(TrainingPresentationPhase.ModeEntry, default(TrainingPresentationPhase));
+            Assert.AreEqual(TrainingPostureMode.ProneFixed, default(TrainingPostureMode));
         }
 
         [Test]

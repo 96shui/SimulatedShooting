@@ -8,7 +8,8 @@ namespace VRShooting.Application
     public sealed class TrainingSessionService : ITrainingSessionService
     {
         const string DefaultZeroingMapId = "zeroing-range-100m";
-        const string DefaultZeroingWeaponId = "training-rifle";
+        const string DefaultMovingTargetMapId = "moving-target-range";
+        const string DefaultTrainingWeaponId = "training-rifle";
 
         readonly IGameEventBus eventBus;
         SessionRecord activeSession;
@@ -37,6 +38,7 @@ namespace VRShooting.Application
                     Current);
             }
 
+            var proneFixed = mode == TrainingMode.Zeroing100m || mode == TrainingMode.MovingTarget;
             activeSession = new SessionRecord
             {
                 SessionId = Guid.NewGuid().ToString("N"),
@@ -45,7 +47,21 @@ namespace VRShooting.Application
                 MapId = string.IsNullOrEmpty(mapId) ? GetDefaultMapId(mode) : mapId,
                 WeaponId = string.IsNullOrEmpty(weaponId) ? GetDefaultWeaponId(mode) : weaponId,
                 Seed = seed,
-                Player = PlayerStatusDto.Default,
+                Player = proneFixed
+                    ? new PlayerStatusDto
+                    {
+                        Health = PlayerStatusDto.Default.Health,
+                        IsAlive = true,
+                        Posture = PlayerPosture.Prone,
+                        Shoulder = ShoulderSide.Right,
+                        CornerShootingAvailable = false
+                    }
+                    : PlayerStatusDto.Default,
+                PostureMode = TrainingPostureMode.ProneFixed,
+                FiringStationId = proneFixed
+                    ? TrainingPresentationRules.FiringStationIdFor(mode)
+                    : string.Empty,
+                ArtificialLocomotionAllowed = !proneFixed,
                 Squad = SquadStatusDto.Empty,
                 Ammo = AmmoDto.Empty
             };
@@ -205,12 +221,22 @@ namespace VRShooting.Application
 
         static string GetDefaultMapId(TrainingMode mode)
         {
-            return mode == TrainingMode.Zeroing100m ? DefaultZeroingMapId : string.Empty;
+            switch (mode)
+            {
+                case TrainingMode.Zeroing100m:
+                    return DefaultZeroingMapId;
+                case TrainingMode.MovingTarget:
+                    return DefaultMovingTargetMapId;
+                default:
+                    return string.Empty;
+            }
         }
 
         static string GetDefaultWeaponId(TrainingMode mode)
         {
-            return mode == TrainingMode.Zeroing100m ? DefaultZeroingWeaponId : string.Empty;
+            return mode == TrainingMode.Zeroing100m || mode == TrainingMode.MovingTarget
+                ? DefaultTrainingWeaponId
+                : string.Empty;
         }
 
         sealed class SessionRecord
@@ -223,6 +249,9 @@ namespace VRShooting.Application
             public RandomSeed Seed { get; set; }
             public AmmoDto Ammo { get; set; }
             public PlayerStatusDto Player { get; set; }
+            public TrainingPostureMode PostureMode { get; set; }
+            public string FiringStationId { get; set; }
+            public bool ArtificialLocomotionAllowed { get; set; }
             public SquadStatusDto Squad { get; set; }
             public ResultGrade CurrentGrade { get; set; }
             public string FailureReason { get; set; }
@@ -269,6 +298,9 @@ namespace VRShooting.Application
                     ElapsedSeconds = GetElapsedSeconds(DateTime.UtcNow),
                     Ammo = Ammo,
                     Player = Player,
+                    PostureMode = PostureMode,
+                    FiringStationId = FiringStationId ?? string.Empty,
+                    ArtificialLocomotionAllowed = ArtificialLocomotionAllowed,
                     Squad = Squad,
                     CurrentGrade = CurrentGrade,
                     FailureReason = FailureReason ?? string.Empty
