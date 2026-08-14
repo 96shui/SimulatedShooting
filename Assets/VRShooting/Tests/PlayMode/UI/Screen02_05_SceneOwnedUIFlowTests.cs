@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using Unity.XR.CoreUtils;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit.UI;
+using VRShooting.Common;
 using VRShooting.Unity;
 using VRShooting.Unity.Bootstrap;
 using VRShooting.Unity.Player;
@@ -59,7 +60,7 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
-        public IEnumerator Screen02_05_ClickZeroingStartsRangeSceneWithSceneOwnedHud()
+        public IEnumerator Screen02_05_ClickZeroingWaitsForPickupThenShowsSceneOwnedHud()
         {
             var mainMenu = Object.FindObjectOfType<MainMenuUI>(true);
             Assert.That(mainMenu, Is.Not.Null, "MainScene should contain a scene-owned MainMenuUI.");
@@ -78,7 +79,28 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(zeroingRangeUi, Is.Not.Null, "ZeroingRangeScene should contain a scene-owned ZeroingRangeUI.");
             Assert.AreEqual(SceneManager.GetActiveScene(), zeroingRangeUi.gameObject.scene);
             Assert.That(FindActiveSceneComponents<MainMenuUI>(), Is.Empty);
-            Assert.That(FindById("Screen_ZeroingHud").activeSelf, Is.True, "Starting the briefing should show the zeroing HUD in the range scene.");
+            Assert.That(FindById("Training.Shared.LargePanelRoot").activeSelf, Is.True,
+                "The full-size pickup guidance should remain visible until the weapon is held.");
+            Assert.That(FindById("Panel_Training_AwaitingWeaponPickup").activeSelf, Is.True);
+            Assert.That(FindById("Training.Shared.MinimalHudRoot").activeSelf, Is.False);
+
+            var services = GameMain.Instance.Services;
+            var sessionId = services.TrainingSessions.Current.SessionId;
+            var pickup = services.WeaponControl.SetGripState(new WeaponGripStateInputDto
+            {
+                SessionId = sessionId,
+                HoldState = WeaponHoldState.TwoHandHeld,
+                RearHandTracked = true,
+                FrontHandTracked = true,
+                Stability01 = 0.95f
+            });
+            Assert.IsTrue(pickup.Success, pickup.Message);
+            yield return null;
+
+            Assert.That(FindById("Training.Shared.LargePanelRoot").activeSelf, Is.False);
+            Assert.That(FindById("Training.Shared.MinimalHudRoot").activeSelf, Is.True);
+            Assert.That(FindById("Screen_ZeroingHud").activeSelf, Is.True,
+                "A valid weapon pickup should atomically switch to the minimal firing HUD.");
         }
 
         [UnityTest]
