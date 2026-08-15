@@ -19,6 +19,8 @@ namespace SimulatedShooting.Editor
         private const string CoastalCliffInstallRequestPath = "Library/CoastalCliffInstall.request";
         private const string CoastalCliffInstallCompletePath = "Library/CoastalCliffInstall.complete";
         private const string MaterialFolder = "Assets/SimulatedShooting/Art/Materials";
+        private const string DistanceTextMaterialPath = MaterialFolder + "/RangeDistanceText.mat";
+        private const string DistanceTextShaderName = "SimulatedShooting/World Space Text Occluded";
         private const string TreeTexturePath =
             "Assets/SimulatedShooting/Art/Vegetation/RangeTree_Broadleaf.png";
         private const string ConcreteTextureFolder =
@@ -101,6 +103,7 @@ namespace SimulatedShooting.Editor
             AddTestId(root, "ZeroingRange.Root");
             root.AddComponent<ZeroingRangeSessionBootstrap>();
             CreateScene(root.transform);
+            ProneRangeSceneMigration.PatchOpenZeroingRangeScene();
             EditorSceneManager.SaveScene(scene, ScenePath);
             AddSceneToBuildSettings();
             AssetDatabase.SaveAssets();
@@ -303,7 +306,7 @@ namespace SimulatedShooting.Editor
             CreateBackground(environment);
             CreateForeground(environment, darkMetal, sandbag);
 
-            foreach (var distance in new[] { 25f, 50f, 75f, 100f })
+            foreach (var distance in new[] { 0f, 25f, 50f, 75f, 100f })
             {
                 CreateDistanceMarker(environment, -6.2f, distance, marker, darkMetal);
                 CreateDistanceMarker(environment, 6.2f, distance, marker, darkMetal);
@@ -923,7 +926,9 @@ namespace SimulatedShooting.Editor
             var target = CreateAnchor("Target_Primary_100m", root, new Vector3(0f, 1.5f, 100f));
             AddTestId(target.gameObject, "ZeroingRange.Target.Primary");
 
-            CreateCube("TargetBacker", target, new Vector3(0f, 0f, 0.03f), new Vector3(1.2f, 1.4f, 0.05f), targetMaterial);
+            var backer = CreateCube("TargetBacker", target, new Vector3(0f, 0f, 0.03f),
+                new Vector3(1.4f, 1.6f, 0.05f), targetMaterial);
+            AddTestId(backer, "ZeroingRange.Target.Backer");
             var face = CreateCube("TargetFace_50cm", target, Vector3.zero, new Vector3(0.5f, 0.5f, 0.02f), boardMaterial);
             AddTestId(face, "ZeroingRange.Target.Face");
 
@@ -936,9 +941,9 @@ namespace SimulatedShooting.Editor
             impactSurface.Configure(face.GetComponent<Collider>(), targetCenter, impactMarkers, impactMarkerMaterial);
 
             CreateCube("TargetSilhouette_Torso", target, new Vector3(0f, -0.06f, -0.013f),
-                new Vector3(0.32f, 0.34f, 0.008f), targetMaterial, false);
+                new Vector3(0.36f, 0.38f, 0.008f), targetMaterial, false);
             CreateCylinder("TargetSilhouette_Head", target, new Vector3(0f, 0.17f, -0.014f),
-                new Vector3(0.13f, 0.003f, 0.13f), targetMaterial, Quaternion.Euler(90f, 0f, 0f), false);
+                new Vector3(0.15f, 0.003f, 0.15f), targetMaterial, Quaternion.Euler(90f, 0f, 0f), false);
 
             var tenRing = CreateCylinder("TenRing_10cm", target, new Vector3(0f, 0f, -0.019f),
                 new Vector3(0.1f, 0.0025f, 0.1f), ringMaterial, Quaternion.Euler(90f, 0f, 0f), false);
@@ -1080,6 +1085,23 @@ namespace SimulatedShooting.Editor
                 new Vector3(0.05f, 0.8f, 0.05f), post);
             CreateCube($"DistanceBoard_{z:0}m_{x:0.0}", parent, new Vector3(x, 0.83f, z),
                 new Vector3(0.45f, 0.55f, 0.04f), marker);
+
+            var side = x < 0f ? "Left" : "Right";
+            var label = new GameObject($"DistanceLabel_{z:0}m_{side}");
+            label.transform.SetParent(parent, false);
+            label.transform.localPosition = new Vector3(x, 0.83f, z - 0.025f);
+            label.transform.localRotation = Quaternion.identity;
+            AddTestId(label, $"ZeroingRange.Environment.DistanceLabel.{z:0}m.{side}");
+
+            var text = label.AddComponent<TextMesh>();
+            text.text = $"{z:0} m";
+            text.anchor = TextAnchor.MiddleCenter;
+            text.alignment = TextAlignment.Center;
+            text.fontSize = 48;
+            text.fontStyle = FontStyle.Bold;
+            text.characterSize = 0.035f;
+            text.color = Color.white;
+            ApplyDistanceTextMaterial(text);
         }
 
         private static void CreateWeaponReference(Transform parent, Material material)
@@ -1247,6 +1269,37 @@ namespace SimulatedShooting.Editor
                 material.SetFloat("_Smoothness", name.Contains("Metal") ? 0.3f : 0.05f);
             AssetDatabase.CreateAsset(material, path);
             return material;
+        }
+
+        private static Material GetDistanceTextMaterial(Texture fontAtlas)
+        {
+            var shader = Shader.Find(DistanceTextShaderName);
+            if (shader == null)
+                throw new System.InvalidOperationException($"Distance text shader was not found: {DistanceTextShaderName}");
+
+            var material = AssetDatabase.LoadAssetAtPath<Material>(DistanceTextMaterialPath);
+            if (material == null)
+            {
+                material = new Material(shader) { name = "RangeDistanceText" };
+                AssetDatabase.CreateAsset(material, DistanceTextMaterialPath);
+            }
+            else
+            {
+                material.shader = shader;
+            }
+
+            material.mainTexture = fontAtlas;
+            material.color = Color.white;
+            material.SetFloat("_ZTest", (float)CompareFunction.LessEqual);
+            EditorUtility.SetDirty(material);
+            return material;
+        }
+
+        private static void ApplyDistanceTextMaterial(TextMesh text)
+        {
+            var font = text.font ?? Resources.GetBuiltinResource<Font>("Arial.ttf");
+            text.font = font;
+            text.GetComponent<MeshRenderer>().sharedMaterial = GetDistanceTextMaterial(font.material.mainTexture);
         }
 
         private static Material GetConcreteMaterial(string name, Vector2 tiling)

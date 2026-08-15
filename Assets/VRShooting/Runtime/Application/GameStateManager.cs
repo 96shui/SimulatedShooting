@@ -23,8 +23,8 @@ namespace VRShooting.Application
     {
         public const string MainSceneName = "MainScene";
         public const string ZeroingRangeSceneName = "ZeroingRangeScene";
-        /// <summary>移动靶场景资源名（仓库当前文件名为 MovingargetScene）。</summary>
-        public const string MovingTargetSceneName = "MovingargetScene";
+        /// <summary>移动靶场景资源名。</summary>
+        public const string MovingTargetSceneName = "MovingTargetRangeScene";
 
         public GameState CurrentState { get; private set; }
 
