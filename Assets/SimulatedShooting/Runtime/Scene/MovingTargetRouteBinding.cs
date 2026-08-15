@@ -11,6 +11,8 @@ namespace SimulatedShooting.Scene
         [SerializeField] Collider hitSurface;
         [SerializeField] Transform targetCenter;
         [SerializeField] Transform impactFeedbackRoot;
+        [SerializeField] Transform targetVisualRoot;
+        [SerializeField] Renderer[] targetRenderers;
         [SerializeField, Range(0f, 1f)] float normalizedProgress;
 
         public Transform RightEndpoint => rightEndpoint;
@@ -19,6 +21,8 @@ namespace SimulatedShooting.Scene
         public Collider HitSurface => hitSurface;
         public Transform TargetCenter => targetCenter;
         public Transform ImpactFeedbackRoot => impactFeedbackRoot;
+        public Transform TargetVisualRoot => targetVisualRoot != null ? targetVisualRoot : targetRoot;
+        public Renderer[] TargetRenderers => targetRenderers;
         public float NormalizedProgress => normalizedProgress;
 
         public void Configure(
@@ -27,7 +31,9 @@ namespace SimulatedShooting.Scene
             Transform target,
             Collider surface,
             Transform center,
-            Transform feedbackRoot)
+            Transform feedbackRoot,
+            Transform visualRoot = null,
+            Renderer[] renderers = null)
         {
             rightEndpoint = right;
             leftEndpoint = left;
@@ -35,6 +41,8 @@ namespace SimulatedShooting.Scene
             hitSurface = surface;
             targetCenter = center;
             impactFeedbackRoot = feedbackRoot;
+            targetVisualRoot = visualRoot != null ? visualRoot : target;
+            targetRenderers = renderers ?? target.GetComponentsInChildren<Renderer>(true);
             ApplyNormalizedProgress(0f);
         }
 
@@ -45,6 +53,17 @@ namespace SimulatedShooting.Scene
                 return;
 
             targetRoot.position = Vector3.Lerp(rightEndpoint.position, leftEndpoint.position, normalizedProgress);
+        }
+
+        void OnDrawGizmosSelected()
+        {
+            if (rightEndpoint == null || leftEndpoint == null)
+                return;
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(rightEndpoint.position, leftEndpoint.position);
+            Gizmos.DrawWireSphere(rightEndpoint.position, 0.25f);
+            Gizmos.DrawWireSphere(leftEndpoint.position, 0.25f);
         }
     }
 }

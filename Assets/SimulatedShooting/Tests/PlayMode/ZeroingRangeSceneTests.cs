@@ -51,6 +51,45 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [Test]
+        public void Task003_ZeroingRangeUsesTheSharedProneFiringStationContract()
+        {
+            var requiredIds = new[]
+            {
+                "ZeroingRange.FiringStation.Root",
+                "ZeroingRange.FiringStation.PlayerRoot",
+                "ZeroingRange.FiringStation.ProneHeadReference",
+                "ZeroingRange.FiringStation.AimForward",
+                "ZeroingRange.FiringStation.LargeUiAnchor",
+                "ZeroingRange.FiringStation.MinimalHudAnchor",
+                "ZeroingRange.FiringStation.WeaponRackAnchor"
+            };
+
+            foreach (var id in requiredIds)
+                Assert.That(Find(id), Is.Not.Null, $"Missing task003 test ID: {id}");
+
+            var bindings = Find("ZeroingRange.FiringStation.Root").GetComponent<TrainingRangeSceneBindings>();
+            Assert.That(bindings.ValidateBindings(out var error), Is.True, error);
+        }
+
+        [Test]
+        public void Task003_ZeroingRangeDisablesArtificialLocomotionWithoutLockingHeadReference()
+        {
+            var station = Find("ZeroingRange.FiringStation.Root");
+            var bindings = station.GetComponent<TrainingRangeSceneBindings>();
+            var guard = station.GetComponent<FixedProneLocomotionGuard>();
+            var playerPose = (bindings.PlayerRootAnchor.position, bindings.PlayerRootAnchor.rotation);
+            var headLocalPosition = bindings.ProneHeadReference.localPosition;
+
+            Assert.That(guard.ArtificialLocomotionDisabled, Is.True);
+            Assert.That(guard.TryApplyArtificialMotionForTests(Vector3.forward, 30f), Is.False);
+            bindings.ProneHeadReference.localPosition += Vector3.right * 0.03f;
+
+            Assert.That(bindings.PlayerRootAnchor.position, Is.EqualTo(playerPose.position));
+            Assert.That(Quaternion.Angle(bindings.PlayerRootAnchor.rotation, playerPose.rotation), Is.LessThan(0.001f));
+            Assert.That(bindings.ProneHeadReference.localPosition, Is.Not.EqualTo(headLocalPosition));
+        }
+
+        [Test]
         public void Task004_XrOriginUsesFloorTrackingWithoutArtificialEyeHeight()
         {
             var xrOriginObject = Find("ZeroingRange.Origin.VR");
@@ -450,7 +489,6 @@ namespace SimulatedShooting.Tests.PlayMode
             var playerRoot = Find("ZeroingRange.Weapon.PlayerRoot");
             var controller = playerRoot.GetComponent<FirstPersonTrainingWeaponController>();
             var feedback = playerRoot.GetComponent<WeaponFeedbackController>();
-            var footsteps = playerRoot.GetComponent<PlayerFootstepAudio>();
 
             Assert.That(feedback, Is.Not.Null);
             Assert.That(controller.FeedbackController, Is.EqualTo(feedback));
@@ -462,10 +500,9 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(Find("ZeroingRange.Weapon.Feedback"), Is.Not.Null);
             Assert.That(Find("ZeroingRange.Weapon.MuzzleFlash"), Is.Not.Null);
 
-            Assert.That(footsteps, Is.Not.Null);
-            Assert.That(footsteps.HasFootstepClips, Is.True);
-            Assert.That(footsteps.TrackedTransform, Is.Not.Null);
-            Assert.That(Find("ZeroingRange.Player.Footsteps"), Is.Not.Null);
+            Assert.That(playerRoot.GetComponent<PlayerFootstepAudio>(), Is.Null,
+                "Fixed-prone P1 must not retain artificial footstep behavior.");
+            Assert.That(Find("ZeroingRange.Player.Footsteps"), Is.Null);
         }
 
         [Test]
@@ -580,19 +617,10 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [Test]
-        public void Task005_FootstepsUseTravelDistanceAndStaySilentWhenStopped()
+        public void Task003_FixedProneSceneHasNoFootstepComponent()
         {
-            var footsteps = Find("ZeroingRange.Weapon.PlayerRoot").GetComponent<PlayerFootstepAudio>();
-            footsteps.ResetTracking();
-
-            footsteps.EvaluatePositionForTests(Vector3.zero, 1f);
-            footsteps.EvaluatePositionForTests(new Vector3(0.70f, 0f, 0f), 1f);
-            Assert.That(footsteps.PlayedStepCount, Is.EqualTo(1));
-
-            footsteps.EvaluatePositionForTests(new Vector3(0.70f, 0.15f, 0f), 1f);
-            footsteps.EvaluatePositionForTests(new Vector3(0.70f, 0f, 0f), 1f);
-            Assert.That(footsteps.PlayedStepCount, Is.EqualTo(1),
-                "Standing still and vertical HMD motion must not loop footsteps");
+            Assert.That(Find("ZeroingRange.Weapon.PlayerRoot").GetComponent<PlayerFootstepAudio>(), Is.Null);
+            Assert.That(Find("ZeroingRange.Player.Footsteps"), Is.Null);
         }
 
         [Test]

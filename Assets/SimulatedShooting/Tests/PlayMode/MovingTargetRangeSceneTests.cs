@@ -19,16 +19,20 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [Test]
-        public void Bdd08_StartTraining_SceneContainsAllTask005StableIds()
+        public void Task003_006_SceneContainsStableProneRangeBindingsAndRouteIds()
         {
             var requiredIds = new[]
             {
                 "MovingTargetRange.Root",
-                "MovingTargetRange.ShootingPosition",
-                "MovingTargetRange.PlayerSpawn",
+                "MovingTargetRange.FiringStation.Root",
+                "MovingTargetRange.FiringStation.PlayerRoot",
+                "MovingTargetRange.FiringStation.ProneHeadReference",
+                "MovingTargetRange.FiringStation.AimForward",
+                "MovingTargetRange.FiringStation.LargeUiAnchor",
+                "MovingTargetRange.FiringStation.MinimalHudAnchor",
+                "MovingTargetRange.FiringStation.WeaponRackAnchor",
                 "MovingTargetRange.Origin.VR",
                 "MovingTargetRange.Camera.NoVR",
-                "MovingTargetRange.Hud.Anchor",
                 "MovingTargetRange.Route.Root",
                 "MovingTargetRange.Route.RightEndpoint",
                 "MovingTargetRange.Route.LeftEndpoint",
@@ -38,7 +42,88 @@ namespace SimulatedShooting.Tests.PlayMode
             };
 
             foreach (var id in requiredIds)
-                Assert.That(Find(id), Is.Not.Null, $"Missing task005 test ID: {id}");
+                Assert.That(Find(id), Is.Not.Null, $"Missing task003/task006 test ID: {id}");
+        }
+
+        [Test]
+        public void Task003_ProneBindingsAreCompleteUniqueAndIndependent()
+        {
+            var bindings = Find("MovingTargetRange.FiringStation.Root")
+                .GetComponent<TrainingRangeSceneBindings>();
+
+            Assert.That(bindings, Is.Not.Null);
+            Assert.That(bindings.ValidateBindings(out var error), Is.True, error);
+            Assert.That(bindings.AllAnchors.Distinct().Count(), Is.EqualTo(bindings.AllAnchors.Count));
+            Assert.That(bindings.LargeUiAnchor.parent, Is.Not.EqualTo(bindings.MinimalHudAnchor));
+            Assert.That(bindings.MinimalHudAnchor.parent, Is.Not.EqualTo(bindings.WeaponRackAnchor));
+            Assert.That(bindings.WeaponRackAnchor.parent, Is.Not.EqualTo(bindings.LargeUiAnchor));
+        }
+
+        [Test]
+        public void Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy()
+        {
+            var copy = Find("MovingTargetRange.Visual.ZeroingStartAreaCopy");
+            Assert.That(copy, Is.Not.Null);
+            Assert.That(Object.FindObjectsOfType<Transform>(true)
+                .Any(item => item.name == "FiringStationVisual"), Is.False,
+                "The approximate P2-only foreground must be removed.");
+
+            foreach (var name in new[]
+                     {
+                         "FiringPad", "FiringLine", "ShootingBench", "RangeGate", "SafetyBoundary",
+                         "WeaponCrate_Left", "WeaponReference_Blockout", "DistancePost_0m_-6.2",
+                         "DistancePost_0m_6.2", "DistanceBoard_0m_-6.2", "DistanceBoard_0m_6.2",
+                         "DistanceLabel_0m_Left", "DistanceLabel_0m_Right"
+                     })
+            {
+                Assert.That(copy.GetComponentsInChildren<Transform>(true).Any(item => item.name == name), Is.True,
+                    $"Missing ZeroingRange start-area copy: {name}");
+            }
+
+            Assert.That(copy.GetComponentsInChildren<Transform>(true)
+                .Count(item => item.name.StartsWith("Sandbag_")), Is.EqualTo(18));
+            var gate = copy.GetComponentsInChildren<Transform>(true).Single(item => item.name == "RangeGate");
+            Assert.That(gate.position, Is.EqualTo(new Vector3(0f, 0f, 4.5f)));
+            var bench = copy.GetComponentsInChildren<Transform>(true).Single(item => item.name == "ShootingBench");
+            Assert.That(bench.position, Is.EqualTo(new Vector3(0f, 0.72f, 2.8f)));
+        }
+
+        [Test]
+        public void Task003_NoVrPreviewCameraRetainsTheTunedRangeComposition()
+        {
+            var camera = Find("MovingTargetRange.Camera.NoVR").transform;
+            Assert.That(camera.localPosition, Is.EqualTo(new Vector3(0f, 1.5f, 0f)));
+            Assert.That(Quaternion.Angle(camera.localRotation, Quaternion.identity), Is.LessThan(0.01f));
+        }
+
+        [Test]
+        public void Task003_ArtificialMoveTeleportAndTurnDoNotMovePlayerRoot()
+        {
+            var guard = Find("MovingTargetRange.FiringStation.Root")
+                .GetComponent<FixedProneLocomotionGuard>();
+            var root = guard.PlayerRootAnchor;
+            var position = root.position;
+            var rotation = root.rotation;
+
+            Assert.That(guard.ArtificialLocomotionDisabled, Is.True);
+            Assert.That(guard.TryApplyArtificialMotionForTests(new Vector3(2f, 0f, 3f), 45f), Is.False);
+            Assert.That(root.position, Is.EqualTo(position));
+            Assert.That(Quaternion.Angle(root.rotation, rotation), Is.LessThan(0.001f));
+            Assert.That(Object.FindObjectsOfType<PlayerFootstepAudio>(true), Is.Empty);
+        }
+
+        [Test]
+        public void Task003_TrackedHeadReferenceCanChangeWithoutMovingPlayerRoot()
+        {
+            var bindings = Find("MovingTargetRange.FiringStation.Root")
+                .GetComponent<TrainingRangeSceneBindings>();
+            var playerPosition = bindings.PlayerRootAnchor.position;
+            var initialHeadPosition = bindings.ProneHeadReference.localPosition;
+
+            bindings.ProneHeadReference.localPosition += new Vector3(0.05f, 0.02f, 0.03f);
+
+            Assert.That(bindings.ProneHeadReference.localPosition, Is.Not.EqualTo(initialHeadPosition));
+            Assert.That(bindings.PlayerRootAnchor.position, Is.EqualTo(playerPosition));
         }
 
         [Test]
@@ -259,13 +344,82 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [Test]
-        public void Bdd10_NightHud_ReusesRouteAndProvidesDayNightOpticHooks()
+        public void Task006_SceneContainsOnlyFixedDayLighting()
         {
             Assert.That(Find("MovingTargetRange.Lighting.Day"), Is.Not.Null);
-            Assert.That(Find("MovingTargetRange.Lighting.Night"), Is.Not.Null);
-            Assert.That(Find("MovingTargetRange.Optic.LowLight"), Is.Not.Null);
+            Assert.That(Find("MovingTargetRange.Lighting.Night"), Is.Null);
+            Assert.That(Find("MovingTargetRange.Optic.LowLight"), Is.Null);
             Assert.That(Find("MovingTargetRange.Route.LeftEndpoint"), Is.Not.Null);
             Assert.That(Find("MovingTargetRange.Route.RightEndpoint"), Is.Not.Null);
+        }
+
+        [Test]
+        public void Task006_VisualDriverAcceptsAuthoritativeStateWithoutInferringRules()
+        {
+            var routeObject = Find("MovingTargetRange.Target.Binding");
+            var binding = routeObject.GetComponent<MovingTargetRouteBinding>();
+            var driver = routeObject.GetComponent<MovingTargetVisualDriver>();
+            var state = new MovingTargetVisualState(
+                0.5f,
+                MovingTargetTravelDirection.RightToLeft,
+                endpointHold: true,
+                canShoot: false,
+                speedMetresPerSecond: 4f);
+
+            driver.Apply(state);
+
+            Assert.That(binding.NormalizedProgress, Is.EqualTo(0.5f).Within(0.001f));
+            Assert.That(driver.CurrentState.Direction, Is.EqualTo(MovingTargetTravelDirection.RightToLeft));
+            Assert.That(driver.CurrentState.EndpointHold, Is.True);
+            Assert.That(driver.CurrentState.CanShoot, Is.False);
+            Assert.That(Vector3.Distance(binding.TargetRoot.position,
+                (binding.RightEndpoint.position + binding.LeftEndpoint.position) * 0.5f), Is.LessThan(0.001f));
+        }
+
+        [Test]
+        public void Task006_FakeTimelineCoversSpeedsHoldsReverseFinishAndRetry()
+        {
+            var timeline = Find("MovingTargetRange.Target.Binding").GetComponent<MovingTargetFakeTimeline>();
+
+            Assert.That(timeline.FrameCount, Is.EqualTo(8));
+            CollectionAssert.AreEquivalent(new[] { 3f, 4f, 5f },
+                Enumerable.Range(0, timeline.FrameCount)
+                    .Select(index => timeline.GetFrame(index).SpeedMetresPerSecond)
+                    .Where(speed => speed > 0f)
+                    .Distinct()
+                    .ToArray());
+            Assert.That(timeline.GetFrame(4).EndpointHold, Is.True);
+            Assert.That(timeline.GetFrame(5).Direction, Is.EqualTo(MovingTargetTravelDirection.LeftToRight));
+            Assert.That(timeline.GetFrame(6).RouteProgress01, Is.Zero);
+            Assert.That(timeline.GetFrame(7).RouteProgress01, Is.Zero);
+        }
+
+        [Test]
+        public void Task006_TargetAndEnvironmentLayersAndMasksAreSeparated()
+        {
+            var binding = Find("MovingTargetRange.Target.Binding").GetComponent<MovingTargetRouteBinding>();
+            var adapter = binding.HitSurface.GetComponent<MovingTargetHitAdapter>();
+            var environment = Find("MovingTargetRange.Environment.Root");
+
+            Assert.That(binding.HitSurface.gameObject.layer, Is.Not.EqualTo(environment.layer));
+            Assert.That(ContainsLayer(adapter.TargetLayerMask, binding.HitSurface.gameObject.layer), Is.True);
+            Assert.That(ContainsLayer(adapter.EnvironmentLayerMask, environment.layer), Is.True);
+            Assert.That(ContainsLayer(adapter.TargetLayerMask, environment.layer), Is.False);
+        }
+
+        [Test]
+        public void Task006_ImpactFeedbackConsumesEachConfirmedShotIdOnlyOnce()
+        {
+            var binding = Find("MovingTargetRange.Target.Binding").GetComponent<MovingTargetRouteBinding>();
+            var adapter = binding.HitSurface.GetComponent<MovingTargetHitAdapter>();
+            var feedback = binding.ImpactFeedbackRoot.GetComponent<MovingTargetImpactFeedback>();
+            var point = binding.TargetCenter.position;
+
+            Assert.That(adapter.TryReportConfirmedHit(
+                "shot-001", binding.HitSurface, point, -binding.TargetCenter.forward, out _), Is.True);
+            Assert.That(adapter.TryReportConfirmedHit(
+                "shot-001", binding.HitSurface, point, -binding.TargetCenter.forward, out _), Is.True);
+            Assert.That(feedback.ConsumedShotCount, Is.EqualTo(1));
         }
 
         [Test]
@@ -320,6 +474,11 @@ namespace SimulatedShooting.Tests.PlayMode
             return SceneManager.GetActiveScene().GetRootGameObjects()
                 .SelectMany(root => root.GetComponentsInChildren<SceneTestId>(true))
                 .FirstOrDefault(testId => testId.Id == id)?.gameObject;
+        }
+
+        static bool ContainsLayer(LayerMask mask, int layer)
+        {
+            return (mask.value & (1 << layer)) != 0;
         }
     }
 }

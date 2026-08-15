@@ -103,6 +103,7 @@ namespace SimulatedShooting.Editor
             AddTestId(root, "ZeroingRange.Root");
             root.AddComponent<ZeroingRangeSessionBootstrap>();
             CreateScene(root.transform);
+            ProneRangeSceneMigration.PatchOpenZeroingRangeScene();
             EditorSceneManager.SaveScene(scene, ScenePath);
             AddSceneToBuildSettings();
             AssetDatabase.SaveAssets();

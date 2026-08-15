@@ -81,6 +81,7 @@ namespace SimulatedShooting.Editor
             CreateFixedTargets(root, fixedTarget, targetBoard, tenRing, impactMarker, concrete);
             CreatePlayerAnchors(root, concrete);
             CreateLighting(root);
+            ProneRangeSceneMigration.PatchOpenMovingTargetRangeScene();
             MarkRenderersStatic(root.Find("Environment"));
             MarkRenderersStatic(root.Find("MovingTargetRoute_40m"));
 
