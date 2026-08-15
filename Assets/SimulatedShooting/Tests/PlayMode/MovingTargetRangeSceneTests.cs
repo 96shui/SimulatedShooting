@@ -6,6 +6,7 @@ using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using VRShooting.Unity.Weapons;
 
 namespace SimulatedShooting.Tests.PlayMode
 {
@@ -43,6 +44,30 @@ namespace SimulatedShooting.Tests.PlayMode
 
             foreach (var id in requiredIds)
                 Assert.That(Find(id), Is.Not.Null, $"Missing task003/task006 test ID: {id}");
+        }
+
+        [Test]
+        public void Task003_006_TrainingRifleCarriesTheCompleteP1InteractionAndFeedbackSetup()
+        {
+            var controller = Object.FindObjectOfType<FirstPersonTrainingWeaponController>(true);
+            var binding = Object.FindObjectOfType<WeaponPrefabBinding>(true);
+
+            Assert.That(controller, Is.Not.Null);
+            Assert.That(controller.name, Is.EqualTo("WeaponPlayerRoot"));
+            Assert.That(binding, Is.Not.Null);
+            Assert.That(binding.name, Is.EqualTo("Weapon_training-rifle_Blockout"));
+            Assert.That(binding.HasRequiredBinding, Is.True);
+            Assert.That(binding.GetComponent<TrainingRifleGrabInteractable>(), Is.Not.Null);
+            Assert.That(controller.HasRequiredWeaponBinding, Is.True);
+            Assert.That(controller.HasVrPoseSources, Is.True);
+            Assert.That(controller.FeedbackController, Is.Not.Null);
+            Assert.That(controller.FeedbackController.HasRequiredAudio, Is.True);
+            Assert.That(controller.FeedbackController.HasProjectileVisualPrefab, Is.True);
+            Assert.That(controller.transform.Find("TracerRoot_training-rifle"), Is.Not.Null);
+            Assert.That(Object.FindObjectsOfType<Transform>(true)
+                .Any(item => item.name == "DirectInteractor_Right"), Is.True);
+            Assert.That(Object.FindObjectsOfType<Transform>(true)
+                .Any(item => item.name == "DirectInteractor_Left"), Is.True);
         }
 
         [Test]
