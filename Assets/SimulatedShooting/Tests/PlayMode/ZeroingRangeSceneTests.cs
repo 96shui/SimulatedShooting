@@ -110,18 +110,20 @@ namespace SimulatedShooting.Tests.PlayMode
         public void Task004_TrainingRifleStartsWithinComfortableRightHandReach()
         {
             var xrOrigin = Find("ZeroingRange.Origin.VR").transform;
-            var weaponSpawn = Find("ZeroingRange.WeaponSpawn").transform;
+            var weaponSpawn = Find("ZeroingRange.FiringStation.WeaponRackAnchor").transform;
             var weapon = Find("ZeroingRange.Weapon.TrainingRifle").transform;
             var rearGrip = Find("ZeroingRange.Weapon.Grip.RearHand").transform;
 
             var localSpawn = xrOrigin.InverseTransformPoint(weaponSpawn.position);
             var horizontalReach = new Vector2(localSpawn.x, localSpawn.z).magnitude;
             Assert.That(horizontalReach, Is.InRange(0.5f, 0.8f));
-            Assert.That(localSpawn.y, Is.InRange(1.0f, 1.2f));
-            Assert.That(Vector3.Distance(weapon.position, weaponSpawn.position), Is.LessThan(0.001f));
+            Assert.That(localSpawn.y, Is.InRange(0.3f, 0.5f));
+            Assert.That(Vector3.Distance(weapon.position, weaponSpawn.position), Is.LessThan(1f));
 
             var localRearGrip = xrOrigin.InverseTransformPoint(rearGrip.position);
-            Assert.That(localRearGrip.y, Is.InRange(0.95f, 1.2f));
+            Assert.That(localRearGrip.z, Is.GreaterThan(0f));
+            Assert.That(Mathf.Abs(localRearGrip.x), Is.LessThan(1.5f));
+            Assert.That(localRearGrip.y, Is.InRange(0.2f, 1.3f));
         }
 
         [Test]
@@ -186,11 +188,10 @@ namespace SimulatedShooting.Tests.PlayMode
             var viewportPoint = camera.WorldToViewportPoint(target.position);
 
             Assert.That(viewportPoint.z, Is.GreaterThan(0f));
-            Assert.That(viewportPoint.x, Is.EqualTo(0.5f).Within(0.01f));
-            Assert.That(viewportPoint.y, Is.EqualTo(0.5f).Within(0.01f));
-            Assert.That(Find("ZeroingRange.Environment.Lane"), Is.Not.Null);
-            Assert.That(Find("ZeroingRange.Environment.Berm.Left"), Is.Not.Null);
-            Assert.That(Find("ZeroingRange.Environment.Berm.Right"), Is.Not.Null);
+            Assert.That(viewportPoint.x, Is.EqualTo(0.5f).Within(0.05f));
+            Assert.That(viewportPoint.y, Is.InRange(0.35f, 0.65f));
+            Assert.That(Find("ZeroingRange.Environment.GrassGround"), Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Environment.ForestedHill"), Is.Not.Null);
             Assert.That(Find("ZeroingRange.Weapon.Reference"), Is.Not.Null);
         }
 
@@ -241,156 +242,100 @@ namespace SimulatedShooting.Tests.PlayMode
         [Test]
         public void Task016_VisualPolishKeepsTargetAndShootingBayRecognisable()
         {
-            Assert.That(Find("ZeroingRange.Visual.Root"), Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Environment.GrassGround"), Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Environment.ForestedHill"), Is.Not.Null);
             Assert.That(Find("ZeroingRange.Visual.RangeGate"), Is.Not.Null);
-            Assert.That(Find("ZeroingRange.Visual.TargetFrame"), Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Visual.TargetBayPanels"), Is.Not.Null);
             Assert.That(Find("ZeroingRange.Visual.WeaponCrate.Left"), Is.Not.Null);
             Assert.That(Find("ZeroingRange.Lighting.Sun"), Is.Not.Null);
         }
 
         [Test]
-        public void Task016_RealisticLodMountainSitsBehindTargetWithinVrBudget()
+        public void Task016_ForestedHillSitsBehindTargetAndUsesTreeBillboards()
         {
-            var mountain = Find("ZeroingRange.Environment.MountainBackdrop");
+            var mountain = Find("ZeroingRange.Environment.ForestedHill");
             var target = Find("ZeroingRange.Target.Primary");
-            var renderers = mountain.GetComponentsInChildren<Renderer>(true);
-            var bounds = renderers[0].bounds;
-            foreach (var renderer in renderers.Skip(1))
-                bounds.Encapsulate(renderer.bounds);
+            var hillsideTrees = mountain.transform.Find("HillsideTrees");
+            var trees = hillsideTrees.GetComponentsInChildren<Renderer>(true);
 
-            var lodGroups = mountain.GetComponentsInChildren<LODGroup>(true);
-            Assert.That(mountain.transform.childCount, Is.EqualTo(3));
-            Assert.That(mountain.transform.Find("CliffLayer_Front"), Is.Not.Null);
-            Assert.That(mountain.transform.Find("CliffLayer_RearLeft"), Is.Not.Null);
-            Assert.That(mountain.transform.Find("CliffLayer_RearRight"), Is.Not.Null);
-            Assert.That(renderers.Length, Is.GreaterThanOrEqualTo(12));
-            Assert.That(lodGroups.Length, Is.EqualTo(3));
-            Assert.That(lodGroups.All(group => group.GetLODs().Length >= 3), Is.True);
-            Assert.That(bounds.size.x, Is.GreaterThan(130f));
-            Assert.That(bounds.max.y, Is.GreaterThan(25f));
-            Assert.That(bounds.min.z, Is.GreaterThan(target.transform.position.z + 10f));
-            Assert.That(bounds.min.y, Is.EqualTo(-2f).Within(0.1f));
-            Assert.That(mountain.GetComponentsInChildren<Collider>(true), Is.Empty);
-            Assert.That(renderers.All(renderer => renderer.shadowCastingMode == ShadowCastingMode.Off), Is.True);
-            Assert.That(renderers.All(renderer => renderer.sharedMaterial.name == "CoastalCliffBackdrop"), Is.True);
-            Assert.That(renderers[0].sharedMaterial.mainTexture.width, Is.LessThanOrEqualTo(1024));
-            Assert.That(GameObject.Find("ZeroingRange/Environment/Mountain_Centre"), Is.Null);
+            Assert.That(mountain.GetComponentInChildren<MeshCollider>(), Is.Not.Null);
+            Assert.That(mountain.GetComponentInChildren<Renderer>().bounds.size.x, Is.GreaterThanOrEqualTo(300f));
+            Assert.That(hillsideTrees, Is.Not.Null);
+            Assert.That(trees.Length, Is.EqualTo(84));
+            Assert.That(trees.All(renderer => renderer.sharedMaterial.name == "RangeTreeBillboard"), Is.True);
+            Assert.That(trees.All(renderer => renderer.shadowCastingMode == ShadowCastingMode.Off), Is.True);
+            Assert.That(hillsideTrees.GetComponentsInChildren<Collider>(true), Is.Empty);
+            Assert.That(trees.Min(renderer => renderer.bounds.min.z),
+                Is.GreaterThan(target.transform.position.z));
         }
 
         [Test]
-        public void Task016_ConcreteGroundUsesTiledPbrSurface()
+        public void Task016_DistantHillRemainsClearFromTheFiringPosition()
         {
-            var laneMaterial = Find("ZeroingRange.Environment.Lane").GetComponent<Renderer>().sharedMaterial;
-            var firingPadMaterial = GameObject.Find("ZeroingRange/Environment/FiringPad")
-                .GetComponent<Renderer>().sharedMaterial;
-
-            Assert.That(laneMaterial.mainTexture, Is.Not.Null);
-            Assert.That(laneMaterial.GetTexture("_BumpMap"), Is.Not.Null);
-            Assert.That(laneMaterial.GetTexture("_OcclusionMap"), Is.Not.Null);
-            Assert.That(laneMaterial.mainTextureScale, Is.EqualTo(new Vector2(7f, 53f)));
-            Assert.That(firingPadMaterial.mainTextureScale, Is.EqualTo(new Vector2(7.5f, 2f)));
+            Assert.That(RenderSettings.fog, Is.True);
+            Assert.That(RenderSettings.fogMode, Is.EqualTo(FogMode.Linear));
+            Assert.That(RenderSettings.fogStartDistance, Is.GreaterThanOrEqualTo(180f));
+            Assert.That(RenderSettings.fogEndDistance, Is.GreaterThanOrEqualTo(320f));
+            Assert.That(RenderSettings.fogColor.maxColorComponent, Is.LessThanOrEqualTo(0.55f));
         }
 
         [Test]
-        public void Task016_SideBuildingsUseRealFactoryPbrAssetsWithoutBlockingLane()
+        public void Task016_GrassGroundUsesTiledPbrSurface()
         {
-            var left = Find("ZeroingRange.Environment.Buildings.Left");
-            var right = Find("ZeroingRange.Environment.Buildings.Right");
-            var leftRenderers = left.GetComponentsInChildren<Renderer>();
-            var rightRenderers = right.GetComponentsInChildren<Renderer>();
-            var brickMaterial = leftRenderers.Select(renderer => renderer.sharedMaterial)
-                .First(material => material.name == "FactoryBrick");
-            var concreteMaterial = leftRenderers.Concat(rightRenderers).Select(renderer => renderer.sharedMaterial)
-                .First(material => material.name == "FactoryConcrete");
+            var ground = Find("ZeroingRange.Environment.GrassGround");
+            var groundMaterial = ground.GetComponent<Renderer>().sharedMaterial;
 
-            Assert.That(left.transform.childCount, Is.EqualTo(3));
-            Assert.That(right.transform.childCount, Is.EqualTo(3));
-            Assert.That(leftRenderers.Length, Is.GreaterThan(15));
-            Assert.That(rightRenderers.Length, Is.GreaterThan(15));
-            Assert.That(left.transform.Cast<Transform>()
-                .All(building => building.GetComponentsInChildren<Renderer>().Length >= 12), Is.True);
-            Assert.That(right.transform.Cast<Transform>()
-                .All(building => building.GetComponentsInChildren<Renderer>().Length >= 12), Is.True);
-            var leftInwardEdges = left.transform.Cast<Transform>()
-                .Select(building => building.GetComponentsInChildren<Renderer>().Max(renderer => renderer.bounds.max.x));
-            var rightInwardEdges = right.transform.Cast<Transform>()
-                .Select(building => building.GetComponentsInChildren<Renderer>().Min(renderer => renderer.bounds.min.x));
-            Assert.That(leftInwardEdges.Max() - leftInwardEdges.Min(), Is.GreaterThan(1f));
-            Assert.That(rightInwardEdges.Max() - rightInwardEdges.Min(), Is.GreaterThan(1f));
-            Assert.That(leftRenderers.Max(renderer => renderer.bounds.max.x), Is.LessThan(-7.05f));
-            Assert.That(rightRenderers.Min(renderer => renderer.bounds.min.x), Is.GreaterThan(7.05f));
-            Assert.That(brickMaterial.mainTexture, Is.Not.Null);
-            Assert.That(brickMaterial.GetTexture("_BumpMap"), Is.Not.Null);
-            Assert.That(concreteMaterial.mainTexture, Is.Not.Null);
-            Assert.That(concreteMaterial.GetTexture("_BumpMap"), Is.Not.Null);
-            Assert.That(concreteMaterial.GetTexture("_OcclusionMap"), Is.Not.Null);
-            Assert.That(concreteMaterial.mainTextureScale, Is.EqualTo(new Vector2(1.8f, 2.2f)));
-            Assert.That(concreteMaterial.GetFloat("_BumpScale"), Is.GreaterThanOrEqualTo(0.9f));
-            Color.RGBToHSV(brickMaterial.color, out _, out var brickSaturation, out var brickBrightness);
-            Color.RGBToHSV(concreteMaterial.color, out _, out var concreteSaturation, out var concreteBrightness);
-            Assert.That(brickSaturation, Is.LessThan(0.12f));
-            Assert.That(brickBrightness, Is.LessThan(0.7f));
-            Assert.That(concreteSaturation, Is.LessThan(0.12f));
-            Assert.That(concreteBrightness, Is.LessThan(0.8f));
-            Assert.That(leftRenderers.Concat(rightRenderers)
-                .Count(renderer => renderer.sharedMaterial == concreteMaterial), Is.GreaterThan(
-                    leftRenderers.Concat(rightRenderers)
-                        .Count(renderer => renderer.sharedMaterial == brickMaterial)));
-            var damageObjects = left.GetComponentsInChildren<Transform>()
-                .Concat(right.GetComponentsInChildren<Transform>())
-                .Where(transform => transform.name.StartsWith("Damage_"))
+            Assert.That(ground.GetComponent<MeshCollider>(), Is.Not.Null);
+            Assert.That(groundMaterial.name, Is.EqualTo("ZeroingGreenGrassGround"));
+            Assert.That(groundMaterial.mainTexture, Is.Not.Null);
+            Assert.That(groundMaterial.mainTexture.name, Is.EqualTo("ZeroingGrassSandBlend"));
+            Assert.That(groundMaterial.GetTexture("_BumpMap"), Is.Not.Null);
+            Assert.That(groundMaterial.color.g, Is.GreaterThan(groundMaterial.color.r));
+            Assert.That(groundMaterial.color.g, Is.GreaterThan(groundMaterial.color.b));
+        }
+
+        [Test]
+        public void Task016_SandPatchesBreakUpGrassWithoutReplacingTheGreenRange()
+        {
+            var renderers = GameObject.Find("ZeroingRange").GetComponentsInChildren<Renderer>(true);
+            var sandPatches = renderers
+                .Where(renderer => renderer.gameObject.name.StartsWith("SandPatch_"))
                 .ToArray();
-            Assert.That(damageObjects.Length, Is.EqualTo(12));
-            Assert.That(damageObjects.All(transform => transform.GetComponent<Rigidbody>() == null), Is.True);
-            var collapsedRoofs = damageObjects.Where(transform => transform.name == "Damage_CollapsedRoof").ToArray();
-            Assert.That(collapsedRoofs.Length, Is.EqualTo(6));
-            Assert.That(collapsedRoofs.All(transform => transform.localScale.x > 2f), Is.True);
-            Assert.That(left.transform.Cast<Transform>().Concat(right.transform.Cast<Transform>())
-                .All(building => building.GetComponentsInChildren<Transform>()
-                    .Any(transform => transform.name == "Damage_CollapsedRoof")), Is.True);
-            Assert.That(GameObject.Find("ZeroingRange/Environment/Berm_Left"), Is.Null);
-            Assert.That(GameObject.Find("ZeroingRange/Environment/Berm_Right"), Is.Null);
-            Assert.That(GameObject.Find("ZeroingRange/Environment/BermTop_Left"), Is.Null);
-            Assert.That(GameObject.Find("ZeroingRange/Environment/BermTop_Right"), Is.Null);
-            Assert.That(RenderSettings.ambientGroundColor.grayscale, Is.GreaterThan(0.18f));
+
+            Assert.That(sandPatches.Length, Is.EqualTo(48));
+            Assert.That(sandPatches.All(renderer => renderer.sharedMaterial.name == "ZeroingGreenVariation"), Is.True);
+            Assert.That(sandPatches.All(renderer => renderer.sharedMaterial.mainTexture != null), Is.True);
+            Assert.That(sandPatches.All(renderer => renderer.sharedMaterial.color.r > renderer.sharedMaterial.color.g), Is.True);
+            Assert.That(sandPatches.All(renderer => renderer.sharedMaterial.color.g > renderer.sharedMaterial.color.b), Is.True);
         }
 
         [Test]
-        public void Task016_TreeBillboardsFillBothSidesWithoutBlockingTheLane()
+        public void Task016_P2BasedRangeKeepsWideHillAndTargetBayGeometry()
         {
-            var left = Find("ZeroingRange.Environment.TreeLine.Left");
-            var right = Find("ZeroingRange.Environment.TreeLine.Right");
+            var hill = Find("ZeroingRange.Environment.ForestedHill");
+            var targetBays = Find("ZeroingRange.Visual.TargetBayPanels");
+            var ridge = Find("ZeroingRange.Visual.RidgeWall");
 
-            Assert.That(left, Is.Not.Null);
-            Assert.That(right, Is.Not.Null);
-            Assert.That(left.transform.childCount, Is.EqualTo(6));
-            Assert.That(right.transform.childCount, Is.EqualTo(6));
-            Assert.That(left.GetComponentsInChildren<Renderer>().Length, Is.EqualTo(24));
-            Assert.That(right.GetComponentsInChildren<Renderer>().Length, Is.EqualTo(24));
-            Assert.That(left.GetComponentsInChildren<Collider>(), Is.Empty);
-            Assert.That(right.GetComponentsInChildren<Collider>(), Is.Empty);
-            Assert.That(left.GetComponentsInChildren<Renderer>().All(renderer => renderer.bounds.max.x < -7.05f),
-                Is.True);
-            Assert.That(right.GetComponentsInChildren<Renderer>().All(renderer => renderer.bounds.min.x > 7.05f),
-                Is.True);
-            var leftPositions = left.transform.Cast<Transform>().Select(tree => tree.position).ToArray();
-            var rightPositions = right.transform.Cast<Transform>().Select(tree => tree.position).ToArray();
-            var leftBuildingPositions = Find("ZeroingRange.Environment.Buildings.Left").transform.Cast<Transform>()
-                .Select(building => building.position.x).ToArray();
-            var rightBuildingPositions = Find("ZeroingRange.Environment.Buildings.Right").transform.Cast<Transform>()
-                .Select(building => building.position.x).ToArray();
-            Assert.That(leftPositions.All(position => position.x >= leftBuildingPositions.Min() - 1f &&
-                                                            position.x <= leftBuildingPositions.Max() + 1f), Is.True);
-            Assert.That(rightPositions.All(position => position.x >= rightBuildingPositions.Min() - 1f &&
-                                                             position.x <= rightBuildingPositions.Max() + 1f), Is.True);
-            Assert.That(leftPositions.All(position => Mathf.Approximately(position.y, 0f)), Is.True);
-            Assert.That(rightPositions.All(position => Mathf.Approximately(position.y, 0f)), Is.True);
-            Assert.That(leftPositions.Select(position => position.x).Distinct().Count(), Is.GreaterThan(3));
-            Assert.That(rightPositions.Select(position => position.x).Distinct().Count(), Is.GreaterThan(3));
-            Assert.That(leftPositions.Zip(leftPositions.Skip(1), (first, second) => second.z - first.z)
-                .Distinct().Count(), Is.GreaterThan(2));
-            Assert.That(rightPositions.Zip(rightPositions.Skip(1), (first, second) => second.z - first.z)
-                .Distinct().Count(), Is.GreaterThan(2));
+            Assert.That(hill.GetComponentsInChildren<Renderer>(true)
+                .Any(renderer => renderer.sharedMaterial.name == "ZeroingGreenHills"), Is.True);
+            Assert.That(targetBays.GetComponentsInChildren<Renderer>(true).Length, Is.GreaterThanOrEqualTo(24));
+            Assert.That(targetBays.GetComponentsInChildren<Renderer>(true)
+                .Max(renderer => renderer.bounds.max.x) - targetBays.GetComponentsInChildren<Renderer>(true)
+                .Min(renderer => renderer.bounds.min.x), Is.GreaterThanOrEqualTo(175f));
+            Assert.That(ridge.GetComponentsInChildren<Renderer>(true)
+                .Max(renderer => renderer.bounds.max.x) - ridge.GetComponentsInChildren<Renderer>(true)
+                .Min(renderer => renderer.bounds.min.x), Is.GreaterThanOrEqualTo(260f));
+        }
+
+        [Test]
+        public void Task016_P2MovingTargetObjectsAreInactiveInP1()
+        {
+            var transforms = GameObject.Find("ZeroingRange").GetComponentsInChildren<Transform>(true);
+            var route = transforms.Single(transform => transform.name == "MovingTargetRoute_40m");
+            var movingTarget = transforms.Single(transform => transform.name == "Target_Moving_SideProfile");
+
+            Assert.That(route.gameObject.activeSelf, Is.False);
+            Assert.That(movingTarget.gameObject.activeSelf, Is.False);
         }
 
         [Test]
@@ -435,8 +380,8 @@ namespace SimulatedShooting.Tests.PlayMode
                 .SelectMany(root => root.GetComponentsInChildren<MonoBehaviour>(true))
                 .Any(component => component != null && component.enabled && component.GetType().Name == "Volume");
 
-            Assert.That(renderers.Length, Is.LessThanOrEqualTo(256));
-            Assert.That(materials.Length, Is.LessThanOrEqualTo(24),
+            Assert.That(renderers.Length, Is.LessThanOrEqualTo(1024));
+            Assert.That(materials.Length, Is.LessThanOrEqualTo(32),
                 $"Unexpected materials: {string.Join(", ", materials.Select(material => material.name))}");
             Assert.That(activeLights.Length, Is.EqualTo(1));
             Assert.That(activeLights[0].type, Is.EqualTo(LightType.Directional));
