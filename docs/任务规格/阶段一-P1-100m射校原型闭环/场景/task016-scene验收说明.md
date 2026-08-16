@@ -6,13 +6,24 @@ task016 的场景侧视觉、性能和基础联调收口已实现。task014 输�
 
 2026-08-12，项目负责人接受现有自动化、历史场景结果和既有 VR 核心射击证据，确认 task016 与 P1 阶段完成。本次状态更新没有新增真实 VR 菜单或目标设备帧率测试记录；这些体验项保留为后续回归观察项。
 
+### 2026-08-16 当前场景覆盖说明
+
+- 当前正式 `ZeroingRangeScene` 已按项目负责人要求，改为以保存后的 `MovingTargetRangeScene` 为基础的绿地版 P1 靶场。
+- 替换前的 P1 场景完整备份为 `Assets/Scenes/ZeroingRangeScene_Backup_20260816.unity`；正式场景继续保留原 `ZeroingRangeScene` GUID。
+- P2 原场景未修改；P1 使用独立的草土混合地面、山体、沙土地表变化和草丛材质。
+- 主地面使用 P1 专用可平铺草土纹理，整体以低饱和草地为主，并由 48 个带泥土纹理的 `SandPatch_*` 形成不规则磨损裸土，避免整片绿色染色感。
+- 原黄土山坡改为带少量裸土的深草色山体，山坡复用 84 个无 Collider 的 Billboard 树节点，树高约 5m 至 9.4m；环境雾使用 180m 至 320m 的线性范围，避免射击位观察山体时被指数雾洗成灰白色。
+- 中央 100m 固定靶作为 P1 主靶并保留 50cm 靶面、10cm 十环、靶心、弹着根和 `TargetImpactSurface`；P2 移动路线与移动目标根在 P1 中停用。
+- 当前视觉回归以 `ZeroingRange.Environment.GrassGround`、`ZeroingRange.Environment.ForestedHill`、`ZeroingRange.Visual.TargetBayPanels` 和 P1 主靶测试 ID 为准。
+- 本节覆盖后续第 3 至第 7 节中关于旧厂房、岩壁和两侧树线的历史描述；这些旧描述只用于追溯替换前版本。
+
 ## 2. Scene 位置
 
 ```text
 Assets/Scenes/ZeroingRangeScene.unity
 ```
 
-场景生成器：
+历史场景生成器（不再代表 2026-08-16 当前场景）：
 
 ```text
 Assets/SimulatedShooting/Editor/ZeroingRangeSceneBuilder.cs
@@ -20,7 +31,7 @@ Assets/SimulatedShooting/Editor/ZeroingRangeSceneBuilder.cs
 
 Unity 菜单：
 
-- 重新生成：`Tools/Simulated Shooting/Build Zeroing Range Scene`
+- 重新生成：`Tools/Simulated Shooting/Build Zeroing Range Scene`（会覆盖当前 P2 基础绿地版，不得用于本次场景）
 - 无 VR 运行：`Tools/Simulated Shooting/Run Zeroing Range Scene`
 
 ## 3. 视觉收口
