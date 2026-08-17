@@ -78,6 +78,11 @@ namespace VRShooting.Unity.Bootstrap
             {
                 ZeroingRangeUI.EnsureExistsInScene(Services);
             }
+
+            if (scene.name == MovingTargetSceneName && Services != null)
+            {
+                MovingTargetRangeUI.EnsureExistsInScene(Services);
+            }
         }
 
         static void ActivateSceneObject(string objectName, UnityEngine.SceneManagement.Scene scene)
