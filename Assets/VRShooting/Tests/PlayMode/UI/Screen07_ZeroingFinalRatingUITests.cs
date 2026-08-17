@@ -116,6 +116,18 @@ namespace VRShooting.Tests.PlayMode.UI
             FindButton("Button_ZeroingBriefing_Start").onClick.Invoke();
             yield return null;
 
+            var sessionId = services.TrainingSessions.Current.SessionId;
+            var pickup = services.WeaponControl.SetGripState(new WeaponGripStateInputDto
+            {
+                SessionId = sessionId,
+                HoldState = WeaponHoldState.TwoHandHeld,
+                RearHandTracked = true,
+                FrontHandTracked = true,
+                Stability01 = 0.95f
+            });
+            Assert.IsTrue(pickup.Success, pickup.Message);
+            yield return null;
+
             RecordZeroingShot();
             RecordZeroingShot();
             RecordZeroingShot();

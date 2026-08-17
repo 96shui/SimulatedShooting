@@ -177,7 +177,7 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
-        public IEnumerator Screen04_ZeroingBriefingStartButton_CreatesSessionAndRoutesToHud()
+        public IEnumerator Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup()
         {
             services.Router.HandleUIEvent(UIEventId.MainMenu_OpenZeroing, ScreenId.MainMenu);
             TrainingSessionDto? started = null;
@@ -190,7 +190,12 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.IsTrue(services.TrainingSessions.HasActiveSession);
             Assert.AreEqual(TrainingMode.Zeroing100m, services.TrainingSessions.Current.Mode);
             Assert.AreEqual(SessionState.Running, services.TrainingSessions.Current.State);
-            Assert.AreEqual(ScreenId.ZeroingHud, services.Router.Current);
+            Assert.AreEqual(ScreenId.ZeroingBriefing, services.Router.Current);
+            var presentation = services.Presentation.Get(services.TrainingSessions.Current.SessionId);
+            Assert.IsTrue(presentation.Success, presentation.Message);
+            Assert.AreEqual(TrainingPresentationPhase.AwaitingWeaponPickup, presentation.Data.Phase);
+            Assert.IsTrue(presentation.Data.LargePanelVisible);
+            Assert.IsFalse(presentation.Data.MinimalHudVisible);
             Assert.IsTrue(started.HasValue);
             Assert.AreEqual(services.TrainingSessions.Current.SessionId, started.Value.SessionId);
         }
@@ -211,7 +216,10 @@ namespace VRShooting.Tests.PlayMode.UI
 
             Assert.AreEqual(1, startEvents);
             Assert.AreEqual(firstSessionId, services.TrainingSessions.Current.SessionId);
-            Assert.AreEqual(ScreenId.ZeroingHud, services.Router.Current);
+            Assert.AreEqual(ScreenId.ZeroingBriefing, services.Router.Current);
+            var presentation = services.Presentation.Get(firstSessionId);
+            Assert.IsTrue(presentation.Success, presentation.Message);
+            Assert.AreEqual(TrainingPresentationPhase.AwaitingWeaponPickup, presentation.Data.Phase);
         }
 
         [UnityTest]

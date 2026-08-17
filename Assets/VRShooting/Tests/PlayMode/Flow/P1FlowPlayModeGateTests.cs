@@ -225,12 +225,19 @@ namespace VRShooting.Tests.PlayMode.Flow
                 Is.Not.Null,
                 "[UI] ZeroingRangeScene missing scene-owned ZeroingRangeUI");
             Assert.That(
-                FindById("Screen_ZeroingHud")?.activeSelf,
+                FindById("Training.Shared.LargePanelRoot")?.activeSelf,
                 Is.True,
-                "[UI] range scene should show Screen_ZeroingHud after start");
+                "[UI] range scene should keep pickup guidance visible after start");
             Assert.IsTrue(
                 services.TrainingSessions.HasActiveSession,
                 "[功能A] training session missing after briefing start");
+
+            PickupWeapon(services.TrainingSessions.Current.SessionId);
+            yield return null;
+            Assert.That(
+                FindById("Screen_ZeroingHud")?.activeSelf,
+                Is.True,
+                "[UI] range scene should show Screen_ZeroingHud after valid pickup");
 
             yield return FireThreeShotsForImpact(PassImpactCm);
             AssertLayer(
@@ -308,11 +315,18 @@ namespace VRShooting.Tests.PlayMode.Flow
                 TrainingMode.Zeroing100m,
                 services.TrainingSessions.Current.Mode,
                 "[功能A] session mode should be Zeroing100m");
+            Assert.AreEqual(
+                ScreenId.ZeroingBriefing,
+                services.Router.Current,
+                "[UI] briefing should remain visible while awaiting weapon pickup");
+
+            PickupWeapon(services.TrainingSessions.Current.SessionId);
+            yield return null;
             AssertLayer(
                 "UI",
                 ScreenId.ZeroingHud,
                 "Screen_ZeroingHud",
-                "briefing start should open ZeroingHud");
+                "valid pickup should open ZeroingHud");
             Assert.That(
                 FindText("Text_ZeroingHud_Ammo").text,
                 Does.Contain("3/3"),
@@ -342,15 +356,7 @@ namespace VRShooting.Tests.PlayMode.Flow
 
         void FireWeaponShot(string sessionId, Vector3 hitPoint)
         {
-            var grip = services.WeaponControl.SetGripState(new WeaponGripStateInputDto
-            {
-                SessionId = sessionId,
-                HoldState = WeaponHoldState.TwoHandHeld,
-                RearHandTracked = true,
-                FrontHandTracked = true,
-                Stability01 = 0.95f
-            });
-            Assert.IsTrue(grip.Success, "[功能B] SetGripState TwoHandHeld failed: " + grip.Message);
+            PickupWeapon(sessionId);
 
             var fire = services.WeaponControl.Fire(new WeaponFireInputDto
             {
@@ -369,6 +375,19 @@ namespace VRShooting.Tests.PlayMode.Flow
             });
             Assert.IsTrue(fire.Success, "[功能B] WeaponControl.Fire failed: " + fire.Message);
             Assert.IsTrue(fire.Data.IsValidShot, "[功能B] Fire returned an invalid shot result");
+        }
+
+        void PickupWeapon(string sessionId)
+        {
+            var grip = services.WeaponControl.SetGripState(new WeaponGripStateInputDto
+            {
+                SessionId = sessionId,
+                HoldState = WeaponHoldState.TwoHandHeld,
+                RearHandTracked = true,
+                FrontHandTracked = true,
+                Stability01 = 0.95f
+            });
+            Assert.IsTrue(grip.Success, "[功能B] SetGripState TwoHandHeld failed: " + grip.Message);
         }
 
         IEnumerator ApplyAdjustmentAndAdvance()

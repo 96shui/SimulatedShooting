@@ -68,7 +68,7 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(FindText("Text_ZeroingHud_Ammo").text, Does.Contain("3/3"));
             Assert.IsNotNull(FindById("Hud_Zeroing_Stability"));
             Assert.IsNotNull(FindById("Hud_Zeroing_ImpactRecord"));
-            Assert.That(FindText("Text_ZeroingHud_Prompt").text, Does.Contain("右手 Grip 拾取"));
+            Assert.That(FindText("Text_ZeroingHud_Prompt").text, Does.Contain("稳定据枪"));
         }
 
         [UnityTest]
@@ -116,6 +116,18 @@ namespace VRShooting.Tests.PlayMode.UI
             yield return null;
 
             FindButton("Button_ZeroingBriefing_Start").onClick.Invoke();
+            yield return null;
+
+            var sessionId = services.TrainingSessions.Current.SessionId;
+            var pickup = services.WeaponControl.SetGripState(new WeaponGripStateInputDto
+            {
+                SessionId = sessionId,
+                HoldState = WeaponHoldState.TwoHandHeld,
+                RearHandTracked = true,
+                FrontHandTracked = true,
+                Stability01 = 0.95f
+            });
+            Assert.IsTrue(pickup.Success, pickup.Message);
             yield return null;
 
             Assert.AreEqual(ScreenId.ZeroingHud, services.Router.Current);

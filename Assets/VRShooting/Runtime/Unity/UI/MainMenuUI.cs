@@ -70,9 +70,12 @@ namespace VRShooting.Unity.UI
         IDisposable zeroingRoundSubscription;
         RectTransform mainMenuScreen;
         RectTransform zeroingBriefingScreen;
+        RectTransform zeroingPickupScreen;
         RectTransform zeroingHudScreen;
         RectTransform zeroingImpactAnalysisScreen;
         RectTransform zeroingFinalRatingScreen;
+        RectTransform largePanelRoot;
+        RectTransform minimalHudRoot;
         RectTransform zeroingStabilityFill;
         readonly List<RectTransform> zeroingImpactDots = new List<RectTransform>();
         Button openZeroingButton;
@@ -100,7 +103,11 @@ namespace VRShooting.Unity.UI
         TextMeshProUGUI zeroingFinalGradeText;
         TextMeshProUGUI zeroingFinalRoundsText;
         TextMeshProUGUI zeroingFinalThumbnailsText;
+        TextMeshProUGUI pickupPromptText;
+        TextMeshProUGUI firingStationStateText;
         Image zeroingPromptBackground;
+        TrainingPresentationView presentationView;
+        TrainingPresentationPresenter presentationPresenter;
         bool isBuilt;
 #if UNITY_EDITOR
         static TMP_FontAsset generatedEditorFontAsset;
@@ -165,6 +172,10 @@ namespace VRShooting.Unity.UI
         {
             screenSubscription?.Dispose();
             zeroingRoundSubscription?.Dispose();
+            if (presentationPresenter != null)
+            {
+                presentationPresenter.SnapshotApplied -= OnPresentationSnapshotApplied;
+            }
             if (services?.Hud != null)
             {
                 services.Hud.HudUpdated -= RenderHud;
@@ -179,6 +190,7 @@ namespace VRShooting.Unity.UI
             if (isBuilt)
             {
                 ShowScreen(services.Router.Current);
+                presentationPresenter?.Refresh();
                 return;
             }
 
@@ -189,6 +201,7 @@ namespace VRShooting.Unity.UI
             SubscribeZeroing();
             isBuilt = true;
             ShowScreen(services.Router.Current);
+            InitializePresentation();
         }
 
         void SubscribeRouter()
@@ -241,41 +254,160 @@ namespace VRShooting.Unity.UI
             gameObject.name = RootObjectName;
             AddTestId(gameObject, RootObjectName);
 
+            largePanelRoot = CreateRect("LargePanelRoot", transform as RectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            AddTestId(largePanelRoot.gameObject, "Training.Shared.LargePanelRoot");
+            largePanelRoot.gameObject.AddComponent<CanvasGroup>();
+            largePanelRoot.gameObject.SetActive(false);
+
+            minimalHudRoot = CreateRect("MinimalHudRoot", transform as RectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            AddTestId(minimalHudRoot.gameObject, "Training.Shared.MinimalHudRoot");
+            minimalHudRoot.gameObject.AddComponent<CanvasGroup>();
+            minimalHudRoot.gameObject.SetActive(false);
+
             if ((ScreenGroup & TrainingUIScreenGroup.MainMenu) != 0)
             {
-                mainMenuScreen = CreateScreen("Screen_MainMenu");
+                mainMenuScreen = CreateScreen(transform as RectTransform, "Screen_MainMenu");
                 BuildMainMenu(mainMenuScreen);
 
-                zeroingBriefingScreen = CreateScreen("Screen_ZeroingBriefing");
+                zeroingBriefingScreen = CreateScreen(largePanelRoot, "Screen_ZeroingBriefing");
                 BuildZeroingBriefing(zeroingBriefingScreen);
+                BuildSharedStatus(zeroingBriefingScreen);
             }
 
             if ((ScreenGroup & TrainingUIScreenGroup.ZeroingRange) != 0)
             {
-                zeroingHudScreen = CreateHudScreen("Screen_ZeroingHud");
+                zeroingPickupScreen = CreateScreen(largePanelRoot, "Panel_Training_AwaitingWeaponPickup");
+                BuildAwaitingWeaponPickup(zeroingPickupScreen);
+
+                zeroingHudScreen = CreateHudScreen(minimalHudRoot, "Screen_ZeroingHud");
                 BuildZeroingHud(zeroingHudScreen);
 
-                zeroingImpactAnalysisScreen = CreateHudScreen("Screen_ZeroingImpactAnalysis");
+                zeroingImpactAnalysisScreen = CreateHudScreen(largePanelRoot, "Screen_ZeroingImpactAnalysis");
                 BuildZeroingImpactAnalysis(zeroingImpactAnalysisScreen);
 
-                zeroingFinalRatingScreen = CreateHudScreen("Screen_ZeroingFinalRating");
+                zeroingFinalRatingScreen = CreateHudScreen(largePanelRoot, "Screen_ZeroingFinalRating");
                 BuildZeroingFinalRating(zeroingFinalRatingScreen);
             }
+
+            ConfigurePresentationView();
         }
 
-        RectTransform CreateScreen(string name)
+        RectTransform CreateScreen(RectTransform parent, string name)
         {
-            var screen = CreateRect(name, transform as RectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            var screen = CreateRect(name, parent, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             AddImage(screen.gameObject, new Color32(7, 16, 13, 242));
             AddTestId(screen.gameObject, name);
             return screen;
         }
 
-        RectTransform CreateHudScreen(string name)
+        RectTransform CreateHudScreen(RectTransform parent, string name)
         {
-            var screen = CreateRect(name, transform as RectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            var screen = CreateRect(name, parent, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             AddTestId(screen.gameObject, name);
             return screen;
+        }
+
+        void BuildSharedStatus(RectTransform parent)
+        {
+            pickupPromptText = AddLabel(parent, "Text_TrainingShared_PickupPrompt", "确认设置后开始训练", 24,
+                FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(610, 930), new Vector2(1310, 975),
+                new Color32(247, 185, 85, 255));
+            OverrideTestId(pickupPromptText.gameObject, "Training.Shared.PickupPrompt");
+            firingStationStateText = AddLabel(parent, "Text_TrainingShared_FiringStationState", "射击位：等待绑定", 18,
+                FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(610, 980), new Vector2(1310, 1020),
+                new Color32(143, 217, 255, 255));
+            OverrideTestId(firingStationStateText.gameObject, "Training.Shared.FiringStationState");
+        }
+
+        void BuildAwaitingWeaponPickup(RectTransform parent)
+        {
+            AddPanel(parent, "Panel_Training_AwaitingWeaponPickup_Content", new Vector2(360, 235), new Vector2(1560, 825),
+                new Color32(11, 19, 16, 235), new Color32(45, 156, 255, 255));
+            AddLabel(parent, "Text_Training_AwaitingWeaponPickup_Title", "100m精度射校靶", 52,
+                FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(520, 300), new Vector2(1400, 390),
+                new Color32(231, 242, 235, 255));
+            AddLabel(parent, "Text_Training_AwaitingWeaponPickup_Rules",
+                "卧姿固定射击位  ·  单发射  ·  每轮3发  ·  共3轮\n右手近距握住后握把后，大型界面将自动隐藏",
+                28, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(480, 430), new Vector2(1440, 570),
+                new Color32(143, 217, 255, 255));
+            pickupPromptText = AddLabel(parent, "Text_TrainingShared_PickupPrompt", "请用右手近距取枪", 38,
+                FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(610, 615), new Vector2(1310, 700),
+                new Color32(247, 185, 85, 255));
+            OverrideTestId(pickupPromptText.gameObject, "Training.Shared.PickupPrompt");
+            firingStationStateText = AddLabel(parent, "Text_TrainingShared_FiringStationState", "射击位：等待绑定", 20,
+                FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(610, 720), new Vector2(1310, 765),
+                new Color32(143, 217, 255, 255));
+            OverrideTestId(firingStationStateText.gameObject, "Training.Shared.FiringStationState");
+            startButton = AddButton(parent, "Button_ZeroingBriefing_Start", "确认并开始", new Vector2(805, 785), new Vector2(1115, 860), true);
+            startButton.onClick.AddListener(OnStartZeroingClicked);
+        }
+
+        void ConfigurePresentationView()
+        {
+            presentationView = gameObject.GetComponent<TrainingPresentationView>();
+            if (presentationView == null)
+            {
+                presentationView = gameObject.AddComponent<TrainingPresentationView>();
+            }
+
+            var bindings = new List<TrainingPresentationPanelBinding>();
+            if (zeroingBriefingScreen != null)
+            {
+                bindings.Add(new TrainingPresentationPanelBinding(ScreenId.ZeroingBriefing, zeroingBriefingScreen.gameObject));
+            }
+            else if (zeroingPickupScreen != null)
+            {
+                bindings.Add(new TrainingPresentationPanelBinding(ScreenId.ZeroingBriefing, zeroingPickupScreen.gameObject));
+            }
+
+            if (zeroingHudScreen != null)
+            {
+                bindings.Add(new TrainingPresentationPanelBinding(ScreenId.ZeroingHud, zeroingHudScreen.gameObject));
+            }
+            if (zeroingImpactAnalysisScreen != null)
+            {
+                bindings.Add(new TrainingPresentationPanelBinding(ScreenId.ZeroingImpactAnalysis, zeroingImpactAnalysisScreen.gameObject));
+            }
+            if (zeroingFinalRatingScreen != null)
+            {
+                bindings.Add(new TrainingPresentationPanelBinding(ScreenId.ZeroingFinalRating, zeroingFinalRatingScreen.gameObject));
+            }
+
+            presentationView.Configure(
+                largePanelRoot.gameObject,
+                minimalHudRoot.gameObject,
+                pickupPromptText,
+                firingStationStateText,
+                startButton,
+                nextRoundButton,
+                finalRetryButton,
+                bindings);
+        }
+
+        void InitializePresentation()
+        {
+            presentationPresenter = gameObject.GetComponent<TrainingPresentationPresenter>();
+            if (presentationPresenter == null)
+            {
+                presentationPresenter = gameObject.AddComponent<TrainingPresentationPresenter>();
+            }
+
+            presentationPresenter.SnapshotApplied -= OnPresentationSnapshotApplied;
+            presentationPresenter.SnapshotApplied += OnPresentationSnapshotApplied;
+            presentationPresenter.Initialize(presentationView, services.Presentation);
+        }
+
+        void OnPresentationSnapshotApplied(TrainingPresentationDto snapshot)
+        {
+            ShowScreen(snapshot.ActiveScreen);
+            if (services != null && services.Router.Current != snapshot.ActiveScreen)
+            {
+                services.Router.Open(snapshot.ActiveScreen, new NavigationArgs
+                {
+                    Mode = snapshot.Mode,
+                    SessionId = snapshot.SessionId
+                });
+            }
         }
 
         Sprite LoadGeneratedSprite(string spriteName)
@@ -423,18 +555,18 @@ namespace VRShooting.Unity.UI
         {
             AddPanel(parent, "Panel_ZeroingHud_Round", new Vector2(60, 60), new Vector2(350, 175), new Color32(12, 28, 36, 205), new Color32(45, 156, 255, 255));
             AddIcon(parent, "Icon_ZeroingHud_Round", "icon_reticle", new Vector2(82, 80), new Vector2(152, 150));
-            zeroingRoundText = AddLabel(parent, "Text_ZeroingHud_Round", "轮次 1/3", 30, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(150, 78), new Vector2(325, 155), new Color32(231, 242, 235, 255));
+            zeroingRoundText = AddLabel(parent, "Text_ZeroingHud_Round", "轮次 --/--", 30, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(150, 78), new Vector2(325, 155), new Color32(231, 242, 235, 255));
 
             AddPanel(parent, "Panel_ZeroingHud_Distance", new Vector2(810, 75), new Vector2(1110, 155), new Color32(12, 28, 36, 205), new Color32(45, 156, 255, 255));
-            zeroingDistanceText = AddLabel(parent, "Text_ZeroingHud_Distance", "距离 100m", 30, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(835, 88), new Vector2(1085, 145), new Color32(143, 217, 255, 255));
+            zeroingDistanceText = AddLabel(parent, "Text_ZeroingHud_Distance", "距离 --", 30, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(835, 88), new Vector2(1085, 145), new Color32(143, 217, 255, 255));
 
             AddPanel(parent, "Panel_ZeroingHud_Ammo", new Vector2(1530, 60), new Vector2(1810, 175), new Color32(12, 28, 36, 205), new Color32(45, 156, 255, 255));
-            zeroingAmmoText = AddLabel(parent, "Text_ZeroingHud_Ammo", "弹数 3/3", 30, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(1555, 78), new Vector2(1730, 155), new Color32(231, 242, 235, 255));
+            zeroingAmmoText = AddLabel(parent, "Text_ZeroingHud_Ammo", "弹数 --/--", 30, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(1555, 78), new Vector2(1730, 155), new Color32(231, 242, 235, 255));
             AddIcon(parent, "Icon_ZeroingHud_Ammo", "icon_bullets", new Vector2(1725, 82), new Vector2(1792, 150));
 
             var stabilityPanel = AddPanel(parent, "Hud_Zeroing_Stability", new Vector2(80, 785), new Vector2(555, 905), new Color32(12, 28, 36, 200), new Color32(45, 156, 255, 255));
             AddLabel(stabilityPanel, "Text_ZeroingHud_StabilityLabel", "稳定度", 24, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(28, 14), new Vector2(-28, -70), new Color32(231, 242, 235, 255), true);
-            zeroingStabilityText = AddLabel(stabilityPanel, "Text_ZeroingHud_StabilityValue", "100%", 20, FontStyles.Bold, TextAlignmentOptions.Right, new Vector2(28, 14), new Vector2(-28, -70), new Color32(200, 255, 106, 255), true);
+            zeroingStabilityText = AddLabel(stabilityPanel, "Text_ZeroingHud_StabilityValue", "--", 20, FontStyles.Bold, TextAlignmentOptions.Right, new Vector2(28, 14), new Vector2(-28, -70), new Color32(200, 255, 106, 255), true);
             var stabilityBar = CreateRect("Hud_Zeroing_StabilityBar", stabilityPanel, Vector2.zero, Vector2.zero, new Vector2(28, 70), new Vector2(420, 92));
             AddTestId(stabilityBar.gameObject, "Hud_Zeroing_StabilityBar");
             AddImage(stabilityBar.gameObject, new Color32(33, 64, 75, 230));
@@ -445,10 +577,10 @@ namespace VRShooting.Unity.UI
             var recordPanel = AddPanel(parent, "Hud_Zeroing_ImpactRecord", new Vector2(1430, 300), new Vector2(1840, 845), new Color32(12, 28, 36, 190), new Color32(45, 156, 255, 255));
             AddLabel(recordPanel, "Text_ZeroingHud_ImpactTitle", "弹着记录", 30, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(35, 25), new Vector2(-35, -465), new Color32(143, 217, 255, 255), true);
             BuildHudTargetPlaceholder(recordPanel);
-            zeroingImpactRecordText = AddLabel(recordPanel, "Text_ZeroingHud_ImpactRecord", "待记录 3 发", 26, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(35, 430), new Vector2(-35, -28), new Color32(77, 213, 255, 255), true);
+            zeroingImpactRecordText = AddLabel(recordPanel, "Text_ZeroingHud_ImpactRecord", "弹着记录待同步", 26, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(35, 430), new Vector2(-35, -28), new Color32(77, 213, 255, 255), true);
 
             AddPanel(parent, "Panel_ZeroingHud_Shoulder", new Vector2(80, 925), new Vector2(390, 995), new Color32(12, 28, 36, 190), new Color32(56, 84, 71, 255));
-            zeroingShoulderText = AddLabel(parent, "Text_ZeroingHud_Shoulder", "肩侧 右肩", 24, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(95, 936), new Vector2(375, 985), new Color32(231, 242, 235, 255));
+            zeroingShoulderText = AddLabel(parent, "Text_ZeroingHud_Shoulder", "肩侧 --", 24, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(95, 936), new Vector2(375, 985), new Color32(231, 242, 235, 255));
 
             var promptPanel = AddPanel(parent, "Panel_ZeroingHud_Prompt", new Vector2(760, 880), new Vector2(1160, 960), new Color32(200, 255, 106, 230), new Color32(247, 185, 85, 255));
             zeroingPromptBackground = promptPanel.GetComponent<Image>();
@@ -476,7 +608,6 @@ namespace VRShooting.Unity.UI
             applyAdjustmentButton = AddButton(parent, "Button_ZeroingImpactAnalysis_ApplyAdjustment", "应用调整", DrawioMin(280, 415, 110, 38), DrawioMax(280, 415, 110, 38), true);
             applyAdjustmentButton.onClick.AddListener(OnApplyAdjustmentClicked);
             nextRoundButton = AddButton(parent, "Button_ZeroingImpactAnalysis_NextRound", "进入下一轮", DrawioMin(415, 415, 120, 38), DrawioMax(415, 415, 120, 38), false);
-            nextRoundButton.onClick.AddListener(OnNextRoundClicked);
             impactBackToMainMenuButton = AddButton(parent, "Button_ZeroingImpactAnalysis_BackToMainMenu", "返回主菜单", DrawioMin(545, 415, 90, 38), DrawioMax(545, 415, 90, 38), false);
             impactBackToMainMenuButton.onClick.AddListener(OnImpactBackToMainMenuClicked);
         }
@@ -497,7 +628,6 @@ namespace VRShooting.Unity.UI
             zeroingFinalThumbnailsText = AddLabel(thumbs, "Text_ZeroingFinalRating_ImpactThumbnails", "弹着缩略图区域", 20, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(20, 16), new Vector2(628, 108), new Color32(143, 217, 255, 255));
 
             finalRetryButton = AddButton(parent, "Button_ZeroingFinalRating_Retry", "重新训练", DrawioMin(270, 415, 110, 38), DrawioMax(270, 415, 110, 38), true);
-            finalRetryButton.onClick.AddListener(OnFinalRetryClicked);
             finalBackToModeSelectionButton = AddButton(parent, "Button_ZeroingFinalRating_BackToModeSelection", "返回模式选择", DrawioMin(405, 415, 130, 38), DrawioMax(405, 415, 130, 38), false);
             finalBackToModeSelectionButton.onClick.AddListener(OnFinalBackToModeSelectionClicked);
         }
@@ -552,6 +682,14 @@ namespace VRShooting.Unity.UI
 
         void OnOpenZeroingClicked()
         {
+            LastError = string.Empty;
+            var presentation = services.Presentation.Enter(TrainingMode.Zeroing100m);
+            if (!presentation.Success)
+            {
+                LastError = presentation.Message;
+                return;
+            }
+
             var result = services.Router.HandleUIEvent(UIEventId.MainMenu_OpenZeroing, ScreenId.MainMenu);
             if (!result.Success)
             {
@@ -562,6 +700,13 @@ namespace VRShooting.Unity.UI
         void OnOpenMovingTargetClicked()
         {
             LastError = string.Empty;
+
+            var presentation = services.Presentation.Enter(TrainingMode.MovingTarget);
+            if (!presentation.Success)
+            {
+                LastError = presentation.Message;
+                return;
+            }
 
             var result = services.Router.HandleUIEvent(UIEventId.MainMenu_OpenMovingTarget, ScreenId.MainMenu);
             if (!result.Success)
@@ -581,6 +726,17 @@ namespace VRShooting.Unity.UI
         {
             LastError = string.Empty;
 
+            var currentPresentation = services.Presentation.Get(string.Empty);
+            if (!currentPresentation.Success)
+            {
+                var entered = services.Presentation.Enter(TrainingMode.Zeroing100m);
+                if (!entered.Success)
+                {
+                    LastError = entered.Message;
+                    return;
+                }
+            }
+
             var zeroingSession = services.Zeroing.StartSession(RandomSeed.Fixed(100), ZeroingWeaponId);
             if (!zeroingSession.Success)
             {
@@ -588,24 +744,10 @@ namespace VRShooting.Unity.UI
                 return;
             }
 
-            var trainingSession = services.TrainingSessions.Current;
-            var weapon = services.WeaponControl.StartSession(trainingSession.SessionId, trainingSession.WeaponId, trainingSession.Mode);
-            if (!weapon.Success)
+            var presentation = services.Presentation.ConfirmStart(zeroingSession.Data.SessionId);
+            if (!presentation.Success)
             {
-                LastError = weapon.Message;
-                return;
-            }
-
-            var route = services.Router.HandleUIEvent(UIEventId.Zeroing_Start, ScreenId.ZeroingBriefing, new NavigationArgs
-            {
-                Mode = TrainingMode.Zeroing100m,
-                SessionId = zeroingSession.Data.SessionId,
-                ReturnToScreen = ScreenId.ZeroingBriefing.ToString()
-            });
-
-            if (!route.Success)
-            {
-                LastError = route.Message;
+                LastError = presentation.Message;
                 return;
             }
 
@@ -622,7 +764,12 @@ namespace VRShooting.Unity.UI
             if (!result.Success)
             {
                 LastError = result.Message;
+                return;
             }
+
+            services.Presentation.Exit(services.TrainingSessions.HasActiveSession
+                ? services.TrainingSessions.Current.SessionId
+                : string.Empty);
         }
 
         void ShowScreen(ScreenId screen)
@@ -636,6 +783,11 @@ namespace VRShooting.Unity.UI
             if (zeroingBriefingScreen != null)
             {
                 zeroingBriefingScreen.gameObject.SetActive(screen == ScreenId.ZeroingBriefing);
+            }
+
+            if (zeroingPickupScreen != null)
+            {
+                zeroingPickupScreen.gameObject.SetActive(screen == ScreenId.ZeroingBriefing);
             }
 
             if (zeroingHudScreen != null)
@@ -722,12 +874,12 @@ namespace VRShooting.Unity.UI
             var impactRecord = FindLine(hud, "impactRecord");
             var shoulder = FindLine(hud, "shoulder");
 
-            SetLabel(zeroingRoundText, round, "轮次 1/3");
-            SetLabel(zeroingDistanceText, distance, "距离 100m");
-            SetLabel(zeroingAmmoText, ammo, "弹数 3/3");
-            SetLabel(zeroingStabilityText, stability, "100%", false);
-            SetLabel(zeroingImpactRecordText, impactRecord, "待记录 3 发", false);
-            SetLabel(zeroingShoulderText, shoulder, "肩侧 右肩");
+            SetLabel(zeroingRoundText, round, "轮次 --/--");
+            SetLabel(zeroingDistanceText, distance, "距离 --");
+            SetLabel(zeroingAmmoText, ammo, "弹数 --/--");
+            SetLabel(zeroingStabilityText, stability, "--", false);
+            SetLabel(zeroingImpactRecordText, impactRecord, "弹着记录待同步", false);
+            SetLabel(zeroingShoulderText, shoulder, "肩侧 --");
 
             var ratio = ParsePercent01(stability.Value);
             if (zeroingStabilityFill != null)
@@ -854,6 +1006,9 @@ namespace VRShooting.Unity.UI
 
         void OnImpactBackToMainMenuClicked()
         {
+            var sessionId = services.TrainingSessions.HasActiveSession
+                ? services.TrainingSessions.Current.SessionId
+                : string.Empty;
             EndCurrentSession(SessionEndReason.Cancelled);
             var route = services.Router.HandleUIEvent(UIEventId.Zeroing_BackToMainMenu, ScreenId.ZeroingImpactAnalysis, new NavigationArgs
             {
@@ -866,60 +1021,8 @@ namespace VRShooting.Unity.UI
                 return;
             }
 
+            services.Presentation.Exit(sessionId);
             ReturnToMainSceneIfNeeded();
-        }
-
-        void OnNextRoundClicked()
-        {
-            if (!services.TrainingSessions.HasActiveSession)
-            {
-                return;
-            }
-
-            var analysis = services.Zeroing.CompleteRound(services.TrainingSessions.Current.SessionId);
-            if (!analysis.Success)
-            {
-                LastError = analysis.Message;
-                return;
-            }
-
-            if (analysis.Data.RoundIndex >= 3)
-            {
-                var finalRoute = services.Router.HandleUIEvent(UIEventId.Zeroing_NextRound, ScreenId.ZeroingImpactAnalysis, new NavigationArgs
-                {
-                    Mode = TrainingMode.Zeroing100m,
-                    SessionId = analysis.Data.SessionId,
-                    ReturnToScreen = ScreenId.ZeroingFinalRating.ToString()
-                });
-
-                if (!finalRoute.Success)
-                {
-                    LastError = finalRoute.Message;
-                }
-
-                return;
-            }
-
-            var next = services.Zeroing.ContinueAfterAnalysis(analysis.Data.SessionId);
-            if (!next.Success)
-            {
-                LastError = next.Message;
-                return;
-            }
-
-            var final = analysis.Data.PassedTenRing;
-            var route = services.Router.HandleUIEvent(UIEventId.Zeroing_NextRound, ScreenId.ZeroingImpactAnalysis, new NavigationArgs
-            {
-                Mode = TrainingMode.Zeroing100m,
-                SessionId = analysis.Data.SessionId,
-                ReturnToScreen = final ? ScreenId.ZeroingFinalRating.ToString() : ScreenId.ZeroingHud.ToString()
-            });
-
-            if (!route.Success)
-            {
-                LastError = route.Message;
-                return;
-            }
         }
 
         void RefreshFinalRating()
@@ -957,26 +1060,11 @@ namespace VRShooting.Unity.UI
             }
         }
 
-        void OnFinalRetryClicked()
-        {
-            EndCurrentSession(SessionEndReason.Cancelled);
-            var route = services.Router.HandleUIEvent(UIEventId.Zeroing_Retry, ScreenId.ZeroingFinalRating, new NavigationArgs
-            {
-                Mode = TrainingMode.Zeroing100m,
-                ReturnToScreen = ScreenId.ZeroingBriefing.ToString()
-            });
-
-            if (!route.Success)
-            {
-                LastError = route.Message;
-                return;
-            }
-
-            ReturnToMainSceneIfNeeded();
-        }
-
         void OnFinalBackToModeSelectionClicked()
         {
+            var sessionId = services.TrainingSessions.HasActiveSession
+                ? services.TrainingSessions.Current.SessionId
+                : string.Empty;
             EndCurrentSession(SessionEndReason.Completed);
             var route = services.Router.HandleUIEvent(UIEventId.Zeroing_BackToModeSelection, ScreenId.ZeroingFinalRating, new NavigationArgs
             {
@@ -989,6 +1077,7 @@ namespace VRShooting.Unity.UI
                 return;
             }
 
+            services.Presentation.Exit(sessionId);
             ReturnToMainSceneIfNeeded();
         }
 
@@ -1301,6 +1390,11 @@ namespace VRShooting.Unity.UI
             }
 
             testId.SetId(id);
+        }
+
+        static void OverrideTestId(GameObject go, string id)
+        {
+            AddTestId(go, id);
         }
 
         RectTransform AddPanel(RectTransform parent, string id, Vector2 min, Vector2 max, Color fill, Color stroke, string text = "")
