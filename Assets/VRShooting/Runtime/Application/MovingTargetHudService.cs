@@ -143,6 +143,7 @@ namespace VRShooting.Application
                 Line("fireMode", "射击模式", "两发起射 / 长按连射", HudSeverity.Info),
                 Line("firePhase", "连射状态", FormatFirePhase(moving.FirePhase), HudSeverity.Normal),
                 Line("hits", "命中", moving.HitCount + "/" + MovingTargetRules.TotalAmmo, HudSeverity.Normal),
+                Line("progress", "进度", Math.Round(moving.RouteProgress01 * 100f) + "%", HudSeverity.Info),
                 Line("speed", "速度", FormatSpeed(moving.SpeedMetersPerSecond), HudSeverity.Info),
                 Line("direction", "方向", string.IsNullOrEmpty(moving.DirectionLabel) ? "等待" : moving.DirectionLabel, HudSeverity.Info),
                 Line("countdown", "倒计时", FormatCountdown(moving), HudSeverity.Warning),
