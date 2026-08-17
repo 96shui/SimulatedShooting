@@ -27,6 +27,8 @@ namespace VRShooting.Application
 
             eventBus.Subscribe<TrainingWeaponPickupEvent>(OnWeaponPickupEvent);
             eventBus.Subscribe<ZeroingRoundCompletedEvent>(OnZeroingRoundCompleted);
+            eventBus.Subscribe<MovingTargetCountdownElapsedEvent>(OnMovingTargetCountdownElapsed);
+            eventBus.Subscribe<MovingTargetSessionCompletedEvent>(OnMovingTargetSessionCompleted);
         }
 
         public event Action<TrainingPresentationDto> PresentationChanged;
@@ -301,6 +303,16 @@ namespace VRShooting.Application
         void OnWeaponPickupEvent(TrainingWeaponPickupEvent pickup)
         {
             ApplyWeaponPickup(pickup);
+        }
+
+        void OnMovingTargetCountdownElapsed(MovingTargetCountdownElapsedEvent evt)
+        {
+            NotifyMovingTargetCountdownElapsed(evt.SessionId);
+        }
+
+        void OnMovingTargetSessionCompleted(MovingTargetSessionCompletedEvent evt)
+        {
+            NotifyTrainingCompleted(evt.SessionId);
         }
 
         void OnZeroingRoundCompleted(ZeroingRoundCompletedEvent evt)

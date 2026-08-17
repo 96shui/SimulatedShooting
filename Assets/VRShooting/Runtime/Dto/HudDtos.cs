@@ -15,6 +15,7 @@ namespace VRShooting.Common
         public IReadOnlyList<HudTextLineDto> TextLines { get; init; }
         public IReadOnlyList<HudPromptDto> Prompts { get; init; }
         public bool CanShoot { get; init; }
+        public WeaponFireSequenceStateDto? FireSequence { get; init; }
 
         public static HudDto Empty => new HudDto
         {

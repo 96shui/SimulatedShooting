@@ -31,6 +31,9 @@ namespace VRShooting.Tests.EditMode.Infrastructure
             Assert.AreEqual(ShoulderSide.Left, default(ShoulderSide));
             Assert.AreEqual(TrainingPresentationPhase.ModeEntry, default(TrainingPresentationPhase));
             Assert.AreEqual(TrainingPostureMode.ProneFixed, default(TrainingPostureMode));
+            Assert.AreEqual(TargetMovePhase.WaitingCountdown, default(TargetMovePhase));
+            Assert.AreEqual(WeaponFireSequencePhase.Idle, default(WeaponFireSequencePhase));
+            Assert.AreEqual(WeaponFireMode.SingleShot, default(WeaponFireMode));
         }
 
         [Test]

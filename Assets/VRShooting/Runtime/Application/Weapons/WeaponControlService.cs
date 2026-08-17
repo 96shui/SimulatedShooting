@@ -95,12 +95,27 @@ namespace VRShooting.Application.Weapons
                 return ServiceResult<WeaponControlStateDto>.Fail(ErrorCode.InvalidInput, "weapon is not applicable to mode");
             }
 
+            var weapon = weaponResult.Data;
+            if (mode == TrainingMode.MovingTarget)
+            {
+                weapon = new WeaponDefinitionDto
+                {
+                    WeaponId = weapon.WeaponId,
+                    DisplayName = weapon.DisplayName,
+                    Type = weapon.Type,
+                    MagazineCapacity = MovingTargetRules.TotalAmmo,
+                    MaxReserveAmmo = 0,
+                    Recoil = weapon.Recoil,
+                    ApplicableModes = weapon.ApplicableModes
+                };
+            }
+
             var state = new SessionWeaponState
             {
                 SessionId = sessionId,
-                Weapon = weaponResult.Data,
-                CurrentMagazine = weaponResult.Data.MagazineCapacity,
-                ReserveAmmo = weaponResult.Data.MaxReserveAmmo,
+                Weapon = weapon,
+                CurrentMagazine = weapon.MagazineCapacity,
+                ReserveAmmo = weapon.MaxReserveAmmo,
                 ShoulderSide = ShoulderSide.Right,
                 AimMode = WeaponAimMode.HipFire,
                 HoldState = WeaponHoldState.OnRack,

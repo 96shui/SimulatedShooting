@@ -4,7 +4,7 @@ using VRShooting.Application.Weapons;
 namespace VRShooting.Application
 {
     /// <summary>
-    /// P1 应用服务组合根（task002）。
+    /// 应用服务组合根。P1 射校与 P2 移动靶共用。
     /// </summary>
     public sealed class ApplicationServices
     {
@@ -18,6 +18,7 @@ namespace VRShooting.Application
             IAmmoService ammo,
             IHUDService hud,
             IZeroingService zeroing,
+            IMovingTargetService movingTarget,
             ITrainingPresentationService presentation)
         {
             EventBus = eventBus;
@@ -29,6 +30,7 @@ namespace VRShooting.Application
             Ammo = ammo;
             Hud = hud;
             Zeroing = zeroing;
+            MovingTarget = movingTarget;
             Presentation = presentation;
         }
 
@@ -50,6 +52,8 @@ namespace VRShooting.Application
 
         public IZeroingService Zeroing { get; }
 
+        public IMovingTargetService MovingTarget { get; }
+
         public ITrainingPresentationService Presentation { get; }
 
         public static ApplicationServices CreateDefault(IXRTrainingInput trainingInput = null)
@@ -60,8 +64,11 @@ namespace VRShooting.Application
             var input = trainingInput ?? new InputSystemXRTrainingInput();
             var weaponControl = new WeaponControlService(eventBus);
             var zeroing = new ZeroingService(eventBus, trainingSessions, weaponControl);
+            var movingTarget = new MovingTargetService(eventBus, trainingSessions);
             var presentation = new TrainingPresentationService(eventBus, trainingSessions, weaponControl, zeroing);
-            var hud = new ZeroingHudService(eventBus, trainingSessions, zeroing, weaponControl, weaponControl);
+            var zeroingHud = new ZeroingHudService(eventBus, trainingSessions, zeroing, weaponControl, weaponControl);
+            var movingTargetHud = new MovingTargetHudService(eventBus, trainingSessions, movingTarget, weaponControl);
+            var hud = new TrainingHudService(trainingSessions, zeroingHud, movingTargetHud);
             return new ApplicationServices(
                 eventBus,
                 router,
@@ -72,6 +79,7 @@ namespace VRShooting.Application
                 weaponControl,
                 hud,
                 zeroing,
+                movingTarget,
                 presentation);
         }
     }
