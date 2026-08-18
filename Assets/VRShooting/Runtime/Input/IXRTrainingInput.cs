@@ -10,6 +10,10 @@ namespace VRShooting.Input
 
         bool TriggerPressed { get; }
 
+        bool TriggerHeld { get; }
+
+        bool TriggerReleased { get; }
+
         float RightTriggerValue { get; }
 
         bool RightGripPressed { get; }

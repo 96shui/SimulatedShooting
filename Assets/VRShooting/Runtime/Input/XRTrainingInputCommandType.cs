@@ -5,6 +5,8 @@ namespace VRShooting.Input
         Confirm = 0,
         Back,
         Trigger,
+        TriggerHeld,
+        TriggerReleased,
         Reload,
         SwitchShoulder,
         AimPressed,

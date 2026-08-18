@@ -65,6 +65,18 @@ namespace VRShooting.Input
                 commandCount++;
             }
 
+            if (input.TriggerHeld)
+            {
+                Publish(XRTrainingInputCommandType.TriggerHeld, sourceScreen);
+                commandCount++;
+            }
+
+            if (input.TriggerReleased)
+            {
+                Publish(XRTrainingInputCommandType.TriggerReleased, sourceScreen);
+                commandCount++;
+            }
+
             if (input.ReloadPressed)
             {
                 Publish(XRTrainingInputCommandType.Reload, sourceScreen);

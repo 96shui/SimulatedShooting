@@ -7,6 +7,7 @@ namespace VRShooting.Common
         public int CurrentMagazine { get; init; }
         public int ReserveAmmo { get; init; }
         public bool CanShoot { get; init; }
+        public WeaponFireMode FireMode { get; init; }
         public ShoulderSide ShoulderSide { get; init; }
         public WeaponAimMode AimMode { get; init; }
         public WeaponHoldState HoldState { get; init; }

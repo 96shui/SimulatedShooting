@@ -10,6 +10,7 @@ namespace VRShooting.Input
         int lastXrFrame = -1;
         bool xrTriggerHeld;
         bool xrTriggerPressed;
+        bool xrTriggerReleased;
 
         public bool ConfirmPressed =>
             WasPressedThisFrame(Keyboard.current?.enterKey) ||
@@ -25,6 +26,18 @@ namespace VRShooting.Input
             WasPressedThisFrame(Mouse.current?.leftButton) ||
             WasPressedThisFrame(Keyboard.current?.fKey) ||
             WasPressedThisFrame(Gamepad.current?.rightTrigger);
+
+        public bool TriggerHeld =>
+            ReadXrTriggerHeld() ||
+            IsPressed(Mouse.current?.leftButton) ||
+            IsPressed(Keyboard.current?.fKey) ||
+            IsPressed(Gamepad.current?.rightTrigger);
+
+        public bool TriggerReleased =>
+            ReadXrTriggerReleased() ||
+            WasReleasedThisFrame(Mouse.current?.leftButton) ||
+            WasReleasedThisFrame(Keyboard.current?.fKey) ||
+            WasReleasedThisFrame(Gamepad.current?.rightTrigger);
 
         public float RightTriggerValue => Mathf.Max(
             ReadXrAxis(XRController.rightHand, "trigger"),
@@ -131,6 +144,18 @@ namespace VRShooting.Input
             return xrTriggerPressed;
         }
 
+        bool ReadXrTriggerHeld()
+        {
+            UpdateXrTriggerState();
+            return xrTriggerHeld;
+        }
+
+        bool ReadXrTriggerReleased()
+        {
+            UpdateXrTriggerState();
+            return xrTriggerReleased;
+        }
+
         void UpdateXrTriggerState()
         {
             if (lastXrFrame == Time.frameCount)
@@ -140,15 +165,17 @@ namespace VRShooting.Input
 
             lastXrFrame = Time.frameCount;
             xrTriggerPressed = false;
+            xrTriggerReleased = false;
             var value = ReadXrAxis(XRController.rightHand, "trigger");
-            if (!xrTriggerHeld && value >= 0.75f)
+            if (WeaponTriggerHysteresis.CrossedPress(xrTriggerHeld, value))
             {
                 xrTriggerHeld = true;
                 xrTriggerPressed = true;
             }
-            else if (xrTriggerHeld && value <= 0.25f)
+            else if (WeaponTriggerHysteresis.CrossedRelease(xrTriggerHeld, value))
             {
                 xrTriggerHeld = false;
+                xrTriggerReleased = true;
             }
         }
 

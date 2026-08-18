@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using VRShooting.Application;
+using VRShooting.Application.Events;
 using VRShooting.Application.Weapons;
 using VRShooting.Common;
 using VRShooting.Contracts;
@@ -41,6 +42,7 @@ namespace SimulatedShooting.Scene
         IWeaponHapticOutput hapticOutput;
         XRTrainingInputCommandDispatcher dispatcher;
         IDisposable inputSubscription;
+        IDisposable shotSubscription;
         Material tracerMaterial;
 
         WeaponControlStateDto currentState;
@@ -57,6 +59,7 @@ namespace SimulatedShooting.Scene
         bool simulatedRearGripHeld;
         bool simulatedFrontGripHeld;
         int tracerCounter;
+        int lastVisualizedShotSequence;
         bool initialized;
         bool hasCurrentState;
         bool grabSubscribed;
@@ -162,6 +165,8 @@ namespace SimulatedShooting.Scene
         {
             inputSubscription?.Dispose();
             inputSubscription = null;
+            shotSubscription?.Dispose();
+            shotSubscription = null;
             dispatcher = null;
         }
 
@@ -197,6 +202,7 @@ namespace SimulatedShooting.Scene
             {
                 SourceScreen = ScreenId.ZeroingHud
             });
+            TickWeaponFire(Time.deltaTime);
             UpdateRecoil(Time.deltaTime);
         }
 
@@ -297,6 +303,7 @@ namespace SimulatedShooting.Scene
             {
                 dispatcher = new XRTrainingInputCommandDispatcher(input, eventBus);
                 inputSubscription = eventBus.Subscribe<XRTrainingInputCommandEvent>(HandleInputCommand);
+                shotSubscription = eventBus.Subscribe<WeaponShotResultEvent>(HandleWeaponShotResult);
             }
 
             weaponService = services.WeaponControl;
@@ -412,7 +419,6 @@ namespace SimulatedShooting.Scene
             switch (evt.CommandType)
             {
                 case XRTrainingInputCommandType.Trigger:
-                    FireCurrentWeapon();
                     break;
                 case XRTrainingInputCommandType.Reload:
                     ApplyStateResult(weaponService.Reload(SessionId));
@@ -712,57 +718,109 @@ namespace SimulatedShooting.Scene
             return Mathf.Abs(Mathf.Tan(angleRadians) * ZeroingRules.DistanceMeters * 100f);
         }
 
-        bool FireCurrentWeapon()
+        void TickWeaponFire(float deltaTime)
         {
-            if (weaponBinding == null || weaponBinding.MuzzlePoint == null || string.IsNullOrEmpty(SessionId))
+            if (services?.WeaponFire == null || input == null || string.IsNullOrEmpty(SessionId))
             {
-                return false;
+                return;
             }
 
-            var sessionId = SessionId;
-            var muzzle = weaponBinding.MuzzlePoint.position;
-            var direction = ResolveAimDirection();
-            var rawDirection = weaponBinding.transform.forward.normalized;
-            var aimMotionOffsetCm = ResolveAimMotionOffsetCm(rawDirection, direction);
-            var hit = Physics.Raycast(muzzle, direction, out var raycastHit, MaxShotDistance);
-            var hitPoint = ResolveHitPointForService(raycastHit, hit, muzzle, direction);
-            var hitObjectId = hit ? ResolveTestId(raycastHit.collider.transform) : string.Empty;
+            services.WeaponFire.Tick(
+                SessionId,
+                deltaTime,
+                new WeaponTriggerStateInputDto
+                {
+                    SessionId = SessionId,
+                    Value01 = input.RightTriggerValue,
+                    Pressed = input.TriggerPressed,
+                    Held = input.TriggerHeld,
+                    Released = input.TriggerReleased
+                },
+                BuildFireSnapshot());
+        }
 
-            var fire = weaponService.Fire(new WeaponFireInputDto
+        void HandleWeaponShotResult(WeaponShotResultEvent evt)
+        {
+            if (!evt.Result.IsValidShot || evt.Result.SessionId != SessionId)
             {
-                SessionId = sessionId,
+                return;
+            }
+
+            if (evt.Result.ShotSequence == lastVisualizedShotSequence)
+            {
+                return;
+            }
+
+            lastVisualizedShotSequence = evt.Result.ShotSequence;
+            ApplyShotVisuals(evt.Result);
+        }
+
+        WeaponFireInputDto BuildFireSnapshot()
+        {
+            var muzzle = weaponBinding != null && weaponBinding.MuzzlePoint != null
+                ? weaponBinding.MuzzlePoint.position
+                : Vector3.zero;
+            var direction = ResolveAimDirection();
+            var rawDirection = weaponBinding != null
+                ? weaponBinding.transform.forward.normalized
+                : Vector3.forward;
+            var hit = Physics.Raycast(muzzle, direction, out var raycastHit, MaxShotDistance);
+            return new WeaponFireInputDto
+            {
+                SessionId = SessionId,
                 MuzzlePosition = muzzle,
-                WeaponPosition = weaponBinding.transform.position,
+                WeaponPosition = weaponBinding != null ? weaponBinding.transform.position : Vector3.zero,
                 RawAimDirection = rawDirection,
                 AimDirection = direction,
-                AimMotionOffsetCm = aimMotionOffsetCm,
-                Stability01 = currentState.Stability01,
-                TwoHandGripActive = currentState.TwoHandGripActive,
-                AimMode = currentState.AimMode,
-                ShoulderSide = currentState.ShoulderSide,
+                AimMotionOffsetCm = ResolveAimMotionOffsetCm(rawDirection, direction),
+                Stability01 = hasCurrentState ? currentState.Stability01 : 0f,
+                TwoHandGripActive = hasCurrentState && currentState.TwoHandGripActive,
+                AimMode = hasCurrentState ? currentState.AimMode : WeaponAimMode.HipFire,
+                ShoulderSide = hasCurrentState ? currentState.ShoulderSide : ShoulderSide.Right,
                 Hit = hit,
-                HitPoint = hitPoint,
-                HitObjectId = hitObjectId
-            });
+                HitPoint = ResolveHitPointForService(raycastHit, hit, muzzle, direction),
+                HitObjectId = hit ? ResolveTestId(raycastHit.collider.transform) : string.Empty
+            };
+        }
 
-            lastShot = fire.Data;
-            var state = weaponService.GetState(sessionId);
+        void ApplyShotVisuals(WeaponShotResultDto result)
+        {
+            lastShot = result;
+            var state = weaponService != null ? weaponService.GetState(result.SessionId) : default;
             if (state.Success)
             {
                 currentState = state.Data;
+                hasCurrentState = true;
             }
 
-            if (!fire.Success)
+            var visualEnd = result.Hit ? result.HitPoint : result.MuzzlePosition + result.AimDirection * MaxShotDistance;
+            SpawnTracer(result.MuzzlePosition, visualEnd, result.Hit, default);
+            if (result.Hit && targetSurface != null)
+            {
+                targetSurface.TryRecordWorldPoint(result.HitPoint, out _);
+            }
+
+            ApplyRecoil(result.RecoilImpulse);
+            hapticOutput?.SendShotImpulse(result.RecoilImpulse, result.FrontHandTracked);
+        }
+
+        bool FireCurrentWeapon()
+        {
+            if (weaponBinding == null || weaponBinding.MuzzlePoint == null || string.IsNullOrEmpty(SessionId) || weaponService == null)
             {
                 return false;
             }
 
-            var visualEnd = hit ? raycastHit.point : muzzle + direction * MaxShotDistance;
-            SpawnTracer(muzzle, visualEnd, hit, raycastHit);
-            RecordImpactIfNeeded(raycastHit, hit);
-            ApplyRecoil(fire.Data.RecoilImpulse);
-            hapticOutput?.SendShotImpulse(fire.Data.RecoilImpulse, fire.Data.FrontHandTracked);
-            return true;
+            var fire = weaponService.Fire(BuildFireSnapshot());
+            lastShot = fire.Data;
+            var state = weaponService.GetState(SessionId);
+            if (state.Success)
+            {
+                currentState = state.Data;
+                hasCurrentState = true;
+            }
+
+            return fire.Success && fire.Data.IsValidShot;
         }
 
         Vector3 ResolveHitPointForService(RaycastHit raycastHit, bool hit, Vector3 muzzle, Vector3 direction)

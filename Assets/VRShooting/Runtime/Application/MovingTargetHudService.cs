@@ -15,23 +15,27 @@ namespace VRShooting.Application
         readonly ITrainingSessionService trainingSessions;
         readonly IMovingTargetService movingTarget;
         readonly IAmmoService ammo;
+        readonly IWeaponAutomaticFireService automaticFire;
 
         public MovingTargetHudService(
             IGameEventBus eventBus,
             ITrainingSessionService trainingSessions,
             IMovingTargetService movingTarget,
-            IAmmoService ammo)
+            IAmmoService ammo,
+            IWeaponAutomaticFireService automaticFire = null)
         {
             this.eventBus = eventBus;
             this.trainingSessions = trainingSessions;
             this.movingTarget = movingTarget;
             this.ammo = ammo;
+            this.automaticFire = automaticFire;
 
             eventBus.Subscribe<SessionStartedEvent>(evt => PublishIfCurrent(evt.Session.SessionId));
             eventBus.Subscribe<AmmoChangedEvent>(evt => PublishIfCurrent(evt.SessionId));
             eventBus.Subscribe<MovingTargetStateChangedEvent>(evt => PublishIfCurrent(evt.Session.SessionId));
             eventBus.Subscribe<MovingTargetShotRecordedEvent>(evt => PublishIfCurrent(evt.SessionId));
             eventBus.Subscribe<MovingTargetFireSequenceCompletedEvent>(evt => PublishIfCurrent(evt.SessionId));
+            eventBus.Subscribe<WeaponFireSequenceChangedEvent>(evt => PublishIfCurrent(evt.State.SessionId));
         }
 
         public event Action<HudDto> HudUpdated;
@@ -57,7 +61,7 @@ namespace VRShooting.Application
             var moving = ResolveSession(sessionId);
             var ammoDto = ResolveAmmo(session, moving);
             var canShoot = moving.CanShoot && ammoDto.CurrentMagazine > 0 && !ammoDto.IsReloading;
-            var fireSequence = BuildFireSequence(sessionId, moving);
+            var fireSequence = ResolveFireSequence(sessionId, moving);
 
             var dto = new HudDto
             {
@@ -110,6 +114,20 @@ namespace VRShooting.Application
                 MagazineCapacity = MovingTargetRules.TotalAmmo,
                 IsReloading = false
             };
+        }
+
+        WeaponFireSequenceStateDto ResolveFireSequence(string sessionId, MovingTargetSessionDto moving)
+        {
+            if (automaticFire != null)
+            {
+                var auto = automaticFire.GetState(sessionId);
+                if (auto.Success && !string.IsNullOrEmpty(auto.Data.SessionId))
+                {
+                    return auto.Data;
+                }
+            }
+
+            return BuildFireSequence(sessionId, moving);
         }
 
         static WeaponFireSequenceStateDto BuildFireSequence(string sessionId, MovingTargetSessionDto moving)

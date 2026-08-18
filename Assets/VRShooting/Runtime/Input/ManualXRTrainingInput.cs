@@ -18,6 +18,7 @@ namespace VRShooting.Input
         bool confirmPressed;
         bool backPressed;
         bool triggerPressed;
+        bool triggerReleased;
         bool reloadPressed;
         bool switchShoulderPressed;
         bool aimPressed;
@@ -31,6 +32,10 @@ namespace VRShooting.Input
         public bool BackPressed => backPressed;
 
         public bool TriggerPressed => triggerPressed;
+
+        public bool TriggerHeld => triggerHeld;
+
+        public bool TriggerReleased => triggerReleased;
 
         public float RightTriggerValue { get; private set; }
 
@@ -81,7 +86,7 @@ namespace VRShooting.Input
                     SetEdgeState(ref backHeld, ref backPressed, isHeld);
                     break;
                 case XRTrainingInputButton.Trigger:
-                    SetEdgeState(ref triggerHeld, ref triggerPressed, isHeld);
+                    SetEdgeState(ref triggerHeld, ref triggerPressed, ref triggerReleased, isHeld);
                     RightTriggerValue = isHeld ? 1f : 0f;
                     break;
                 case XRTrainingInputButton.Reload:
@@ -126,14 +131,16 @@ namespace VRShooting.Input
         public void SetRightTriggerValue(float value)
         {
             RightTriggerValue = Mathf.Clamp01(value);
-            if (!triggerHeld && RightTriggerValue >= 0.75f)
+            if (WeaponTriggerHysteresis.CrossedPress(triggerHeld, RightTriggerValue))
             {
                 triggerHeld = true;
                 triggerPressed = true;
+                triggerReleased = false;
             }
-            else if (triggerHeld && RightTriggerValue <= 0.25f)
+            else if (WeaponTriggerHysteresis.CrossedRelease(triggerHeld, RightTriggerValue))
             {
                 triggerHeld = false;
+                triggerReleased = true;
             }
         }
 
@@ -142,6 +149,7 @@ namespace VRShooting.Input
             confirmPressed = false;
             backPressed = false;
             triggerPressed = false;
+            triggerReleased = false;
             reloadPressed = false;
             switchShoulderPressed = false;
             aimPressed = false;

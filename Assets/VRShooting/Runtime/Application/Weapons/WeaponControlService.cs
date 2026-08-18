@@ -116,6 +116,9 @@ namespace VRShooting.Application.Weapons
                 Weapon = weapon,
                 CurrentMagazine = weapon.MagazineCapacity,
                 ReserveAmmo = weapon.MaxReserveAmmo,
+                FireMode = mode == TrainingMode.MovingTarget
+                    ? WeaponFireMode.InitialTwoThenAutomatic
+                    : WeaponFireMode.SingleShot,
                 ShoulderSide = ShoulderSide.Right,
                 AimMode = WeaponAimMode.HipFire,
                 HoldState = WeaponHoldState.OnRack,
@@ -165,7 +168,13 @@ namespace VRShooting.Application.Weapons
                 return ServiceResult<WeaponShotResultDto>.Fail(ErrorCode.InvalidState, blockedResult.Message, blockedResult);
             }
 
-            state.CurrentMagazine--;
+            if (!TryConsumeOneShot(state))
+            {
+                var emptyResult = BuildShotResult(input, state, false, ErrorCode.InvalidState, "not enough ammo");
+                eventBus?.Publish(new WeaponShotResultEvent { Result = emptyResult });
+                return ServiceResult<WeaponShotResultDto>.Fail(ErrorCode.InvalidState, emptyResult.Message, emptyResult);
+            }
+
             state.ShotSequence++;
             var recoil = WeaponRecoilRules.Compute(
                 state.SessionId,
@@ -320,7 +329,7 @@ namespace VRShooting.Application.Weapons
                 return ServiceResult<AmmoDto>.Fail(ErrorCode.InvalidInput, "amount must be positive");
             }
 
-            if (state.CurrentMagazine < amount || state.IsReloading)
+            if (AvailableMagazine(state) < amount || state.IsReloading)
             {
                 return ServiceResult<AmmoDto>.Fail(ErrorCode.InvalidState, "not enough ammo");
             }
@@ -330,6 +339,99 @@ namespace VRShooting.Application.Weapons
             eventBus?.Publish(new AmmoChangedEvent { SessionId = sessionId, Ammo = ammo });
             eventBus?.Publish(new WeaponStateChangedEvent { State = ToStateDto(state) });
             return ServiceResult<AmmoDto>.Ok(ammo);
+        }
+
+        public ServiceResult<AmmoReservationDto> ReserveAmmo(string sessionId, int amount, string reservationId)
+        {
+            if (!TryGetSession(sessionId, out var state, out var failure))
+            {
+                return ServiceResult<AmmoReservationDto>.Fail(failure.ErrorCode, failure.Message, AmmoReservationDto.Empty);
+            }
+
+            if (string.IsNullOrWhiteSpace(reservationId) || amount <= 0)
+            {
+                return ServiceResult<AmmoReservationDto>.Fail(
+                    ErrorCode.InvalidInput,
+                    "reservation id and a positive amount are required",
+                    AmmoReservationDto.Empty);
+            }
+
+            if (state.Reservations.TryGetValue(reservationId, out var existingRemaining))
+            {
+                return ServiceResult<AmmoReservationDto>.Ok(new AmmoReservationDto
+                {
+                    SessionId = sessionId,
+                    ReservationId = reservationId,
+                    ReservedAmount = existingRemaining,
+                    RemainingReservedAmount = existingRemaining
+                });
+            }
+
+            if (state.IsReloading || AvailableMagazine(state) < amount)
+            {
+                return ServiceResult<AmmoReservationDto>.Fail(
+                    ErrorCode.InvalidState,
+                    "not enough ammo to reserve initial shots",
+                    AmmoReservationDto.Empty);
+            }
+
+            state.Reservations[reservationId] = amount;
+            return ServiceResult<AmmoReservationDto>.Ok(new AmmoReservationDto
+            {
+                SessionId = sessionId,
+                ReservationId = reservationId,
+                ReservedAmount = amount,
+                RemainingReservedAmount = amount
+            });
+        }
+
+        public ServiceResult<AmmoDto> ConsumeReservedAmmo(string sessionId, string reservationId, int amount)
+        {
+            if (!TryGetSession(sessionId, out var state, out var failure))
+            {
+                return ServiceResult<AmmoDto>.Fail(failure.ErrorCode, failure.Message);
+            }
+
+            if (string.IsNullOrWhiteSpace(reservationId) || amount <= 0)
+            {
+                return ServiceResult<AmmoDto>.Fail(ErrorCode.InvalidInput, "reservation id and a positive amount are required");
+            }
+
+            if (!state.Reservations.TryGetValue(reservationId, out var remaining) || remaining < amount || state.CurrentMagazine < amount)
+            {
+                return ServiceResult<AmmoDto>.Fail(ErrorCode.InvalidState, "reservation cannot consume that amount");
+            }
+
+            remaining -= amount;
+            if (remaining <= 0)
+            {
+                state.Reservations.Remove(reservationId);
+            }
+            else
+            {
+                state.Reservations[reservationId] = remaining;
+            }
+
+            state.CurrentMagazine -= amount;
+            var ammo = ToAmmoDto(state);
+            eventBus?.Publish(new AmmoChangedEvent { SessionId = sessionId, Ammo = ammo });
+            eventBus?.Publish(new WeaponStateChangedEvent { State = ToStateDto(state) });
+            return ServiceResult<AmmoDto>.Ok(ammo);
+        }
+
+        public ServiceResult<AmmoDto> ReleaseAmmoReservation(string sessionId, string reservationId)
+        {
+            if (!TryGetSession(sessionId, out var state, out var failure))
+            {
+                return ServiceResult<AmmoDto>.Fail(failure.ErrorCode, failure.Message);
+            }
+
+            if (!string.IsNullOrWhiteSpace(reservationId))
+            {
+                state.Reservations.Remove(reservationId);
+            }
+
+            return ServiceResult<AmmoDto>.Ok(ToAmmoDto(state));
         }
 
         public ServiceResult<AmmoDto> StartReload(string sessionId)
@@ -463,6 +565,59 @@ namespace VRShooting.Application.Weapons
                    state.FrontHandTracked;
         }
 
+        static int AvailableMagazine(SessionWeaponState state)
+        {
+            return Math.Max(0, state.CurrentMagazine - ReservedRemaining(state));
+        }
+
+        static int ReservedRemaining(SessionWeaponState state)
+        {
+            var total = 0;
+            foreach (var remaining in state.Reservations.Values)
+            {
+                total += remaining;
+            }
+
+            return total;
+        }
+
+        static bool TryConsumeOneShot(SessionWeaponState state)
+        {
+            if (state.Reservations.Count > 0)
+            {
+                string firstId = null;
+                foreach (var pair in state.Reservations)
+                {
+                    firstId = pair.Key;
+                    break;
+                }
+
+                if (firstId != null && state.Reservations.TryGetValue(firstId, out var remaining) && remaining > 0 && state.CurrentMagazine > 0)
+                {
+                    remaining--;
+                    if (remaining <= 0)
+                    {
+                        state.Reservations.Remove(firstId);
+                    }
+                    else
+                    {
+                        state.Reservations[firstId] = remaining;
+                    }
+
+                    state.CurrentMagazine--;
+                    return true;
+                }
+            }
+
+            if (state.CurrentMagazine <= 0)
+            {
+                return false;
+            }
+
+            state.CurrentMagazine--;
+            return true;
+        }
+
         static WeaponShotResultDto BuildShotResult(
             WeaponFireInputDto input,
             SessionWeaponState state,
@@ -512,6 +667,7 @@ namespace VRShooting.Application.Weapons
                 CurrentMagazine = state.CurrentMagazine,
                 ReserveAmmo = state.ReserveAmmo,
                 CanShoot = CanShoot(state),
+                FireMode = state.FireMode,
                 ShoulderSide = state.ShoulderSide,
                 AimMode = state.AimMode,
                 HoldState = state.HoldState,
@@ -588,6 +744,7 @@ namespace VRShooting.Application.Weapons
             public int CurrentMagazine;
             public int ReserveAmmo;
             public bool IsReloading;
+            public WeaponFireMode FireMode;
             public ShoulderSide ShoulderSide;
             public WeaponAimMode AimMode;
             public WeaponHoldState HoldState;
@@ -595,6 +752,7 @@ namespace VRShooting.Application.Weapons
             public bool FrontHandTracked;
             public float Stability01;
             public int ShotSequence;
+            public readonly Dictionary<string, int> Reservations = new Dictionary<string, int>();
         }
 
         readonly struct ServiceFailure

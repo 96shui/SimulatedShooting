@@ -16,6 +16,8 @@ namespace VRShooting.Application
             IWeaponControlService weaponControl,
             IWeaponService weapons,
             IAmmoService ammo,
+            IWeaponAutomaticFireService automaticFire,
+            ITrainingWeaponFireCoordinator weaponFire,
             IHUDService hud,
             IZeroingService zeroing,
             IMovingTargetService movingTarget,
@@ -28,6 +30,8 @@ namespace VRShooting.Application
             WeaponControl = weaponControl;
             Weapons = weapons;
             Ammo = ammo;
+            AutomaticFire = automaticFire;
+            WeaponFire = weaponFire;
             Hud = hud;
             Zeroing = zeroing;
             MovingTarget = movingTarget;
@@ -48,6 +52,10 @@ namespace VRShooting.Application
 
         public IAmmoService Ammo { get; }
 
+        public IWeaponAutomaticFireService AutomaticFire { get; }
+
+        public ITrainingWeaponFireCoordinator WeaponFire { get; }
+
         public IHUDService Hud { get; }
 
         public IZeroingService Zeroing { get; }
@@ -63,11 +71,19 @@ namespace VRShooting.Application
             var trainingSessions = new TrainingSessionService(eventBus);
             var input = trainingInput ?? new InputSystemXRTrainingInput();
             var weaponControl = new WeaponControlService(eventBus);
+            var automaticFire = new WeaponAutomaticFireService(weaponControl, weaponControl, eventBus);
             var zeroing = new ZeroingService(eventBus, trainingSessions, weaponControl);
             var movingTarget = new MovingTargetService(eventBus, trainingSessions);
             var presentation = new TrainingPresentationService(eventBus, trainingSessions, weaponControl, zeroing);
+            var weaponFire = new TrainingWeaponFireCoordinator(
+                eventBus,
+                trainingSessions,
+                presentation,
+                weaponControl,
+                automaticFire,
+                movingTarget);
             var zeroingHud = new ZeroingHudService(eventBus, trainingSessions, zeroing, weaponControl, weaponControl);
-            var movingTargetHud = new MovingTargetHudService(eventBus, trainingSessions, movingTarget, weaponControl);
+            var movingTargetHud = new MovingTargetHudService(eventBus, trainingSessions, movingTarget, weaponControl, automaticFire);
             var hud = new TrainingHudService(trainingSessions, zeroingHud, movingTargetHud);
             return new ApplicationServices(
                 eventBus,
@@ -77,6 +93,8 @@ namespace VRShooting.Application
                 weaponControl,
                 weaponControl,
                 weaponControl,
+                automaticFire,
+                weaponFire,
                 hud,
                 zeroing,
                 movingTarget,

@@ -69,11 +69,12 @@ namespace VRShooting.Tests.PlayMode.Input
             yield return null;
 
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(3, result.Data);
+            Assert.AreEqual(4, result.Data);
             CollectionAssert.AreEqual(
                 new[]
                 {
                     XRTrainingInputCommandType.Trigger,
+                    XRTrainingInputCommandType.TriggerHeld,
                     XRTrainingInputCommandType.Reload,
                     XRTrainingInputCommandType.SwitchShoulder
                 },

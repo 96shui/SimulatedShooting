@@ -90,11 +90,12 @@ namespace VRShooting.Tests.EditMode.Input
             });
 
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(3, result.Data);
-            Assert.AreEqual(3, received.Count);
+            Assert.AreEqual(4, result.Data);
+            Assert.AreEqual(4, received.Count);
             Assert.AreEqual(XRTrainingInputCommandType.Trigger, received[0].CommandType);
-            Assert.AreEqual(XRTrainingInputCommandType.Reload, received[1].CommandType);
-            Assert.AreEqual(XRTrainingInputCommandType.SwitchShoulder, received[2].CommandType);
+            Assert.AreEqual(XRTrainingInputCommandType.TriggerHeld, received[1].CommandType);
+            Assert.AreEqual(XRTrainingInputCommandType.Reload, received[2].CommandType);
+            Assert.AreEqual(XRTrainingInputCommandType.SwitchShoulder, received[3].CommandType);
             Assert.AreEqual(ScreenId.ZeroingHud, received[0].SourceScreen);
         }
 
@@ -181,8 +182,30 @@ namespace VRShooting.Tests.EditMode.Input
             Assert.IsFalse(input.TriggerPressed, "trigger must stay latched until it returns below the release threshold");
 
             input.SetRightTriggerValue(0.2f);
+            Assert.IsTrue(input.TriggerReleased);
+            Assert.IsFalse(input.TriggerHeld);
             input.SetRightTriggerValue(0.8f);
             Assert.IsTrue(input.TriggerPressed);
+            Assert.IsTrue(input.TriggerHeld);
+        }
+
+        [Test]
+        public void Task007_NoVrInputSubstitute_TriggerHeldAndReleasedAreObservable()
+        {
+            var input = new ManualXRTrainingInput();
+
+            input.Press(XRTrainingInputButton.Trigger);
+            Assert.IsTrue(input.TriggerPressed);
+            Assert.IsTrue(input.TriggerHeld);
+            Assert.IsFalse(input.TriggerReleased);
+
+            input.AdvanceFrame();
+            Assert.IsFalse(input.TriggerPressed);
+            Assert.IsTrue(input.TriggerHeld);
+
+            input.Release(XRTrainingInputButton.Trigger);
+            Assert.IsTrue(input.TriggerReleased);
+            Assert.IsFalse(input.TriggerHeld);
         }
     }
 }

@@ -26,6 +26,11 @@ namespace VRShooting.Application.Events
         public WeaponShotResultDto Result { get; init; }
     }
 
+    public readonly struct WeaponFireSequenceChangedEvent
+    {
+        public WeaponFireSequenceStateDto State { get; init; }
+    }
+
     public readonly struct AmmoChangedEvent
     {
         public string SessionId { get; init; }

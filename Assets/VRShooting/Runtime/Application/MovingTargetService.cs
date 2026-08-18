@@ -259,6 +259,11 @@ namespace VRShooting.Application
                     FireSequenceRecordDto.Empty);
             }
 
+            if (sequence.Completed)
+            {
+                return ServiceResult<FireSequenceRecordDto>.Ok(sequence.ToDto());
+            }
+
             sequence.Complete(stopReason);
             record.FirePhase = WeaponFireSequencePhase.Stopped;
             var dto = sequence.ToDto();
