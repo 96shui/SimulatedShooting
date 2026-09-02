@@ -14,8 +14,10 @@ namespace VRShooting.Unity.UI
     public sealed class MainMenuXRModeController : MonoBehaviour
     {
         const string MainSceneName = "MainScene";
+        const string TrackedPoseDriverTypeName = "UnityEngine.InputSystem.XR.TrackedPoseDriver";
 
         readonly List<XRDisplaySubsystem> displays = new List<XRDisplaySubsystem>();
+        readonly List<Behaviour> poseDriversDisabledForTests = new List<Behaviour>();
 
         bool? forcedVrMode;
         bool initialized;
@@ -66,14 +68,56 @@ namespace VRShooting.Unity.UI
 
         public void SetVrModeForTests(bool enabled)
         {
+            RestorePoseDriversDisabledForTests();
             forcedVrMode = enabled;
             RefreshForScene(SceneManager.GetActiveScene());
+            if (enabled)
+            {
+                DisablePoseDriversForTests();
+            }
         }
 
         public void ClearForcedModeForTests()
         {
+            RestorePoseDriversDisabledForTests();
             forcedVrMode = null;
             RefreshForScene(SceneManager.GetActiveScene());
+        }
+
+        void DisablePoseDriversForTests()
+        {
+            if (vrCamera == null)
+            {
+                return;
+            }
+
+            var behaviours = vrCamera.GetComponents<Behaviour>();
+            for (var index = 0; index < behaviours.Length; index++)
+            {
+                var behaviour = behaviours[index];
+                if (behaviour == null
+                    || !behaviour.enabled
+                    || behaviour.GetType().FullName != TrackedPoseDriverTypeName)
+                {
+                    continue;
+                }
+
+                behaviour.enabled = false;
+                poseDriversDisabledForTests.Add(behaviour);
+            }
+        }
+
+        void RestorePoseDriversDisabledForTests()
+        {
+            for (var index = 0; index < poseDriversDisabledForTests.Count; index++)
+            {
+                if (poseDriversDisabledForTests[index] != null)
+                {
+                    poseDriversDisabledForTests[index].enabled = true;
+                }
+            }
+
+            poseDriversDisabledForTests.Clear();
         }
 
         bool ResolveVrMode()

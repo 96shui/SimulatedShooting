@@ -158,6 +158,17 @@ namespace VRShooting.Application
             });
         }
 
+        internal void ReleaseSession(string sessionId)
+        {
+            if (string.IsNullOrEmpty(sessionId))
+            {
+                return;
+            }
+
+            sessions.Remove(sessionId);
+            presentationShootingAllowed.Remove(sessionId);
+        }
+
         void OnSessionStarted(SessionStartedEvent evt)
         {
             if (evt.Session.Mode != TrainingMode.Zeroing100m)

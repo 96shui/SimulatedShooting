@@ -11,6 +11,7 @@ namespace SimulatedShooting.Scene
     {
         [SerializeField] private GameObject xrOrigin;
         [SerializeField] private Camera noVrCamera;
+        [SerializeField] private bool autoDetectVrDisplayInEditor;
 
         readonly List<XRDisplaySubsystem> displays = new List<XRDisplaySubsystem>();
         readonly List<Camera> disabledExternalCameras = new List<Camera>();
@@ -68,6 +69,13 @@ namespace SimulatedShooting.Scene
             {
                 return forcedVrMode.Value;
             }
+
+#if UNITY_EDITOR
+            if (!autoDetectVrDisplayInEditor)
+            {
+                return false;
+            }
+#endif
 
             displays.Clear();
             SubsystemManager.GetInstances(displays);

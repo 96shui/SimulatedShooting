@@ -24,6 +24,7 @@ namespace VRShooting.Tests.EditMode.Application
         TrainingPresentationService presentation;
         WeaponAutomaticFireService autoFire;
         TrainingWeaponFireCoordinator coordinator;
+        MovingTargetProgressCoordinator progress;
         List<WeaponShotResultDto> shots;
 
         [SetUp]
@@ -43,6 +44,7 @@ namespace VRShooting.Tests.EditMode.Application
                 weapons,
                 autoFire,
                 movingTarget);
+            progress = new MovingTargetProgressCoordinator(sessions, presentation, movingTarget);
             shots = new List<WeaponShotResultDto>();
             eventBus.Subscribe<WeaponShotResultEvent>(evt =>
             {
@@ -57,10 +59,12 @@ namespace VRShooting.Tests.EditMode.Application
         public void Screen09_Coordinator_IgnoresTriggerDuringCountdownThenFiresTwoOnQuickTap()
         {
             var sessionId = StartMovingTargetLive();
+            progress.Tick(sessionId, 1f);
             coordinator.Tick(sessionId, 1f, Press(sessionId), Snapshot(sessionId));
             Assert.AreEqual(0, shots.Count);
             Assert.IsFalse(movingTarget.GetSession(sessionId).Data.CanShoot);
 
+            progress.Tick(sessionId, 2f);
             coordinator.Tick(sessionId, 2f, Release(sessionId), Snapshot(sessionId));
             Assert.IsTrue(movingTarget.GetSession(sessionId).Data.CanShoot);
 
@@ -74,20 +78,23 @@ namespace VRShooting.Tests.EditMode.Application
         public void Screen09_Coordinator_StopsOnLeftHoldAndDoesNotResumeWhileHeld()
         {
             var sessionId = StartMovingTargetLive();
-            coordinator.Tick(sessionId, 3f, Idle(sessionId), Snapshot(sessionId));
+            progress.Tick(sessionId, 3f);
 
             coordinator.Tick(sessionId, 0.25f, Press(sessionId), Snapshot(sessionId));
             var beforeHold = shots.Count;
             Assert.That(beforeHold, Is.GreaterThanOrEqualTo(2));
 
+            progress.Tick(sessionId, 10f);
             coordinator.Tick(sessionId, 10f, Hold(sessionId), Snapshot(sessionId));
             Assert.AreEqual(TargetMovePhase.LeftEndpointHold, movingTarget.GetSession(sessionId).Data.Phase);
             var duringHold = shots.Count;
 
+            progress.Tick(sessionId, 2f);
             coordinator.Tick(sessionId, 2f, Hold(sessionId), Snapshot(sessionId));
             Assert.AreEqual(duringHold, shots.Count);
             Assert.IsFalse(autoFire.GetState(sessionId).Data.TriggerArmedForNewSequence);
 
+            progress.Tick(sessionId, 1f);
             coordinator.Tick(sessionId, 1f, Hold(sessionId), Snapshot(sessionId));
             Assert.AreEqual(duringHold, shots.Count);
         }
@@ -96,9 +103,9 @@ namespace VRShooting.Tests.EditMode.Application
         public void Screen09_Coordinator_CompletesTrainingAndKeepsFireSequences()
         {
             var sessionId = StartMovingTargetLive();
-            coordinator.Tick(sessionId, 3f, Idle(sessionId), Snapshot(sessionId));
+            progress.Tick(sessionId, 3f);
             coordinator.Tick(sessionId, 0.2f, PressAndRelease(sessionId), Snapshot(sessionId));
-            coordinator.Tick(sessionId, 100f, Idle(sessionId), Snapshot(sessionId));
+            progress.Tick(sessionId, 100f);
 
             var result = movingTarget.CompleteSession(sessionId);
             Assert.IsTrue(result.Success, result.Message);

@@ -188,8 +188,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 Assert.That(characterRenderers.All(renderer => renderer.sharedMaterial.mainTexture != null), Is.True);
                 Assert.That(characterRenderers.All(renderer => renderer.sharedMaterial.color.r >
                     renderer.sharedMaterial.color.g * 4f), Is.True);
-                Assert.That(characterRenderers.All(renderer => renderer.GetComponent<MeshFilter>()
-                    .sharedMesh.normals.All(normal => normal.z < -0.99f)), Is.True,
+                Assert.That(characterRenderers.All(renderer => FacesCamera(renderer, camera)), Is.True,
                     "Wall slogan mesh faces must point toward the player without mirroring the glyphs.");
                 Assert.That(characterRenderers.All(renderer => renderer.bounds.size.y >= 5.3f), Is.True);
                 Assert.That(characterRenderers.All(renderer => renderer.bounds.min.y >= 22.7f), Is.True,
@@ -205,6 +204,7 @@ namespace SimulatedShooting.Tests.PlayMode
         {
             var dataWins = Find("MovingTargetRange.Visual.Slogan.DataWins");
             var winBattles = Find("MovingTargetRange.Visual.Slogan.WinBattles");
+            var camera = Find("MovingTargetRange.Camera.NoVR").GetComponent<Camera>();
 
             Assert.That(dataWins, Is.Not.Null);
             Assert.That(dataWins.name, Is.EqualTo("Slogan_数据致胜"));
@@ -212,7 +212,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(dataWins.transform.position.y, Is.LessThan(winBattles.transform.position.y - 6f));
             Assert.That(dataWins.GetComponentsInChildren<Renderer>(true).Length, Is.EqualTo(4));
             Assert.That(dataWins.GetComponentsInChildren<Renderer>(true).All(renderer =>
-                renderer.GetComponent<MeshFilter>().sharedMesh.normals.All(normal => normal.z < -0.99f)), Is.True);
+                FacesCamera(renderer, camera)), Is.True);
         }
 
         [Test]
@@ -425,11 +425,15 @@ namespace SimulatedShooting.Tests.PlayMode
             var binding = Find("MovingTargetRange.Target.Binding").GetComponent<MovingTargetRouteBinding>();
             var adapter = binding.HitSurface.GetComponent<MovingTargetHitAdapter>();
             var environment = Find("MovingTargetRange.Environment.Root");
+            var groundCollider = Find("MovingTargetRange.Visual.SandyGround").GetComponent<Collider>();
 
             Assert.That(binding.HitSurface.gameObject.layer, Is.Not.EqualTo(environment.layer));
             Assert.That(ContainsLayer(adapter.TargetLayerMask, binding.HitSurface.gameObject.layer), Is.True);
             Assert.That(ContainsLayer(adapter.EnvironmentLayerMask, environment.layer), Is.True);
             Assert.That(ContainsLayer(adapter.TargetLayerMask, environment.layer), Is.False);
+            Assert.That(adapter.IsTargetCollider(binding.HitSurface), Is.True);
+            Assert.That(adapter.IsTargetCollider(groundCollider), Is.False,
+                "Environment ray hits must be recorded as misses instead of target hits.");
         }
 
         [Test]
@@ -504,6 +508,12 @@ namespace SimulatedShooting.Tests.PlayMode
         static bool ContainsLayer(LayerMask mask, int layer)
         {
             return (mask.value & (1 << layer)) != 0;
+        }
+
+        static bool FacesCamera(Renderer renderer, Camera camera)
+        {
+            var worldFaceNormal = renderer.transform.TransformDirection(Vector3.back).normalized;
+            return Vector3.Dot(worldFaceNormal, camera.transform.forward.normalized) < -0.99f;
         }
     }
 }

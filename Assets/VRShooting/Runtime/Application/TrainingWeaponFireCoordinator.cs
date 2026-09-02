@@ -59,11 +59,6 @@ namespace VRShooting.Application
                 return started;
             }
 
-            if (fireMode == WeaponFireMode.InitialTwoThenAutomatic)
-            {
-                movingTarget.Tick(sessionId, deltaTime);
-            }
-
             var allow = IsFiringAllowed(sessionId, fireMode);
             var autoState = autoFire.GetState(sessionId);
             if (autoState.Success && IsActive(autoState.Data.Phase) && !allow)

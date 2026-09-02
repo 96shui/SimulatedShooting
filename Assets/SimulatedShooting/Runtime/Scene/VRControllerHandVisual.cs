@@ -38,7 +38,14 @@ namespace SimulatedShooting.Scene
         public float GripPose01 => gripPose01;
         public bool HasRenderableHand =>
             modelRoot != null && modelRoot.GetComponentsInChildren<Renderer>(true).Length > 0;
-        public int FingerBoneCount => fingerBones.Count;
+        public int FingerBoneCount
+        {
+            get
+            {
+                EnsureConfigured();
+                return fingerBones.Count;
+            }
+        }
         public bool GripPosePreviewActive => gripPosePreviewActive;
         public bool UsesCustomFingerPose => useCustomFingerPose;
         public Transform GripAnchor => gripAnchor;
@@ -67,6 +74,7 @@ namespace SimulatedShooting.Scene
 
         public void SetGripForTests(bool gripping)
         {
+            EnsureConfigured();
             overrideGripForTests = true;
             testGripState = gripping;
             UpdateVisualPose(1f);
@@ -139,14 +147,21 @@ namespace SimulatedShooting.Scene
 
         void Awake()
         {
-            if (!configured)
+            EnsureConfigured();
+        }
+
+        void EnsureConfigured()
+        {
+            if (configured)
             {
-                openLocalPosition = transform.localPosition;
-                openLocalRotation = transform.localRotation;
-                configured = true;
-                PrepareModelForManualPose();
-                CacheFingerBones();
+                return;
             }
+
+            openLocalPosition = transform.localPosition;
+            openLocalRotation = transform.localRotation;
+            configured = true;
+            PrepareModelForManualPose();
+            CacheFingerBones();
         }
 
         void LateUpdate()

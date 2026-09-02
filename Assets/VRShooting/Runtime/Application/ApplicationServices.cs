@@ -18,6 +18,8 @@ namespace VRShooting.Application
             IAmmoService ammo,
             IWeaponAutomaticFireService automaticFire,
             ITrainingWeaponFireCoordinator weaponFire,
+            MovingTargetProgressCoordinator movingTargetProgress,
+            TrainingSessionResourceCoordinator sessionResources,
             IHUDService hud,
             IZeroingService zeroing,
             IMovingTargetService movingTarget,
@@ -32,6 +34,8 @@ namespace VRShooting.Application
             Ammo = ammo;
             AutomaticFire = automaticFire;
             WeaponFire = weaponFire;
+            MovingTargetProgress = movingTargetProgress;
+            SessionResources = sessionResources;
             Hud = hud;
             Zeroing = zeroing;
             MovingTarget = movingTarget;
@@ -55,6 +59,10 @@ namespace VRShooting.Application
         public IWeaponAutomaticFireService AutomaticFire { get; }
 
         public ITrainingWeaponFireCoordinator WeaponFire { get; }
+
+        public MovingTargetProgressCoordinator MovingTargetProgress { get; }
+
+        public TrainingSessionResourceCoordinator SessionResources { get; }
 
         public IHUDService Hud { get; }
 
@@ -82,6 +90,16 @@ namespace VRShooting.Application
                 weaponControl,
                 automaticFire,
                 movingTarget);
+            var movingTargetProgress = new MovingTargetProgressCoordinator(
+                trainingSessions,
+                presentation,
+                movingTarget);
+            var sessionResources = new TrainingSessionResourceCoordinator(
+                eventBus,
+                zeroing,
+                movingTarget,
+                automaticFire,
+                weaponControl);
             var zeroingHud = new ZeroingHudService(eventBus, trainingSessions, zeroing, weaponControl, weaponControl);
             var movingTargetHud = new MovingTargetHudService(eventBus, trainingSessions, movingTarget, weaponControl, automaticFire);
             var hud = new TrainingHudService(trainingSessions, zeroingHud, movingTargetHud);
@@ -95,6 +113,8 @@ namespace VRShooting.Application
                 weaponControl,
                 automaticFire,
                 weaponFire,
+                movingTargetProgress,
+                sessionResources,
                 hud,
                 zeroing,
                 movingTarget,

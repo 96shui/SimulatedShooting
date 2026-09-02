@@ -38,6 +38,7 @@ namespace SimulatedShooting.Scene
 
         public LayerMask TargetLayerMask => targetLayerMask;
         public LayerMask EnvironmentLayerMask => environmentLayerMask;
+        public Collider TargetCollider => targetCollider;
 
         public void Configure(
             Collider target,
@@ -49,6 +50,13 @@ namespace SimulatedShooting.Scene
             targetLayerMask = targetMask;
             environmentLayerMask = environmentMask;
             impactFeedback = feedback;
+        }
+
+        public bool IsTargetCollider(Collider candidate)
+        {
+            return candidate != null
+                   && candidate == targetCollider
+                   && (targetLayerMask.value & (1 << candidate.gameObject.layer)) != 0;
         }
 
         public bool TryReportConfirmedHit(
@@ -64,8 +72,7 @@ namespace SimulatedShooting.Scene
                 return false;
             }
 
-            var isTarget = hitCollider == targetCollider &&
-                           (targetLayerMask.value & (1 << hitCollider.gameObject.layer)) != 0;
+            var isTarget = IsTargetCollider(hitCollider);
             input = new MovingTargetHitInput(shotId, hitCollider, worldPoint, worldNormal, isTarget);
             HitReported?.Invoke(input);
             if (isTarget && impactFeedback != null)

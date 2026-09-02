@@ -87,6 +87,25 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
+        public IEnumerator Screen00_SceneAnchorsBindLargePanelAndMinimalHudAsIndependentWorldCanvases()
+        {
+            var largeAnchor = new GameObject("LargeUiAnchor").transform;
+            var minimalAnchor = new GameObject("MinimalHudAnchor").transform;
+
+            Assert.That(ui.BindToSceneAnchors(largeAnchor, minimalAnchor), Is.True);
+            yield return null;
+
+            Assert.That(ui.LargePanelRoot.transform.parent, Is.EqualTo(largeAnchor));
+            Assert.That(ui.MinimalHudRoot.transform.parent, Is.EqualTo(minimalAnchor));
+            Assert.That(ui.LargePanelRoot.transform.parent, Is.Not.EqualTo(ui.MinimalHudRoot.transform.parent));
+            Assert.That(ui.LargePanelRoot.GetComponent<Canvas>().renderMode, Is.EqualTo(RenderMode.WorldSpace));
+            Assert.That(ui.MinimalHudRoot.GetComponent<Canvas>().renderMode, Is.EqualTo(RenderMode.WorldSpace));
+
+            UnityEngine.Object.Destroy(largeAnchor.gameObject);
+            UnityEngine.Object.Destroy(minimalAnchor.gameObject);
+        }
+
+        [UnityTest]
         public IEnumerator Screen08_MissingSpeedConfigurationCannotStartAndShowsServiceError()
         {
             var unavailable = new FakeMovingTargetUIPort

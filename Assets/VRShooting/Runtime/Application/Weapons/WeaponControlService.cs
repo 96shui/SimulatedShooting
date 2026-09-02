@@ -142,6 +142,14 @@ namespace VRShooting.Application.Weapons
             return ServiceResult<WeaponControlStateDto>.Ok(ToStateDto(state));
         }
 
+        internal void ReleaseSession(string sessionId)
+        {
+            if (!string.IsNullOrWhiteSpace(sessionId))
+            {
+                sessions.Remove(sessionId);
+            }
+        }
+
         public ServiceResult<WeaponShotResultDto> Fire(WeaponFireInputDto input)
         {
             if (!TryGetSession(input.SessionId, out var state, out var failure))

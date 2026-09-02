@@ -22,7 +22,7 @@ namespace VRShooting.Tests.PlayMode.Flow
             var services = ApplicationServices.CreateDefault(input);
             var sessionId = StartLiveMovingTarget(services);
 
-            services.WeaponFire.Tick(sessionId, 3f, Idle(sessionId), Snapshot(sessionId));
+            services.MovingTargetProgress.Tick(sessionId, 3f);
             input.Press(XRTrainingInputButton.Trigger);
             input.Release(XRTrainingInputButton.Trigger);
             services.WeaponFire.Tick(
@@ -51,7 +51,7 @@ namespace VRShooting.Tests.PlayMode.Flow
             var services = ApplicationServices.CreateDefault(input);
             var sessionId = StartLiveMovingTarget(services);
 
-            services.WeaponFire.Tick(sessionId, 3f, Idle(sessionId), Snapshot(sessionId));
+            services.MovingTargetProgress.Tick(sessionId, 3f);
             services.WeaponFire.Tick(
                 sessionId,
                 2f,

@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 using VRShooting.Application;
 using VRShooting.Common;
 using VRShooting.Unity.Bootstrap;
@@ -68,6 +69,38 @@ namespace VRShooting.Unity.UI
         public GameObject LargePanelRoot => largePanelRoot != null ? largePanelRoot.gameObject : null;
 
         public GameObject MinimalHudRoot => minimalHudRoot != null ? minimalHudRoot.gameObject : null;
+
+        /// <summary>
+        /// Composition-root entry point. The scene supplies poses while the UI owns canvas size and scale.
+        /// </summary>
+        public bool BindToSceneAnchors(
+            Transform largePanelAnchor,
+            Transform minimalHudAnchor,
+            Camera eventCamera = null)
+        {
+            if (!built)
+            {
+                Build();
+            }
+
+            var binder = GetComponent<TrainingUIAnchorBinder>();
+            if (binder == null)
+            {
+                binder = gameObject.AddComponent<TrainingUIAnchorBinder>();
+            }
+
+            binder.Configure(largePanelRoot, minimalHudRoot);
+            var large = EnsureAnchor(largePanelAnchor, TrainingUIAnchorSlot.LargePanel);
+            var minimal = EnsureAnchor(minimalHudAnchor, TrainingUIAnchorSlot.MinimalHud);
+            if (!binder.Bind(large, minimal))
+            {
+                return false;
+            }
+
+            ConfigureWorldSpaceRoot(largePanelRoot, eventCamera, 10);
+            ConfigureWorldSpaceRoot(minimalHudRoot, eventCamera, 11);
+            return true;
+        }
 
         public void Initialize(IMovingTargetUIPort port)
         {
@@ -389,6 +422,62 @@ namespace VRShooting.Unity.UI
             }
             image.color = color;
             return image;
+        }
+
+        static TrainingUIAnchor EnsureAnchor(Transform anchorTransform, TrainingUIAnchorSlot slot)
+        {
+            if (anchorTransform == null)
+            {
+                return null;
+            }
+
+            var anchor = anchorTransform.GetComponent<TrainingUIAnchor>();
+            if (anchor == null)
+            {
+                anchor = anchorTransform.gameObject.AddComponent<TrainingUIAnchor>();
+            }
+
+            anchor.Configure(slot);
+            return anchor;
+        }
+
+        static void ConfigureWorldSpaceRoot(RectTransform root, Camera eventCamera, int sortingOrder)
+        {
+            root.anchorMin = new Vector2(0.5f, 0.5f);
+            root.anchorMax = new Vector2(0.5f, 0.5f);
+            root.pivot = new Vector2(0.5f, 0.5f);
+            root.sizeDelta = new Vector2(1920f, 1080f);
+            root.localPosition = Vector3.zero;
+            root.localRotation = Quaternion.identity;
+            root.localScale = Vector3.one * 0.00105f;
+
+            var canvas = root.GetComponent<Canvas>();
+            if (canvas == null)
+            {
+                canvas = root.gameObject.AddComponent<Canvas>();
+            }
+
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = eventCamera;
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = sortingOrder;
+
+            var scaler = root.GetComponent<CanvasScaler>();
+            if (scaler == null)
+            {
+                scaler = root.gameObject.AddComponent<CanvasScaler>();
+            }
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
+            scaler.dynamicPixelsPerUnit = 1f;
+
+            if (root.GetComponent<GraphicRaycaster>() == null)
+            {
+                root.gameObject.AddComponent<GraphicRaycaster>();
+            }
+            if (root.GetComponent<TrackedDeviceGraphicRaycaster>() == null)
+            {
+                root.gameObject.AddComponent<TrackedDeviceGraphicRaycaster>();
+            }
         }
 
         static void AddTestId(GameObject go, string id)

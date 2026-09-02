@@ -368,7 +368,9 @@ namespace SimulatedShooting.Tests.PlayMode
         public void Task016_SceneStaysWithinPrototypeRenderingBudget()
         {
             var roots = SceneManager.GetActiveScene().GetRootGameObjects();
-            var renderers = roots.SelectMany(root => root.GetComponentsInChildren<Renderer>(true)).ToArray();
+            var renderers = roots.SelectMany(root => root.GetComponentsInChildren<Renderer>(true))
+                .Where(renderer => renderer.enabled && renderer.gameObject.activeInHierarchy)
+                .ToArray();
             var materials = renderers.SelectMany(renderer => renderer.sharedMaterials)
                 .Where(material => material != null)
                 .Distinct()

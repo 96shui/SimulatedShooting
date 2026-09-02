@@ -159,6 +159,17 @@ namespace VRShooting.Application.Weapons
             return ServiceResult<WeaponFireSequenceStateDto>.Ok(ToDto(state));
         }
 
+        internal void ReleaseSession(string sessionId)
+        {
+            if (string.IsNullOrEmpty(sessionId) || !sessions.TryGetValue(sessionId, out var state))
+            {
+                return;
+            }
+
+            CancelInternal(state, WeaponFireStopReason.WeaponBecameInvalid, false);
+            sessions.Remove(sessionId);
+        }
+
         void HandleTriggerEdges(SessionFireState state, WeaponFireInputDto snapshot)
         {
             if (state.PendingReleased)

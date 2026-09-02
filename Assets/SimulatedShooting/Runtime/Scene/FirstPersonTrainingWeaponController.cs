@@ -20,6 +20,7 @@ namespace SimulatedShooting.Scene
         [SerializeField] private WeaponPrefabBinding weaponBinding;
         [SerializeField] private TrainingRifleGrabInteractable grabInteractable;
         [SerializeField] private TargetImpactSurface targetSurface;
+        [SerializeField] private MovingTargetHitAdapter movingTargetHitAdapter;
         [SerializeField] private Transform tracerRoot;
         [SerializeField] private WeaponFeedbackController feedbackController;
         [SerializeField] private Transform headPoseSource;
@@ -63,6 +64,8 @@ namespace SimulatedShooting.Scene
         bool initialized;
         bool hasCurrentState;
         bool grabSubscribed;
+        bool latestRaycastHit;
+        RaycastHit latestRaycast;
 
         public bool IsInitialized => initialized;
         public bool HasRequiredWeaponBinding => weaponBinding != null && weaponBinding.HasRequiredBinding;
@@ -117,6 +120,11 @@ namespace SimulatedShooting.Scene
         public void ConfigureFeedback(WeaponFeedbackController feedback)
         {
             feedbackController = feedback;
+        }
+
+        public void ConfigureMovingTargetHitAdapter(MovingTargetHitAdapter hitAdapter)
+        {
+            movingTargetHitAdapter = hitAdapter;
         }
 
         public void ConfigureServices(ApplicationServices applicationServices, IXRTrainingInput trainingInput = null)
@@ -310,7 +318,10 @@ namespace SimulatedShooting.Scene
             var start = weaponService.GetState(sessionId);
             if (!start.Success)
             {
-                start = weaponService.StartSession(sessionId, weaponBinding.WeaponId, TrainingMode.Zeroing100m);
+                start = weaponService.StartSession(
+                    sessionId,
+                    weaponBinding.WeaponId,
+                    services.TrainingSessions.Current.Mode);
             }
 
             if (!start.Success)
@@ -362,11 +373,6 @@ namespace SimulatedShooting.Scene
             {
                 services = GameMain.Instance.Services;
                 eventBus = services.EventBus;
-                if (!services.TrainingSessions.HasActiveSession)
-                {
-                    services.Zeroing.StartSession(RandomSeed.Fixed(100), WeaponControlService.TrainingRifleId);
-                }
-
                 return services.TrainingSessions.HasActiveSession;
             }
 
@@ -393,6 +399,11 @@ namespace SimulatedShooting.Scene
             if (targetSurface == null)
             {
                 targetSurface = FindObjectOfType<TargetImpactSurface>();
+            }
+
+            if (movingTargetHitAdapter == null)
+            {
+                movingTargetHitAdapter = FindObjectOfType<MovingTargetHitAdapter>();
             }
 
             if (tracerRoot == null)
@@ -764,7 +775,10 @@ namespace SimulatedShooting.Scene
             var rawDirection = weaponBinding != null
                 ? weaponBinding.transform.forward.normalized
                 : Vector3.forward;
-            var hit = Physics.Raycast(muzzle, direction, out var raycastHit, MaxShotDistance);
+            var physicalHit = Physics.Raycast(muzzle, direction, out var raycastHit, MaxShotDistance);
+            latestRaycastHit = physicalHit;
+            latestRaycast = raycastHit;
+            var targetHit = IsScoringTargetHit(raycastHit, physicalHit);
             return new WeaponFireInputDto
             {
                 SessionId = SessionId,
@@ -777,9 +791,9 @@ namespace SimulatedShooting.Scene
                 TwoHandGripActive = hasCurrentState && currentState.TwoHandGripActive,
                 AimMode = hasCurrentState ? currentState.AimMode : WeaponAimMode.HipFire,
                 ShoulderSide = hasCurrentState ? currentState.ShoulderSide : ShoulderSide.Right,
-                Hit = hit,
-                HitPoint = ResolveHitPointForService(raycastHit, hit, muzzle, direction),
-                HitObjectId = hit ? ResolveTestId(raycastHit.collider.transform) : string.Empty
+                Hit = targetHit,
+                HitPoint = ResolveHitPointForService(raycastHit, physicalHit, muzzle, direction),
+                HitObjectId = targetHit ? ResolveTestId(raycastHit.collider.transform) : string.Empty
             };
         }
 
@@ -793,11 +807,25 @@ namespace SimulatedShooting.Scene
                 hasCurrentState = true;
             }
 
-            var visualEnd = result.Hit ? result.HitPoint : result.MuzzlePosition + result.AimDirection * MaxShotDistance;
+            var visualEnd = latestRaycastHit
+                ? latestRaycast.point
+                : result.MuzzlePosition + result.AimDirection * MaxShotDistance;
             SpawnTracer(result.MuzzlePosition, visualEnd, result.Hit, default);
             if (result.Hit && targetSurface != null)
             {
-                targetSurface.TryRecordWorldPoint(result.HitPoint, out _);
+                targetSurface.TryRecordWorldPoint(
+                    latestRaycastHit ? latestRaycast.point : result.HitPoint,
+                    out _);
+            }
+
+            if (movingTargetHitAdapter != null && latestRaycastHit && latestRaycast.collider != null)
+            {
+                movingTargetHitAdapter.TryReportConfirmedHit(
+                    BuildShotId(result),
+                    latestRaycast.collider,
+                    latestRaycast.point,
+                    latestRaycast.normal,
+                    out _);
             }
 
             ApplyRecoil(result.RecoilImpulse);
@@ -842,6 +870,30 @@ namespace SimulatedShooting.Scene
             }
 
             return raycastHit.point;
+        }
+
+        bool IsScoringTargetHit(RaycastHit raycastHit, bool physicalHit)
+        {
+            if (!physicalHit || raycastHit.collider == null)
+            {
+                return false;
+            }
+
+            if (services != null
+                && services.TrainingSessions.HasActiveSession
+                && services.TrainingSessions.Current.Mode == TrainingMode.MovingTarget)
+            {
+                return movingTargetHitAdapter != null
+                       && movingTargetHitAdapter.IsTargetCollider(raycastHit.collider);
+            }
+
+            var surface = raycastHit.collider.GetComponentInParent<TargetImpactSurface>();
+            return surface != null && (targetSurface == null || surface == targetSurface);
+        }
+
+        static string BuildShotId(WeaponShotResultDto result)
+        {
+            return result.SessionId + ":" + result.ShotSequence;
         }
 
         void RecordImpactIfNeeded(RaycastHit raycastHit, bool hit)

@@ -300,6 +300,14 @@ namespace VRShooting.Application
             return ServiceResult<MovingTargetResultDto>.Ok(record.Result.Value);
         }
 
+        internal void ReleaseSession(string sessionId)
+        {
+            if (!string.IsNullOrEmpty(sessionId))
+            {
+                sessions.Remove(sessionId);
+            }
+        }
+
         bool TryGetRecord(string sessionId, out SessionRecord record, out ErrorCode failure, out string message)
         {
             record = null;
