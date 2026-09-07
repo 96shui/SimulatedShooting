@@ -94,7 +94,7 @@ namespace SimulatedShooting.Scene
             }
 
             transform.SetPositionAndRotation(rackPosition, rackRotation);
-            if (TryGetComponent<Rigidbody>(out var body))
+            if (TryGetComponent<Rigidbody>(out var body) && !body.isKinematic)
             {
                 body.velocity = Vector3.zero;
                 body.angularVelocity = Vector3.zero;
@@ -104,6 +104,19 @@ namespace SimulatedShooting.Scene
             SetRackPhysics(true);
             SetPromptVisible(false);
             PublishHoldState();
+        }
+
+        public void ResetToRack()
+        {
+            // A new training session must not inherit the previous XR selection.
+            if (interactionManager != null)
+            {
+                while (interactorsSelecting.Count > 0)
+                {
+                    interactionManager.SelectCancel(interactorsSelecting[interactorsSelecting.Count - 1], this);
+                }
+            }
+            ReturnToRack();
         }
 
         public override bool IsHoverableBy(IXRHoverInteractor interactor)

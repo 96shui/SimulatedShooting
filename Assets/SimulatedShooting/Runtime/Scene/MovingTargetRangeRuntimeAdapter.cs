@@ -80,6 +80,12 @@ namespace SimulatedShooting.Scene
                 return;
             }
 
+            if (visualSessionId != session.SessionId)
+            {
+                FindInScene<MovingTargetImpactFeedback>()?.ResetFeedback();
+                visualSessionId = session.SessionId;
+            }
+
             visualDriver.Apply(new MovingTargetVisualState(
                 session.RouteProgress01,
                 ResolveDirection(session.Phase),
@@ -157,7 +163,6 @@ namespace SimulatedShooting.Scene
                 return;
             }
 
-            visualSessionId = evt.Session.SessionId;
             ApplyState(evt.Session);
         }
 

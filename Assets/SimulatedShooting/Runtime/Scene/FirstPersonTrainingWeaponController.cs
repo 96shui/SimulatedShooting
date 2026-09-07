@@ -61,6 +61,8 @@ namespace SimulatedShooting.Scene
         bool simulatedFrontGripHeld;
         int tracerCounter;
         int lastVisualizedShotSequence;
+        string boundSessionId = string.Empty;
+        bool poseCaptured;
         bool initialized;
         bool hasCurrentState;
         bool grabSubscribed;
@@ -95,6 +97,10 @@ namespace SimulatedShooting.Scene
                 : string.Empty;
 
         public ApplicationServices Services => services;
+
+        ScreenId InputScreen => services != null && services.TrainingSessions.HasActiveSession
+            && services.TrainingSessions.Current.Mode == TrainingMode.MovingTarget
+                ? ScreenId.MovingTargetHud : ScreenId.ZeroingHud;
 
         public void ConfigureForScene(
             Camera camera,
@@ -167,6 +173,10 @@ namespace SimulatedShooting.Scene
         {
             UnsubscribeGrabInteractable();
             TearDownInputSubscription();
+            if (tracerMaterial != null)
+            {
+                Destroy(tracerMaterial);
+            }
         }
 
         void TearDownInputSubscription()
@@ -176,6 +186,7 @@ namespace SimulatedShooting.Scene
             shotSubscription?.Dispose();
             shotSubscription = null;
             dispatcher = null;
+            initialized = false;
         }
 
         private void Awake()
@@ -191,6 +202,11 @@ namespace SimulatedShooting.Scene
 
         private void OnDisable()
         {
+            if (services != null && !string.IsNullOrEmpty(boundSessionId))
+            {
+                services.AutomaticFire.Cancel(boundSessionId, WeaponFireStopReason.WeaponBecameInvalid);
+            }
+            RestoreRecoilPose();
             UnsubscribeGrabInteractable();
             TearDownInputSubscription();
         }
@@ -208,7 +224,7 @@ namespace SimulatedShooting.Scene
             UpdateAimModeFromInput();
             dispatcher.ProcessFrame(new XRTrainingInputDispatchContext
             {
-                SourceScreen = ScreenId.ZeroingHud
+                SourceScreen = InputScreen
             });
             TickWeaponFire(Time.deltaTime);
             UpdateRecoil(Time.deltaTime);
@@ -280,9 +296,14 @@ namespace SimulatedShooting.Scene
 
         void EnsureInitialized()
         {
-            if (initialized)
+            if (initialized && boundSessionId == SessionId && !string.IsNullOrEmpty(boundSessionId))
             {
                 return;
+            }
+
+            if (boundSessionId != SessionId)
+            {
+                ResetSessionState();
             }
 
             ResolveSceneReferences();
@@ -332,11 +353,19 @@ namespace SimulatedShooting.Scene
 
             currentState = start.Data;
             hasCurrentState = true;
-            headPosition = viewCamera.transform.position;
-            yaw = viewCamera.transform.eulerAngles.y;
-            pitch = NormalizePitch(viewCamera.transform.eulerAngles.x);
-            tracerMaterial = CreateTracerMaterial();
-            CacheRecoilRootPose();
+            boundSessionId = sessionId;
+            if (!poseCaptured)
+            {
+                headPosition = viewCamera.transform.position;
+                yaw = viewCamera.transform.eulerAngles.y;
+                pitch = NormalizePitch(viewCamera.transform.eulerAngles.x);
+                CacheRecoilRootPose();
+                poseCaptured = true;
+            }
+            if (tracerMaterial == null)
+            {
+                tracerMaterial = CreateTracerMaterial();
+            }
             hapticOutput ??= new InputSystemWeaponHapticOutput();
             initialized = true;
             SubscribeGrabInteractable();
@@ -344,19 +373,44 @@ namespace SimulatedShooting.Scene
             UpdateGripState();
         }
 
+        void ResetSessionState()
+        {
+            TearDownInputSubscription();
+            boundSessionId = string.Empty;
+            hasCurrentState = false;
+            currentState = default;
+            lastShot = default;
+            lastVisualizedShotSequence = 0;
+            latestRaycastHit = false;
+            latestRaycast = default;
+            simulatedRearGripHeld = false;
+            simulatedFrontGripHeld = false;
+            frontHandOffset = Vector2.zero;
+            RestoreRecoilPose();
+            if (poseCaptured && viewCamera != null && !ShouldUseVrPoseSources())
+            {
+                viewCamera.transform.SetPositionAndRotation(headPosition, Quaternion.Euler(pitch, yaw, 0f));
+                viewCamera.fieldOfView = hipFieldOfView;
+            }
+            grabInteractable?.ResetToRack();
+        }
+
+        void RestoreRecoilPose()
+        {
+            recoilActive = false;
+            recoilElapsed = 0f;
+            activeRecoil = default;
+            if (poseCaptured && weaponBinding != null && weaponBinding.RecoilRoot != null)
+            {
+                weaponBinding.RecoilRoot.localPosition = recoilRootBasePosition;
+                weaponBinding.RecoilRoot.localRotation = recoilRootBaseRotation;
+            }
+        }
+
         bool EnsureSharedServices()
         {
             if (services != null && eventBus != null)
             {
-                if (!services.TrainingSessions.HasActiveSession)
-                {
-                    var bootstrap = FindObjectOfType<ZeroingRangeSessionBootstrap>();
-                    if (bootstrap != null)
-                    {
-                        bootstrap.EnsureZeroingSession();
-                    }
-                }
-
                 return services.TrainingSessions.HasActiveSession;
             }
 
@@ -364,7 +418,6 @@ namespace SimulatedShooting.Scene
             if (sceneBootstrap != null)
             {
                 services = sceneBootstrap.EnsureServices();
-                sceneBootstrap.EnsureZeroingSession();
                 eventBus = services.EventBus;
                 return services.TrainingSessions.HasActiveSession;
             }
@@ -422,7 +475,7 @@ namespace SimulatedShooting.Scene
 
         void HandleInputCommand(XRTrainingInputCommandEvent evt)
         {
-            if (evt.SourceScreen != ScreenId.ZeroingHud)
+            if (!initialized || string.IsNullOrEmpty(SessionId) || evt.SourceScreen != InputScreen)
             {
                 return;
             }
@@ -752,7 +805,8 @@ namespace SimulatedShooting.Scene
 
         void HandleWeaponShotResult(WeaponShotResultEvent evt)
         {
-            if (!evt.Result.IsValidShot || evt.Result.SessionId != SessionId)
+            // Earlier subscribers may complete the session on this very shot.
+            if (!evt.Result.IsValidShot || evt.Result.SessionId != boundSessionId)
             {
                 return;
             }
@@ -810,7 +864,8 @@ namespace SimulatedShooting.Scene
             var visualEnd = latestRaycastHit
                 ? latestRaycast.point
                 : result.MuzzlePosition + result.AimDirection * MaxShotDistance;
-            SpawnTracer(result.MuzzlePosition, visualEnd, result.Hit, default);
+            // Physical impact feedback is independent of whether this collider scores.
+            SpawnTracer(result.MuzzlePosition, visualEnd, latestRaycastHit, latestRaycast);
             if (result.Hit && targetSurface != null)
             {
                 targetSurface.TryRecordWorldPoint(

@@ -7,6 +7,7 @@ using UnityEngine.TestTools;
 using VRShooting.Application.Weapons;
 using VRShooting.Common;
 using VRShooting.Contracts;
+using VRShooting.Input;
 using VRShooting.Unity.Bootstrap;
 using VRShooting.Unity.UI;
 
@@ -41,6 +42,141 @@ namespace SimulatedShooting.Tests.PlayMode
             }
 
             yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator P2_RealTrigger_QuickTapFiresTwo_ForbiddenHoldDoesNotResume()
+        {
+            // BDD 09: quick two-shot burst, held fire, endpoint stop and release/repress gate.
+            var services = GameMain.Instance.Services;
+            var controller = Object.FindObjectOfType<FirstPersonTrainingWeaponController>(true);
+            var input = new ManualXRTrainingInput();
+            controller.ConfigureServices(services, input);
+            var started = services.MovingTarget.StartSession(
+                new MovingTargetSettingsDto { SpeedMetersPerSecond = 4f }, RandomSeed.Fixed(209));
+            var sessionId = started.Data.SessionId;
+            services.Presentation.ConfirmStart(sessionId);
+            controller.InitializeForTests();
+            input.Press(XRTrainingInputButton.RightGrip);
+            input.Press(XRTrainingInputButton.LeftGrip);
+            controller.SendMessage("Update");
+            input.AdvanceFrame();
+            services.MovingTargetProgress.Tick(sessionId, 3f);
+
+            input.SetRightTriggerValue(1f);
+            input.SetRightTriggerValue(0f);
+            controller.SendMessage("Update");
+            input.AdvanceFrame();
+            yield return new WaitForSeconds(0.25f);
+            Assert.That(services.MovingTarget.GetSession(sessionId).Data.ShotsFired, Is.EqualTo(2));
+            Assert.That(controller.FeedbackController.ValidShotFeedbackCount, Is.EqualTo(2));
+
+            input.Press(XRTrainingInputButton.Trigger);
+            controller.SendMessage("Update");
+            input.AdvanceFrame();
+            yield return new WaitForSeconds(0.22f);
+            var moving = services.MovingTarget.GetSession(sessionId).Data;
+            Assert.That(moving.ShotsFired, Is.GreaterThanOrEqualTo(4));
+            services.MovingTargetProgress.Tick(sessionId, (1f - moving.LegProgress01) * 10f + 0.001f);
+            controller.SendMessage("Update");
+            var countAtHold = services.MovingTarget.GetSession(sessionId).Data.ShotsFired;
+            Assert.That(services.AutomaticFire.GetState(sessionId).Data.StopReason,
+                Is.EqualTo(WeaponFireStopReason.ShootingBecameForbidden));
+            services.MovingTargetProgress.Tick(sessionId, 2f);
+            yield return new WaitForSeconds(0.2f);
+            Assert.That(services.MovingTarget.GetSession(sessionId).Data.ShotsFired, Is.EqualTo(countAtHold));
+        }
+
+        [UnityTest]
+        public IEnumerator P2_RetryRequiresFreshPickup_AndReenabledControllerReceivesInput()
+        {
+            // BDD 00: pickup order; BDD 11: retry clears the previous session.
+            var services = GameMain.Instance.Services;
+            var controller = Object.FindObjectOfType<FirstPersonTrainingWeaponController>(true);
+            var input = new ManualXRTrainingInput();
+            controller.ConfigureServices(services, input);
+            var first = services.MovingTarget.StartSession(
+                new MovingTargetSettingsDto { SpeedMetersPerSecond = 4f }, RandomSeed.Fixed(206));
+            Assert.That(services.Presentation.ConfirmStart(first.Data.SessionId).Success, Is.True);
+            Assert.That(controller.InitializeForTests(), Is.True);
+            controller.enabled = false;
+            controller.enabled = true;
+            input.Press(XRTrainingInputButton.RightGrip);
+            input.Press(XRTrainingInputButton.LeftGrip);
+            controller.SendMessage("Update");
+            input.AdvanceFrame();
+            Assert.That(controller.CurrentHoldState, Is.EqualTo(WeaponHoldState.TwoHandHeld));
+            services.MovingTargetProgress.Tick(first.Data.SessionId, 3f);
+            Assert.That(controller.FireCurrentStateForTests(), Is.True);
+            var feedbackCount = controller.FeedbackController.ValidShotFeedbackCount;
+            var targetFeedback = Object.FindObjectOfType<MovingTargetImpactFeedback>(true);
+            Assert.That(targetFeedback.TryConsume(new MovingTargetHitInput(
+                "previous-session-shot", null, Vector3.zero, Vector3.forward, true)), Is.True);
+
+            services.MovingTargetProgress.Tick(first.Data.SessionId, 100f);
+            Assert.That(services.Presentation.Retry(first.Data.SessionId).Success, Is.True);
+            var second = services.MovingTarget.StartSession(
+                new MovingTargetSettingsDto { SpeedMetersPerSecond = 4f }, RandomSeed.Fixed(207));
+            Assert.That(services.Presentation.ConfirmStart(second.Data.SessionId).Success, Is.True);
+            Assert.That(controller.InitializeForTests(), Is.True);
+            Assert.That(controller.CurrentHoldState, Is.EqualTo(WeaponHoldState.OnRack));
+            Assert.That(controller.CurrentMagazine, Is.EqualTo(10));
+            Assert.That(controller.LastShotWasValid, Is.False);
+            Assert.That(targetFeedback.ConsumedShotCount, Is.Zero);
+            Assert.That(services.Presentation.Get(second.Data.SessionId).Data.Phase,
+                Is.EqualTo(TrainingPresentationPhase.AwaitingWeaponPickup));
+
+            input.Release(XRTrainingInputButton.RightGrip);
+            input.Release(XRTrainingInputButton.LeftGrip);
+            controller.SendMessage("Update");
+            input.AdvanceFrame();
+            input.Press(XRTrainingInputButton.RightGrip);
+            input.Press(XRTrainingInputButton.LeftGrip);
+            controller.SendMessage("Update");
+            input.AdvanceFrame();
+            services.MovingTargetProgress.Tick(second.Data.SessionId, 3f);
+            Assert.That(controller.FireCurrentStateForTests(), Is.True);
+            Assert.That(controller.FeedbackController.ValidShotFeedbackCount, Is.EqualTo(feedbackCount + 1),
+                "Shot sequence 1 in a new session must not be suppressed as a duplicate.");
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore()
+        {
+            // BDD 09: hit feedback; task006: environment impacts must not score as targets.
+            var services = GameMain.Instance.Services;
+            var controller = Object.FindObjectOfType<FirstPersonTrainingWeaponController>(true);
+            var input = new ManualXRTrainingInput();
+            controller.ConfigureServices(services, input);
+            var started = services.MovingTarget.StartSession(
+                new MovingTargetSettingsDto { SpeedMetersPerSecond = 4f }, RandomSeed.Fixed(208));
+            services.Presentation.ConfirmStart(started.Data.SessionId);
+            controller.InitializeForTests();
+            input.Press(XRTrainingInputButton.RightGrip);
+            input.Press(XRTrainingInputButton.LeftGrip);
+            controller.SendMessage("Update");
+            input.AdvanceFrame();
+            controller.SendMessage("Update");
+            services.MovingTargetProgress.Tick(started.Data.SessionId, 3f);
+            var binding = controller.GrabInteractable.GetComponent<VRShooting.Unity.Weapons.WeaponPrefabBinding>();
+            var obstacle = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            obstacle.name = "P2_TestEnvironmentImpact";
+            obstacle.transform.position = binding.MuzzlePoint.position + controller.CurrentAimDirection * 4f;
+            Physics.SyncTransforms();
+            Assert.That(Physics.Raycast(binding.MuzzlePoint.position, controller.CurrentAimDirection,
+                out var collision, 5f), Is.True);
+            Assert.That(collision.collider.gameObject, Is.EqualTo(obstacle));
+            var before = controller.FeedbackController.ImpactFeedbackCount;
+            Assert.That(controller.FireCurrentStateForTests(), Is.True);
+            Assert.That(controller.LastShotHit, Is.False);
+            yield return new WaitForSeconds(0.15f);
+            Assert.That(controller.FeedbackController.ImpactFeedbackCount, Is.EqualTo(before + 1));
+            var impact = GameObject.Find("ImpactFeedback_ZeroingTarget_001");
+            Assert.That(impact, Is.Not.Null);
+            Assert.That(Vector3.Distance(impact.transform.position, collision.point), Is.LessThan(0.02f));
+            Assert.That(services.MovingTarget.GetSession(started.Data.SessionId).Data.HitCount, Is.Zero);
+            Object.Destroy(obstacle);
         }
 
         [UnityTest]
