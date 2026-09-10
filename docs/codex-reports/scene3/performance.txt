@@ -1,0 +1,10 @@
+Editor fixture / 13 corpses + 2 teammates / 180 frames
+Device: NVIDIA GeForce RTX 3060 Laptop GPU
+CPU: 12th Gen Intel(R) Core(TM) i7-12700H
+Resolution: 640x480
+Frame mean ms: 0.2256711
+Frame p95 ms: 0.3834
+GC bytes/frame: 655
+GPU ms: unavailable in batch Editor
+Mono used bytes: 699478016
+Not a VR device budget acceptance. Target refresh rate remains unspecified.

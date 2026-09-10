@@ -3,7 +3,8 @@
   "rootNamespace": "SimulatedShooting",
   "references": [
     "VRShooting.Runtime",
-    "Unity.XR.Interaction.Toolkit"
+    "Unity.XR.Interaction.Toolkit",
+    "Unity.InputSystem"
   ],
   "autoReferenced": true
 }
