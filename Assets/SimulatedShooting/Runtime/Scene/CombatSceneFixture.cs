@@ -16,11 +16,9 @@ namespace SimulatedShooting.Scene
         int sequence;
         int mapIndex;
         bool showMap;
-        Vector3 droneStart;
 
         void Start()
         {
-            droneStart = Bindings.Drone.position;
             foreach (var p in Bindings.Points) p.FactReported += OnFact;
             ResetFixture();
         }
@@ -62,7 +60,6 @@ namespace SimulatedShooting.Scene
 
         void Update()
         {
-            Bindings.Drone.position = droneStart + Vector3.up * Mathf.Min(Time.timeSinceLevelLoad * 0.6f, 2f);
             if (!Walker.View.enabled) return;
 #if ENABLE_INPUT_SYSTEM
             var keyboard = Keyboard.current;

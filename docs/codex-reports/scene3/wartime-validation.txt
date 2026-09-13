@@ -1,0 +1,1 @@
+PASS: bindings, navigation, collision clearance, missing scripts

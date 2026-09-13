@@ -21,6 +21,82 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [UnityTest]
+        public IEnumerator Bdd14_19_StartupAndResetKeepDroneAndPlayerStable()
+        {
+            var fixture = Object.FindObjectOfType<CombatSceneFixture>();
+            fixture.Walker.InputEnabled = false;
+            var drone = bindings.Drone.position;
+            for (int reset = 0; reset < 2; reset++)
+            {
+                fixture.ResetFixture();
+                var until = Time.time + 2;
+                while (Time.time < until)
+                {
+                    fixture.Walker.Move(Vector2.zero, Vector2.zero);
+                    Assert.That(Vector3.Distance(bindings.Drone.position, drone), Is.LessThan(.001f), "Inspection must not trigger briefing takeoff");
+                    Assert.That(fixture.Walker.transform.position.y, Is.InRange(-.1f, .15f));
+                    yield return null;
+                }
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd19_ExteriorGroundAndWallsPreventLeavingTheTown()
+        {
+            var fixture = Object.FindObjectOfType<CombatSceneFixture>();
+            fixture.Walker.InputEnabled = false;
+            foreach (var actor in fixture.Actors) actor.gameObject.SetActive(false);
+            var controller = fixture.Walker.GetComponent<CharacterController>();
+            // Sample open ground between buildings, behind the search building, and beside the street.
+            foreach (var position in new[] { new Vector3(-23, 0, 45), new Vector3(62, 0, 60), new Vector3(24, 0, 111), new Vector3(0, 0, 95), new Vector3(40, 0, 47) })
+            {
+                controller.enabled = false;
+                controller.transform.position = position;
+                controller.enabled = true;
+                for (int i = 0; i < 60; i++) controller.Move(Vector3.down * .05f);
+                Assert.That(controller.transform.position.y, Is.GreaterThan(-.25f), "Unsupported exterior ground " + position);
+            }
+            // Push straight and diagonally against all sides and both sides of the trench opening.
+            var starts = new[] { new Vector3(-23, 0, 45), new Vector3(63, 0, 60), new Vector3(24, 0, 112), new Vector3(0, 0, 30), new Vector3(45, 0, 30), new Vector3(-23, 0, 30), new Vector3(63, 0, 30), new Vector3(-23, 0, 112), new Vector3(63, 0, 112) };
+            var directions = new[] { Vector3.left, Vector3.right, Vector3.forward, Vector3.back, Vector3.back, new Vector3(-1, 0, -1), new Vector3(1, 0, -1), new Vector3(-1, 0, 1), new Vector3(1, 0, 1) };
+            for (int edge = 0; edge < starts.Length; edge++)
+                foreach (float diagonal in new[] { 0f, .25f, -.25f })
+                {
+                    controller.enabled = false;
+                    controller.transform.position = starts[edge];
+                    controller.enabled = true;
+                    var tangent = Vector3.Cross(directions[edge], Vector3.up);
+                    for (int i = 0; i < 120; i++) controller.Move((directions[edge] + tangent * diagonal) * .1f + Vector3.down * .03f);
+                    var p = controller.transform.position;
+                    Assert.That(p.x, Is.InRange(-25f, 65f), "Town side wall " + edge);
+                    Assert.That(p.z, Is.InRange(28f, 114f), "Town end wall " + edge);
+                    Assert.That(p.y, Is.GreaterThan(-.25f));
+                }
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd15_19_SpawnTrenchWallsBlockWalkingOut()
+        {
+            var fixture = Object.FindObjectOfType<CombatSceneFixture>();
+            fixture.Walker.InputEnabled = false;
+            foreach (var actor in fixture.Actors) actor.gameObject.SetActive(false);
+            var controller = fixture.Walker.GetComponent<CharacterController>();
+            foreach (var direction in new[] { Vector3.left, Vector3.right, Vector3.back })
+            {
+                controller.enabled = false;
+                controller.transform.position = bindings.PlayerSpawn.position;
+                controller.enabled = true;
+                for (int i = 0; i < 150; i++) controller.Move(direction * .1f + Vector3.down * .03f);
+                var p = controller.transform.position;
+                Assert.That(p.x, Is.InRange(-2f, 2f));
+                Assert.That(p.z, Is.GreaterThan(-10f));
+                Assert.That(p.y, Is.GreaterThan(-.1f));
+            }
+            yield return null;
+        }
+
+        [UnityTest]
         public IEnumerator Bdd14_19_20_StreetAllFloorsRoomsAndReturnAreReachable()
         {
             foreach (var door in bindings.Doors) door.Apply("route-open", true);

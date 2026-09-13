@@ -9,6 +9,66 @@ namespace SimulatedShooting.Tests.EditMode
     public class CombatSceneTests
     {
         [Test]
+        public void Bdd19_ExteriorCollisionCoversDistrictWithoutIntersectingBuildings()
+        {
+            EditorSceneManager.OpenScene("Assets/Scenes/CombatScene.unity", OpenSceneMode.Single);
+            var bindings = Object.FindObjectOfType<CombatSceneBindings>();
+            var landscape = bindings.transform.Find("EnvironmentBackdrop/Landscape").GetComponent<BoxCollider>();
+            Assert.That(landscape, Is.Not.Null);
+            Assert.That(landscape.enabled && !landscape.isTrigger, Is.True);
+            var exterior = bindings.GeometryRoot.Find("Town_ExteriorCollision");
+            Assert.That(exterior, Is.Not.Null);
+            var ground = exterior.Find("TownGround").GetComponent<BoxCollider>();
+            Physics.SyncTransforms();
+            var buildings = bindings.GeometryRoot.Find("Town_PerimeterBuildings").GetComponentsInChildren<BoxCollider>();
+            foreach (var building in buildings)
+            {
+                var min = building.bounds.min; var max = building.bounds.max;
+                Assert.That(min.x, Is.GreaterThan(ground.bounds.min.x));
+                Assert.That(max.x, Is.LessThan(ground.bounds.max.x));
+                Assert.That(min.z, Is.GreaterThan(ground.bounds.min.z));
+                Assert.That(max.z, Is.LessThan(ground.bounds.max.z));
+                foreach (var wall in exterior.GetComponentsInChildren<BoxCollider>().Where(c => c != ground))
+                    Assert.That(wall.bounds.Intersects(building.bounds), Is.False, wall.name + " cuts through " + building.transform.parent.name);
+            }
+        }
+
+        [Test]
+        public void Bdd19_PerimeterBuildingsFormStreetWithoutBlockingSearchPoints()
+        {
+            EditorSceneManager.OpenScene("Assets/Scenes/CombatScene.unity", OpenSceneMode.Single);
+            var bindings = Object.FindObjectOfType<CombatSceneBindings>();
+            var district = bindings.GeometryRoot.Find("Town_PerimeterBuildings");
+            Assert.That(district, Is.Not.Null);
+            Assert.That(district.childCount, Is.EqualTo(6));
+            Physics.SyncTransforms();
+            var colliders = district.GetComponentsInChildren<BoxCollider>();
+            Assert.That(colliders.Length, Is.EqualTo(6));
+            foreach (var point in bindings.Points.Where(p => p.RequiresNavigation))
+                foreach (var collider in colliders)
+                {
+                    var bounds = collider.bounds;
+                    bounds.Expand(.8f);
+                    Assert.That(bounds.Contains(point.transform.position + Vector3.up), Is.False, point.Id);
+                }
+            Assert.That(district.GetComponentsInChildren<TextMesh>(), Is.Empty);
+        }
+
+        [Test]
+        public void Bdd15_19_WartimeDetailsPreserveRoutesAndRemoveWorldSigns()
+        {
+            EditorSceneManager.OpenScene("Assets/Scenes/CombatScene.unity", OpenSceneMode.Single);
+            var bindings = Object.FindObjectOfType<CombatSceneBindings>();
+            Assert.That(bindings.ValidateBindings(), Is.Empty);
+            Assert.That(bindings.GeometryRoot.GetComponentsInChildren<Transform>(true).Any(t => t.name.StartsWith("Sign_")), Is.False);
+            var details = bindings.GeometryRoot.Find("VisualPolish_Wartime");
+            Assert.That(details, Is.Not.Null);
+            Assert.That(details.GetComponentsInChildren<Collider>(), Is.Empty);
+            foreach (var name in new[] { "BrokenMasonry", "ScorchedPlaster", "BrokenWindowFrame", "EarthBank" })
+                Assert.That(details.GetComponentsInChildren<Transform>().Any(t => t.name == name), Is.True, name);
+        }
+
+        [Test]
         public void Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms()
         {
             var scene = EditorSceneManager.OpenScene("Assets/Scenes/CombatScene.unity", OpenSceneMode.Single);
