@@ -6,7 +6,8 @@
     "VRShooting.Runtime",
     "Unity.XR.Interaction.Toolkit",
     "Unity.XR.CoreUtils",
-    "Unity.InputSystem"
+    "Unity.InputSystem",
+    "VRShooting.Contracts"
   ],
   "includePlatforms": [
     "Editor"

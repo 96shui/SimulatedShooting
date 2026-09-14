@@ -5,6 +5,7 @@ namespace VRShooting.Common
     /// </summary>
     public enum TrainingPostureMode
     {
-        ProneFixed = 0
+        ProneFixed = 0,
+        CombatFree = 1
     }
 }

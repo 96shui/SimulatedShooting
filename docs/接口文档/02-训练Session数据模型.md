@@ -146,6 +146,10 @@ public readonly struct TrainingResultDto
 - `WeaponId` 对堑壕和城镇必填；100m 和移动靶可使用系统指定训练武器。
 - `ElapsedSeconds` 由玩法服务层统一计时，UI 不自行累加。
 - 所有结算页必须使用 `TrainingResultDto` 或对应模式结果 DTO。
-- P1/P2 的 `PostureMode` 固定为 `ProneFixed`，`ArtificialLocomotionAllowed=false`，并由 `13-P1P2卧姿射击与界面显隐契约.md` 约束；P3 的姿态与移动另行定义。
+- P1/P2 的 `PostureMode` 固定为 `ProneFixed`，`ArtificialLocomotionAllowed=false`，并由 `13-P1P2卧姿射击与界面显隐契约.md` 约束；P3 的姿态与移动由接口14定义，TrainingPostureMode追加CombatFree，保留ProneFixed=0。
 - `FiringStationId` 是玩法对场景射击位的稳定逻辑引用，不得保存或传递 Unity `Transform`。
 
+
+## P3 v1 补充
+
+P3 新端口、配置、错误/幂等、会话修订、场景ID与Fixture遵循 [14-P3战斗契约与独立测试基础](14-P3战斗契约与独立测试基础.md)。共用类型保持唯一，生产实现不引用替身。

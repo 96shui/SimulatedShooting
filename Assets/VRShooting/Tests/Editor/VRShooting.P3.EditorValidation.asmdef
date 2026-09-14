@@ -1,0 +1,8 @@
+{
+  "name": "VRShooting.P3.EditorValidation",
+  "references": [],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}

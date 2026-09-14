@@ -1,19 +1,20 @@
 {
-    "name": "VRShooting.Runtime",
-    "rootNamespace": "VRShooting",
-    "references": [
-        "Unity.InputSystem",
-        "Unity.TextMeshPro",
-        "Unity.ugui",
-        "Unity.XR.Interaction.Toolkit"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "VRShooting.Runtime",
+  "rootNamespace": "VRShooting",
+  "references": [
+    "Unity.InputSystem",
+    "Unity.TextMeshPro",
+    "Unity.ugui",
+    "Unity.XR.Interaction.Toolkit",
+    "VRShooting.Contracts"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

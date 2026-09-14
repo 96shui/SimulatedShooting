@@ -1,26 +1,28 @@
 {
-    "name": "VRShooting.Runtime.PlayModeTests",
-    "rootNamespace": "VRShooting.Tests.PlayMode",
-    "references": [
-        "VRShooting.Runtime",
-        "SimulatedShooting.Runtime",
-        "Unity.TextMeshPro",
-        "Unity.ugui",
-        "Unity.XR.Interaction.Toolkit",
-        "Unity.XR.CoreUtils"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": false,
-    "defineConstraints": [
-        "UNITY_INCLUDE_TESTS"
-    ],
-    "versionDefines": [],
-    "noEngineReferences": false,
-    "optionalUnityReferences": [
-        "TestAssemblies"
-    ]
+  "name": "VRShooting.Runtime.PlayModeTests",
+  "rootNamespace": "VRShooting.Tests.PlayMode",
+  "references": [
+    "VRShooting.Runtime",
+    "SimulatedShooting.Runtime",
+    "Unity.TextMeshPro",
+    "Unity.ugui",
+    "Unity.XR.Interaction.Toolkit",
+    "Unity.XR.CoreUtils",
+    "VRShooting.Contracts",
+    "VRShooting.P3.TestSupport"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false,
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
 }

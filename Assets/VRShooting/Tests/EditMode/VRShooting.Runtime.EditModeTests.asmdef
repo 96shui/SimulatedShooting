@@ -1,23 +1,25 @@
 {
-    "name": "VRShooting.Runtime.EditModeTests",
-    "rootNamespace": "VRShooting.Tests.EditMode",
-    "references": [
-        "VRShooting.Runtime"
-    ],
-    "includePlatforms": [
-        "Editor"
-    ],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": false,
-    "defineConstraints": [
-        "UNITY_INCLUDE_TESTS"
-    ],
-    "versionDefines": [],
-    "noEngineReferences": false,
-    "optionalUnityReferences": [
-        "TestAssemblies"
-    ]
+  "name": "VRShooting.Runtime.EditModeTests",
+  "rootNamespace": "VRShooting.Tests.EditMode",
+  "references": [
+    "VRShooting.Runtime",
+    "VRShooting.Contracts",
+    "VRShooting.P3.TestSupport"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS"
+  ],
+  "versionDefines": [],
+  "noEngineReferences": false,
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
 }

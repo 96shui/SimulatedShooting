@@ -232,3 +232,7 @@ P1/P2 场景必须提供 `TrainingRangeSceneBindings` 或等效组件，序列�
 - 玩法功能负责人只发布 DTO/事件，不引用 `TrainingRangeSceneBindings` 或 Transform。
 - 组合与真实性验证由审核测试与优化负责人按 P2 阶段审核清单完成，不建立审核类 task。
 
+
+## P3 v1 补充
+
+P3 新端口、配置、错误/幂等、会话修订、场景ID与Fixture遵循 [14-P3战斗契约与独立测试基础](14-P3战斗契约与独立测试基础.md)。共用类型保持唯一，生产实现不引用替身。

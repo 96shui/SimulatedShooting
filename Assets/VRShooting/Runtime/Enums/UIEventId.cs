@@ -24,6 +24,18 @@ namespace VRShooting.Common
         MovingTarget_Retry,
         MovingTarget_BackToModeSelection,
         Common_Back,
-        Common_Retry
+        Common_Retry,
+        Trench_SelectMap,
+        Trench_Start,
+        Trench_ViewMap,
+        Trench_Retry,
+        Trench_BackToMainMenu,
+        Urban_SelectMap,
+        Urban_EnterBuilding,
+        Urban_ExitBuilding,
+        Urban_OpenRoomDoor,
+        Urban_MarkRoomSearched,
+        Urban_Retry,
+        Urban_BackToMainMenu
     }
 }

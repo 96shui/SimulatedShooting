@@ -1,0 +1,8 @@
+{
+  "name": "VRShooting.P3.TestSupport",
+  "rootNamespace": "VRShooting.P3.TestSupport",
+  "references": ["VRShooting.Contracts"],
+  "autoReferenced": false,
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}
