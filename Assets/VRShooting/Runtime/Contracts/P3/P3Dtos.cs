@@ -125,6 +125,7 @@ namespace VRShooting.Common
     /// <summary>P3.Contracts.v1; see docs/接口文档/14-P3战斗契约与独立测试基础.md.</summary>
     public readonly struct RoomDto
     {
+        public Vector2? MapPosition { get; init; }
         readonly string roomId;
         public string RoomId { get => roomId ?? string.Empty; init => roomId = value ?? string.Empty; }
         readonly string displayName;
@@ -166,6 +167,7 @@ namespace VRShooting.Common
     /// <summary>P3.Contracts.v1; see docs/接口文档/14-P3战斗契约与独立测试基础.md.</summary>
     public readonly struct UrbanResultDto
     {
+        public float ElapsedSeconds { get; init; }
         readonly string sessionId;
         public string SessionId { get => sessionId ?? string.Empty; init => sessionId = value ?? string.Empty; }
         public long Revision { get; init; }
@@ -346,4 +348,3 @@ namespace VRShooting.Common
     }
 
 }
-

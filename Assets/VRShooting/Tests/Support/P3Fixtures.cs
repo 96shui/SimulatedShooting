@@ -65,12 +65,12 @@ namespace VRShooting.P3.TestSupport
                     var floorId = "urban-a.floor-" + i;
                     projections.Add(Projection(floorId, floorId + ".map"));
                     floors.Add(new FloorDto { FloorId = floorId, DisplayName = i + "F", MiniMap = MiniMap(floorId),
-                        Rooms = new[] { new RoomDto { RoomId = "urban-a.room-" + i.ToString("000"), DisplayName = "房间" + i } } });
+                        Rooms = new[] { new RoomDto { RoomId = "urban-a.room-" + i.ToString("000"), DisplayName = "房间" + i, MapPosition=new Vector2(.5f,.5f) } } });
                 }
                 return new CombatSceneDefinitionDto
                 {
                     MapId = P3ContractIds.UrbanMap, SceneId = P3ContractIds.UrbanScene, Mode = TrainingMode.Urban,
-                    EntranceId = P3ContractIds.UrbanEntrance, Projections = projections, Floors = floors, SpawnPoints = Spawns(true)
+                    EntranceId = P3ContractIds.UrbanEntrance, EntranceWorldPosition=Vector3.forward*5, Projections = projections, Floors = floors, SpawnPoints = Spawns(true)
                 };
             }
         }

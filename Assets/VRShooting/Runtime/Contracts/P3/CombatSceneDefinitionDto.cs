@@ -16,6 +16,7 @@ namespace VRShooting.Common
         public string MapId { get => mapId ?? string.Empty; init => mapId = value ?? string.Empty; }
         public string SceneId { get => sceneId ?? string.Empty; init => sceneId = value ?? string.Empty; }
         public string EntranceId { get => entranceId ?? string.Empty; init => entranceId = value ?? string.Empty; }
+        public Vector3? EntranceWorldPosition { get; init; }
         public TrainingMode Mode { get; init; }
         public IReadOnlyList<MapProjectionDto> Projections { get => projections ?? Array.Empty<MapProjectionDto>(); init => projections = ContractCollection.Copy(value); }
         public IReadOnlyList<SceneSpawnPointDto> SpawnPoints { get => spawnPoints ?? Array.Empty<SceneSpawnPointDto>(); init => spawnPoints = ContractCollection.Copy(value); }
@@ -52,6 +53,7 @@ namespace VRShooting.Common
             else
             {
                 if (!AddId(uniqueIds, EntranceId) || Floors.Count != 3) return Invalid("Entrance/three floors");
+                if(EntranceWorldPosition.HasValue&&(!Finite(EntranceWorldPosition.Value)||!InsideProjection(EntranceWorldPosition.Value,string.Empty)))return Invalid("Entrance position");
                 foreach (var floor in Floors)
                 {
                     if (!AddId(uniqueIds, floor.FloorId) || !projectionFloors.Contains(floor.FloorId)) return Invalid("Floor/projection");
@@ -59,6 +61,11 @@ namespace VRShooting.Common
                     foreach (var room in floor.Rooms)
                     {
                         if (!AddId(uniqueIds, room.RoomId)) return Invalid("RoomId");
+                        if(room.MapPosition.HasValue)
+                        {
+                            var p=room.MapPosition.Value;
+                            if(!Finite(p.x)||!Finite(p.y)||p.x<0||p.y<0||p.x>1||p.y>1)return Invalid("Room map position");
+                        }
                         roomFloors.Add(room.RoomId, floor.FloorId);
                     }
                 }
@@ -92,7 +99,7 @@ namespace VRShooting.Common
         public CombatSceneDefinitionDto WithSpawnPoints(IReadOnlyList<SceneSpawnPointDto> points) => new CombatSceneDefinitionDto
         {
             MapId = MapId, SceneId = SceneId, Mode = Mode, EntranceId = EntranceId,
-            Projections = Projections, SearchNodes = SearchNodes, Floors = Floors, SpawnPoints = points
+            Projections = Projections, SearchNodes = SearchNodes, Floors = Floors, SpawnPoints = points, EntranceWorldPosition=EntranceWorldPosition
         };
         bool InsideProjection(Vector3 point, string floorId)
         {

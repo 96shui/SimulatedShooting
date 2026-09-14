@@ -6,6 +6,15 @@ using VRShooting.Contracts;
 
 namespace VRShooting.Common
 {
+    public readonly struct CombatEnemyAssignmentDto
+    {
+        readonly string entityId,spawnPointId,floorId,roomId;
+        public string EntityId {get=>entityId??string.Empty;init=>entityId=value??string.Empty;}
+        public string SpawnPointId {get=>spawnPointId??string.Empty;init=>spawnPointId=value??string.Empty;}
+        public string FloorId {get=>floorId??string.Empty;init=>floorId=value??string.Empty;}
+        public string RoomId {get=>roomId??string.Empty;init=>roomId=value??string.Empty;}
+        public EncounterGroup Group {get;init;}
+    }
     public enum CombatFeedbackKind { ShotFired, EnemyHit, EnemyDied, EnemyAttack, PlayerDamaged, PlayerDied }
     public readonly struct CombatFeedbackDto
     {
