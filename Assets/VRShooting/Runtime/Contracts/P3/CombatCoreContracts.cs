@@ -31,6 +31,7 @@ namespace VRShooting.Common
     }
     public readonly struct CombatCoreSnapshotDto
     {
+        public bool TrackingValid { get; init; }
         readonly string sessionId;
         public string SessionId { get => sessionId ?? string.Empty; init => sessionId = value ?? string.Empty; }
         public long Revision { get; init; }

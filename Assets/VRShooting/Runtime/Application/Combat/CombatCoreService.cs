@@ -33,6 +33,7 @@ namespace VRShooting.Application.Combat
         CombatCoreSnapshotDto snapshot;
         public event Action<CombatCoreSnapshotDto> Changed;
         public event Action<CombatFeedbackDto> Feedback;
+        public bool HasPendingInputs => pending.Count > 0;
 
         public CombatCoreService(ICombatClock clock, CombatConfigDto? config = null)
         {
@@ -298,7 +299,7 @@ namespace VRShooting.Application.Combat
             }
             snapshot = new CombatCoreSnapshotDto
             {
-                SessionId = session, Revision = revision, State = state,
+                SessionId = session, Revision = revision, State = state, TrackingValid = tracked,
                 Player = new PlayerStatusDto { Health = health, IsAlive = health > 0, Posture = posture,
                     Shoulder = weapon.ShoulderSide, CornerShootingAvailable = corner },
                 Ammo = weapons.GetAmmo(session).Data,
