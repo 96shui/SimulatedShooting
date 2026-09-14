@@ -43,7 +43,12 @@ namespace SimulatedShooting.Tests.EditMode
             Assert.That(district.childCount, Is.EqualTo(6));
             Physics.SyncTransforms();
             var colliders = district.GetComponentsInChildren<BoxCollider>();
-            Assert.That(colliders.Length, Is.EqualTo(6));
+            Assert.That(colliders.Length, Is.GreaterThan(6));
+            foreach (Transform building in district)
+            {
+                Assert.That(building.Find("ClosedBuildingShell"), Is.Null, building.name);
+                Assert.That(building.Find("Interior/TrainingDummy"), Is.Not.Null, building.name);
+            }
             foreach (var point in bindings.Points.Where(p => p.RequiresNavigation))
                 foreach (var collider in colliders)
                 {

@@ -12,6 +12,93 @@ namespace SimulatedShooting.Tests.PlayMode
     public class CombatScenePlayModeTests
     {
         CombatSceneBindings bindings;
+        [UnityTest]
+        public IEnumerator Bdd19_AllHousesHaveDummiesAndPhysicalEntrances()
+        {
+            var fixture = Object.FindObjectOfType<CombatSceneFixture>();
+            fixture.Walker.InputEnabled = false;
+            foreach (var actor in fixture.Actors) actor.gameObject.SetActive(false);
+            var controller = fixture.Walker.GetComponent<CharacterController>();
+            foreach (Transform house in bindings.GeometryRoot.Find("Town_PerimeterBuildings"))
+            {
+                var interior = house.Find("Interior");
+                Assert.That(interior, Is.Not.Null, house.name);
+                Assert.That(interior.Find("TrainingDummy").GetComponentsInChildren<Renderer>().Any(r => r.enabled), Is.True);
+                var entrance = interior.Find("WalkEntrance");
+                var outside = entrance.position - house.forward * 2;
+                var inside = entrance.position + house.forward * 2;
+                var path = new NavMeshPath();
+                Assert.That(NavMesh.CalculatePath(bindings.UrbanEntry.position, inside, NavMesh.AllAreas, path), Is.True, house.name);
+                Assert.That(path.status, Is.EqualTo(NavMeshPathStatus.PathComplete), house.name);
+                controller.enabled = false;
+                controller.transform.position = bindings.UrbanEntry.position + Vector3.up*.05f;
+                controller.enabled = true;
+                foreach (var corner in path.corners.Skip(1).Concat(path.corners.Reverse().Skip(1)))
+                {
+                    for (int i = 0; i < 1800; i++)
+                    {
+                        var delta = corner - controller.transform.position; delta.y = 0;
+                        if (delta.magnitude < .18f) break;
+                        controller.Move(Vector3.ClampMagnitude(delta,.1f) + Vector3.down*.03f);
+                        if (i % 30 == 0) yield return null;
+                    }
+                    var remaining = corner - controller.transform.position; remaining.y = 0;
+                    Assert.That(remaining.magnitude, Is.LessThan(.3f), house.name + " street route " + corner + " player " + controller.transform.position);
+                    Assert.That(controller.transform.position.y, Is.GreaterThan(-.25f), house.name);
+                }
+                controller.enabled = false; controller.transform.position = outside + Vector3.up * .1f; controller.enabled = true;
+                foreach (var target in new[] { inside, outside })
+                {
+                    for (int i = 0; i < 150; i++)
+                    {
+                        var delta = target - controller.transform.position; delta.y = 0;
+                        if (delta.magnitude < .1f) break;
+                        controller.Move(Vector3.ClampMagnitude(delta,.08f) + Vector3.down*.03f);
+                        if (i % 20 == 0) yield return null;
+                    }
+                    var remaining = target - controller.transform.position; remaining.y = 0;
+                    Assert.That(remaining.magnitude, Is.LessThan(.2f), house.name + " doorway " + controller.transform.position);
+                    Assert.That(controller.transform.position.y, Is.GreaterThan(-.2f), house.name);
+                }
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd19_DistrictGroundGridAndElevatedGuardsPreventFalls()
+        {
+            var fixture = Object.FindObjectOfType<CombatSceneFixture>();
+            fixture.Walker.InputEnabled = false;
+            foreach (var actor in fixture.Actors) actor.gameObject.SetActive(false);
+            var controller = fixture.Walker.GetComponent<CharacterController>();
+            for (int x = -24; x <= 64; x += 2)
+                for (int z = 29; z <= 113; z += 2)
+                    Assert.That(Physics.Raycast(new Vector3(x,.15f,z), Vector3.down,.7f,~0,QueryTriggerInteraction.Ignore), Is.True, "Ground gap " + x + "," + z);
+            var guards = bindings.GeometryRoot.Find("WalkwaySafety");
+            Assert.That(guards, Is.Not.Null);
+            foreach (Transform guard in guards)
+                foreach (float along in new[] { -.35f, 0, .35f })
+                    foreach (float diagonal in new[] { -.25f, 0, .25f })
+                    {
+                        var point = guard.TransformPoint(new Vector3(0,-.5f,along));
+                        // Select the side supported by the landing/ramp rather than the drop side.
+                        Vector3 start = Vector3.zero; bool supported = false;
+                        foreach (int side in new[] { -1, 1 })
+                        {
+                            var candidate = point + guard.right * side * .6f + Vector3.up * .2f;
+                            if (!Physics.Raycast(candidate,Vector3.down,out var hit,.6f,~0,QueryTriggerInteraction.Ignore)) continue;
+                            start = hit.point + Vector3.up*.05f; supported = true; break;
+                        }
+                        Assert.That(supported, Is.True, guard.name + " unsupported test location " + point);
+                        controller.enabled = false; controller.transform.position = start; controller.enabled = true;
+                        var direction = point-start; direction.y = 0; direction.Normalize();
+                        var minY = start.y - .4f;
+                        for (int i = 0; i < 35; i++)
+                            controller.Move((direction+guard.forward*diagonal)*.05f + Vector3.down*.03f);
+                        Assert.That(controller.transform.position.y, Is.GreaterThan(minY), guard.name + " fell at " + point);
+                    }
+            yield return null;
+        }
+
         [UnitySetUp]
         public IEnumerator Load()
         {

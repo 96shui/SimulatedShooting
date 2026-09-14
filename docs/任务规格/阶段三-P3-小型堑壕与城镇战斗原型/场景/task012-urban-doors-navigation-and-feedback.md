@@ -110,3 +110,12 @@
 ## 本次场景交付范围澄清（2026-09-10）
 
 按用户要求，task003/006 的堑壕与 task009/012 的城镇合并在 `Assets/Scenes/CombatScene.unity`，空间连续可通行。仅交付场景层，原文 TrenchScene/UrbanScene 保留为逻辑区域 ID，不再分别生成两个场景文件。交互事实、门/角色反馈与 Fake 巡检属于本次；真实玩法服务、业务 UI、任务衔接及胜负规则由其他线负责。场景本地端口见 [合并场景表现绑定](../../../接口文档/14-P3合并场景表现绑定.md)。不将 Fake 演示宣称为真实战斗闭环或契约节点 A 签核。
+
+
+## 2026-09-14 场景通行修复
+
+按用户要求，现有六栋外围建筑均开放首层入口和内部空间，每栋至少放置一个静态假人（复用角色视觉，不计入生产敌人数或搜索规则）。主楼保留三层五房和巡检角色。可行走地面必须连续承托；楼梯、平台和楼层外露边缘设置可见且与碰撞一致的防坠护栏；移除旧街道内部边界障碍。保持保存场景的建筑位置、外观和既有服务端口。
+
+验收：无 VR CharacterController 从街道逐栋进入并返回，检查假人；网格采样地面，逐段向高处边缘直行和斜向挤压，不能坠落。对应 CombatScenePlayModeTests 的 Bdd19 通行与防坠测试。VR 实机舒适度待验。
+
+验证结果（2026-09-14）：Unity 2022.3.62f3c1；CombatScenePlayModeTests 14/14 通过，CombatSceneTests EditMode 8/8 通过。结果文件：`Logs/Scene3/walkability-playmode-final.xml`、`Logs/Scene3/walkability-editmode.xml`。新增用例覆盖六栋房屋从街道往返、门洞双向通行、假人可见、1935 个地面采样点及高处护栏直向/斜向挤压；既有三层房间巡检与复位回归通过。修改由 `CombatSceneWalkabilityRepair.Apply` 应用于现有保存场景，导航已重烘焙。VR 实机舒适度仍待验。
