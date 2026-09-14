@@ -60,6 +60,7 @@ namespace VRShooting.Common
         {
             if (!Positive(PlayerHealth)) return Invalid(nameof(PlayerHealth));
             if (!Positive(EnemyDamage)) return Invalid(nameof(EnemyDamage));
+            if (PlayerHealth - EnemyDamage == PlayerHealth) return Invalid("damage must reduce representable health");
             if (!Positive(EnemyAttackInterval)) return Invalid(nameof(EnemyAttackInterval));
             if (!Positive(EnemyRange)) return Invalid(nameof(EnemyRange));
             if (!Positive(EnemyHalfViewAngle)) return Invalid(nameof(EnemyHalfViewAngle));

@@ -96,15 +96,16 @@ namespace VRShooting.Application.Weapons
             }
 
             var weapon = weaponResult.Data;
-            if (mode == TrainingMode.MovingTarget)
+            if (mode == TrainingMode.MovingTarget ||
+                (resolvedWeaponId == TrainingRifleId && (mode == TrainingMode.Trench || mode == TrainingMode.Urban)))
             {
                 weapon = new WeaponDefinitionDto
                 {
                     WeaponId = weapon.WeaponId,
                     DisplayName = weapon.DisplayName,
                     Type = weapon.Type,
-                    MagazineCapacity = MovingTargetRules.TotalAmmo,
-                    MaxReserveAmmo = 0,
+                    MagazineCapacity = mode == TrainingMode.MovingTarget ? MovingTargetRules.TotalAmmo : 30,
+                    MaxReserveAmmo = mode == TrainingMode.MovingTarget ? 0 : 120,
                     Recoil = weapon.Recoil,
                     ApplicableModes = weapon.ApplicableModes
                 };
@@ -148,6 +149,12 @@ namespace VRShooting.Application.Weapons
             {
                 sessions.Remove(sessionId);
             }
+        }
+
+        // Combat lifecycle cancellation preserves all rounds; no reload-complete side effect.
+        internal void CancelReload(string sessionId)
+        {
+            if (sessions.TryGetValue(sessionId, out var state)) state.IsReloading = false;
         }
 
         public ServiceResult<WeaponShotResultDto> Fire(WeaponFireInputDto input)
@@ -507,7 +514,7 @@ namespace VRShooting.Application.Weapons
                 MagazineCapacity = 3,
                 MaxReserveAmmo = 6,
                 Recoil = RecoilLevel.Medium,
-                ApplicableModes = new[] { TrainingMode.Zeroing100m, TrainingMode.MovingTarget }
+                ApplicableModes = new[] { TrainingMode.Zeroing100m, TrainingMode.MovingTarget, TrainingMode.Trench, TrainingMode.Urban }
             };
             yield return new WeaponDefinitionDto
             {
