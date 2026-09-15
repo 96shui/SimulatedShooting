@@ -1,5 +1,6 @@
 using VRShooting.Input;
 using VRShooting.Application.Weapons;
+using VRShooting.Application.Combat;
 
 namespace VRShooting.Application
 {
@@ -72,7 +73,10 @@ namespace VRShooting.Application
 
         public ITrainingPresentationService Presentation { get; }
 
-        public static ApplicationServices CreateDefault(IXRTrainingInput trainingInput = null)
+        public CombatApplicationCoordinator Combat { get; private set; }
+
+        public static ApplicationServices CreateDefault(IXRTrainingInput trainingInput = null,
+            ICombatSceneLoader combatScenes = null, ICombatSummaryStore combatStore = null)
         {
             var eventBus = new GameEventBus();
             var router = new UIRouter(eventBus);
@@ -118,7 +122,11 @@ namespace VRShooting.Application
                 hud,
                 zeroing,
                 movingTarget,
-                presentation);
+                presentation)
+            {
+                Combat = new CombatApplicationCoordinator(router, combatScenes, combatStore ??
+                    new CombatSummaryFileStore(System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "CombatResults")))
+            };
         }
     }
 }

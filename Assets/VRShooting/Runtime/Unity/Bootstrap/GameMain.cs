@@ -110,6 +110,7 @@ namespace VRShooting.Unity.Bootstrap
 
             GameStateManager.DestroyInstance();
             SceneManager.sceneLoaded -= OnSceneLoaded;
+            Services?.Combat.Dispose();
             Services = null;
             GameState = null;
             Instance = null;
