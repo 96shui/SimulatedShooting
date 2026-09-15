@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="141" result="Passed" total="141" passed="141" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-15 03:31:51Z" end-time="2026-09-15 03:32:15Z" duration="23.8719075">
+  <test-suite type="TestSuite" id="1177" name="VR" fullname="VR" runstate="Runnable" testcasecount="141" result="Passed" start-time="2026-09-15 03:31:51Z" end-time="2026-09-15 03:32:15Z" duration="23.871908" total="141" passed="141" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1254" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="73" result="Passed" start-time="2026-09-15 03:31:51Z" end-time="2026-09-15 03:32:12Z" duration="21.534677" total="73" passed="73" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="81976" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1255" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="73" result="Passed" start-time="2026-09-15 03:31:51Z" end-time="2026-09-15 03:32:12Z" duration="21.534364" total="73" passed="73" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1256" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="73" result="Passed" start-time="2026-09-15 03:31:51Z" end-time="2026-09-15 03:32:12Z" duration="21.534201" total="73" passed="73" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1257" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="73" result="Passed" start-time="2026-09-15 03:31:51Z" end-time="2026-09-15 03:32:12Z" duration="21.533976" total="73" passed="73" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1178" name="MovingTargetRangeIntegrationTests" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-15 03:31:51Z" end-time="2026-09-15 03:31:53Z" duration="2.226757" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1181" name="P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore" methodname="P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests" runstate="Runnable" seed="308777323" result="Passed" start-time="2026-09-15 03:31:51Z" end-time="2026-09-15 03:31:52Z" duration="0.694933" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+              </test-case>
+              <test-case id="1182" name="P2_RealComposition_RunsPickupCountdownVisualResultAndRetry" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RealComposition_RunsPickupCountdownVisualResultAndRetry" methodname="P2_RealComposition_RunsPickupCountdownVisualResultAndRetry" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests" runstate="Runnable" seed="1937561151" result="Passed" start-time="2026-09-15 03:31:52Z" end-time="2026-09-15 03:31:52Z" duration="0.285878" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+              </test-case>
+              <test-case id="1179" name="P2_RealTrigger_QuickTapFiresTwo_ForbiddenHoldDoesNotResume" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RealTrigger_QuickTapFiresTwo_ForbiddenHoldDoesNotResume" methodname="P2_RealTrigger_QuickTapFiresTwo_ForbiddenHoldDoesNotResume" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests" runstate="Runnable" seed="953893016" result="Passed" start-time="2026-09-15 03:31:52Z" end-time="2026-09-15 03:31:53Z" duration="0.950734" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+              </test-case>
+              <test-case id="1180" name="P2_RetryRequiresFreshPickup_AndReenabledControllerReceivesInput" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RetryRequiresFreshPickup_AndReenabledControllerReceivesInput" methodname="P2_RetryRequiresFreshPickup_AndReenabledControllerReceivesInput" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests" runstate="Runnable" seed="1082485697" result="Passed" start-time="2026-09-15 03:31:53Z" end-time="2026-09-15 03:31:53Z" duration="0.286715" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1183" name="MovingTargetRangeSceneTests" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" testcasecount="26" result="Passed" start-time="2026-09-15 03:31:53Z" end-time="2026-09-15 03:32:00Z" duration="6.912736" total="26" passed="26" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1201" name="Bdd09_DayHud_TestRaysHitStableSurfaceAtCentreAndBothEndpoints" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_DayHud_TestRaysHitStableSurfaceAtCentreAndBothEndpoints" methodname="Bdd09_DayHud_TestRaysHitStableSurfaceAtCentreAndBothEndpoints" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="550723126" result="Passed" start-time="2026-09-15 03:31:53Z" end-time="2026-09-15 03:31:53Z" duration="0.263201" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1191" name="Bdd09_DayHud_UsesOneHundredMetreRangeAndFortyMetreRoute" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_DayHud_UsesOneHundredMetreRangeAndFortyMetreRoute" methodname="Bdd09_DayHud_UsesOneHundredMetreRangeAndFortyMetreRoute" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="1238013085" result="Passed" start-time="2026-09-15 03:31:53Z" end-time="2026-09-15 03:31:54Z" duration="0.262190" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1208" name="Bdd09_NoVrMode_UsesFloorOriginAndOnePlayerView" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_NoVrMode_UsesFloorOriginAndOnePlayerView" methodname="Bdd09_NoVrMode_UsesFloorOriginAndOnePlayerView" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="1173516949" result="Passed" start-time="2026-09-15 03:31:54Z" end-time="2026-09-15 03:31:54Z" duration="0.261256" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1200" name="Bdd09_RoutePhases_OnlyExplicitAuthoritativeProgressMovesTarget" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_RoutePhases_OnlyExplicitAuthoritativeProgressMovesTarget" methodname="Bdd09_RoutePhases_OnlyExplicitAuthoritativeProgressMovesTarget" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="1331226720" result="Passed" start-time="2026-09-15 03:31:54Z" end-time="2026-09-15 03:31:54Z" duration="0.258498" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1207" name="Bdd09_SideProfileTarget_HasUnifiedHitSurfaceAndFeedbackHooks" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_SideProfileTarget_HasUnifiedHitSurfaceAndFeedbackHooks" methodname="Bdd09_SideProfileTarget_HasUnifiedHitSurfaceAndFeedbackHooks" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="986120452" result="Passed" start-time="2026-09-15 03:31:54Z" end-time="2026-09-15 03:31:54Z" duration="0.260671" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1209" name="Bdd09_VrMode_KeepsExactlyOneCameraAndAudioListener" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_VrMode_KeepsExactlyOneCameraAndAudioListener" methodname="Bdd09_VrMode_KeepsExactlyOneCameraAndAudioListener" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="66978304" result="Passed" start-time="2026-09-15 03:31:54Z" end-time="2026-09-15 03:31:55Z" duration="0.314485" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1199" name="Bdd09_WaitingCountdown_RealFrameTimeCannotMoveTarget" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_WaitingCountdown_RealFrameTimeCannotMoveTarget" methodname="Bdd09_WaitingCountdown_RealFrameTimeCannotMoveTarget" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="2143699697" result="Passed" start-time="2026-09-15 03:31:55Z" end-time="2026-09-15 03:31:55Z" duration="0.379059" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1198" name="Bdd09_WaitingCountdown_TargetStartsAndRemainsAtRightEndpoint" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_WaitingCountdown_TargetStartsAndRemainsAtRightEndpoint" methodname="Bdd09_WaitingCountdown_TargetStartsAndRemainsAtRightEndpoint" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="766128191" result="Passed" start-time="2026-09-15 03:31:55Z" end-time="2026-09-15 03:31:55Z" duration="0.249656" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1184" name="Task003_006_SceneContainsStableProneRangeBindingsAndRouteIds" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_006_SceneContainsStableProneRangeBindingsAndRouteIds" methodname="Task003_006_SceneContainsStableProneRangeBindingsAndRouteIds" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="1004797768" result="Passed" start-time="2026-09-15 03:31:55Z" end-time="2026-09-15 03:31:56Z" duration="0.249666" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1185" name="Task003_006_TrainingRifleCarriesTheCompleteP1InteractionAndFeedbackSetup" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_006_TrainingRifleCarriesTheCompleteP1InteractionAndFeedbackSetup" methodname="Task003_006_TrainingRifleCarriesTheCompleteP1InteractionAndFeedbackSetup" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="308630680" result="Passed" start-time="2026-09-15 03:31:56Z" end-time="2026-09-15 03:31:56Z" duration="0.259050" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1189" name="Task003_ArtificialMoveTeleportAndTurnDoNotMovePlayerRoot" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_ArtificialMoveTeleportAndTurnDoNotMovePlayerRoot" methodname="Task003_ArtificialMoveTeleportAndTurnDoNotMovePlayerRoot" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="1574484167" result="Passed" start-time="2026-09-15 03:31:56Z" end-time="2026-09-15 03:31:56Z" duration="0.277105" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1188" name="Task003_NoVrPreviewCameraRetainsTheTunedRangeComposition" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_NoVrPreviewCameraRetainsTheTunedRangeComposition" methodname="Task003_NoVrPreviewCameraRetainsTheTunedRangeComposition" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="764426937" result="Passed" start-time="2026-09-15 03:31:56Z" end-time="2026-09-15 03:31:56Z" duration="0.264240" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1186" name="Task003_ProneBindingsAreCompleteUniqueAndIndependent" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_ProneBindingsAreCompleteUniqueAndIndependent" methodname="Task003_ProneBindingsAreCompleteUniqueAndIndependent" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="1558864196" result="Passed" start-time="2026-09-15 03:31:56Z" end-time="2026-09-15 03:31:57Z" duration="0.257799" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1187" name="Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy" methodname="Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="2059699674" result="Passed" start-time="2026-09-15 03:31:57Z" end-time="2026-09-15 03:31:57Z" duration="0.254680" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1190" name="Task003_TrackedHeadReferenceCanChangeWithoutMovingPlayerRoot" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_TrackedHeadReferenceCanChangeWithoutMovingPlayerRoot" methodname="Task003_TrackedHeadReferenceCanChangeWithoutMovingPlayerRoot" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="773723632" result="Passed" start-time="2026-09-15 03:31:57Z" end-time="2026-09-15 03:31:57Z" duration="0.257313" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1204" name="Task006_FakeTimelineCoversSpeedsHoldsReverseFinishAndRetry" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_FakeTimelineCoversSpeedsHoldsReverseFinishAndRetry" methodname="Task006_FakeTimelineCoversSpeedsHoldsReverseFinishAndRetry" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="1821419171" result="Passed" start-time="2026-09-15 03:31:57Z" end-time="2026-09-15 03:31:57Z" duration="0.267809" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1206" name="Task006_ImpactFeedbackConsumesEachConfirmedShotIdOnlyOnce" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_ImpactFeedbackConsumesEachConfirmedShotIdOnlyOnce" methodname="Task006_ImpactFeedbackConsumesEachConfirmedShotIdOnlyOnce" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="1875581144" result="Passed" start-time="2026-09-15 03:31:57Z" end-time="2026-09-15 03:31:58Z" duration="0.261342" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1202" name="Task006_SceneContainsOnlyFixedDayLighting" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_SceneContainsOnlyFixedDayLighting" methodname="Task006_SceneContainsOnlyFixedDayLighting" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="99499448" result="Passed" start-time="2026-09-15 03:31:58Z" end-time="2026-09-15 03:31:58Z" duration="0.252124" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1205" name="Task006_TargetAndEnvironmentLayersAndMasksAreSeparated" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_TargetAndEnvironmentLayersAndMasksAreSeparated" methodname="Task006_TargetAndEnvironmentLayersAndMasksAreSeparated" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="1898838054" result="Passed" start-time="2026-09-15 03:31:58Z" end-time="2026-09-15 03:31:58Z" duration="0.248331" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1203" name="Task006_VisualDriverAcceptsAuthoritativeStateWithoutInferringRules" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_VisualDriverAcceptsAuthoritativeStateWithoutInferringRules" methodname="Task006_VisualDriverAcceptsAuthoritativeStateWithoutInferringRules" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="1705243599" result="Passed" start-time="2026-09-15 03:31:58Z" end-time="2026-09-15 03:31:58Z" duration="0.251997" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1196" name="Task018_ReferenceRange_CopiesP1DistanceMarkersFromTwentyFiveToOneHundredMetres" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_CopiesP1DistanceMarkersFromTwentyFiveToOneHundredMetres" methodname="Task018_ReferenceRange_CopiesP1DistanceMarkersFromTwentyFiveToOneHundredMetres" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="244895729" result="Passed" start-time="2026-09-15 03:31:58Z" end-time="2026-09-15 03:31:59Z" duration="0.251877" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1194" name="Task018_ReferenceRange_DataWinsCharactersAlignWithNumberCharacter" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_DataWinsCharactersAlignWithNumberCharacter" methodname="Task018_ReferenceRange_DataWinsCharactersAlignWithNumberCharacter" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="147827426" result="Passed" start-time="2026-09-15 03:31:59Z" end-time="2026-09-15 03:31:59Z" duration="0.273152" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1193" name="Task018_ReferenceRange_HasCentredDataWinsSloganBelowWinBattles" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_HasCentredDataWinsSloganBelowWinBattles" methodname="Task018_ReferenceRange_HasCentredDataWinsSloganBelowWinBattles" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="275815056" result="Passed" start-time="2026-09-15 03:31:59Z" end-time="2026-09-15 03:31:59Z" duration="0.256434" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1197" name="Task018_ReferenceRange_HasFiveSpacedP1FixedTargetsAroundCentre" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_HasFiveSpacedP1FixedTargetsAroundCentre" methodname="Task018_ReferenceRange_HasFiveSpacedP1FixedTargetsAroundCentre" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="190049422" result="Passed" start-time="2026-09-15 03:31:59Z" end-time="2026-09-15 03:32:00Z" duration="0.257215" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1192" name="Task018_ReferenceRange_HasThreeDimensionalRangeAndWallSlogans" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_HasThreeDimensionalRangeAndWallSlogans" methodname="Task018_ReferenceRange_HasThreeDimensionalRangeAndWallSlogans" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="1658983144" result="Passed" start-time="2026-09-15 03:32:00Z" end-time="2026-09-15 03:32:00Z" duration="0.253943" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1195" name="Task018_ReferenceRange_UsesThreeDimensionalRangeAndSparseGroundDetail" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_UsesThreeDimensionalRangeAndSparseGroundDetail" methodname="Task018_ReferenceRange_UsesThreeDimensionalRangeAndSparseGroundDetail" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests" runstate="Runnable" seed="82976319" result="Passed" start-time="2026-09-15 03:32:00Z" end-time="2026-09-15 03:32:00Z" duration="0.266622" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1210" name="ZeroingRangeSceneTests" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" testcasecount="43" result="Passed" start-time="2026-09-15 03:32:00Z" end-time="2026-09-15 03:32:12Z" duration="12.393255" total="43" passed="43" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1240" name="Task003_FixedProneSceneHasNoFootstepComponent" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task003_FixedProneSceneHasNoFootstepComponent" methodname="Task003_FixedProneSceneHasNoFootstepComponent" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1888405356" result="Passed" start-time="2026-09-15 03:32:00Z" end-time="2026-09-15 03:32:00Z" duration="0.304517" asserts="0">
+                <properties />
+                <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+              </test-case>
+              <test-case id="1213" name="Task003_ZeroingRangeDisablesArtificialLocomotionWithoutLockingHeadReference" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task003_ZeroingRangeDisablesArtificialLocomotionWithoutLockingHeadReference" methodname="Task003_ZeroingRangeDisablesArtificialLocomotionWithoutLockingHeadReference" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1983559919" result="Passed" start-time="2026-09-15 03:32:00Z" end-time="2026-09-15 03:32:01Z" duration="0.274061" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1212" name="Task003_ZeroingRangeUsesTheSharedProneFiringStationContract" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task003_ZeroingRangeUsesTheSharedProneFiringStationContract" methodname="Task003_ZeroingRangeUsesTheSharedProneFiringStationContract" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="343756727" result="Passed" start-time="2026-09-15 03:32:01Z" end-time="2026-09-15 03:32:01Z" duration="0.257337" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1217" name="Task004_DistanceMarkersShowZeroThroughOneHundredMetres" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_DistanceMarkersShowZeroThroughOneHundredMetres" methodname="Task004_DistanceMarkersShowZeroThroughOneHundredMetres" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="35462510" result="Passed" start-time="2026-09-15 03:32:01Z" end-time="2026-09-15 03:32:01Z" duration="0.261110" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1219" name="Task004_FirstPersonCompositionFramesTargetThroughRangeLane" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_FirstPersonCompositionFramesTargetThroughRangeLane" methodname="Task004_FirstPersonCompositionFramesTargetThroughRangeLane" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1290847068" result="Passed" start-time="2026-09-15 03:32:01Z" end-time="2026-09-15 03:32:01Z" duration="0.271548" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1211" name="Task004_SceneContainsStableTrainingAnchorsForVrAndNoVr" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_SceneContainsStableTrainingAnchorsForVrAndNoVr" methodname="Task004_SceneContainsStableTrainingAnchorsForVrAndNoVr" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1589260363" result="Passed" start-time="2026-09-15 03:32:01Z" end-time="2026-09-15 03:32:02Z" duration="0.274124" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1218" name="Task004_TargetCanBeHitFromShootingPosition" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_TargetCanBeHitFromShootingPosition" methodname="Task004_TargetCanBeHitFromShootingPosition" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1197107757" result="Passed" start-time="2026-09-15 03:32:02Z" end-time="2026-09-15 03:32:02Z" duration="0.259838" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1216" name="Task004_TargetHasSpecifiedDimensionsAtOneHundredMetres" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_TargetHasSpecifiedDimensionsAtOneHundredMetres" methodname="Task004_TargetHasSpecifiedDimensionsAtOneHundredMetres" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="864545776" result="Passed" start-time="2026-09-15 03:32:02Z" end-time="2026-09-15 03:32:02Z" duration="0.262961" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1215" name="Task004_TrainingRifleStartsWithinComfortableRightHandReach" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_TrainingRifleStartsWithinComfortableRightHandReach" methodname="Task004_TrainingRifleStartsWithinComfortableRightHandReach" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1067871561" result="Passed" start-time="2026-09-15 03:32:02Z" end-time="2026-09-15 03:32:02Z" duration="0.262323" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1214" name="Task004_XrOriginUsesFloorTrackingWithoutArtificialEyeHeight" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_XrOriginUsesFloorTrackingWithoutArtificialEyeHeight" methodname="Task004_XrOriginUsesFloorTrackingWithoutArtificialEyeHeight" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="2107051224" result="Passed" start-time="2026-09-15 03:32:02Z" end-time="2026-09-15 03:32:03Z" duration="0.269185" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1244" name="Task005_006_FireUpdatesSharedZeroingSession" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_006_FireUpdatesSharedZeroingSession" methodname="Task005_006_FireUpdatesSharedZeroingSession" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="79253914" result="Passed" start-time="2026-09-15 03:32:03Z" end-time="2026-09-15 03:32:03Z" duration="0.287904" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1241" name="Task005_AdsViewAlignsToGunLineAndFrontHandChangesAimDirection" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_AdsViewAlignsToGunLineAndFrontHandChangesAimDirection" methodname="Task005_AdsViewAlignsToGunLineAndFrontHandChangesAimDirection" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="406262308" result="Passed" start-time="2026-09-15 03:32:03Z" end-time="2026-09-15 03:32:03Z" duration="0.273155" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1235" name="Task005_FeedbackUsesLicensedAudioAndProjectileVisualAssets" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_FeedbackUsesLicensedAudioAndProjectileVisualAssets" methodname="Task005_FeedbackUsesLicensedAudioAndProjectileVisualAssets" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="313051654" result="Passed" start-time="2026-09-15 03:32:03Z" end-time="2026-09-15 03:32:04Z" duration="0.267466" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1234" name="Task005_FirstPersonTrainingWeaponHasRequiredVisibleBindings" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_FirstPersonTrainingWeaponHasRequiredVisibleBindings" methodname="Task005_FirstPersonTrainingWeaponHasRequiredVisibleBindings" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1617543364" result="Passed" start-time="2026-09-15 03:32:04Z" end-time="2026-09-15 03:32:04Z" duration="0.260975" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1239" name="Task005_InvalidShotProducesNoAudioTracerOrImpactFeedback" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_InvalidShotProducesNoAudioTracerOrImpactFeedback" methodname="Task005_InvalidShotProducesNoAudioTracerOrImpactFeedback" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="711753328" result="Passed" start-time="2026-09-15 03:32:04Z" end-time="2026-09-15 03:32:04Z" duration="0.262351" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1237" name="Task005_NoVrFirstPersonWeaponFiresVisibleTracerAndTargetImpact" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_NoVrFirstPersonWeaponFiresVisibleTracerAndTargetImpact" methodname="Task005_NoVrFirstPersonWeaponFiresVisibleTracerAndTargetImpact" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="2141300381" result="Passed" start-time="2026-09-15 03:32:04Z" end-time="2026-09-15 03:32:04Z" duration="0.282335" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1243" name="Task005_ReloadRestoresMagazineAfterSpendingAmmo" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_ReloadRestoresMagazineAfterSpendingAmmo" methodname="Task005_ReloadRestoresMagazineAfterSpendingAmmo" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="657405852" result="Passed" start-time="2026-09-15 03:32:04Z" end-time="2026-09-15 03:32:05Z" duration="0.276227" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1242" name="Task005_ShoulderSwitchUpdatesNoVrWeaponState" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_ShoulderSwitchUpdatesNoVrWeaponState" methodname="Task005_ShoulderSwitchUpdatesNoVrWeaponState" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="816897005" result="Passed" start-time="2026-09-15 03:32:05Z" end-time="2026-09-15 03:32:05Z" duration="0.258633" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1236" name="Task005_TrainingRifleUsesLicensedQbz191Visual" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_TrainingRifleUsesLicensedQbz191Visual" methodname="Task005_TrainingRifleUsesLicensedQbz191Visual" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="997991807" result="Passed" start-time="2026-09-15 03:32:05Z" end-time="2026-09-15 03:32:05Z" duration="0.268529" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1238" name="Task005_ValidShotPlaysOneFeedbackStackAndArrivesAtRecordedImpact" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_ValidShotPlaysOneFeedbackStackAndArrivesAtRecordedImpact" methodname="Task005_ValidShotPlaysOneFeedbackStackAndArrivesAtRecordedImpact" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1731304621" result="Passed" start-time="2026-09-15 03:32:05Z" end-time="2026-09-15 03:32:06Z" duration="0.521564" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1221" name="Task012_ImpactCoordinatesUseCentimetresAndMatchVisualMarker" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task012_ImpactCoordinatesUseCentimetresAndMatchVisualMarker" methodname="Task012_ImpactCoordinatesUseCentimetresAndMatchVisualMarker" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="540214850" result="Passed" start-time="2026-09-15 03:32:06Z" end-time="2026-09-15 03:32:06Z" duration="0.296105" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1222" name="Task012_ImpactOutsideFiftyCentimetreFaceIsRejected" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task012_ImpactOutsideFiftyCentimetreFaceIsRejected" methodname="Task012_ImpactOutsideFiftyCentimetreFaceIsRejected" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1762248205" result="Passed" start-time="2026-09-15 03:32:06Z" end-time="2026-09-15 03:32:06Z" duration="0.264381" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1220" name="Task012_RaycastHitReturnsStableImpactCoordinates" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task012_RaycastHitReturnsStableImpactCoordinates" methodname="Task012_RaycastHitReturnsStableImpactCoordinates" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="618874560" result="Passed" start-time="2026-09-15 03:32:06Z" end-time="2026-09-15 03:32:07Z" duration="0.260244" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1251" name="Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease" methodname="Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1466384892" result="Passed" start-time="2026-09-15 03:32:07Z" end-time="2026-09-15 03:32:07Z" duration="0.290335" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1250" name="Task013_NoVrModeStartsOnRackAndCannotShootBeforeGrip" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_NoVrModeStartsOnRackAndCannotShootBeforeGrip" methodname="Task013_NoVrModeStartsOnRackAndCannotShootBeforeGrip" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="432139556" result="Passed" start-time="2026-09-15 03:32:07Z" end-time="2026-09-15 03:32:07Z" duration="0.270581" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1248" name="Task013_RifleGripUsesStraightTriggerFingerAndOpenFrontHandWrap" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_RifleGripUsesStraightTriggerFingerAndOpenFrontHandWrap" methodname="Task013_RifleGripUsesStraightTriggerFingerAndOpenFrontHandWrap" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="295598126" result="Passed" start-time="2026-09-15 03:32:07Z" end-time="2026-09-15 03:32:07Z" duration="0.296986" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1245" name="Task013_RiflePrefabHasDirectGrabPhysicsAndStableRecoilHierarchy" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_RiflePrefabHasDirectGrabPhysicsAndStableRecoilHierarchy" methodname="Task013_RiflePrefabHasDirectGrabPhysicsAndStableRecoilHierarchy" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1264018614" result="Passed" start-time="2026-09-15 03:32:07Z" end-time="2026-09-15 03:32:08Z" duration="0.262928" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1252" name="Task013_RuntimeModeKeepsExactlyOneCameraAndAudioListener" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_RuntimeModeKeepsExactlyOneCameraAndAudioListener" methodname="Task013_RuntimeModeKeepsExactlyOneCameraAndAudioListener" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="896006428" result="Passed" start-time="2026-09-15 03:32:08Z" end-time="2026-09-15 03:32:08Z" duration="0.271706" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1253" name="Task013_ShotProducesLocalRecoilAndTwoHandHapticsThenSettles" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_ShotProducesLocalRecoilAndTwoHandHapticsThenSettles" methodname="Task013_ShotProducesLocalRecoilAndTwoHandHapticsThenSettles" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="447849536" result="Passed" start-time="2026-09-15 03:32:08Z" end-time="2026-09-15 03:32:09Z" duration="0.717657" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1249" name="Task013_VirtualHandGripPoseDeformsTheSkinnedMesh" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_VirtualHandGripPoseDeformsTheSkinnedMesh" methodname="Task013_VirtualHandGripPoseDeformsTheSkinnedMesh" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1260682916" result="Passed" start-time="2026-09-15 03:32:09Z" end-time="2026-09-15 03:32:09Z" duration="0.291778" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1247" name="Task013_VirtualHandGripPoseUsesUprightRearGripAndPalmUpFrontSupport" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_VirtualHandGripPoseUsesUprightRearGripAndPalmUpFrontSupport" methodname="Task013_VirtualHandGripPoseUsesUprightRearGripAndPalmUpFrontSupport" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="712536591" result="Passed" start-time="2026-09-15 03:32:09Z" end-time="2026-09-15 03:32:09Z" duration="0.261998" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1246" name="Task013_VirtualHandsUseRiggedMeshesAndGripOnlyTheVisualLayer" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_VirtualHandsUseRiggedMeshesAndGripOnlyTheVisualLayer" methodname="Task013_VirtualHandsUseRiggedMeshesAndGripOnlyTheVisualLayer" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="887306923" result="Passed" start-time="2026-09-15 03:32:09Z" end-time="2026-09-15 03:32:09Z" duration="0.260021" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1225" name="Task016_DistantHillRemainsClearFromTheFiringPosition" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_DistantHillRemainsClearFromTheFiringPosition" methodname="Task016_DistantHillRemainsClearFromTheFiringPosition" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="655987372" result="Passed" start-time="2026-09-15 03:32:09Z" end-time="2026-09-15 03:32:10Z" duration="0.268406" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1224" name="Task016_ForestedHillSitsBehindTargetAndUsesTreeBillboards" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_ForestedHillSitsBehindTargetAndUsesTreeBillboards" methodname="Task016_ForestedHillSitsBehindTargetAndUsesTreeBillboards" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="922069609" result="Passed" start-time="2026-09-15 03:32:10Z" end-time="2026-09-15 03:32:10Z" duration="0.284952" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1226" name="Task016_GrassGroundUsesTiledPbrSurface" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_GrassGroundUsesTiledPbrSurface" methodname="Task016_GrassGroundUsesTiledPbrSurface" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="322577556" result="Passed" start-time="2026-09-15 03:32:10Z" end-time="2026-09-15 03:32:10Z" duration="0.270076" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1230" name="Task016_LegacyPrimitiveTreeCrownsAreAbsent" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_LegacyPrimitiveTreeCrownsAreAbsent" methodname="Task016_LegacyPrimitiveTreeCrownsAreAbsent" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="570806021" result="Passed" start-time="2026-09-15 03:32:10Z" end-time="2026-09-15 03:32:11Z" duration="0.278499" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1233" name="Task016_NoVrCameraHasClearTargetSightlineAndVrSafeSettings" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_NoVrCameraHasClearTargetSightlineAndVrSafeSettings" methodname="Task016_NoVrCameraHasClearTargetSightlineAndVrSafeSettings" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1526454652" result="Passed" start-time="2026-09-15 03:32:11Z" end-time="2026-09-15 03:32:11Z" duration="0.264500" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1228" name="Task016_P2BasedRangeKeepsWideHillAndTargetBayGeometry" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_P2BasedRangeKeepsWideHillAndTargetBayGeometry" methodname="Task016_P2BasedRangeKeepsWideHillAndTargetBayGeometry" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="368650153" result="Passed" start-time="2026-09-15 03:32:11Z" end-time="2026-09-15 03:32:11Z" duration="0.261540" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1229" name="Task016_P2MovingTargetObjectsAreInactiveInP1" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_P2MovingTargetObjectsAreInactiveInP1" methodname="Task016_P2MovingTargetObjectsAreInactiveInP1" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1704336269" result="Passed" start-time="2026-09-15 03:32:11Z" end-time="2026-09-15 03:32:11Z" duration="0.269985" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1227" name="Task016_SandPatchesBreakUpGrassWithoutReplacingTheGreenRange" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_SandPatchesBreakUpGrassWithoutReplacingTheGreenRange" methodname="Task016_SandPatchesBreakUpGrassWithoutReplacingTheGreenRange" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="447165485" result="Passed" start-time="2026-09-15 03:32:11Z" end-time="2026-09-15 03:32:12Z" duration="0.271628" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1232" name="Task016_SceneStaysWithinPrototypeRenderingBudget" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_SceneStaysWithinPrototypeRenderingBudget" methodname="Task016_SceneStaysWithinPrototypeRenderingBudget" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="2000843621" result="Passed" start-time="2026-09-15 03:32:12Z" end-time="2026-09-15 03:32:12Z" duration="0.270072" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1223" name="Task016_VisualPolishKeepsTargetAndShootingBayRecognisable" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_VisualPolishKeepsTargetAndShootingBayRecognisable" methodname="Task016_VisualPolishKeepsTargetAndShootingBayRecognisable" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1406879352" result="Passed" start-time="2026-09-15 03:32:12Z" end-time="2026-09-15 03:32:12Z" duration="0.265947" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1231" name="Task016_WeaponCrateAppearsInLowerLeftWithoutBlockingTarget" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_WeaponCrateAppearsInLowerLeftWithoutBlockingTarget" methodname="Task016_WeaponCrateAppearsInLowerLeftWithoutBlockingTarget" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1144735379" result="Passed" start-time="2026-09-15 03:32:12Z" end-time="2026-09-15 03:32:12Z" duration="0.273863" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1346" name="VRShooting.Runtime.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.PlayModeTests.dll" runstate="Runnable" testcasecount="68" result="Passed" start-time="2026-09-15 03:32:12Z" end-time="2026-09-15 03:32:15Z" duration="2.333479" total="68" passed="68" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="81976" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1347" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="68" result="Passed" start-time="2026-09-15 03:32:12Z" end-time="2026-09-15 03:32:15Z" duration="2.325271" total="68" passed="68" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1348" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="68" result="Passed" start-time="2026-09-15 03:32:12Z" end-time="2026-09-15 03:32:15Z" duration="2.324734" total="68" passed="68" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1349" name="PlayMode" fullname="VRShooting.Tests.PlayMode" runstate="Runnable" testcasecount="68" result="Passed" start-time="2026-09-15 03:32:12Z" end-time="2026-09-15 03:32:15Z" duration="2.324467" total="68" passed="68" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestSuite" id="1353" name="Flow" fullname="VRShooting.Tests.PlayMode.Flow" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-09-15 03:32:12Z" end-time="2026-09-15 03:32:13Z" duration="0.794103" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="1339" name="P1FlowPlayModeGateTests" fullname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" classname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-15 03:32:12Z" end-time="2026-09-15 03:32:13Z" duration="0.789902" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1340" name="P1Flow_InputStub_Round1Pass_ShowsExcellentFinalRating" fullname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_InputStub_Round1Pass_ShowsExcellentFinalRating" methodname="P1Flow_InputStub_Round1Pass_ShowsExcellentFinalRating" classname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" runstate="Runnable" seed="772686633" result="Passed" start-time="2026-09-15 03:32:12Z" end-time="2026-09-15 03:32:13Z" duration="0.189794" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <output><![CDATA[[GameStateManager] 状态改变为: InGame
+]]></output>
+                </test-case>
+                <test-case id="1341" name="P1Flow_InputStub_ThreeRoundsFail_ShowsFailFinalRating" fullname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_InputStub_ThreeRoundsFail_ShowsFailFinalRating" methodname="P1Flow_InputStub_ThreeRoundsFail_ShowsFailFinalRating" classname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" runstate="Runnable" seed="69047940" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.036715" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <output><![CDATA[[GameStateManager] 状态改变为: InGame
+]]></output>
+                </test-case>
+                <test-case id="1342" name="P1Flow_SceneOwned_MainMenuToRange_Round1PassShowsExcellent" fullname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_SceneOwned_MainMenuToRange_Round1PassShowsExcellent" methodname="P1Flow_SceneOwned_MainMenuToRange_Round1PassShowsExcellent" classname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" runstate="Runnable" seed="1539947013" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.562471" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <output><![CDATA[[GameStateManager] 状态改变为: InGame
+]]></output>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1343" name="Screen09_AutoFireNoVrPlayModeTests" fullname="VRShooting.Tests.PlayMode.Flow.Screen09_AutoFireNoVrPlayModeTests" classname="VRShooting.Tests.PlayMode.Flow.Screen09_AutoFireNoVrPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.003904" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1345" name="Screen09_NoVrInput_HeldTriggerConsumesTenRounds" fullname="VRShooting.Tests.PlayMode.Flow.Screen09_AutoFireNoVrPlayModeTests.Screen09_NoVrInput_HeldTriggerConsumesTenRounds" methodname="Screen09_NoVrInput_HeldTriggerConsumesTenRounds" classname="VRShooting.Tests.PlayMode.Flow.Screen09_AutoFireNoVrPlayModeTests" runstate="Runnable" seed="1499524804" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.002125" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1344" name="Screen09_NoVrInput_QuickTapFiresTwoShots" fullname="VRShooting.Tests.PlayMode.Flow.Screen09_AutoFireNoVrPlayModeTests.Screen09_NoVrInput_QuickTapFiresTwoShots" methodname="Screen09_NoVrInput_QuickTapFiresTwoShots" classname="VRShooting.Tests.PlayMode.Flow.Screen09_AutoFireNoVrPlayModeTests" runstate="Runnable" seed="1167470636" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.001277" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+            </test-suite>
+            <test-suite type="TestSuite" id="1352" name="Infrastructure" fullname="VRShooting.Tests.PlayMode.Infrastructure" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.014740" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="1337" name="Infrastructure_UITestIdTests" fullname="VRShooting.Tests.PlayMode.Infrastructure.Infrastructure_UITestIdTests" classname="VRShooting.Tests.PlayMode.Infrastructure.Infrastructure_UITestIdTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.001617" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1338" name="Infrastructure_UITestId_DefaultId_IsEmptyStringNotNull" fullname="VRShooting.Tests.PlayMode.Infrastructure.Infrastructure_UITestIdTests.Infrastructure_UITestId_DefaultId_IsEmptyStringNotNull" methodname="Infrastructure_UITestId_DefaultId_IsEmptyStringNotNull" classname="VRShooting.Tests.PlayMode.Infrastructure.Infrastructure_UITestIdTests" runstate="Runnable" seed="1132842441" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.001212" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1335" name="Screen22_P3FixturePlayModeTests" fullname="VRShooting.Tests.PlayMode.Infrastructure.Screen22_P3FixturePlayModeTests" classname="VRShooting.Tests.PlayMode.Infrastructure.Screen22_P3FixturePlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.012787" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1336" name="Screen22_BlankSceneConsumesUiAndSceneFixturesThenUnsubscribes" fullname="VRShooting.Tests.PlayMode.Infrastructure.Screen22_P3FixturePlayModeTests.Screen22_BlankSceneConsumesUiAndSceneFixturesThenUnsubscribes" methodname="Screen22_BlankSceneConsumesUiAndSceneFixturesThenUnsubscribes" classname="VRShooting.Tests.PlayMode.Infrastructure.Screen22_P3FixturePlayModeTests" runstate="Runnable" seed="527181810" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.012190" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+            </test-suite>
+            <test-suite type="TestSuite" id="1351" name="Input" fullname="VRShooting.Tests.PlayMode.Input" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.005607" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="1331" name="Screen05_XRTrainingInputPlayModeTests" fullname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests" classname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.005167" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1332" name="Screen02_MainMenuConfirmWithNoVrInputSubstitute_Opens100mZeroingEntry" fullname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests.Screen02_MainMenuConfirmWithNoVrInputSubstitute_Opens100mZeroingEntry" methodname="Screen02_MainMenuConfirmWithNoVrInputSubstitute_Opens100mZeroingEntry" classname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests" runstate="Runnable" seed="1989723344" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.001673" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1334" name="Screen05_NoVrInputSubstitute_AimInput_IsPublishedForWeaponControl" fullname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests.Screen05_NoVrInputSubstitute_AimInput_IsPublishedForWeaponControl" methodname="Screen05_NoVrInputSubstitute_AimInput_IsPublishedForWeaponControl" classname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests" runstate="Runnable" seed="1687897468" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.001758" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1333" name="Screen05_NoVrInputSubstitute_TriggerReloadAndShoulderSwitch_ArePublishedForServiceLayer" fullname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests.Screen05_NoVrInputSubstitute_TriggerReloadAndShoulderSwitch_ArePublishedForServiceLayer" methodname="Screen05_NoVrInputSubstitute_TriggerReloadAndShoulderSwitch_ArePublishedForServiceLayer" classname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests" runstate="Runnable" seed="1595214817" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.001153" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+            </test-suite>
+            <test-suite type="TestFixture" id="1260" name="Screen23_CombatInputPlayModeTests" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.020649" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1264" name="Locomotion_P1P2StayFixed_AndVrDoesNotMoveEyeHeight" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.Locomotion_P1P2StayFixed_AndVrDoesNotMoveEyeHeight" methodname="Locomotion_P1P2StayFixed_AndVrDoesNotMoveEyeHeight" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" seed="1799299741" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.003104" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1261" name="ManualInput_PickupTwoHandsSingleShot_ReloadShoulderPostureAndCombat" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.ManualInput_PickupTwoHandsSingleShot_ReloadShoulderPostureAndCombat" methodname="ManualInput_PickupTwoHandsSingleShot_ReloadShoulderPostureAndCombat" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" seed="587980664" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.012721" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1263" name="PhysicsFirstHit_BlocksWallAndEmbeddedMuzzle" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.PhysicsFirstHit_BlocksWallAndEmbeddedMuzzle" methodname="PhysicsFirstHit_BlocksWallAndEmbeddedMuzzle" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" seed="1206709904" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.002390" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1262" name="TrackingAndPause_BlockHeldTrigger_AndStopMovement" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.TrackingAndPause_BlockHeldTrigger_AndStopMovement" methodname="TrackingAndPause_BlockHeldTrigger_AndStopMovement" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" seed="387031095" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.001833" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1265" name="Screen24_TrenchPlayModeTests" fullname="VRShooting.Tests.PlayMode.Screen24_TrenchPlayModeTests" classname="VRShooting.Tests.PlayMode.Screen24_TrenchPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.029473" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1267" name="FakeNavigation_AcknowledgesActualSquadPositions_AndStopsAtCancel" fullname="VRShooting.Tests.PlayMode.Screen24_TrenchPlayModeTests.FakeNavigation_AcknowledgesActualSquadPositions_AndStopsAtCancel" methodname="FakeNavigation_AcknowledgesActualSquadPositions_AndStopsAtCancel" classname="VRShooting.Tests.PlayMode.Screen24_TrenchPlayModeTests" runstate="Runnable" seed="825610578" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.020798" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1266" name="FakeScene_BriefingCombatVictoryRetryFailure_UpdatesHudAndUnsubscribes" fullname="VRShooting.Tests.PlayMode.Screen24_TrenchPlayModeTests.FakeScene_BriefingCombatVictoryRetryFailure_UpdatesHudAndUnsubscribes" methodname="FakeScene_BriefingCombatVictoryRetryFailure_UpdatesHudAndUnsubscribes" classname="VRShooting.Tests.PlayMode.Screen24_TrenchPlayModeTests" runstate="Runnable" seed="1824059369" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.008171" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1268" name="Screen25_UrbanPlayModeTests" fullname="VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests" classname="VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.027261" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1270" name="BuildingFailureKeepsCountsAndOldSessionInputsAreRejected" fullname="VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.BuildingFailureKeepsCountsAndOldSessionInputsAreRejected" methodname="BuildingFailureKeepsCountsAndOldSessionInputsAreRejected" classname="VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests" runstate="Runnable" seed="1206503967" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.018470" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1269" name="SceneFactsDriveStreetBuildingDoorsVictoryAndRetry" fullname="VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.SceneFactsDriveStreetBuildingDoorsVictoryAndRetry" methodname="SceneFactsDriveStreetBuildingDoorsVictoryAndRetry" classname="VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests" runstate="Runnable" seed="780024303" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.008136" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1271" name="Screen26_CombatCompositionPlayModeTests" fullname="VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests" classname="VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.022744" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1272" name="TrenchButtonsDriveVictoryRetryFailureAndPersistenceRecovery" fullname="VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.TrenchButtonsDriveVictoryRetryFailureAndPersistenceRecovery" methodname="TrenchButtonsDriveVictoryRetryFailureAndPersistenceRecovery" classname="VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests" runstate="Runnable" seed="708133744" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.013784" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1273" name="UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry" fullname="VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry" methodname="UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry" classname="VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests" runstate="Runnable" seed="1436030293" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.008434" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestSuite" id="1350" name="UI" fullname="VRShooting.Tests.PlayMode.UI" runstate="Runnable" testcasecount="48" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:15Z" duration="1.409374" total="48" passed="48" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="1274" name="P3UiTask002_005_008_011PlayModeTests" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.070598" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1283" name="P3UiRoot_BuildsAllPagesAndFrozenTestIds" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.P3UiRoot_BuildsAllPagesAndFrozenTestIds" methodname="P3UiRoot_BuildsAllPagesAndFrozenTestIds" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="2107927665" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.022961" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1275" name="Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing" methodname="Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="2042891955" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.006648" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1276" name="Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand" methodname="Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="175656228" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.007226" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1277" name="Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents" methodname="Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="45652141" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.005833" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1278" name="Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent" methodname="Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="609863930" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.004473" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1279" name="Screen18_UrbanMapSelection_RendersRangesAndStartsStreet" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet" methodname="Screen18_UrbanMapSelection_RendersRangesAndStartsStreet" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="567314640" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.006305" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1280" name="Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible" methodname="Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="864920909" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.004680" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1281" name="Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands" methodname="Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="126397328" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.006630" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1282" name="Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce" methodname="Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="428421515" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.004796" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1284" name="Screen00_TrainingPresentationPresenterPlayModeTests" fullname="VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests" classname="VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.022281" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1289" name="Screen00_AllSharedNodesHaveStableTestIdsAndHudKeepsCenterAimReserveClear" fullname="VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_AllSharedNodesHaveStableTestIdsAndHudKeepsCenterAimReserveClear" methodname="Screen00_AllSharedNodesHaveStableTestIdsAndHudKeepsCenterAimReserveClear" classname="VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests" runstate="Runnable" seed="227009177" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.004504" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1290" name="Screen00_AnchorBinderReportsMissingAnchorAndSupportsDefaultFakeAnchors" fullname="VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_AnchorBinderReportsMissingAnchorAndSupportsDefaultFakeAnchors" methodname="Screen00_AnchorBinderReportsMissingAnchorAndSupportsDefaultFakeAnchors" classname="VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests" runstate="Runnable" seed="1261520614" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.003385" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <output><![CDATA[[TrainingUIAnchorBinder] Missing LargePanel anchor.
+]]></output>
+                </test-case>
+                <test-case id="1288" name="Screen00_DisableEnableAndDestroyKeepOneSubscriptionAndSelfHealFromQuery" fullname="VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_DisableEnableAndDestroyKeepOneSubscriptionAndSelfHealFromQuery" methodname="Screen00_DisableEnableAndDestroyKeepOneSubscriptionAndSelfHealFromQuery" classname="VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests" runstate="Runnable" seed="1051835157" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.003798" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1285" name="Screen00_FakeSnapshotsAtomicallyDriveLargePanelMinimalHudAndCurrentScreen" fullname="VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_FakeSnapshotsAtomicallyDriveLargePanelMinimalHudAndCurrentScreen" methodname="Screen00_FakeSnapshotsAtomicallyDriveLargePanelMinimalHudAndCurrentScreen" classname="VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests" runstate="Runnable" seed="699807366" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.003572" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1286" name="Screen00_NextRoundClickSendsOneCommandAndWaitsForReturnedSnapshotToHide" fullname="VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_NextRoundClickSendsOneCommandAndWaitsForReturnedSnapshotToHide" methodname="Screen00_NextRoundClickSendsOneCommandAndWaitsForReturnedSnapshotToHide" classname="VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests" runstate="Runnable" seed="1168520946" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.003432" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1287" name="Screen00_RepeatedAndOutOfOrderEventsDoNotReapplyOrFlashOlderPanel" fullname="VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_RepeatedAndOutOfOrderEventsDoNotReapplyOrFlashOlderPanel" methodname="Screen00_RepeatedAndOutOfOrderEventsDoNotReapplyOrFlashOlderPanel" classname="VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests" runstate="Runnable" seed="70442087" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.002573" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1291" name="Screen02_04_MainMenuZeroingBriefingUITests" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:14Z" duration="0.064268" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1292" name="Screen02_InputInfrastructure_SupportsDesktopAndXrPointers" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_InputInfrastructure_SupportsDesktopAndXrPointers" methodname="Screen02_InputInfrastructure_SupportsDesktopAndXrPointers" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1450166433" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.008318" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1294" name="Screen02_MainMenuOpenZeroingButton_RoutesToZeroingBriefing" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_MainMenuOpenZeroingButton_RoutesToZeroingBriefing" methodname="Screen02_MainMenuOpenZeroingButton_RoutesToZeroingBriefing" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="566286829" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.008022" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1293" name="Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton" methodname="Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1404709455" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.016343" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1298" name="Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist" methodname="Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="2080146918" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:13Z" duration="0.006360" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1295" name="Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu" methodname="Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="373032393" result="Passed" start-time="2026-09-15 03:32:13Z" end-time="2026-09-15 03:32:14Z" duration="0.008112" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1296" name="Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup" methodname="Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="562234136" result="Passed" start-time="2026-09-15 03:32:14Z" end-time="2026-09-15 03:32:14Z" duration="0.008436" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1297" name="Screen04_ZeroingBriefingStartButton_IsIdempotentForRepeatedClicks" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingStartButton_IsIdempotentForRepeatedClicks" methodname="Screen04_ZeroingBriefingStartButton_IsIdempotentForRepeatedClicks" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="2116899443" result="Passed" start-time="2026-09-15 03:32:14Z" end-time="2026-09-15 03:32:14Z" duration="0.007786" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1299" name="Screen02_05_SceneOwnedUIFlowTests" fullname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests" classname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-15 03:32:14Z" end-time="2026-09-15 03:32:14Z" duration="0.962863" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1300" name="Screen02_05_ClickZeroingWaitsForPickupThenShowsSceneOwnedHud" fullname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_05_ClickZeroingWaitsForPickupThenShowsSceneOwnedHud" methodname="Screen02_05_ClickZeroingWaitsForPickupThenShowsSceneOwnedHud" classname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests" runstate="Runnable" seed="1426067213" result="Passed" start-time="2026-09-15 03:32:14Z" end-time="2026-09-15 03:32:14Z" duration="0.498523" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+[GameStateManager] 状态改变为: InGame
+]]></output>
+                </test-case>
+                <test-case id="1301" name="Screen02_MainScene_SwitchesBetweenDesktopAndVrUiModes" fullname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_MainScene_SwitchesBetweenDesktopAndVrUiModes" methodname="Screen02_MainScene_SwitchesBetweenDesktopAndVrUiModes" classname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests" runstate="Runnable" seed="1557379659" result="Passed" start-time="2026-09-15 03:32:14Z" end-time="2026-09-15 03:32:14Z" duration="0.235199" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+                </test-case>
+                <test-case id="1302" name="Screen02_MainScene_VrUsesFloorTrackingAndReadableStabilizedMenu" fullname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_MainScene_VrUsesFloorTrackingAndReadableStabilizedMenu" methodname="Screen02_MainScene_VrUsesFloorTrackingAndReadableStabilizedMenu" classname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests" runstate="Runnable" seed="111945688" result="Passed" start-time="2026-09-15 03:32:14Z" end-time="2026-09-15 03:32:14Z" duration="0.228496" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1303" name="Screen05_ZeroingHudUITests" fullname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests" classname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-15 03:32:14Z" end-time="2026-09-15 03:32:15Z" duration="0.078271" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1305" name="Screen05_ZeroingHud_FireRefreshesAmmoAndImpactRecord" fullname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_FireRefreshesAmmoAndImpactRecord" methodname="Screen05_ZeroingHud_FireRefreshesAmmoAndImpactRecord" classname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests" runstate="Runnable" seed="1857958170" result="Passed" start-time="2026-09-15 03:32:14Z" end-time="2026-09-15 03:32:15Z" duration="0.021805" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1304" name="Screen05_ZeroingHud_LoadsInitialDtoValues" fullname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_LoadsInitialDtoValues" methodname="Screen05_ZeroingHud_LoadsInitialDtoValues" classname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests" runstate="Runnable" seed="1670026711" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.018988" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1306" name="Screen05_ZeroingHud_ToggleShoulderRefreshesPrompt" fullname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_ToggleShoulderRefreshesPrompt" methodname="Screen05_ZeroingHud_ToggleShoulderRefreshesPrompt" classname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests" runstate="Runnable" seed="344451074" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.015899" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1307" name="Screen05_ZeroingHud_ZeroAmmoShowsBlockedPrompt" fullname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_ZeroAmmoShowsBlockedPrompt" methodname="Screen05_ZeroingHud_ZeroAmmoShowsBlockedPrompt" classname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests" runstate="Runnable" seed="535740037" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.020871" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1308" name="Screen06_ZeroingImpactAnalysisUITests" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.078883" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1310" name="Screen06_ApplyAdjustmentUpdatesStateAndNextRoundReturnsToHud" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ApplyAdjustmentUpdatesStateAndNextRoundReturnsToHud" methodname="Screen06_ApplyAdjustmentUpdatesStateAndNextRoundReturnsToHud" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="538494853" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.019949" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1311" name="Screen06_BackToMainMenuButtonReturnsToMainMenu" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_BackToMainMenuButtonReturnsToMainMenu" methodname="Screen06_BackToMainMenuButtonReturnsToMainMenu" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1133738416" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.016838" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1312" name="Screen06_ThirdRoundPrimaryActionOpensFinalRating" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThirdRoundPrimaryActionOpensFinalRating" methodname="Screen06_ThirdRoundPrimaryActionOpensFinalRating" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="493484253" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.024784" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1309" name="Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto" methodname="Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1393314809" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.016493" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1313" name="Screen07_ZeroingFinalRatingUITests" fullname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests" classname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.063080" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1316" name="Screen07_BackToModeSelectionReturnsToMainMenuFallback" fullname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests.Screen07_BackToModeSelectionReturnsToMainMenuFallback" methodname="Screen07_BackToModeSelectionReturnsToMainMenuFallback" classname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests" runstate="Runnable" seed="1259905916" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.022431" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1314" name="Screen07_FirstRoundPassShowsExcellentFinalRating" fullname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests.Screen07_FirstRoundPassShowsExcellentFinalRating" methodname="Screen07_FirstRoundPassShowsExcellentFinalRating" classname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests" runstate="Runnable" seed="102915401" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.020191" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1315" name="Screen07_RetryReturnsToZeroingBriefing" fullname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests.Screen07_RetryReturnsToZeroingBriefing" methodname="Screen07_RetryReturnsToZeroingBriefing" classname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests" runstate="Runnable" seed="1634721027" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.019890" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1317" name="Screen08_09_11_MovingTargetUIFlowTests" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.068419" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1330" name="Destroy_UnsubscribesAndDisposesFakePort" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Destroy_UnsubscribesAndDisposesFakePort" methodname="Destroy_UnsubscribesAndDisposesFakePort" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" seed="527696208" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.005951" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1320" name="Screen00_SceneAnchorsBindLargePanelAndMinimalHudAsIndependentWorldCanvases" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen00_SceneAnchorsBindLargePanelAndMinimalHudAsIndependentWorldCanvases" methodname="Screen00_SceneAnchorsBindLargePanelAndMinimalHudAsIndependentWorldCanvases" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" seed="115829387" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.006803" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1321" name="Screen08_MissingSpeedConfigurationCannotStartAndShowsServiceError" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen08_MissingSpeedConfigurationCannotStartAndShowsServiceError" methodname="Screen08_MissingSpeedConfigurationCannotStartAndShowsServiceError" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" seed="963198253" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.005934" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1319" name="Screen08_StartSuccessWaitsForPickupAndLiveDtoAtomicallyShowsMinimalHud" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen08_StartSuccessWaitsForPickupAndLiveDtoAtomicallyShowsMinimalHud" methodname="Screen08_StartSuccessWaitsForPickupAndLiveDtoAtomicallyShowsMinimalHud" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" seed="1462833385" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.006109" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1318" name="Screen08_ThreeSpeedsDefaultToFourAndForwardOnlySelectedSpeed" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen08_ThreeSpeedsDefaultToFourAndForwardOnlySelectedSpeed" methodname="Screen08_ThreeSpeedsDefaultToFourAndForwardOnlySelectedSpeed" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" seed="1467963909" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.006096" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1322" name="Screen09_HudConsumesCountdownPerShotContinuousAndForbiddenSnapshotsInOrder" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen09_HudConsumesCountdownPerShotContinuousAndForbiddenSnapshotsInOrder" methodname="Screen09_HudConsumesCountdownPerShotContinuousAndForbiddenSnapshotsInOrder" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" seed="267821279" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.006246" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1324" name="Screen11_BackToModeSelectionSendsOnlyOneExitCommand" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_BackToModeSelectionSendsOnlyOneExitCommand" methodname="Screen11_BackToModeSelectionSendsOnlyOneExitCommand" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" seed="567415343" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.005692" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1323" name="Screen11_CompletionShowsVariableSequencesAndRetrySendsOneCommand" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_CompletionShowsVariableSequencesAndRetrySendsOneCommand" methodname="Screen11_CompletionShowsVariableSequencesAndRetrySendsOneCommand" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" seed="2133976157" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.007620" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-suite type="ParameterizedMethod" id="1329" name="Screen11_GradeAndEmptySequenceFormattingIsDtoDriven" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_GradeAndEmptySequenceFormattingIsDtoDriven" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.016849" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                  <properties />
+                  <test-case id="1325" name="Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Fail,&quot;不及格&quot;,0,&quot;0%&quot;)" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Fail,&quot;不及格&quot;,0,&quot;0%&quot;)" methodname="Screen11_GradeAndEmptySequenceFormattingIsDtoDriven" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" seed="530188997" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.003976" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1326" name="Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Pass,&quot;及格&quot;,3,&quot;37.5%&quot;)" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Pass,&quot;及格&quot;,3,&quot;37.5%&quot;)" methodname="Screen11_GradeAndEmptySequenceFormattingIsDtoDriven" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" seed="374665971" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.004042" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1327" name="Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Good,&quot;良好&quot;,4,&quot;50%&quot;)" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Good,&quot;良好&quot;,4,&quot;50%&quot;)" methodname="Screen11_GradeAndEmptySequenceFormattingIsDtoDriven" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" seed="70067137" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.004471" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1328" name="Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Excellent,&quot;优秀&quot;,8,&quot;100%&quot;)" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Excellent,&quot;优秀&quot;,8,&quot;100%&quot;)" methodname="Screen11_GradeAndEmptySequenceFormattingIsDtoDriven" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" seed="1907909163" result="Passed" start-time="2026-09-15 03:32:15Z" end-time="2026-09-15 03:32:15Z" duration="0.003806" asserts="0">
+                    <properties />
+                  </test-case>
+                </test-suite>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
