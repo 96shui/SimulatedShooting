@@ -119,3 +119,11 @@
 验收：无 VR CharacterController 从街道逐栋进入并返回，检查假人；网格采样地面，逐段向高处边缘直行和斜向挤压，不能坠落。对应 CombatScenePlayModeTests 的 Bdd19 通行与防坠测试。VR 实机舒适度待验。
 
 验证结果（2026-09-14）：Unity 2022.3.62f3c1；CombatScenePlayModeTests 14/14 通过，CombatSceneTests EditMode 8/8 通过。结果文件：`Logs/Scene3/walkability-playmode-final.xml`、`Logs/Scene3/walkability-editmode.xml`。新增用例覆盖六栋房屋从街道往返、门洞双向通行、假人可见、1935 个地面采样点及高处护栏直向/斜向挤压；既有三层房间巡检与复位回归通过。修改由 `CombatSceneWalkabilityRepair.Apply` 应用于现有保存场景，导航已重烘焙。VR 实机舒适度仍待验。
+
+## 2026-09-15 战术敌人与房间直通补充
+
+运行时所有敌人继续由统一 `Actor_Enemy` Prefab 生成，外观替换为 Quaternius 的 CC0 SWAT 战术人物；不导入或再分发 Counter-Strike 拆包资源。主楼一、二层增加永久内部门洞，原房门状态、交互事实和稳定 RoomId 保持不变。专项验收只检查统一人物源、6 个室内建筑点，以及同层房间的 NavMesh 直通路径。
+
+按用户截图复核，巡检场景的走廊房门初始保持开启，仍可响应接受后的开关门事实；黑色整板式防坠结构仅保留不可见碰撞，另加金属扶手和立柱。6 个室内点分布到门后、房间纵深和墙角，2 个街道点调整到楼梯口与东侧巷道；机车重新按包围盒落地并拉开间距，避免穿墙、悬空和重叠。
+
+场景巡检增加快速观察模式：数字键 1–6 可直接查看战壕、街道、巷道和主楼三层，0 为全区鸟瞰，O 切换自由飞行，Shift 加速，Space/Ctrl 升降。该功能只改变无 VR 巡检角色的位置和碰撞模式，不修改生产 PlayerSpawn、Session 或正式移动规则。

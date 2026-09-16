@@ -9,6 +9,7 @@ namespace SimulatedShooting.Scene
         public string RoomId;
         public Transform Hinge;
         public NavMeshObstacle Obstacle;
+        public bool InitiallyOpen;
         public bool IsOpen { get; private set; }
         readonly HashSet<string> events = new HashSet<string>();
 
@@ -30,9 +31,9 @@ namespace SimulatedShooting.Scene
         public void ResetView()
         {
             events.Clear();
-            IsOpen = false;
-            Hinge.localRotation = Quaternion.identity;
-            Obstacle.enabled = true;
+            IsOpen = InitiallyOpen;
+            Hinge.localRotation = Quaternion.Euler(0, IsOpen ? 100 : 0, 0);
+            Obstacle.enabled = !IsOpen;
         }
     }
 }

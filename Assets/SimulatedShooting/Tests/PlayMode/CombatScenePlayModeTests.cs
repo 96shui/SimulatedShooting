@@ -13,6 +13,20 @@ namespace SimulatedShooting.Tests.PlayMode
     {
         CombatSceneBindings bindings;
         [UnityTest]
+        public IEnumerator Bdd19_ArtRenderProfileRestoresQualityWhenDisabled()
+        {
+            var profile = bindings.GetComponent<CombatSceneRenderProfile>();
+            Assert.That(profile, Is.Not.Null);
+            Assert.That(QualitySettings.renderPipeline, Is.EqualTo(profile.Profile));
+            Assert.That(QualitySettings.shadowDistance, Is.EqualTo(90));
+            profile.enabled = false;
+            Assert.That(QualitySettings.renderPipeline, Is.Not.EqualTo(profile.Profile));
+            profile.enabled = true;
+            Assert.That(QualitySettings.renderPipeline, Is.EqualTo(profile.Profile));
+            yield return null;
+        }
+
+        [UnityTest]
         public IEnumerator Bdd19_AllHousesHaveDummiesAndPhysicalEntrances()
         {
             var fixture = Object.FindObjectOfType<CombatSceneFixture>();
@@ -200,18 +214,32 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [UnityTest]
+        public IEnumerator Bdd19_InspectionCanJumpDirectlyToDistrictAndBuildingViews()
+        {
+            var fixture = Object.FindObjectOfType<CombatSceneFixture>();
+            var productionSpawn = bindings.PlayerSpawn.position;
+            fixture.JumpToObservationPoint(0);
+            yield return null;
+            Assert.That(fixture.Walker.ObservationMode, Is.True);
+            Assert.That(fixture.Walker.transform.position.y, Is.GreaterThan(20));
+            Assert.That(bindings.PlayerSpawn.position, Is.EqualTo(productionSpawn));
+            fixture.JumpToObservationPoint(6);
+            Assert.That(fixture.Walker.transform.position.y, Is.GreaterThan(8));
+        }
+
+        [UnityTest]
         public IEnumerator Bdd20_DoorOnlyChangesOnOutputAndDuplicateEventsAreIdempotent()
         {
             var door = bindings.Doors[0];
-            Assert.That(door.IsOpen, Is.False);
-            door.Apply("accepted-1", true);
-            door.Apply("accepted-1", false);
-            yield return new WaitForSeconds(1);
             Assert.That(door.IsOpen, Is.True);
-            Assert.That(door.Obstacle.enabled, Is.False);
-            door.ResetView();
+            door.Apply("accepted-1", false);
+            door.Apply("accepted-1", true);
+            yield return new WaitForSeconds(1);
             Assert.That(door.IsOpen, Is.False);
             Assert.That(door.Obstacle.enabled, Is.True);
+            door.ResetView();
+            Assert.That(door.IsOpen, Is.True);
+            Assert.That(door.Obstacle.enabled, Is.False);
         }
 
         [UnityTest]
@@ -253,6 +281,8 @@ namespace SimulatedShooting.Tests.PlayMode
         {
             var fixture = Object.FindObjectOfType<CombatSceneFixture>();
             var room = bindings.Points.First(p => p.Kind == CombatPointKind.Room);
+            room.Door.Apply("prepare-confirm", false);
+            yield return new WaitForSeconds(1);
             var player = fixture.Walker;
             player.InputEnabled = false;
             var controller = player.GetComponent<CharacterController>();
@@ -282,7 +312,7 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [UnityTest]
-        public IEnumerator Bdd19_20_CharacterColliderWalksFromTrenchThroughEveryRoom()
+        public IEnumerator Bdd19_20_CharacterColliderWalksThroughEveryRoomAndPermanentPassage()
         {
             foreach (var door in bindings.Doors) door.Apply("walk-open", true);
             var fixture = Object.FindObjectOfType<CombatSceneFixture>();
@@ -311,6 +341,16 @@ namespace SimulatedShooting.Tests.PlayMode
                         " player " + controller.transform.position + " nearby " + string.Join(",", Physics.OverlapSphere(controller.transform.position+Vector3.up, 1, ~0, QueryTriggerInteraction.Ignore).Select(c=>c.name)) +
                         " door angle " + (point.Door != null ? point.Door.Hinge.localEulerAngles.ToString() : "n/a"));
                 }
+            }
+
+            foreach (var floorY in new[] { 0f, 3.6f })
+            {
+                var path = new NavMeshPath();
+                Assert.That(NavMesh.SamplePosition(new Vector3(31, floorY, 70), out var adjacentRoom, 1, NavMesh.AllAreas), Is.True);
+                Assert.That(NavMesh.SamplePosition(new Vector3(31, floorY, 82), out var nextRoom, 1, NavMesh.AllAreas), Is.True);
+                Assert.That(NavMesh.CalculatePath(adjacentRoom.position, nextRoom.position, NavMesh.AllAreas, path), Is.True);
+                Assert.That(path.status, Is.EqualTo(NavMeshPathStatus.PathComplete), "floor " + floorY + " adjacent rooms");
+                Assert.That(path.corners.Zip(path.corners.Skip(1), Vector3.Distance).Sum(), Is.LessThan(14), "path must use the internal doorway");
             }
         }
 
