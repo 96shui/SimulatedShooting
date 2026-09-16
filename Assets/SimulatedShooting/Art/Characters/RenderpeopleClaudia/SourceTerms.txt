@@ -1,0 +1,227 @@
+General Terms & Conditions | RENDERPEOPLE
+SIGN IN YOUR ACCOUNT TO HAVE ACCESS TO DIFFERENT FEATURES
+USERNAME
+PASSWORD
+Remember Me
+FORGOT YOUR PASSWORD?
+FORGOT YOUR DETAILS?
+USERNAME OR EMAIL
+AAH, WAIT, I REMEMBER NOW!
+Scanned 3D People   |   Easy to use   |   For all common formats & renderers   |   Instant download
+LANGUAGES
+ACCOUNT
+LOGIN
+Renderpeople Shop
+BY PRODUCT TYPE
+All People Models
+3D Posed People
+NEW
+3D Posed People Plus
+3D Posed People Classic
+3D Rigged People
+3D Animated People
+4D People
+BY TOPIC
+Bundles
+Casual
+Business
+Shopping
+Swimwear
+Sportswear
+Elegant
+Free Models
+Discounts
+ML / CV Licenses
+Support
+Contact us
+FAQ
+Company
+Customer Gallery
+About Renderpeople
+Jobs
+Plug-Ins
+Studio for 3ds Max
+Resizer for 3ds Max
+Partners
+Blog
+MY CART
+No products in cart.
+General Terms and Conditions
+1. Scope
+1.1
+These general terms and conditions (hereinafter “Terms and Conditions”) govern the contractual relationship between Renderpeople GmbH (hereinafter “Renderpeople”) and the customer (hereinafter “Licensee”) regarding the acquisition of usage rights (licenses) for the digital 3D models (hereinafter “Products” or “Digital Products”) offered by Renderpeople at
+https://renderpeople.com
+(hereinafter “Online Shop”). The acquisition can be made via the Online Shop or by email (B2B only).
+1.2
+Conditions of the Licensee that oppose or differ from these Terms and Conditions are recognized by Renderpeople only if a written agreement has been made.
+2. Subject Matter of the Contract; Use of Free 3D Data
+2.1
+Renderpeople produces digital products, namely photorealistic 3D models in the form of 3D, image, and video files (also referred to as “3D data”), which depict a digital image of a previously recorded model in 3D space. The produced 3D data have certain formats, which can only be opened with an appropriate computer program.
+2.2
+The Licensee can purchase a license from Renderpeople for the use of the 3D data.
+2.3
+The 3D data is provided to the Licensee via a download link after the conclusion of the license contract.
+2.4
+These Terms and Conditions govern the contractual relationship between Renderpeople and the Licensee, particularly the content and scope of the acquired license.
+2.5
+Renderpeople also provides free 3D data for download and thereby grants a free license for the use of the 3D data. The same provisions apply to this as for paid 3D data.
+3. Conclusion of the contract; Technical steps and correction of input errors; Storage of contract text
+3.1
+Products displayed in the Online Shop are merely an invitation for the Licensee to make a binding offer (“invitatio ad offerendum”). A binding offer by the Licensee can be made either directly via the order form in the Online Shop or via email (B2B only) to info@renderpeople.com.
+3.2
+For making an offer via the order form in the Online Shop, the Licensee follows these steps: The Licensee can place one or more products in the shopping cart. During the ordering process, the Licensee provides all necessary data and the desired payment method. If you have placed products in the shopping cart, by clicking on the “PROCEED TO CHECKOUT” buttons, you will first be taken to a page where you can enter your data and then select the payment method. Input errors (e.g., regarding the desired quantity) can be corrected by returning to the shopping cart and making the desired changes. If you want to completely cancel the order process, you can simply close your browser window. By clicking the “PLACE ORDER” button, the Licensee submits a legally binding offer to conclude a purchase contract.
+3.3
+For making an offer via email, available only to businesses (B2B), the Licensee follows these steps: They send an inquiry via email. In the subsequent correspondence, all necessary data of the Licensee are requested. Furthermore, the order quantity, payment method, and other contents of the order are clarified. The Licensee submits a legally binding offer to conclude a purchase contract via email. Alternatively, a legally binding offer can be made by Renderpeople via email, which the Licensee can directly accept.
+3.4
+The Licensee assures that all personal data provided by them (name, email, etc.) are always truthful and correct.
+3.5
+The acceptance of the offer to conclude a purchase contract is declared by Renderpeople either with the order confirmation sent by email or a written payment request or is implicitly made by providing the products for download. Only with the acceptance of the offer by Renderpeople is a binding purchase contract concluded.
+3.6
+Orders with details of the purchase contract are stored by Renderpeople. The Terms and Conditions are sent to the Licensee with the order confirmation by email and are also available at any time on the website of the Online Shop. If the Licensee has created a customer account, they can view past orders at any time via the customer area and download the 3D data.
+4. Granting of usage rights (License)
+4.1
+Upon the conclusion of the contract, Renderpeople grants the Licensee a simple, non-exclusive, temporally and spatially unlimited right to use the 3D data exclusively for the following purposes:
+a)
+Rendering of still images and animations for commercial or private use, such as for video production, advertising, TV, broadcasting, film, print, presentations, and illustrations.
+b)
+Real-time rendering for commercial or private use, such as for AR, VR, and XR applications as well as computer and video games.
+4.2
+The use of the 3D data for the following purposes is prohibited unless there is express written consent from Renderpeople. Renderpeople can permit the use of the 3D data for the following purposes through a separate license agreement or written consent. A contract and consent can be requested by email (info@renderpeople.com) from Renderpeople:
+a)
+Use of the 3D data for Computer Vision Research. This includes but is not limited to (a) the creation of datasets, the development and training of neural networks and machine learning models, the development of real-time simulations; (b) the creation and publication of research papers, marketing materials, and press releases, resulting from any research and development conducted with the use of the 3D data.
+b)
+Any kind of transfer, especially renting, reselling, lending, or sublicensing the 3D data as well as the license from the Licensee to third parties, neither in their original form nor in parts or modified versions. This includes, but is not limited to, 3D data created with or based on products from Renderpeople. Unless otherwise agreed, the Licensee waives the right to use the 3D data, originally granted to them through the license, in the event of permission from Renderpeople. In any case, the Licensee must fully name the third party so that they can be clearly identified. By third parties, both consumers and businesses are understood that are economically independent of the Licensee. This includes companies associated with the Licensee’s company, as well as subsidiaries.
+c)
+Implementation of the 3D data in applications (especially, but not exclusively with the SaaS model) such as architectural visualization software and learning environments if third parties are thereby allowed to use the 3D data. Computer and video games are not affected by this exclusion.
+d)
+The sale of still images and animations that contain the 3D data in their original form, in parts, or in modified variants, on online marketplaces for stock photos and videos (e.g., Shutterstock, Vecteezy, POND5, etc.).
+4.3
+The use of the 3D data for the following purposes is strictly prohibited.
+a)
+The use of the 3D data in any manner that violates legal regulations, good morals, or the property and rights of third parties. The use of the 3D data in a pornographic, fraudulent, defamatory, offensive, or slanderous context is strictly forbidden.
+b)
+Disclosure, making easily accessible, and/or providing the 3D data to third parties. Furthermore, the 3D data must not be directly circulated. Specifically prohibited is making the 3D data available in a way that allows third parties to easily download, extract, distribute, or otherwise access the 3D data as individual files. To counter this, the licensee must always store and/or integrate the 3D data according to the current state of technology.
+5. Prices and Payment Methods; Payment Conditions
+5.1
+Depending on the order quantity, Renderpeople can grant quantity discounts on the price.
+5.2
+Payments in the online shop can be made via Credit Card, PayPal, SOFORT, IDEAL, BANCONTACT, and ALIPAY. Depending on the country of origin of the licensee, certain payment methods may not be available. The choice is up to the licensee.
+5.3
+The purchase price is due immediately upon ordering.
+6. Provision of the 3D Data
+6.1
+The 3D data is provided to the licensee via a download link upon conclusion of the purchase agreement. However, Renderpeople reserves the right to send the download link for the 3D data only after receipt of the payment.
+6.2
+The download link for the 3D data is either directly in the order confirmation, which is sent to the licensee by email upon contract conclusion, or in a separate email sent to the licensee. When purchasing in the online shop, the download link is also displayed directly on the website after successful payment.
+6.3
+The free 3D data can be downloaded directly in the online shop or on partner sites via a download link.
+6.4
+The dispatch of download links can be delayed due to technical problems.
+7. Reservation of the Granting of Usage Rights; Assertion of Rights by Third Parties
+7.1
+The granting of usage rights for purchased products only becomes effective when the licensee has fully paid the owed compensation. Renderpeople may temporarily allow the use of the products even before this point. However, such preliminary permission does not grant usage rights.
+7.2
+Renderpeople reserves the right to revoke the acquired license for the use of the 3D data from the licensee at any time, as long as the payment for it has not been fully made.
+7.3
+In the event of a breach of contract by the licensee, especially in the case of overdue payment, Renderpeople – after granting a grace period – is entitled to prohibit the licensee from using the acquired 3D data. With the prohibition, Renderpeople also withdraws from the purchase contract.
+7.4
+In the case of legal action by third parties against the aforementioned powers of Renderpeople, the licensee must immediately inform Renderpeople in writing so that Renderpeople can take appropriate measures. If the third party is unable to compensate Renderpeople for the costs of these measures, the licensee is fully responsible for the costs and must cover them.
+8. Warranty
+Renderpeople is liable for any defects in accordance with the applicable legal provisions.
+9. Right of Revocation for Consumers
+9.1
+If the licensee is a consumer, they have the right of revocation in accordance with statutory provisions.
+9.2
+More information on the regulations concerning the right of revocation can be found in the cancellation policy (see last page).
+10. Liability
+10.1
+Renderpeople is not liable for damages resulting from the use of the 3D data within the acquired license based on slight negligence by Renderpeople or one of its legal representatives or vicarious agents.
+10.2
+Renderpeople is liable for damages to the licensee resulting from violations of third-party protective rights through the contractual use of the 3D data. To claim damages, the licensee must immediately provide Renderpeople with all information received from the third party concerning the infringement, without being requested. The licensee is not allowed to make any legal statements to the third party without prior approval from Renderpeople. If the infringement by the third party cannot be averted without reasonable economic effort, Renderpeople is entitled to withdraw from the purchase contract with the licensee. The licensee’s claims for damages remain unaffected.
+10.3
+Renderpeople is not liable for direct, indirect, incidental, or consequential damages, including but not limited to financial losses, data losses, delay damages, reputational damages, or damages caused by malware resulting from the use of the 3D data and based on slight negligence by Renderpeople or one of its legal representatives or vicarious agents.
+10.4
+The licensee is liable to Renderpeople for any damages resulting from the licensee’s non-contractual use of the 3D data. This is especially the case when the rights of third parties are violated because the licensee has modified the 3D data or used it in an alienated context.
+11. Data Protection
+11.1
+Upon the conclusion of the contract, the licensee must expressly confirm having taken note of Renderpeople’s
+privacy policy
+.
+11.2
+All information regarding the collection, processing, and use of personal data related to the order of the products and the optional creation of a customer account can be found in Renderpeople’s
+privacy policy
+.
+12. Severability Clause
+If one or more provisions of this contract are or become wholly or partially ineffective, the effectiveness of the contract and its other provisions remains unaffected. In such a case, Renderpeople and the licensee agree to cooperate on a new regulation that corresponds to the previously pursued purpose.
+13. Final Provisions
+13.1
+The terms and conditions are exclusively subject to the law of the Federal Republic of Germany, excluding the UN Sales Convention. If the licensee is a consumer outside the Federal Republic of Germany, this choice of law only applies in consideration of the fact that mandatory provisions or laws granting special protection to the consumer in their respective country of residence are not withdrawn.
+13.2
+For all licensees who are merchants, the exclusive jurisdiction for disputes and all other matters is Renderpeople’s headquarters (Cologne, Germany).
+13.3
+The EU Commission has established an online platform for the resolution of disputes with consumers. The platform serves as a contact point for the out-of-court resolution of disputes concerning contractual obligations arising from online purchase contracts. More information is available at the following link:
+http://ec.europa.eu/consumers/odr/
+Renderpeople is neither willing nor obliged to participate in a dispute resolution procedure before a consumer arbitration board.
+Terms and conditions version date: 13.12.2024
+__________________
+Renderpeople GmbH
+Venloer Str. 476
+50825 Köln
+Email: info@renderpeople.com
+Company headquarters and court of registration: Köln, Amtsgericht Köln HRB 78971
+CEO: Cyril Jaugey
+Renderpeople Newsletter
+The Renderpeople newsletter informs you regularly about 3D People news, product updates and exclusive offers via e-mail. You can unsubscribe at any time.
+For more information about content, unsubscribing, statistical data evaluation and the use of US provider MailChimp as our marketing automation platform please view our
+Privacy Policy
+.
+Renderpeople's Mission
+Our mission is to continually improve the usability and realism of 3D People. With a huge passion for 3D and photogrammetry scanning we work passionately to bring new ideas and products to life for all CGI professionals with a frequent need to deliver lifelike visualizations under strict time constraints.
+Payment Methods
+3D People by Type
+All 3D People
+Posed People
+Rigged People
+Animated People
+4D People
+NEW
+Bundles
+3D People by Topic
+Business
+Smart Casual
+Workwear
+Shopping
+Sportswear
+Swimwear
+About Us
+Gallery
+Free Models
+Free Resizer Plugin
+Quantity Discount
+Partners
+Affiliate Program
+Miscellaneous
+My Account
+Contact us
+FAQ
+Legal Disclosure
+Data Protection Declaration
+General Terms & Conditions
+GET SOCIAL
+© 2021 Copyright by Renderpeople. All rights reserved.
+TOP
+Save & Share Cart
+Your Shopping Cart will be saved and you'll be given a link. You, or anyone with the link, can use it to retrieve your Cart at any time.
+Save Cart & Generate Link
+Send Cart in an Email
+Done! close
+Empty cart. Please add products before saving :)
+Back
+Save & Share Cart
+Your Shopping Cart will be saved with Product pictures and information, and Cart Totals. Then send it to yourself, or a friend, with a link to retrieve it at any time.
+To
+From Name
+Subject
+Have a look at this Shopping Cart sent by a friend via Renderpeople
+Send Cart Email
+Your cart email sent successfully :)

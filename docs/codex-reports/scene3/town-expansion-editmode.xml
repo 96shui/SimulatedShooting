@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="7" result="Passed" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-13 13:55:14Z" end-time="2026-09-13 13:55:17Z" duration="2.953299">
+  <test-suite type="TestSuite" id="1215" name="VR" fullname="VR" runstate="Runnable" testcasecount="168" result="Passed" start-time="2026-09-13 13:55:14Z" end-time="2026-09-13 13:55:17Z" duration="2.953299" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1238" name="SimulatedShooting.EditModeTests.dll" fullname="E:/AI/project/SimulatedShooting_WartimeReview/Library/ScriptAssemblies/SimulatedShooting.EditModeTests.dll" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-09-13 13:55:14Z" end-time="2026-09-13 13:55:17Z" duration="2.904482" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="37816" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1239" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-09-13 13:55:14Z" end-time="2026-09-13 13:55:17Z" duration="2.903814" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1240" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-09-13 13:55:14Z" end-time="2026-09-13 13:55:17Z" duration="2.903504" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1241" name="EditMode" fullname="SimulatedShooting.Tests.EditMode" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-09-13 13:55:14Z" end-time="2026-09-13 13:55:17Z" duration="2.903092" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1218" name="CombatSceneTests" fullname="SimulatedShooting.Tests.EditMode.CombatSceneTests" classname="SimulatedShooting.Tests.EditMode.CombatSceneTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-09-13 13:55:14Z" end-time="2026-09-13 13:55:17Z" duration="2.901142" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1221" name="Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms" fullname="SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms" methodname="Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms" classname="SimulatedShooting.Tests.EditMode.CombatSceneTests" runstate="Runnable" seed="134793505" result="Passed" start-time="2026-09-13 13:55:14Z" end-time="2026-09-13 13:55:15Z" duration="0.597385" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1225" name="Bdd15_19_EnemyPrefabUsesImportedSoldierVisual" fullname="SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd15_19_EnemyPrefabUsesImportedSoldierVisual" methodname="Bdd15_19_EnemyPrefabUsesImportedSoldierVisual" classname="SimulatedShooting.Tests.EditMode.CombatSceneTests" runstate="Runnable" seed="1880274434" result="Passed" start-time="2026-09-13 13:55:15Z" end-time="2026-09-13 13:55:15Z" duration="0.001083" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1220" name="Bdd15_19_WartimeDetailsPreserveRoutesAndRemoveWorldSigns" fullname="SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd15_19_WartimeDetailsPreserveRoutesAndRemoveWorldSigns" methodname="Bdd15_19_WartimeDetailsPreserveRoutesAndRemoveWorldSigns" classname="SimulatedShooting.Tests.EditMode.CombatSceneTests" runstate="Runnable" seed="731588232" result="Passed" start-time="2026-09-13 13:55:15Z" end-time="2026-09-13 13:55:16Z" duration="0.452701" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1222" name="Bdd19_20_ValidatorReportsDuplicateIdsAndMissingAnchor" fullname="SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_20_ValidatorReportsDuplicateIdsAndMissingAnchor" methodname="Bdd19_20_ValidatorReportsDuplicateIdsAndMissingAnchor" classname="SimulatedShooting.Tests.EditMode.CombatSceneTests" runstate="Runnable" seed="964731331" result="Passed" start-time="2026-09-13 13:55:16Z" end-time="2026-09-13 13:55:16Z" duration="0.454360" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1219" name="Bdd19_PerimeterBuildingsFormStreetWithoutBlockingSearchPoints" fullname="SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_PerimeterBuildingsFormStreetWithoutBlockingSearchPoints" methodname="Bdd19_PerimeterBuildingsFormStreetWithoutBlockingSearchPoints" classname="SimulatedShooting.Tests.EditMode.CombatSceneTests" runstate="Runnable" seed="962209256" result="Passed" start-time="2026-09-13 13:55:16Z" end-time="2026-09-13 13:55:16Z" duration="0.451959" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1223" name="Bdd19_TrenchTownTransitionHasNoCoplanarWalkableSurfaces" fullname="SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_TrenchTownTransitionHasNoCoplanarWalkableSurfaces" methodname="Bdd19_TrenchTownTransitionHasNoCoplanarWalkableSurfaces" classname="SimulatedShooting.Tests.EditMode.CombatSceneTests" runstate="Runnable" seed="986144763" result="Passed" start-time="2026-09-13 13:55:16Z" end-time="2026-09-13 13:55:17Z" duration="0.457429" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1224" name="Bdd19_TrenchUsesImportedSandbagsAndDetailedTimber" fullname="SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_TrenchUsesImportedSandbagsAndDetailedTimber" methodname="Bdd19_TrenchUsesImportedSandbagsAndDetailedTimber" classname="SimulatedShooting.Tests.EditMode.CombatSceneTests" runstate="Runnable" seed="1435124313" result="Passed" start-time="2026-09-13 13:55:17Z" end-time="2026-09-13 13:55:17Z" duration="0.452376" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

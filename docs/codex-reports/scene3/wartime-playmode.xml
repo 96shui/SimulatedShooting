@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="9" result="Passed" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-13 12:29:16Z" end-time="2026-09-13 12:29:24Z" duration="7.4146359">
+  <test-suite type="TestSuite" id="1161" name="VR" fullname="VR" runstate="Runnable" testcasecount="130" result="Passed" start-time="2026-09-13 12:29:16Z" end-time="2026-09-13 12:29:24Z" duration="7.414636" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1248" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/AI/project/SimulatedShooting_WartimeReview/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="82" result="Passed" start-time="2026-09-13 12:29:16Z" end-time="2026-09-13 12:29:24Z" duration="7.409532" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="23660" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1249" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="82" result="Passed" start-time="2026-09-13 12:29:16Z" end-time="2026-09-13 12:29:24Z" duration="7.408717" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1250" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="82" result="Passed" start-time="2026-09-13 12:29:16Z" end-time="2026-09-13 12:29:24Z" duration="7.408085" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1251" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="82" result="Passed" start-time="2026-09-13 12:29:16Z" end-time="2026-09-13 12:29:24Z" duration="7.407380" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1162" name="CombatScenePlayModeTests" fullname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests" classname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-09-13 12:29:16Z" end-time="2026-09-13 12:29:24Z" duration="7.405497" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1163" name="Bdd14_19_20_StreetAllFloorsRoomsAndReturnAreReachable" fullname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd14_19_20_StreetAllFloorsRoomsAndReturnAreReachable" methodname="Bdd14_19_20_StreetAllFloorsRoomsAndReturnAreReachable" classname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests" runstate="Runnable" seed="1097928892" result="Passed" start-time="2026-09-13 12:29:16Z" end-time="2026-09-13 12:29:18Z" duration="1.438406" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1170" name="Bdd14_19_XrAndNoVrHaveExclusiveCameraAndPreserveHeadPose" fullname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd14_19_XrAndNoVrHaveExclusiveCameraAndPreserveHeadPose" methodname="Bdd14_19_XrAndNoVrHaveExclusiveCameraAndPreserveHeadPose" classname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests" runstate="Runnable" seed="1906944389" result="Passed" start-time="2026-09-13 12:29:18Z" end-time="2026-09-13 12:29:18Z" duration="0.477481" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+]]></output>
+              </test-case>
+              <test-case id="1165" name="Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup" fullname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup" methodname="Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup" classname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests" runstate="Runnable" seed="935875359" result="Passed" start-time="2026-09-13 12:29:18Z" end-time="2026-09-13 12:29:19Z" duration="0.552363" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1166" name="Bdd15_20_NavigationFailureAndArrivalReportFacts" fullname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_20_NavigationFailureAndArrivalReportFacts" methodname="Bdd15_20_NavigationFailureAndArrivalReportFacts" classname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests" runstate="Runnable" seed="1321199651" result="Passed" start-time="2026-09-13 12:29:19Z" end-time="2026-09-13 12:29:19Z" duration="0.819567" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1168" name="Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors" fullname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors" methodname="Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors" classname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests" runstate="Runnable" seed="1887828869" result="Passed" start-time="2026-09-13 12:29:19Z" end-time="2026-09-13 12:29:20Z" duration="0.650643" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1171" name="Bdd17_21_MaximumActorsCorpsesPerformanceSample" fullname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd17_21_MaximumActorsCorpsesPerformanceSample" methodname="Bdd17_21_MaximumActorsCorpsesPerformanceSample" classname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests" runstate="Runnable" seed="1923181618" result="Passed" start-time="2026-09-13 12:29:20Z" end-time="2026-09-13 12:29:20Z" duration="0.370609" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1169" name="Bdd19_20_CharacterColliderWalksFromTrenchThroughEveryRoom" fullname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_20_CharacterColliderWalksFromTrenchThroughEveryRoom" methodname="Bdd19_20_CharacterColliderWalksFromTrenchThroughEveryRoom" classname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests" runstate="Runnable" seed="1456201561" result="Passed" start-time="2026-09-13 12:29:20Z" end-time="2026-09-13 12:29:22Z" duration="1.423014" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1167" name="Bdd19_20_ConfirmationRequiresRangeAndUnoccludedRay" fullname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_20_ConfirmationRequiresRangeAndUnoccludedRay" methodname="Bdd19_20_ConfirmationRequiresRangeAndUnoccludedRay" classname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests" runstate="Runnable" seed="1561401055" result="Passed" start-time="2026-09-13 12:29:22Z" end-time="2026-09-13 12:29:22Z" duration="0.330440" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1164" name="Bdd20_DoorOnlyChangesOnOutputAndDuplicateEventsAreIdempotent" fullname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd20_DoorOnlyChangesOnOutputAndDuplicateEventsAreIdempotent" methodname="Bdd20_DoorOnlyChangesOnOutputAndDuplicateEventsAreIdempotent" classname="SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests" runstate="Runnable" seed="1271699615" result="Passed" start-time="2026-09-13 12:29:22Z" end-time="2026-09-13 12:29:24Z" duration="1.331048" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

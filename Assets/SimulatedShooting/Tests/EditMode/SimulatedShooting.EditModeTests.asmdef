@@ -5,7 +5,7 @@
     "SimulatedShooting.Runtime",
     "SimulatedShooting.Editor",
     "VRShooting.Runtime",
-    "VRShooting.Contracts"
+    "Unity.TextMeshPro"
   ],
   "includePlatforms": [
     "Editor"
