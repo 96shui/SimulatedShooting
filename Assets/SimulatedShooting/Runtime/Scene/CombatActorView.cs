@@ -16,6 +16,7 @@ namespace SimulatedShooting.Scene
         public AudioSource Audio;
         public AudioClip HitClip;
         public NavMeshAgent Agent;
+        public CombatSoldierAnimation SoldierAnimation;
         public bool IsDead { get; private set; }
         public int HitFeedbackCount { get; private set; }
         public event Action<string, bool> NavigationReported;
@@ -29,6 +30,7 @@ namespace SimulatedShooting.Scene
             if (string.IsNullOrEmpty(eventId) || !feedback.Add("hit:" + eventId)) return;
             HitFeedbackCount++;
             Audio.PlayOneShot(HitClip);
+            if (SoldierAnimation != null) SoldierAnimation.Hit();
         }
 
         public void PlayShot(string eventId)
@@ -36,16 +38,19 @@ namespace SimulatedShooting.Scene
             if (IsDead || string.IsNullOrEmpty(eventId) || !feedback.Add("shot:" + eventId)) return;
             MuzzleFlash.SetActive(true);
             flashUntil = Time.time + 0.08f;
+            if (SoldierAnimation != null) SoldierAnimation.Shot();
         }
 
         public void ApplyDead(bool dead)
         {
+            if (IsDead == dead) return;
             IsDead = dead;
             moving = false;
             if (Agent.enabled && Agent.isOnNavMesh) Agent.ResetPath();
             Agent.enabled = !dead;
-            VisualRoot.localPosition = dead ? new Vector3(0, 0.3f, 0) : Vector3.zero;
-            VisualRoot.localRotation = dead ? Quaternion.Euler(-90, 0, 0) : Quaternion.identity;
+            VisualRoot.localPosition = dead && SoldierAnimation == null ? new Vector3(0, 0.3f, 0) : Vector3.zero;
+            VisualRoot.localRotation = dead && SoldierAnimation == null ? Quaternion.Euler(-90, 0, 0) : Quaternion.identity;
+            if (SoldierAnimation != null) SoldierAnimation.SetDead(dead);
             HitCollider.enabled = !dead;
             MuzzleFlash.SetActive(false);
         }

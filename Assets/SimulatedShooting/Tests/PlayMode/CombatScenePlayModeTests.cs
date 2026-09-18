@@ -119,6 +119,8 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return SceneManager.LoadSceneAsync("CombatScene");
             yield return null;
             bindings = Object.FindObjectOfType<CombatSceneBindings>();
+            // These geometry tests drive the inspection capsule, even if a desktop XR runtime is running.
+            bindings.GetComponent<ZeroingRangeXRModeController>().SetVrModeForTests(false);
         }
 
         [UnityTest]

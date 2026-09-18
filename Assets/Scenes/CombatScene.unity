@@ -8964,6 +8964,7 @@ MonoBehaviour:
   Kind: 5
   Volume: {fileID: 64581131}
   Door: {fileID: 2002993702}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &64581131
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10102,6 +10103,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5507602890640317171, guid: e2d0cab21cf45d3409a8d907f6f17a29, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6088039782716530428, guid: e2d0cab21cf45d3409a8d907f6f17a29, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -10118,6 +10123,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7353024509169454937, guid: e2d0cab21cf45d3409a8d907f6f17a29, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8467243214403346922, guid: e2d0cab21cf45d3409a8d907f6f17a29, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -10131,6 +10140,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8879281146207514769, guid: e2d0cab21cf45d3409a8d907f6f17a29, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9106713414055200484, guid: e2d0cab21cf45d3409a8d907f6f17a29, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -17404,6 +17417,7 @@ MonoBehaviour:
   Kind: 6
   Volume: {fileID: 144669352}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &144669352
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27643,6 +27657,7 @@ MonoBehaviour:
   Kind: 1
   Volume: {fileID: 213589067}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 473637565}
 --- !u!65 &213589067
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28347,6 +28362,7 @@ MonoBehaviour:
   Kind: 0
   Volume: {fileID: 223894615}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &223894615
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30377,6 +30393,7 @@ MonoBehaviour:
   Kind: 7
   Volume: {fileID: 240159346}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &240159346
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -31255,6 +31272,7 @@ MonoBehaviour:
   Kind: 1
   Volume: {fileID: 247108158}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 614070798}
 --- !u!65 &247108158
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38115,6 +38133,7 @@ MonoBehaviour:
   Kind: 4
   Volume: {fileID: 296415739}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &296415739
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -40557,6 +40576,7 @@ MonoBehaviour:
   Kind: 1
   Volume: {fileID: 314843833}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 1223033388}
 --- !u!65 &314843833
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -52878,6 +52898,7 @@ MonoBehaviour:
   Kind: 0
   Volume: {fileID: 398957973}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &398957973
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -56070,6 +56091,7 @@ MonoBehaviour:
   Kind: 5
   Volume: {fileID: 424884810}
   Door: {fileID: 1861614679}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &424884810
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -59816,6 +59838,7 @@ MonoBehaviour:
   Kind: 1
   Volume: {fileID: 455342776}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 743649158}
 --- !u!65 &455342776
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -62133,6 +62156,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 68469119}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &473637564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 473637565}
+  m_Layer: 0
+  m_Name: Estimate_building-spawn-4
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &473637565
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473637564}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 24.3, y: 3.6, z: 84}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2034809262}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &474278724
 GameObject:
@@ -65402,6 +65456,7 @@ MonoBehaviour:
   Kind: 1
   Volume: {fileID: 493285600}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 1481271958}
 --- !u!65 &493285600
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -66439,6 +66494,7 @@ MonoBehaviour:
   Kind: 6
   Volume: {fileID: 501680210}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &501680210
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -82219,6 +82275,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 612191817}
   m_Mesh: {fileID: 4300000, guid: 3a475d3e9c702474dbbd934f8b4cd99c, type: 2}
+--- !u!1 &614070797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 614070798}
+  m_Layer: 0
+  m_Name: Estimate_building-spawn-6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &614070798
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614070797}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 34, y: 7.2, z: 84}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2034809262}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &614371993
 GameObject:
   m_ObjectHideFlags: 0
@@ -85477,6 +85564,7 @@ MonoBehaviour:
   Kind: 1
   Volume: {fileID: 643389212}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 2033346378}
 --- !u!65 &643389212
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -92318,6 +92406,7 @@ MonoBehaviour:
   Kind: 3
   Volume: {fileID: 689151662}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &689151662
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -92472,6 +92561,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 689497287}
   m_Mesh: {fileID: 4300000, guid: 33df68d94aca5804b8b756aaf179f416, type: 2}
+--- !u!1 &690036506
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 690036507}
+  m_Layer: 0
+  m_Name: Estimate_building-spawn-5
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &690036507
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690036506}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 36.5, y: 7.2, z: 68}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2034809262}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &691023285
 GameObject:
   m_ObjectHideFlags: 0
@@ -98011,6 +98131,7 @@ MonoBehaviour:
   Kind: 1
   Volume: {fileID: 734036090}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 1236840516}
 --- !u!65 &734036090
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -98777,6 +98898,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742112021}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &743649157
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 743649158}
+  m_Layer: 0
+  m_Name: Estimate_street-spawn-2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &743649158
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743649157}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 12.2, y: 0, z: 62.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2034809262}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &743697747
 GameObject:
   m_ObjectHideFlags: 0
@@ -106804,6 +106956,7 @@ MonoBehaviour:
   Kind: 1
   Volume: {fileID: 798374319}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 1705597623}
 --- !u!65 &798374319
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -116154,6 +116307,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 861431823}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &862496615
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 862496616}
+  m_Layer: 0
+  m_Name: Estimate_building-spawn-3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &862496616
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862496615}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 36.3, y: 3.6, z: 73.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2034809262}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &864401776
 GameObject:
   m_ObjectHideFlags: 0
@@ -117853,6 +118037,7 @@ MonoBehaviour:
   Kind: 3
   Volume: {fileID: 881471011}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &881471011
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -123099,6 +123284,7 @@ MonoBehaviour:
   Kind: 0
   Volume: {fileID: 919652483}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &919652483
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -130594,6 +130780,7 @@ MonoBehaviour:
   Kind: 1
   Volume: {fileID: 978521032}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 862496616}
 --- !u!65 &978521032
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -134461,6 +134648,7 @@ MonoBehaviour:
   Kind: 7
   Volume: {fileID: 1007920066}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1007920066
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -140694,6 +140882,7 @@ MonoBehaviour:
   Kind: 0
   Volume: {fileID: 1052378837}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1052378837
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -142166,6 +142355,7 @@ MonoBehaviour:
   Kind: 5
   Volume: {fileID: 1061799313}
   Door: {fileID: 557801737}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1061799313
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -164027,6 +164217,7 @@ MonoBehaviour:
   Kind: 6
   Volume: {fileID: 1222217517}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1222217517
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -164197,6 +164388,7 @@ MonoBehaviour:
   Kind: 2
   Volume: {fileID: 1223033386}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1223033386
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -165145,6 +165337,7 @@ MonoBehaviour:
   Kind: 5
   Volume: {fileID: 1231690850}
   Door: {fileID: 947828991}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1231690850
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -165985,6 +166178,7 @@ MonoBehaviour:
   Kind: 2
   Volume: {fileID: 1236840514}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1236840514
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -172296,6 +172490,7 @@ MonoBehaviour:
   Kind: 1
   Volume: {fileID: 1282593092}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 1671323149}
 --- !u!65 &1282593092
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -173266,6 +173461,7 @@ MonoBehaviour:
   Kind: 1
   Volume: {fileID: 1286290126}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 690036507}
 --- !u!65 &1286290126
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -179029,6 +179225,7 @@ MonoBehaviour:
   Kind: 2
   Volume: {fileID: 1323194377}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1323194377
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -184366,6 +184563,7 @@ MonoBehaviour:
   Kind: 7
   Volume: {fileID: 1359782320}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1359782320
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -187786,6 +187984,7 @@ MonoBehaviour:
   Kind: 5
   Volume: {fileID: 1382951335}
   Door: {fileID: 1787672349}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1382951335
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -201536,6 +201735,7 @@ MonoBehaviour:
   Kind: 3
   Volume: {fileID: 1476875198}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1476875198
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -202075,6 +202275,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480687550}
   m_Mesh: {fileID: 4300000, guid: f5d3fc9449158864491bb8aaff0e4a75, type: 2}
+--- !u!1 &1481271957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1481271958}
+  m_Layer: 0
+  m_Name: Estimate_building-spawn-2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1481271958
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481271957}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 24.5, y: 0, z: 84}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2034809262}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1482352187
 GameObject:
   m_ObjectHideFlags: 0
@@ -204459,6 +204690,7 @@ MonoBehaviour:
   Kind: 1
   Volume: {fileID: 1494839574}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 1884333743}
 --- !u!65 &1494839574
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -228704,6 +228936,7 @@ MonoBehaviour:
   Kind: 2
   Volume: {fileID: 1671323147}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1671323147
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -233501,6 +233734,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1704020214}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1705597622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1705597623}
+  m_Layer: 0
+  m_Name: Estimate_street-spawn-1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1705597623
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1705597622}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 42.1, y: 0, z: 67.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2034809262}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1705837011
 GameObject:
   m_ObjectHideFlags: 0
@@ -237918,6 +238182,7 @@ MonoBehaviour:
   Kind: 0
   Volume: {fileID: 1733606332}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1733606332
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -256040,6 +256305,7 @@ MonoBehaviour:
   Kind: 1
   Volume: {fileID: 1873336590}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 1323194379}
 --- !u!65 &1873336590
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -257679,6 +257945,7 @@ MonoBehaviour:
   Kind: 2
   Volume: {fileID: 1884333741}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1884333741
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -268205,6 +268472,7 @@ MonoBehaviour:
   Kind: 7
   Volume: {fileID: 1964704236}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1964704236
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -268489,6 +268757,7 @@ MonoBehaviour:
   Kind: 0
   Volume: {fileID: 1968695191}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &1968695191
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -278514,6 +278783,7 @@ MonoBehaviour:
   Kind: 0
   Volume: {fileID: 2032500988}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &2032500988
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -278558,6 +278828,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2034809262}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2033346377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2033346378}
+  m_Layer: 0
+  m_Name: Estimate_building-spawn-1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2033346378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033346377}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 36.5, y: 0, z: 66.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -278955,6 +279256,8 @@ MonoBehaviour:
   Drone: {fileID: 947443913}
   EnemyPrefab: {fileID: 8576743073599559382, guid: b85a4a82c0ef7ac4b8d99048ca60648b, type: 3}
   TeammatePrefab: {fileID: 3852635402858298265, guid: cf0b9730fa280d24e84e627e362d62aa, type: 3}
+  TrainingRiflePrefab: {fileID: 6878203385005859914, guid: e2d0cab21cf45d3409a8d907f6f17a29, type: 3}
+  RifleShotClip: {fileID: 8300000, guid: e9c360d8d5f0f7e4cbbe111d3682e485, type: 3}
   Points:
   - {fileID: 398957972}
   - {fileID: 2032500987}
@@ -279104,6 +279407,14 @@ Transform:
   - {fileID: 485076268}
   - {fileID: 543085481}
   - {fileID: 829188861}
+  - {fileID: 2033346378}
+  - {fileID: 1481271958}
+  - {fileID: 862496616}
+  - {fileID: 473637565}
+  - {fileID: 690036507}
+  - {fileID: 614070798}
+  - {fileID: 1705597623}
+  - {fileID: 743649158}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2034809263
@@ -286440,6 +286751,7 @@ MonoBehaviour:
   Kind: 3
   Volume: {fileID: 2087434145}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &2087434145
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -286527,6 +286839,7 @@ MonoBehaviour:
   Kind: 0
   Volume: {fileID: 2087842775}
   Door: {fileID: 0}
+  EstimateAnchor: {fileID: 0}
 --- !u!65 &2087842775
 BoxCollider:
   m_ObjectHideFlags: 0

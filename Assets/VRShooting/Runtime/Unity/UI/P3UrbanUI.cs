@@ -84,8 +84,8 @@ namespace VRShooting.Unity.UI
                 ? "当前选择：暂无地图"
                 : "当前选择：" + selectedMap.DisplayName);
             P3UiText.SetText(enemyText, found || LastMaps.Count > 0
-                ? "街道敌人：" + selectedMap.StreetEnemyMin + "–" + selectedMap.StreetEnemyMax +
-                  "\n建筑敌人：" + selectedMap.BuildingEnemyMin + "–" + selectedMap.BuildingEnemyMax
+                ? "街道敌人：" + selectedMap.StreetEnemyMin + "-" + selectedMap.StreetEnemyMax +
+                  "\n建筑敌人：" + selectedMap.BuildingEnemyMin + "-" + selectedMap.BuildingEnemyMax
                 : "敌情：--");
             P3UiText.SetText(floorText, found || LastMaps.Count > 0
                 ? "建筑楼层：" + selectedMap.Floors.Count + " 层"
@@ -114,8 +114,8 @@ namespace VRShooting.Unity.UI
             SelectedMapId = mapId;
             for (var index = 0; index < mapCards.Count; index++) mapCards[index]?.SetSelected(mapCards[index].MapId == mapId);
             P3UiText.SetText(selectedMapText, "当前选择：" + selected.DisplayName);
-            P3UiText.SetText(enemyText, "街道敌人：" + selected.StreetEnemyMin + "–" + selected.StreetEnemyMax +
-                "\n建筑敌人：" + selected.BuildingEnemyMin + "–" + selected.BuildingEnemyMax);
+            P3UiText.SetText(enemyText, "街道敌人：" + selected.StreetEnemyMin + "-" + selected.StreetEnemyMax +
+                "\n建筑敌人：" + selected.BuildingEnemyMin + "-" + selected.BuildingEnemyMax);
             P3UiText.SetText(floorText, "建筑楼层：" + selected.Floors.Count + " 层");
             MapSelectionChanged?.Invoke(mapId);
         }

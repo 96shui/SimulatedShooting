@@ -45,6 +45,8 @@ namespace VRShooting.Unity.Bootstrap
         void InitManagers()
         {
             Services = ApplicationServices.CreateDefault();
+            if (Services.CombatScenesAvailable)
+                gameObject.AddComponent<P3LiveUIController>().Initialize(Services.Combat);
             GameState = GameStateManager.Instance;
             mainMenuXrModeController = MainMenuXRModeController.EnsureExists(gameObject);
 

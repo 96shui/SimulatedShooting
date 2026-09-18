@@ -1,0 +1,1526 @@
+{
+  "success": true,
+  "message": "Test job status retrieved.",
+  "error": null,
+  "data": {
+    "job_id": "321b6223d2334a2bbc3c88d6c52b5a3b",
+    "status": "succeeded",
+    "mode": "PlayMode",
+    "started_unix_ms": 1789575019582,
+    "finished_unix_ms": 1789575163825,
+    "last_update_unix_ms": 1789575163825,
+    "progress": {
+      "completed": 165,
+      "total": 264,
+      "current_test_full_name": null,
+      "current_test_started_unix_ms": 1789575163509,
+      "last_finished_test_full_name": "VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Excellent,\"优秀\",8,\"100%\")",
+      "last_finished_unix_ms": 1789575163621,
+      "stuck_suspected": false,
+      "editor_is_focused": true,
+      "blocked_reason": null,
+      "failures_so_far": [],
+      "failures_capped": false
+    },
+    "error": null,
+    "result": {
+      "mode": "PlayMode",
+      "summary": {
+        "total": 165,
+        "passed": 165,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 140.2105847,
+        "resultState": "Passed"
+      },
+      "results": [
+        {
+          "name": "Bdd14_19_20_StreetAllFloorsRoomsAndReturnAreReachable",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd14_19_20_StreetAllFloorsRoomsAndReturnAreReachable",
+          "state": "Passed",
+          "durationSeconds": 3.5052861,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd14_19_StartupAndResetKeepDroneAndPlayerStable",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd14_19_StartupAndResetKeepDroneAndPlayerStable",
+          "state": "Passed",
+          "durationSeconds": 5.1940516,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd14_19_XrAndNoVrHaveExclusiveCameraAndPreserveHeadPose",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd14_19_XrAndNoVrHaveExclusiveCameraAndPreserveHeadPose",
+          "state": "Passed",
+          "durationSeconds": 0.9491377,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup",
+          "state": "Passed",
+          "durationSeconds": 1.4089209,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd15_19_SpawnTrenchWallsBlockWalkingOut",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_19_SpawnTrenchWallsBlockWalkingOut",
+          "state": "Passed",
+          "durationSeconds": 0.9347569,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd15_20_NavigationFailureAndArrivalReportFacts",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_20_NavigationFailureAndArrivalReportFacts",
+          "state": "Passed",
+          "durationSeconds": 1.436599,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors",
+          "state": "Passed",
+          "durationSeconds": 1.7946456,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd17_21_MaximumActorsCorpsesPerformanceSample",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd17_21_MaximumActorsCorpsesPerformanceSample",
+          "state": "Passed",
+          "durationSeconds": 10.8288149,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd19_20_CharacterColliderWalksThroughEveryRoomAndPermanentPassage",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_20_CharacterColliderWalksThroughEveryRoomAndPermanentPassage",
+          "state": "Passed",
+          "durationSeconds": 17.6854055,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd19_20_ConfirmationRequiresRangeAndUnoccludedRay",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_20_ConfirmationRequiresRangeAndUnoccludedRay",
+          "state": "Passed",
+          "durationSeconds": 1.9894643,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd19_AllHousesHaveDummiesAndPhysicalEntrances",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_AllHousesHaveDummiesAndPhysicalEntrances",
+          "state": "Passed",
+          "durationSeconds": 12.8008192,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd19_ArtRenderProfileRestoresQualityWhenDisabled",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_ArtRenderProfileRestoresQualityWhenDisabled",
+          "state": "Passed",
+          "durationSeconds": 0.8989161,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd19_DistrictGroundGridAndElevatedGuardsPreventFalls",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_DistrictGroundGridAndElevatedGuardsPreventFalls",
+          "state": "Passed",
+          "durationSeconds": 0.9695792,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd19_ExteriorGroundAndWallsPreventLeavingTheTown",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_ExteriorGroundAndWallsPreventLeavingTheTown",
+          "state": "Passed",
+          "durationSeconds": 0.9974614,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd19_InspectionCanJumpDirectlyToDistrictAndBuildingViews",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_InspectionCanJumpDirectlyToDistrictAndBuildingViews",
+          "state": "Passed",
+          "durationSeconds": 0.9167581,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Bdd20_DoorOnlyChangesOnOutputAndDuplicateEventsAreIdempotent",
+          "fullName": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd20_DoorOnlyChangesOnOutputAndDuplicateEventsAreIdempotent",
+          "state": "Passed",
+          "durationSeconds": 1.8745773,
+          "message": null,
+          "stackTrace": null,
+          "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore",
+          "state": "Passed",
+          "durationSeconds": 1.0655988,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态初始化为: InGame\r\n"
+        },
+        {
+          "name": "P2_RealComposition_RunsPickupCountdownVisualResultAndRetry",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RealComposition_RunsPickupCountdownVisualResultAndRetry",
+          "state": "Passed",
+          "durationSeconds": 0.7421283,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态初始化为: InGame\r\n"
+        },
+        {
+          "name": "P2_RealTrigger_QuickTapFiresTwo_ForbiddenHoldDoesNotResume",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RealTrigger_QuickTapFiresTwo_ForbiddenHoldDoesNotResume",
+          "state": "Passed",
+          "durationSeconds": 1.4870467,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态初始化为: InGame\r\n"
+        },
+        {
+          "name": "P2_RetryRequiresFreshPickup_AndReenabledControllerReceivesInput",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RetryRequiresFreshPickup_AndReenabledControllerReceivesInput",
+          "state": "Passed",
+          "durationSeconds": 0.7686301,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态初始化为: InGame\r\n"
+        },
+        {
+          "name": "Bdd09_DayHud_TestRaysHitStableSurfaceAtCentreAndBothEndpoints",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_DayHud_TestRaysHitStableSurfaceAtCentreAndBothEndpoints",
+          "state": "Passed",
+          "durationSeconds": 0.389168,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Bdd09_DayHud_UsesOneHundredMetreRangeAndFortyMetreRoute",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_DayHud_UsesOneHundredMetreRangeAndFortyMetreRoute",
+          "state": "Passed",
+          "durationSeconds": 0.4160222,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Bdd09_NoVrMode_UsesFloorOriginAndOnePlayerView",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_NoVrMode_UsesFloorOriginAndOnePlayerView",
+          "state": "Passed",
+          "durationSeconds": 0.4093427,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Bdd09_RoutePhases_OnlyExplicitAuthoritativeProgressMovesTarget",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_RoutePhases_OnlyExplicitAuthoritativeProgressMovesTarget",
+          "state": "Passed",
+          "durationSeconds": 0.4035408,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Bdd09_SideProfileTarget_HasUnifiedHitSurfaceAndFeedbackHooks",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_SideProfileTarget_HasUnifiedHitSurfaceAndFeedbackHooks",
+          "state": "Passed",
+          "durationSeconds": 0.4298301,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Bdd09_VrMode_KeepsExactlyOneCameraAndAudioListener",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_VrMode_KeepsExactlyOneCameraAndAudioListener",
+          "state": "Passed",
+          "durationSeconds": 0.5404874,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Bdd09_WaitingCountdown_RealFrameTimeCannotMoveTarget",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_WaitingCountdown_RealFrameTimeCannotMoveTarget",
+          "state": "Passed",
+          "durationSeconds": 0.7263669,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Bdd09_WaitingCountdown_TargetStartsAndRemainsAtRightEndpoint",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_WaitingCountdown_TargetStartsAndRemainsAtRightEndpoint",
+          "state": "Passed",
+          "durationSeconds": 0.3989255,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task003_006_SceneContainsStableProneRangeBindingsAndRouteIds",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_006_SceneContainsStableProneRangeBindingsAndRouteIds",
+          "state": "Passed",
+          "durationSeconds": 0.4704667,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task003_006_TrainingRifleCarriesTheCompleteP1InteractionAndFeedbackSetup",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_006_TrainingRifleCarriesTheCompleteP1InteractionAndFeedbackSetup",
+          "state": "Passed",
+          "durationSeconds": 0.4643201,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task003_ArtificialMoveTeleportAndTurnDoNotMovePlayerRoot",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_ArtificialMoveTeleportAndTurnDoNotMovePlayerRoot",
+          "state": "Passed",
+          "durationSeconds": 0.4748955,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task003_NoVrPreviewCameraRetainsTheTunedRangeComposition",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_NoVrPreviewCameraRetainsTheTunedRangeComposition",
+          "state": "Passed",
+          "durationSeconds": 0.4282537,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task003_ProneBindingsAreCompleteUniqueAndIndependent",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_ProneBindingsAreCompleteUniqueAndIndependent",
+          "state": "Passed",
+          "durationSeconds": 0.4080694,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy",
+          "state": "Passed",
+          "durationSeconds": 0.4152936,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task003_TrackedHeadReferenceCanChangeWithoutMovingPlayerRoot",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_TrackedHeadReferenceCanChangeWithoutMovingPlayerRoot",
+          "state": "Passed",
+          "durationSeconds": 0.4068677,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task006_FakeTimelineCoversSpeedsHoldsReverseFinishAndRetry",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_FakeTimelineCoversSpeedsHoldsReverseFinishAndRetry",
+          "state": "Passed",
+          "durationSeconds": 0.4703786,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task006_ImpactFeedbackConsumesEachConfirmedShotIdOnlyOnce",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_ImpactFeedbackConsumesEachConfirmedShotIdOnlyOnce",
+          "state": "Passed",
+          "durationSeconds": 0.4340991,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task006_SceneContainsOnlyFixedDayLighting",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_SceneContainsOnlyFixedDayLighting",
+          "state": "Passed",
+          "durationSeconds": 0.468005,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task006_TargetAndEnvironmentLayersAndMasksAreSeparated",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_TargetAndEnvironmentLayersAndMasksAreSeparated",
+          "state": "Passed",
+          "durationSeconds": 0.4149512,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task006_VisualDriverAcceptsAuthoritativeStateWithoutInferringRules",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_VisualDriverAcceptsAuthoritativeStateWithoutInferringRules",
+          "state": "Passed",
+          "durationSeconds": 0.4193313,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task018_ReferenceRange_CopiesP1DistanceMarkersFromTwentyFiveToOneHundredMetres",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_CopiesP1DistanceMarkersFromTwentyFiveToOneHundredMetres",
+          "state": "Passed",
+          "durationSeconds": 0.4059103,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task018_ReferenceRange_DataWinsCharactersAlignWithNumberCharacter",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_DataWinsCharactersAlignWithNumberCharacter",
+          "state": "Passed",
+          "durationSeconds": 0.4037086,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task018_ReferenceRange_HasCentredDataWinsSloganBelowWinBattles",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_HasCentredDataWinsSloganBelowWinBattles",
+          "state": "Passed",
+          "durationSeconds": 0.4134249,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task018_ReferenceRange_HasFiveSpacedP1FixedTargetsAroundCentre",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_HasFiveSpacedP1FixedTargetsAroundCentre",
+          "state": "Passed",
+          "durationSeconds": 0.4118868,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task018_ReferenceRange_HasThreeDimensionalRangeAndWallSlogans",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_HasThreeDimensionalRangeAndWallSlogans",
+          "state": "Passed",
+          "durationSeconds": 0.4184536,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task018_ReferenceRange_UsesThreeDimensionalRangeAndSparseGroundDetail",
+          "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_UsesThreeDimensionalRangeAndSparseGroundDetail",
+          "state": "Passed",
+          "durationSeconds": 0.4213077,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene",
+          "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene",
+          "state": "Passed",
+          "durationSeconds": 3.0100647,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds",
+          "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds",
+          "state": "Passed",
+          "durationSeconds": 2.1014941,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: MainMenu\r\n"
+        },
+        {
+          "name": "Screen17_Trench_DeathThreeRetriesTrackingAndMovement",
+          "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen17_Trench_DeathThreeRetriesTrackingAndMovement",
+          "state": "Passed",
+          "durationSeconds": 1.4142004,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Screen17_Trench_ProductionVictoryRetryAndReturn",
+          "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen17_Trench_ProductionVictoryRetryAndReturn",
+          "state": "Passed",
+          "durationSeconds": 1.5189913,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Screen21_Urban_DeathThreeRetriesTrackingAndMovement",
+          "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_DeathThreeRetriesTrackingAndMovement",
+          "state": "Passed",
+          "durationSeconds": 1.3813923,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Screen21_Urban_ProductionVictoryRetryAndReturn",
+          "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_ProductionVictoryRetryAndReturn",
+          "state": "Passed",
+          "durationSeconds": 2.4791539,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+        },
+        {
+          "name": "Screen23_VrGripsRetainIndependentPressHoldReleaseEdges",
+          "fullName": "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_VrGripsRetainIndependentPressHoldReleaseEdges",
+          "state": "Passed",
+          "durationSeconds": 0.2880066,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen23_VrSticksAndFaceButtonsReachP3Commands",
+          "fullName": "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_VrSticksAndFaceButtonsReachP3Commands",
+          "state": "Passed",
+          "durationSeconds": 0.2867133,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task003_FixedProneSceneHasNoFootstepComponent",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task003_FixedProneSceneHasNoFootstepComponent",
+          "state": "Passed",
+          "durationSeconds": 0.4470937,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态初始化为: InGame\r\n"
+        },
+        {
+          "name": "Task003_ZeroingRangeDisablesArtificialLocomotionWithoutLockingHeadReference",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task003_ZeroingRangeDisablesArtificialLocomotionWithoutLockingHeadReference",
+          "state": "Passed",
+          "durationSeconds": 0.425613,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task003_ZeroingRangeUsesTheSharedProneFiringStationContract",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task003_ZeroingRangeUsesTheSharedProneFiringStationContract",
+          "state": "Passed",
+          "durationSeconds": 0.4466602,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task004_DistanceMarkersShowZeroThroughOneHundredMetres",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_DistanceMarkersShowZeroThroughOneHundredMetres",
+          "state": "Passed",
+          "durationSeconds": 0.5599768,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task004_FirstPersonCompositionFramesTargetThroughRangeLane",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_FirstPersonCompositionFramesTargetThroughRangeLane",
+          "state": "Passed",
+          "durationSeconds": 0.4704706,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task004_SceneContainsStableTrainingAnchorsForVrAndNoVr",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_SceneContainsStableTrainingAnchorsForVrAndNoVr",
+          "state": "Passed",
+          "durationSeconds": 0.4271015,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task004_TargetCanBeHitFromShootingPosition",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_TargetCanBeHitFromShootingPosition",
+          "state": "Passed",
+          "durationSeconds": 0.4207765,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task004_TargetHasSpecifiedDimensionsAtOneHundredMetres",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_TargetHasSpecifiedDimensionsAtOneHundredMetres",
+          "state": "Passed",
+          "durationSeconds": 0.4313614,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task004_TrainingRifleStartsWithinComfortableRightHandReach",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_TrainingRifleStartsWithinComfortableRightHandReach",
+          "state": "Passed",
+          "durationSeconds": 0.4721489,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task004_XrOriginUsesFloorTrackingWithoutArtificialEyeHeight",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_XrOriginUsesFloorTrackingWithoutArtificialEyeHeight",
+          "state": "Passed",
+          "durationSeconds": 0.4706549,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task005_006_FireUpdatesSharedZeroingSession",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_006_FireUpdatesSharedZeroingSession",
+          "state": "Passed",
+          "durationSeconds": 0.5009079,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task005_AdsViewAlignsToGunLineAndFrontHandChangesAimDirection",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_AdsViewAlignsToGunLineAndFrontHandChangesAimDirection",
+          "state": "Passed",
+          "durationSeconds": 0.3879677,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task005_FeedbackUsesLicensedAudioAndProjectileVisualAssets",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_FeedbackUsesLicensedAudioAndProjectileVisualAssets",
+          "state": "Passed",
+          "durationSeconds": 0.4231017,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task005_FirstPersonTrainingWeaponHasRequiredVisibleBindings",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_FirstPersonTrainingWeaponHasRequiredVisibleBindings",
+          "state": "Passed",
+          "durationSeconds": 0.5381059,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task005_InvalidShotProducesNoAudioTracerOrImpactFeedback",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_InvalidShotProducesNoAudioTracerOrImpactFeedback",
+          "state": "Passed",
+          "durationSeconds": 0.5329855,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task005_NoVrFirstPersonWeaponFiresVisibleTracerAndTargetImpact",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_NoVrFirstPersonWeaponFiresVisibleTracerAndTargetImpact",
+          "state": "Passed",
+          "durationSeconds": 0.4222465,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task005_ReloadRestoresMagazineAfterSpendingAmmo",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_ReloadRestoresMagazineAfterSpendingAmmo",
+          "state": "Passed",
+          "durationSeconds": 0.4864058,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task005_ShoulderSwitchUpdatesNoVrWeaponState",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_ShoulderSwitchUpdatesNoVrWeaponState",
+          "state": "Passed",
+          "durationSeconds": 0.4264978,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task005_TrainingRifleUsesLicensedQbz191Visual",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_TrainingRifleUsesLicensedQbz191Visual",
+          "state": "Passed",
+          "durationSeconds": 0.4243032,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task005_ValidShotPlaysOneFeedbackStackAndArrivesAtRecordedImpact",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_ValidShotPlaysOneFeedbackStackAndArrivesAtRecordedImpact",
+          "state": "Passed",
+          "durationSeconds": 0.8400781,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task012_ImpactCoordinatesUseCentimetresAndMatchVisualMarker",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task012_ImpactCoordinatesUseCentimetresAndMatchVisualMarker",
+          "state": "Passed",
+          "durationSeconds": 0.4042242,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task012_ImpactOutsideFiftyCentimetreFaceIsRejected",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task012_ImpactOutsideFiftyCentimetreFaceIsRejected",
+          "state": "Passed",
+          "durationSeconds": 0.4184774,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task012_RaycastHitReturnsStableImpactCoordinates",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task012_RaycastHitReturnsStableImpactCoordinates",
+          "state": "Passed",
+          "durationSeconds": 0.4205974,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease",
+          "state": "Passed",
+          "durationSeconds": 0.727822,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task013_NoVrModeStartsOnRackAndCannotShootBeforeGrip",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_NoVrModeStartsOnRackAndCannotShootBeforeGrip",
+          "state": "Passed",
+          "durationSeconds": 0.5028677,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task013_RifleGripUsesStraightTriggerFingerAndOpenFrontHandWrap",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_RifleGripUsesStraightTriggerFingerAndOpenFrontHandWrap",
+          "state": "Passed",
+          "durationSeconds": 0.4383129,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task013_RiflePrefabHasDirectGrabPhysicsAndStableRecoilHierarchy",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_RiflePrefabHasDirectGrabPhysicsAndStableRecoilHierarchy",
+          "state": "Passed",
+          "durationSeconds": 0.4256694,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task013_RuntimeModeKeepsExactlyOneCameraAndAudioListener",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_RuntimeModeKeepsExactlyOneCameraAndAudioListener",
+          "state": "Passed",
+          "durationSeconds": 0.5993518,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task013_ShotProducesLocalRecoilAndTwoHandHapticsThenSettles",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_ShotProducesLocalRecoilAndTwoHandHapticsThenSettles",
+          "state": "Passed",
+          "durationSeconds": 1.0023085,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task013_VirtualHandGripPoseDeformsTheSkinnedMesh",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_VirtualHandGripPoseDeformsTheSkinnedMesh",
+          "state": "Passed",
+          "durationSeconds": 0.5461031,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task013_VirtualHandGripPoseUsesUprightRearGripAndPalmUpFrontSupport",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_VirtualHandGripPoseUsesUprightRearGripAndPalmUpFrontSupport",
+          "state": "Passed",
+          "durationSeconds": 0.4498577,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task013_VirtualHandsUseRiggedMeshesAndGripOnlyTheVisualLayer",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_VirtualHandsUseRiggedMeshesAndGripOnlyTheVisualLayer",
+          "state": "Passed",
+          "durationSeconds": 0.4294525,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task016_DistantHillRemainsClearFromTheFiringPosition",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_DistantHillRemainsClearFromTheFiringPosition",
+          "state": "Passed",
+          "durationSeconds": 0.4190179,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task016_ForestedHillSitsBehindTargetAndUsesTreeBillboards",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_ForestedHillSitsBehindTargetAndUsesTreeBillboards",
+          "state": "Passed",
+          "durationSeconds": 0.4166386,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task016_GrassGroundUsesTiledPbrSurface",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_GrassGroundUsesTiledPbrSurface",
+          "state": "Passed",
+          "durationSeconds": 0.4724664,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task016_LegacyPrimitiveTreeCrownsAreAbsent",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_LegacyPrimitiveTreeCrownsAreAbsent",
+          "state": "Passed",
+          "durationSeconds": 0.4237261,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task016_NoVrCameraHasClearTargetSightlineAndVrSafeSettings",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_NoVrCameraHasClearTargetSightlineAndVrSafeSettings",
+          "state": "Passed",
+          "durationSeconds": 0.4844911,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task016_P2BasedRangeKeepsWideHillAndTargetBayGeometry",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_P2BasedRangeKeepsWideHillAndTargetBayGeometry",
+          "state": "Passed",
+          "durationSeconds": 0.4095567,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task016_P2MovingTargetObjectsAreInactiveInP1",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_P2MovingTargetObjectsAreInactiveInP1",
+          "state": "Passed",
+          "durationSeconds": 0.4427514,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task016_SandPatchesBreakUpGrassWithoutReplacingTheGreenRange",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_SandPatchesBreakUpGrassWithoutReplacingTheGreenRange",
+          "state": "Passed",
+          "durationSeconds": 0.4353136,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task016_SceneStaysWithinPrototypeRenderingBudget",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_SceneStaysWithinPrototypeRenderingBudget",
+          "state": "Passed",
+          "durationSeconds": 0.4275304,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task016_VisualPolishKeepsTargetAndShootingBayRecognisable",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_VisualPolishKeepsTargetAndShootingBayRecognisable",
+          "state": "Passed",
+          "durationSeconds": 0.4235956,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Task016_WeaponCrateAppearsInLowerLeftWithoutBlockingTarget",
+          "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_WeaponCrateAppearsInLowerLeftWithoutBlockingTarget",
+          "state": "Passed",
+          "durationSeconds": 0.4138475,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "P1Flow_InputStub_Round1Pass_ShowsExcellentFinalRating",
+          "fullName": "VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_InputStub_Round1Pass_ShowsExcellentFinalRating",
+          "state": "Passed",
+          "durationSeconds": 1.5993953,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: InGame\r\n"
+        },
+        {
+          "name": "P1Flow_InputStub_ThreeRoundsFail_ShowsFailFinalRating",
+          "fullName": "VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_InputStub_ThreeRoundsFail_ShowsFailFinalRating",
+          "state": "Passed",
+          "durationSeconds": 0.9202821,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: InGame\r\n"
+        },
+        {
+          "name": "P1Flow_SceneOwned_MainMenuToRange_Round1PassShowsExcellent",
+          "fullName": "VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_SceneOwned_MainMenuToRange_Round1PassShowsExcellent",
+          "state": "Passed",
+          "durationSeconds": 1.3286101,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: InGame\r\n"
+        },
+        {
+          "name": "Screen09_NoVrInput_HeldTriggerConsumesTenRounds",
+          "fullName": "VRShooting.Tests.PlayMode.Flow.Screen09_AutoFireNoVrPlayModeTests.Screen09_NoVrInput_HeldTriggerConsumesTenRounds",
+          "state": "Passed",
+          "durationSeconds": 0.1733596,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen09_NoVrInput_QuickTapFiresTwoShots",
+          "fullName": "VRShooting.Tests.PlayMode.Flow.Screen09_AutoFireNoVrPlayModeTests.Screen09_NoVrInput_QuickTapFiresTwoShots",
+          "state": "Passed",
+          "durationSeconds": 0.1699068,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Infrastructure_UITestId_DefaultId_IsEmptyStringNotNull",
+          "fullName": "VRShooting.Tests.PlayMode.Infrastructure.Infrastructure_UITestIdTests.Infrastructure_UITestId_DefaultId_IsEmptyStringNotNull",
+          "state": "Passed",
+          "durationSeconds": 0.1699316,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen22_BlankSceneConsumesUiAndSceneFixturesThenUnsubscribes",
+          "fullName": "VRShooting.Tests.PlayMode.Infrastructure.Screen22_P3FixturePlayModeTests.Screen22_BlankSceneConsumesUiAndSceneFixturesThenUnsubscribes",
+          "state": "Passed",
+          "durationSeconds": 0.2432145,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen02_MainMenuConfirmWithNoVrInputSubstitute_Opens100mZeroingEntry",
+          "fullName": "VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests.Screen02_MainMenuConfirmWithNoVrInputSubstitute_Opens100mZeroingEntry",
+          "state": "Passed",
+          "durationSeconds": 0.2344394,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen05_NoVrInputSubstitute_AimInput_IsPublishedForWeaponControl",
+          "fullName": "VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests.Screen05_NoVrInputSubstitute_AimInput_IsPublishedForWeaponControl",
+          "state": "Passed",
+          "durationSeconds": 0.1802167,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen05_NoVrInputSubstitute_TriggerReloadAndShoulderSwitch_ArePublishedForServiceLayer",
+          "fullName": "VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests.Screen05_NoVrInputSubstitute_TriggerReloadAndShoulderSwitch_ArePublishedForServiceLayer",
+          "state": "Passed",
+          "durationSeconds": 0.1654377,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Locomotion_P1P2StayFixed_AndVrDoesNotMoveEyeHeight",
+          "fullName": "VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.Locomotion_P1P2StayFixed_AndVrDoesNotMoveEyeHeight",
+          "state": "Passed",
+          "durationSeconds": 0.1814186,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "ManualInput_PickupTwoHandsSingleShot_ReloadShoulderPostureAndCombat",
+          "fullName": "VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.ManualInput_PickupTwoHandsSingleShot_ReloadShoulderPostureAndCombat",
+          "state": "Passed",
+          "durationSeconds": 0.1682211,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "PhysicsFirstHit_BlocksWallAndEmbeddedMuzzle",
+          "fullName": "VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.PhysicsFirstHit_BlocksWallAndEmbeddedMuzzle",
+          "state": "Passed",
+          "durationSeconds": 0.1694111,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "TrackingAndPause_BlockHeldTrigger_AndStopMovement",
+          "fullName": "VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.TrackingAndPause_BlockHeldTrigger_AndStopMovement",
+          "state": "Passed",
+          "durationSeconds": 0.1694546,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "FakeNavigation_AcknowledgesActualSquadPositions_AndStopsAtCancel",
+          "fullName": "VRShooting.Tests.PlayMode.Screen24_TrenchPlayModeTests.FakeNavigation_AcknowledgesActualSquadPositions_AndStopsAtCancel",
+          "state": "Passed",
+          "durationSeconds": 0.1778829,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "FakeScene_BriefingCombatVictoryRetryFailure_UpdatesHudAndUnsubscribes",
+          "fullName": "VRShooting.Tests.PlayMode.Screen24_TrenchPlayModeTests.FakeScene_BriefingCombatVictoryRetryFailure_UpdatesHudAndUnsubscribes",
+          "state": "Passed",
+          "durationSeconds": 0.4151408,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "BuildingFailureKeepsCountsAndOldSessionInputsAreRejected",
+          "fullName": "VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.BuildingFailureKeepsCountsAndOldSessionInputsAreRejected",
+          "state": "Passed",
+          "durationSeconds": 0.1825255,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "SceneFactsDriveStreetBuildingDoorsVictoryAndRetry",
+          "fullName": "VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.SceneFactsDriveStreetBuildingDoorsVictoryAndRetry",
+          "state": "Passed",
+          "durationSeconds": 0.5296715,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "TrenchButtonsDriveVictoryRetryFailureAndPersistenceRecovery",
+          "fullName": "VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.TrenchButtonsDriveVictoryRetryFailureAndPersistenceRecovery",
+          "state": "Passed",
+          "durationSeconds": 0.4529561,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry",
+          "fullName": "VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry",
+          "state": "Passed",
+          "durationSeconds": 0.7012497,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "P3UiRoot_BuildsAllPagesAndFrozenTestIds",
+          "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.P3UiRoot_BuildsAllPagesAndFrozenTestIds",
+          "state": "Passed",
+          "durationSeconds": 0.2229142,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing",
+          "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing",
+          "state": "Passed",
+          "durationSeconds": 0.2294368,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand",
+          "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand",
+          "state": "Passed",
+          "durationSeconds": 0.2247908,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents",
+          "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents",
+          "state": "Passed",
+          "durationSeconds": 0.2338074,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent",
+          "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent",
+          "state": "Passed",
+          "durationSeconds": 0.2298552,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen18_UrbanMapSelection_RendersRangesAndStartsStreet",
+          "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet",
+          "state": "Passed",
+          "durationSeconds": 0.2328621,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible",
+          "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible",
+          "state": "Passed",
+          "durationSeconds": 0.2400867,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands",
+          "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands",
+          "state": "Passed",
+          "durationSeconds": 0.2314784,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce",
+          "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce",
+          "state": "Passed",
+          "durationSeconds": 0.2333437,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen00_AllSharedNodesHaveStableTestIdsAndHudKeepsCenterAimReserveClear",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_AllSharedNodesHaveStableTestIdsAndHudKeepsCenterAimReserveClear",
+          "state": "Passed",
+          "durationSeconds": 0.277292,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen00_AnchorBinderReportsMissingAnchorAndSupportsDefaultFakeAnchors",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_AnchorBinderReportsMissingAnchorAndSupportsDefaultFakeAnchors",
+          "state": "Passed",
+          "durationSeconds": 0.294329,
+          "message": null,
+          "stackTrace": null,
+          "output": "[TrainingUIAnchorBinder] Missing LargePanel anchor.\r\n"
+        },
+        {
+          "name": "Screen00_DisableEnableAndDestroyKeepOneSubscriptionAndSelfHealFromQuery",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_DisableEnableAndDestroyKeepOneSubscriptionAndSelfHealFromQuery",
+          "state": "Passed",
+          "durationSeconds": 0.4520359,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen00_FakeSnapshotsAtomicallyDriveLargePanelMinimalHudAndCurrentScreen",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_FakeSnapshotsAtomicallyDriveLargePanelMinimalHudAndCurrentScreen",
+          "state": "Passed",
+          "durationSeconds": 0.5269228,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen00_NextRoundClickSendsOneCommandAndWaitsForReturnedSnapshotToHide",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_NextRoundClickSendsOneCommandAndWaitsForReturnedSnapshotToHide",
+          "state": "Passed",
+          "durationSeconds": 0.3984469,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen00_RepeatedAndOutOfOrderEventsDoNotReapplyOrFlashOlderPanel",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_RepeatedAndOutOfOrderEventsDoNotReapplyOrFlashOlderPanel",
+          "state": "Passed",
+          "durationSeconds": 0.3894613,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen02_InputInfrastructure_SupportsDesktopAndXrPointers",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_InputInfrastructure_SupportsDesktopAndXrPointers",
+          "state": "Passed",
+          "durationSeconds": 0.2240752,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen02_MainMenuOpenZeroingButton_RoutesToZeroingBriefing",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_MainMenuOpenZeroingButton_RoutesToZeroingBriefing",
+          "state": "Passed",
+          "durationSeconds": 0.2330611,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton",
+          "state": "Passed",
+          "durationSeconds": 0.3410164,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist",
+          "state": "Passed",
+          "durationSeconds": 0.2229254,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu",
+          "state": "Passed",
+          "durationSeconds": 0.2834856,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup",
+          "state": "Passed",
+          "durationSeconds": 0.2995657,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen04_ZeroingBriefingStartButton_IsIdempotentForRepeatedClicks",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingStartButton_IsIdempotentForRepeatedClicks",
+          "state": "Passed",
+          "durationSeconds": 0.2817559,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen02_05_ClickZeroingWaitsForPickupThenShowsSceneOwnedHud",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_05_ClickZeroingWaitsForPickupThenShowsSceneOwnedHud",
+          "state": "Passed",
+          "durationSeconds": 1.2202205,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: MainMenu\r\n[GameStateManager] 状态改变为: InGame\r\n"
+        },
+        {
+          "name": "Screen02_MainScene_SwitchesBetweenDesktopAndVrUiModes",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_MainScene_SwitchesBetweenDesktopAndVrUiModes",
+          "state": "Passed",
+          "durationSeconds": 0.6642789,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: MainMenu\r\n"
+        },
+        {
+          "name": "Screen02_MainScene_VrUsesFloorTrackingAndReadableStabilizedMenu",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_MainScene_VrUsesFloorTrackingAndReadableStabilizedMenu",
+          "state": "Passed",
+          "durationSeconds": 0.7174165,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: MainMenu\r\n"
+        },
+        {
+          "name": "Screen05_ZeroingHud_FireRefreshesAmmoAndImpactRecord",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_FireRefreshesAmmoAndImpactRecord",
+          "state": "Passed",
+          "durationSeconds": 0.4269407,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen05_ZeroingHud_LoadsInitialDtoValues",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_LoadsInitialDtoValues",
+          "state": "Passed",
+          "durationSeconds": 0.3353869,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen05_ZeroingHud_ToggleShoulderRefreshesPrompt",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_ToggleShoulderRefreshesPrompt",
+          "state": "Passed",
+          "durationSeconds": 0.418899,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen05_ZeroingHud_ZeroAmmoShowsBlockedPrompt",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_ZeroAmmoShowsBlockedPrompt",
+          "state": "Passed",
+          "durationSeconds": 0.4065106,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen06_ApplyAdjustmentUpdatesStateAndNextRoundReturnsToHud",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ApplyAdjustmentUpdatesStateAndNextRoundReturnsToHud",
+          "state": "Passed",
+          "durationSeconds": 0.4545838,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen06_BackToMainMenuButtonReturnsToMainMenu",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_BackToMainMenuButtonReturnsToMainMenu",
+          "state": "Passed",
+          "durationSeconds": 0.4109888,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen06_ThirdRoundPrimaryActionOpensFinalRating",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThirdRoundPrimaryActionOpensFinalRating",
+          "state": "Passed",
+          "durationSeconds": 0.6837884,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto",
+          "state": "Passed",
+          "durationSeconds": 0.3398082,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen07_BackToModeSelectionReturnsToMainMenuFallback",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests.Screen07_BackToModeSelectionReturnsToMainMenuFallback",
+          "state": "Passed",
+          "durationSeconds": 0.5644473,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen07_FirstRoundPassShowsExcellentFinalRating",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests.Screen07_FirstRoundPassShowsExcellentFinalRating",
+          "state": "Passed",
+          "durationSeconds": 0.5157896,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen07_RetryReturnsToZeroingBriefing",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests.Screen07_RetryReturnsToZeroingBriefing",
+          "state": "Passed",
+          "durationSeconds": 0.562827,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Destroy_UnsubscribesAndDisposesFakePort",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Destroy_UnsubscribesAndDisposesFakePort",
+          "state": "Passed",
+          "durationSeconds": 0.2937673,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen00_SceneAnchorsBindLargePanelAndMinimalHudAsIndependentWorldCanvases",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen00_SceneAnchorsBindLargePanelAndMinimalHudAsIndependentWorldCanvases",
+          "state": "Passed",
+          "durationSeconds": 0.2888499,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen08_MissingSpeedConfigurationCannotStartAndShowsServiceError",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen08_MissingSpeedConfigurationCannotStartAndShowsServiceError",
+          "state": "Passed",
+          "durationSeconds": 0.2792481,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen08_StartSuccessWaitsForPickupAndLiveDtoAtomicallyShowsMinimalHud",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen08_StartSuccessWaitsForPickupAndLiveDtoAtomicallyShowsMinimalHud",
+          "state": "Passed",
+          "durationSeconds": 0.3569535,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen08_ThreeSpeedsDefaultToFourAndForwardOnlySelectedSpeed",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen08_ThreeSpeedsDefaultToFourAndForwardOnlySelectedSpeed",
+          "state": "Passed",
+          "durationSeconds": 0.2802589,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen09_HudConsumesCountdownPerShotContinuousAndForbiddenSnapshotsInOrder",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen09_HudConsumesCountdownPerShotContinuousAndForbiddenSnapshotsInOrder",
+          "state": "Passed",
+          "durationSeconds": 0.2862872,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen11_BackToModeSelectionSendsOnlyOneExitCommand",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_BackToModeSelectionSendsOnlyOneExitCommand",
+          "state": "Passed",
+          "durationSeconds": 0.2820847,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen11_CompletionShowsVariableSequencesAndRetrySendsOneCommand",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_CompletionShowsVariableSequencesAndRetrySendsOneCommand",
+          "state": "Passed",
+          "durationSeconds": 0.3491001,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Fail,\"不及格\",0,\"0%\")",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Fail,\"不及格\",0,\"0%\")",
+          "state": "Passed",
+          "durationSeconds": 0.1135569,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Pass,\"及格\",3,\"37.5%\")",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Pass,\"及格\",3,\"37.5%\")",
+          "state": "Passed",
+          "durationSeconds": 0.1164781,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Good,\"良好\",4,\"50%\")",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Good,\"良好\",4,\"50%\")",
+          "state": "Passed",
+          "durationSeconds": 0.1104658,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        },
+        {
+          "name": "Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Excellent,\"优秀\",8,\"100%\")",
+          "fullName": "VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Excellent,\"优秀\",8,\"100%\")",
+          "state": "Passed",
+          "durationSeconds": 0.1113395,
+          "message": null,
+          "stackTrace": null,
+          "output": ""
+        }
+      ]
+    }
+  },
+  "hint": null
+}

@@ -32,6 +32,8 @@ namespace SimulatedShooting.Scene
         public Transform Drone;
         public CombatActorView EnemyPrefab;
         public CombatActorView TeammatePrefab;
+        public GameObject TrainingRiflePrefab;
+        public AudioClip RifleShotClip;
         public CombatScenePoint[] Points = Array.Empty<CombatScenePoint>();
         public CombatDoorView[] Doors = Array.Empty<CombatDoorView>();
         public CombatMapBinding[] Maps = Array.Empty<CombatMapBinding>();

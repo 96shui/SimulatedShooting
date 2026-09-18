@@ -21,6 +21,15 @@ namespace VRShooting.Tests.EditMode
         void Range(string key){Assert.That(service.Submit(new CombatInputDto {SessionId=id,Tick=clock.Tick,EventId="range-"+ ++sequence,Kind=CombatInputKind.AreaPresence,EntityId=key,Flag=true}).Success);service.Advance(id);}
         void Enter(){Range("urban-a.entrance");Assert.That(service.EnterBuilding(id,"urban-a.entrance").Success);}
         string[] Rooms=>P3Fixtures.UrbanDefinition.Floors.SelectMany(f=>f.Rooms).Select(r=>r.RoomId).ToArray();
+        [Test] public void Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime()
+        {
+            Start();
+            Range("urban-a.entrance");
+            Assert.That(service.GetHud(id).Data.Prompts.Any(p=>p.PromptId=="EnterBuilding"&&p.IsEnabled),Is.True);
+            service.Submit(new CombatInputDto{SessionId=id,Tick=clock.Tick,EventId="leave-entry",Kind=CombatInputKind.AreaPresence,EntityId="urban-a.entrance",Flag=false});
+            service.Advance(id);
+            Assert.That(service.GetHud(id).Data.Prompts.Any(p=>p.PromptId=="EnterBuilding"&&p.IsEnabled),Is.False);
+        }
         CombatShotDto Shot(){service.Combat.SetGrip(new WeaponGripStateInputDto {SessionId=id,HoldState=WeaponHoldState.TwoHandHeld,RearHandTracked=true,FrontHandTracked=true});return service.Combat.Fire(new WeaponFireInputDto {SessionId=id,AimDirection=Vector3.forward}).Data;}
         void Hit(string enemy,CombatShotDto shot){Assert.That(service.Submit(new CombatInputDto {SessionId=id,Tick=clock.Tick,EventId="hit-"+ ++sequence,Kind=CombatInputKind.Hit,EntityId=id+".player",TargetId=enemy,ShotId=shot.ShotId,Flag=true,Value=1}).Success);}
         void Kill(EncounterGroup? group=null){foreach(var enemy in service.GetEnemyAssignments(id).Data.Where(e=>!group.HasValue||e.Group==group)) {Hit(enemy.EntityId,Shot());service.Advance(id);}}

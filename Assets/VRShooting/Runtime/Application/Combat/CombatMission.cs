@@ -8,11 +8,13 @@ namespace VRShooting.Application.Combat
     public sealed class CombatMission : ICombatTickPort, IDisposable
     {
         readonly Func<DateTime> utcNow;
+        readonly ICombatClock sceneClock;
         bool disposed;
         CombatSummaryDto? summary;
         public CombatMission(ICombatSceneLease scene, Func<DateTime> utcNow = null)
         {
             this.utcNow = utcNow ?? (() => DateTime.UtcNow);
+            sceneClock=scene.Clock;
             Definition = scene.Definition;
             if (Definition.Mode == TrainingMode.Trench)
             {
@@ -55,6 +57,11 @@ namespace VRShooting.Application.Combat
                 if (!result.Success) return ServiceResult<Unit>.Fail(result.ErrorCode, result.Message);
                 SessionId = result.Data.SessionId;
             }
+            var forward=Definition.PlayerSpawnForward.sqrMagnitude>0 ? Definition.PlayerSpawnForward : UnityEngine.Vector3.forward;
+            Core.Submit(new CombatInputDto {SessionId=SessionId,EventId="initial-player-pose",Tick=sceneClock.Tick,
+                Kind=CombatInputKind.PlayerPose,EntityId=SessionId+".player",Position=Definition.PlayerSpawnPosition,Direction=forward});
+            Core.Advance(SessionId);
+            (Squad as SquadFormationService)?.Start(SessionId,Definition.PlayerSpawnPosition,forward);
             Changed?.Invoke(); return ServiceResult<Unit>.Ok(Unit.Value);
         }
         public ServiceResult<Unit> Advance()

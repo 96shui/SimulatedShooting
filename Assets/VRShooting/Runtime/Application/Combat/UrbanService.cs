@@ -161,7 +161,7 @@ namespace VRShooting.Application.Combat
                 {
                     if(input.Kind==CombatInputKind.AreaPresence)
                     {
-                        if(input.Flag)inRange.Add(input.EntityId);else inRange.Remove(input.EntityId);
+                        if(input.Flag)dirty|=inRange.Add(input.EntityId);else dirty|=inRange.Remove(input.EntityId);
                         if(input.Flag&&phase==UrbanPhase.Building&&definition.Floors.Any(f=>f.FloorId==input.EntityId)&&floor!=input.EntityId){floor=input.EntityId;dirty=true;}
                     }
                     else if(Active)squad.Submit(input);

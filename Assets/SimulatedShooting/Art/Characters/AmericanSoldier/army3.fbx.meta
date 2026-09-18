@@ -1,0 +1,860 @@
+fileFormatVersion: 2
+guid: 405d712ff14953b468f9847d4c80f485
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human:
+    - boneName: mott_var01:Hips
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftUpLeg
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightUpLeg
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftLeg
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightLeg
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftFoot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightFoot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:Spine
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:Spine1
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:Neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftShoulder
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightShoulder
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftForeArm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightForeArm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftToeBase
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightToeBase
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandThumb1
+      humanName: Left Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandThumb2
+      humanName: Left Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandThumb3
+      humanName: Left Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandIndex1
+      humanName: Left Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandIndex2
+      humanName: Left Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandIndex3
+      humanName: Left Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandMiddle1
+      humanName: Left Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandMiddle2
+      humanName: Left Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandMiddle3
+      humanName: Left Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandRing1
+      humanName: Left Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandRing2
+      humanName: Left Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandRing3
+      humanName: Left Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandPinky1
+      humanName: Left Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandPinky2
+      humanName: Left Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:LeftHandPinky3
+      humanName: Left Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandThumb1
+      humanName: Right Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandThumb2
+      humanName: Right Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandThumb3
+      humanName: Right Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandIndex1
+      humanName: Right Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandIndex2
+      humanName: Right Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandIndex3
+      humanName: Right Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandMiddle1
+      humanName: Right Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandMiddle2
+      humanName: Right Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandMiddle3
+      humanName: Right Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandRing1
+      humanName: Right Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandRing2
+      humanName: Right Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandRing3
+      humanName: Right Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandPinky1
+      humanName: Right Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandPinky2
+      humanName: Right Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:RightHandPinky3
+      humanName: Right Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: mott_var01:Spine2
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: army3(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:Mesh_0090
+      parentName: army3(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:Hips
+      parentName: army3(Clone)
+      position: {x: -0.0000052009927, y: 1.0515213, z: 0.002509014}
+      rotation: {x: -0.00000036139238, y: -0.0000014986609, z: 0.000047646336, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftUpLeg
+      parentName: mott_var01:Hips
+      position: {x: -0.094529696, y: -0.055392303, z: -0.0035569477}
+      rotation: {x: 0.0012790632, y: -0.0003621628, z: 0.9999767, w: 0.006701177}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftLeg
+      parentName: mott_var01:LeftUpLeg
+      position: {x: 0.0000000012272587, y: 0.42853588, z: 6.8978495e-10}
+      rotation: {x: -0.028902633, y: -0.00014393112, z: 0.013011918, w: 0.99949753}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftFoot
+      parentName: mott_var01:LeftLeg
+      position: {x: -0.0000000018764608, y: 0.45337683, z: 0.0000000024802946}
+      rotation: {x: 0.47257197, y: -0.018223694, z: -0.028282192, w: 0.8806496}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftToeBase
+      parentName: mott_var01:LeftFoot
+      position: {x: 3.0269862e-10, y: 0.18416712, z: 0.0000000036417895}
+      rotation: {x: 0.31906012, y: 0.08865127, z: -0.029991534, w: 0.9431024}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftToe_End
+      parentName: mott_var01:LeftToeBase
+      position: {x: 2.419325e-10, y: 0.07376768, z: 3.3164835e-11}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightUpLeg
+      parentName: mott_var01:Hips
+      position: {x: 0.094529696, y: -0.055392303, z: -0.0021231985}
+      rotation: {x: -0.0011971855, y: 0.0024004534, z: 0.99997455, w: -0.0066091795}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightLeg
+      parentName: mott_var01:RightUpLeg
+      position: {x: 1.5749357e-10, y: 0.42850864, z: 8.216532e-10}
+      rotation: {x: -0.03584335, y: 0.00021245817, z: -0.013021783, w: 0.9992726}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightFoot
+      parentName: mott_var01:RightLeg
+      position: {x: 0.0000000014475716, y: 0.45368487, z: 0.0000000024895077}
+      rotation: {x: 0.47883654, y: 0.018138058, z: 0.028300758, w: 0.8772603}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightToeBase
+      parentName: mott_var01:RightFoot
+      position: {x: -2.4461858e-10, y: 0.18563226, z: 0.000000008263893}
+      rotation: {x: 0.31630087, y: -0.08938903, z: 0.02995227, w: 0.94396305}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightToe_End
+      parentName: mott_var01:RightToeBase
+      position: {x: 7.37373e-11, y: 0.07366845, z: -1.4681287e-11}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:Spine
+      parentName: mott_var01:Hips
+      position: {x: -0, y: 0.099694364, z: -0.010692779}
+      rotation: {x: -0.053397745, y: 0.0000040407613, z: -0.000047498335, w: 0.99857336}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:Spine1
+      parentName: mott_var01:Spine
+      position: {x: -0, y: 0.11697728, z: -1.12703305e-10}
+      rotation: {x: 7.756376e-26, y: -1.1513365e-13, z: 6.736845e-13, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:Spine2
+      parentName: mott_var01:Spine1
+      position: {x: -0, y: 0.13368818, z: -2.2076704e-10}
+      rotation: {x: -0, y: -3.1554436e-30, z: -6.60671e-29, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:Neck
+      parentName: mott_var01:Spine2
+      position: {x: -0, y: 0.15039931, z: 0.000000018495292}
+      rotation: {x: 0.05339819, y: -6.6788136e-30, z: -6.5804344e-29, w: 0.9985733}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:Head
+      parentName: mott_var01:Neck
+      position: {x: -0, y: 0.072896115, z: 0.018295515}
+      rotation: {x: -0.000000013344634, y: 1.8634725e-20, z: 2.486736e-28, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:HeadTop_End
+      parentName: mott_var01:Head
+      position: {x: -0, y: 0.2319136, z: 0.05820581}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftShoulder
+      parentName: mott_var01:Spine2
+      position: {x: -0.060548156, y: 0.1225773, z: -0.0030096918}
+      rotation: {x: 0.54959047, y: -0.43674162, z: 0.5695471, w: 0.42757836}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftArm
+      parentName: mott_var01:LeftShoulder
+      position: {x: -1.9210927e-10, y: 0.13397937, z: 0.0000000016289976}
+      rotation: {x: -0.12810059, y: -0.07236984, z: -0.0059212022, w: 0.9890995}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftForeArm
+      parentName: mott_var01:LeftArm
+      position: {x: -5.6692515e-11, y: 0.27238312, z: -0.0000000034816798}
+      rotation: {x: -0.00000034671243, y: -0.0007047429, z: -0.00000015975023, w: 0.99999976}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHand
+      parentName: mott_var01:LeftForeArm
+      position: {x: -0.000000001058207, y: 0.28145754, z: 0.000000007029889}
+      rotation: {x: -0.0007320776, y: 0.015936436, z: 0.051107697, w: 0.99856573}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandThumb1
+      parentName: mott_var01:LeftHand
+      position: {x: 0.020908695, y: 0.0246063, z: 0.020862471}
+      rotation: {x: 0.10182655, y: 0.04165473, z: -0.28028768, w: 0.9535906}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandThumb2
+      parentName: mott_var01:LeftHandThumb1
+      position: {x: 0.007186517, y: 0.02990321, z: 1.829207e-11}
+      rotation: {x: 0.00033074044, y: 0.00394095, z: -0.15162867, w: 0.9884296}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandThumb3
+      parentName: mott_var01:LeftHandThumb2
+      position: {x: -0.0023953444, y: 0.03487554, z: -7.1478254e-11}
+      rotation: {x: -0.001035571, y: 0.0091385795, z: -0.044211324, w: 0.99897987}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandThumb4
+      parentName: mott_var01:LeftHandThumb3
+      position: {x: -0.0047911713, y: 0.030261017, z: -4.4941045e-10}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandMiddle1
+      parentName: mott_var01:LeftHand
+      position: {x: 0.01092653, y: 0.10652072, z: 0.00033094417}
+      rotation: {x: 0.0014659653, y: -0.0016091524, z: -0.051248237, w: 0.9986836}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandMiddle2
+      parentName: mott_var01:LeftHandMiddle1
+      position: {x: -0.000009677547, y: 0.031896375, z: -7.109189e-10}
+      rotation: {x: -0.00000038417224, y: -0.0000032632472, z: 0.00017294288, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandMiddle3
+      parentName: mott_var01:LeftHandMiddle2
+      position: {x: 0.0000009634504, y: 0.030737814, z: 7.9492707e-10}
+      rotation: {x: 0.00000027124858, y: 0.0000047831463, z: 0.00017032027, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandMiddle4
+      parentName: mott_var01:LeftHandMiddle3
+      position: {x: 0.000008714591, y: 0.024117704, z: 2.0570481e-10}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandPinky1
+      parentName: mott_var01:LeftHand
+      position: {x: -0.034202315, y: 0.08596373, z: 0.002038302}
+      rotation: {x: 0.0014821541, y: -0.0012850221, z: -0.05142665, w: 0.99867487}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandPinky2
+      parentName: mott_var01:LeftHandPinky1
+      position: {x: -0.000020572526, y: 0.031275578, z: -5.1974663e-10}
+      rotation: {x: -0.000000004919473, y: -0.000010356361, z: 0.0003936886, w: 0.99999994}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandPinky3
+      parentName: mott_var01:LeftHandPinky2
+      position: {x: 0.0000030907297, y: 0.025900101, z: -3.4430228e-10}
+      rotation: {x: 0.00000022477215, y: 0.000009059717, z: 0.00033099955, w: 0.99999994}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandPinky4
+      parentName: mott_var01:LeftHandPinky3
+      position: {x: 0.000017482449, y: 0.02185975, z: -5.53826e-10}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandIndex1
+      parentName: mott_var01:LeftHand
+      position: {x: 0.034729455, y: 0.08843068, z: 0.0023262675}
+      rotation: {x: 0.0015803712, y: 0.0006384698, z: -0.05126301, w: 0.99868375}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandIndex2
+      parentName: mott_var01:LeftHandIndex1
+      position: {x: -0.000012398591, y: 0.034294084, z: 5.5835725e-10}
+      rotation: {x: 0.00000014471121, y: -0.0000040234977, z: 0.0002647489, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandIndex3
+      parentName: mott_var01:LeftHandIndex2
+      position: {x: 0.0000056781264, y: 0.033396922, z: -9.0507923e-10}
+      rotation: {x: 0.0000004315873, y: 0.0000035767468, z: 0.000036478068, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandIndex4
+      parentName: mott_var01:LeftHandIndex3
+      position: {x: 0.0000067217043, y: 0.027729766, z: -1.8452794e-12}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandRing1
+      parentName: mott_var01:LeftHand
+      position: {x: -0.011453665, y: 0.10781994, z: 0.00048552788}
+      rotation: {x: 0.001433397, y: -0.0022511631, z: -0.051689055, w: 0.9986597}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandRing2
+      parentName: mott_var01:LeftHandRing1
+      position: {x: -0.000034791115, y: 0.029281152, z: -0.0000000017216752}
+      rotation: {x: 0.00000032407084, y: -0.00002995101, z: 0.0007759929, w: 0.9999997}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandRing3
+      parentName: mott_var01:LeftHandRing2
+      position: {x: 0.000009780655, y: 0.028025288, z: 6.802584e-10}
+      rotation: {x: 0.00000014939329, y: 0.000012754741, z: 0.00037610537, w: 0.99999994}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:LeftHandRing4
+      parentName: mott_var01:LeftHandRing3
+      position: {x: 0.000025010744, y: 0.02254441, z: -2.6282648e-10}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightShoulder
+      parentName: mott_var01:Spine2
+      position: {x: 0.060548156, y: 0.12257186, z: -0.0029589897}
+      rotation: {x: -0.54987526, y: -0.43658197, z: 0.56930983, w: -0.4276912}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightArm
+      parentName: mott_var01:RightShoulder
+      position: {x: 1.9281221e-10, y: 0.13397937, z: 0.0000000016289141}
+      rotation: {x: -0.12811054, y: 0.070562534, z: 0.00573977, w: 0.98922986}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightForeArm
+      parentName: mott_var01:RightArm
+      position: {x: 1.5519308e-10, y: 0.27237454, z: 0.000000001354045}
+      rotation: {x: 0.00000008851956, y: 0.0007225658, z: -0.0000001210963, w: 0.99999976}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHand
+      parentName: mott_var01:RightForeArm
+      position: {x: 2.5425406e-10, y: 0.28118426, z: 0.0000000015552687}
+      rotation: {x: -0.0010864867, y: -0.0051476285, z: -0.046638098, w: 0.998898}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandThumb1
+      parentName: mott_var01:RightHand
+      position: {x: -0.020274855, y: 0.025513496, z: 0.022029655}
+      rotation: {x: 0.10116562, y: -0.053432494, z: 0.27641764, w: 0.95420325}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandThumb2
+      parentName: mott_var01:RightHandThumb1
+      position: {x: -0.007367844, y: 0.030593984, z: -2.1463485e-10}
+      rotation: {x: 0.00025861862, y: -0.002635351, z: 0.13800691, w: 0.99042773}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandThumb3
+      parentName: mott_var01:RightHandThumb2
+      position: {x: 0.0013960953, y: 0.03439193, z: 4.0610997e-11}
+      rotation: {x: -0.0007520442, y: -0.006192945, z: 0.08021885, w: 0.9967578}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandThumb4
+      parentName: mott_var01:RightHandThumb3
+      position: {x: 0.005971748, y: 0.029282777, z: -4.4089574e-10}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandRing1
+      parentName: mott_var01:RightHand
+      position: {x: 0.011273284, y: 0.097284384, z: 0.0002596808}
+      rotation: {x: 0.0011808571, y: 0.0030956178, z: 0.046137795, w: 0.9989296}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandRing2
+      parentName: mott_var01:RightHandRing1
+      position: {x: -0.000032583186, y: 0.033061806, z: 9.023556e-10}
+      rotation: {x: 0.00000033415586, y: -0.000018888053, z: 0.0007355214, w: 0.99999976}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandRing3
+      parentName: mott_var01:RightHandRing2
+      position: {x: 0.000014730514, y: 0.031724494, z: 6.135237e-10}
+      rotation: {x: 0.00000017431574, y: 0.000010985396, z: 0.00009903312, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandRing4
+      parentName: mott_var01:RightHandRing3
+      position: {x: 0.000017853099, y: 0.02682816, z: -7.3006656e-10}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandPinky1
+      parentName: mott_var01:RightHand
+      position: {x: 0.033779833, y: 0.09115431, z: 0.003115451}
+      rotation: {x: 0.0011517496, y: 0.0037195017, z: 0.046152446, w: 0.9989269}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandPinky2
+      parentName: mott_var01:RightHandPinky1
+      position: {x: -0.00002910674, y: 0.029905217, z: 1.7377616e-10}
+      rotation: {x: -0.00000032135105, y: -0.000023510764, z: 0.0006515682, w: 0.9999998}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandPinky3
+      parentName: mott_var01:RightHandPinky2
+      position: {x: 0.000008335907, y: 0.023984466, z: 5.462415e-10}
+      rotation: {x: 0.0000001265079, y: 0.000034289806, z: 0.00035366428, w: 0.99999994}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandPinky4
+      parentName: mott_var01:RightHandPinky3
+      position: {x: 0.000020771116, y: 0.020173289, z: 1.4452638e-10}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandMiddle1
+      parentName: mott_var01:RightHand
+      position: {x: -0.008818715, y: 0.09425015, z: 0.0002508598}
+      rotation: {x: 0.001302223, y: 0.00052387785, z: 0.04604063, w: 0.9989386}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandMiddle2
+      parentName: mott_var01:RightHandMiddle1
+      position: {x: -0.000043938304, y: 0.037113868, z: -9.352234e-11}
+      rotation: {x: -0.00000014788306, y: -0.000014831566, z: 0.00037318468, w: 0.99999994}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandMiddle3
+      parentName: mott_var01:RightHandMiddle2
+      position: {x: -0.000014833533, y: 0.034169, z: 0.000000001197129}
+      rotation: {x: 0.00000013539481, y: 0.000072550865, z: 0.0012705033, w: 0.9999992}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandMiddle4
+      parentName: mott_var01:RightHandMiddle3
+      position: {x: 0.000058770303, y: 0.028071346, z: -8.335337e-10}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandIndex1
+      parentName: mott_var01:RightHand
+      position: {x: -0.0362344, y: 0.09464904, z: 0.0018576309}
+      rotation: {x: 0.0013683914, y: -0.0008649594, z: 0.046032354, w: 0.9989387}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandIndex2
+      parentName: mott_var01:RightHandIndex1
+      position: {x: -0.000039739472, y: 0.033350375, z: 0.0000000010661927}
+      rotation: {x: -0.00000018764754, y: -0.000019571176, z: 0.00079324853, w: 0.9999997}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandIndex3
+      parentName: mott_var01:RightHandIndex2
+      position: {x: 0.000012231081, y: 0.031003952, z: -1.5313332e-11}
+      rotation: {x: -0.00000021651555, y: 0.000011388888, z: 0.0003634394, w: 0.99999994}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mott_var01:RightHandIndex4
+      parentName: mott_var01:RightHandIndex3
+      position: {x: 0.000027507544, y: 0.025137605, z: -2.3218034e-10}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -111,7 +111,7 @@ namespace VRShooting.Unity.UI
                 : "当前选择：暂无地图");
             P3UiText.SetText(difficultyText, found ? "复杂度：" + P3UiText.Difficulty(selectedMap.Difficulty) : "复杂度：--");
             P3UiText.SetText(enemyText, found
-                ? "敌人数量：" + selectedMap.MinEnemyCount + "–" + selectedMap.MaxEnemyCount
+                ? "敌人数量：" + selectedMap.MinEnemyCount + "-" + selectedMap.MaxEnemyCount
                 : "敌人数量：--");
             P3UiText.SetText(conditionsText,
                 "任务条件\n搜索完整堑壕\n消灭全部敌人\n失败条件：玩家死亡\n红色标记：敌人预估区域");
@@ -152,7 +152,7 @@ namespace VRShooting.Unity.UI
             var selectedMap = FindMap(mapId);
             P3UiText.SetText(selectedMapText, "当前选择：" + selectedMap.DisplayName);
             P3UiText.SetText(difficultyText, "复杂度：" + P3UiText.Difficulty(selectedMap.Difficulty));
-            P3UiText.SetText(enemyText, "敌人数量：" + selectedMap.MinEnemyCount + "–" + selectedMap.MaxEnemyCount);
+            P3UiText.SetText(enemyText, "敌人数量：" + selectedMap.MinEnemyCount + "-" + selectedMap.MaxEnemyCount);
             MapSelectionChanged?.Invoke(mapId);
         }
 
@@ -268,7 +268,7 @@ namespace VRShooting.Unity.UI
             LastError = string.Empty;
             P3UiText.SetText(titleText, "堑壕射击 · 开场任务");
             P3UiText.SetText(mapText, "地图：" + (string.IsNullOrWhiteSpace(map.DisplayName) ? briefing.MapId : map.DisplayName));
-            P3UiText.SetText(enemyText, "敌情预估：" + briefing.EnemyEstimateMin + "–" + briefing.EnemyEstimateMax + " 名");
+            P3UiText.SetText(enemyText, "敌情预估：" + briefing.EnemyEstimateMin + "-" + briefing.EnemyEstimateMax + " 名");
             P3UiText.SetText(squadText, "小队配置\n" + P3UiText.Squad(briefing.PlannedSquad));
             P3UiText.SetText(objectivesText, "任务目标\n进入堑壕\n搜索路线\n消灭敌人\n保持小队队形");
             P3UiText.SetText(projectionStateText, MapFocused ? "投影：已聚焦 · 点击返回简报" : "投影：无人机起飞 · 等待开始");

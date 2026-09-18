@@ -18,6 +18,11 @@ namespace SimulatedShooting.Scene
         int mapIndex;
         bool showMap;
 
+        void Awake()
+        {
+            if(UnityCombatSceneLoader.PreparingProductionScene)enabled=false;
+        }
+
         void Start()
         {
             foreach (var p in Bindings.Points) p.FactReported += OnFact;

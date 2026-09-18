@@ -1,0 +1,13 @@
+{
+  "success": true,
+  "message": "Retrieved 1 log entries.",
+  "data": [
+    {
+      "type": "Error",
+      "message": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.",
+      "file": "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Scripts/GazeInputManager.cs",
+      "line": 55,
+      "stackTrace": "UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager:Awake ()\nSimulatedShooting.Scene.ZeroingRangeXRModeController:ApplyMode (bool,bool) (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:106)\nSimulatedShooting.Scene.ZeroingRangeXRModeController:Awake () (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:36)"
+    }
+  ]
+}

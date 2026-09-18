@@ -1,0 +1,77 @@
+{
+  "success": true,
+  "message": "Test job status retrieved.",
+  "error": null,
+  "data": {
+    "job_id": "b325ed04ef884c19968220b50f3099cd",
+    "status": "succeeded",
+    "mode": "PlayMode",
+    "started_unix_ms": 1789580099499,
+    "finished_unix_ms": 1789580118912,
+    "last_update_unix_ms": 1789580118912,
+    "progress": {
+      "completed": 4,
+      "total": 169,
+      "current_test_full_name": null,
+      "current_test_started_unix_ms": 1789580113177,
+      "last_finished_test_full_name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen18_21_VrActionsAndTrackedPosesSurviveUrbanLoadAndReturn",
+      "last_finished_unix_ms": 1789580118766,
+      "stuck_suspected": false,
+      "editor_is_focused": true,
+      "blocked_reason": null,
+      "failures_so_far": [],
+      "failures_capped": false
+    },
+    "error": null,
+    "result": {
+      "mode": "PlayMode",
+      "summary": {
+        "total": 4,
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 16.8386118,
+        "resultState": "Passed"
+      },
+      "results": [
+        {
+          "name": "Screen00_MovingRangeHeadAndBothHandsReceiveDevicePoses",
+          "fullName": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen00_MovingRangeHeadAndBothHandsReceiveDevicePoses",
+          "state": "Passed",
+          "durationSeconds": 4.5008107,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: MainMenu\r\nFailed to get haptic capabilities of SceneHandoffController:/SceneHandoffController1, error code -1. Continuing assuming a single haptic channel.\r\nFailed to get haptic capabilities of SceneHandoffController:/SceneHandoffController, error code -1. Continuing assuming a single haptic channel.\r\n[GameStateManager] 状态改变为: MainMenu\r\n"
+        },
+        {
+          "name": "Screen00_RangeAutomaticallyChoosesRunningDisplay",
+          "fullName": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen00_RangeAutomaticallyChoosesRunningDisplay",
+          "state": "Passed",
+          "durationSeconds": 1.9793906,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: MainMenu\r\n[GameStateManager] 状态改变为: MainMenu\r\n"
+        },
+        {
+          "name": "Screen14_18_TrackedTriggerClicksMapsAndBriefingAcrossRigHandoff",
+          "fullName": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen14_18_TrackedTriggerClicksMapsAndBriefingAcrossRigHandoff",
+          "state": "Passed",
+          "durationSeconds": 4.4975016,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态改变为: MainMenu\r\n"
+        },
+        {
+          "name": "Screen18_21_VrActionsAndTrackedPosesSurviveUrbanLoadAndReturn",
+          "fullName": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen18_21_VrActionsAndTrackedPosesSurviveUrbanLoadAndReturn",
+          "state": "Passed",
+          "durationSeconds": 5.5896514,
+          "message": null,
+          "stackTrace": null,
+          "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nFailed to get haptic capabilities of SceneHandoffController:/SceneHandoffController1, error code -1. Continuing assuming a single haptic channel.\r\nFailed to get haptic capabilities of SceneHandoffController:/SceneHandoffController, error code -1. Continuing assuming a single haptic channel.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nFailed to get haptic capabilities of SceneHandoffController:/SceneHandoffController1, error code -1. Continuing assuming a single haptic channel.\r\nFailed to get haptic capabilities of SceneHandoffController:/SceneHandoffController, error code -1. Continuing assuming a single haptic channel.\r\n[GameStateManager] 状态改变为: MainMenu\r\n"
+        }
+      ]
+    }
+  },
+  "hint": null
+}

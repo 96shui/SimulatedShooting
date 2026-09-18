@@ -222,6 +222,7 @@ namespace VRShooting.Unity.UI
             if (scaler == null) scaler = gameObject.AddComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1920f, 1080f);
+            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             scaler.matchWidthOrHeight = 0.5f;
             var adapter = GetComponent<TrainingUICanvasAdapter>();
             if (adapter == null) adapter = gameObject.AddComponent<TrainingUICanvasAdapter>();
@@ -335,7 +336,7 @@ namespace VRShooting.Unity.UI
             var posture = AddLabel(page, "Hud_UrbanStreet_Posture", "姿态：--", 24, new Vector2(1400, 765), new Vector2(1830, 810), TextAlignmentOptions.Left);
             var shoulder = AddLabel(page, "Hud_UrbanStreet_Shoulder", "射击肩：--", 24, new Vector2(1400, 710), new Vector2(1830, 755), TextAlignmentOptions.Left);
             var corner = AddLabel(page, "Hud_UrbanStreet_Corner", "拐角射击：--", 24, new Vector2(1400, 655), new Vector2(1830, 700), TextAlignmentOptions.Left);
-            var squad = AddLabel(page, "Hud_UrbanStreet_Squad", "小队：--", 22, new Vector2(600, 55), new Vector2(1260, 220), TextAlignmentOptions.Center);
+            var squad = AddLabel(page, "Hud_UrbanStreet_Squad", "小队：--", 22, new Vector2(600, 30), new Vector2(1260, 105), TextAlignmentOptions.Center);
             var prompt = AddLabel(page, "Hud_UrbanStreet_Prompt", string.Empty, 28, new Vector2(650, 260), new Vector2(1270, 325), TextAlignmentOptions.Center, new Color32(247, 185, 85, 255));
             var state = AddLabel(page, "Hud_UrbanStreet_TaskState", "任务状态：--", 22, new Vector2(650, 220), new Vector2(1270, 255), TextAlignmentOptions.Center);
             var enter = AddButton(page, "Button_UrbanStreetHud_EnterBuilding", "进入建筑", new Vector2(760, 120), new Vector2(1160, 195), true);
@@ -357,7 +358,7 @@ namespace VRShooting.Unity.UI
             var posture = AddLabel(page, "Hud_UrbanBuilding_Posture", "姿态：--", 24, new Vector2(1400, 765), new Vector2(1830, 810), TextAlignmentOptions.Left);
             var shoulder = AddLabel(page, "Hud_UrbanBuilding_Shoulder", "射击肩：--", 24, new Vector2(1400, 710), new Vector2(1830, 755), TextAlignmentOptions.Left);
             var corner = AddLabel(page, "Hud_UrbanBuilding_Corner", "拐角射击：--", 24, new Vector2(1400, 655), new Vector2(1830, 700), TextAlignmentOptions.Left);
-            var squad = AddLabel(page, "Hud_UrbanBuilding_Squad", "小队：--", 22, new Vector2(600, 55), new Vector2(1260, 220), TextAlignmentOptions.Center);
+            var squad = AddLabel(page, "Hud_UrbanBuilding_Squad", "小队：--", 22, new Vector2(600, 30), new Vector2(1260, 105), TextAlignmentOptions.Center);
             var prompt = AddLabel(page, "Hud_UrbanBuilding_Prompt", string.Empty, 28, new Vector2(650, 260), new Vector2(1270, 325), TextAlignmentOptions.Center, new Color32(247, 185, 85, 255));
             var state = AddLabel(page, "Hud_UrbanBuilding_TaskState", "任务状态：--", 22, new Vector2(650, 220), new Vector2(1270, 255), TextAlignmentOptions.Center);
             var open = AddButton(page, "Button_UrbanBuildingHud_OpenDoor", "开门", new Vector2(700, 120), new Vector2(990, 195), true);
@@ -390,8 +391,10 @@ namespace VRShooting.Unity.UI
 
         RectTransform CreatePage(ScreenId screen, string title)
         {
-            var page = Rect("Screen_" + screen, transform as RectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
-            AddPanel(page, "Panel_" + screen + "_Frame", new Vector2(30, 30), new Vector2(1890, 1050), new Color32(7, 16, 13, 242));
+            var page = Rect("Screen_" + screen, transform as RectTransform, Vector2.one*.5f, Vector2.one*.5f, new Vector2(-960,-540), new Vector2(960,540));
+            bool hud=screen==ScreenId.TrenchHud||screen==ScreenId.UrbanStreetHud||screen==ScreenId.UrbanBuildingHud;
+            var frame=AddPanel(page, "Panel_" + screen + "_Frame", new Vector2(30, 30), new Vector2(1890, 1050), new Color32(7, 16, 13, (byte)(hud?0:242)));
+            if(hud)frame.GetComponentInChildren<Image>().raycastTarget=false;
             var titleId = "Text_" + screen + "_Title";
             AddLabel(page, titleId, title, 43, new Vector2(80, 965), new Vector2(1840, 1035), TextAlignmentOptions.Center);
             AddTestId(page.gameObject, "Screen_" + screen);

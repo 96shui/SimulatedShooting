@@ -49,6 +49,7 @@ namespace VRShooting.Unity.UI
 
         public string MapId => mapId ?? string.Empty;
         public Sprite Sprite => sprite;
+        public P3MapResourceBinding(string id,Sprite value){mapId=id;sprite=value;}
     }
 
     /// <summary>
@@ -79,6 +80,11 @@ namespace VRShooting.Unity.UI
         public MiniMapDto LastMap { get; private set; }
         public int RenderedAreaCount => renderedAreas.Count;
         public int RenderedMarkerCount => renderedMarkers.Count;
+        public void SetMapResource(string id,Sprite sprite)
+        {
+            mapResources.RemoveAll(b=>b!=null&&b.MapId==id);
+            mapResources.Add(new P3MapResourceBinding(id,sprite));
+        }
 
         public void Configure(Image background, TMP_Text label, RectTransform areas, RectTransform markers)
         {
@@ -171,6 +177,7 @@ namespace VRShooting.Unity.UI
 
             if (marker.Type == MarkerType.EnemyEstimate || marker.Type == MarkerType.EnemyKilled)
             {
+                image.color = Color.clear;
                 var cross = new GameObject("Cross", typeof(RectTransform), typeof(TextMeshProUGUI));
                 cross.transform.SetParent(markerObject.transform, false);
                 var crossRect = cross.transform as RectTransform;
@@ -179,7 +186,7 @@ namespace VRShooting.Unity.UI
                 crossRect.offsetMin = Vector2.zero;
                 crossRect.offsetMax = Vector2.zero;
                 var text = cross.GetComponent<TextMeshProUGUI>();
-                text.text = "×";
+                text.text = "X";
                 text.fontSize = 22f;
                 text.alignment = TextAlignmentOptions.Center;
                 text.color = MarkerColor(marker.Type);
@@ -357,7 +364,7 @@ namespace VRShooting.Unity.UI
             IsSelected = selected;
             SetText(nameText, IsAvailable ? map.DisplayName : "地图不可用");
             SetText(conditionText, IsAvailable
-                ? "复杂度：" + P3UiText.Difficulty(map.Difficulty) + "\n敌人数量：" + map.MinEnemyCount + "–" + map.MaxEnemyCount
+                ? "复杂度：" + P3UiText.Difficulty(map.Difficulty) + "\n敌人数量：" + map.MinEnemyCount + "-" + map.MaxEnemyCount
                 : "当前版本未开放");
             RefreshVisualState();
         }
@@ -369,7 +376,7 @@ namespace VRShooting.Unity.UI
             IsSelected = selected;
             SetText(nameText, IsAvailable ? map.DisplayName : "地图不可用");
             SetText(conditionText, IsAvailable
-                ? "街道敌人：" + map.StreetEnemyMin + "–" + map.StreetEnemyMax + "\n建筑敌人：" + map.BuildingEnemyMin + "–" + map.BuildingEnemyMax
+                ? "街道敌人：" + map.StreetEnemyMin + "-" + map.StreetEnemyMax + "\n建筑敌人：" + map.BuildingEnemyMin + "-" + map.BuildingEnemyMax
                 : "当前版本未开放");
             RefreshVisualState();
         }

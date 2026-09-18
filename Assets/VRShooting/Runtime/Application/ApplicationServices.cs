@@ -9,6 +9,8 @@ namespace VRShooting.Application
     /// </summary>
     public sealed class ApplicationServices
     {
+        public static System.Func<ICombatSceneLoader> CombatSceneLoaderFactory { get; set; }
+        public bool CombatScenesAvailable { get; private set; }
         ApplicationServices(
             IGameEventBus eventBus,
             IUIRouter router,
@@ -79,6 +81,7 @@ namespace VRShooting.Application
             ICombatSceneLoader combatScenes = null, ICombatSummaryStore combatStore = null)
         {
             var eventBus = new GameEventBus();
+            combatScenes = combatScenes ?? CombatSceneLoaderFactory?.Invoke();
             var router = new UIRouter(eventBus);
             var trainingSessions = new TrainingSessionService(eventBus);
             var input = trainingInput ?? new InputSystemXRTrainingInput();
@@ -124,6 +127,7 @@ namespace VRShooting.Application
                 movingTarget,
                 presentation)
             {
+                CombatScenesAvailable = combatScenes != null,
                 Combat = new CombatApplicationCoordinator(router, combatScenes, combatStore ??
                     new CombatSummaryFileStore(System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "CombatResults")))
             };

@@ -130,10 +130,13 @@ namespace SimulatedShooting.Scene
                 var collider = visual.GetComponent<Collider>();
                 if (collider != null)
                 {
+                    collider.enabled = false;
                     Destroy(collider);
                 }
             }
 
+            // Visual projectiles must never intercept the authoritative ray, including this creation frame.
+            foreach (var collider in visual.GetComponentsInChildren<Collider>(true)) collider.enabled = false;
             projectileVisual = visual.transform;
             projectileVisual.localPosition = Vector3.zero;
             NormalizeProjectileVisual(projectileVisual, material);

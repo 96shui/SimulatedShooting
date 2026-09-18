@@ -15,6 +15,7 @@ namespace SimulatedShooting.Scene
         public CombatPointKind Kind;
         public BoxCollider Volume;
         public CombatDoorView Door;
+        public Transform EstimateAnchor;
         public bool RequiresNavigation => Kind != CombatPointKind.EstimateArea;
         public event Action<CombatScenePoint, Transform, string> FactReported;
 

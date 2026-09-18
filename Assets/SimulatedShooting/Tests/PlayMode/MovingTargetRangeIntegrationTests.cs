@@ -28,6 +28,7 @@ namespace SimulatedShooting.Tests.PlayMode
             }
 
             yield return SceneManager.LoadSceneAsync("MovingTargetRangeScene", LoadSceneMode.Single);
+            Object.FindObjectOfType<ZeroingRangeXRModeController>().SetVrModeForTests(false);
             new GameObject("GameMain_P2Integration").AddComponent<GameMain>();
             yield return null;
             yield return null;

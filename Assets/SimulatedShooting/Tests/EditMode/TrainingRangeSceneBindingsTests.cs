@@ -83,6 +83,16 @@ namespace SimulatedShooting.Tests.EditMode
             CollectionAssert.DoesNotContain(buildPaths, "Assets/Scenes/MovingargetScene.unity");
         }
 
+        [TestCase("Assets/Scenes/MovingTargetRangeScene.unity")]
+        [TestCase("Assets/Scenes/ZeroingRangeScene.unity")]
+        public void Bdd00_AuthoredRangeEnablesAutomaticHeadsetDetection(string scenePath)
+        {
+            var scene=EditorSceneManager.OpenScene(scenePath,OpenSceneMode.Single);
+            var mode=scene.GetRootGameObjects().SelectMany(r=>r.GetComponentsInChildren<ZeroingRangeXRModeController>(true)).Single();
+            Assert.That(new SerializedObject(mode).FindProperty("autoDetectVrDisplayInEditor").boolValue,Is.True,
+                "A real headset must work on ordinary Play without a test override");
+        }
+
         Transform Child(string name)
         {
             var child = new GameObject(name).transform;

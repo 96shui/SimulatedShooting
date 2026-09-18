@@ -52,7 +52,7 @@ namespace VRShooting.Tests.PlayMode.UI
                 Assert.That(view.SelectedMapId, Is.EqualTo(P3ContractIds.TrenchMap));
                 Assert.That(Text(view, "selected").text, Does.Contain("堑壕地图 A"));
                 Assert.That(Text(view, "difficulty").text, Does.Contain("中"));
-                Assert.That(Text(view, "enemy").text, Does.Contain("3–5"));
+                Assert.That(Text(view, "enemy").text, Does.Contain("3-5"));
                 Assert.That(Text(view, "conditions").text, Does.Contain("搜索完整堑壕"));
                 Assert.That(Text(view, "conditions").text, Does.Contain("失败条件：玩家死亡"));
 
@@ -183,8 +183,8 @@ namespace VRShooting.Tests.PlayMode.UI
 
                 Assert.That(view.SelectedMapId, Is.EqualTo(P3ContractIds.UrbanMap));
                 Assert.That(Text(view, "selected").text, Does.Contain("城镇地图 A"));
-                Assert.That(Text(view, "enemy").text, Does.Contain("1–2"));
-                Assert.That(Text(view, "enemy").text, Does.Contain("3–6"));
+                Assert.That(Text(view, "enemy").text, Does.Contain("1-2"));
+                Assert.That(Text(view, "enemy").text, Does.Contain("3-6"));
                 Assert.That(Text(view, "conditions").text, Does.Contain("搜索楼房"));
                 view.SelectButton.onClick.Invoke();
                 CollectionAssert.AreEqual(

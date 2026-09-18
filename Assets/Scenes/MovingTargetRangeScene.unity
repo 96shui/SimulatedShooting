@@ -16143,7 +16143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xrOrigin: {fileID: 1123609097}
   noVrCamera: {fileID: 624199840}
-  autoDetectVrDisplayInEditor: 0
+  autoDetectVrDisplayInEditor: 1
 --- !u!1 &361889732
 GameObject:
   m_ObjectHideFlags: 0

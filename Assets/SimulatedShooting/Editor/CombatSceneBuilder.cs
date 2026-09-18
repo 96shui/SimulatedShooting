@@ -249,6 +249,7 @@ namespace SimulatedShooting.Editor
                 // Preserve the prefab's binding data; this scene fixture does not start weapon gameplay.
                 foreach(var behaviour in instance.GetComponentsInChildren<MonoBehaviour>()) behaviour.enabled=false;
                 foreach(var rigidbody in instance.GetComponentsInChildren<Rigidbody>()) rigidbody.isKinematic=true;
+                foreach(var collider in instance.GetComponentsInChildren<Collider>()) collider.enabled=false;
             }
         }
 

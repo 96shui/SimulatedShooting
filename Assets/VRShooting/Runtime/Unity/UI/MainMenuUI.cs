@@ -497,8 +497,11 @@ namespace VRShooting.Unity.UI
 
             openMovingTargetButton = AddButton(parent, "Button_MainMenu_OpenMovingTarget", "移动目标射击", new Vector2(1390, 300), new Vector2(1700, 370), true);
             openMovingTargetButton.onClick.AddListener(OnOpenMovingTargetClicked);
-            DisableButton(AddButton(parent, "Button_MainMenu_Trench_Disabled", "堑壕射击", new Vector2(1390, 395), new Vector2(1700, 465), false));
-            DisableButton(AddButton(parent, "Button_MainMenu_Urban_Disabled", "城镇攻防", new Vector2(1390, 490), new Vector2(1700, 560), false));
+            var trenchButton = AddButton(parent, "Button_MainMenu_Trench", "堑壕射击", new Vector2(1390, 395), new Vector2(1700, 465), false);
+            var urbanButton = AddButton(parent, "Button_MainMenu_Urban", "城镇攻防", new Vector2(1390, 490), new Vector2(1700, 560), false);
+            trenchButton.interactable = urbanButton.interactable = services.CombatScenesAvailable;
+            trenchButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Trench));
+            urbanButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Urban));
             DisableButton(AddButton(parent, "Button_MainMenu_Armory_Disabled", "武器库", new Vector2(1390, 585), new Vector2(1700, 655), false));
             DisableButton(AddButton(parent, "Button_MainMenu_Settings_Disabled", "设置", new Vector2(1390, 680), new Vector2(1700, 750), false));
 

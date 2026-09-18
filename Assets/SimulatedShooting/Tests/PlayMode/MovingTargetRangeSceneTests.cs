@@ -16,6 +16,8 @@ namespace SimulatedShooting.Tests.PlayMode
         public IEnumerator LoadMovingTargetRangeScene()
         {
             yield return SceneManager.LoadSceneAsync("MovingTargetRangeScene", LoadSceneMode.Single);
+            // This fixture tests desktop presentation; automatic XR entry has a separate device-path gate.
+            Object.FindObjectOfType<ZeroingRangeXRModeController>().SetVrModeForTests(false);
             Physics.SyncTransforms();
         }
 

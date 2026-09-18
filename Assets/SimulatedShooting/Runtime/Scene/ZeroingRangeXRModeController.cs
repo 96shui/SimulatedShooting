@@ -11,7 +11,7 @@ namespace SimulatedShooting.Scene
     {
         [SerializeField] private GameObject xrOrigin;
         [SerializeField] private Camera noVrCamera;
-        [SerializeField] private bool autoDetectVrDisplayInEditor;
+        [SerializeField] private bool autoDetectVrDisplayInEditor = true;
 
         readonly List<XRDisplaySubsystem> displays = new List<XRDisplaySubsystem>();
         readonly List<Camera> disabledExternalCameras = new List<Camera>();
@@ -233,6 +233,9 @@ namespace SimulatedShooting.Scene
             {
                 sceneManager.enabled = false;
             }
+
+            foreach (var group in xrOrigin.GetComponentsInChildren<XRInteractionGroup>(true))
+                group.interactionManager = externalManager;
 
             var interactors = xrOrigin.GetComponentsInChildren<XRBaseInteractor>(true);
             for (var index = 0; index < interactors.Length; index++)

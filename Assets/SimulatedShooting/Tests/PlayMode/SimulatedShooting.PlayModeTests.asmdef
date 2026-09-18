@@ -6,7 +6,8 @@
     "VRShooting.Runtime",
     "Unity.XR.Interaction.Toolkit",
     "Unity.XR.CoreUtils",
-    "VRShooting.Contracts"
+    "VRShooting.Contracts",
+    "Unity.InputSystem"
   ],
   "optionalUnityReferences": [
     "TestAssemblies"

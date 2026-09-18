@@ -23,6 +23,7 @@ namespace SimulatedShooting.Tests.PlayMode
         public IEnumerator LoadScene()
         {
             yield return SceneManager.LoadSceneAsync("ZeroingRangeScene", LoadSceneMode.Single);
+            Object.FindObjectOfType<ZeroingRangeXRModeController>().SetVrModeForTests(false);
             Physics.SyncTransforms();
             EnsureBootstrap();
         }

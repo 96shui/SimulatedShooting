@@ -17,6 +17,8 @@ namespace VRShooting.Common
         public string SceneId { get => sceneId ?? string.Empty; init => sceneId = value ?? string.Empty; }
         public string EntranceId { get => entranceId ?? string.Empty; init => entranceId = value ?? string.Empty; }
         public Vector3? EntranceWorldPosition { get; init; }
+        public Vector3 PlayerSpawnPosition { get; init; }
+        public Vector3 PlayerSpawnForward { get; init; }
         public TrainingMode Mode { get; init; }
         public IReadOnlyList<MapProjectionDto> Projections { get => projections ?? Array.Empty<MapProjectionDto>(); init => projections = ContractCollection.Copy(value); }
         public IReadOnlyList<SceneSpawnPointDto> SpawnPoints { get => spawnPoints ?? Array.Empty<SceneSpawnPointDto>(); init => spawnPoints = ContractCollection.Copy(value); }
@@ -33,6 +35,7 @@ namespace VRShooting.Common
             if (MapId != (trench ? P3ContractIds.TrenchMap : P3ContractIds.UrbanMap)) return Invalid("MapId");
             if (SceneId != (trench ? P3ContractIds.TrenchScene : P3ContractIds.UrbanScene)) return Invalid("SceneId");
             if (Projections.Count == 0) return Invalid("Projections");
+            if (!Finite(PlayerSpawnPosition) || !Finite(PlayerSpawnForward)) return Invalid("Player spawn");
             var projectionFloors = new HashSet<string>(StringComparer.Ordinal);
             foreach (var projection in Projections)
             {
@@ -99,7 +102,8 @@ namespace VRShooting.Common
         public CombatSceneDefinitionDto WithSpawnPoints(IReadOnlyList<SceneSpawnPointDto> points) => new CombatSceneDefinitionDto
         {
             MapId = MapId, SceneId = SceneId, Mode = Mode, EntranceId = EntranceId,
-            Projections = Projections, SearchNodes = SearchNodes, Floors = Floors, SpawnPoints = points, EntranceWorldPosition=EntranceWorldPosition
+            Projections = Projections, SearchNodes = SearchNodes, Floors = Floors, SpawnPoints = points, EntranceWorldPosition=EntranceWorldPosition,
+            PlayerSpawnPosition=PlayerSpawnPosition, PlayerSpawnForward=PlayerSpawnForward
         };
         bool InsideProjection(Vector3 point, string floorId)
         {
