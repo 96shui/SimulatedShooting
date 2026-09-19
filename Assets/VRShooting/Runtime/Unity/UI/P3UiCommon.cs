@@ -103,14 +103,14 @@ namespace VRShooting.Unity.UI
             if (mapImage != null)
             {
                 mapImage.sprite = ResolveSprite(map.MapId);
-                mapImage.color = map.Visible ? new Color32(22, 45, 41, 235) : new Color32(22, 30, 29, 160);
+                mapImage.color = map.Visible && mapImage.sprite != null ? Color.white : new Color32(22, 30, 29, 160);
                 mapImage.enabled = true;
             }
 
             if (mapLabel != null)
             {
                 mapLabel.text = map.Visible
-                    ? (string.IsNullOrWhiteSpace(map.MapId) ? "平面图" : "平面图 · " + map.MapId)
+                    ? "▲我方  ○队友  ◇预估  ×击杀"
                     : "平面图不可用";
             }
 
@@ -175,6 +175,17 @@ namespace VRShooting.Unity.UI
             image.raycastTarget = false;
             AddTestId(markerObject, objectName);
 
+            image.enabled = false;
+            var symbolObject = new GameObject("Symbol", typeof(RectTransform), typeof(TacticalMapMarkerGraphic));
+            var symbolRect = (RectTransform)symbolObject.transform;
+            symbolRect.SetParent(rect, false);
+            symbolRect.anchorMin = Vector2.zero; symbolRect.anchorMax = Vector2.one;
+            symbolRect.offsetMin = symbolRect.offsetMax = Vector2.zero;
+            var symbol = symbolObject.GetComponent<TacticalMapMarkerGraphic>();
+            symbol.MarkerType = marker.Type;
+            symbol.color = MarkerColor(marker.Type);
+            symbol.raycastTarget = false;
+
             if (marker.Type == MarkerType.EnemyEstimate || marker.Type == MarkerType.EnemyKilled)
             {
                 image.color = Color.clear;
@@ -191,6 +202,8 @@ namespace VRShooting.Unity.UI
                 text.alignment = TextAlignmentOptions.Center;
                 text.color = MarkerColor(marker.Type);
                 text.raycastTarget = false;
+                // Retain the existing semantic child for tooling; the vector symbol is the visible mark.
+                text.enabled = false;
             }
 
             return markerObject;
@@ -224,7 +237,7 @@ namespace VRShooting.Unity.UI
                 }
             }
 
-            return null;
+            return TacticalUITheme.Current != null ? TacticalUITheme.Current.Map(mapId) : null;
         }
 
         static void Clear(List<GameObject> objects)

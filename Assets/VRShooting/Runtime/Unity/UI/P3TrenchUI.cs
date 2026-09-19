@@ -336,11 +336,42 @@ namespace VRShooting.Unity.UI
     public sealed class P3BriefingDroneVisual : MonoBehaviour, IP3BriefingVisualPort
     {
         public int PlayCount { get; private set; }
+        RectTransform drone;
+        float elapsed;
+
+        public void Configure(RectTransform badge)
+        {
+            drone = badge;
+            for (var i = 0; i < 4; i++)
+            {
+                var rotor = new GameObject("Rotor" + i, typeof(RectTransform), typeof(TacticalRingGraphic));
+                var rect = (RectTransform)rotor.transform;
+                rect.SetParent(drone, false);
+                rect.anchorMin = rect.anchorMax = new Vector2(i % 2 == 0 ? .18f : .82f, i < 2 ? .18f : .82f);
+                rect.sizeDelta = new Vector2(22, 22);
+                var ring = rotor.GetComponent<TacticalRingGraphic>();
+                ring.color = new Color32(113, 221, 244, 255); ring.raycastTarget = false;
+            }
+            var body = TacticalUIStyle.Artwork(drone, "Body", null, Vector2.zero, Vector2.one);
+            body.rectTransform.anchorMin = new Vector2(.25f, .32f);
+            body.rectTransform.anchorMax = new Vector2(.75f, .68f);
+            body.rectTransform.offsetMin = body.rectTransform.offsetMax = Vector2.zero;
+            body.color = new Color32(113, 221, 244, 255);
+        }
+
+        void OnEnable() { elapsed = 0; }
+        void Update()
+        {
+            if (drone == null || elapsed >= 2) return;
+            elapsed = Mathf.Min(2, elapsed + Time.unscaledDeltaTime);
+            drone.localScale = Vector3.one * Mathf.Lerp(.72f, 1, Mathf.SmoothStep(0, 1, elapsed / 2));
+        }
 
         public void PlayDroneTakeoff(TrenchBriefingDto briefing)
         {
             // Presentation-only hook. It never creates or modifies a mission.
             PlayCount++;
+            elapsed = 0;
         }
     }
 

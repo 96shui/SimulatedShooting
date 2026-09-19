@@ -21,6 +21,7 @@ namespace VRShooting.Unity.UI
         [SerializeField] protected TMP_Text promptText;
         [SerializeField] protected TMP_Text stateText;
         [SerializeField] protected P3MiniMapView miniMap;
+        RectTransform healthFill;
 
         public HudDto LastHud { get; private set; }
         public SquadStatusDto LastSquad { get; private set; }
@@ -40,12 +41,43 @@ namespace VRShooting.Unity.UI
             promptText = prompt;
             stateText = state;
             miniMap = map;
+            if (healthText != null)
+            {
+                healthText.enableAutoSizing = true;
+                healthText.fontSizeMin = 18;
+                healthText.fontSizeMax = 26;
+                healthText.enableWordWrapping = false;
+            }
+            if (health != null && healthFill == null)
+            {
+                var background = TacticalUIStyle.Artwork(health.transform, "Hud_Combat_HealthTrack", null, Vector2.zero, Vector2.one);
+                var track = background.rectTransform;
+                track.anchorMin = Vector2.zero; track.anchorMax = new Vector2(1, 0);
+                track.offsetMin = new Vector2(0, -9); track.offsetMax = new Vector2(0, -3);
+                background.color = new Color32(27, 49, 60, 255);
+                var fill = TacticalUIStyle.Artwork(track, "Hud_Combat_HealthFill", null, Vector2.zero, Vector2.one);
+                healthFill = fill.rectTransform;
+                healthFill.anchorMin = Vector2.zero; healthFill.anchorMax = Vector2.one;
+                healthFill.offsetMin = healthFill.offsetMax = Vector2.zero;
+                fill.color = new Color32(109, 223, 187, 255);
+            }
         }
 
         public void ApplyHud(HudDto hud, SquadStatusDto squad, MiniMapDto map, string progressText = "")
         {
             LastHud = hud;
             LastSquad = squad;
+            var normal = new Color32(218, 241, 249, 255);
+            var warning = new Color32(255, 114, 90, 255);
+            if (healthText != null) healthText.color = hud.Player.Health <= 25 || !hud.Player.IsAlive ? warning : normal;
+            if (ammoText != null) ammoText.color = hud.Ammo.IsReloading
+                ? new Color32(247, 185, 85, 255)
+                : hud.Ammo.CurrentMagazine <= 0 ? warning : normal;
+            if (healthFill != null)
+            {
+                healthFill.anchorMax = new Vector2(Mathf.Clamp01(hud.Player.Health / 100f), 1);
+                healthFill.GetComponent<Image>().color = hud.Player.Health <= 25 ? new Color32(255, 114, 90, 255) : new Color32(109, 223, 187, 255);
+            }
             P3UiText.SetText(healthText, "生命：" + Mathf.RoundToInt(hud.Player.Health) + " / 100" +
                 (hud.Player.IsAlive ? "" : " · 已失去战斗能力"));
             P3UiText.SetText(ammoText, "弹药：" + P3UiText.Ammo(hud.Ammo) +
@@ -120,16 +152,31 @@ namespace VRShooting.Unity.UI
         [SerializeField] TMP_Text searchProgressText;
 
         public TrenchSessionDto LastSession { get; private set; }
+        RectTransform searchFill;
 
         public void ConfigureTrench(TMP_Text enemyProgress, TMP_Text searchProgress)
         {
             enemyProgressText = enemyProgress;
             searchProgressText = searchProgress;
+            if (searchProgress != null && searchFill == null)
+            {
+                var background = TacticalUIStyle.Artwork(searchProgress.transform, "Hud_Trench_SearchTrack", null, Vector2.zero, Vector2.one);
+                var rect = background.rectTransform;
+                rect.anchorMin = Vector2.zero; rect.anchorMax = new Vector2(1, 0);
+                rect.offsetMin = new Vector2(0, -15); rect.offsetMax = new Vector2(0, -7);
+                background.color = new Color32(27, 49, 60, 255);
+                var fill = TacticalUIStyle.Artwork(rect, "Hud_Trench_SearchFill", null, Vector2.zero, Vector2.one);
+                searchFill = fill.rectTransform;
+                searchFill.anchorMin = Vector2.zero; searchFill.anchorMax = Vector2.zero;
+                searchFill.offsetMin = searchFill.offsetMax = Vector2.zero;
+                fill.color = new Color32(90, 204, 240, 255);
+            }
         }
 
         public void Apply(TrenchSessionDto session, HudDto hud)
         {
             LastSession = session;
+            if (searchFill != null) searchFill.anchorMax = new Vector2(Mathf.Clamp01(session.SearchProgress01), 1);
             hud = NormalizeHud(hud, session.SessionId, TrainingMode.Trench, HudType.Trench,
                 session.Ammo, session.Player, session.MiniMap);
             var map = hud.MiniMap;
@@ -187,6 +234,7 @@ namespace VRShooting.Unity.UI
             LastResult = result;
             LastError = string.Empty;
             P3UiText.SetText(outcomeText, result.Victory ? "胜利" : "失败");
+            if (outcomeText != null) outcomeText.color = result.Victory ? new Color32(125, 232, 189, 255) : new Color32(255, 130, 100, 255);
             P3UiText.SetText(summaryText, "堑壕射击 · 任务结算\n地图：" + result.MapName);
             P3UiText.SetText(statsText,
                 "消灭敌人：" + result.EnemyKilled + " / " + result.EnemyTotal +

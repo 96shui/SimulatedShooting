@@ -170,6 +170,7 @@ namespace VRShooting.Unity.UI
             resultsScreen = CreateScreen(largePanelRoot, "Screen_MovingTargetResults", true);
             BuildResults(resultsScreen);
 
+            TacticalUIStyle.Apply(transform);
             largePanelRoot.gameObject.SetActive(false);
             minimalHudRoot.gameObject.SetActive(false);
         }
@@ -184,6 +185,11 @@ namespace VRShooting.Unity.UI
                 25, FontStyles.Bold, new Vector2(430, 330), new Vector2(1490, 380), new Color32(143, 217, 255, 255));
 
             var speeds = new[] { 3f, 4f, 5f };
+            var route = TacticalUIStyle.Artwork(parent, "Image_MovingTargetSetup_TravelLine", null, new Vector2(600, 616), new Vector2(1320, 620));
+            route.color = new Color32(80, 174, 201, 200);
+            TacticalUIStyle.Artwork(parent, "Image_MovingTargetSetup_Target", TacticalUIStyle.Sprite("icon_running"), new Vector2(930, 588), new Vector2(990, 648));
+            AddLabel(parent, "Text_MovingTargetSetup_LeftEndpoint", "左端停留 · 禁射", 20, FontStyles.Normal, new Vector2(465, 650), new Vector2(755, 690), new Color32(247, 185, 85, 255));
+            AddLabel(parent, "Text_MovingTargetSetup_Travel", "往返移动靶", 20, FontStyles.Normal, new Vector2(1175, 650), new Vector2(1465, 690), new Color32(143, 217, 255, 255));
             for (var index = 0; index < speeds.Length; index++)
             {
                 var speed = speeds[index];
@@ -235,6 +241,24 @@ namespace VRShooting.Unity.UI
                 new Vector2(350, 250), new Vector2(1570, 430), new Color32(143, 217, 255, 255));
             resultSequencesText = AddLabel(parent, "Text_MovingTargetResults_Sequences", string.Empty, 20, FontStyles.Normal,
                 new Vector2(350, 450), new Vector2(1570, 760), new Color32(231, 242, 235, 255), TextAlignmentOptions.TopLeft);
+            var viewport = CreateRect("Viewport_MovingTargetResults_Sequences", parent, Vector2.zero, Vector2.zero, new Vector2(350, 450), new Vector2(1570, 760));
+            viewport.gameObject.AddComponent<RectMask2D>();
+            var scroll = viewport.gameObject.AddComponent<ScrollRect>();
+            var scrollSurface = viewport.gameObject.AddComponent<Image>();
+            scrollSurface.color = new Color(0.02f, 0.05f, 0.08f, 0.65f);
+            resultSequencesText.rectTransform.SetParent(viewport, false);
+            resultSequencesText.rectTransform.anchorMin = new Vector2(0, 1);
+            resultSequencesText.rectTransform.anchorMax = Vector2.one;
+            resultSequencesText.rectTransform.pivot = new Vector2(.5f, 1);
+            resultSequencesText.rectTransform.anchoredPosition = Vector2.zero;
+            resultSequencesText.rectTransform.sizeDelta = new Vector2(-32, 310);
+            var fitter = resultSequencesText.gameObject.AddComponent<ContentSizeFitter>();
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            scroll.viewport = viewport;
+            scroll.content = resultSequencesText.rectTransform;
+            scroll.horizontal = false;
+            scroll.movementType = ScrollRect.MovementType.Clamped;
+            AddLabel(parent, "Text_MovingTargetResults_ScrollHint", "逐发记录  ·  上下滚动查看", 18, FontStyles.Normal, new Vector2(350, 770), new Vector2(1570, 803), new Color32(143, 217, 255, 255));
             resultsBackButton = AddButton(parent, "Button_MovingTargetResults_BackToModeSelection", "返回模式选择",
                 new Vector2(485, 815), new Vector2(835, 885), false);
             retryButton = AddButton(parent, "Button_MovingTargetResults_Retry", "重新训练",
@@ -254,13 +278,7 @@ namespace VRShooting.Unity.UI
             {
                 var available = ContainsSpeed(availableSpeeds, pair.Key);
                 pair.Value.gameObject.SetActive(available);
-                var image = pair.Value.GetComponent<Image>();
-                if (image != null)
-                {
-                    image.color = Math.Abs(pair.Key - selectedSpeed) < 0.001f
-                        ? new Color32(45, 156, 255, 255)
-                        : new Color32(24, 45, 39, 255);
-                }
+                TacticalUIStyle.StyleButton(pair.Value, Math.Abs(pair.Key - selectedSpeed) < 0.001f);
             }
         }
 

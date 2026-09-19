@@ -390,6 +390,7 @@ namespace VRShooting.Unity.UI
             LastResult = result;
             LastError = string.Empty;
             P3UiText.SetText(outcomeText, result.Victory ? "胜利" : "失败");
+            if (outcomeText != null) outcomeText.color = result.Victory ? new Color32(125, 232, 189, 255) : new Color32(255, 130, 100, 255);
             P3UiText.SetText(summaryText, "城镇攻防 · 任务结算");
             P3UiText.SetText(statsText,
                 "街道清除：" + (result.StreetCleared ? "已清除" : "未清除") +

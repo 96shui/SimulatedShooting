@@ -103,6 +103,7 @@ namespace VRShooting.Unity.UI
         TextMeshProUGUI zeroingFinalGradeText;
         TextMeshProUGUI zeroingFinalRoundsText;
         TextMeshProUGUI zeroingFinalThumbnailsText;
+        readonly List<TacticalTargetPlot> finalTargetPlots = new List<TacticalTargetPlot>();
         TextMeshProUGUI pickupPromptText;
         TextMeshProUGUI firingStationStateText;
         Image zeroingPromptBackground;
@@ -289,6 +290,7 @@ namespace VRShooting.Unity.UI
                 BuildZeroingFinalRating(zeroingFinalRatingScreen);
             }
 
+            TacticalUIStyle.Apply(transform);
             ConfigurePresentationView();
         }
 
@@ -483,37 +485,37 @@ namespace VRShooting.Unity.UI
 
         void BuildMainMenu(RectTransform parent)
         {
-            AddPanel(parent, "Panel_MainMenu_Frame", new Vector2(60, 60), new Vector2(-60, -60), new Color32(11, 19, 16, 220), new Color32(45, 66, 56, 255));
-            AddPanel(parent, "Placeholder_MainMenu_BaseHall", new Vector2(130, 170), new Vector2(1220, 690), new Color32(10, 21, 18, 160), new Color32(73, 107, 90, 255), "素材占位：基地大厅 / 全息任务台 / 武器墙");
-            AddLabel(parent, "Text_MainMenu_Title", "VR射击训练系统 DEMO", 42, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(360, 360), new Vector2(1120, 440), new Color32(231, 242, 235, 255));
-            AddLabel(parent, "Text_MainMenu_Subtitle", "沉浸训练   精准提升   实战为先", 22, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(470, 445), new Vector2(1010, 500), new Color32(143, 217, 255, 255));
+            var hall = TacticalUIStyle.Artwork(parent, "Placeholder_MainMenu_BaseHall", TacticalUITheme.Current != null ? TacticalUITheme.Current.Hall : null, Vector2.zero, new Vector2(1920, 1080));
+            AddTestId(hall.gameObject, hall.name);
+            AddPanel(parent, "Panel_MainMenu_Frame", new Vector2(1300, 145), new Vector2(1810, 920), new Color32(11, 19, 16, 220), new Color32(45, 66, 56, 255));
+            AddLabel(parent, "Text_MainMenu_Title", "VR 射击训练系统", 58, FontStyles.Normal, TextAlignmentOptions.Left, new Vector2(120, 835), new Vector2(1240, 930), new Color32(231, 242, 235, 255));
+            AddLabel(parent, "Text_MainMenu_Subtitle", "战术训练中心  /  TACTICAL TRAINING", 24, FontStyles.Normal, TextAlignmentOptions.Left, new Vector2(125, 785), new Vector2(1150, 830), new Color32(143, 217, 255, 255));
 
-            AddPanel(parent, "Panel_MainMenu_Profile", new Vector2(95, 720), new Vector2(450, 940), new Color32(17, 29, 24, 220), new Color32(56, 84, 71, 255),
-                "玩家档案\n训练等级：L03\n最近评级：良好");
-            AddPanel(parent, "Panel_MainMenu_Menu", new Vector2(1390, 110), new Vector2(1700, 170), new Color32(17, 29, 24, 230), new Color32(56, 84, 71, 255), "主菜单入口");
+            AddPanel(parent, "Panel_MainMenu_Profile", new Vector2(120, 165), new Vector2(630, 325), new Color32(17, 29, 24, 220), new Color32(56, 84, 71, 255),
+                "本地训练\n循序训练 · 安全操作 · 精准射击");
+            AddPanel(parent, "Panel_MainMenu_Menu", new Vector2(1360, 805), new Vector2(1750, 865), new Color32(17, 29, 24, 230), new Color32(56, 84, 71, 255), "选择训练科目");
 
-            openZeroingButton = AddButton(parent, "Button_MainMenu_OpenZeroing", "100m精度射校靶", new Vector2(1390, 205), new Vector2(1700, 275), true);
+            openZeroingButton = AddButton(parent, "Button_MainMenu_OpenZeroing", "01   100m 精度射校靶", new Vector2(1360, 665), new Vector2(1750, 750), true);
             openZeroingButton.onClick.AddListener(OnOpenZeroingClicked);
 
-            openMovingTargetButton = AddButton(parent, "Button_MainMenu_OpenMovingTarget", "移动目标射击", new Vector2(1390, 300), new Vector2(1700, 370), true);
+            openMovingTargetButton = AddButton(parent, "Button_MainMenu_OpenMovingTarget", "02   移动目标射击", new Vector2(1360, 535), new Vector2(1750, 620), false);
             openMovingTargetButton.onClick.AddListener(OnOpenMovingTargetClicked);
-            var trenchButton = AddButton(parent, "Button_MainMenu_Trench", "堑壕射击", new Vector2(1390, 395), new Vector2(1700, 465), false);
-            var urbanButton = AddButton(parent, "Button_MainMenu_Urban", "城镇攻防", new Vector2(1390, 490), new Vector2(1700, 560), false);
+            var trenchButton = AddButton(parent, "Button_MainMenu_Trench", "03   堑壕射击", new Vector2(1360, 405), new Vector2(1750, 490), false);
+            var urbanButton = AddButton(parent, "Button_MainMenu_Urban", "04   城镇攻防", new Vector2(1360, 275), new Vector2(1750, 360), false);
             trenchButton.interactable = urbanButton.interactable = services.CombatScenesAvailable;
             trenchButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Trench));
             urbanButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Urban));
-            DisableButton(AddButton(parent, "Button_MainMenu_Armory_Disabled", "武器库", new Vector2(1390, 585), new Vector2(1700, 655), false));
-            DisableButton(AddButton(parent, "Button_MainMenu_Settings_Disabled", "设置", new Vector2(1390, 680), new Vector2(1700, 750), false));
 
-            AddPanel(parent, "Panel_MainMenu_BottomStatus", new Vector2(120, 985), new Vector2(1800, 1032), new Color32(17, 29, 24, 210), new Color32(56, 84, 71, 255),
-                "底部状态栏：网络 / 音量 / 用户 / 版本 / 提示");
+            AddPanel(parent, "Panel_MainMenu_BottomStatus", new Vector2(120, 55), new Vector2(1800, 115), new Color32(17, 29, 24, 210), new Color32(56, 84, 71, 255),
+                "单机训练  /  LOCAL SIMULATION                                     选择科目后查看任务简报");
 
         }
 
         void BuildZeroingBriefing(RectTransform parent)
         {
             AddPanel(parent, "Panel_ZeroingBriefing_Frame", new Vector2(110, 60), new Vector2(1390, 820), new Color32(11, 19, 16, 215), new Color32(45, 156, 255, 255));
-            AddPanel(parent, "Placeholder_ZeroingBriefing_Range", new Vector2(1390, 100), new Vector2(1840, 790), new Color32(10, 21, 18, 120), new Color32(73, 107, 90, 255), "素材占位：100m室外靶场背景");
+            var rangeArt = TacticalUIStyle.Artwork(parent, "Placeholder_ZeroingBriefing_Range", TacticalUIStyle.Sprite("icon_framed_reticle_large"), new Vector2(1440, 325), new Vector2(1790, 675));
+            AddTestId(rangeArt.gameObject, rangeArt.name);
             AddLabel(parent, "Text_ZeroingBriefing_Header", "任务简报  MISSION BRIEFING", 26, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(180, 95), new Vector2(780, 145), new Color32(231, 242, 235, 255));
             AddLabel(parent, "Text_ZeroingBriefing_Title", "100m精度射校靶", 54, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(190, 190), new Vector2(760, 280), new Color32(231, 242, 235, 255));
 
@@ -533,14 +535,14 @@ namespace VRShooting.Unity.UI
             AddPanel(parent, "Panel_ZeroingBriefing_SafetyNote", new Vector2(105, 980), new Vector2(900, 1030), new Color32(17, 29, 24, 230), new Color32(56, 84, 71, 255),
                 "请确认武器处于安全状态，佩戴护具，听从指挥。");
             AddPanel(parent, "Panel_ZeroingBriefing_Status", new Vector2(960, 980), new Vector2(1815, 1030), new Color32(17, 29, 24, 230), new Color32(56, 84, 71, 255),
-                "当前轮次  1 / 3        历史最佳  0环        预计用时  00:10:00");
+                "固定射击位  /  单发模式  /  完成后查看弹着分析");
 
         }
 
         void BuildTargetDiagram(RectTransform parent)
         {
             var center = new Vector2(1082f, 505f);
-            var sizes = new[] { 315f, 250f, 190f, 130f, 70f };
+            var sizes = new[] { 315f, 252f, 189f, 126f, 63f };
             for (var i = 0; i < sizes.Length; i++)
             {
                 var ring = CreateRect("Image_ZeroingBriefing_TargetRing_" + i, parent, Vector2.zero, Vector2.zero, center - new Vector2(sizes[i] * 0.5f, sizes[i] * 0.5f), center + new Vector2(sizes[i] * 0.5f, sizes[i] * 0.5f));
@@ -592,7 +594,7 @@ namespace VRShooting.Unity.UI
 
         void BuildZeroingImpactAnalysis(RectTransform parent)
         {
-            AddPanel(parent, "Placeholder_ZeroingImpactAnalysis_BlurredRange", DrawioMin(35, 45, 730, 500), DrawioMax(35, 45, 730, 500), new Color32(10, 21, 18, 165), new Color32(73, 107, 90, 255), "素材占位：虚化靶场射击背景");
+            AddPanel(parent, "Placeholder_ZeroingImpactAnalysis_BlurredRange", DrawioMin(35, 45, 730, 500), DrawioMax(35, 45, 730, 500), new Color32(5, 13, 23, 230), new Color32(73, 107, 90, 255));
             AddPanel(parent, "Panel_ZeroingImpactAnalysis_Modal", DrawioMin(160, 85, 480, 390), DrawioMax(160, 85, 480, 390), new Color32(11, 19, 16, 235), new Color32(45, 156, 255, 255));
             AddLabel(parent, "Text_ZeroingImpactAnalysis_Title", "本轮弹着分析", 40, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(210, 100, 380, 45), DrawioMax(210, 100, 380, 45), new Color32(231, 242, 235, 255));
 
@@ -617,7 +619,7 @@ namespace VRShooting.Unity.UI
 
         void BuildZeroingFinalRating(RectTransform parent)
         {
-            AddPanel(parent, "Placeholder_ZeroingFinalRating_Range", DrawioMin(35, 45, 730, 500), DrawioMax(35, 45, 730, 500), new Color32(10, 21, 18, 165), new Color32(73, 107, 90, 255), "素材占位：靶场与胸靶背景");
+            AddPanel(parent, "Placeholder_ZeroingFinalRating_Range", DrawioMin(35, 45, 730, 500), DrawioMax(35, 45, 730, 500), new Color32(5, 13, 23, 230), new Color32(73, 107, 90, 255));
             AddPanel(parent, "Panel_ZeroingFinalRating_Panel", DrawioMin(130, 85, 540, 390), DrawioMax(130, 85, 540, 390), new Color32(11, 19, 16, 235), new Color32(45, 156, 255, 255));
             AddLabel(parent, "Text_ZeroingFinalRating_Title", "100m射校 训练结算", 38, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(205, 98, 390, 48), DrawioMax(205, 98, 390, 48), new Color32(231, 242, 235, 255));
 
@@ -628,7 +630,16 @@ namespace VRShooting.Unity.UI
             zeroingFinalRoundsText = AddLabel(rounds, "Text_ZeroingFinalRating_Rounds", "三轮射击记录", 22, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(28, 24), new Vector2(620, 230), new Color32(231, 242, 235, 255));
 
             var thumbs = AddPanel(parent, "Placeholder_ZeroingFinalRating_ImpactThumbnails", DrawioMin(345, 310, 270, 70), DrawioMax(345, 310, 270, 70), new Color32(17, 29, 24, 210), new Color32(73, 107, 90, 255));
-            zeroingFinalThumbnailsText = AddLabel(thumbs, "Text_ZeroingFinalRating_ImpactThumbnails", "弹着缩略图区域", 20, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(20, 16), new Vector2(628, 108), new Color32(143, 217, 255, 255));
+            zeroingFinalThumbnailsText = AddLabel(thumbs, "Text_ZeroingFinalRating_ImpactThumbnails", "三轮弹着分布", 16, FontStyles.Normal, TextAlignmentOptions.Left, new Vector2(365, 16), new Vector2(628, 108), new Color32(143, 217, 255, 255));
+            for (var round = 0; round < 3; round++)
+            {
+                var plotRect = CreateRect("Image_ZeroingFinalRating_Round" + (round + 1), thumbs, Vector2.zero, Vector2.zero,
+                    new Vector2(24 + round * 112, 16), new Vector2(120 + round * 112, 112));
+                var plot = plotRect.gameObject.AddComponent<TacticalTargetPlot>();
+                plot.raycastTarget = false;
+                finalTargetPlots.Add(plot);
+                AddTestId(plotRect.gameObject, plotRect.name);
+            }
 
             finalRetryButton = AddButton(parent, "Button_ZeroingFinalRating_Retry", "重新训练", DrawioMin(270, 415, 110, 38), DrawioMax(270, 415, 110, 38), true);
             finalBackToModeSelectionButton = AddButton(parent, "Button_ZeroingFinalRating_BackToModeSelection", "返回模式选择", DrawioMin(405, 415, 130, 38), DrawioMax(405, 415, 130, 38), false);
@@ -638,7 +649,7 @@ namespace VRShooting.Unity.UI
         void BuildAnalysisTargetDiagram(RectTransform parent)
         {
             var center = new Vector2(204f, 190f);
-            var sizes = new[] { 255f, 205f, 155f, 105f, 56f };
+            var sizes = new[] { 255f, 204f, 153f, 102f, 51f };
             for (var i = 0; i < sizes.Length; i++)
             {
                 var ring = CreateRect("Image_ZeroingImpactAnalysis_TargetRing_" + i, parent, Vector2.zero, Vector2.zero, center - new Vector2(sizes[i] * 0.5f, sizes[i] * 0.5f), center + new Vector2(sizes[i] * 0.5f, sizes[i] * 0.5f));
@@ -672,7 +683,7 @@ namespace VRShooting.Unity.UI
             outline.effectDistance = new Vector2(2f, -2f);
 
             var center = new Vector2(140f, 145f);
-            var sizes = new[] { 210f, 165f, 120f, 78f, 38f };
+            var sizes = new[] { 210f, 168f, 126f, 84f, 42f };
             for (var i = 0; i < sizes.Length; i++)
             {
                 var ring = CreateRect("Image_ZeroingHud_TargetRing_" + i, target, Vector2.zero, Vector2.zero, center - new Vector2(sizes[i] * 0.5f, sizes[i] * 0.5f), center + new Vector2(sizes[i] * 0.5f, sizes[i] * 0.5f));
@@ -894,7 +905,7 @@ namespace VRShooting.Unity.UI
             if (zeroingPromptText != null)
             {
                 zeroingPromptText.text = prompt;
-                zeroingPromptText.color = hud.CanShoot ? new Color32(7, 16, 13, 255) : new Color32(255, 225, 180, 255);
+                zeroingPromptText.color = hud.CanShoot ? new Color32(232, 249, 255, 255) : new Color32(255, 225, 180, 255);
             }
 
             if (zeroingPromptBackground != null)
@@ -1047,6 +1058,14 @@ namespace VRShooting.Unity.UI
 
         void RenderFinalRating(ZeroingResultDto result)
         {
+            for (var round = 0; round < finalTargetPlots.Count; round++)
+            {
+                var analysis = FindAnalysis(result, round + 1);
+                var points = new List<Vector2>();
+                if (analysis.HasValue && analysis.Value.Shots != null)
+                    foreach (var shot in analysis.Value.Shots) points.Add(shot.ImpactPointCm);
+                finalTargetPlots[round].SetImpacts(points);
+            }
             if (zeroingFinalGradeText != null)
             {
                 zeroingFinalGradeText.text = FormatGrade(result.Grade);
@@ -1179,7 +1198,7 @@ namespace VRShooting.Unity.UI
 
         static string FormatThumbnailSummary(ZeroingResultDto result)
         {
-            var lines = new List<string> { "弹着缩略图摘要" };
+            var lines = new List<string>();
             for (var round = 1; round <= 3; round++)
             {
                 var analysis = FindAnalysis(result, round);
@@ -1188,10 +1207,10 @@ namespace VRShooting.Unity.UI
                     continue;
                 }
 
-                lines.Add("第" + round + "轮：" + FormatImpactDots(analysis.Value));
+                lines.Add("第" + round + "轮：" + (analysis.Value.Shots?.Count ?? 0) + "发 · " + (analysis.Value.PassedTenRing ? "通过" : "未通过"));
             }
 
-            return lines.Count == 1 ? "弹着缩略图区域\n暂无弹着记录" : string.Join("\n", lines);
+            return lines.Count == 0 ? "暂无弹着记录" : string.Join("\n", lines);
         }
 
         static string FormatImpactDots(ZeroingRoundAnalysisDto analysis)
@@ -1456,6 +1475,11 @@ namespace VRShooting.Unity.UI
 
         static void ResetTextMaterialEffects(TextMeshProUGUI tmp)
         {
+            if (TacticalUITheme.Current != null && tmp.font == TacticalUITheme.Current.Font)
+            {
+                tmp.fontSharedMaterial = tmp.font.material;
+                return;
+            }
             var sourceMaterial = tmp.fontSharedMaterial;
             if (sourceMaterial == null)
             {
@@ -1500,6 +1524,8 @@ namespace VRShooting.Unity.UI
 
         TMP_FontAsset ResolveFontAsset()
         {
+            var theme = TacticalUITheme.Current;
+            if (theme != null && theme.Font != null) return theme.Font;
 #if UNITY_EDITOR
             if (fontAsset == null)
             {

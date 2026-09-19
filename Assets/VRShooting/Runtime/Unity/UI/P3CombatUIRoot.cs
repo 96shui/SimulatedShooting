@@ -104,6 +104,7 @@ namespace VRShooting.Unity.UI
             BuildUrbanStreetHud();
             BuildUrbanBuildingHud();
             BuildUrbanResults();
+            TacticalUIStyle.Apply(transform);
             SetAllPagesActive(false);
             if (showOnAwake) Show(VisibleScreen);
         }
@@ -266,12 +267,15 @@ namespace VRShooting.Unity.UI
             trenchBriefingView = page.gameObject.AddComponent<P3TrenchBriefingView>();
             trenchBriefingView.Configure(FindText(page, "Text_TrenchBriefing_Title"), map, enemy, squad, objectives,
                 projectionState, error, start, view, back, projection);
-            page.gameObject.AddComponent<P3BriefingDroneVisual>();
+            var droneBadge = Rect("Image_TrenchBriefing_ReconDrone", page, Vector2.zero, Vector2.zero, new Vector2(105, 900), new Vector2(170, 955));
+            AddTestId(droneBadge.gameObject, droneBadge.name);
+            AddLabel(page, "Text_TrenchBriefing_ReconLabel", "无人机侦察  /  战术投影", 22, new Vector2(195, 900), new Vector2(850, 955), TextAlignmentOptions.Left, new Color32(143, 217, 255, 255));
+            page.gameObject.AddComponent<P3BriefingDroneVisual>().Configure(droneBadge);
         }
 
         void BuildTrenchHud()
         {
-            var page = CreatePage(ScreenId.TrenchHud, "堑壕第一人称 HUD");
+            var page = CreatePage(ScreenId.TrenchHud, "堑壕作战");
             var map = CreateMiniMap(page, "Hud_Trench_MiniMap", new Vector2(50, 625), new Vector2(560, 990));
             AddPanel(page, "Panel_TrenchHud_Left", new Vector2(50, 395), new Vector2(560, 605), new Color32(11, 25, 20, 225));
             var enemy = AddLabel(page, "Hud_Trench_EnemyProgress", "敌情：--", 25, new Vector2(80, 515), new Vector2(530, 565), TextAlignmentOptions.Left);
@@ -282,6 +286,7 @@ namespace VRShooting.Unity.UI
             var posture = AddLabel(page, "Hud_Trench_Posture", "姿态：--", 24, new Vector2(1400, 765), new Vector2(1830, 810), TextAlignmentOptions.Left);
             var shoulder = AddLabel(page, "Hud_Trench_Shoulder", "射击肩：--", 24, new Vector2(1400, 710), new Vector2(1830, 755), TextAlignmentOptions.Left);
             var corner = AddLabel(page, "Hud_Trench_Corner", "拐角射击：--", 24, new Vector2(1400, 655), new Vector2(1830, 700), TextAlignmentOptions.Left);
+            AddPanel(page, "Panel_TrenchHud_Squad", new Vector2(610, 25), new Vector2(1310, 190), new Color32(11, 25, 20, 225));
             var squad = AddLabel(page, "Hud_Trench_Squad", "小队：--", 22, new Vector2(600, 55), new Vector2(1260, 220), TextAlignmentOptions.Center);
             var prompt = AddLabel(page, "Hud_Trench_Prompt", string.Empty, 28, new Vector2(650, 260), new Vector2(1270, 325), TextAlignmentOptions.Center, new Color32(247, 185, 85, 255));
             var state = AddLabel(page, "Hud_Trench_State", "任务状态：--", 22, new Vector2(650, 220), new Vector2(1270, 255), TextAlignmentOptions.Center);
@@ -326,7 +331,8 @@ namespace VRShooting.Unity.UI
 
         void BuildUrbanStreetHud()
         {
-            var page = CreatePage(ScreenId.UrbanStreetHud, "城镇攻防 · 街道 HUD");
+            var page = CreatePage(ScreenId.UrbanStreetHud, "城镇攻防 · 街道行动");
+            AddPanel(page, "Panel_UrbanStreetHud_Right", new Vector2(1360, 630), new Vector2(1870, 990), new Color32(11, 25, 20, 225));
             var map = CreateMiniMap(page, "Hud_UrbanStreet_MiniMap", new Vector2(50, 625), new Vector2(560, 990));
             AddPanel(page, "Panel_UrbanStreetHud_Left", new Vector2(50, 365), new Vector2(560, 605), new Color32(11, 25, 20, 225));
             var streetState = AddLabel(page, "Hud_UrbanStreet_State", "街道状态：--", 24, new Vector2(80, 520), new Vector2(530, 570), TextAlignmentOptions.Left);
@@ -347,7 +353,8 @@ namespace VRShooting.Unity.UI
 
         void BuildUrbanBuildingHud()
         {
-            var page = CreatePage(ScreenId.UrbanBuildingHud, "城镇攻防 · 建筑搜索 HUD");
+            var page = CreatePage(ScreenId.UrbanBuildingHud, "城镇攻防 · 建筑搜索");
+            AddPanel(page, "Panel_UrbanBuildingHud_Right", new Vector2(1360, 630), new Vector2(1870, 990), new Color32(11, 25, 20, 225));
             var map = CreateMiniMap(page, "Hud_UrbanBuilding_MiniMap", new Vector2(50, 625), new Vector2(560, 990));
             AddPanel(page, "Panel_UrbanBuildingHud_Rooms", new Vector2(50, 275), new Vector2(560, 605), new Color32(11, 25, 20, 225));
             var floor = AddLabel(page, "Hud_UrbanBuilding_Floor", "当前楼层：--", 24, new Vector2(80, 530), new Vector2(530, 575), TextAlignmentOptions.Left);
@@ -407,12 +414,16 @@ namespace VRShooting.Unity.UI
             var card = AddPanel(parent, "Panel_TrenchMapSelection_" + suffix, min, max, new Color32(17, 36, 29, 245));
             var border = card.gameObject.AddComponent<Image>();
             border.color = new Color32(69, 224, 215, 255);
+            border.sprite = TacticalUIStyle.Sprite("panel_holo_medium");
+            border.type = Image.Type.Sliced;
+            border.fillCenter = false;
             border.raycastTarget = false;
             border.enabled = false;
             var button = card.gameObject.AddComponent<Button>();
             button.targetGraphic = card.Find(card.name + "_Image").GetComponent<Image>();
-            var nameText = AddLabel(card, "Text_TrenchMapSelection_" + suffix + "_Name", name, 32, new Vector2(35, 115), new Vector2(max.x - min.x - 35, max.y - min.y - 30), TextAlignmentOptions.Center);
-            var condition = AddLabel(card, "Text_TrenchMapSelection_" + suffix + "_Condition", string.Empty, 22, new Vector2(35, 30), new Vector2(max.x - min.x - 35, 105), TextAlignmentOptions.Center, new Color32(143, 217, 255, 255));
+            TacticalUIStyle.Artwork(card, "Image_TrenchMapSelection_Preview", TacticalUITheme.Current != null ? TacticalUITheme.Current.Trench : null, new Vector2(25, 25), new Vector2(310, max.y - min.y - 25));
+            var nameText = AddLabel(card, "Text_TrenchMapSelection_" + suffix + "_Name", name, 32, new Vector2(335, 115), new Vector2(max.x - min.x - 35, max.y - min.y - 30), TextAlignmentOptions.Center);
+            var condition = AddLabel(card, "Text_TrenchMapSelection_" + suffix + "_Condition", string.Empty, 22, new Vector2(335, 30), new Vector2(max.x - min.x - 35, 105), TextAlignmentOptions.Center, new Color32(143, 217, 255, 255));
             var view = card.gameObject.AddComponent<P3MapCardView>();
             view.Configure(button, nameText, condition, border);
             view.SetMapId(P3ContractIds.TrenchMap);
@@ -424,12 +435,16 @@ namespace VRShooting.Unity.UI
             var card = AddPanel(parent, "Panel_UrbanMapSelection_" + suffix, min, max, new Color32(17, 36, 29, 245));
             var border = card.gameObject.AddComponent<Image>();
             border.color = new Color32(69, 224, 215, 255);
+            border.sprite = TacticalUIStyle.Sprite("panel_holo_medium");
+            border.type = Image.Type.Sliced;
+            border.fillCenter = false;
             border.raycastTarget = false;
             border.enabled = false;
             var button = card.gameObject.AddComponent<Button>();
             button.targetGraphic = card.Find(card.name + "_Image").GetComponent<Image>();
-            var nameText = AddLabel(card, "Text_UrbanMapSelection_" + suffix + "_Name", "城镇地图 A", 32, new Vector2(35, 115), new Vector2(max.x - min.x - 35, max.y - min.y - 30), TextAlignmentOptions.Center);
-            var condition = AddLabel(card, "Text_UrbanMapSelection_" + suffix + "_Condition", string.Empty, 22, new Vector2(35, 30), new Vector2(max.x - min.x - 35, 105), TextAlignmentOptions.Center, new Color32(143, 217, 255, 255));
+            TacticalUIStyle.Artwork(card, "Image_UrbanMapSelection_Preview", TacticalUITheme.Current != null ? TacticalUITheme.Current.Urban : null, new Vector2(25, 25), new Vector2(310, max.y - min.y - 25));
+            var nameText = AddLabel(card, "Text_UrbanMapSelection_" + suffix + "_Name", "城镇地图 A", 32, new Vector2(335, 115), new Vector2(max.x - min.x - 35, max.y - min.y - 30), TextAlignmentOptions.Center);
+            var condition = AddLabel(card, "Text_UrbanMapSelection_" + suffix + "_Condition", string.Empty, 22, new Vector2(335, 30), new Vector2(max.x - min.x - 35, 105), TextAlignmentOptions.Center, new Color32(143, 217, 255, 255));
             var view = card.gameObject.AddComponent<P3MapCardView>();
             view.Configure(button, nameText, condition, border);
             view.SetMapId(P3ContractIds.UrbanMap);
@@ -456,9 +471,13 @@ namespace VRShooting.Unity.UI
         P3MiniMapView CreateMiniMap(RectTransform parent, string id, Vector2 min, Vector2 max)
         {
             var panel = AddPanel(parent, id, min, max, new Color32(18, 35, 31, 240));
-            var background = AddImage(panel, id + "_Background", new Vector2(22, 40), new Vector2(max.x - min.x - 22, max.y - min.y - 22), new Color32(22, 45, 41, 235));
+            var background = AddImage(panel, id + "_Background", new Vector2(28, 58), new Vector2(max.x - min.x - 28, max.y - min.y - 35), new Color32(22, 45, 41, 235));
             background.raycastTarget = false;
-            var label = AddLabel(panel, id + "_Label", "平面图", 18, new Vector2(22, 8), new Vector2(max.x - min.x - 22, 38), TextAlignmentOptions.Left, new Color32(143, 217, 255, 255));
+            var label = AddLabel(panel, id + "_Label", "平面图", 18, new Vector2(28, 20), new Vector2(max.x - min.x - 28, 52), TextAlignmentOptions.Left, new Color32(143, 217, 255, 255));
+            label.enableAutoSizing = true;
+            label.fontSizeMin = 10;
+            label.fontSizeMax = 18;
+            label.enableWordWrapping = false;
             var areaLayer = Rect("Areas", background.transform as RectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             var markerLayer = Rect("Markers", background.transform as RectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             var view = panel.gameObject.AddComponent<P3MiniMapView>();
