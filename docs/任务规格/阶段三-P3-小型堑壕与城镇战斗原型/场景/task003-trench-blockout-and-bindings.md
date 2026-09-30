@@ -112,3 +112,11 @@
 ## 2026-09-16 接入候选
 
 本任务场景产物从 `origin/dev/scene-p3` 的 `8fd6793` 接入当前工作分支。物理资源共用 CombatScene，按模式使用独立定义、出生点和 Session；完整验证与 VR 待验项见 [本次报告](../../../codex-reports/p3-vr-playable-integration.md)。本线工程接入不代表独立审核或阶段通过。
+
+## 2026-09-28 模式 03 地图替换
+
+用户要求复制现有模式 03 场景，用提供的 `Bunkers Trenches Pack [1.3].unitypackage` 替换战壕地图模型。新增独立 `Assets/Scenes/BunkersTrenchCombatScene.unity`，保留原 `CombatScene.unity` 给模式 04；模式 03 入口改加载新场景。新场景需重设玩家和两队友入口、3–5 名敌人的候选点、搜索节点、导航网格及 `trench-a` 俯视小地图与世界边界。选择性导入所需模型和贴图，保留原包来源记录。验收追溯 BDD 12「模式 03 使用新战壕场景」、14「新战壕入口与敌人候选点」、15「小地图与新战壕对应」；增加无 VR 场景和加载测试，VR 路线及帧率待实机验收。
+
+## 2026-09-29 原始演示地图接入
+
+用户确认原包 `DemoScene02` 的完整地形与布景预览效果，并要求在该地图恢复模式 03 玩法。新生产场景为 `Assets/Scenes/BunkersOriginalMode3CombatScene.unity`，直接保留原演示场景地形、战壕和碉堡，复用现有角色、XR、武器、战斗服务及 UI 绑定。重设贴地入口、两名队友、敌人候选点、搜索节点，重新烘焙导航并生成该区域俯视小地图。模式 04 的 `CombatScene.unity` 不变。验收追溯 BDD 12、14、15；无 VR 路径与战斗闭环自动化验证，真实 VR 移动和性能待实机验收。

@@ -244,6 +244,14 @@ namespace SimulatedShooting.Editor
                     Object.DestroyImmediate(preview.gameObject);
             }
 
+            // Domain reloads can clear the dictionary while a HideAndDontSave
+            // clone remains in the editor. Remove those orphaned previews too.
+            foreach (var visual in Resources.FindObjectsOfTypeAll<VRControllerHandVisual>()
+                         .Where(visual => visual != null &&
+                                          visual.gameObject.name.StartsWith("__VRHandPosePreview_"))
+                         .ToArray())
+                Object.DestroyImmediate(visual.gameObject);
+
             ActivePreviews.Clear();
             SceneView.RepaintAll();
         }

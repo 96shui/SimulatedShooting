@@ -146,6 +146,32 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
+        public IEnumerator Screen02_MainScene_TeleportRayCannotDisableModeSelectionUiRay()
+        {
+            // BDD 02: mode selection remains reachable with the VR controller ray.
+            xrModeController.SetVrModeForTests(true);
+            yield return null;
+
+            var rig = xrModeController.VrCamera.transform.root;
+            var uiRays = rig.GetComponentsInChildren<NearFarInteractor>(true);
+            var teleportRays = rig.GetComponentsInChildren<XRRayInteractor>(true)
+                .Where(interactor => !interactor.enableUIInteraction).ToArray();
+            Assert.That(uiRays.Length, Is.GreaterThanOrEqualTo(2));
+            Assert.That(teleportRays.Length, Is.GreaterThanOrEqualTo(2));
+
+            uiRays[0].gameObject.SetActive(false);
+            teleportRays[0].gameObject.SetActive(true);
+            xrModeController.RefreshForScene(SceneManager.GetActiveScene());
+
+            Assert.That(uiRays.All(interactor => interactor.gameObject.activeInHierarchy && interactor.enableUIInteraction),
+                Is.True, "The mode-selection UI rays must stay active: " + string.Join(", ",
+                    uiRays.Select(interactor => interactor.name + "=" + interactor.gameObject.activeSelf +
+                        "/" + interactor.gameObject.activeInHierarchy + "/" + interactor.enableUIInteraction)));
+            Assert.That(teleportRays.All(interactor => !interactor.gameObject.activeSelf), Is.True,
+                "Teleport rays must not replace the UI ray on a fixed menu.");
+        }
+
+        [UnityTest]
         public IEnumerator Screen02_MainScene_VrUsesFloorTrackingAndReadableStabilizedMenu()
         {
             var origin = Object.FindObjectOfType<XROrigin>(true);

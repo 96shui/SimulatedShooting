@@ -27,7 +27,7 @@ namespace SimulatedShooting.Tests.EditMode
         [TestCase(TrainingMode.Urban)]
         public void Screen24_25_RealSceneProvidesValidProductionDefinition(TrainingMode mode)
         {
-            var scene = EditorSceneManager.OpenScene("Assets/Scenes/CombatScene.unity", OpenSceneMode.Additive);
+            var scene = EditorSceneManager.OpenScene(UnityCombatSceneLoader.ScenePathFor(mode), OpenSceneMode.Additive);
             NavMeshDataInstance navigation=default;
             try
             {

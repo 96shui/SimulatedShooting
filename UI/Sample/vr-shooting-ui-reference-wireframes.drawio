@@ -211,10 +211,10 @@
           <mxGeometry height="500" width="730" x="35" y="45" as="geometry" />
         </mxCell>
         <mxCell id="p06-modal" parent="1" style="rounded=1;arcSize=6;fillColor=#0b1310;strokeColor=#2d9cff;strokeWidth=2;fontColor=#e7f2eb;fontSize=20;fontStyle=1;align=center;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="本轮弹着分析" vertex="1">
-          <mxGeometry height="390" width="480" x="160" y="85" as="geometry" />
+          <mxGeometry height="480" width="480" x="160" y="65" as="geometry" />
         </mxCell>
         <mxCell id="p06-target" parent="1" style="shape=mxgraph.basic.target;whiteSpace=wrap;html=1;fillColor=#111d18;strokeColor=#c8ff6a;fontColor=#e7f2eb;fontSize=13;" value="50cm×50cm胸靶示意
-3个弹着点偏离中心" vertex="1">
+3个弹着点偏离中心；蓝色为调整后中心" vertex="1">
           <mxGeometry height="210" width="170" x="205" y="160" as="geometry" />
         </mxCell>
         <mxCell id="p06-data" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="垂直偏差：偏上 12cm
@@ -225,10 +225,22 @@
           <mxGeometry height="230" width="190" x="405" y="155" as="geometry" />
         </mxCell>
         <mxCell id="p06-apply" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=15;fontStyle=1;" value="应用调整" vertex="1">
-          <mxGeometry height="38" width="110" x="280" y="415" as="geometry" />
+          <mxGeometry height="38" width="110" x="280" y="505" as="geometry" />
         </mxCell>
         <mxCell id="p06-next" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="进入下一轮" vertex="1">
-          <mxGeometry height="38" width="120" x="415" y="415" as="geometry" />
+          <mxGeometry height="38" width="120" x="415" y="505" as="geometry" />
+        </mxCell>
+        <mxCell id="p06-manual" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#2d9cff;fontColor=#e7f2eb;fontSize=13;align=center;verticalAlign=top;spacing=5;whiteSpace=wrap;html=1;" value="三发平均弹着点 → 调整后弹着中心" vertex="1">
+          <mxGeometry height="82" width="390" x="205" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="p06-horizontal" parent="1" style="rounded=1;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=13;align=center;whiteSpace=wrap;html=1;" value="水平  −    +8cm    +" vertex="1">
+          <mxGeometry height="38" width="170" x="215" y="425" as="geometry" />
+        </mxCell>
+        <mxCell id="p06-vertical" parent="1" style="rounded=1;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=13;align=center;whiteSpace=wrap;html=1;" value="垂直  −    -12cm    +" vertex="1">
+          <mxGeometry height="38" width="170" x="410" y="425" as="geometry" />
+        </mxCell>
+        <mxCell id="p06-back" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="返回主菜单" vertex="1">
+          <mxGeometry height="38" width="90" x="545" y="505" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

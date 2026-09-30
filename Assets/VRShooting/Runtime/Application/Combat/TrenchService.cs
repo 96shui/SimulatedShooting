@@ -18,6 +18,7 @@ namespace VRShooting.Application.Combat
         readonly Func<string> nextSessionId;
         readonly CombatCoreService core;
         readonly SquadFormationService squad;
+        readonly SquadGrenadeTacticService grenades;
         readonly HashSet<string> searched=new HashSet<string>(), inRange=new HashSet<string>(), killed=new HashSet<string>();
         readonly Dictionary<string,Vector3> estimates=new Dictionary<string,Vector3>();
         readonly Dictionary<string,CombatInputDto> received=new Dictionary<string,CombatInputDto>();
@@ -34,6 +35,7 @@ namespace VRShooting.Application.Combat
         CombatVisualSnapshotDto visual;
         public ICombatCoreService Combat=>core;
         public ISquadCommandService SquadCommands=>squad;
+        public ICombatGrenadeTacticService GrenadeTactics=>grenades;
         public event Action<TrenchSessionDto> SessionChanged;
         public event Action<TrenchResultDto> ResultReady;
         public event Action<HudDto> HudUpdated;
@@ -48,6 +50,7 @@ namespace VRShooting.Application.Combat
             this.random=random??throw new ArgumentNullException(nameof(random)); this.config=config??CombatConfigDto.Default;
             nextSessionId=sessionIdFactory??(()=>Guid.NewGuid().ToString("N"));
             core=new CombatCoreService(clock,this.config); squad=new SquadFormationService(clock,navigation,this.config);
+            grenades=new SquadGrenadeTacticService(clock,core,squad,this.config);
             core.Changed+=OnCore; squad.Changed+=OnSquad;
         }
         public ServiceResult<IReadOnlyList<TrenchMapDto>> GetMaps()
@@ -60,9 +63,11 @@ namespace VRShooting.Application.Combat
         public ServiceResult<TrenchBriefingDto> GetBriefing(string mapId,string weaponId,RandomSeed seed)
         {
             var valid=ValidateStart(mapId,weaponId); if(!valid.Success)return Fail<TrenchBriefingDto>(valid.ErrorCode);
-            var members=new[]{new SquadMemberDto {MemberId="preview.player",Role=SquadMemberRole.Player,Health=config.PlayerHealth},
-                new SquadMemberDto {MemberId="preview.teammate-2",Role=SquadMemberRole.TeammateTwo,Health=config.PlayerHealth,WorldPosition=Vector3.back*config.SquadSpacing},
-                new SquadMemberDto {MemberId="preview.teammate-3",Role=SquadMemberRole.TeammateThree,Health=config.PlayerHealth,WorldPosition=Vector3.back*config.SquadSpacing*2}};
+            var spawn=definition.PlayerSpawnPosition;
+            var forward=SpawnForward();
+            var members=new[]{new SquadMemberDto {MemberId="preview.player",Role=SquadMemberRole.Player,Health=config.PlayerHealth,WorldPosition=spawn},
+                new SquadMemberDto {MemberId="preview.teammate-2",Role=SquadMemberRole.TeammateTwo,Health=config.PlayerHealth,WorldPosition=spawn-forward*config.SquadSpacing},
+                new SquadMemberDto {MemberId="preview.teammate-3",Role=SquadMemberRole.TeammateThree,Health=config.PlayerHealth,WorldPosition=spawn-forward*config.SquadSpacing*2}};
             return ServiceResult<TrenchBriefingDto>.Ok(new TrenchBriefingDto {MapId=mapId,EnemyEstimateMin=3,EnemyEstimateMax=5,
                 PlannedSquad=new SquadStatusDto {Members=Array.AsReadOnly(members),CommandMenuAvailable=false},ProjectedMap=BuildMap(true)});
         }
@@ -79,7 +84,10 @@ namespace VRShooting.Application.Combat
             {
                 var index=random.NextInt(0,candidates.Count); if(index<0||index>=candidates.Count)return Fail<TrenchSessionDto>(ErrorCode.InvalidInput);
                 var point=candidates[index];candidates.RemoveAt(index);var enemyId=id+".enemy-"+(i+1).ToString("000",CultureInfo.InvariantCulture);
-                spawns.Add(new CombatEntityVisualDto {EntityId=enemyId,Role=CombatEntityRole.Enemy,Position=point.WorldPosition,Forward=Vector3.forward});
+                var facing=definition.PlayerSpawnPosition-point.WorldPosition;
+                facing.y=0;
+                spawns.Add(new CombatEntityVisualDto {EntityId=enemyId,Role=CombatEntityRole.Enemy,Position=point.WorldPosition,
+                    Forward=facing.sqrMagnitude>.001f?facing.normalized:-SpawnForward()});
                 selected.Add(enemyId,point.EstimatePosition);
             }
             starting=true;
@@ -89,7 +97,8 @@ namespace VRShooting.Application.Combat
                 session=id;combat=started.Data;revision=0;elapsed=0;lastNow=clock.Now;cancelled=hasResult=false;pendingOutcome=null;
                 searched.Clear();inRange.Clear();killed.Clear();estimates.Clear();received.Clear();pending.Clear();
                 foreach(var pair in selected)estimates.Add(pair.Key,pair.Value);
-                squad.Start(id,Vector3.zero,Vector3.forward);dirty=true;
+                squad.Start(id,definition.PlayerSpawnPosition,SpawnForward());dirty=true;
+                grenades.Start(id);
             }
             finally {starting=false;}
             Publish();return ServiceResult<TrenchSessionDto>.Ok(snapshot);
@@ -140,7 +149,10 @@ namespace VRShooting.Application.Combat
                     }
                     else if(combat.State==SessionState.Running&&combat.TrackingValid)squad.Submit(input);
                 }
-                pending.Clear();ReconcileKills();UpdateSquad();Evaluate();
+                pending.Clear();
+                var grenadeResult=grenades.Advance();if(!grenadeResult.Success)return grenadeResult;
+                combat=core.GetSnapshot(id).Data;
+                ReconcileKills();UpdateSquad();Evaluate();
             }
             finally {batch=false;}
             Publish();return Ok();
@@ -268,13 +280,16 @@ namespace VRShooting.Application.Combat
             }
             if(preview)
             {
-                markers.Add(Marker("preview.player",MarkerType.Player,Vector3.zero,"入口/玩家"));
-                markers.Add(Marker("preview.teammate-2",MarkerType.Teammate,Vector3.back*config.SquadSpacing,"二号"));
-                markers.Add(Marker("preview.teammate-3",MarkerType.Teammate,Vector3.back*config.SquadSpacing*2,"三号"));
+                var spawn=definition.PlayerSpawnPosition;
+                var forward=SpawnForward();
+                markers.Add(Marker("preview.player",MarkerType.Player,spawn,"入口/玩家"));
+                markers.Add(Marker("preview.teammate-2",MarkerType.Teammate,spawn-forward*config.SquadSpacing,"二号"));
+                markers.Add(Marker("preview.teammate-3",MarkerType.Teammate,spawn-forward*config.SquadSpacing*2,"三号"));
             }
             return new MiniMapDto {MapId=definition.MapId,Visible=true,Markers=markers.AsReadOnly(),Areas=areas.AsReadOnly()};
         }
         MapMarkerDto Marker(string id,MarkerType type,Vector3 position,string label)=>new MapMarkerDto {MarkerId=id,Type=type,NormalizedPosition=Project(position),Label=label};
+        Vector3 SpawnForward()=>definition.PlayerSpawnForward.sqrMagnitude>.001f?definition.PlayerSpawnForward.normalized:Vector3.forward;
         Vector2 Project(Vector3 position)
         {var bounds=definition.Projections.First(p=>p.FloorId.Length==0).WorldBoundsXZ;return new Vector2(Mathf.Clamp01((position.x-bounds.x)/bounds.width),Mathf.Clamp01((position.z-bounds.y)/bounds.height));}
         static HudTextLineDto Line(string key,string label,string value)=>new HudTextLineDto {Key=key,Label=label,Value=value};
@@ -297,7 +312,7 @@ namespace VRShooting.Application.Combat
         static ServiceResult<T> Fail<T>(ErrorCode code)=>ServiceResult<T>.Fail(code,"Trench request rejected: "+code);
         public void Dispose()
         {
-            if(disposed)return;disposed=true;core.Changed-=OnCore;squad.Changed-=OnSquad;core.Dispose();squad.Dispose();pending.Clear();received.Clear();
+            if(disposed)return;disposed=true;core.Changed-=OnCore;squad.Changed-=OnSquad;grenades.Dispose();core.Dispose();squad.Dispose();pending.Clear();received.Clear();
             SessionChanged=null;ResultReady=null;HudUpdated=null;PlayerChanged=null;SquadChanged=null;VisualChanged=null;
         }
     }

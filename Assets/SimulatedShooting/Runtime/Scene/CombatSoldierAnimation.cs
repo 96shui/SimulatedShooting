@@ -14,6 +14,7 @@ namespace SimulatedShooting.Scene
         public bool Friendly;
         float recoil;
         bool dead;
+        float grenadeThrowUntil;
         Quaternion leftGrip, rightGrip;
         Vector3 riflePosition;
         Quaternion rifleRotation;
@@ -31,6 +32,14 @@ namespace SimulatedShooting.Scene
             if (dead) return;
             recoil = 1;
             Animator.CrossFadeInFixedTime("Shot", .06f, 0, 0);
+        }
+
+        public void GrenadeThrow()
+        {
+            if (dead || Animator == null) return;
+            grenadeThrowUntil = Time.time + .62f;
+            var state = Animator.StringToHash("GrenadeThrow");
+            if (Animator.HasState(0, state)) Animator.CrossFadeInFixedTime("GrenadeThrow", .06f, 0, 0);
         }
 
         public void Hit()
@@ -67,6 +76,14 @@ namespace SimulatedShooting.Scene
         {
             if (dead) return;
             var root = Actor.VisualRoot;
+            if (Time.time < grenadeThrowUntil)
+            {
+                var phase = Mathf.InverseLerp(grenadeThrowUntil - .62f, grenadeThrowUntil, Time.time);
+                var target = root.TransformPoint(new Vector3(.18f, phase < .55f ? 1.42f : 1.53f, phase < .55f ? .30f : .62f));
+                SolveArm(RightUpperArm, RightForearm, RightHand, target, root.TransformPoint(new Vector3(.42f, 1.22f, .08f)));
+                SolveArm(LeftUpperArm, LeftForearm, LeftHand, target + root.right * -.14f, root.TransformPoint(new Vector3(-.36f, 1.22f, .15f)));
+                return;
+            }
             // Stable shoulder-height targets keep the two hands on the rifle while legs animate.
             float sway = Mathf.Sin(Time.time * 1.8f) * .004f;
             var right = root.TransformPoint(new Vector3(.14f, 1.30f + sway, .25f - recoil * .035f));

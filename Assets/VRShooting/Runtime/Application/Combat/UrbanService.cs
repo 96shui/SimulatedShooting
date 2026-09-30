@@ -18,6 +18,7 @@ namespace VRShooting.Application.Combat
         readonly Func<string> nextSessionId;
         readonly CombatCoreService core;
         readonly SquadFormationService squad;
+
         readonly Dictionary<string,RoomState> rooms=new Dictionary<string,RoomState>(StringComparer.Ordinal);
         readonly Dictionary<string,SceneSpawnPointDto> enemies=new Dictionary<string,SceneSpawnPointDto>(StringComparer.Ordinal);
         readonly HashSet<string> killed=new HashSet<string>(),inRange=new HashSet<string>();
@@ -36,6 +37,7 @@ namespace VRShooting.Application.Combat
         CombatVisualSnapshotDto visual;
         public ICombatCoreService Combat=>core;
         public ISquadCommandService SquadCommands=>squad;
+
         public event Action<UrbanSessionDto> SessionChanged;
         public event Action<UrbanResultDto> ResultReady;
         public event Action<HudDto> HudUpdated;
@@ -50,6 +52,7 @@ namespace VRShooting.Application.Combat
             this.random=random??throw new ArgumentNullException(nameof(random));this.config=config??CombatConfigDto.Default;
             nextSessionId=sessionIdFactory??(()=>Guid.NewGuid().ToString("N"));
             core=new CombatCoreService(clock,this.config);squad=new SquadFormationService(clock,navigation,this.config);
+
             core.Changed+=OnCore;squad.Changed+=OnSquad;
         }
         public ServiceResult<IReadOnlyList<UrbanMapDto>> GetMaps()
@@ -85,6 +88,7 @@ namespace VRShooting.Application.Combat
                 foreach(var pair in chosen)enemies.Add(pair.Key,pair.Value);
                 foreach(var f in definition.Floors)foreach(var r in f.Rooms)rooms.Add(r.RoomId,new RoomState {Definition=r,FloorId=f.FloorId});
                 squad.Start(id,Vector3.zero,Vector3.forward);dirty=true;
+
             }
             finally{starting=false;}
             Publish();return ServiceResult<UrbanSessionDto>.Ok(snapshot);
@@ -156,7 +160,8 @@ namespace VRShooting.Application.Combat
             batch=true;
             try
             {
-                var advanced=core.Advance(id);if(!advanced.Success)return advanced;AccumulateTime();combat=core.GetSnapshot(id).Data;
+                var advanced=core.Advance(id);if(!advanced.Success)return advanced;
+                AccumulateTime();combat=core.GetSnapshot(id).Data;
                 foreach(var input in pending)
                 {
                     if(input.Kind==CombatInputKind.AreaPresence)
@@ -296,6 +301,7 @@ namespace VRShooting.Application.Combat
         bool Matches(string id)=>!disposed&&session.Length>0&&session==id;
         static bool Finite(float v)=>!float.IsNaN(v)&&!float.IsInfinity(v);
         static bool Finite(Vector3 v)=>Finite(v.x)&&Finite(v.y)&&Finite(v.z);
+
         static ServiceResult<Unit> Ok()=>ServiceResult<Unit>.Ok(Unit.Value);
         static ServiceResult<T> Fail<T>(ErrorCode code)=>ServiceResult<T>.Fail(code,"Urban request rejected: "+code);
         public void Dispose(){if(disposed)return;disposed=true;core.Changed-=OnCore;squad.Changed-=OnSquad;core.Dispose();squad.Dispose();pending.Clear();received.Clear();SessionChanged=null;ResultReady=null;HudUpdated=null;PlayerChanged=null;SquadChanged=null;VisualChanged=null;}

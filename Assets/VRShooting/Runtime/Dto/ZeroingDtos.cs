@@ -38,12 +38,20 @@ namespace VRShooting.Common
         public int RearSightClicks { get; init; }
     }
 
+    public enum ZeroingAdjustmentAxis
+    {
+        Horizontal,
+        Vertical
+    }
+
     public readonly struct ZeroingRoundAnalysisDto
     {
         public string SessionId { get; init; }
         public int RoundIndex { get; init; }
         public IReadOnlyList<ZeroingShotDto> Shots { get; init; }
         public Vector2 AverageOffsetCm { get; init; }
+        public Vector2 ProposedCorrectionCm { get; init; }
+        public Vector2 PreviewAverageOffsetCm { get; init; }
         public VerticalAdjustmentDirection VerticalDirection { get; init; }
         public float FrontSightDegreesToAdjust { get; init; }
         public HorizontalAdjustmentDirection HorizontalDirection { get; init; }

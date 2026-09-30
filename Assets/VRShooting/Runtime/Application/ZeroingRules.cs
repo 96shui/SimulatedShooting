@@ -106,18 +106,10 @@ namespace VRShooting.Application
             string sessionId,
             int roundIndex,
             IReadOnlyList<ZeroingShotDto> shots,
-            bool adjustmentApplied)
+            bool adjustmentApplied,
+            Vector2 proposedCorrectionCm = default)
         {
-            var average = Vector2.zero;
-            for (var i = 0; i < shots.Count; i++)
-            {
-                average += shots[i].ImpactPointCm;
-            }
-
-            if (shots.Count > 0)
-            {
-                average /= shots.Count;
-            }
+            var average = ComputeAverageOffset(shots);
 
             var passed = shots.Count == ShotsPerRound;
             for (var i = 0; i < shots.Count; i++)
@@ -131,12 +123,31 @@ namespace VRShooting.Application
                 RoundIndex = roundIndex,
                 Shots = shots is ZeroingShotDto[] array ? array : CopyShots(shots),
                 AverageOffsetCm = average,
+                ProposedCorrectionCm = proposedCorrectionCm,
+                PreviewAverageOffsetCm = average + proposedCorrectionCm,
                 VerticalDirection = ResolveVerticalDirection(average.y),
                 FrontSightDegreesToAdjust = ComputeFrontSightDegrees(average.y),
                 HorizontalDirection = ResolveHorizontalDirection(average.x),
                 RearSightClicksToAdjust = ComputeRearSightClicks(average.x),
                 PassedTenRing = passed,
                 AdjustmentApplied = adjustmentApplied
+            };
+        }
+
+        public static Vector2 ComputeAverageOffset(IReadOnlyList<ZeroingShotDto> shots)
+        {
+            var sum = Vector2.zero;
+            for (var i = 0; i < shots.Count; i++)
+                sum += shots[i].ImpactPointCm;
+            return shots.Count == 0 ? Vector2.zero : sum / shots.Count;
+        }
+
+        public static SightAdjustmentDto ApplyCorrection(SightAdjustmentDto current, Vector2 correctionCm)
+        {
+            return new SightAdjustmentDto
+            {
+                FrontSightDegrees = current.FrontSightDegrees + ComputeFrontSightDegrees(correctionCm.y),
+                RearSightClicks = current.RearSightClicks + ComputeRearSightClicks(correctionCm.x)
             };
         }
 

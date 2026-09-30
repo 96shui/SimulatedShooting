@@ -64,6 +64,16 @@ namespace VRShooting.Tests.EditMode
             service.Dispose(); service = new TrenchService(P3Fixtures.TrenchDefinition.WithSpawnPoints(P3Fixtures.TrenchDefinition.SpawnPoints.Reverse().ToArray()),clock,new SeededCombatRandom(),navigation);
             Start(42); Assert.That(Enemies.Select(e=>e.Position),Is.EqualTo(positions));
         }
+        [Test] public void SpawnedEnemiesFaceTheTrenchEntrance()
+        {
+            Start(42);
+            foreach (var enemy in Enemies)
+            {
+                var toEntrance = P3Fixtures.TrenchDefinition.PlayerSpawnPosition - enemy.Position;
+                toEntrance.y = 0;
+                Assert.That(Vector3.Dot(enemy.Forward, toEntrance.normalized), Is.GreaterThan(.99f), enemy.EntityId);
+            }
+        }
         [TestCase(3)] [TestCase(5)] public void EnemyCountBoundariesCanBeInjected(int count)
         {
             service.Dispose(); service = new TrenchService(P3Fixtures.TrenchDefinition,clock,new CountRandom(count),navigation);

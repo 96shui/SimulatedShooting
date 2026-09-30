@@ -16,6 +16,8 @@
 
 如开发团队决定合并场景，必须保留 `SceneId` 概念供路由和测试使用。
 
+`MainScene` 的 VR 输入约定：左摇杆只接连续移动，右摇杆只接一种转向方式；右摇杆不得接移动，左摇杆不得接转向。真实 VR 移动由 XR Locomotion Provider 执行，无 VR 玩家移动替身不得再次移动 XR Origin。
+
 ## UI Prefab 命名
 
 | 类型 | 命名格式 | 示例 |

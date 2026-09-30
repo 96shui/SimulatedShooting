@@ -12240,7 +12240,7 @@ MonoBehaviour:
   modelRoot: {fileID: 422119472}
   grabInteractable: {fileID: 1401336405}
   gripAnchor: {fileID: 1401336403}
-  gripPositionOffset: {x: 0.002, y: 0.05, z: -0.02}
+  gripPositionOffset: {x: 0.002, y: 0.052, z: 0.025}
   gripRotationOffset: {x: -90, y: 0, z: -5}
   poseBlendSpeed: 18
   useCustomFingerPose: 0
@@ -55914,7 +55914,7 @@ MonoBehaviour:
   modelRoot: {fileID: 1148343128}
   grabInteractable: {fileID: 1401336405}
   gripAnchor: {fileID: 1401336402}
-  gripPositionOffset: {x: -0.005, y: -0.024, z: -0.018}
+  gripPositionOffset: {x: -0.018, y: -0.052, z: -0.018}
   gripRotationOffset: {x: 0, y: 0, z: 180}
   poseBlendSpeed: 18
   useCustomFingerPose: 0

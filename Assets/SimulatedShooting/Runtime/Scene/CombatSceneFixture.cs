@@ -62,6 +62,8 @@ namespace SimulatedShooting.Scene
             actor.EntityId = id;
             actor.name = "Actor_" + id;
             actor.NavigationReported += (entity, arrived) => LastFact = "角色" + (arrived ? "已抵達" : "無法抵達");
+            if (gameObject.scene.name == "BunkersOriginalMode3CombatScene")
+                actor.MatchVisualToTerrain(Bindings.GeometryRoot.GetComponentInChildren<Terrain>());
             Actors.Add(actor);
         }
 
@@ -99,6 +101,26 @@ namespace SimulatedShooting.Scene
 
         public void JumpToObservationPoint(int index)
         {
+            if (gameObject.scene.name == "BunkersOriginalMode3CombatScene")
+            {
+                var terrain = Bindings.GeometryRoot.GetComponentInChildren<Terrain>();
+                var locations = new[]
+                {
+                    new Vector3(320, 115, 280), new Vector3(290, 0, 283),
+                    new Vector3(307, 0, 282), new Vector3(321, 0, 282),
+                    new Vector3(333, 0, 269), new Vector3(332, 0, 253),
+                    new Vector3(345, 0, 281)
+                };
+                if (index < 0 || index >= locations.Length) return;
+                var position = locations[index];
+                if (index != 0) position.y = terrain.SampleHeight(position) + terrain.transform.position.y + 1.65f;
+                var lookAt = index == 0 ? new Vector3(320, 0, 280) :
+                    index == locations.Length - 1 ? new Vector3(333, 0, 282) : locations[Mathf.Min(index + 1, locations.Length - 1)];
+                lookAt.y = terrain.SampleHeight(lookAt) + terrain.transform.position.y + (index == 0 ? 0 : 1.4f);
+                Walker.JumpToObservationPoint(position, lookAt);
+                LastFact = index == 0 ? "戰壕鳥瞰" : "戰壕觀察點 " + index;
+                return;
+            }
             var positions = new[]
             {
                 new Vector3(24, 28, 55),

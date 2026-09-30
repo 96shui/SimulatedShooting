@@ -21,6 +21,9 @@ namespace SimulatedShooting.Tests.PlayMode
             fixture.Walker.InputEnabled = false;
             var actor = fixture.Actors.First(a => a.EntityId == "teammate-2");
             var animation = actor.SoldierAnimation;
+            Assert.That(actor.VisualRoot.Find("DetailedCharacterD4"), Is.Not.Null);
+            var enemy = fixture.Actors.First(a => !a.EntityId.StartsWith("teammate"));
+            Assert.That(enemy.VisualRoot.Find("DetailedCharacterD3"), Is.Not.Null);
             var start = actor.transform.position;
             actor.PlayShot("task014-shot");
             yield return null;
@@ -48,7 +51,7 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return new WaitForSeconds(.5f);
             Assert.That(animation.Animator.GetFloat("Speed"), Is.GreaterThan(.1f));
             Assert.That(Vector3.Distance(actor.transform.position, start), Is.GreaterThan(.1f));
-            var leg = animation.Animator.GetComponentsInChildren<Transform>().First(t => t.name == "mott_var01:LeftLeg");
+            var leg = animation.Animator.GetComponentsInChildren<Transform>().First(t => t.name == "L_knee");
             var rotation = leg.localRotation;
             // Compare across a stride: two isolated samples can coincide in a looping gait.
             float maxAngle = 0;

@@ -93,6 +93,38 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
+        public IEnumerator Screen06_ManualAxisButtonsPreviewAndCommitCorrection()
+        {
+            // BDD 06: horizontal and vertical controls move the preview independently.
+            yield return OpenHudAndCompleteRound();
+            var sessionId = services.TrainingSessions.Current.SessionId;
+            var before = services.Zeroing.CompleteRound(sessionId).Data;
+
+            var horizontal = FindButton("Button_ZeroingImpactAnalysis_HorizontalPlus");
+            var vertical = FindButton("Button_ZeroingImpactAnalysis_VerticalMinus");
+            horizontal.onClick.Invoke();
+            vertical.onClick.Invoke();
+            yield return null;
+
+            var preview = services.Zeroing.CompleteRound(sessionId).Data;
+            Assert.AreEqual(before.AverageOffsetCm, preview.AverageOffsetCm);
+            Assert.AreEqual(before.ProposedCorrectionCm + new Vector2(1f, -1f), preview.ProposedCorrectionCm);
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_PreviewAverage").text, Does.Contain("预览"));
+            var averageMarker = FindById("Image_ZeroingImpactAnalysis_AverageCenter");
+            var previewMarker = FindById("Image_ZeroingImpactAnalysis_AdjustedCenter");
+            Assert.IsTrue(averageMarker.activeSelf);
+            Assert.IsTrue(previewMarker.activeSelf);
+            Assert.AreNotEqual(averageMarker.GetComponent<RectTransform>().offsetMin,
+                previewMarker.GetComponent<RectTransform>().offsetMin);
+
+            FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment").onClick.Invoke();
+            yield return null;
+            Assert.IsFalse(horizontal.interactable);
+            Assert.IsFalse(vertical.interactable);
+            Assert.IsTrue(services.Zeroing.CompleteRound(sessionId).Data.AdjustmentApplied);
+        }
+
+        [UnityTest]
         public IEnumerator Screen06_BackToMainMenuButtonReturnsToMainMenu()
         {
             yield return OpenHudAndCompleteRound();
@@ -111,16 +143,16 @@ namespace VRShooting.Tests.PlayMode.UI
             ApplyAndNext();
             yield return null;
 
-            Fire(new Vector3(-8f, 12f, 100f));
-            Fire(new Vector3(-8f, 12f, 100f));
-            Fire(new Vector3(-8f, 12f, 100f));
+            Fire(new Vector3(12f, 12f, 100f));
+            Fire(new Vector3(12f, 12f, 100f));
+            Fire(new Vector3(12f, 12f, 100f));
             yield return null;
             ApplyAndNext();
             yield return null;
 
-            Fire(new Vector3(-8f, 12f, 100f));
-            Fire(new Vector3(-8f, 12f, 100f));
-            Fire(new Vector3(-8f, 12f, 100f));
+            Fire(new Vector3(12f, -8f, 100f));
+            Fire(new Vector3(12f, -8f, 100f));
+            Fire(new Vector3(12f, -8f, 100f));
             yield return null;
 
             var apply = FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment");

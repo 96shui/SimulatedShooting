@@ -35,4 +35,9 @@ namespace VRShooting.Application
         ServiceResult<SquadCommandResult> Issue(SquadCommandRequest request);
         ServiceResult<SquadStatusDto> OnReloadStarted(string sessionId);
     }
+    public interface ICombatGrenadeSquadPort
+    {
+        IReadOnlyList<SquadMemberDto> GetMembers(string sessionId);
+        ServiceResult<Unit> SetGrenadeState(string sessionId, string memberId, bool throwing);
+    }
 }

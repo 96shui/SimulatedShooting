@@ -18,6 +18,7 @@ namespace SimulatedShooting.Editor
         const string TargetLayerName = "TrainingTarget";
         const string PreviewPath = "docs/codex-reports/evidence/task003-task006-moving-target-range.png";
         const string BaselinePath = "docs/codex-reports/evidence/task003-task006-performance-baseline.md";
+        const float ZeroingPlayerForwardOffset = 0.3f;
 
         [MenuItem("Tools/Simulated Shooting/Migrate P1 P2 To Fixed Prone Range Contract")]
         public static void ApplyTask003And006()
@@ -119,6 +120,50 @@ namespace SimulatedShooting.Editor
             PatchZeroingRangeScene(SceneManager.GetActiveScene());
         }
 
+        [MenuItem("Tools/Simulated Shooting/Move P1 Player Start Forward")]
+        public static void MoveOpenZeroingPlayerStartForward()
+        {
+            var scene = SceneManager.GetActiveScene();
+            if (scene.path != ZeroingScenePath)
+                throw new InvalidOperationException("Open ZeroingRangeScene before moving the P1 player start.");
+
+            var root = FindByTestId(scene, "ZeroingRange.Root")?.transform;
+            var anchors = root == null ? null : FindDescendant(root, "TrainingAnchors");
+            var playerRoot = FindByTestId(scene, "ZeroingRange.FiringStation.PlayerRoot")?.transform;
+            var xrOrigin = FindByTestId(scene, "ZeroingRange.Origin.VR")?.transform;
+            if (anchors == null || playerRoot == null || xrOrigin == null)
+                throw new InvalidOperationException("P1 player start anchors are incomplete.");
+
+            var delta = ZeroingPlayerForwardOffset - playerRoot.localPosition.z;
+            if (Mathf.Abs(delta) < 0.001f)
+                return;
+
+            var targets = new[]
+            {
+                playerRoot,
+                xrOrigin,
+                FindDescendant(anchors, "PlayerSpawn"),
+                FindByTestId(scene, "ZeroingRange.Camera.NoVR")?.transform,
+                FindByTestId(scene, "ZeroingRange.FiringStation.ProneHeadReference")?.transform,
+                FindByTestId(scene, "ZeroingRange.FiringStation.AimForward")?.transform,
+                FindByTestId(scene, "ZeroingRange.FiringStation.LargeUiAnchor")?.transform,
+                FindByTestId(scene, "ZeroingRange.FiringStation.MinimalHudAnchor")?.transform,
+                FindByTestId(scene, "ZeroingRange.HudAnchor")?.transform
+            }.Where(item => item != null).Distinct().ToArray();
+
+            Undo.RecordObjects(targets.Cast<UnityEngine.Object>().ToArray(), "Move P1 player start forward");
+            foreach (var target in targets)
+            {
+                var position = target.localPosition;
+                position.z += delta;
+                target.localPosition = position;
+                PrefabUtility.RecordPrefabInstancePropertyModifications(target);
+            }
+
+            EditorSceneManager.MarkSceneDirty(scene);
+            Debug.Log($"[ProneRangeSceneMigration] Moved the P1 player start forward by {delta:0.###} m.");
+        }
+
         public static void PatchOpenMovingTargetRangeScene()
         {
             PatchMovingTargetRangeScene(SceneManager.GetActiveScene());
@@ -149,18 +194,18 @@ namespace SimulatedShooting.Editor
 
             var station = EnsureAnchor(anchors, "FiringStation_Prone", Vector3.zero,
                 "ZeroingRange.FiringStation.Root");
-            var playerRoot = EnsureAnchor(station, "PlayerRootAnchor", Vector3.zero,
+            var playerRoot = EnsureAnchor(station, "PlayerRootAnchor", new Vector3(0f, 0f, ZeroingPlayerForwardOffset),
                 "ZeroingRange.FiringStation.PlayerRoot");
-            var proneHead = EnsureAnchor(station, "ProneHeadReference", new Vector3(0f, 0.72f, 0f),
+            var proneHead = EnsureAnchor(station, "ProneHeadReference", new Vector3(0f, 0.72f, ZeroingPlayerForwardOffset),
                 "ZeroingRange.FiringStation.ProneHeadReference");
-            var aim = EnsureAnchor(station, "AimForwardAnchor", new Vector3(0f, 0.72f, 1f),
+            var aim = EnsureAnchor(station, "AimForwardAnchor", new Vector3(0f, 0.72f, 1f + ZeroingPlayerForwardOffset),
                 "ZeroingRange.FiringStation.AimForward");
-            var largeUi = EnsureAnchor(station, "LargeUiAnchor", new Vector3(-0.72f, 0.88f, 1.55f),
+            var largeUi = EnsureAnchor(station, "LargeUiAnchor", new Vector3(-0.72f, 0.88f, 1.55f + ZeroingPlayerForwardOffset),
                 "ZeroingRange.FiringStation.LargeUiAnchor");
-            var minimalHud = EnsureAnchor(station, "MinimalHudAnchor", new Vector3(0.62f, 0.82f, 1.25f),
+            var minimalHud = EnsureAnchor(station, "MinimalHudAnchor", new Vector3(0.62f, 0.82f, 1.25f + ZeroingPlayerForwardOffset),
                 "ZeroingRange.FiringStation.MinimalHudAnchor");
             var weaponRackPosition = weaponSpawn == null
-                ? new Vector3(0.42f, 0.35f, 0.75f)
+                ? new Vector3(0.42f, 0.35f, 0.62f)
                 : station.InverseTransformPoint(weaponSpawn.position);
             var weaponRack = EnsureAnchor(station, "WeaponRackAnchor", weaponRackPosition,
                 "ZeroingRange.FiringStation.WeaponRackAnchor");
@@ -174,10 +219,17 @@ namespace SimulatedShooting.Editor
                 xrOrigin);
             if (noVrCamera != null)
             {
-                noVrCamera.transform.localPosition = new Vector3(0f, 1.5f, 0f);
+                noVrCamera.transform.localPosition = new Vector3(0f, 1.5f, ZeroingPlayerForwardOffset);
                 noVrCamera.transform.localRotation = Quaternion.identity;
                 noVrCamera.transform.localScale = Vector3.one;
             }
+
+            var playerSpawn = FindDescendant(anchors, "PlayerSpawn");
+            if (playerSpawn != null)
+                playerSpawn.localPosition = new Vector3(0f, 0f, ZeroingPlayerForwardOffset);
+            var hudAnchor = FindByTestId(scene, "ZeroingRange.HudAnchor")?.transform;
+            if (hudAnchor != null)
+                hudAnchor.localPosition = new Vector3(0f, 1.55f, 1.5f + ZeroingPlayerForwardOffset);
 
             foreach (var footsteps in root.GetComponentsInChildren<PlayerFootstepAudio>(true))
                 UnityEngine.Object.DestroyImmediate(footsteps);

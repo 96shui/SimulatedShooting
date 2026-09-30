@@ -15,6 +15,8 @@ namespace SimulatedShooting.Scene
     public sealed class UnityCombatSceneLoader : ICombatSceneLoader
     {
         public const string ScenePath="Assets/Scenes/CombatScene.unity";
+        public const string TrenchScenePath="Assets/Scenes/BunkersOriginalMode3CombatScene.unity";
+        public static string ScenePathFor(TrainingMode mode)=>mode==TrainingMode.Trench?TrenchScenePath:ScenePath;
         readonly Func<bool> vrAvailability;
         // Tests may substitute display availability; tracking and interaction still use the real XR rig.
         public UnityCombatSceneLoader(Func<bool> vrAvailability = null){this.vrAvailability=vrAvailability;}
@@ -35,11 +37,12 @@ namespace SimulatedShooting.Scene
                 PreparingProductionScene=true;
                 var before=new HashSet<int>();
                 for(int i=0;i<SceneManager.sceneCount;i++)before.Add(SceneManager.GetSceneAt(i).handle);
-                var op=SceneManager.LoadSceneAsync(ScenePath,LoadSceneMode.Additive);
+                var scenePath=ScenePathFor(mode);
+                var op=SceneManager.LoadSceneAsync(scenePath,LoadSceneMode.Additive);
                 if(op==null)return ServiceResult<ICombatSceneLease>.Fail(ErrorCode.ResourceUnavailable);
                 while(!op.isDone)await Task.Yield();
                 for(int i=0;i<SceneManager.sceneCount;i++)
-                { var s=SceneManager.GetSceneAt(i);if(s.path==ScenePath&&!before.Contains(s.handle))loaded=s; }
+                { var s=SceneManager.GetSceneAt(i);if(s.path==scenePath&&!before.Contains(s.handle))loaded=s; }
                 if(!loaded.IsValid())return ServiceResult<ICombatSceneLease>.Fail(ErrorCode.ResourceUnavailable);
                 if(cancellation.IsCancellationRequested)
                 {
@@ -70,8 +73,8 @@ namespace SimulatedShooting.Scene
             public ICombatClock Clock=>runtime.Clock;
             public ICombatRandom Random {get;}=new SeededCombatRandom();
             public ICombatNavigationPort Navigation=>runtime;
-            public ServiceResult<Unit> Activate(ICombatCoreService core,ICombatWorldInputPort world,ICombatStateService state,IHUDService hud,ISquadCommandService squad,ICombatTickPort tick,string sessionId)
-                =>runtime.Activate(core,world,state,tick,sessionId);
+            public ServiceResult<Unit> Activate(ICombatCoreService core,ICombatWorldInputPort world,ICombatStateService state,IHUDService hud,ISquadCommandService squad,ICombatGrenadeTacticService grenades,ICombatTickPort tick,string sessionId)
+                =>runtime.Activate(core,world,state,grenades,tick,sessionId);
             public void Deactivate(){if(runtime!=null)runtime.Deactivate();}
             public void Dispose()
             {

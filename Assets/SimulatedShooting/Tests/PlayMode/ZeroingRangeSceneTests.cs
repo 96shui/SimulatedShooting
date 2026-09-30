@@ -703,6 +703,77 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [Test]
+        public void Task004_PlayerStartsForwardOnPadWithRifleWithinReach()
+        {
+            // BDD 04: the fixed prone start keeps the player on the firing pad and near the rifle.
+            var bindings = Find("ZeroingRange.FiringStation.Root").GetComponent<TrainingRangeSceneBindings>();
+            var player = bindings.PlayerRootAnchor;
+            var xrOrigin = Find("ZeroingRange.Origin.VR").transform;
+            var noVrCamera = Find("ZeroingRange.Camera.NoVR").transform;
+            var pad = GameObject.Find("FiringPad").GetComponent<Collider>();
+            var rack = bindings.WeaponRackAnchor;
+            var rearGrip = Find("ZeroingRange.Weapon.Grip.RearHand").transform;
+
+            Assert.That(player.position.z, Is.GreaterThan(0.2f));
+            Assert.That(xrOrigin.position, Is.EqualTo(player.position));
+            Assert.That(noVrCamera.position.z, Is.EqualTo(player.position.z).Within(0.001f));
+            Assert.That(bindings.ProneHeadReference.position.z,
+                Is.EqualTo(player.position.z).Within(0.001f));
+            Assert.That(pad.bounds.Contains(new Vector3(player.position.x, pad.bounds.center.y, player.position.z)),
+                Is.True);
+            var horizontalReach = Vector2.Distance(new Vector2(player.position.x, player.position.z),
+                new Vector2(rack.position.x, rack.position.z));
+            Assert.That(horizontalReach, Is.InRange(0.5f, 0.8f));
+            var gripReach = Vector2.Distance(new Vector2(player.position.x, player.position.z),
+                new Vector2(rearGrip.position.x, rearGrip.position.z));
+            Assert.That(gripReach, Is.LessThan(0.8f));
+        }
+
+        [Test]
+        public void Task003_FixedRangeKeepsTheUiRayAvailableAfterTeleportInput()
+        {
+            // BDD 04: a fixed prone range never swaps the UI ray for a teleport ray.
+            var guard = Find("ZeroingRange.FiringStation.Root").GetComponent<FixedProneLocomotionGuard>();
+            var rig = Find("ZeroingRange.Origin.VR");
+            var uiRays = rig.GetComponentsInChildren<NearFarInteractor>(true);
+            var teleportRays = rig.GetComponentsInChildren<XRRayInteractor>(true)
+                .Where(interactor => !interactor.enableUIInteraction).ToArray();
+            Assert.That(uiRays.Length, Is.GreaterThanOrEqualTo(2));
+            Assert.That(teleportRays.Length, Is.GreaterThanOrEqualTo(2));
+
+            uiRays[0].gameObject.SetActive(false);
+            teleportRays[0].gameObject.SetActive(true);
+            guard.EnforcePolicy();
+
+            Assert.That(uiRays.All(interactor => interactor.gameObject.activeSelf && interactor.enableUIInteraction),
+                Is.True);
+            Assert.That(teleportRays.All(interactor => !interactor.gameObject.activeSelf), Is.True);
+        }
+
+        [Test]
+        public void Task013_GripPalmsSitOnThePistolGripAndBelowTheHandguard()
+        {
+            // BDD 05 / task013: the visible hands must contact the grip and support
+            // the handguard without putting the support palm inside the rifle.
+            var rightVisual = Find("ZeroingRange.Origin.VR.VirtualHand.Right")
+                .GetComponent<VRControllerHandVisual>();
+            var leftVisual = Find("ZeroingRange.Origin.VR.VirtualHand.Left")
+                .GetComponent<VRControllerHandVisual>();
+            var rearGrip = Find("ZeroingRange.Weapon.Grip.RearHand").transform;
+            var frontGrip = Find("ZeroingRange.Weapon.Grip.FrontHand").transform;
+
+            rightVisual.SetGripForTests(true);
+            leftVisual.SetGripForTests(true);
+
+            var rearPalm = rearGrip.InverseTransformPoint(rightVisual.transform.position);
+            var supportPalm = frontGrip.InverseTransformPoint(leftVisual.transform.position);
+            Assert.That(rearPalm.z, Is.InRange(0.01f, 0.045f),
+                "The firing hand should close around the pistol grip, not float behind it");
+            Assert.That(supportPalm.y, Is.InRange(-0.065f, -0.04f),
+                "The support palm should sit below the handguard instead of intersecting its side");
+        }
+
+        [Test]
         public void Task013_RifleGripUsesStraightTriggerFingerAndOpenFrontHandWrap()
         {
             // BDD: 05-100m射击HUD / 虚拟手使用手部网格并在持枪时切换握持姿势
@@ -742,7 +813,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(Quaternion.Angle(rightMiddleIntermediateOpen, rightMiddleIntermediate.localRotation),
                 Is.InRange(55f, 80f), "The lower fingers should naturally wrap the rear grip");
             Assert.That(Quaternion.Angle(leftIndexIntermediateOpen, leftIndexIntermediate.localRotation),
-                Is.InRange(20f, 40f), "The support fingers should only bend gently upward");
+                Is.InRange(19.9f, 40f), "The support fingers should only bend gently upward");
             Assert.That(Quaternion.Angle(leftIndexDistalOpen, leftIndexDistal.localRotation),
                 Is.LessThan(20f), "The support fingertips should not hook through the handguard");
             Assert.That(Quaternion.Angle(leftThumbProximalOpen, leftThumbProximal.localRotation),

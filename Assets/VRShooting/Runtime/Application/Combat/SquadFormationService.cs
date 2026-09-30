@@ -7,7 +7,7 @@ using VRShooting.Contracts;
 namespace VRShooting.Application.Combat
 {
     /// <summary>BDD24: path targets are intentions; only acknowledged navigation changes actor positions.</summary>
-    public sealed class SquadFormationService : ISquadCommandService, ICombatWorldInputPort, IDisposable
+    public sealed class SquadFormationService : ISquadCommandService, ICombatWorldInputPort, ICombatGrenadeSquadPort, IDisposable
     {
         readonly ICombatClock clock;
         readonly ICombatNavigationPort navigation;
@@ -61,6 +61,7 @@ namespace VRShooting.Application.Combat
                     if(member.Waiting||member.State!=SquadMemberState.HoldingPosition) dirty=true;
                     member.Waiting=false; member.State=SquadMemberState.HoldingPosition; member.RetryAt=clock.Now; continue;
                 }
+                if(member.State==SquadMemberState.ThrowingGrenade)continue;
                 if(member.Waiting)
                 {
                     if(clock.Now+1e-8>=member.ExpiresAt) Failure(member);
@@ -88,7 +89,8 @@ namespace VRShooting.Application.Combat
             if(input.Flag)
             {
                 member.Position=input.Position; member.Forward=input.Direction.normalized; member.Waiting=false;
-                member.State=SquadMemberState.Following; member.RetryAt=clock.Now; dirty=true;
+                if(member.State!=SquadMemberState.ThrowingGrenade)member.State=SquadMemberState.Following;
+                member.RetryAt=clock.Now; dirty=true;
             }
             else Failure(member);
             Publish(); return Ok();
@@ -136,6 +138,14 @@ namespace VRShooting.Application.Combat
         public ServiceResult<SquadStatusDto> GetSquadStatus(string id)=>Matches(id)?ServiceResult<SquadStatusDto>.Ok(snapshot):ServiceResult<SquadStatusDto>.Fail(ErrorCode.NotFound);
         public ServiceResult<CombatVisualSnapshotDto> GetVisualSnapshot(string id)=>Matches(id)?ServiceResult<CombatVisualSnapshotDto>.Ok(visual):ServiceResult<CombatVisualSnapshotDto>.Fail(ErrorCode.NotFound);
         public ServiceResult<IReadOnlyList<SquadCommandType>> GetAvailableCommands(string id)=>Matches(id)?ServiceResult<IReadOnlyList<SquadCommandType>>.Ok(Array.Empty<SquadCommandType>()):ServiceResult<IReadOnlyList<SquadCommandType>>.Fail(ErrorCode.NotFound);
+        public IReadOnlyList<SquadMemberDto> GetMembers(string id)=>Matches(id)?snapshot.Members:Array.Empty<SquadMemberDto>();
+        public ServiceResult<Unit> SetGrenadeState(string id,string memberId,bool throwing)
+        {
+            if(!Matches(id))return Fail(ErrorCode.NotFound); if(publishing)return Fail(ErrorCode.Busy);
+            var member=Array.Find(members,m=>m.Id==memberId);if(member==null)return Fail(ErrorCode.NotFound);
+            if(member.State==SquadMemberState.HoldingPosition&&!throwing)return Ok();
+            member.State=throwing?SquadMemberState.ThrowingGrenade:SquadMemberState.Following;dirty=true;Publish();return Ok();
+        }
         public ServiceResult<SquadCommandResult> Issue(SquadCommandRequest request)=>ServiceResult<SquadCommandResult>.Fail(Matches(request.SessionId)?ErrorCode.InvalidState:ErrorCode.NotFound);
         public ServiceResult<SquadStatusDto> OnReloadStarted(string id)=>ServiceResult<SquadStatusDto>.Fail(Matches(id)?ErrorCode.InvalidState:ErrorCode.NotFound);
         public void Stop() { if(Matches(session)) UpdatePlayer(playerPosition,playerForward,false,playerHealth); }

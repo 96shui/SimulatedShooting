@@ -71,6 +71,10 @@ namespace VRShooting.Unity.Player
 
         void Update()
         {
+            // In the VR main menu the XR locomotion provider owns movement.
+            var menu = GameMain.Instance?.GetComponent<VRShooting.Unity.UI.MainMenuXRModeController>();
+            if (SceneManager.GetActiveScene().name == "MainScene" && menu != null && menu.IsVrMode)
+                return;
             ResolveTrainingInput();
             var input = trainingInput.MoveAxis;
             if (input.sqrMagnitude < 0.01f)

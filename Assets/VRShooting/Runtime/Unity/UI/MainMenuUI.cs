@@ -78,11 +78,14 @@ namespace VRShooting.Unity.UI
         RectTransform minimalHudRoot;
         RectTransform zeroingStabilityFill;
         readonly List<RectTransform> zeroingImpactDots = new List<RectTransform>();
+        RectTransform zeroingAverageCenter;
+        RectTransform zeroingAdjustedCenter;
         Button openZeroingButton;
         Button openMovingTargetButton;
         Button startButton;
         Button backButton;
         Button applyAdjustmentButton;
+        readonly List<Button> zeroingAdjustmentButtons = new List<Button>();
         Button nextRoundButton;
         Button impactBackToMainMenuButton;
         Button finalRetryButton;
@@ -100,6 +103,9 @@ namespace VRShooting.Unity.UI
         TextMeshProUGUI zeroingAnalysisRearSightText;
         TextMeshProUGUI zeroingAnalysisSuggestionText;
         TextMeshProUGUI zeroingAnalysisAppliedText;
+        TextMeshProUGUI zeroingAnalysisCorrectionXText;
+        TextMeshProUGUI zeroingAnalysisCorrectionYText;
+        TextMeshProUGUI zeroingAnalysisPreviewText;
         TextMeshProUGUI zeroingFinalGradeText;
         TextMeshProUGUI zeroingFinalRoundsText;
         TextMeshProUGUI zeroingFinalThumbnailsText;
@@ -595,7 +601,7 @@ namespace VRShooting.Unity.UI
         void BuildZeroingImpactAnalysis(RectTransform parent)
         {
             AddPanel(parent, "Placeholder_ZeroingImpactAnalysis_BlurredRange", DrawioMin(35, 45, 730, 500), DrawioMax(35, 45, 730, 500), new Color32(5, 13, 23, 230), new Color32(73, 107, 90, 255));
-            AddPanel(parent, "Panel_ZeroingImpactAnalysis_Modal", DrawioMin(160, 85, 480, 390), DrawioMax(160, 85, 480, 390), new Color32(11, 19, 16, 235), new Color32(45, 156, 255, 255));
+            AddPanel(parent, "Panel_ZeroingImpactAnalysis_Modal", DrawioMin(160, 65, 480, 480), DrawioMax(160, 65, 480, 480), new Color32(11, 19, 16, 235), new Color32(45, 156, 255, 255));
             AddLabel(parent, "Text_ZeroingImpactAnalysis_Title", "本轮弹着分析", 40, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(210, 100, 380, 45), DrawioMax(210, 100, 380, 45), new Color32(231, 242, 235, 255));
 
             var target = AddPanel(parent, "Placeholder_ZeroingImpactAnalysis_Target", DrawioMin(205, 160, 170, 210), DrawioMax(205, 160, 170, 210), new Color32(17, 29, 24, 225), new Color32(200, 255, 106, 255));
@@ -609,12 +615,31 @@ namespace VRShooting.Unity.UI
             zeroingAnalysisRearSightText = AddLabel(data, "Text_ZeroingImpactAnalysis_RearSight", "觇孔：--", 22, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(28, 150), new Vector2(428, 190), new Color32(247, 185, 85, 255));
             zeroingAnalysisSuggestionText = AddLabel(data, "Text_ZeroingImpactAnalysis_Suggestion", "说明：应用后进入下一轮", 18, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(28, 45), new Vector2(428, 120), new Color32(143, 217, 255, 255));
 
-            zeroingAnalysisAppliedText = AddLabel(parent, "Text_ZeroingImpactAnalysis_AppliedState", "等待应用调整", 20, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(285, 382, 245, 28), DrawioMax(285, 382, 245, 28), new Color32(143, 217, 255, 255));
-            applyAdjustmentButton = AddButton(parent, "Button_ZeroingImpactAnalysis_ApplyAdjustment", "应用调整", DrawioMin(280, 415, 110, 38), DrawioMax(280, 415, 110, 38), true);
+            var adjustPanel = AddPanel(parent, "Panel_ZeroingImpactAnalysis_ManualAdjust", DrawioMin(205, 390, 390, 82), DrawioMax(205, 390, 390, 82), new Color32(17, 29, 24, 235), new Color32(45, 156, 255, 255));
+            zeroingAnalysisPreviewText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_PreviewAverage", "原始均值(黄) → 调整预览(蓝)", 22, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(20, 112), new Vector2(915, 145), new Color32(200, 255, 106, 255));
+            AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_HorizontalLabel", "水平", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(18, 24), new Vector2(113, 100), new Color32(231, 242, 235, 255));
+            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalMinus", "-", new Vector2(122, 25), new Vector2(196, 96), ZeroingAdjustmentAxis.Horizontal, -1);
+            zeroingAnalysisCorrectionXText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_CorrectionX", "0cm", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(202, 25), new Vector2(312, 96), new Color32(143, 217, 255, 255));
+            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalPlus", "+", new Vector2(318, 25), new Vector2(392, 96), ZeroingAdjustmentAxis.Horizontal, 1);
+            AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_VerticalLabel", "垂直", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(475, 24), new Vector2(570, 100), new Color32(231, 242, 235, 255));
+            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_VerticalMinus", "-", new Vector2(578, 25), new Vector2(652, 96), ZeroingAdjustmentAxis.Vertical, -1);
+            zeroingAnalysisCorrectionYText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_CorrectionY", "0cm", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(658, 25), new Vector2(768, 96), new Color32(143, 217, 255, 255));
+            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_VerticalPlus", "+", new Vector2(774, 25), new Vector2(848, 96), ZeroingAdjustmentAxis.Vertical, 1);
+
+            zeroingAnalysisAppliedText = AddLabel(parent, "Text_ZeroingImpactAnalysis_AppliedState", "等待应用调整", 20, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(285, 478, 245, 24), DrawioMax(285, 478, 245, 24), new Color32(143, 217, 255, 255));
+            applyAdjustmentButton = AddButton(parent, "Button_ZeroingImpactAnalysis_ApplyAdjustment", "应用调整", DrawioMin(280, 505, 110, 38), DrawioMax(280, 505, 110, 38), true);
             applyAdjustmentButton.onClick.AddListener(OnApplyAdjustmentClicked);
-            nextRoundButton = AddButton(parent, "Button_ZeroingImpactAnalysis_NextRound", "进入下一轮", DrawioMin(415, 415, 120, 38), DrawioMax(415, 415, 120, 38), false);
-            impactBackToMainMenuButton = AddButton(parent, "Button_ZeroingImpactAnalysis_BackToMainMenu", "返回主菜单", DrawioMin(545, 415, 90, 38), DrawioMax(545, 415, 90, 38), false);
+            nextRoundButton = AddButton(parent, "Button_ZeroingImpactAnalysis_NextRound", "进入下一轮", DrawioMin(415, 505, 120, 38), DrawioMax(415, 505, 120, 38), false);
+            impactBackToMainMenuButton = AddButton(parent, "Button_ZeroingImpactAnalysis_BackToMainMenu", "返回主菜单", DrawioMin(545, 505, 90, 38), DrawioMax(545, 505, 90, 38), false);
             impactBackToMainMenuButton.onClick.AddListener(OnImpactBackToMainMenuClicked);
+        }
+
+        void AddAdjustmentButton(RectTransform parent, string id, string label, Vector2 min, Vector2 max,
+            ZeroingAdjustmentAxis axis, int direction)
+        {
+            var button = AddButton(parent, id, label, min, max, false);
+            button.onClick.AddListener(() => OnAdjustImpactPoint(axis, direction));
+            zeroingAdjustmentButtons.Add(button);
         }
 
         void BuildZeroingFinalRating(RectTransform parent)
@@ -671,6 +696,18 @@ namespace VRShooting.Unity.UI
                 outline.effectDistance = new Vector2(2f, -2f);
                 zeroingImpactDots.Add(dot);
             }
+            zeroingAverageCenter = CreateRect("Image_ZeroingImpactAnalysis_AverageCenter", parent, Vector2.zero, Vector2.zero, center - new Vector2(7, 7), center + new Vector2(7, 7));
+            AddTestId(zeroingAverageCenter.gameObject, zeroingAverageCenter.gameObject.name);
+            AddImage(zeroingAverageCenter.gameObject, new Color32(255, 210, 66, 255));
+            var averageOutline = zeroingAverageCenter.gameObject.AddComponent<Outline>();
+            averageOutline.effectColor = new Color32(7, 16, 13, 255);
+            averageOutline.effectDistance = new Vector2(2f, -2f);
+            zeroingAdjustedCenter = CreateRect("Image_ZeroingImpactAnalysis_AdjustedCenter", parent, Vector2.zero, Vector2.zero, center - new Vector2(12, 12), center + new Vector2(12, 12));
+            AddTestId(zeroingAdjustedCenter.gameObject, zeroingAdjustedCenter.gameObject.name);
+            AddImage(zeroingAdjustedCenter.gameObject, new Color32(77, 213, 255, 245));
+            var adjustedOutline = zeroingAdjustedCenter.gameObject.AddComponent<Outline>();
+            adjustedOutline.effectColor = new Color32(7, 16, 13, 255);
+            adjustedOutline.effectDistance = new Vector2(3f, -3f);
         }
 
         void BuildHudTargetPlaceholder(RectTransform parent)
@@ -939,6 +976,15 @@ namespace VRShooting.Unity.UI
             SetAnalysisText(zeroingAnalysisHorizontalText, "水平偏差", FormatHorizontalOffset(analysis.AverageOffsetCm.x));
             SetAnalysisText(zeroingAnalysisFrontSightText, "准星柱", FormatFrontSight(analysis));
             SetAnalysisText(zeroingAnalysisRearSightText, "觇孔", FormatRearSight(analysis));
+            if (zeroingAnalysisCorrectionXText != null)
+                zeroingAnalysisCorrectionXText.text = FormatSignedCm(analysis.ProposedCorrectionCm.x);
+            if (zeroingAnalysisCorrectionYText != null)
+                zeroingAnalysisCorrectionYText.text = FormatSignedCm(analysis.ProposedCorrectionCm.y);
+            if (zeroingAnalysisPreviewText != null)
+                zeroingAnalysisPreviewText.text = "均值(黄) (" + FormatSignedCm(analysis.AverageOffsetCm.x) + ", " +
+                    FormatSignedCm(analysis.AverageOffsetCm.y) + ") → 预览(蓝) (" +
+                    FormatSignedCm(analysis.PreviewAverageOffsetCm.x) + ", " +
+                    FormatSignedCm(analysis.PreviewAverageOffsetCm.y) + ")";
 
             if (zeroingAnalysisSuggestionText != null)
             {
@@ -962,6 +1008,9 @@ namespace VRShooting.Unity.UI
                     label.text = analysis.AdjustmentApplied ? "已应用" : "应用调整";
                 }
             }
+
+            foreach (var button in zeroingAdjustmentButtons)
+                button.interactable = !analysis.AdjustmentApplied;
 
             if (nextRoundButton != null)
             {
@@ -991,6 +1040,44 @@ namespace VRShooting.Unity.UI
                 zeroingImpactDots[i].offsetMin = pos - new Vector2(9f, 9f);
                 zeroingImpactDots[i].offsetMax = pos + new Vector2(9f, 9f);
             }
+            if (zeroingAverageCenter != null)
+            {
+                var average = analysis.AverageOffsetCm;
+                var clamped = new Vector2(Mathf.Clamp(average.x, -25f, 25f), Mathf.Clamp(average.y, -25f, 25f));
+                var pos = center + clamped * pixelsPerCm;
+                zeroingAverageCenter.offsetMin = pos - new Vector2(7f, 7f);
+                zeroingAverageCenter.offsetMax = pos + new Vector2(7f, 7f);
+                zeroingAverageCenter.gameObject.SetActive(true);
+            }
+            if (zeroingAdjustedCenter != null)
+            {
+                var preview = analysis.PreviewAverageOffsetCm;
+                var clamped = new Vector2(Mathf.Clamp(preview.x, -25f, 25f), Mathf.Clamp(preview.y, -25f, 25f));
+                var pos = center + clamped * pixelsPerCm;
+                zeroingAdjustedCenter.offsetMin = pos - new Vector2(12f, 12f);
+                zeroingAdjustedCenter.offsetMax = pos + new Vector2(12f, 12f);
+                zeroingAdjustedCenter.gameObject.SetActive(true);
+            }
+        }
+
+        void OnAdjustImpactPoint(ZeroingAdjustmentAxis axis, int direction)
+        {
+            if (services == null || !services.TrainingSessions.HasActiveSession)
+                return;
+            var sessionId = services.TrainingSessions.Current.SessionId;
+            var analysis = services.Zeroing.CompleteRound(sessionId);
+            if (!analysis.Success)
+            {
+                LastError = analysis.Message;
+                return;
+            }
+            var adjusted = services.Zeroing.AdjustImpactPoint(sessionId, analysis.Data.RoundIndex, axis, direction);
+            if (!adjusted.Success)
+            {
+                LastError = adjusted.Message;
+                return;
+            }
+            RenderImpactAnalysis(adjusted.Data);
         }
 
         void OnApplyAdjustmentClicked()
@@ -1345,6 +1432,11 @@ namespace VRShooting.Unity.UI
         static string FormatCm(float value)
         {
             return Mathf.Abs(value).ToString("0.#", CultureInfo.InvariantCulture) + "cm";
+        }
+
+        static string FormatSignedCm(float value)
+        {
+            return value.ToString("+0.#;-0.#;0", CultureInfo.InvariantCulture) + "cm";
         }
 
         static void SetLabel(TextMeshProUGUI label, HudTextLineDto line, string fallback, bool includeLabel = true)

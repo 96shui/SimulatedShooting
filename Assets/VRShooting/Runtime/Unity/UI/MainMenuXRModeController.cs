@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Movement;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning;
 using VRShooting.Unity.Player;
 
 namespace VRShooting.Unity.UI
@@ -163,7 +166,10 @@ namespace VRShooting.Unity.UI
                 }
 
                 SetXrOriginActive(scene, true, vrCamera);
+                ConfigureMenuLocomotion(vrCamera);
                 SetSceneCamera(scene, vrCamera);
+                if (uiModeChanged)
+                    TrainingUiRayPolicy.KeepUiRayAvailable(vrCamera.transform.root.gameObject);
             }
             else
             {
@@ -186,6 +192,19 @@ namespace VRShooting.Unity.UI
                     adapter.SetMode(vrMode && vrCamera != null, vrCamera);
                 }
             }
+        }
+
+        static void ConfigureMenuLocomotion(Camera camera)
+        {
+            var rig = camera.transform.root;
+            var move = rig.GetComponentInChildren<ContinuousMoveProvider>(true);
+            if (move != null)
+                move.rightHandMoveInput.inputSourceMode = XRInputValueReader.InputSourceMode.Unused;
+            var snap = rig.GetComponentInChildren<SnapTurnProvider>(true);
+            if (snap != null)
+                snap.leftHandTurnInput.inputSourceMode = XRInputValueReader.InputSourceMode.Unused;
+            var smooth = rig.GetComponentInChildren<ContinuousTurnProvider>(true);
+            if (smooth != null) smooth.enabled = false;
         }
 
         static Camera ResolveXrCamera(UnityEngine.SceneManagement.Scene scene)

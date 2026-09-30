@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using VRShooting.Application.Weapons;
 using VRShooting.Common;
@@ -19,6 +20,7 @@ namespace VRShooting.Application.Combat
         readonly List<CombatInputDto> pending = new List<CombatInputDto>();
         readonly HashSet<string> issuedShots = new HashSet<string>(StringComparer.Ordinal);
         readonly HashSet<string> spentShots = new HashSet<string>(StringComparer.Ordinal);
+        readonly HashSet<string> resolvedGrenades = new HashSet<string>(StringComparer.Ordinal);
         readonly HashSet<string> sessionIds = new HashSet<string>(StringComparer.Ordinal);
         readonly List<CombatFeedbackDto> feedback = new List<CombatFeedbackDto>();
         string session = "";
@@ -56,7 +58,7 @@ namespace VRShooting.Application.Combat
             weapons.ReleaseSession(session);
             session = sessionId; playerId = session + ".player"; sessionIds.Add(session);
             weapons.StartSession(session, WeaponControlService.TrainingRifleId, mode);
-            enemies.Clear(); enemyById.Clear(); received.Clear(); pending.Clear(); issuedShots.Clear(); spentShots.Clear(); feedback.Clear();
+            enemies.Clear(); enemyById.Clear(); received.Clear(); pending.Clear(); issuedShots.Clear(); spentShots.Clear(); feedback.Clear();resolvedGrenades.Clear();
             foreach (var spawn in spawns)
             {
                 var enemy = new Enemy { Id = spawn.EntityId, Position = spawn.Position, Forward = spawn.Forward.normalized };
@@ -147,6 +149,33 @@ namespace VRShooting.Application.Combat
             var result = weapons.StartReload(session); if (!result.Success) return Failure(result.ErrorCode);
             if (result.Data.IsReloading) { reloadAt = clock.Now + config.ReloadSeconds; dirty = true; Publish(); }
             return Ok();
+        }
+
+        public ServiceResult<IReadOnlyList<string>> ApplyGrenadeExplosion(string sessionId, string grenadeId, string throwerId, Vector3 blastPosition, float radius, IReadOnlyList<string> exposedTargets)
+        {
+            var guard = Guard(sessionId);
+            if (!guard.Success) return ServiceResult<IReadOnlyList<string>>.Fail(guard.ErrorCode, guard.Message);
+            if (!Active || string.IsNullOrWhiteSpace(grenadeId) || string.IsNullOrWhiteSpace(throwerId) || !Finite(blastPosition) || !Finite(radius) || radius <= 0)
+                return ServiceResult<IReadOnlyList<string>>.Fail(ErrorCode.InvalidInput, "Invalid grenade explosion");
+            if (pending.Count > 0) return ServiceResult<IReadOnlyList<string>>.Fail(ErrorCode.Busy, "Resolve grenade at an Advance boundary");
+            if ((throwerId!=session+".teammate-2"&&throwerId!=session+".teammate-3") || exposedTargets==null)
+                return ServiceResult<IReadOnlyList<string>>.Fail(ErrorCode.InvalidInput);
+            if (!resolvedGrenades.Add(grenadeId)) return ServiceResult<IReadOnlyList<string>>.Ok(Array.Empty<string>());
+            var killed = new List<string>();
+            foreach (var enemy in enemies)
+            {
+                if (enemy.Dead || (exposedTargets != null && !exposedTargets.Contains(enemy.Id)) || Vector3.Distance(enemy.Position, blastPosition) > radius) continue;
+                enemy.Dead = true;
+                enemy.State = CombatEntityState.Dead;
+                enemy.CanAttack = false;
+                enemy.NextAttack = double.PositiveInfinity;
+                killed.Add(enemy.Id);
+                Emit(CombatFeedbackKind.EnemyHit, grenadeId, throwerId, enemy.Id, grenadeId, 0);
+                Emit(CombatFeedbackKind.EnemyDied, grenadeId, throwerId, enemy.Id, grenadeId, 0);
+                dirty = true;
+            }
+            Publish();
+            return ServiceResult<IReadOnlyList<string>>.Ok(killed.AsReadOnly());
         }
 
         public ServiceResult<Unit> Submit(CombatInputDto input)

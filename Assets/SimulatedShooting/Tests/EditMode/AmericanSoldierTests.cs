@@ -9,22 +9,35 @@ namespace SimulatedShooting.Tests.EditMode
     public class AmericanSoldierTests
     {
         [Test]
-        public void Bdd23_Task014_BothFactionsHaveSkinnedModelsAndDistinctUniforms()
+        public void Bdd23_Task014_D3EnemyAndD4TeammateHaveDistinctSkinnedModels()
         {
-            Material enemyUniform = null;
             foreach (var role in new[] { "Enemy", "Teammate" })
             {
                 var root = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/SimulatedShooting/Prefabs/Combat/Actor_" + role + ".prefab");
                 var view = root.GetComponent<CombatActorView>();
-                var model = view.VisualRoot.Find("AmericanSoldier");
+                var model = view.VisualRoot.Find(role == "Enemy" ? "DetailedCharacterD3" : "DetailedCharacterD4");
                 Assert.That(model, Is.Not.Null);
-                var skin = model.GetComponentInChildren<SkinnedMeshRenderer>();
+                var skins = model.GetComponentsInChildren<SkinnedMeshRenderer>();
+                var skin = skins[0];
                 Assert.That(skin.bones.Length, Is.GreaterThan(40));
-                Assert.That(skin.sharedMaterials.All(m => m != null && m.shader.name == "Universal Render Pipeline/Lit"), Is.True);
-                var uniform = skin.sharedMaterials[2];
-                Assert.That(uniform.GetTexture("_BaseMap"), Is.Not.Null);
-                if (role == "Enemy") enemyUniform = uniform;
-                else Assert.That(uniform.GetColor("_BaseColor"), Is.Not.EqualTo(enemyUniform.GetColor("_BaseColor")));
+                Assert.That(skins.SelectMany(s => s.sharedMaterials).All(m => m != null && m.shader.name == "Universal Render Pipeline/Lit"), Is.True);
+                Assert.That(skins.Any(s => s.sharedMaterials.Any(m => m.GetTexture("_BaseMap") != null)), Is.True);
+                if (role == "Enemy")
+                {
+                    Assert.That(skins.Any(s => s.sharedMaterials.Any(m => m.name == "D3_Mask")), Is.True);
+                    Assert.That(skins.Single(s => s.name == "D3_Baloons").enabled, Is.False);
+                    Assert.That(skins.Any(s => s.name == "D3_Suit"), Is.True);
+                    Assert.That(skins.First(s => s.name == "D3_Suit").sharedMaterial.GetTexture("_BaseMap").name, Does.Contain("D3_set2"));
+                    Assert.That(model.GetComponentsInChildren<Transform>(true).Any(t => t.name == "D3_Flamethrower"), Is.False);
+                    var muzzleCarrier = model.GetComponentsInChildren<Transform>(true).Single(t => t.name == "Model_QBZ191_Enemy");
+                    Assert.That(muzzleCarrier.GetComponentsInChildren<Renderer>(true).All(r => !r.enabled), Is.True);
+                }
+                else
+                {
+                    Assert.That(skins.Any(s => s.name == "D4_Helmet"), Is.True);
+                    Assert.That(skins.Any(s => s.name == "D4_Vest_V2"), Is.True);
+                    Assert.That(skins.First(s => s.name == "D4_Suit").sharedMaterial.GetTexture("_BaseMap").name, Does.Contain("blue"));
+                }
                 var animator = model.GetComponent<Animator>();
                 Assert.That(animator.runtimeAnimatorController, Is.Not.Null);
                 Assert.That(animator.applyRootMotion, Is.False);

@@ -9,6 +9,7 @@ namespace VRShooting.Application
         ServiceResult<ZeroingSessionDto> GetSession(string sessionId);
         ServiceResult<ZeroingShotDto> RecordShot(string sessionId, ShotInputDto input);
         ServiceResult<ZeroingRoundAnalysisDto> CompleteRound(string sessionId);
+        ServiceResult<ZeroingRoundAnalysisDto> AdjustImpactPoint(string sessionId, int roundIndex, ZeroingAdjustmentAxis axis, int direction);
         ServiceResult<ZeroingRoundAnalysisDto> ApplyAdjustment(string sessionId, int roundIndex);
         ServiceResult<ZeroingSessionDto> ContinueAfterAnalysis(string sessionId);
         ServiceResult<ZeroingResultDto> GetFinalResult(string sessionId);

@@ -27,6 +27,11 @@ namespace VRShooting.Common
         public float GpuBudgetMilliseconds { get; init; }
         public float LoadBudgetSeconds { get; init; }
         public int SteadyStateGcBytesPerFrame { get; init; }
+        public float GrenadeDetectionRange { get; init; }
+        public float GrenadeBlastRadius { get; init; }
+        public float GrenadeFuseSeconds { get; init; }
+        public float GrenadeCooldownSeconds { get; init; }
+        public float GrenadeThrowSpeed { get; init; }
         public WeaponFireMode FireMode { get; init; }
         public AmmoDto InitialAmmo { get; init; }
         public static CombatConfigDto Default => new CombatConfigDto
@@ -52,6 +57,11 @@ namespace VRShooting.Common
             GpuBudgetMilliseconds = 11f,
             LoadBudgetSeconds = 5f,
             SteadyStateGcBytesPerFrame = 0,
+            GrenadeDetectionRange = 12f,
+            GrenadeBlastRadius = 5f,
+            GrenadeFuseSeconds = 1.25f,
+            GrenadeCooldownSeconds = 8f,
+            GrenadeThrowSpeed = 12f,
             FireMode = WeaponFireMode.SingleShot,
             InitialAmmo = new AmmoDto { CurrentMagazine = 30, ReserveAmmo = 120, MagazineCapacity = 30 }
         };
@@ -79,6 +89,11 @@ namespace VRShooting.Common
             if (!Positive(CpuBudgetMilliseconds)) return Invalid(nameof(CpuBudgetMilliseconds));
             if (!Positive(GpuBudgetMilliseconds)) return Invalid(nameof(GpuBudgetMilliseconds));
             if (!Positive(LoadBudgetSeconds)) return Invalid(nameof(LoadBudgetSeconds));
+            if (!Positive(GrenadeDetectionRange)) return Invalid(nameof(GrenadeDetectionRange));
+            if (!Positive(GrenadeBlastRadius)) return Invalid(nameof(GrenadeBlastRadius));
+            if (!Positive(GrenadeFuseSeconds)) return Invalid(nameof(GrenadeFuseSeconds));
+            if (!Positive(GrenadeCooldownSeconds)) return Invalid(nameof(GrenadeCooldownSeconds));
+            if (!Positive(GrenadeThrowSpeed)) return Invalid(nameof(GrenadeThrowSpeed));
             if (EnemyHalfViewAngle > 180 || SnapTurnDegrees > 180) return Invalid("angles");
             if (StandingSpeed < CrouchingSpeed || CrouchingSpeed < ProneSpeed) return Invalid("posture speeds");
             if (StandingEyeHeight < CrouchingEyeHeight || CrouchingEyeHeight < ProneEyeHeight) return Invalid("posture heights");
@@ -112,7 +127,14 @@ namespace VRShooting.Common
             CpuBudgetMilliseconds = CpuBudgetMilliseconds,
             GpuBudgetMilliseconds = GpuBudgetMilliseconds,
             LoadBudgetSeconds = LoadBudgetSeconds,
-            SteadyStateGcBytesPerFrame = SteadyStateGcBytesPerFrame, FireMode = FireMode, InitialAmmo = InitialAmmo
+            SteadyStateGcBytesPerFrame = SteadyStateGcBytesPerFrame,
+            FireMode = FireMode,
+            InitialAmmo = InitialAmmo,
+            GrenadeDetectionRange = GrenadeDetectionRange,
+            GrenadeBlastRadius = GrenadeBlastRadius,
+            GrenadeFuseSeconds = GrenadeFuseSeconds,
+            GrenadeCooldownSeconds = GrenadeCooldownSeconds,
+            GrenadeThrowSpeed = GrenadeThrowSpeed
         };
         static bool Positive(float value) => !float.IsNaN(value) && !float.IsInfinity(value) && value > 0;
         static ServiceResult<Unit> Invalid(string field) => ServiceResult<Unit>.Fail(ErrorCode.InvalidInput, "Invalid combat configuration: " + field);

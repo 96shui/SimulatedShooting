@@ -19,13 +19,13 @@ namespace VRShooting.Application.Combat
             if (Definition.Mode == TrainingMode.Trench)
             {
                 Trench = new TrenchService(Definition, scene.Clock, scene.Random, scene.Navigation);
-                Core = Trench.Combat; World = Trench; State = Trench; Hud = Trench; Squad = Trench.SquadCommands;
+                Core = Trench.Combat; World = Trench; State = Trench; Hud = Trench; Squad = Trench.SquadCommands; Grenades = Trench.GrenadeTactics;
                 Trench.SessionChanged += OnTrench; Trench.ResultReady += OnTrenchResult;
             }
             else if (Definition.Mode == TrainingMode.Urban)
             {
                 Urban = new UrbanService(Definition, scene.Clock, scene.Random, scene.Navigation);
-                Core = Urban.Combat; World = Urban; State = Urban; Hud = Urban; Squad = Urban.SquadCommands;
+                Core = Urban.Combat; World = Urban; State = Urban; Hud = Urban; Squad = Urban.SquadCommands; Grenades = null;
                 Urban.SessionChanged += OnUrban; Urban.ResultReady += OnUrbanResult;
             }
             else throw new ArgumentException("Only P3 modes can be composed", nameof(scene));
@@ -38,6 +38,7 @@ namespace VRShooting.Application.Combat
         public ICombatStateService State { get; }
         public IHUDService Hud { get; }
         public ISquadCommandService Squad { get; }
+        public ICombatGrenadeTacticService Grenades { get; }
         public string SessionId { get; private set; } = string.Empty;
         public CombatSummaryDto? Summary => summary;
         public event Action Changed;

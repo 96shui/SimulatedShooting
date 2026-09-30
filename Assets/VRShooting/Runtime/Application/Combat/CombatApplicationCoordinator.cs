@@ -95,7 +95,7 @@ namespace VRShooting.Application.Combat
             {
                 var started = Mission.Start(seed);
                 if (!started.Success) { CleanupScene(); Navigate(MapScreen); return Reject(started.ErrorCode); }
-                var attached = scene.Activate(Mission.Core, Mission.World, Mission.State, Mission.Hud, Mission.Squad, Mission, Mission.SessionId);
+                var attached = scene.Activate(Mission.Core, Mission.World, Mission.State, Mission.Hud, Mission.Squad, Mission.Grenades, Mission, Mission.SessionId);
                 if (!attached.Success) { CleanupScene(); Navigate(MapScreen); return Reject(attached.ErrorCode); }
                 return Navigate(mode == TrainingMode.Trench ? ScreenId.TrenchHud : ScreenId.UrbanStreetHud);
             }

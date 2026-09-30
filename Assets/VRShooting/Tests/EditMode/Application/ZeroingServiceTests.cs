@@ -76,6 +76,55 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
+        public void AdjustImpactPoint_UsesSeparateAxesAndAffectsNextRoundOnce()
+        {
+            // BDD 06: three-shot mean is immutable; player moves only the pending correction.
+            var session = StartZeroingSession();
+            var originalOffset = session.FixedImpactOffsetCm;
+            RecordThreeImpacts(session.SessionId, new Vector2(-8f, 12f));
+            var initial = zeroing.CompleteRound(session.SessionId).Data;
+            Assert.AreEqual(8f, initial.ProposedCorrectionCm.x, 0.001f);
+            Assert.AreEqual(-12f, initial.ProposedCorrectionCm.y, 0.001f);
+            Assert.AreEqual(Vector2.zero, initial.PreviewAverageOffsetCm);
+
+            var horizontal = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Horizontal, 1);
+            var vertical = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Vertical, -1);
+            Assert.IsTrue(horizontal.Success, horizontal.Message);
+            Assert.IsTrue(vertical.Success, vertical.Message);
+            Assert.AreEqual(new Vector2(-8f, 12f), vertical.Data.AverageOffsetCm);
+            Assert.AreEqual(new Vector2(9f, -13f), vertical.Data.ProposedCorrectionCm);
+            Assert.AreEqual(new Vector2(1f, -1f), vertical.Data.PreviewAverageOffsetCm);
+
+            var applied = zeroing.ApplyAdjustment(session.SessionId, 1);
+            var duplicate = zeroing.ApplyAdjustment(session.SessionId, 1);
+            Assert.IsTrue(applied.Success, applied.Message);
+            Assert.IsTrue(duplicate.Success, duplicate.Message);
+            Assert.AreEqual(new Vector2(9f, -13f), applied.Data.ProposedCorrectionCm);
+            Assert.AreEqual(originalOffset + new Vector2(9f, -13f),
+                zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm);
+            Assert.IsTrue(zeroing.ContinueAfterAnalysis(session.SessionId).Success);
+
+            var sameAim = new Vector2(-8f, 12f) - originalOffset;
+            var nextShot = RecordImpact(session.SessionId, sameAim);
+            Assert.IsTrue(nextShot.Success, nextShot.Message);
+            Assert.AreEqual(new Vector2(1f, -1f), nextShot.Data.ImpactPointCm);
+        }
+
+        [Test]
+        public void AdjustImpactPoint_RejectsIncompleteOrAppliedRoundAndInvalidDirection()
+        {
+            var session = StartZeroingSession();
+            var incomplete = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Horizontal, 1);
+            Assert.AreEqual(ErrorCode.InvalidState, incomplete.ErrorCode);
+            RecordThreeImpacts(session.SessionId, new Vector2(-8f, 12f));
+            var invalid = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Vertical, 0);
+            Assert.AreEqual(ErrorCode.InvalidInput, invalid.ErrorCode);
+            zeroing.ApplyAdjustment(session.SessionId, 1);
+            var applied = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Horizontal, 1);
+            Assert.AreEqual(ErrorCode.InvalidState, applied.ErrorCode);
+        }
+
+        [Test]
         public void RecordShot_AcceptsUpToThreeShotsPerRound()
         {
             var session = StartZeroingSession();

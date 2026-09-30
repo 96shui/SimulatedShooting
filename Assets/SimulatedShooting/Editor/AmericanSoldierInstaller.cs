@@ -34,7 +34,12 @@ namespace SimulatedShooting.Editor
             ConfigureTextures();
             var controller = BakeController();
             Upgrade("Enemy", false, controller);
-            Upgrade("Teammate", true, controller);
+            if (AssetDatabase.LoadAssetAtPath<GameObject>(DetailedCharacterD3Installer.Folder + "/D3_MIXAMO.fbx") != null)
+                DetailedCharacterD3Installer.Install();
+            if (AssetDatabase.LoadAssetAtPath<GameObject>(DetailedCharacterD4Installer.Folder + "/D4_MIXAMO.fbx") != null)
+                DetailedCharacterD4Installer.Install();
+            else
+                Upgrade("Teammate", true, controller);
             AssetDatabase.SaveAssets();
             Debug.Log("AmericanSoldier: both faction prefabs installed; embedded textures and CC0 animations bound.");
         }

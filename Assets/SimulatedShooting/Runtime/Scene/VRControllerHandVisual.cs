@@ -298,9 +298,9 @@ namespace SimulatedShooting.Scene
                 if (jointName.EndsWith("Metacarpal", StringComparison.OrdinalIgnoreCase))
                     curlDegrees = thumbOnRearHand ? 26f : 8f;
                 else if (jointName.EndsWith("Proximal", StringComparison.OrdinalIgnoreCase))
-                    curlDegrees = thumbOnRearHand ? 42f : 16f;
+                    curlDegrees = thumbOnRearHand ? 42f : 12f;
                 else if (jointName.EndsWith("Distal", StringComparison.OrdinalIgnoreCase))
-                    curlDegrees = thumbOnRearHand ? 28f : 8f;
+                    curlDegrees = thumbOnRearHand ? 28f : 5f;
                 rotationOffset = new Vector3(curlDegrees, 0f, 0f);
                 return curlDegrees > 0f;
             }
@@ -336,11 +336,11 @@ namespace SimulatedShooting.Scene
             var curlBias = isIndex ? 0f : isMiddle ? 2f : isRing ? 4f : 6f;
             var isMetacarpal = jointName.EndsWith("Metacarpal", StringComparison.OrdinalIgnoreCase);
             if (jointName.EndsWith("Proximal", StringComparison.OrdinalIgnoreCase))
-                curlDegrees = rearHand ? 58f + curlBias : 22f + curlBias * 2f;
+                curlDegrees = rearHand ? 58f + curlBias : 16f + curlBias;
             else if (jointName.EndsWith("Intermediate", StringComparison.OrdinalIgnoreCase))
-                curlDegrees = rearHand ? 66f + curlBias : 30f + curlBias * 2f;
+                curlDegrees = rearHand ? 66f + curlBias : 20f + curlBias;
             else if (jointName.EndsWith("Distal", StringComparison.OrdinalIgnoreCase))
-                curlDegrees = rearHand ? 30f + curlBias : 10f + curlBias;
+                curlDegrees = rearHand ? 30f + curlBias : 6f + curlBias * 0.5f;
 
             rotationOffset = new Vector3(curlDegrees, 0f, 0f);
             return isMetacarpal || curlDegrees > 0f;
@@ -463,11 +463,11 @@ namespace SimulatedShooting.Scene
                 var rearHand = side == VirtualHandSide.Right;
                 return new HandGripPose
                 {
-                    thumb = Pose(rearHand ? 26f : 8f, rearHand ? 42f : 16f, 0f, rearHand ? 28f : 8f),
-                    index = Pose(0f, rearHand ? 72f : 22f, rearHand ? 12f : 30f, rearHand ? 6f : 10f),
-                    middle = Pose(0f, rearHand ? 60f : 26f, rearHand ? 68f : 34f, rearHand ? 32f : 12f),
-                    ring = Pose(0f, rearHand ? 62f : 30f, rearHand ? 70f : 38f, rearHand ? 34f : 14f),
-                    little = Pose(0f, rearHand ? 64f : 34f, rearHand ? 72f : 42f, rearHand ? 36f : 16f)
+                    thumb = Pose(rearHand ? 26f : 8f, rearHand ? 42f : 12f, 0f, rearHand ? 28f : 5f),
+                    index = Pose(0f, rearHand ? 72f : 16f, rearHand ? 12f : 20f, rearHand ? 6f : 6f),
+                    middle = Pose(0f, rearHand ? 60f : 18f, rearHand ? 68f : 22f, rearHand ? 32f : 7f),
+                    ring = Pose(0f, rearHand ? 62f : 20f, rearHand ? 70f : 24f, rearHand ? 34f : 8f),
+                    little = Pose(0f, rearHand ? 64f : 22f, rearHand ? 72f : 26f, rearHand ? 36f : 9f)
                 };
             }
 

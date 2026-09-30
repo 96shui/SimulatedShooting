@@ -25,7 +25,7 @@ namespace SimulatedShooting.Scene
     }
 
     // Owns physical facts and visuals; all damage, ammo, search and outcome rules remain in services.
-    public sealed class CombatSceneRuntime:MonoBehaviour,ICombatNavigationPort
+    public sealed class CombatSceneRuntime:MonoBehaviour,ICombatNavigationPort,ICombatGrenadeWorld
     {
         CombatSceneBindings binding;
         TrainingMode mode;
@@ -34,11 +34,14 @@ namespace SimulatedShooting.Scene
         readonly Dictionary<string,CombatNavigationRequestDto> navigation=new Dictionary<string,CombatNavigationRequestDto>();
         readonly Queue<(CombatNavigationRequestDto request,bool arrived,Vector3 position,Vector3 forward)> navigationResults=new Queue<(CombatNavigationRequestDto,bool,Vector3,Vector3)>();
         readonly Dictionary<string,bool> presence=new Dictionary<string,bool>();
+        readonly Dictionary<string,CombatGrenadeProjectile> grenadesInFlight=new Dictionary<string,CombatGrenadeProjectile>();
         readonly P3XRTrainingInput hardware=new P3XRTrainingInput();
         ICombatCoreService core;
         ICombatWorldInputPort world;
         ICombatStateService state;
         ICombatTickPort tick;
+        ICombatGrenadeTacticService grenades;
+        Material grenadeMaterial;
         CombatInputController controller;
         GameObject rifle;
         WeaponPrefabBinding weapon;
@@ -119,7 +122,7 @@ namespace SimulatedShooting.Scene
                     {mini.SetMapResource(map.Id,sprite);if(map.Id.EndsWith("f"))mini.SetMapResource("floor-"+map.Id[6],sprite);}
                 }
             }
-            binding.WeaponAnchor.gameObject.SetActive(false);
+            binding.WeaponAnchor.gameObject.SetActive(mode==TrainingMode.Trench);
             ResetPlayer();
         }
         void ResetPlayer()
@@ -131,22 +134,32 @@ namespace SimulatedShooting.Scene
             if(!vr){eye.transform.localPosition=new Vector3(0,1.65f,0);eye.transform.localRotation=Quaternion.identity;}
             pitch=0;
         }
-        public ServiceResult<Unit> Activate(ICombatCoreService combat,ICombatWorldInputPort facts,ICombatStateService visual,ICombatTickPort advance,string id)
+        public ServiceResult<Unit> Activate(ICombatCoreService combat,ICombatWorldInputPort facts,ICombatStateService visual,ICombatGrenadeTacticService grenadeTactics,ICombatTickPort advance,string id)
         {
             Deactivate();
             if(binding.TrainingRiflePrefab==null)return ServiceResult<Unit>.Fail(ErrorCode.ResourceUnavailable,"Training rifle binding missing");
-            core=combat;world=facts;state=visual;tick=advance;session=id;ResetPlayer();
+            if(grenadeTactics!=null&&binding.GrenadePrefab==null&&Resources.Load<GameObject>("Combat/Grenade_M67")==null&&Resources.Load<GameObject>("Combat/m67_low")==null)
+                return ServiceResult<Unit>.Fail(ErrorCode.ResourceUnavailable,"M67 grenade model missing");
+            core=combat;world=facts;state=visual;grenades=grenadeTactics;tick=advance;session=id;ResetPlayer();
             foreach(var door in binding.Doors)door.ResetView();
+            if(mode==TrainingMode.Trench)binding.WeaponAnchor.gameObject.SetActive(false);
             rifle=Instantiate(binding.TrainingRiflePrefab,transform);
             weapon=rifle.GetComponent<WeaponPrefabBinding>();grab=rifle.GetComponent<TrainingRifleGrabInteractable>();
             var spawn=player.position;
-            rifle.transform.SetPositionAndRotation(spawn+player.forward*.55f+Vector3.up*1.05f,player.rotation);
+            rifle.transform.SetPositionAndRotation(mode==TrainingMode.Trench?binding.WeaponAnchor.position:spawn+player.forward*.55f+Vector3.up*1.05f,
+                mode==TrainingMode.Trench?binding.WeaponAnchor.rotation:player.rotation);
             if(grab!=null){grab.interactionManager=interactionManager;grab.enabled=vr;grab.CaptureRackPose();}
             SetLayer(rifle,2); // IgnoreRaycast excludes the held rifle from its own physical shots.
+            // The spawned rifle starts close to the player capsule. It must not push the
+            // player backwards or block continuous movement while being held in VR.
+            foreach(var collider in rifle.GetComponentsInChildren<Collider>(true))
+                Physics.IgnoreCollision(body,collider,true);
             weaponFeedback=rifle.AddComponent<WeaponFeedbackController>();
             weaponFeedback.Configure(weapon.MuzzlePoint,rifle.transform,weapon.MuzzlePoint,grab,null,binding.RifleShotClip,null,null,new[]{binding.EnemyPrefab.HitClip});
             hardware.Reset();
             state.VisualChanged+=ApplyVisual;core.Feedback+=Feedback;
+            if(grenades!=null){grenades.GrenadeThrown+=OnGrenadeThrown;grenades.GrenadeExploded+=OnGrenadeExploded;grenades.GrenadeCancelled+=OnGrenadeCancelled;}
+            if(grenades!=null)grenades.Configure(this);
             var first=state.GetVisualSnapshot(session);if(first.Success)ApplyVisual(first.Data);
             controller=new CombatInputController(session,mode,core,new InputRouter(this),Clock,
                 new CombatPhysicsShotQuery(~(1<<2),~(1<<2)),new CombatCharacterLocomotion(body,vr?null:eye.transform));
@@ -199,6 +212,11 @@ namespace SimulatedShooting.Scene
             LastFrameResult=controller.Step(frame,delta);
             if(!LastFrameResult.Success)return;
             LastFrameResult=tick.Advance();
+            if(LastFrameResult.Success && grenades!=null)
+            {
+                if(mode==TrainingMode.Trench && input is P3XRTrainingInput p3 && p3.GrenadePressed) grenades.RequestFirstTeammateThrow();
+                LastFrameResult=grenades.Advance();
+            }
             if(tracked&&input.ConfirmPressed)Interact();
             if(input.BackPressed)VRShooting.Unity.Bootstrap.GameMain.Instance?.Services.Combat.BackToMaps();
         }
@@ -296,10 +314,18 @@ namespace SimulatedShooting.Scene
                 if(!actors.TryGetValue(entity.EntityId,out var actor))
                 {
                     var at=entity.Position;
+                    if(mode==TrainingMode.Trench && NavMesh.SamplePosition(at,out var spawnHit,1.25f,NavMesh.AllAreas))
+                        at=spawnHit.position;
                     actor=Instantiate(entity.Role==CombatEntityRole.Enemy?binding.EnemyPrefab:binding.TeammatePrefab,at,Quaternion.LookRotation(entity.Forward),transform);
                     actor.EntityId=entity.EntityId;actor.gameObject.AddComponent<CombatEntityBinding>().EntityId=entity.EntityId;
                     actor.NavigationReported+=NavigationReported;actors.Add(entity.EntityId,actor);
-                    if(entity.Role==CombatEntityRole.Enemy)actor.Agent.enabled=false;
+                    if(entity.Role==CombatEntityRole.Enemy)
+                    {
+                        actor.Agent.enabled=false;
+                        if(mode==TrainingMode.Trench)actor.transform.position=entity.Position;
+                    }
+                    if(mode==TrainingMode.Trench)
+                        actor.MatchVisualToTerrain(binding.GeometryRoot.GetComponentInChildren<Terrain>());
                     foreach(var c in actor.GetComponentsInChildren<Collider>())Physics.IgnoreCollision(body,c);
                 }
                 bool dead=entity.State==CombatEntityState.Dead;
@@ -340,15 +366,112 @@ namespace SimulatedShooting.Scene
                 if(feedback.Kind==CombatFeedbackKind.EnemyAttack)actor.PlayShot(feedback.EventId);
             }
         }
+
+        void OnGrenadeThrown(GrenadeThrowPlanDto plan)
+        {
+            if (!active || plan.SessionId != session) return;
+            if (actors.TryGetValue(plan.ThrowerId, out var thrower))
+            {
+                var toward=plan.Target-thrower.transform.position;toward.y=0;
+                if(toward.sqrMagnitude>.001f)thrower.transform.rotation=Quaternion.LookRotation(toward);
+                thrower.PlayGrenadeThrow();
+            }
+            var prefab = binding.GrenadePrefab ?? Resources.Load<GameObject>("Combat/Grenade_M67") ?? Resources.Load<GameObject>("Combat/m67_low");
+            if(prefab==null)return;
+            var grenade=Instantiate(prefab,plan.Origin,Quaternion.identity,transform);
+            var renderers=grenade.GetComponentsInChildren<Renderer>(true);
+            if(renderers.Length>0)
+            {
+                var bounds=renderers[0].bounds;for(var i=1;i<renderers.Length;i++)bounds.Encapsulate(renderers[i].bounds);
+                if(bounds.size.y>.001f)grenade.transform.localScale*=.11f/bounds.size.y;
+                if(grenadeMaterial==null)
+                {
+                    var shader=Shader.Find("Universal Render Pipeline/Lit")??Shader.Find("Standard");
+                    if(shader!=null)
+                    {
+                        grenadeMaterial=new Material(shader);
+                        var albedo=Resources.Load<Texture2D>("Combat/textures/DefaultMaterial_BaseColor");
+                        var normal=Resources.Load<Texture2D>("Combat/textures/DefaultMaterial_Normal");
+                        var metal=Resources.Load<Texture2D>("Combat/textures/DefaultMaterial_Metallic");
+                        if(albedo!=null){if(grenadeMaterial.HasProperty("_BaseMap"))grenadeMaterial.SetTexture("_BaseMap",albedo);if(grenadeMaterial.HasProperty("_MainTex"))grenadeMaterial.SetTexture("_MainTex",albedo);}
+                        if(normal!=null&&grenadeMaterial.HasProperty("_BumpMap")){grenadeMaterial.SetTexture("_BumpMap",normal);grenadeMaterial.EnableKeyword("_NORMALMAP");}
+                        if(metal!=null&&grenadeMaterial.HasProperty("_MetallicGlossMap")){grenadeMaterial.SetTexture("_MetallicGlossMap",metal);grenadeMaterial.EnableKeyword("_METALLICGLOSSMAP");}
+                        if(grenadeMaterial.HasProperty("_Metallic"))grenadeMaterial.SetFloat("_Metallic",.6f);
+                        if(grenadeMaterial.HasProperty("_Smoothness"))grenadeMaterial.SetFloat("_Smoothness",.4f);
+                    }
+                }
+                if(grenadeMaterial!=null)foreach(var mesh in renderers)mesh.sharedMaterial=grenadeMaterial;
+            }
+            var projectile = grenade.GetComponent<CombatGrenadeProjectile>() ?? grenade.AddComponent<CombatGrenadeProjectile>();
+            grenadesInFlight[plan.GrenadeId] = projectile;
+            projectile.Launch(plan, () => { if (grenadesInFlight.ContainsKey(plan.GrenadeId)) { Destroy(grenade); grenadesInFlight.Remove(plan.GrenadeId); } }, () => grenades.ProjectilePosition);
+        }
+
+        void OnGrenadeExploded(GrenadeExplosionDto explosion)
+        {
+            if (explosion.SessionId != session) return;
+            if (grenadesInFlight.TryGetValue(explosion.GrenadeId, out var projectile))
+            {
+                if (projectile != null) Destroy(projectile.gameObject);
+                grenadesInFlight.Remove(explosion.GrenadeId);
+            }
+            var blast = new GameObject("VFX_GrenadeExplosion_" + explosion.GrenadeId);
+            blast.transform.SetParent(transform); blast.transform.position = explosion.Position;
+            blast.AddComponent<CombatExplosionVfx>();
+        }
+        void OnGrenadeCancelled()
+        {
+            foreach(var projectile in grenadesInFlight.Values)if(projectile!=null)Destroy(projectile.gameObject);
+            grenadesInFlight.Clear();
+        }
+        public bool TryGetThrowPose(string memberId,out Vector3 feet,out Vector3 release)
+        {
+            if(actors.TryGetValue(memberId,out var actor)&&actor!=null&&!actor.IsDead)
+            {
+                feet=actor.transform.position;
+                release=actor.PerceptionOrigin!=null?actor.PerceptionOrigin.position+actor.transform.forward*.18f+Vector3.up*.05f:feet+Vector3.up*1.25f;
+                return true;
+            }
+            feet=release=default;return false;
+        }
+        public bool Sweep(Vector3 from,Vector3 to,out Vector3 impact)
+        {
+            var direction=to-from;var distance=direction.magnitude;
+            if(distance>.001f)
+            {
+                var hits=Physics.SphereCastAll(from,.045f,direction.normalized,distance,~(1<<2),QueryTriggerInteraction.Ignore);
+                float closest=float.PositiveInfinity;
+                foreach(var hit in hits)
+                {
+                    if(hit.collider.GetComponentInParent<CombatActorView>()!=null||hit.distance>=closest)continue;
+                    closest=hit.distance;impact=hit.point;
+                }
+                if(closest<float.PositiveInfinity)return true;
+            }
+            impact=to;return false;
+        }
+        public bool IsExposed(Vector3 blast,Vector3 enemyFeet)
+        {
+            var start=blast+Vector3.up*.1f;var target=enemyFeet+Vector3.up*1.05f;var direction=target-start;var distance=direction.magnitude;
+            if(distance<.01f)return true;
+            foreach(var hit in Physics.RaycastAll(start,direction.normalized,distance-.04f,~(1<<2),QueryTriggerInteraction.Ignore))
+                if(hit.collider.GetComponentInParent<CombatActorView>()==null)return false;
+            return true;
+        }
         public void Deactivate()
         {
             active=false;
             if(state!=null)state.VisualChanged-=ApplyVisual;if(core!=null)core.Feedback-=Feedback;
+            if(grenades!=null){grenades.GrenadeThrown-=OnGrenadeThrown;grenades.GrenadeExploded-=OnGrenadeExploded;grenades.GrenadeCancelled-=OnGrenadeCancelled;}
             controller?.Dispose();controller=null;
             foreach(var actor in actors.Values)if(actor!=null){actor.NavigationReported-=NavigationReported;actor.gameObject.SetActive(false);Destroy(actor.gameObject);}
             actors.Clear();navigation.Clear();navigationResults.Clear();presence.Clear();
+            foreach(var projectile in grenadesInFlight.Values)if(projectile!=null)Destroy(projectile.gameObject);
+            grenadesInFlight.Clear();
+            if(grenadeMaterial!=null){Destroy(grenadeMaterial);grenadeMaterial=null;}
             if(rifle!=null){if(grab!=null)grab.ResetToRack();rifle.SetActive(false);Destroy(rifle);}
-            rifle=null;weapon=null;grab=null;core=null;world=null;state=null;tick=null;session="";
+            if(binding!=null&&mode==TrainingMode.Trench)binding.WeaponAnchor.gameObject.SetActive(true);
+            rifle=null;weapon=null;grab=null;core=null;world=null;state=null;grenades=null;tick=null;session="";
         }
         public void RestoreMainScene()
         {

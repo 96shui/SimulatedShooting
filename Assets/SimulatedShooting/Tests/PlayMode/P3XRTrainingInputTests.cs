@@ -19,6 +19,7 @@ namespace SimulatedShooting.Tests.PlayMode
             InputSystem.RegisterLayout(@"{""name"":""P3BindingTestController"",""extend"":""XRController"",""controls"":[
                 {""name"":""thumbstick"",""layout"":""Stick""},
                 {""name"":""primaryButton"",""layout"":""Button"",""format"":""FLT"",""sizeInBits"":32},
+                {""name"":""primary2DAxisClick"",""layout"":""Button"",""format"":""FLT"",""sizeInBits"":32},
                 {""name"":""secondaryButton"",""layout"":""Button"",""format"":""FLT"",""sizeInBits"":32},
                 {""name"":""gripPressed"",""layout"":""Button"",""format"":""FLT"",""sizeInBits"":32},
                 {""name"":""trigger"",""layout"":""Axis""}]} ");
@@ -40,10 +41,11 @@ namespace SimulatedShooting.Tests.PlayMode
             InputSystem.QueueDeltaStateEvent(right.GetChildControl<StickControl>("thumbstick"),new Vector2(.9f,0));
             InputSystem.QueueDeltaStateEvent(right.GetChildControl<ButtonControl>("primaryButton"),1f);
             InputSystem.QueueDeltaStateEvent(left.GetChildControl<ButtonControl>("primaryButton"),1f);
+            InputSystem.QueueDeltaStateEvent(left.GetChildControl<ButtonControl>("primary2DAxisClick"),1f);
             yield return null;
             input.Sample(true);
             Assert.That(input.MoveAxis.y,Is.GreaterThan(.5f));Assert.That(input.TurnAxis.x,Is.GreaterThan(.7f));
-            Assert.That(input.ReloadPressed,Is.True,"right primary reload; value="+right.GetChildControl<ButtonControl>("primaryButton").ReadValue()+" updated="+right.wasUpdatedThisFrame);Assert.That(input.ConfirmPressed,Is.True,"left primary confirm");
+            Assert.That(input.GrenadePressed,Is.True,"right A grenade");Assert.That(input.ReloadPressed,Is.True,"left stick click reload");Assert.That(input.ConfirmPressed,Is.True,"left primary confirm");
             InputSystem.QueueDeltaStateEvent(right.GetChildControl<ButtonControl>("secondaryButton"),1f);
             InputSystem.QueueDeltaStateEvent(left.GetChildControl<ButtonControl>("secondaryButton"),1f);
             yield return null;input.Sample(true);

@@ -31,7 +31,7 @@ namespace VRShooting.Application
         ICombatRandom Random { get; }
         ICombatNavigationPort Navigation { get; }
         ServiceResult<Unit> Activate(ICombatCoreService core, ICombatWorldInputPort world, ICombatStateService state,
-            IHUDService hud, ISquadCommandService squad, ICombatTickPort tick, string sessionId);
+            IHUDService hud, ISquadCommandService squad, ICombatGrenadeTacticService grenades, ICombatTickPort tick, string sessionId);
         void Deactivate();
     }
     public interface ICombatApplicationView { void Render(CombatApplicationSnapshotDto state); }

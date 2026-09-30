@@ -832,8 +832,8 @@ namespace SimulatedShooting.Editor
                 ? VirtualHandSide.Right
                 : VirtualHandSide.Left;
             var positionOffset = handedness == InteractorHandedness.Right
-                ? new Vector3(0.002f, 0.050f, -0.020f)
-                : new Vector3(-0.005f, -0.024f, -0.018f);
+                ? new Vector3(0.002f, 0.052f, 0.025f)
+                : new Vector3(-0.018f, -0.052f, -0.018f);
             var rotationOffset = handedness == InteractorHandedness.Right
                 ? new Vector3(-90f, 0f, -5f)
                 : new Vector3(0f, 0f, 180f);

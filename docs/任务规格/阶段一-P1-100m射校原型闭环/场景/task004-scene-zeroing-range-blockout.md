@@ -26,6 +26,7 @@
 - VR Origin / 测试相机摆放点。
 - VR Origin 显式使用 Floor Tracking Origin，Camera Y Offset 与 Camera Floor Offset Object 初始 Y 均为 0m，由 HMD 或输入替身提供相对地面的真实眼高。
 - 初始步枪位于玩家右前方的自然伸手范围与腰胸之间的舒适高度。
+- 模式一固定出生点位于射击平台上并向枪架前移；玩家根、XR Origin、无 VR 测试视点及 UI 锚点保持一致的相对布局，不移动真实 HMD 跟踪姿态或枪架。
 - 场景对象命名和必要测试 ID。
 
 ## 风格要求
@@ -59,6 +60,7 @@
   - 靶标对象具备稳定名称或测试 ID。
   - XR Origin 使用 Floor Tracking Origin，Camera Y Offset 和 Camera Floor Offset Object 初始 Y 均为 0m。
   - 初始步枪后握把位于玩家右前方 0.5m 至 0.8m、地面上方约 1.0m 至 1.2m。
+  - 玩家根、XR Origin 和无 VR 测试视点在前移后的固定射击点对齐；玩家位于射击平台范围内，枪架仍在自然伸手范围。
 
 ## 验收标准
 

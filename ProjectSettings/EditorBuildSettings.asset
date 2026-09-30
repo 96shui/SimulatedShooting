@@ -20,6 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CombatScene.unity
     guid: 07007994e2c0bf14ea3c8cdcded49a84
+  - enabled: 0
+    path: Assets/Scenes/BunkersTrenchCombatScene.unity
+    guid: 9c7b878cf00650c4b8ffd9c379ab9c88
+  - enabled: 1
+    path: Assets/Scenes/BunkersOriginalMode3CombatScene.unity
+    guid: d475dcde907e22e41af4f2c8c86af6f9
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba, type: 2}

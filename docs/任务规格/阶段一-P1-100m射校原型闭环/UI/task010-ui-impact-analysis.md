@@ -25,6 +25,7 @@ UI
   - 水平偏差。
   - 准星柱方向和角度。
   - 觇孔方向和格数。
+- 显示 3 发坐标均值、两轴待应用补偿和补偿后的弹着中心预览；水平与垂直各有 ±1cm 按钮，均有稳定测试 ID。
 - `Button_ZeroingImpactAnalysis_ApplyAdjustment`
 - `Button_ZeroingImpactAnalysis_NextRound`
 - 已应用状态显示。
@@ -48,6 +49,7 @@ UI
 ## 联调说明
 
 - 与 功能A 联调：获取 `ZeroingRoundAnalysisDto`，调用应用调整和继续命令。
+- 手动按钮调用 `IZeroingService.AdjustImpactPoint`，View 只渲染返回的 DTO；`ApplyAdjustment` 将待应用补偿作用于下一轮。
 - 与 功能B 联调：确认应用调整后后续射击偏移来源更新。
 
 ## 测试要求
@@ -57,6 +59,7 @@ UI
   - 显示 3 个弹着点。
   - 点击应用调整后按钮状态/文本变化。
   - 重复点击不会重复应用。
+  - 水平和垂直按钮只改变各自轴，调整后预览与服务 DTO 一致；应用后按钮禁用，下一轮弹着使用新偏移。
   - 点击下一轮进入 HUD；第 3 轮后主操作按钮替换为返回主菜单。
 
 ## 验收标准

@@ -37,7 +37,8 @@ namespace SimulatedShooting.Scene
         public bool LeftGripPressed=>front&&!oldFront;
         public bool LeftGripHeld=>front;
         public bool LeftGripReleased=>!front&&oldFront;
-        public bool ReloadPressed=>IsVr ? Pressed(XRController.rightHand,"primaryButton") : desktop.ReloadPressed;
+        public bool ReloadPressed=>IsVr ? Pressed(XRController.leftHand,"primary2DAxisClick") : desktop.ReloadPressed;
+        public bool GrenadePressed=>IsVr && Pressed(XRController.rightHand,"primaryButton");
         public bool SwitchShoulderPressed=>IsVr ? Pressed(XRController.rightHand,"secondaryButton") : desktop.SwitchShoulderPressed;
         public bool AimPressed=>desktop.AimPressed;
         public bool AimHeld=>desktop.AimHeld;

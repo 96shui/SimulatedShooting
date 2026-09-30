@@ -43,7 +43,7 @@ namespace VRShooting.P3.TestSupport
             public ICombatCoreService Core;
             public ICombatWorldInputPort World;
             public string SessionId;
-            public ServiceResult<Unit> Activate(ICombatCoreService core, ICombatWorldInputPort world, ICombatStateService state, IHUDService hud, ISquadCommandService squad, ICombatTickPort tick, string sessionId)
+            public ServiceResult<Unit> Activate(ICombatCoreService core, ICombatWorldInputPort world, ICombatStateService state, IHUDService hud, ISquadCommandService squad, ICombatGrenadeTacticService grenades, ICombatTickPort tick, string sessionId)
             {
                 Activations++; Core = core; World = world; SessionId = sessionId;
                 DuringActivation?.Invoke();

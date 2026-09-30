@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion;
+using VRShooting.Unity.UI;
 
 namespace SimulatedShooting.Scene
 {
@@ -39,6 +40,9 @@ namespace SimulatedShooting.Scene
 
             foreach (var provider in xrOrigin.GetComponentsInChildren<LocomotionProvider>(true))
                 provider.enabled = false;
+
+            if (Application.isPlaying)
+                TrainingUiRayPolicy.KeepUiRayAvailable(xrOrigin);
         }
 
         public bool TryApplyArtificialMotionForTests(Vector3 translation, float yawDegrees)

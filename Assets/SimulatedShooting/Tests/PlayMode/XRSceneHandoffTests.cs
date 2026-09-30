@@ -10,7 +10,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
+using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Movement;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning;
 using UnityEngine.UI;
 using VRShooting.Application;
 using VRShooting.Common;
@@ -58,6 +61,26 @@ namespace SimulatedShooting.Tests.PlayMode
             GameMain.Instance.GetComponent<MainMenuXRModeController>().SetVrModeForTests(true);
             // Keep real pose drivers enabled: this suite sends device state, not Transform overrides.
             foreach(var pose in Object.FindObjectsOfType<TrackedPoseDriver>(true))pose.enabled=true;
+            yield return null;
+        }
+
+        // BDD 02 "主菜单双摇杆各司其职".
+        [UnityTest] public IEnumerator Screen02_MainMenuUsesLeftMoveAndRightSnapTurnOnly()
+        {
+            var rig=GameMain.Instance.GetComponent<MainMenuXRModeController>().VrCamera.transform.root;
+            var move=rig.GetComponentInChildren<ContinuousMoveProvider>(true);
+            var snap=rig.GetComponentInChildren<SnapTurnProvider>(true);
+            var smooth=rig.GetComponentInChildren<ContinuousTurnProvider>(true);
+            Assert.That(move,Is.Not.Null);
+            Assert.That(snap,Is.Not.Null);
+            Assert.That(smooth,Is.Not.Null);
+            Assert.That(move.isActiveAndEnabled,Is.True);
+            Assert.That(move.leftHandMoveInput.inputSourceMode,Is.EqualTo(XRInputValueReader.InputSourceMode.InputActionReference));
+            Assert.That(move.rightHandMoveInput.inputSourceMode,Is.EqualTo(XRInputValueReader.InputSourceMode.Unused));
+            Assert.That(snap.isActiveAndEnabled,Is.True);
+            Assert.That(snap.leftHandTurnInput.inputSourceMode,Is.EqualTo(XRInputValueReader.InputSourceMode.Unused));
+            Assert.That(snap.rightHandTurnInput.inputSourceMode,Is.EqualTo(XRInputValueReader.InputSourceMode.InputActionReference));
+            Assert.That(smooth.enabled,Is.False);
             yield return null;
         }
 
@@ -174,7 +197,7 @@ namespace SimulatedShooting.Tests.PlayMode
                     Assert.That(app.Snapshot.Screen,Is.EqualTo(ScreenId.TrenchHud),"Incoming rig must click the start button");
                 }
                 app.ReturnToMainMenu();
-                while(SceneManager.GetSceneByName("CombatScene").isLoaded)yield return null;
+                while(SceneManager.GetSceneByPath(UnityCombatSceneLoader.ScenePathFor(mode)).isLoaded)yield return null;
                 yield return null;
             }
         }
