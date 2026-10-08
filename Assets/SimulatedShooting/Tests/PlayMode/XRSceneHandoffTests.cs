@@ -34,7 +34,13 @@ namespace SimulatedShooting.Tests.PlayMode
         [UnitySetUp] public IEnumerator Setup()
         {
             previousFactory=ApplicationServices.CombatSceneLoaderFactory;
-            if(GameMain.Instance!=null)Object.Destroy(GameMain.Instance.gameObject);
+            if(GameMain.Instance!=null)
+            {
+                GameMain.Instance.GetComponent<MainMenuXRModeController>().enabled=false;
+                Object.Destroy(GameMain.Instance.gameObject);
+            }
+            foreach(var manager in Object.FindObjectsOfType<InputActionManager>(true))manager.gameObject.SetActive(false);
+            InputSystem.DisableAllEnabledActions();
             yield return null;
             ApplicationServices.CombatSceneLoaderFactory=()=>new UnityCombatSceneLoader(()=>true);
             foreach(var device in InputSystem.devices.Where(d=>d.enabled&&(d is XRHMD||d is XRController)).ToArray())
@@ -68,6 +74,7 @@ namespace SimulatedShooting.Tests.PlayMode
         [UnityTest] public IEnumerator Screen02_MainMenuUsesLeftMoveAndRightSnapTurnOnly()
         {
             var rig=GameMain.Instance.GetComponent<MainMenuXRModeController>().VrCamera.transform.root;
+            Assert.That(rig.GetComponentsInChildren<VRControllerHandVisual>().Count(h=>h.HasRenderableHand),Is.EqualTo(2),"Main menu also uses human hands");
             var move=rig.GetComponentInChildren<ContinuousMoveProvider>(true);
             var snap=rig.GetComponentInChildren<SnapTurnProvider>(true);
             var smooth=rig.GetComponentInChildren<ContinuousTurnProvider>(true);
@@ -109,6 +116,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 var runtime=Object.FindObjectOfType<CombatSceneRuntime>();
                 runtime.ManualStepping=true;
                 Assert.That(runtime.IsVr,Is.True);
+                Assert.That(Object.FindObjectsOfType<AudioListener>().Count(l=>l.isActiveAndEnabled),Is.EqualTo(1));
                 AssertActions(runtime.PlayerRoot.gameObject);
                 yield return CheckTrackedHead(runtime.PlayerCamera);
                 yield return GrabWithControllers(runtime.PlayerRoot.gameObject,runtime.GetComponentsInChildren<TrainingRifleGrabInteractable>().Single());
@@ -120,6 +128,36 @@ namespace SimulatedShooting.Tests.PlayMode
                 AssertActions(camera.GetComponentInParent<InputActionManager>().gameObject);
                 yield return CheckTrackedHead(camera);
             }
+        }
+
+        [UnityTest] public IEnumerator Bdd23_Task019_TrenchReconThenTrackedHandsGrabStableRifle()
+        {
+            var app=GameMain.Instance.Services.Combat;
+            app.OpenMode(TrainingMode.Trench);
+            var load=app.SelectMapAsync("trench-a",VRShooting.Contracts.RandomSeed.Fixed(71));
+            while(!load.IsCompleted)yield return null;
+            Assert.That(load.Result.Success,Is.True,load.Result.Message);
+            var runtime=Object.FindObjectOfType<CombatSceneRuntime>();runtime.ManualStepping=true;
+            Assert.That(runtime.IsVr,Is.True);
+            AssertActions(runtime.PlayerRoot.gameObject);
+            yield return CheckTrackedHead(runtime.PlayerCamera);
+            Assert.That(app.Start().Success,Is.True);
+            runtime.InputOverride=new VRShooting.Input.ManualXRTrainingInput();
+            runtime.FrameOverride=new CombatInputFrameDto {HeadTracked=true,RearHandTracked=true,FrontHandTracked=true,
+                PlayerPosition=runtime.PlayerRoot.position,PlayerForward=runtime.PlayerRoot.forward};
+            for(int frame=0;frame<1200&&!app.Mission.HasCombatStarted;frame++)
+            {
+                runtime.Step(.1f);
+                Assert.That(runtime.LastFrameResult.Success,Is.True,app.Mission.Opening?.Phase+": "+runtime.LastFrameResult.Message);
+                if(frame%20==0)yield return null;
+            }
+            Assert.That(app.Mission.HasCombatStarted,Is.True);
+            runtime.Step(.02f);runtime.InputOverride=null;runtime.FrameOverride=null;
+            yield return GrabWithControllers(runtime.PlayerRoot.gameObject,runtime.GetComponentsInChildren<TrainingRifleGrabInteractable>().Single());
+            Assert.That(Object.FindObjectsOfType<AudioListener>().Count(l=>l.isActiveAndEnabled),Is.EqualTo(1));
+            app.ReturnToMainMenu();
+            while(SceneManager.GetSceneByPath(UnityCombatSceneLoader.TrenchScenePath).isLoaded)yield return null;
+            AssertActions(GameMain.Instance.GetComponent<MainMenuXRModeController>().VrCamera.GetComponentInParent<InputActionManager>().gameObject);
         }
 
         [UnityTest] public IEnumerator Screen00_MovingRangeHeadAndBothHandsReceiveDevicePoses()
@@ -140,6 +178,11 @@ namespace SimulatedShooting.Tests.PlayMode
                 Assert.That(pose.transform.localPosition.y,Is.EqualTo(1.1f).Within(.01f));
                 Assert.That(pose.GetComponentsInChildren<VRControllerHandVisual>().Any(h=>h.HasRenderableHand),Is.True,name+" hand must be visible");
             }
+            foreach(var direct in mode.XrOrigin.GetComponentsInChildren<XRDirectInteractor>(true))
+            {
+                Assert.That(direct.selectInput.inputActionValue.bindings.Count,Is.GreaterThan(0),"Grip Value must have its own analog binding");
+                Assert.That(direct.selectInput.inputActionValue.bindings.Any(b=>b.path.EndsWith("/grip")),Is.True);
+            }
             var rifle=Object.FindObjectOfType<TrainingRifleGrabInteractable>();
             yield return GrabWithControllers(mode.XrOrigin,rifle);
         }
@@ -152,6 +195,15 @@ namespace SimulatedShooting.Tests.PlayMode
             InputSystem.QueueDeltaStateEvent(left.GetChildControl<AxisControl>("grip"),0f);
             yield return null;
             var rightPose=rig.GetComponentsInChildren<TrackedPoseDriver>(true).Single(t=>t.name=="Right Controller");
+            foreach(var side in new[]{"Left Controller","Right Controller"})
+            {
+                var tracked=rig.GetComponentsInChildren<TrackedPoseDriver>(true).Single(t=>t.name==side);
+                var hand=tracked.GetComponentInChildren<VRControllerHandVisual>();
+                Assert.That(hand!=null&&hand.HasRenderableHand,Is.True,side+" must show a human hand");
+                Assert.That(tracked.GetComponentsInChildren<Renderer>().Where(r=>r is MeshRenderer||r is SkinnedMeshRenderer)
+                    .Where(r=>r.GetComponentInParent<VRControllerHandVisual>()==null&&r.GetComponentInParent<TrainingRifleGrabInteractable>()==null)
+                    .All(r=>!r.enabled),Is.True,"Hardware controller meshes must stay hidden");
+            }
             // Device position reaches the production direct interactor; do not call SelectEnter manually.
             QueueController(right,rightPose.transform.parent.InverseTransformPoint(rifle.RearAttach.position));
             yield return new WaitForSeconds(.15f);
@@ -171,6 +223,50 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return new WaitForSeconds(.15f);
             Assert.That(rifle.FrontHandSelected,Is.True,"Physical left grip must form a two-hand hold; distance="+
                 Vector3.Distance(leftPose.transform.position,rifle.FrontAttach.position)+" selected="+string.Join(";",rifle.interactorsSelecting.Select(i=>i.transform.name)));
+            // BDD23 task019: stable device poses while the tracking origin translates.
+            var heldOffset=rightPose.transform.InverseTransformPoint(rifle.RearAttach.position);
+            var heldRotation=Quaternion.Inverse(rightPose.transform.rotation)*rifle.transform.rotation;
+            for(int frame=0;frame<45;frame++)
+            {
+                rig.transform.position+=rig.transform.forward*.015f;
+                yield return null;
+                Assert.That(Vector3.Distance(rightPose.transform.InverseTransformPoint(rifle.RearAttach.position),heldOffset),Is.LessThan(.005f),"Walking must not make the gun chase the hand");
+                Assert.That(Quaternion.Angle(Quaternion.Inverse(rightPose.transform.rotation)*rifle.transform.rotation,heldRotation),Is.LessThan(.5f));
+            }
+            var hands=rig.GetComponentsInChildren<VRControllerHandVisual>();
+            var gripOffsets=hands.Select(h=>h.GripAnchor.InverseTransformPoint(h.transform.position)).ToArray();
+            // Simulate an origin change after Dynamic update and run Unity's real render callbacks.
+            rig.transform.position+=rig.transform.forward*.03f;
+            var flags=System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic;
+            // Invoke the production XRI/hand callbacks without re-entering native input updates in the test runner.
+            var managerRender=typeof(UnityEngine.XR.Interaction.Toolkit.XRInteractionManager).GetMethod("OnBeforeRender",flags);
+            managerRender.Invoke(rifle.interactionManager,null);
+            var handRender=typeof(VRControllerHandVisual).GetMethod("UpdateBeforeRender",flags);
+            var order=(BeforeRenderOrderAttribute)System.Attribute.GetCustomAttribute(handRender,typeof(BeforeRenderOrderAttribute));
+            Assert.That(order.order,Is.GreaterThan(UnityEngine.XR.Interaction.Toolkit.XRInteractionUpdateOrder.k_BeforeRenderOrder));
+            foreach(var hand in hands)handRender.Invoke(hand,null);
+            Assert.That(Vector3.Distance(rightPose.transform.InverseTransformPoint(rifle.RearAttach.position),heldOffset),Is.LessThan(.005f),"BeforeRender must update the held gun");
+            for(int i=0;i<hands.Length;i++)
+                Assert.That(Vector3.Distance(hands[i].GripAnchor.InverseTransformPoint(hands[i].transform.position),gripOffsets[i]),Is.LessThan(.001f),"Hand visuals must follow the latest gun pose before rendering");
+            var heldCamera=rig.GetComponentInChildren<Camera>();
+            // Lift the real tracked hands into the HMD aiming corridor for first-person evidence.
+            var aimRotation=heldCamera.transform.rotation;
+            var rearTarget=heldCamera.transform.position+heldCamera.transform.forward*.45f-heldCamera.transform.up*.18f+heldCamera.transform.right*.1f;
+            var gripDelta=rifle.transform.InverseTransformDirection(rifle.FrontAttach.position-rifle.RearAttach.position);
+            var frontTarget=rearTarget+aimRotation*heldOffset+(aimRotation*heldRotation)*gripDelta;
+            QueueController(right,rightPose.transform.parent.InverseTransformPoint(rearTarget),Quaternion.Inverse(rightPose.transform.parent.rotation)*aimRotation);
+            QueueController(left,leftPose.transform.parent.InverseTransformPoint(frontTarget),Quaternion.Inverse(leftPose.transform.parent.rotation)*aimRotation);
+            yield return new WaitForSeconds(.15f);
+            Assert.That(rifle.RearHandSelected&&rifle.FrontHandSelected,Is.True,"Raising to aim must keep both grips");
+            foreach(var hand in hands)
+            {
+                var renderer=hand.ModelRoot.GetComponentsInChildren<Renderer>().First(r=>r.enabled&&!r.forceRenderingOff&&r.gameObject.activeInHierarchy);
+                var point=heldCamera.WorldToViewportPoint(renderer.bounds.center);
+                Assert.That(point.z,Is.GreaterThan(heldCamera.nearClipPlane),"Hand must be in front of the HMD near plane");
+                Assert.That(point.x,Is.InRange(0f,1f),"Human hand must be in the HMD horizontal view");
+                Assert.That(point.y,Is.InRange(0f,1f),"Human hand must be in the HMD vertical view");
+            }
+            PresentationEvidence.Capture(heldCamera,"VR-human-hands-"+rifle.gameObject.scene.name);
         }
 
         [UnityTest] public IEnumerator Screen14_18_TrackedTriggerClicksMapsAndBriefingAcrossRigHandoff()
@@ -193,6 +289,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 AssertActions(runtime.PlayerRoot.gameObject);
                 if(mode==TrainingMode.Trench)
                 {
+                    yield return CheckTrackedHead(runtime.PlayerCamera);
                     yield return ClickWithController(ui.TrenchBriefingView.StartButton,runtime.PlayerCamera);
                     Assert.That(app.Snapshot.Screen,Is.EqualTo(ScreenId.TrenchDroneRecon),"Incoming rig must click start without bypassing recon");
                 }
@@ -215,9 +312,19 @@ namespace SimulatedShooting.Tests.PlayMode
                 Quaternion.Inverse(pose.transform.parent.rotation)*Quaternion.LookRotation(center-origin));
             yield return new WaitForSeconds(.3f);
             var rays=rig.GetComponentsInChildren<NearFarInteractor>().Where(r=>r.handedness==UnityEngine.XR.Interaction.Toolkit.Interactors.InteractorHandedness.Right).ToArray();
+            // Production ray stabilization settles gradually after an instantaneous device pose change.
+            var settleDeadline=Time.realtimeSinceStartup+2f;
+            while(Time.realtimeSinceStartup<settleDeadline&&!rays.Any(r=>r.TryGetUIModel(out var value)&&value.currentRaycast.gameObject!=null&&
+                (value.currentRaycast.gameObject==button.gameObject||value.currentRaycast.gameObject.transform.IsChildOf(button.transform))))
+                yield return null;
             Assert.That(rays.Any(r=>r.TryGetUIModel(out var model)&&model.currentRaycast.gameObject!=null&&
                 (model.currentRaycast.gameObject==button.gameObject||model.currentRaycast.gameObject.transform.IsChildOf(button.transform))),Is.True,
-                "Production tracked ray must hit "+button.name+"; "+string.Join(";",rays.Select(r=>r.TryGetUIModel(out var m)?"hit="+m.currentRaycast.gameObject:"no model")));
+                "Production tracked ray must hit "+button.name+"; canvasVr="+adapter.IsVrMode+" button="+button.gameObject.activeInHierarchy+
+                " camera="+camera.transform.position+" center="+center+" now="+((RectTransform)button.transform).TransformPoint(((RectTransform)button.transform).rect.center)+
+                " pose="+pose.transform.position+" forward="+pose.transform.forward+"; "+string.Join(";",rays.Select(r=>
+                    "rayActive="+r.isActiveAndEnabled+" far="+r.enableFarCasting+" ui="+r.enableUIInteraction+
+                    " origin="+r.farInteractionCaster.effectiveCastOrigin.position+" dir="+r.farInteractionCaster.effectiveCastOrigin.forward+
+                    (r.TryGetUIModel(out var m)?" hit="+m.currentRaycast.gameObject:" no model"))));
             InputSystem.QueueDeltaStateEvent(right.GetChildControl<ButtonControl>("triggerPressed"),1f);
             InputSystem.QueueDeltaStateEvent(right.GetChildControl<AxisControl>("trigger"),1f);
             yield return new WaitForSeconds(.1f);
@@ -262,8 +369,16 @@ namespace SimulatedShooting.Tests.PlayMode
         [UnityTearDown] public IEnumerator Cleanup()
         {
             GameMain.Instance?.Services.Combat.ReturnToMainMenu();
+            // Stop the menu controller before yielding: it otherwise reactivates the rig
+            // while device filters are replaced, leaving readers on disposed input state.
+            if(GameMain.Instance!=null)
+            {
+                GameMain.Instance.GetComponent<MainMenuXRModeController>().enabled=false;
+                Object.Destroy(GameMain.Instance.gameObject);
+            }
             // Stop consumers before replacing device filters/removing devices held by XRI selections.
             foreach(var manager in Object.FindObjectsOfType<InputActionManager>(true))manager.gameObject.SetActive(false);
+            InputSystem.DisableAllEnabledActions();
             yield return null;
             foreach(var entry in deviceFilters)
             {
@@ -277,7 +392,6 @@ namespace SimulatedShooting.Tests.PlayMode
             foreach(var device in suspendedDevices)if(device.added)InputSystem.EnableDevice(device);
             suspendedDevices.Clear();
             ApplicationServices.CombatSceneLoaderFactory=previousFactory;
-            if(GameMain.Instance!=null)Object.Destroy(GameMain.Instance.gameObject);
             yield return null;
             yield return SceneManager.LoadSceneAsync("MainScene");
             GameMain.Instance?.GetComponent<MainMenuXRModeController>()?.ClearForcedModeForTests();

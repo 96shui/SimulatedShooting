@@ -39,7 +39,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 if(mode==TrainingMode.Trench)app.Start();
                 yield return null;
                 Assert.That(Object.FindObjectsOfType<AudioListener>().Count(x=>x.isActiveAndEnabled),Is.EqualTo(1));
-                Assert.That(Object.FindObjectsOfType<Camera>().Count(x=>x.isActiveAndEnabled),Is.EqualTo(1));
+                Assert.That(Object.FindObjectsOfType<Camera>().Count(x=>x.isActiveAndEnabled&&x.targetTexture==null),Is.EqualTo(1),"Drone capture is a texture feed, not a second player output");
                 var page=(RectTransform)ui.transform.Find("Screen_"+app.Snapshot.Screen);
                 var corners=new Vector3[4];page.GetWorldCorners(corners);
                 foreach(var corner in corners)
@@ -101,6 +101,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(runtime.GetComponentsInChildren<UnityEngine.XR.Interaction.Toolkit.Interactors.XRBaseInteractor>(true).All(i=>i.interactionManager==manager),Is.True);
             input=new ManualXRTrainingInput();runtime.InputOverride=input;
             if(mode==TrainingMode.Trench)ui.TrenchBriefingView.StartButton.onClick.Invoke();
+            yield return CompleteOpening();
             var liveRifles=runtime.GetComponentsInChildren<TrainingRifleGrabInteractable>(true).Where(g=>g.gameObject.activeInHierarchy).ToArray();
             Assert.That(liveRifles.Length,Is.EqualTo(1));
             Assert.That(liveRifles[0].interactionManager,Is.SameAs(manager));
@@ -135,6 +136,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 {
                     if(mode==TrainingMode.Trench)ui.TrenchResultsView.RetryButton.onClick.Invoke();else ui.UrbanResultsView.RetryButton.onClick.Invoke();
                     if(mode==TrainingMode.Trench)ui.TrenchBriefingView.StartButton.onClick.Invoke();
+                    yield return CompleteOpening();
                     Assert.That(runtime.Actors.Values.All(a=>!a.IsDead),Is.True);
                     Assert.That(app.Mission.Core.GetSnapshot(app.Mission.SessionId).Data.Ammo.CurrentMagazine,Is.EqualTo(30));
                 }
@@ -169,6 +171,7 @@ namespace SimulatedShooting.Tests.PlayMode
             }
             Assert.That(app.Mission,Is.Not.Null);
             Assert.That(app.Mission.SessionId,Is.Not.Empty);
+            yield return CompleteOpening();
             string firstSession=app.Mission.SessionId;
             input.Press(XRTrainingInputButton.RightGrip);input.Press(XRTrainingInputButton.LeftGrip);
             Sample(runtime.PlayerRoot.position,runtime.PlayerRoot.position+Vector3.up*1.4f,Vector3.forward);
@@ -199,9 +202,12 @@ namespace SimulatedShooting.Tests.PlayMode
                 Place(new Vector3(origin.x,target.transform.position.y,origin.z));
                 input.Release(XRTrainingInputButton.Trigger);Sample(runtime.PlayerRoot.position,origin,(center-origin).normalized);
                 input.Press(XRTrainingInputButton.Trigger);Sample(runtime.PlayerRoot.position,origin,(center-origin).normalized);
+                Assert.That(target.IsDead, Is.False, "First bullet must leave one health unit");
+                input.Release(XRTrainingInputButton.Trigger);Sample(runtime.PlayerRoot.position,origin,(center-origin).normalized);
+                input.Press(XRTrainingInputButton.Trigger);Sample(runtime.PlayerRoot.position,origin,(center-origin).normalized);
                 Physics.Raycast(origin,(center-origin).normalized,out var diagnosticHit,10,~(1<<2),QueryTriggerInteraction.Ignore);
                 Assert.That(target.IsDead,Is.True,target.EntityId+" must die from real physics hit; first="+(diagnosticHit.collider!=null?diagnosticHit.collider.name:"none")+"; overlap="+string.Join(",",Physics.OverlapSphere(origin,.01f,~(1<<2),QueryTriggerInteraction.Ignore).Select(c=>c.name))+"; ammo="+app.Mission.Core.GetSnapshot(firstSession).Data.Ammo.CurrentMagazine);
-                Assert.That(target.HitFeedbackCount,Is.EqualTo(1));
+                Assert.That(target.HitFeedbackCount,Is.EqualTo(2));
             }
             input.Release(XRTrainingInputButton.Trigger);
             if(mode==TrainingMode.Trench)
@@ -225,6 +231,7 @@ namespace SimulatedShooting.Tests.PlayMode
             {
                 if(mode==TrainingMode.Trench)ui.TrenchResultsView.RetryButton.onClick.Invoke();else ui.UrbanResultsView.RetryButton.onClick.Invoke();
                 if(mode==TrainingMode.Trench)ui.TrenchBriefingView.StartButton.onClick.Invoke();
+                yield return CompleteOpening();
                 Assert.That(app.Mission.SessionId,Is.Not.EqualTo(firstSession));
                 Assert.That(app.Mission.Core.GetSnapshot(app.Mission.SessionId).Data.Ammo.CurrentMagazine,Is.EqualTo(30));
                 Assert.That(runtime.Actors.Values.All(a=>!a.IsDead),Is.True);
@@ -238,6 +245,28 @@ namespace SimulatedShooting.Tests.PlayMode
         {
             var body=runtime.PlayerRoot.GetComponent<CharacterController>();body.enabled=false;
             runtime.PlayerRoot.position=position+Vector3.up*.06f;body.enabled=true;Physics.SyncTransforms();
+        }
+        IEnumerator CompleteOpening()
+        {
+            // BDD28/task019: exercise the production flight and application commit, never skip recon.
+            if(app.Mission.Trench==null)yield break;
+            Assert.That(app.Snapshot.Screen,Is.EqualTo(ScreenId.TrenchDroneRecon));
+            Assert.That(runtime.CharacterActionsLocked,Is.True);
+            input.Clear();
+            runtime.FrameOverride=new CombatInputFrameDto {HeadTracked=true,RearHandTracked=true,FrontHandTracked=true,
+                PlayerPosition=runtime.PlayerRoot.position,PlayerForward=runtime.PlayerRoot.forward};
+            for(int frame=0;frame<1200&&!app.Mission.HasCombatStarted;frame++)
+            {
+                runtime.Step(.1f);
+                Assert.That(runtime.LastFrameResult.Success,Is.True,app.Mission.Opening?.Phase+": "+runtime.LastFrameResult.Message);
+                if(frame%20==0)yield return null;
+            }
+            Assert.That(app.Mission.HasCombatStarted,Is.True,"Production recon must reach combat");
+            Assert.That(runtime.CharacterActionsLocked,Is.False);
+            Assert.That(app.Snapshot.Screen,Is.EqualTo(ScreenId.TrenchHud));
+            // Release every control before the next gameplay command.
+            runtime.Step(.02f);input.AdvanceFrame();
+            yield return null;
         }
         static Vector3 ClearShotOrigin(CombatActorView target)
         {

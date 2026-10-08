@@ -51,6 +51,7 @@ namespace VRShooting.Application
                     ? new PlayerStatusDto
                     {
                         Health = PlayerStatusDto.Default.Health,
+                        MaxHealth = PlayerStatusDto.Default.MaxHealth,
                         IsAlive = true,
                         Posture = PlayerPosture.Prone,
                         Shoulder = ShoulderSide.Right,

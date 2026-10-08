@@ -56,7 +56,7 @@ namespace VRShooting.Tests.EditMode.Infrastructure
             Assert.That(config.FireMode, Is.EqualTo(WeaponFireMode.SingleShot));
             Assert.That(config.InitialAmmo.CurrentMagazine, Is.EqualTo(30));
             Assert.That(config.InitialAmmo.ReserveAmmo, Is.EqualTo(120));
-            Assert.That(config.PlayerHealth, Is.EqualTo(100));
+            Assert.That(config.PlayerHealth, Is.EqualTo(2));
             Assert.That(config.TargetRefreshHz, Is.EqualTo(72));
         }
 

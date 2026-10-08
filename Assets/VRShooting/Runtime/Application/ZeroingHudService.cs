@@ -78,6 +78,7 @@ namespace VRShooting.Application
                 Player = new PlayerStatusDto
                 {
                     Health = session.Player.Health,
+                    MaxHealth = session.Player.MaxHealth,
                     IsAlive = session.Player.IsAlive,
                     Posture = session.Player.Posture,
                     Shoulder = shoulder,

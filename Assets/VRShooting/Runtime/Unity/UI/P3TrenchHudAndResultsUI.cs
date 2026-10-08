@@ -21,7 +21,7 @@ namespace VRShooting.Unity.UI
         [SerializeField] protected TMP_Text promptText;
         [SerializeField] protected TMP_Text stateText;
         [SerializeField] protected P3MiniMapView miniMap;
-        RectTransform healthFill;
+        readonly Image[] healthCells = new Image[2];
 
         public HudDto LastHud { get; private set; }
         public SquadStatusDto LastSquad { get; private set; }
@@ -48,18 +48,23 @@ namespace VRShooting.Unity.UI
                 healthText.fontSizeMax = 26;
                 healthText.enableWordWrapping = false;
             }
-            if (health != null && healthFill == null)
+            if (health != null && healthCells[0] == null)
             {
                 var background = TacticalUIStyle.Artwork(health.transform, "Hud_Combat_HealthTrack", null, Vector2.zero, Vector2.one);
                 var track = background.rectTransform;
                 track.anchorMin = Vector2.zero; track.anchorMax = new Vector2(1, 0);
                 track.offsetMin = new Vector2(0, -9); track.offsetMax = new Vector2(0, -3);
                 background.color = new Color32(27, 49, 60, 255);
-                var fill = TacticalUIStyle.Artwork(track, "Hud_Combat_HealthFill", null, Vector2.zero, Vector2.one);
-                healthFill = fill.rectTransform;
-                healthFill.anchorMin = Vector2.zero; healthFill.anchorMax = Vector2.one;
-                healthFill.offsetMin = healthFill.offsetMax = Vector2.zero;
-                fill.color = new Color32(109, 223, 187, 255);
+                for (var index = 0; index < healthCells.Length; index++)
+                {
+                    var fill = TacticalUIStyle.Artwork(track, "Hud_Combat_HealthCell_" + (index + 1), null, Vector2.zero, Vector2.one);
+                    fill.rectTransform.anchorMin = new Vector2(index * .5f, 0);
+                    fill.rectTransform.anchorMax = new Vector2((index + 1) * .5f, 1);
+                    fill.rectTransform.offsetMin = new Vector2(index == 0 ? 0 : 2, 0);
+                    fill.rectTransform.offsetMax = new Vector2(index == 0 ? -2 : 0, 0);
+                    fill.color = new Color32(109, 223, 187, 255);
+                    healthCells[index] = fill;
+                }
             }
         }
 
@@ -69,16 +74,21 @@ namespace VRShooting.Unity.UI
             LastSquad = squad;
             var normal = new Color32(218, 241, 249, 255);
             var warning = new Color32(255, 114, 90, 255);
-            if (healthText != null) healthText.color = hud.Player.Health <= 25 || !hud.Player.IsAlive ? warning : normal;
+            // Older UI fixtures omit MaxHealth; production always supplies the configured maximum.
+            var maximum = hud.Player.MaxHealth > 0 ? hud.Player.MaxHealth : PlayerStatusDto.Default.MaxHealth;
+            var fraction = Mathf.Clamp01(hud.Player.Health / maximum);
+            var lowHealth = fraction <= .5f || !hud.Player.IsAlive;
+            if (healthText != null) healthText.color = lowHealth ? warning : normal;
             if (ammoText != null) ammoText.color = hud.Ammo.IsReloading
                 ? new Color32(247, 185, 85, 255)
                 : hud.Ammo.CurrentMagazine <= 0 ? warning : normal;
-            if (healthFill != null)
+            for (var index = 0; index < healthCells.Length; index++)
             {
-                healthFill.anchorMax = new Vector2(Mathf.Clamp01(hud.Player.Health / 100f), 1);
-                healthFill.GetComponent<Image>().color = hud.Player.Health <= 25 ? new Color32(255, 114, 90, 255) : new Color32(109, 223, 187, 255);
+                if (healthCells[index] == null) continue;
+                healthCells[index].enabled = fraction * healthCells.Length > index;
+                healthCells[index].color = lowHealth ? warning : new Color32(109, 223, 187, 255);
             }
-            P3UiText.SetText(healthText, "生命：" + Mathf.RoundToInt(hud.Player.Health) + " / 100" +
+            P3UiText.SetText(healthText, "生命：" + Mathf.RoundToInt(hud.Player.Health) + " / " + Mathf.RoundToInt(maximum) +
                 (hud.Player.IsAlive ? "" : " · 已失去战斗能力"));
             P3UiText.SetText(ammoText, "弹药：" + P3UiText.Ammo(hud.Ammo) +
                 (hud.Ammo.IsReloading ? " · 换弹中" : "") +

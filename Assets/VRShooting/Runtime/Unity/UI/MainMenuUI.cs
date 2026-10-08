@@ -100,6 +100,7 @@ namespace VRShooting.Unity.UI
         TextMeshProUGUI zeroingAnalysisFrontSightText;
         TextMeshProUGUI zeroingAnalysisRearSightText;
         TextMeshProUGUI zeroingAnalysisSuggestionText;
+        Button zeroingAnalysisHelpButton;
         TextMeshProUGUI zeroingAnalysisAppliedText;
         TextMeshProUGUI zeroingAnalysisCorrectionXText;
         TextMeshProUGUI zeroingAnalysisCorrectionYText;
@@ -609,10 +610,15 @@ namespace VRShooting.Unity.UI
             var data = AddPanel(parent, "Panel_ZeroingImpactAnalysis_Data", DrawioMin(405, 155, 190, 230), DrawioMax(405, 155, 190, 230), new Color32(17, 29, 24, 225), new Color32(56, 84, 71, 255));
             zeroingAnalysisFrontSightText = AddLabel(data, "Text_ZeroingImpactAnalysis_FrontSight", "准心柱：--", 22, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(28, 285), new Vector2(428, 340), new Color32(247, 185, 85, 255));
             zeroingAnalysisRearSightText = AddLabel(data, "Text_ZeroingImpactAnalysis_RearSight", "觇孔：--", 22, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(28, 215), new Vector2(428, 270), new Color32(247, 185, 85, 255));
-            var help = AddButton(data, "Button_ZeroingImpactAnalysis_Help", "帮助", new Vector2(28, 135), new Vector2(160, 192), false);
+            zeroingAnalysisFrontSightText.rectTransform.offsetMin = new Vector2(28, 70);
+            zeroingAnalysisFrontSightText.rectTransform.offsetMax = new Vector2(428, 115);
+            zeroingAnalysisRearSightText.rectTransform.offsetMin = new Vector2(28, 18);
+            zeroingAnalysisRearSightText.rectTransform.offsetMax = new Vector2(428, 63);
+            var help = AddButton(data, "Button_ZeroingImpactAnalysis_Help", "帮助", new Vector2(28, 285), new Vector2(160, 342), false);
+            zeroingAnalysisHelpButton = help;
             zeroingAnalysisSuggestionText = AddLabel(data, "Text_ZeroingImpactAnalysis_Suggestion",
                 "弹着点偏左时觇孔向前调整，弹着点偏右时觇孔向后调整，100m射击距离时觇孔调整一格为两厘米。\n\n弹着点偏上时顺时针调整准心柱，弹着点偏下时逆时针调整准心柱，100m射击距离时准心柱调整一圈约为23厘米，调整1度约0.064厘米。",
-                19, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(28, 18), new Vector2(428, 124), new Color32(143, 217, 255, 255));
+                19, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(28, 120), new Vector2(428, 270), new Color32(143, 217, 255, 255));
             zeroingAnalysisSuggestionText.enableAutoSizing = true;
             zeroingAnalysisSuggestionText.fontSizeMin = 15;
             zeroingAnalysisSuggestionText.fontSizeMax = 19;
@@ -622,15 +628,11 @@ namespace VRShooting.Unity.UI
             help.onClick.AddListener(() =>
             {
                 var expanded = !zeroingAnalysisSuggestionText.gameObject.activeSelf;
-                zeroingAnalysisSuggestionText.gameObject.SetActive(expanded);
-                zeroingAnalysisFrontSightText.gameObject.SetActive(!expanded);
-                zeroingAnalysisRearSightText.gameObject.SetActive(!expanded);
-                help.GetComponent<RectTransform>().offsetMin = expanded ? new Vector2(28, 285) : new Vector2(28, 135);
-                help.GetComponent<RectTransform>().offsetMax = expanded ? new Vector2(160, 342) : new Vector2(160, 192);
-                SetButtonLabel(help, expanded ? "收起帮助" : "帮助");
+                SetZeroingHelpExpanded(expanded);
             });
             var adjustPanel = AddPanel(parent, "Panel_ZeroingImpactAnalysis_ManualAdjust", DrawioMin(205, 390, 390, 82), DrawioMax(205, 390, 390, 82), new Color32(17, 29, 24, 235), new Color32(45, 156, 255, 255));
             zeroingAnalysisPreviewText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_PreviewAverage", "原始均值(黄) → 调整预览(蓝) · 按住连续调节", 22, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(20, 112), new Vector2(915, 145), new Color32(200, 255, 106, 255));
+            SetZeroingHelpExpanded(false);
             AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_HorizontalLabel", "觇孔", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(18, 24), new Vector2(113, 100), new Color32(231, 242, 235, 255));
             AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalMinus", "向后", new Vector2(122, 25), new Vector2(196, 96), ZeroingAdjustmentAxis.Horizontal, -1);
             zeroingAnalysisCorrectionXText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_CorrectionX", "0", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(202, 25), new Vector2(312, 96), new Color32(143, 217, 255, 255));
@@ -656,6 +658,15 @@ namespace VRShooting.Unity.UI
             var buttonText = button.GetComponentInChildren<TextMeshProUGUI>(true);
             if (buttonText != null) { buttonText.enableWordWrapping = false; buttonText.enableAutoSizing = true; buttonText.fontSizeMin = 12; buttonText.fontSizeMax = 22; }
             zeroingAdjustmentButtons.Add(button);
+        }
+
+        void SetZeroingHelpExpanded(bool expanded)
+        {
+            foreach (var tip in new[] { zeroingAnalysisFrontSightText, zeroingAnalysisRearSightText,
+                zeroingAnalysisSuggestionText, zeroingAnalysisPreviewText })
+                if (tip != null) tip.gameObject.SetActive(expanded);
+            if (zeroingAnalysisHelpButton != null)
+                SetButtonLabel(zeroingAnalysisHelpButton, expanded ? "收起帮助" : "帮助");
         }
 
         void BuildZeroingFinalRating(RectTransform parent)
@@ -877,15 +888,7 @@ namespace VRShooting.Unity.UI
 
             if (screen == ScreenId.ZeroingImpactAnalysis)
             {
-                if (zeroingAnalysisSuggestionText != null) zeroingAnalysisSuggestionText.gameObject.SetActive(false);
-                if (zeroingAnalysisFrontSightText != null) zeroingAnalysisFrontSightText.gameObject.SetActive(true);
-                if (zeroingAnalysisRearSightText != null) zeroingAnalysisRearSightText.gameObject.SetActive(true);
-                var help = zeroingImpactAnalysisScreen.GetComponentsInChildren<Button>(true);
-                foreach (var button in help) if (button.name == "Button_ZeroingImpactAnalysis_Help") {
-                    button.GetComponent<RectTransform>().offsetMin = new Vector2(28, 135);
-                    button.GetComponent<RectTransform>().offsetMax = new Vector2(160, 192);
-                    SetButtonLabel(button, "帮助");
-                }
+                SetZeroingHelpExpanded(false);
                 RefreshImpactAnalysis();
             }
 

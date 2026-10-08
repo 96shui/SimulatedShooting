@@ -20,6 +20,8 @@
 
 VR 菜单通过 XRUIInputModule、TrackedDeviceGraphicRaycaster 和手柄 UI 射线交互。切入 VR 时须启用输入模块、射线组件及其 UI Press 动作；UI Press 同时支持数字扳机按钮和模拟 trigger 的 0.5 按压阈值。物体选择不得阻断菜单 UI；传送射线不得替代菜单射线。NearFarInteractor 必须启用远距离投射（enableFarCasting），否则 XRI 会清空 UI 输入模型；菜单射线组件及其父层级必须激活。业务射击与 UI 点击仍走各自输入适配入口。
 
+2026-10-09 task019：训练枪近手抓取的 XRInputButtonReader 必须同时绑定数字 `gripPressed` 和模拟 `grip`。不得只绑定 Performed 而保留 Value 空动作；XRI 的交互强度读取使用 Value，空绑定会在设备切换或无驱动输入时访问无效状态。P1/P2 场景及场景构建器保持同一绑定。
+
 ## UI Prefab 命名
 
 | 类型 | 命名格式 | 示例 |

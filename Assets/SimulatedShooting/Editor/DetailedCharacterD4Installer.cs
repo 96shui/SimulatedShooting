@@ -118,6 +118,7 @@ namespace SimulatedShooting.Editor
                         var offset = (src[0].position - sourceHip) * ratio;
                         if (ClipNames[index] != "Death") { offset.x = 0; offset.z = 0; }
                         dst[0].position = targetHip + offset;
+                        if (ClipNames[index] == "Death") NaturalSoldierDeathBaker.ApplyRelaxedArms(dst, targetRest, time);
                         for (int bone = 0; bone < dst.Length; bone++)
                         {
                             var rotation = dst[bone].localRotation;

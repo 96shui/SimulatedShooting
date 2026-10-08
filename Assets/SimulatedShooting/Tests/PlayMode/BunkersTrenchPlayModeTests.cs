@@ -32,7 +32,10 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(runtime, Is.Not.Null);
             Assert.That(runtime.gameObject.scene.path, Is.EqualTo(UnityCombatSceneLoader.TrenchScenePath));
             var binding = runtime.GetComponent<CombatSceneBindings>();
-            Assert.That(Vector3.Distance(runtime.PlayerRoot.position, binding.TrenchEntry.position), Is.LessThan(.2f));
+            Assert.That(Vector2.Distance(new Vector2(runtime.PlayerRoot.position.x,runtime.PlayerRoot.position.z),
+                new Vector2(binding.TrenchEntry.position.x,binding.TrenchEntry.position.z)), Is.LessThan(.8f),"Spawn may shift to avoid embedded trench geometry");
+            Assert.That(runtime.PlayerRoot.position.y,Is.InRange(SurfaceHeight(binding.GeometryRoot,runtime.PlayerRoot.position)+.01f,
+                SurfaceHeight(binding.GeometryRoot,runtime.PlayerRoot.position)+.25f),"Spawn feet must be above the actual floor");
             Assert.That(binding.WeaponAnchor.gameObject.activeSelf, Is.True, "The briefing needs a visible rifle beside the spawn");
             Assert.That(binding.WeaponAnchor.GetComponentsInChildren<Renderer>().Any(r => r.enabled), Is.True);
             Assert.That(binding.Maps.Single(m => m.Id == "trench-a").Plan.name, Does.Contain("OriginalDemoMap"));
@@ -63,6 +66,16 @@ namespace SimulatedShooting.Tests.PlayMode
             var input = new ManualXRTrainingInput();
             runtime.InputOverride = input;
             Assert.That(app.Start().Success, Is.True);
+            runtime.FrameOverride=new CombatInputFrameDto {HeadTracked=true,RearHandTracked=true,FrontHandTracked=true,
+                PlayerPosition=runtime.PlayerRoot.position,PlayerForward=runtime.PlayerRoot.forward};
+            for(int frame=0;frame<1200&&!app.Mission.HasCombatStarted;frame++)
+            {
+                runtime.Step(.1f);
+                Assert.That(runtime.LastFrameResult.Success,Is.True,runtime.LastFrameResult.Message);
+                if(frame%20==0)yield return null;
+            }
+            Assert.That(app.Mission.HasCombatStarted,Is.True,"BDD28: complete real drone opening before gameplay");
+            runtime.Step(.02f);
             var binding = runtime.GetComponent<CombatSceneBindings>();
             var rifle = runtime.GetComponentInChildren<TrainingRifleGrabInteractable>();
             Assert.That(rifle, Is.Not.Null, "A grabbable rifle must replace the briefing preview");
@@ -83,11 +96,12 @@ namespace SimulatedShooting.Tests.PlayMode
                 Assert.That(actor.HitCollider.bounds.min.y, Is.EqualTo(boots.bounds.min.y).Within(.08f), actor.EntityId);
                 Assert.That(NavMesh.SamplePosition(actor.transform.position, out _, .8f, NavMesh.AllAreas), Is.True, actor.EntityId);
             }
-            Assert.That(start.y, Is.EqualTo(ground.SampleHeight(start) + ground.transform.position.y).Within(.25f),
-                "Player feet must start on the imported terrain");
+            Assert.That(start.y, Is.InRange(SurfaceHeight(binding.GeometryRoot,start)+.01f,SurfaceHeight(binding.GeometryRoot,start)+.25f),
+                "Player feet must start above the actual terrain or authored floor");
             input.SetMoveAxis(Vector2.up);
             for (var frame = 0; frame < 75; frame++)
             {
+                TrackedFrame(runtime);
                 runtime.Step(.02f);
                 Assert.That(runtime.LastFrameResult.Success, Is.True, runtime.LastFrameResult.Message);
                 input.AdvanceFrame();
@@ -97,11 +111,13 @@ namespace SimulatedShooting.Tests.PlayMode
                 "Player must move through the authored trench corridor");
             input.Press(XRTrainingInputButton.RightGrip);
             input.Press(XRTrainingInputButton.LeftGrip);
+            TrackedFrame(runtime);
             runtime.Step(.02f);
             Assert.That(runtime.LastFrameResult.Success, Is.True, runtime.LastFrameResult.Message);
             input.AdvanceFrame();
             var before = app.Mission.Core.GetSnapshot(app.Mission.SessionId).Data.Ammo.CurrentMagazine;
             input.Press(XRTrainingInputButton.Trigger);
+            TrackedFrame(runtime);
             runtime.Step(.02f);
             Assert.That(runtime.LastFrameResult.Success, Is.True, runtime.LastFrameResult.Message);
             Assert.That(app.Mission.Core.GetSnapshot(app.Mission.SessionId).Data.Ammo.CurrentMagazine,
@@ -118,13 +134,12 @@ namespace SimulatedShooting.Tests.PlayMode
             var fixture = Object.FindObjectOfType<CombatSceneFixture>();
             Assert.That(fixture, Is.Not.Null);
             Assert.That(fixture.enabled, Is.True);
-            var expectedFloorY = new[] { 2.08f, 2.64f, 2.32f, 2.35f, 2.19f, 2.14f, 1.24f };
+            yield return new WaitForSeconds(.15f);
             foreach (var enemy in fixture.Actors.Where(a => a.EntityId.StartsWith("trench-spawn-")))
             {
                 var foot = enemy.GetComponentsInChildren<SkinnedMeshRenderer>(true)
                     .First(r => r.name.EndsWith("_Boots"));
-                var pointIndex = int.Parse(enemy.EntityId.Substring("trench-spawn-".Length)) - 1;
-                var floorY = expectedFloorY[pointIndex];
+                var floorY = SurfaceHeight(fixture.Bindings.GeometryRoot,enemy.transform.position);
                 Assert.That(foot.bounds.min.y, Is.EqualTo(floorY).Within(.08f), enemy.EntityId + " boots");
                 Assert.That(enemy.HitCollider.bounds.min.y, Is.EqualTo(floorY).Within(.08f), enemy.EntityId + " collision");
             }
@@ -144,6 +159,25 @@ namespace SimulatedShooting.Tests.PlayMode
             finally { Time.captureDeltaTime = previousFrameTime; }
             Assert.That(Vector3.Dot(walker.transform.position - start, forward), Is.GreaterThan(2f),
                 "The editor inspection rig must not be blocked by the scene rifle or terrain");
+        }
+
+        static float SurfaceHeight(Transform geometry,Vector3 position)
+        {
+            var terrain=geometry.GetComponentInChildren<Terrain>();
+            var floor=terrain.SampleHeight(position)+terrain.transform.position.y;
+            return Physics.RaycastAll(new Vector3(position.x,floor+1.35f,position.z),Vector3.down,1.4f,~0,QueryTriggerInteraction.Ignore)
+                .Where(h=>h.transform.IsChildOf(geometry)&&h.normal.y>.65f).Select(h=>h.point.y).DefaultIfEmpty(floor).Max();
+        }
+        static void TrackedFrame(CombatSceneRuntime runtime)
+        {
+            runtime.FrameOverride=new CombatInputFrameDto {HeadTracked=true,RearHandTracked=true,FrontHandTracked=true,
+                RearGripInRange=true,FrontGripInRange=true,PlayerPosition=runtime.PlayerRoot.position,PlayerForward=runtime.PlayerRoot.forward,
+                MuzzlePosition=runtime.PlayerCamera.transform.position,AimDirection=runtime.PlayerCamera.transform.forward};
+        }
+        [UnityTearDown] public IEnumerator Cleanup()
+        {
+            GameMain.Instance?.Services.Combat.ReturnToMainMenu();
+            yield return null;yield return null;
         }
     }
 }

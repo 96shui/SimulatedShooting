@@ -20,9 +20,13 @@ namespace VRShooting.Tests.PlayMode.UI
         MainMenuUI mainMenuUi;
         ZeroingRangeUI zeroingRangeUi;
 
-        [SetUp]
-        public void SetUp()
+        [UnitySetUp]
+        public IEnumerator SetUp()
         {
+            // UI contract tests own their services; a previous live scene must not navigate them away.
+            if(VRShooting.Unity.Bootstrap.GameMain.Instance!=null)
+                Object.Destroy(VRShooting.Unity.Bootstrap.GameMain.Instance.gameObject);
+            yield return null;
             services = ApplicationServices.CreateDefault();
             root = new GameObject("Test_ZeroingImpactAnalysisUI", typeof(RectTransform));
             root.SetActive(false);
@@ -67,12 +71,81 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.IsTrue(FindById("Image_ZeroingImpactAnalysis_Impact_2").activeSelf);
             Assert.IsTrue(FindById("Image_ZeroingImpactAnalysis_Impact_3").activeSelf);
 
-            Assert.IsFalse(FindById("Text_ZeroingImpactAnalysis_Suggestion").activeSelf);
+            AssertHelpVisible(false);
             FindButton("Button_ZeroingImpactAnalysis_Help").onClick.Invoke();
-            Assert.IsTrue(FindById("Text_ZeroingImpactAnalysis_Suggestion").activeSelf);
+            AssertHelpVisible(true);
             Assert.That(FindText("Text_ZeroingImpactAnalysis_Suggestion").text, Does.Contain("调整1度约0.064厘米"));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("顺时针"));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain("觇孔"));
+        }
+
+        [UnityTest]
+        public IEnumerator Screen06_HelpOwnsAllTipsAndResetsOnNextRound()
+        {
+            // BDD06 2026-10-09: guidance requires an explicit Help click.
+            yield return OpenHudAndCompleteRound();
+            AssertHelpVisible(false);
+            CaptureHelp("P1-analysis-help-closed");
+            FindButton("Button_ZeroingImpactAnalysis_HorizontalPlus").onClick.Invoke();
+            AssertHelpVisible(false);
+            var help = FindButton("Button_ZeroingImpactAnalysis_Help");
+            help.onClick.Invoke();
+            AssertHelpVisible(true);
+            CaptureHelp("P1-analysis-help-open");
+            FindButton("Button_ZeroingImpactAnalysis_VerticalPlus").onClick.Invoke();
+            AssertHelpVisible(true);
+            help.onClick.Invoke();
+            AssertHelpVisible(false);
+            help.onClick.Invoke();
+            ApplyAndNext();
+            yield return null;
+            Fire(new Vector3(12f, 12f, 100f));
+            Fire(new Vector3(12f, 12f, 100f));
+            Fire(new Vector3(12f, 12f, 100f));
+            yield return null;
+            Assert.AreEqual(ScreenId.ZeroingImpactAnalysis, services.Router.Current);
+            AssertHelpVisible(false);
+        }
+
+        void AssertHelpVisible(bool visible)
+        {
+            foreach (var suffix in new[] { "FrontSight", "RearSight", "Suggestion", "PreviewAverage" })
+                Assert.AreEqual(visible, FindById("Text_ZeroingImpactAnalysis_" + suffix).activeSelf, suffix);
+            Assert.IsTrue(FindButton("Button_ZeroingImpactAnalysis_Help").gameObject.activeSelf);
+            Assert.IsTrue(FindById("Text_ZeroingImpactAnalysis_CorrectionX").activeSelf);
+            Assert.IsTrue(FindById("Text_ZeroingImpactAnalysis_CorrectionY").activeSelf);
+        }
+
+        void CaptureHelp(string name)
+        {
+            var canvas=zeroingRangeUi.GetComponent<Canvas>();
+            var previousMode=canvas.renderMode;var previousCamera=canvas.worldCamera;
+            var cameraRoot=new GameObject("HelpEvidenceCamera");
+            var camera=cameraRoot.AddComponent<Camera>();camera.enabled=false;
+            camera.clearFlags=CameraClearFlags.SolidColor;camera.backgroundColor=Color.black;camera.cullingMask=1<<31;
+            var parts=zeroingRangeUi.GetComponentsInChildren<Transform>(true);
+            var layers=new int[parts.Length];
+            var target=new RenderTexture(1920,1080,24);var texture=new Texture2D(1920,1080,TextureFormat.RGB24,false);
+            var previousActive=RenderTexture.active;
+            try
+            {
+                for(int i=0;i<parts.Length;i++){layers[i]=parts[i].gameObject.layer;parts[i].gameObject.layer=31;}
+                camera.targetTexture=target;
+                canvas.renderMode=RenderMode.ScreenSpaceCamera;canvas.worldCamera=camera;canvas.planeDistance=1;
+                Canvas.ForceUpdateCanvases();
+                foreach(var text in zeroingRangeUi.GetComponentsInChildren<TMP_Text>())text.ForceMeshUpdate();
+                camera.Render();RenderTexture.active=target;
+                texture.ReadPixels(new Rect(0,0,1920,1080),0,0);texture.Apply();
+                var folder=System.IO.Path.Combine(UnityEngine.Application.dataPath,"../Temp/GoalRepair/images");
+                System.IO.Directory.CreateDirectory(folder);
+                System.IO.File.WriteAllBytes(System.IO.Path.Combine(folder,name+".png"),texture.EncodeToPNG());
+            }
+            finally
+            {
+                for(int i=0;i<parts.Length;i++)parts[i].gameObject.layer=layers[i];
+                canvas.renderMode=previousMode;canvas.worldCamera=previousCamera;RenderTexture.active=previousActive;
+                target.Release();Object.Destroy(target);Object.Destroy(texture);Object.Destroy(cameraRoot);
+            }
         }
 
         [UnityTest]

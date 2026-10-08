@@ -103,6 +103,7 @@ namespace SimulatedShooting.Scene
 
             if (xrOrigin != null)
             {
+                if (modeChanged) VRHandPresentation.EnsureOnRig(xrOrigin);
                 xrOrigin.SetActive(vrMode);
             }
 

@@ -30,7 +30,8 @@ namespace SimulatedShooting.Tests.EditMode
                     Assert.That(skins.First(s => s.name == "D3_Suit").sharedMaterial.GetTexture("_BaseMap").name, Does.Contain("D3_set2"));
                     Assert.That(model.GetComponentsInChildren<Transform>(true).Any(t => t.name == "D3_Flamethrower"), Is.False);
                     var muzzleCarrier = model.GetComponentsInChildren<Transform>(true).Single(t => t.name == "Model_QBZ191_Enemy");
-                    Assert.That(muzzleCarrier.GetComponentsInChildren<Renderer>(true).All(r => !r.enabled), Is.True);
+                    Assert.That(muzzleCarrier.GetComponentsInChildren<Renderer>(true).Any(r => r.enabled), Is.True,
+                        "BDD23 task019 restores the training rifle; back cylinders and flamethrower remain hidden");
                 }
                 else
                 {

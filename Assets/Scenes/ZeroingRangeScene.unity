@@ -8097,9 +8097,17 @@ MonoBehaviour:
       m_Type: 0
       m_ExpectedControlType: Axis
       m_Id: 3dc6d06c-4936-4150-82c9-247f41847749
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
+      m_Processors:
+      m_Interactions:
+      m_SingletonActionBindings:
+      - m_Name:
+        m_Id: 1ba55669-150a-5378-8943-839348d1a6f1
+        m_Path: <XRController>{RightHand}/grip
+        m_Interactions:
+        m_Processors:
+        m_Groups:
+        m_Action: Grip Select Value
+        m_Flags: 0
       m_Flags: 0
     m_InputActionReferencePerformed: {fileID: 0}
     m_InputActionReferenceValue: {fileID: 0}
@@ -30984,9 +30992,17 @@ MonoBehaviour:
       m_Type: 0
       m_ExpectedControlType: Axis
       m_Id: b6d1585c-231b-46a3-897f-bc2df41d33d3
-      m_Processors: 
-      m_Interactions: 
-      m_SingletonActionBindings: []
+      m_Processors:
+      m_Interactions:
+      m_SingletonActionBindings:
+      - m_Name:
+        m_Id: 4eff4f0a-4ec0-5e26-9fcd-be6cc5ea6340
+        m_Path: <XRController>{LeftHand}/grip
+        m_Interactions:
+        m_Processors:
+        m_Groups:
+        m_Action: Grip Select Value
+        m_Flags: 0
       m_Flags: 0
     m_InputActionReferencePerformed: {fileID: 0}
     m_InputActionReferenceValue: {fileID: 0}

@@ -142,6 +142,7 @@ namespace SimulatedShooting.Editor
                         var offset = (src[0].position - sourceHip) * ratio;
                         if (ClipNames[index] != "Death") { offset.x = 0; offset.z = 0; }
                         dst[0].position = targetHip + offset;
+                        if (ClipNames[index] == "Death") NaturalSoldierDeathBaker.ApplyRelaxedArms(dst, targetRest, time);
                         for (int bone = 0; bone < dst.Length; bone++)
                         {
                             var rotation = dst[bone].localRotation;
@@ -244,7 +245,7 @@ namespace SimulatedShooting.Editor
                 CombatSoldierAnimation.SolveArm(driver.LeftUpperArm, driver.LeftForearm, driver.LeftHand,
                     visual.TransformPoint(new Vector3(.12f, 1.27f, .43f)), visual.TransformPoint(new Vector3(-.40f, 1.08f, .28f)));
                 rifle.SetParent(driver.RightHand, true);
-                foreach (var renderer in rifle.GetComponentsInChildren<Renderer>(true)) renderer.enabled = false;
+                foreach (var renderer in rifle.GetComponentsInChildren<Renderer>(true)) renderer.enabled = true;
                 driver.Rifle = rifle;
                 var mark = AssetDatabase.LoadAssetAtPath<Material>("Assets/SimulatedShooting/Art/Characters/AmericanSoldier/Materials/EnemyIdentification.mat");
                 var band = GameObject.CreatePrimitive(PrimitiveType.Cylinder);

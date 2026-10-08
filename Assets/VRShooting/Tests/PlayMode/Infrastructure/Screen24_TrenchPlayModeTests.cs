@@ -20,7 +20,7 @@ namespace VRShooting.Tests.PlayMode
         {
             var clock=new FakeCombatClock();var nav=new FakeCombatWorld();
             using var opening=new TrenchOpeningTestDriver(clock);
-            using var service=new TrenchService(P3Fixtures.TrenchDefinition,clock,new SeededCombatRandom(),nav,CombatConfigDto.Default.WithPlayerHealth(5),recon:opening.Service);
+            using var service=new TrenchService(P3Fixtures.TrenchDefinition,clock,new SeededCombatRandom(),nav,CombatConfigDto.Default.WithPlayerHealth(1),recon:opening.Service);
             var scene=SceneManager.CreateScene("TrenchServiceTestScene");
             var view=new GameObject("Hud_Trench_Probe",typeof(RectTransform),typeof(CanvasRenderer),typeof(Text));
             SceneManager.MoveGameObjectToScene(view,scene);var probe=view.AddComponent<TrenchHudProbe>();probe.Bind(service);
@@ -36,9 +36,12 @@ namespace VRShooting.Tests.PlayMode
                 foreach(var enemy in targets)
                 {
                     service.Combat.SetGrip(new WeaponGripStateInputDto {SessionId=id,HoldState=WeaponHoldState.TwoHandHeld,RearHandTracked=true,FrontHandTracked=true});
+                    for(var hitIndex=0;hitIndex<2;hitIndex++)
+                    {
                     var shot=service.Combat.Fire(new WeaponFireInputDto {SessionId=id,AimDirection=Vector3.forward}).Data;
                     service.Submit(new CombatInputDto {SessionId=id,Tick=clock.Tick,EventId=shot.ShotId,Kind=CombatInputKind.Hit,
                         EntityId=id+".player",TargetId=enemy.EntityId,ShotId=shot.ShotId,Flag=true,Value=1});service.Advance(id);yield return null;
+                    }
                 }
                 Assert.That(service.GetResult(id).Data.Victory);Assert.That(results,Is.EqualTo(1));Assert.That(service.GetHud(id).Data.CanShoot,Is.False);
                 var oldId=id;service.Cancel(id);service.GetBriefing("trench-a","training-rifle",RandomSeed.Fixed(12));

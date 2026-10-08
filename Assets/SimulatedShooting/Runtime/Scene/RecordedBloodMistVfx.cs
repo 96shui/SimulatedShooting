@@ -12,7 +12,7 @@ namespace SimulatedShooting.Scene
         float started;
         const float Lifetime = .85f;
 
-        public bool Initialize(int shotIndex)
+        public bool Initialize(int shotIndex, Transform observer = null)
         {
             if (sharedMaterial == null)
                 sharedMaterial = Resources.Load<Material>("Combat/VFX/BloodMist/ActionVFX_BloodMist1");
@@ -30,7 +30,7 @@ namespace SimulatedShooting.Scene
             meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             meshRenderer.receiveShadows = false;
             properties = new MaterialPropertyBlock();
-            viewer = Camera.main != null ? Camera.main.transform : null;
+            viewer = observer != null ? observer : Camera.main != null ? Camera.main.transform : null;
             if (viewer != null)
             {
                 transform.position += (viewer.position - transform.position).normalized * .06f;

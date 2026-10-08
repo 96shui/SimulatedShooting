@@ -79,6 +79,7 @@ public enum ShoulderSide
 
 public readonly struct PlayerStatusDto
 {
+    public float MaxHealth { get; init; } // 本局生命上限，P3默认2。
     public float Health { get; init; }
     public bool IsAlive { get; init; }
     public PlayerPosture Posture { get; init; }

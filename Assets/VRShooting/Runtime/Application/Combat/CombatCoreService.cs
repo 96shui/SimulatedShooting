@@ -70,7 +70,7 @@ namespace VRShooting.Application.Combat
             enemies.Clear(); enemyById.Clear(); received.Clear(); pending.Clear(); issuedShots.Clear(); spentShots.Clear(); feedback.Clear();resolvedGrenades.Clear();
             foreach (var spawn in spawns)
             {
-                var enemy = new Enemy { Id = spawn.EntityId, Position = spawn.Position, Forward = spawn.Forward.normalized };
+                var enemy = new Enemy { Id = spawn.EntityId, Position = spawn.Position, Forward = spawn.Forward.normalized, Health = config.EnemyHealth };
                 enemies.Add(enemy); enemyById.Add(enemy.Id, enemy);
             }
             enemies.Sort((a,b) => StringComparer.Ordinal.Compare(a.Id,b.Id));
@@ -299,10 +299,15 @@ namespace VRShooting.Application.Combat
             {
                 if (input.Kind != CombatInputKind.Hit || input.TargetId == playerId || !spentShots.Add(input.ShotId)) continue;
                 var enemy = enemyById[input.TargetId]; if (enemy.Dead) continue;
-                enemy.Dead = true; enemy.State = CombatEntityState.Dead; enemy.CanAttack = false; enemy.NextAttack = double.PositiveInfinity;
+                var damage = Mathf.Min(enemy.Health, config.PlayerBulletDamage);
+                enemy.Health = Mathf.Max(0, enemy.Health - config.PlayerBulletDamage);
                 dirty = true;
-                Emit(CombatFeedbackKind.EnemyHit, input.EventId, playerId, enemy.Id, input.ShotId);
-                Emit(CombatFeedbackKind.EnemyDied, input.EventId, playerId, enemy.Id, input.ShotId);
+                Emit(CombatFeedbackKind.EnemyHit, input.EventId, playerId, enemy.Id, input.ShotId, damage);
+                if (enemy.Health <= 0)
+                {
+                    enemy.Dead = true; enemy.State = CombatEntityState.Dead; enemy.CanAttack = false; enemy.NextAttack = double.PositiveInfinity;
+                    Emit(CombatFeedbackKind.EnemyDied, input.EventId, playerId, enemy.Id, input.ShotId);
+                }
             }
             pending.Clear();
             if (Active && clock.Now + 1e-8 >= reloadAt)
@@ -361,7 +366,7 @@ namespace VRShooting.Application.Combat
             snapshot = new CombatCoreSnapshotDto
             {
                 SessionId = session, Revision = revision, State = state, TrackingValid = tracked,
-                Player = new PlayerStatusDto { Health = health, IsAlive = health > 0, Posture = posture,
+                Player = new PlayerStatusDto { Health = health, MaxHealth = config.PlayerHealth, IsAlive = health > 0, Posture = posture,
                     Shoulder = weapon.ShoulderSide, CornerShootingAvailable = corner },
                 Ammo = weapons.GetAmmo(session).Data,
                 Weapon = new WeaponControlStateDto { SessionId = session, WeaponId = weapon.WeaponId,
@@ -409,6 +414,7 @@ namespace VRShooting.Application.Combat
             public string Id;
             public Vector3 Position, Forward;
             public bool Visible, CanAttack, Dead;
+            public float Health;
             public double NextAttack = double.PositiveInfinity;
             public CombatEntityState State = CombatEntityState.Spawned;
         }

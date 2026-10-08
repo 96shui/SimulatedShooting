@@ -47,10 +47,13 @@ namespace VRShooting.Tests.PlayMode
             {
                 Assert.That(mission.Core.SetGrip(new WeaponGripStateInputDto { SessionId = id, HoldState = WeaponHoldState.TwoHandHeld,
                     RearHandTracked = true, FrontHandTracked = true }).Success);
+                for (var bullet = 0; bullet < 2; bullet++)
+                {
                 var shot = mission.Core.Fire(new WeaponFireInputDto { SessionId = id, AimDirection = Vector3.forward }); Assert.That(shot.Success);
                 Assert.That(mission.World.Submit(new CombatInputDto { SessionId = id, Tick = lease.Clock.Tick, EventId = "hit-" + ++sequence,
                     Kind = CombatInputKind.Hit, EntityId = id + ".player", TargetId = enemy.EntityId, ShotId = shot.Data.ShotId, Flag = true, Value = 1 }).Success);
                 app.Advance(); yield return null;
+                }
             }
             if (mode == TrainingMode.Trench) foreach (var node in lease.Definition.SearchNodes) Range(node.NodeId);
             else foreach (var room in lease.Definition.Floors.SelectMany(f => f.Rooms))

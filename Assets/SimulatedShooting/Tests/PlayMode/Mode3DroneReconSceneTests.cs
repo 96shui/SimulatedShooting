@@ -24,6 +24,8 @@ namespace SimulatedShooting.Tests.PlayMode
         [UnityTest]
         public IEnumerator PreparingSceneCompletesFullFlightAndRestoresPlayerViewBeforeCombat()
         {
+            yield return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MainScene");
+            yield return null;
             var load=new UnityCombatSceneLoader(()=>false).LoadAsync(TrainingMode.Trench,CancellationToken.None);
             while(!load.IsCompleted)yield return null;
             Assert.That(load.Result.Success,Is.True,load.Result.Message);

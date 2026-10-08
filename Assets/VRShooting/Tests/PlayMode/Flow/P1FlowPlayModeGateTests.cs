@@ -91,17 +91,9 @@ namespace VRShooting.Tests.PlayMode.Flow
 
             AssertLayer(
                 "UI",
-                ScreenId.ZeroingImpactAnalysis,
-                "Screen_ZeroingImpactAnalysis",
-                "three passing shots should open impact analysis");
-
-            yield return ApplyAdjustmentAndAdvance();
-
-            AssertLayer(
-                "UI",
                 ScreenId.ZeroingFinalRating,
                 "Screen_ZeroingFinalRating",
-                "round-1 pass should open final rating");
+                "BDD06 2026-10-05: round-1 pass goes directly to final rating");
             Assert.That(
                 FindText("Text_ZeroingFinalRating_Grade").text,
                 Does.Contain("优秀"),
@@ -128,6 +120,11 @@ namespace VRShooting.Tests.PlayMode.Flow
             for (var round = 1; round <= 3; round++)
             {
                 yield return FireThreeShotsForImpact(FailImpactCm);
+                if(round==3)
+                {
+                    AssertLayer("UI",ScreenId.ZeroingFinalRating,"Screen_ZeroingFinalRating","Third failed round directly opens final rating");
+                    break;
+                }
                 AssertLayer(
                     "UI",
                     ScreenId.ZeroingImpactAnalysis,
@@ -242,13 +239,6 @@ namespace VRShooting.Tests.PlayMode.Flow
             yield return FireThreeShotsForImpact(PassImpactCm);
             AssertLayer(
                 "UI",
-                ScreenId.ZeroingImpactAnalysis,
-                "Screen_ZeroingImpactAnalysis",
-                "scene-owned range should open impact analysis after 3 shots");
-
-            yield return ApplyAdjustmentAndAdvance();
-            AssertLayer(
-                "UI",
                 ScreenId.ZeroingFinalRating,
                 "Screen_ZeroingFinalRating",
                 "scene-owned round-1 pass should open final rating");
@@ -260,6 +250,8 @@ namespace VRShooting.Tests.PlayMode.Flow
 
         IEnumerator SetUpInMemoryFixture()
         {
+            if(GameMain.Instance!=null)Object.Destroy(GameMain.Instance.gameObject);
+            yield return null;
             sceneOwnedMode = false;
             trainingInput = new ManualXRTrainingInput();
             services = ApplicationServices.CreateDefault(trainingInput);

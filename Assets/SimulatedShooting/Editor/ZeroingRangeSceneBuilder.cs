@@ -699,7 +699,8 @@ namespace SimulatedShooting.Editor
             direct.selectInput = new XRInputButtonReader("Grip Select")
             {
                 inputSourceMode = XRInputButtonReader.InputSourceMode.InputAction,
-                inputActionPerformed = new InputAction("Grip Select", InputActionType.Button, selectBinding)
+                inputActionPerformed = new InputAction("Grip Select", InputActionType.Button, selectBinding),
+                inputActionValue = new InputAction("Grip Select Value", InputActionType.Value, selectBinding.Replace("/gripPressed", "/grip"))
             };
 
             EnsureHandVisualRoot(controller, handedness, handMaterial);

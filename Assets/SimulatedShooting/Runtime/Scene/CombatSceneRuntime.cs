@@ -76,6 +76,10 @@ namespace SimulatedShooting.Scene
         public IReadOnlyDictionary<string,CombatActorView> Actors=>actors;
         public string SessionId=>session;
         public bool IsVr=>vr;
+        public int PlayerDamageFeedbackCount { get; private set; }
+        readonly HashSet<string> confirmedFeedback = new HashSet<string>();
+        public Vector3 PlayerHitPoint => eye.transform.position
+            + Vector3.ProjectOnPlane(eye.transform.forward, Vector3.up).normalized * .42f - Vector3.up * .32f;
         public ServiceResult<Unit> LastFrameResult {get;private set;}
 
         public void Prepare(CombatSceneBindings bindings,TrainingMode selected,bool? vrAvailability=null)
@@ -84,6 +88,7 @@ namespace SimulatedShooting.Scene
             foreach(var fixture in GetComponentsInChildren<CombatSceneFixture>(true))fixture.enabled=false;
             var xrMode=binding.GetComponent<ZeroingRangeXRModeController>();
             xrOrigin=xrMode.XrOrigin;desktopEye=xrMode.NoVrCamera;xrMode.enabled=false;
+            VRHandPresentation.EnsureOnRig(xrOrigin);
             foreach(var walker in GetComponentsInChildren<CombatSceneWalker>(true))walker.enabled=false;
             var displays=new List<XRDisplaySubsystem>();SubsystemManager.GetInstances(displays);vr=vrAvailability??displays.Any(d=>d.running);
             // Both rigs reference the same XRI action asset. Disable the departing rig
@@ -94,6 +99,9 @@ namespace SimulatedShooting.Scene
             var desktopListener=desktopEye.GetComponent<AudioListener>();if(desktopListener!=null)desktopListener.enabled=!vr;
             eye=vr?xrOrigin.GetComponentsInChildren<Camera>(true).First():desktopEye;
             eye.enabled=true;
+            eye.tag="MainCamera";
+            foreach(var follow in xrOrigin.GetComponentsInChildren<UnityEngine.XR.Interaction.Toolkit.UI.LazyFollow>(true))
+                follow.target=eye.transform;
             player=vr?xrOrigin.transform:desktopEye.transform.parent;
             body=player.GetComponent<CharacterController>()??player.gameObject.AddComponent<CharacterController>();
             player.gameObject.layer=2;
@@ -114,6 +122,13 @@ namespace SimulatedShooting.Scene
             foreach(var caster in xrOrigin.GetComponentsInChildren<UnityEngine.XR.Interaction.Toolkit.Interactors.Casters.SphereInteractionCaster>(true))
                 caster.physicsLayerMask=caster.physicsLayerMask.value|(1<<2);
             xrOrigin.SetActive(vr);
+            // The authored maps also contain an overview camera outside both player rigs.
+            // Disabling the range mode restores that camera, so claim scene output explicitly.
+            foreach(var root in gameObject.scene.GetRootGameObjects())
+            {
+                foreach(var camera in root.GetComponentsInChildren<Camera>(true))camera.enabled=camera==eye;
+                foreach(var listener in root.GetComponentsInChildren<AudioListener>(true))listener.enabled=listener.gameObject==eye.gameObject;
+            }
             ResetPlayer();
             Definition=CombatSceneDefinitionBuilder.Build(binding,mode,
                 new Vector3(eye.transform.position.x,player.position.y,eye.transform.position.z));
@@ -176,8 +191,8 @@ namespace SimulatedShooting.Scene
             if(ui!=null)
             {
                 var adapter=ui.View.GetComponent<VRShooting.Unity.UI.TrainingUICanvasAdapter>();
-                adapter.ConfigureVrLayout(1.6f,.0008f,floorHeight+.10f);
                 adapter.SetMode(vr,eye);
+                adapter.ConfigureVrLayout(1.6f,.0008f,floorHeight+.10f);
             }
         }
         public ServiceResult<Unit> Activate(ICombatCoreService combat,ICombatWorldInputPort facts,ICombatStateService visual,ICombatGrenadeTacticService grenadeTactics,ICombatTickPort advance,string id)
@@ -192,6 +207,7 @@ namespace SimulatedShooting.Scene
             if(mode==TrainingMode.Trench)binding.WeaponAnchor.gameObject.SetActive(false);
             rifle=Instantiate(binding.TrainingRiflePrefab,transform);
             weapon=rifle.GetComponent<WeaponPrefabBinding>();grab=rifle.GetComponent<TrainingRifleGrabInteractable>();
+            VRHandPresentation.EnsureOnRig(xrOrigin, grab);
             var spawn=player.position;
             var standingFeet=new Vector3(eye.transform.position.x,player.position.y,eye.transform.position.z);
             var correctedRack=binding.WeaponAnchor.position+standingFeet-binding.TrenchEntry.position;
@@ -206,6 +222,7 @@ namespace SimulatedShooting.Scene
             weaponFeedback=rifle.AddComponent<WeaponFeedbackController>();
             weaponFeedback.Configure(weapon.MuzzlePoint,rifle.transform,weapon.MuzzlePoint,grab,null,binding.RifleShotClip,null,null,null);
             hardware.Reset();
+            confirmedFeedback.Clear(); PlayerDamageFeedbackCount = 0;
             state.VisualChanged+=ApplyVisual;core.Feedback+=Feedback;
             if(grenades!=null){grenades.GrenadeThrown+=OnGrenadeThrown;grenades.GrenadeExploded+=OnGrenadeExploded;grenades.GrenadeCancelled+=OnGrenadeCancelled;}
             if(grenades!=null)grenades.Configure(this);
@@ -440,6 +457,19 @@ namespace SimulatedShooting.Scene
         void Feedback(CombatFeedbackDto feedback)
         {
             if(feedback.SessionId!=session)return;
+            if (!confirmedFeedback.Add(feedback.Kind + ":" + feedback.EventId)) return;
+            if (feedback.Kind == CombatFeedbackKind.PlayerDamaged && feedback.TargetId == session + ".player" && weaponFeedback != null)
+            {
+                var normal = actors.TryGetValue(feedback.EntityId, out var attacker)
+                    ? (PlayerHitPoint - attacker.Muzzle.position).normalized : -eye.transform.forward;
+                var impact = weaponFeedback.PlayConfirmedFleshImpact(PlayerHitPoint, normal, (int)++sequence, eye.transform);
+                impact.name = "ImpactFeedback_Player_" + feedback.EventId;
+                impact.GetComponent<SceneTestId>().Id = "Combat.Player.FleshImpactFeedback";
+                impact.transform.SetParent(transform, true);
+                PlayerDamageFeedbackCount++;
+                if (vr) foreach (var node in new[] { XRNode.LeftHand, XRNode.RightHand })
+                    InputDevices.GetDeviceAtXRNode(node).SendHapticImpulse(0, .45f, .1f);
+            }
             if(feedback.Kind==CombatFeedbackKind.ShotFired)
             {
                 recoil=2;
@@ -468,7 +498,7 @@ namespace SimulatedShooting.Scene
                     }
                 }
                 if(feedback.Kind==CombatFeedbackKind.EnemyAttack)
-                    actor.PlayShot(feedback.EventId, player.position + Vector3.up * 1.2f);
+                    actor.PlayShot(feedback.EventId, PlayerHitPoint, true);
             }
         }
 
@@ -616,7 +646,9 @@ namespace SimulatedShooting.Scene
             var liveUi=VRShooting.Unity.Bootstrap.GameMain.Instance?.GetComponent<VRShooting.Unity.UI.P3LiveUIController>();
             if(liveUi!=null)liveUi.View.GetComponent<VRShooting.Unity.UI.TrainingUICanvasAdapter>().ClearForcedModeForTests();
         }
-        void OnDestroy(){Deactivate();RestoreMainScene();foreach(var sprite in mapSprites)if(sprite!=null)Destroy(sprite);mapSprites.Clear();}
+        // The lease restores MainScene before unloading. OnDestroy can also run during
+        // a Single scene load, when reactivating departing roots creates orphan XR managers.
+        void OnDestroy(){Deactivate();foreach(var sprite in mapSprites)if(sprite!=null)Destroy(sprite);mapSprites.Clear();}
         static void SetLayer(GameObject root,int layer){foreach(var t in root.GetComponentsInChildren<Transform>(true))t.gameObject.layer=layer;}
         sealed class InputRouter:IXRTrainingInput
         {

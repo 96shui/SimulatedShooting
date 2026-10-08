@@ -35,7 +35,8 @@ namespace VRShooting.Tests.EditMode.UI
                 plot.SetImpacts(new[] { point });
                 using (var helper = new UnityEngine.UI.VertexHelper())
                 {
-                    typeof(TacticalTargetPlot).GetMethod("OnPopulateMesh", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                    typeof(TacticalTargetPlot).GetMethod("OnPopulateMesh", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
+                        null, new[] { typeof(UnityEngine.UI.VertexHelper) }, null)
                         .Invoke(plot, new object[] { helper });
                     helper.FillMesh(mesh);
                 }

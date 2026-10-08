@@ -50,6 +50,20 @@ namespace SimulatedShooting.Scene
         public bool UsesCustomFingerPose => useCustomFingerPose;
         public Transform GripAnchor => gripAnchor;
 
+        public void BindWeapon(TrainingRifleGrabInteractable grab)
+        {
+            grabInteractable = grab;
+            gripAnchor = grab == null ? null : handSide == VirtualHandSide.Right ? grab.RearAttach : grab.FrontAttach;
+        }
+
+        void OnEnable() { Application.onBeforeRender += UpdateBeforeRender; }
+        void OnDisable() { Application.onBeforeRender -= UpdateBeforeRender; }
+        [BeforeRenderOrder(UnityEngine.XR.Interaction.Toolkit.XRInteractionUpdateOrder.k_BeforeRenderOrder + 1)]
+        void UpdateBeforeRender()
+        {
+            if (Application.isPlaying && isActiveAndEnabled) UpdateVisualPose(0);
+        }
+
         public void Configure(
             VirtualHandSide side,
             Transform handModel,

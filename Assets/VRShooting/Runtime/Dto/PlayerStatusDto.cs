@@ -6,6 +6,7 @@ namespace VRShooting.Common
     public readonly struct PlayerStatusDto
     {
         public float Health { get; init; }
+        public float MaxHealth { get; init; }
         public bool IsAlive { get; init; }
         public PlayerPosture Posture { get; init; }
         public ShoulderSide Shoulder { get; init; }
@@ -14,6 +15,7 @@ namespace VRShooting.Common
         public static PlayerStatusDto Default => new PlayerStatusDto
         {
             Health = 100f,
+            MaxHealth = 100f,
             IsAlive = true,
             Posture = PlayerPosture.Standing,
             Shoulder = ShoulderSide.Right,

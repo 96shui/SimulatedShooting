@@ -167,12 +167,12 @@ namespace SimulatedShooting.Scene
             }
         }
 
-        public void PlayConfirmedFleshImpact(Vector3 point, Vector3 normal, int shotIndex)
+        public GameObject PlayConfirmedFleshImpact(Vector3 point, Vector3 normal, int shotIndex, Transform observer = null)
         {
-            PlayImpact(point, normal, shotIndex, true);
+            return PlayImpact(point, normal, shotIndex, true, observer);
         }
 
-        void PlayImpact(Vector3 point, Vector3 normal, int shotIndex, bool hitFlesh)
+        GameObject PlayImpact(Vector3 point, Vector3 normal, int shotIndex, bool hitFlesh, Transform observer = null)
         {
             impactFeedbackCount++;
             var impact = new GameObject(hitFlesh
@@ -190,7 +190,7 @@ namespace SimulatedShooting.Scene
             if (hitFlesh)
             {
                 var mist = impact.AddComponent<RecordedBloodMistVfx>();
-                if (!mist.Initialize(shotIndex)) Debug.LogWarning("ActionVFX Blood Mist material is missing.", impact);
+                if (!mist.Initialize(shotIndex, observer)) Debug.LogWarning("ActionVFX Blood Mist material is missing.", impact);
 
             }
 
@@ -204,6 +204,7 @@ namespace SimulatedShooting.Scene
             }
 
             impact.AddComponent<TimedSelfDestruct>().Configure(hitFlesh ? .9f : .75f);
+            return impact;
         }
 
         void ConfigureFleshImpactParticles(ParticleSystem particles)

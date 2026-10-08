@@ -95,11 +95,11 @@ namespace VRShooting.Tests.EditMode
         {
             Start(); Search(); service.Advance(id); Assert.That(service.CompleteIfReady(id).ErrorCode,Is.EqualTo(ErrorCode.InvalidState));
             service.Cancel(id); Start(); int results=0; service.ResultReady += _=>results++;
-            foreach(var enemy in Enemies) { Hit(enemy.EntityId,Shoot()); Assert.That(service.Advance(id).Success); }
+            foreach(var enemy in Enemies) { Hit(enemy.EntityId,Shoot()); Assert.That(service.Advance(id).Success); Hit(enemy.EntityId,Shoot()); Assert.That(service.Advance(id).Success); }
             Assert.That(service.CompleteIfReady(id).ErrorCode,Is.EqualTo(ErrorCode.InvalidState));
             Search(); service.Advance(id); var result=service.GetResult(id).Data;
             Assert.That(result.Victory); Assert.That(result.EnemyKilled,Is.EqualTo(result.EnemyTotal));
-            Assert.That(result.RemainingAmmo,Is.EqualTo(150-result.EnemyTotal));
+            Assert.That(result.RemainingAmmo,Is.EqualTo(150-2*result.EnemyTotal));
             Assert.That(service.CompleteIfReady(id).Data.Equals(result)); Assert.That(results,Is.EqualTo(1));
         }
         [Test] public void ValidationAndIdempotenceCannotFakeKillsOrSearch()
@@ -111,15 +111,15 @@ namespace VRShooting.Tests.EditMode
             Search(); Assert.That(service.CompleteIfReady(id).ErrorCode,Is.EqualTo(ErrorCode.Busy)); service.Advance(id);
             var revision=service.GetSession(id).Data.Revision;
             Assert.That(service.MarkSearchNode(id,"trench-a.node-001").Success); Assert.That(service.GetSession(id).Data.Revision,Is.EqualTo(revision));
-            var enemy=Enemies[0]; Hit(enemy.EntityId,Shoot()); service.Advance(id); revision=service.GetSession(id).Data.Revision;
+            var enemy=Enemies[0]; Hit(enemy.EntityId,Shoot()); service.Advance(id); Hit(enemy.EntityId,Shoot()); service.Advance(id); revision=service.GetSession(id).Data.Revision;
             Assert.That(service.RegisterEnemyKilled(id,enemy.EntityId).Success); Assert.That(service.GetSession(id).Data.Revision,Is.EqualTo(revision));
         }
         [Test] public void SameBatchDeathWinsAndRetainsFinalSearchAndKill()
         {
-            service.Dispose(); service=new TrenchService(P3Fixtures.TrenchDefinition,clock,new SeededCombatRandom(),navigation,CombatConfigDto.Default.WithPlayerHealth(5),recon:opening.Service);
+            service.Dispose(); service=new TrenchService(P3Fixtures.TrenchDefinition,clock,new SeededCombatRandom(),navigation,CombatConfigDto.Default.WithPlayerHealth(1),recon:opening.Service);
             Start(); var enemies=Enemies;
-            foreach(var enemy in enemies.Skip(1)) { Hit(enemy.EntityId,Shoot()); service.Advance(id); }
-            var final=enemies[0]; var shot=Shoot();
+            foreach(var enemy in enemies.Skip(1)) { Hit(enemy.EntityId,Shoot()); service.Advance(id); Hit(enemy.EntityId,Shoot()); service.Advance(id); }
+            var final=enemies[0]; Hit(final.EntityId,Shoot()); service.Advance(id); var shot=Shoot();
             service.Submit(new CombatInputDto { SessionId=id,Tick=clock.Tick,EventId="sight",Kind=CombatInputKind.Perception,
                 EntityId=final.EntityId,TargetId=id+".player",Position=Vector3.forward*10,Direction=Vector3.back,Flag=true }); service.Advance(id);
             clock.Advance(1); Hit(final.EntityId,shot); Search(); service.Advance(id);
@@ -140,7 +140,7 @@ namespace VRShooting.Tests.EditMode
         {
             Start(); clock.Advance(2); service.Advance(id); service.Combat.SetState(id,SessionState.Paused); clock.Advance(100); service.Advance(id);
             service.Combat.SetState(id,SessionState.Running); Search(); service.Advance(id);
-            foreach(var enemy in Enemies) { Hit(enemy.EntityId,Shoot()); service.Advance(id); }
+            foreach(var enemy in Enemies) { Hit(enemy.EntityId,Shoot()); service.Advance(id); Hit(enemy.EntityId,Shoot()); service.Advance(id); }
             var old=service.GetResult(id).Data; Assert.That(old.ElapsedSeconds,Is.EqualTo(2).Within(.001)); var oldId=id;
             Assert.That(service.Cancel(id).Success); Assert.That(service.Cancel(id).Success); Start();
             Assert.That(id,Is.Not.EqualTo(oldId)); Assert.That(service.GetResult(oldId).ErrorCode,Is.EqualTo(ErrorCode.NotFound));

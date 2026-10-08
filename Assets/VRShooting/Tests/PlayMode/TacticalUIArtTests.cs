@@ -54,10 +54,12 @@ namespace VRShooting.Tests.PlayMode
                     new MapMarkerDto {MarkerId="player",Type=MarkerType.Player,NormalizedPosition=new Vector2(.2f,.3f)},
                     new MapMarkerDto {MarkerId="estimate",Type=MarkerType.EnemyEstimate,NormalizedPosition=new Vector2(.7f,.6f)}
                 }};
-                root.TrenchHudView.Apply(new TrenchSessionDto {SessionId="art-test",Player=new PlayerStatusDto {Health=32,IsAlive=true},SearchProgress01=.65f,MiniMap=map},default);
-                var health = root.TrenchHudView.GetComponentsInChildren<RectTransform>(true).First(t=>t.name=="Hud_Combat_HealthFill");
+                root.TrenchHudView.Apply(new TrenchSessionDto {SessionId="art-test",Player=new PlayerStatusDto {Health=1,MaxHealth=2,IsAlive=true},SearchProgress01=.65f,MiniMap=map},default);
+                var health = root.TrenchHudView.GetComponentsInChildren<Image>(true).Where(t=>t.name.StartsWith("Hud_Combat_HealthCell_")).OrderBy(t=>t.name).ToArray();
                 var search = root.TrenchHudView.GetComponentsInChildren<RectTransform>(true).First(t=>t.name=="Hud_Trench_SearchFill");
-                Assert.That(health.anchorMax.x, Is.EqualTo(.32f).Within(.001f));
+                Assert.That(health.Length, Is.EqualTo(2));
+                Assert.That(health[0].enabled, Is.True);
+                Assert.That(health[1].enabled, Is.False);
                 Assert.That(search.anchorMax.x, Is.EqualTo(.65f).Within(.001f));
                 var symbols = root.TrenchHudView.MiniMap.GetComponentsInChildren<TacticalMapMarkerGraphic>(true);
                 Assert.That(symbols.Length, Is.EqualTo(2));
@@ -105,9 +107,15 @@ namespace VRShooting.Tests.PlayMode
                 root.BuildIfNeeded();
                 var view = root.TrenchHudView;
                 var health = view.GetComponentsInChildren<TMP_Text>(true).First(t => t.name == "Hud_Trench_Health");
-                view.ApplyHud(new HudDto { Player = new PlayerStatusDto { Health = 20, IsAlive = true } }, default, default);
+                view.ApplyHud(new HudDto { Player = new PlayerStatusDto { Health = 1, MaxHealth = 2, IsAlive = true } }, default, default);
                 Assert.That(health.color, Is.EqualTo((Color)new Color32(255, 114, 90, 255)));
-                view.ApplyHud(new HudDto { Player = new PlayerStatusDto { Health = 100, IsAlive = true } }, default, default);
+                Assert.That(health.text, Does.Contain("1 / 2"));
+                var cells = view.GetComponentsInChildren<Image>(true).Where(i => i.name.StartsWith("Hud_Combat_HealthCell_")).OrderBy(i => i.name).ToArray();
+                Assert.That(cells.Length, Is.EqualTo(2));
+                Assert.That(cells[0].enabled, Is.True); Assert.That(cells[1].enabled, Is.False);
+                view.ApplyHud(new HudDto { Player = new PlayerStatusDto { Health = 2, MaxHealth = 2, IsAlive = true } }, default, default);
+                Assert.That(health.text, Does.Contain("2 / 2"));
+                Assert.That(cells.All(i => i.enabled), Is.True);
                 Assert.That(health.color, Is.EqualTo((Color)new Color32(218, 241, 249, 255)));
                 Assert.That(health.enableAutoSizing, Is.True);
                 var ammo = view.GetComponentsInChildren<TMP_Text>(true).First(t => t.name == "Hud_Trench_Ammo");

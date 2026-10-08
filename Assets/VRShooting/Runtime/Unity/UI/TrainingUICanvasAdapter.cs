@@ -143,10 +143,11 @@ namespace VRShooting.Unity.UI
 
             var cameras = Resources.FindObjectsOfTypeAll<Camera>();
             Camera fallback = null;
+            var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
             for (var index = 0; index < cameras.Length; index++)
             {
                 var candidate = cameras[index];
-                if (candidate == null || !candidate.gameObject.scene.IsValid() || !candidate.gameObject.scene.isLoaded)
+                if (candidate == null || candidate.gameObject.scene != scene || !candidate.gameObject.scene.isLoaded)
                 {
                     continue;
                 }
@@ -156,7 +157,7 @@ namespace VRShooting.Unity.UI
                     continue;
                 }
 
-                if (IsUnderXrOrigin(candidate.transform))
+                if (candidate.isActiveAndEnabled && IsUnderXrOrigin(candidate.transform))
                 {
                     return candidate;
                 }

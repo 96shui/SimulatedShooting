@@ -60,8 +60,11 @@ namespace VRShooting.Tests.PlayMode
             core.Submit(new CombatInputDto { SessionId = Session, Tick = clock.Tick, EventId = "see-player", Kind = CombatInputKind.Perception,
                 EntityId = "enemy", TargetId = Session + ".player", Position = new Vector3(0,0,10), Direction = Vector3.back, Flag = true });
             core.Advance(Session); Step(controller,input,clock,seconds:1);
-            Assert.That(core.GetSnapshot(Session).Data.Player.Health, Is.EqualTo(90));
+            Assert.That(core.GetSnapshot(Session).Data.Player.Health, Is.EqualTo(1));
             ray.Target = "enemy"; input.Press(XRTrainingInputButton.Trigger); Step(controller,input,clock);
+            Assert.That(core.GetSnapshot(Session).Data.Visual.Entities.Single(e => e.EntityId == "enemy").CorpseVisible, Is.False);
+            input.Release(XRTrainingInputButton.Trigger); Step(controller,input,clock);
+            input.Press(XRTrainingInputButton.Trigger); Step(controller,input,clock);
             Assert.That(core.GetSnapshot(Session).Data.Visual.Entities.Single(e => e.EntityId == "enemy").CorpseVisible);
             var health = core.GetSnapshot(Session).Data.Player.Health; Step(controller,input,clock,seconds:5);
             Assert.That(core.GetSnapshot(Session).Data.Player.Health, Is.EqualTo(health));

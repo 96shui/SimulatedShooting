@@ -24,9 +24,12 @@ namespace VRShooting.Tests.PlayMode
             foreach(var enemy in service.GetEnemyAssignments(id).Data)
             {
                 service.Combat.SetGrip(new WeaponGripStateInputDto {SessionId=id,HoldState=WeaponHoldState.TwoHandHeld,RearHandTracked=true,FrontHandTracked=true});
-                var shot=service.Combat.Fire(new WeaponFireInputDto {SessionId=id,AimDirection=Vector3.forward}).Data;
+                for(var hitIndex=0;hitIndex<2;hitIndex++)
+                    {
+                    var shot=service.Combat.Fire(new WeaponFireInputDto {SessionId=id,AimDirection=Vector3.forward}).Data;
                 service.Submit(new CombatInputDto {SessionId=id,Tick=clock.Tick,EventId="h-"+ ++sequence,Kind=CombatInputKind.Hit,EntityId=id+".player",TargetId=enemy.EntityId,ShotId=shot.ShotId,Flag=true,Value=1});
                 service.Advance(id);yield return null;
+                    }
             }
             Assert.That(service.GetResult(id).Success,Is.False);
             foreach(var room in P3Fixtures.UrbanDefinition.Floors.SelectMany(f=>f.Rooms))
@@ -45,7 +48,7 @@ namespace VRShooting.Tests.PlayMode
         }
         [UnityTest] public IEnumerator BuildingFailureKeepsCountsAndOldSessionInputsAreRejected()
         {
-            var clock=new FakeCombatClock();using var service=new UrbanService(P3Fixtures.UrbanDefinition,clock,new SeededCombatRandom(),new FakeCombatWorld(),CombatConfigDto.Default.WithPlayerHealth(5));
+            var clock=new FakeCombatClock();using var service=new UrbanService(P3Fixtures.UrbanDefinition,clock,new SeededCombatRandom(),new FakeCombatWorld(),CombatConfigDto.Default.WithPlayerHealth(1));
             var id=service.StartSession("urban-a","training-rifle",RandomSeed.Fixed(1)).Data.SessionId;
             service.Submit(new CombatInputDto {SessionId=id,Tick=clock.Tick,EventId="entry",Kind=CombatInputKind.AreaPresence,EntityId="urban-a.entrance",Flag=true});service.Advance(id);service.EnterBuilding(id,"urban-a.entrance");
             var enemy=service.GetEnemyAssignments(id).Data.First(e=>e.Group==EncounterGroup.Street);

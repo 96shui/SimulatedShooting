@@ -40,11 +40,29 @@ namespace SimulatedShooting.Scene
             base.Awake();
             weaponBinding ??= GetComponent<WeaponPrefabBinding>();
             selectMode = InteractableSelectMode.Multiple;
-            movementType = MovementType.VelocityTracking;
+            // Follow tracked poses at Dynamic/BeforeRender frequency. VelocityTracking
+            // chases a moving rig at fixed physics frequency and oscillates while walking.
+            movementType = MovementType.Instantaneous;
+            smoothPosition = false;
+            smoothRotation = false;
+            attachEaseInTime = 0f;
             throwOnDetach = true;
             useDynamicAttach = false;
             SyncAttachTransforms();
             SetRackPhysics(true);
+        }
+
+        public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
+        {
+            if(updatePhase==XRInteractionUpdateOrder.UpdatePhase.OnBeforeRender&&isSelected)
+            {
+                // NearFar refreshes its attachment only in Dynamic update. Walking can
+                // move the origin afterwards; refresh the physical grip before rendering.
+                foreach(var selecting in interactorsSelecting)
+                    if(selecting is NearFarInteractor near)
+                        near.interactionAttachController.ResetOffset();
+            }
+            base.ProcessInteractable(updatePhase);
         }
 
         protected override void OnEnable()

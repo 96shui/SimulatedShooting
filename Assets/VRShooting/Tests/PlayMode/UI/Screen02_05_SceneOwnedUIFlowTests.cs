@@ -206,6 +206,10 @@ namespace VRShooting.Tests.PlayMode.UI
 
             var mainMenu = Object.FindObjectOfType<MainMenuUI>(true);
             var menuRect = mainMenu.transform as RectTransform;
+            // The rig's gravity update can move the camera after canvas LateUpdate.
+            // Measure this layout against the current pose, rather than two different frames.
+            mainMenu.GetComponent<TrainingUICanvasAdapter>().ForcePlacementForTests();
+            Canvas.ForceUpdateCanvases();
             var horizontalDistance = Vector3.ProjectOnPlane(
                 menuRect.position - vrCamera.transform.position, Vector3.up).magnitude;
             var worldWidth = menuRect.rect.width * Mathf.Abs(menuRect.lossyScale.x);

@@ -7,6 +7,8 @@ namespace VRShooting.Common
     public readonly struct CombatConfigDto
     {
         public float PlayerHealth { get; init; }
+        public float EnemyHealth { get; init; }
+        public float PlayerBulletDamage { get; init; }
         public float EnemyDamage { get; init; }
         public float EnemyAttackInterval { get; init; }
         public float EnemyRange { get; init; }
@@ -36,8 +38,10 @@ namespace VRShooting.Common
         public AmmoDto InitialAmmo { get; init; }
         public static CombatConfigDto Default => new CombatConfigDto
         {
-            PlayerHealth = 100f,
-            EnemyDamage = 10f,
+            PlayerHealth = 2f,
+            EnemyHealth = 2f,
+            PlayerBulletDamage = 1f,
+            EnemyDamage = 1f,
             EnemyAttackInterval = 1f,
             EnemyRange = 30f,
             EnemyHalfViewAngle = 60f,
@@ -69,6 +73,9 @@ namespace VRShooting.Common
         public ServiceResult<Unit> Validate()
         {
             if (!Positive(PlayerHealth)) return Invalid(nameof(PlayerHealth));
+            if (!Positive(EnemyHealth)) return Invalid(nameof(EnemyHealth));
+            if (!Positive(PlayerBulletDamage)) return Invalid(nameof(PlayerBulletDamage));
+            if (EnemyHealth - PlayerBulletDamage == EnemyHealth) return Invalid("bullet damage must reduce representable enemy health");
             if (!Positive(EnemyDamage)) return Invalid(nameof(EnemyDamage));
             if (PlayerHealth - EnemyDamage == PlayerHealth) return Invalid("damage must reduce representable health");
             if (!Positive(EnemyAttackInterval)) return Invalid(nameof(EnemyAttackInterval));
@@ -108,6 +115,8 @@ namespace VRShooting.Common
         public CombatConfigDto WithPlayerHealth(float health) => new CombatConfigDto
         {
             PlayerHealth = health,
+            EnemyHealth = EnemyHealth,
+            PlayerBulletDamage = PlayerBulletDamage,
             EnemyDamage = EnemyDamage,
             EnemyAttackInterval = EnemyAttackInterval,
             EnemyRange = EnemyRange,

@@ -904,10 +904,30 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return null;
             Assert.That(grab.HoldState, Is.EqualTo(WeaponHoldState.TwoHandHeld));
 
+            // BDD23 task019: steady tracked hands keep the rifle stable while the rig walks.
+            Assert.That(grab.movementType, Is.EqualTo(XRBaseInteractable.MovementType.Instantaneous));
+            yield return null;
+            var rearOffset = right.transform.InverseTransformPoint(grab.RearAttach.position);
+            var rearRotation = Quaternion.Inverse(right.transform.rotation) * grab.transform.rotation;
+            float maximumTranslationError = 0, maximumRotationError = 0;
+            for (var step = 0; step < 45; step++)
+            {
+                mode.XrOrigin.transform.position += new Vector3(.015f, 0, .01f);
+                yield return null;
+                maximumTranslationError = Mathf.Max(maximumTranslationError,
+                    Vector3.Distance(grab.RearAttach.position, right.transform.TransformPoint(rearOffset)));
+                maximumRotationError = Mathf.Max(maximumRotationError,
+                    Quaternion.Angle(grab.transform.rotation, right.transform.rotation * rearRotation));
+            }
+            Assert.That(maximumTranslationError, Is.LessThan(.005f), "Walking must not introduce physics chasing jitter");
+            Assert.That(maximumRotationError, Is.LessThan(.5f));
+
             manager.SelectExit((IXRSelectInteractor)right, (IXRSelectInteractable)grab);
             yield return null;
             Assert.That(grab.HoldState, Is.EqualTo(WeaponHoldState.Dropped));
             Assert.That(grab.FrontHandSelected, Is.False);
+            Assert.That(grab.GetComponent<Rigidbody>().isKinematic, Is.False);
+            Assert.That(grab.GetComponent<Rigidbody>().useGravity, Is.True);
         }
 
         [UnityTest]

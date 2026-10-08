@@ -26,6 +26,7 @@ namespace SimulatedShooting.Scene
         Action arrival;
         bool configured;
         bool arrived;
+        bool enemyShot;
 
         public float Progress01 =>
             flightDuration > 0f ? Mathf.Clamp01(elapsed / flightDuration) : (arrived ? 1f : 0f);
@@ -39,8 +40,11 @@ namespace SimulatedShooting.Scene
             Material trailMaterial,
             AudioClip flybyClip,
             int shotIndex,
-            Action onArrival)
+            Action onArrival,
+            bool readableEnemyShot = false)
         {
+            enemyShot = readableEnemyShot;
+            if (enemyShot) { minimumVisibleSeconds = .09f; maximumTrailLengthMetres = 1.8f; }
             start = startPoint;
             end = endPoint;
             arrival = onArrival;
@@ -55,8 +59,8 @@ namespace SimulatedShooting.Scene
             trail.useWorldSpace = true;
             trail.positionCount = 2;
             trail.numCapVertices = 2;
-            trail.startWidth = 0.0008f;
-            trail.endWidth = 0.0024f;
+            trail.startWidth = enemyShot ? .006f : .0008f;
+            trail.endWidth = enemyShot ? .012f : .0024f;
             trail.sharedMaterial = trailMaterial != null ? trailMaterial : GetDefaultTrailMaterial();
             trail.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             trail.receiveShadows = false;
@@ -92,8 +96,8 @@ namespace SimulatedShooting.Scene
             // rapidly fading cue so the accepted shot is still readable in VR.
             var travelled = distance * progress;
             var visibility = Mathf.Lerp(1f, 0.25f, Mathf.Clamp01(travelled / 35f));
-            trail.startColor = new Color(0.72f, 0.69f, 0.64f, 0.012f * visibility);
-            trail.endColor = new Color(1f, 0.91f, 0.77f, 0.22f * visibility);
+            trail.startColor = new Color(0.72f, 0.69f, 0.64f, (enemyShot ? .16f : .012f) * visibility);
+            trail.endColor = new Color(1f, 0.91f, 0.77f, (enemyShot ? .85f : .22f) * visibility);
 
             transform.position = head;
             UpdateCorditeHead(progress, visibility);
@@ -152,7 +156,7 @@ namespace SimulatedShooting.Scene
             if (corditeRenderer == null) return;
             var frame = Mathf.Clamp(Mathf.FloorToInt(5f + progress * 13f), 0, corditeFrames.Length - 1);
             corditeRenderer.sprite = corditeFrames[frame];
-            corditeRenderer.color = new Color(1f, 1f, 1f, 0.55f * visibility);
+            corditeRenderer.color = new Color(1f, 1f, 1f, (enemyShot ? .9f : .55f) * visibility);
             var camera = Camera.main;
             if (camera == null) return;
             var toCamera = camera.transform.position - projectileVisual.position;

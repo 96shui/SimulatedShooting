@@ -24,6 +24,7 @@ namespace SimulatedShooting.Scene
         public bool IsDead { get; private set; }
         public int HitFeedbackCount { get; private set; }
         public int ShotAudioFeedbackCount { get; private set; }
+        public int ShotVisualFeedbackCount { get; private set; }
         public event Action<string, bool> NavigationReported;
         readonly HashSet<string> feedback = new HashSet<string>();
         bool moving;
@@ -66,8 +67,8 @@ namespace SimulatedShooting.Scene
 
         void Awake()
         {
-            standingVisualPosition = VisualRoot.localPosition;
-            standingVisualRotation = VisualRoot.localRotation;
+            standingVisualPosition = VisualRoot != null ? VisualRoot.localPosition : Vector3.zero;
+            standingVisualRotation = VisualRoot != null ? VisualRoot.localRotation : Quaternion.identity;
             if (Audio != null)
             {
                 Audio.spatialBlend = 1f;
@@ -134,13 +135,14 @@ namespace SimulatedShooting.Scene
         {
             if (actionsLocked || string.IsNullOrEmpty(eventId) || !feedback.Add("hit:" + eventId)) return;
             HitFeedbackCount++;
-            Audio.PlayOneShot(HitClip);
+            if (Audio != null && HitClip != null) Audio.PlayOneShot(HitClip);
             if (SoldierAnimation != null) SoldierAnimation.Hit();
         }
 
-        public void PlayShot(string eventId, Vector3? targetPosition = null)
+        public void PlayShot(string eventId, Vector3? targetPosition = null, bool confirmedAttack = false)
         {
-            if (actionsLocked || IsDead || string.IsNullOrEmpty(eventId) || !feedback.Add("shot:" + eventId)) return;
+            if (actionsLocked || IsDead && !confirmedAttack || string.IsNullOrEmpty(eventId) || !feedback.Add("shot:" + eventId)) return;
+            ShotVisualFeedbackCount++;
             if (Audio != null && ShotClip != null)
             {
                 Audio.PlayOneShot(ShotClip, 0.85f);
@@ -159,7 +161,7 @@ namespace SimulatedShooting.Scene
                     tracerObject.transform.SetParent(transform.parent, true);
                     var tracer = tracerObject.AddComponent<BallisticTracerVisual>();
                     tracer.Configure(Muzzle.position, targetPosition.Value,
-                        null, null, null, null, 0, null);
+                        null, null, null, null, 0, null, true);
                 }
             }
             if (SoldierAnimation != null) SoldierAnimation.Shot();

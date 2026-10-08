@@ -257,7 +257,7 @@ namespace SimulatedShooting.Tests.EditMode
         {
             var prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/SimulatedShooting/Prefabs/Combat/Actor_Enemy.prefab");
             var view = prefab.GetComponent<CombatActorView>();
-            var soldier = view.VisualRoot.Find("AmericanSoldier");
+            var soldier = view.VisualRoot.Find("DetailedCharacterD3");
             Assert.That(soldier, Is.Not.Null);
             Assert.That(soldier.GetComponentsInChildren<Renderer>(true), Is.Not.Empty);
 

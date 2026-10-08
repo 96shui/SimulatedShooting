@@ -32,7 +32,7 @@ namespace VRShooting.Tests.EditMode
         }
         CombatShotDto Shot(){service.Combat.SetGrip(new WeaponGripStateInputDto {SessionId=id,HoldState=WeaponHoldState.TwoHandHeld,RearHandTracked=true,FrontHandTracked=true});return service.Combat.Fire(new WeaponFireInputDto {SessionId=id,AimDirection=Vector3.forward}).Data;}
         void Hit(string enemy,CombatShotDto shot){Assert.That(service.Submit(new CombatInputDto {SessionId=id,Tick=clock.Tick,EventId="hit-"+ ++sequence,Kind=CombatInputKind.Hit,EntityId=id+".player",TargetId=enemy,ShotId=shot.ShotId,Flag=true,Value=1}).Success);}
-        void Kill(EncounterGroup? group=null){foreach(var enemy in service.GetEnemyAssignments(id).Data.Where(e=>!group.HasValue||e.Group==group)) {Hit(enemy.EntityId,Shot());service.Advance(id);}}
+        void Kill(EncounterGroup? group=null){foreach(var enemy in service.GetEnemyAssignments(id).Data.Where(e=>!group.HasValue||e.Group==group)) {Hit(enemy.EntityId,Shot());service.Advance(id);Hit(enemy.EntityId,Shot());service.Advance(id);}}
         void Check(string room){Range(room+".door");Assert.That(service.OpenRoomDoor(id,room).Success);Range(room+".check");Assert.That(service.MarkRoomSearched(id,room).Success);service.Advance(id);}
         [Test] public void SeedAndOwnershipAreStableAndCountsWithinBounds()
         {
@@ -72,7 +72,7 @@ namespace VRShooting.Tests.EditMode
             Assert.That(service.OpenRoomDoor(id,room).ErrorCode,Is.EqualTo(ErrorCode.InvalidState));Range(room+".door");service.OpenRoomDoor(id,room);
             Assert.That(State.Floors.SelectMany(f=>f.Rooms).Single(r=>r.RoomId==room).SearchState,Is.EqualTo(RoomSearchState.Searching));
             Range(room+".check");Assert.That(service.MarkRoomSearched(id,room).ErrorCode,Is.EqualTo(ErrorCode.InvalidState));
-            foreach(var enemy in service.GetEnemyAssignments(id).Data.Where(e=>e.RoomId==room)){Hit(enemy.EntityId,Shot());service.Advance(id);}
+            foreach(var enemy in service.GetEnemyAssignments(id).Data.Where(e=>e.RoomId==room)){Hit(enemy.EntityId,Shot());service.Advance(id);Hit(enemy.EntityId,Shot());service.Advance(id);}
             Assert.That(service.MarkRoomSearched(id,room).Success);var revision=State.Revision;
             Assert.That(service.MarkRoomSearched(id,room).Success);Assert.That(service.OpenRoomDoor(id,room).Success);Assert.That(State.Revision,Is.EqualTo(revision));
         }
@@ -95,10 +95,10 @@ namespace VRShooting.Tests.EditMode
         {Start();Kill();Assert.That(service.CompleteIfReady(id).ErrorCode,Is.EqualTo(ErrorCode.InvalidState));Assert.That(State.RoomsSearched,Is.Zero);}
         [Test] public void DeathCompetesWithLastCheckAndKill_AndWins()
         {
-            service.Dispose();service=new UrbanService(P3Fixtures.UrbanDefinition,clock,new EndpointRandom(false),new FakeCombatWorld(),CombatConfigDto.Default.WithPlayerHealth(5));
+            service.Dispose();service=new UrbanService(P3Fixtures.UrbanDefinition,clock,new EndpointRandom(false),new FakeCombatWorld(),CombatConfigDto.Default.WithPlayerHealth(1));
             Start();Enter();Kill(EncounterGroup.Building);foreach(var room in Rooms.Take(2))Check(room);
             var last=Rooms.Last();Range(last+".door");service.OpenRoomDoor(id,last);Range(last+".check");
-            var enemy=service.GetEnemyAssignments(id).Data.Single(e=>e.Group==EncounterGroup.Street);var shot=Shot();
+            var enemy=service.GetEnemyAssignments(id).Data.Single(e=>e.Group==EncounterGroup.Street);Hit(enemy.EntityId,Shot());service.Advance(id);var shot=Shot();
             service.Submit(new CombatInputDto {SessionId=id,Tick=clock.Tick,EventId="sight",Kind=CombatInputKind.Perception,EntityId=enemy.EntityId,TargetId=id+".player",Position=Vector3.forward*10,Direction=Vector3.back,Flag=true});service.Advance(id);
             clock.Advance(1);Hit(enemy.EntityId,shot);Assert.That(service.MarkRoomSearched(id,last).Success);service.Advance(id);
             var result=service.GetResult(id).Data;Assert.That(result.Victory,Is.False);Assert.That(result.RoomsSearched,Is.EqualTo(3));Assert.That(result.EnemyKilled,Is.EqualTo(result.EnemyTotal));
