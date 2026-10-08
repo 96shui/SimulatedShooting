@@ -1,0 +1,6 @@
+model=m67_low(Clone)
+phaseTime=0.65 modelPosition=(0.00, 0.00, 0.00) active=True
+phaseTime=1.65 modelPosition=(0.00, 0.39, 2.50) active=True
+phaseTime=2.65 modelPosition=(0.00, -1.52, 5.00) active=True
+phaseTime=3.9 modelPosition=(0.00, -1.52, 5.00) active=True
+landingHit=True centreAboveFloor=0.08498538 bottomAboveFloor=-0.05783689 visible=True

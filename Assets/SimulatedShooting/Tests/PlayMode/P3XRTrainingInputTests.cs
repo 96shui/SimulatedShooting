@@ -51,6 +51,21 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return null;input.Sample(true);
             Assert.That(input.SwitchShoulderPressed,Is.True,"right secondary shoulder");Assert.That(input.PosturePressed,Is.True,"left secondary posture");
         }
+        [UnityTest] public IEnumerator Screen23_GrenadeCommandRemainsAvailableWhileBothGripsAreHeld()
+        {
+            yield return null;
+            var input=new P3XRTrainingInput();input.Sample(true);
+            InputSystem.QueueDeltaStateEvent(right.GetChildControl<ButtonControl>("gripPressed"),1f);
+            InputSystem.QueueDeltaStateEvent(left.GetChildControl<ButtonControl>("gripPressed"),1f);
+            yield return null;input.Sample(true);
+            InputSystem.QueueDeltaStateEvent(right.GetChildControl<ButtonControl>("primaryButton"),1f);
+            yield return null;input.Sample(true);
+            Assert.That(input.RightGripHeld&&input.LeftGripHeld,Is.True);
+            Assert.That(input.GrenadePressed,Is.True);
+            InputSystem.QueueDeltaStateEvent(right.GetChildControl<ButtonControl>("primaryButton"),0f);
+            yield return null;input.Sample(true);
+            Assert.That(input.GrenadePressed,Is.False);
+        }
         [UnityTest] public IEnumerator Screen23_VrGripsRetainIndependentPressHoldReleaseEdges()
         {
             yield return null;

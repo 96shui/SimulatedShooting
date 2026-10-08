@@ -47,15 +47,29 @@ namespace VRShooting.Tests.EditMode
             Assert.That(squad.GetSquadStatus(Session).Data.Members.All(m => m.State != SquadMemberState.ThrowingGrenade));
         }
 
-        [Test] public void SingleEnemyDoesNotThrowAndNoTargetCannotConsumeCooldown()
+        [Test] public void SingleDistantEnemyThrowsTowardMaximumRange()
         {
             tactic.Dispose(); core.Dispose(); squad.Dispose();
-            core = new CombatCoreService(clock); core.Start(Session, TrainingMode.Trench, new[] { Enemy("only", new Vector3(3, 0, 3)) });
+            core = new CombatCoreService(clock); core.Start(Session, TrainingMode.Trench, new[] { Enemy("only", new Vector3(40, 0, 0)) });
             squad = new SquadFormationService(clock, new FakeCombatWorld()); squad.Start(Session, Vector3.zero, Vector3.forward);
             tactic = new SquadGrenadeTacticService(clock, core, squad); tactic.Configure(new GrenadeWorld()); tactic.Start(Session);
-            var throws = 0; tactic.GrenadeThrown += _ => throws++;
+            GrenadeThrowPlanDto thrown=default; tactic.GrenadeThrown += plan => thrown=plan;
             tactic.RequestFirstTeammateThrow();
-            Assert.That(tactic.Advance().Success); clock.Advance(10); Assert.That(tactic.Advance().Success); Assert.That(throws, Is.Zero);
+            Assert.That(tactic.Advance().Success);
+            Assert.That(thrown.ThrowerId, Is.EqualTo(Session+".teammate-2"));
+            Assert.That(thrown.Target.x, Is.EqualTo(18f).Within(.01f));
+        }
+
+        [Test] public void NextPressIsAcceptedThreeSecondsAfterPreviousThrow()
+        {
+            tactic.RequestFirstTeammateThrow(); tactic.Advance();
+            clock.Advance(2.5); tactic.Advance();
+            tactic.RequestFirstTeammateThrow(); tactic.Advance();
+            Assert.That(tactic.Current.HasValue, Is.False);
+            clock.Advance(.6);
+            tactic.RequestFirstTeammateThrow(); tactic.Advance();
+            Assert.That(tactic.Current.HasValue, Is.True);
+            Assert.That(tactic.Current.Value.GrenadeId, Is.EqualTo(Session+".grenade-002"));
         }
 
         [Test] public void ExplosionIsIdempotentAndDoesNotResurrectCorpse()

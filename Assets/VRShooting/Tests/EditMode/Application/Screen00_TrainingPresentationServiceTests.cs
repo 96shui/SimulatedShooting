@@ -220,14 +220,12 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
-        public void Screen00_PassedFirstRound_ContinueShowsFinalRating()
+        public void Screen00_PassedFirstRound_DirectlyShowsFinalRatingWithoutAdjustment()
         {
             var sessionId = StartAndConfirm(TrainingMode.Zeroing100m, RandomSeed.Fixed(100));
             PickupRear(sessionId);
             RecordThreeImpacts(sessionId, new Vector2(1f, 1f));
-            zeroing.ApplyAdjustment(sessionId, 1);
-
-            var next = presentation.ContinueNextRound(sessionId);
+            var next = presentation.Get(sessionId);
 
             Assert.IsTrue(next.Success, next.Message);
             Assert.AreEqual(TrainingPresentationPhase.SessionResults, next.Data.Phase);
@@ -238,16 +236,14 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
-        public void Screen00_ThreeFailedRounds_ContinueShowsFinalRating()
+        public void Screen00_ThreeFailedRounds_DirectlyShowsFinalRatingWithoutLastAdjustment()
         {
             var sessionId = StartAndConfirm(TrainingMode.Zeroing100m, RandomSeed.Fixed(100));
             PickupRear(sessionId);
             FailCurrentRoundAndContinue(sessionId);
             FailCurrentRoundAndContinue(sessionId);
             RecordThreeImpacts(sessionId, new Vector2(-8f, 12f));
-            zeroing.ApplyAdjustment(sessionId, 3);
-
-            var next = presentation.ContinueNextRound(sessionId);
+            var next = presentation.Get(sessionId);
 
             Assert.IsTrue(next.Success, next.Message);
             Assert.AreEqual(TrainingPresentationPhase.SessionResults, next.Data.Phase);

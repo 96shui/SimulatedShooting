@@ -548,6 +548,8 @@ namespace SimulatedShooting.Tests.PlayMode
 
             Assert.That(feedback.ImpactFeedbackCount, Is.EqualTo(1));
             Assert.That(Find("ZeroingRange.Target.ImpactFeedback"), Is.Not.Null);
+            Assert.That(Find("ZeroingRange.Target.ImpactFeedback").GetComponent<ParticleSystem>(), Is.Null,
+                "Surface hits retain their event marker without the old spark effect.");
         }
 
         [Test]

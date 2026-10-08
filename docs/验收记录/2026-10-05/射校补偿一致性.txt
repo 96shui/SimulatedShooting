@@ -1,0 +1,1 @@
+rawTargetAim=(2.00, 11.00, 100.00) sameForHitAndMiss=True firstAverage=(10.03, 9.40) preview=(0.00, 0.00) applied=True nextImpact=(0.00, 0.00) nextInside10=True outsideCollider=(40.00, 20.00, 100.00)

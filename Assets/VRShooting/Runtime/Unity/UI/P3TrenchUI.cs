@@ -487,7 +487,6 @@ namespace VRShooting.Unity.UI
         RandomSeed seed;
         bool busy;
         bool commandCompleted;
-        bool visualPlayed;
 
         public string LastError { get; private set; } = string.Empty;
         public TrenchBriefingDto LastBriefing { get; private set; }
@@ -531,11 +530,8 @@ namespace VRShooting.Unity.UI
 
             LastBriefing = briefing.Data;
             view.Apply(briefing.Data, selected.Data);
-            if (!visualPlayed)
-            {
-                visual?.PlayDroneTakeoff(briefing.Data);
-                visualPlayed = true;
-            }
+            // Briefing is a preview. Production flight begins only after a prepared
+            // session is activated by CombatApplicationCoordinator.
         }
 
         void OnStartRequested()
@@ -551,7 +547,7 @@ namespace VRShooting.Unity.UI
             }
 
             state.TrenchSessionId = started.Data.SessionId;
-            var routed = navigation.Open(ScreenId.TrenchHud, new NavigationArgs
+            var routed = navigation.Open(started.Data.State==SessionState.Preparing?ScreenId.TrenchDroneRecon:ScreenId.TrenchHud, new NavigationArgs
             {
                 Mode = TrainingMode.Trench,
                 SessionId = started.Data.SessionId,
@@ -604,7 +600,6 @@ namespace VRShooting.Unity.UI
             visual = null;
             busy = false;
             commandCompleted = false;
-            visualPlayed = false;
         }
     }
 }

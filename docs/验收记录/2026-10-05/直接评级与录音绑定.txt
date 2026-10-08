@@ -1,0 +1,5 @@
+passRound=1 grade=Excellent phase=SessionResults screen=ZeroingFinalRating final=True adjustmentApplied=False label=优秀
+passRound=2 grade=Good phase=SessionResults screen=ZeroingFinalRating final=True adjustmentApplied=False label=良好
+passRound=3 grade=Pass phase=SessionResults screen=ZeroingFinalRating final=True adjustmentApplied=False label=及格
+passRound=0 grade=Fail phase=SessionResults screen=ZeroingFinalRating final=True adjustmentApplied=False label=不及格
+rotorClip=DroneRotor_Mavic_Recorded seconds=8.7 channels=1 frequency=48000

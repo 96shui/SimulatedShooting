@@ -63,6 +63,10 @@ namespace VRShooting.P3.TestSupport
             var error = CheckSession(sessionId);
             return error == ErrorCode.None ? ServiceResult<TrenchSessionDto>.Ok(frames.Current) : ServiceResult<TrenchSessionDto>.Fail(error);
         }
+        public ServiceResult<TrenchSessionDto> PrepareSession(string mapId, string weaponId, RandomSeed seed)
+            => StartSession(mapId, weaponId, seed);
+        public ServiceResult<TrenchSessionDto> BeginCombat(string sessionId)
+            => Command("BeginCombat", sessionId, sessionId);
         public ServiceResult<TrenchResultDto> GetResult(string sessionId)
         {
             var error = CheckSession(sessionId);

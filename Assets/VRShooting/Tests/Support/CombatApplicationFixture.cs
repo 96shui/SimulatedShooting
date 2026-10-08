@@ -29,7 +29,7 @@ namespace VRShooting.P3.TestSupport
             Saved.Add(summary); return ServiceResult<Unit>.Ok(Unit.Value);
         }
         public ServiceResult<CombatSummaryDto> GetLatest(TrainingMode mode) => ServiceResult<CombatSummaryDto>.Fail(ErrorCode.NotFound);
-        public sealed class Lease : ICombatSceneLease
+        public sealed class Lease : ICombatSceneLease,IDroneReconSceneLease
         {
             public Lease(TrainingMode mode) { Definition = mode == TrainingMode.Trench ? P3Fixtures.TrenchDefinition : P3Fixtures.UrbanDefinition; }
             public CombatSceneDefinitionDto Definition { get; set; }
@@ -37,6 +37,8 @@ namespace VRShooting.P3.TestSupport
             public ICombatClock Clock => TestClock;
             public ICombatRandom Random { get; } = new FakeCombatRandom(RandomSeed.Fixed(1));
             public ICombatNavigationPort Navigation { get; } = new FakeCombatWorld();
+            public FakeDroneReconScenePort DroneScene {get;}=new FakeDroneReconScenePort();
+            public IDroneReconScenePort DroneReconScene=>DroneScene;
             public int Activations, Deactivations, Disposals;
             public bool FailActivation;
             public Action DuringActivation, DuringDeactivation;

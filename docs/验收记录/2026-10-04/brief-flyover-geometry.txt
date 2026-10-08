@@ -1,0 +1,1 @@
+anchors=3 flight points=11 outbound metres=14.93835 estimated opening seconds=16.95068 blocked segments=0

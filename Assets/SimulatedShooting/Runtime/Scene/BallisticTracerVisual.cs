@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 
 namespace SimulatedShooting.Scene
@@ -8,9 +7,13 @@ namespace SimulatedShooting.Scene
     [RequireComponent(typeof(LineRenderer))]
     public sealed class BallisticTracerVisual : MonoBehaviour
     {
+        const string CorditeResourcePath = "Combat/VFX/CorditeTracer/tracer-round";
+        static Sprite[] corditeFrames;
+        static Material corditeMaterial;
+        static Material defaultTrailMaterial;
         [SerializeField] private float projectileSpeedMetresPerSecond = 720f;
-        [SerializeField] private float maximumTrailLengthMetres = 2.8f;
-        [SerializeField] private float minimumVisibleSeconds = 0.06f;
+        [SerializeField] private float maximumTrailLengthMetres = 0.9f;
+        [SerializeField] private float minimumVisibleSeconds = 0.035f;
 
         Vector3 start;
         Vector3 end;
@@ -18,6 +21,7 @@ namespace SimulatedShooting.Scene
         float flightDuration;
         LineRenderer trail;
         Transform projectileVisual;
+        SpriteRenderer corditeRenderer;
         AudioSource flybySource;
         Action arrival;
         bool configured;
@@ -50,18 +54,20 @@ namespace SimulatedShooting.Scene
             trail = GetComponent<LineRenderer>();
             trail.useWorldSpace = true;
             trail.positionCount = 2;
-            trail.numCapVertices = 4;
-            trail.startWidth = 0.014f;
-            trail.endWidth = 0.003f;
-            trail.sharedMaterial = trailMaterial;
-            trail.startColor = new Color(1f, 0.92f, 0.52f, 0.95f);
-            trail.endColor = new Color(1f, 0.28f, 0.04f, 0.08f);
+            trail.numCapVertices = 2;
+            trail.startWidth = 0.0008f;
+            trail.endWidth = 0.0024f;
+            trail.sharedMaterial = trailMaterial != null ? trailMaterial : GetDefaultTrailMaterial();
+            trail.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            trail.receiveShadows = false;
+            trail.startColor = new Color(0.72f, 0.69f, 0.64f, 0.012f);
+            trail.endColor = new Color(1f, 0.91f, 0.77f, 0.22f);
             trail.SetPosition(0, start);
             trail.SetPosition(1, start);
 
             transform.position = start;
             transform.rotation = ResolveRotation(start, end);
-            CreateProjectileVisual(projectilePrefab, projectileMaterial);
+            CreateProjectileVisual(projectileMaterial);
             ConfigureFlybyAudio(flybyClip, shotIndex);
             configured = true;
         }
@@ -82,7 +88,15 @@ namespace SimulatedShooting.Scene
             var head = Vector3.Lerp(start, end, progress);
             var tail = Vector3.Lerp(start, end, Mathf.Max(0f, progress - trailFraction));
 
+            // Daylight bullets have no persistent luminous beam. Keep a tiny,
+            // rapidly fading cue so the accepted shot is still readable in VR.
+            var travelled = distance * progress;
+            var visibility = Mathf.Lerp(1f, 0.25f, Mathf.Clamp01(travelled / 35f));
+            trail.startColor = new Color(0.72f, 0.69f, 0.64f, 0.012f * visibility);
+            trail.endColor = new Color(1f, 0.91f, 0.77f, 0.22f * visibility);
+
             transform.position = head;
+            UpdateCorditeHead(progress, visibility);
             if (trail != null)
             {
                 trail.SetPosition(0, tail);
@@ -114,74 +128,65 @@ namespace SimulatedShooting.Scene
             Destroy(gameObject, 0.05f);
         }
 
-        void CreateProjectileVisual(GameObject prefab, Material material)
+        void CreateProjectileVisual(Material material)
         {
-            GameObject visual;
-            if (prefab != null)
+            // The licensed CORDITE sheet is the live shot visual; the small 3D
+            // projectile remains a fallback if the sheet is unavailable.
+            if (TryLoadCordite())
             {
-                visual = Instantiate(prefab, transform);
-                visual.name = "ProjectileVisual_training-rifle";
+                var effect = new GameObject("ProjectileVisual_CorditeTracer");
+                effect.transform.SetParent(transform, false);
+                effect.transform.localScale = Vector3.one * 0.1f;
+                corditeRenderer = effect.AddComponent<SpriteRenderer>();
+                corditeRenderer.sharedMaterial = corditeMaterial;
+                corditeRenderer.sprite = corditeFrames[5];
+                corditeRenderer.color = new Color(1f, 1f, 1f, 0.55f);
+                projectileVisual = effect.transform;
             }
-            else
-            {
-                visual = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-                visual.name = "ProjectileVisual_training-rifle_Fallback";
-                visual.transform.SetParent(transform, false);
-                var collider = visual.GetComponent<Collider>();
-                if (collider != null)
-                {
-                    collider.enabled = false;
-                    Destroy(collider);
-                }
-            }
-
-            // Visual projectiles must never intercept the authoritative ray, including this creation frame.
-            foreach (var collider in visual.GetComponentsInChildren<Collider>(true)) collider.enabled = false;
-            projectileVisual = visual.transform;
+            else projectileVisual = RealisticProjectileVisual.Create(transform, material);
             projectileVisual.localPosition = Vector3.zero;
-            NormalizeProjectileVisual(projectileVisual, material);
         }
 
-        static void NormalizeProjectileVisual(Transform visual, Material material)
+        void UpdateCorditeHead(float progress, float visibility)
         {
-            var renderers = visual.GetComponentsInChildren<Renderer>(true);
-            if (renderers.Length == 0)
-            {
-                return;
-            }
+            if (corditeRenderer == null) return;
+            var frame = Mathf.Clamp(Mathf.FloorToInt(5f + progress * 13f), 0, corditeFrames.Length - 1);
+            corditeRenderer.sprite = corditeFrames[frame];
+            corditeRenderer.color = new Color(1f, 1f, 1f, 0.55f * visibility);
+            var camera = Camera.main;
+            if (camera == null) return;
+            var toCamera = camera.transform.position - projectileVisual.position;
+            if (toCamera.sqrMagnitude < 0.0001f) return;
+            var forward = toCamera.normalized;
+            var right = Vector3.ProjectOnPlane(end - start, forward);
+            if (right.sqrMagnitude > 0.0001f)
+                projectileVisual.rotation = Quaternion.LookRotation(forward, Vector3.Cross(forward, right.normalized));
+            else projectileVisual.rotation = Quaternion.LookRotation(forward, Vector3.up);
+        }
 
-            if (material != null)
+        static bool TryLoadCordite()
+        {
+            if (corditeFrames == null)
             {
-                foreach (var renderer in renderers)
+                var sheet = Resources.Load<Texture2D>(CorditeResourcePath);
+                if (sheet == null) return false;
+                corditeFrames = new Sprite[24];
+                for (var frame = 0; frame < corditeFrames.Length; frame++)
                 {
-                    var materials = renderer.sharedMaterials;
-                    for (var index = 0; index < materials.Length; index++)
-                    {
-                        materials[index] = material;
-                    }
-
-                    renderer.sharedMaterials = materials;
+                    var column = frame % 8;
+                    var row = frame / 8;
+                    var rect = new Rect(column * 256, (2 - row) * 256, 256, 256);
+                    corditeFrames[frame] = Sprite.Create(sheet, rect, new Vector2(0.5f, 0.5f), 256f);
                 }
             }
-
-            var filters = visual.GetComponentsInChildren<MeshFilter>(true);
-            var largestFilter = filters
-                .Where(filter => filter.sharedMesh != null)
-                .OrderByDescending(filter => filter.sharedMesh.bounds.size.magnitude)
-                .FirstOrDefault();
-            if (largestFilter == null)
+            if (corditeMaterial == null)
             {
-                visual.localScale = Vector3.one * 0.018f;
-                return;
+                var shader = Shader.Find("SimulatedShooting/CorditeTracerTint");
+                if (shader == null) return false;
+                corditeMaterial = new Material(shader) { name = "Runtime_CorditeDaylightTracer" };
+                corditeMaterial.SetColor("_Tint", new Color(0.92f, 0.87f, 0.78f, 1f));
             }
-
-            var size = largestFilter.sharedMesh.bounds.size;
-            var largest = Mathf.Max(size.x, size.y, size.z);
-            var longAxis = size.x >= size.y && size.x >= size.z
-                ? Vector3.right
-                : size.y >= size.z ? Vector3.up : Vector3.forward;
-            visual.localRotation = Quaternion.FromToRotation(longAxis, Vector3.forward);
-            visual.localScale = Vector3.one * (0.045f / Mathf.Max(0.0001f, largest));
+            return true;
         }
 
         void ConfigureFlybyAudio(AudioClip clip, int shotIndex)
@@ -215,6 +220,18 @@ namespace SimulatedShooting.Scene
             return direction.sqrMagnitude > 0.000001f
                 ? Quaternion.LookRotation(direction.normalized, Vector3.up)
                 : Quaternion.identity;
+        }
+
+        static Material GetDefaultTrailMaterial()
+        {
+            if (defaultTrailMaterial != null) return defaultTrailMaterial;
+            var shader = Shader.Find("Sprites/Default") ?? Shader.Find("Universal Render Pipeline/Unlit") ?? Shader.Find("Standard");
+            defaultTrailMaterial = new Material(shader)
+            {
+                name = "Runtime_SubtleBulletWake",
+                color = Color.white
+            };
+            return defaultTrailMaterial;
         }
     }
 }

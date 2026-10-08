@@ -1,4 +1,4 @@
-<mxfile host="embed.diagrams.net" pages="22">
+<mxfile host="embed.diagrams.net" pages="23">
   <diagram id="p01" name="01 通用视觉风格">
     <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
       <root>
@@ -213,8 +213,9 @@
         <mxCell id="p06-modal" parent="1" style="rounded=1;arcSize=6;fillColor=#0b1310;strokeColor=#2d9cff;strokeWidth=2;fontColor=#e7f2eb;fontSize=20;fontStyle=1;align=center;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="本轮弹着分析" vertex="1">
           <mxGeometry height="480" width="480" x="160" y="65" as="geometry" />
         </mxCell>
-        <mxCell id="p06-target" parent="1" style="shape=mxgraph.basic.target;whiteSpace=wrap;html=1;fillColor=#111d18;strokeColor=#c8ff6a;fontColor=#e7f2eb;fontSize=13;" value="50cm×50cm胸靶示意
-3个弹着点偏离中心；蓝色为调整后中心" vertex="1">
+        <mxCell id="p06-target" parent="1" style="rounded=0;dashed=1;whiteSpace=wrap;html=1;fillColor=#111d18;strokeColor=#c8ff6a;fontColor=#e7f2eb;fontSize=13;" value="素材占位：场景同款半身胸靶
+50cm×50cm命中区域 / 10环
+3个弹着点；蓝色为调整后中心" vertex="1">
           <mxGeometry height="210" width="170" x="205" y="160" as="geometry" />
         </mxCell>
         <mxCell id="p06-data" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="垂直偏差：偏上 12cm
@@ -269,7 +270,8 @@
           <mxGeometry height="140" width="270" x="345" y="150" as="geometry" />
         </mxCell>
         <mxCell id="p07-thumbs" parent="1" style="rounded=1;dashed=1;arcSize=6;fillColor=#111d18;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=14;align=center;whiteSpace=wrap;html=1;" value="弹着缩略图区域
-靶图 / 10环 / 命中点" vertex="1">
+场景同款半身胸靶 / 10环 / 命中点
+按各轮DTO厘米坐标叠加" vertex="1">
           <mxGeometry height="70" width="270" x="345" y="310" as="geometry" />
         </mxCell>
         <mxCell id="p07-retry" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=15;fontStyle=1;" value="重新训练" vertex="1">
@@ -532,7 +534,7 @@
         <mxCell id="p14-bg" parent="1" style="rounded=0;fillColor=#07100d;strokeColor=none;" value="" vertex="1">
           <mxGeometry height="600" width="800" as="geometry" />
         </mxCell>
-        <mxCell id="p14-view" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=16;align=center;whiteSpace=wrap;html=1;" value="素材占位：堑壕边缘 + 无人机起飞背景" vertex="1">
+        <mxCell id="p14-view" parent="1" style="rounded=1;dashed=1;arcSize=4;fillColor=#0a1512;strokeColor=#496b5a;fontColor=#8fa99b;fontSize=16;align=center;whiteSpace=wrap;html=1;" value="素材占位：小队出生处 + 地面待命无人机" vertex="1">
           <mxGeometry height="510" width="730" x="35" y="40" as="geometry" />
         </mxCell>
         <mxCell id="p14-title" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#2d9cff;fontColor=#e7f2eb;fontSize=20;fontStyle=1;align=center;" value="堑壕射击 开场任务" vertex="1">
@@ -555,7 +557,7 @@
 保持小队队形" vertex="1">
           <mxGeometry height="180" width="145" x="585" y="150" as="geometry" />
         </mxCell>
-        <mxCell id="p14-controls" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;align=center;" value="开始进入 / 查看地图 / 返回武器库" vertex="1">
+        <mxCell id="p14-controls" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;align=center;whiteSpace=wrap;html=1;" value="开始进入（先无人机侦察） / 查看地图 / 返回地图选择" vertex="1">
           <mxGeometry height="42" width="290" x="255" y="430" as="geometry" />
         </mxCell>
       </root>
@@ -865,6 +867,37 @@ HUD透明度：滑条
         </mxCell>
         <mxCell id="p22-back" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="返回" vertex="1">
           <mxGeometry height="38" width="95" x="510" y="425" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="p28" name="28 模式三无人机开场侦察">
+    <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p28-bg" parent="1" style="fillColor=#07100d;strokeColor=none;" value="" vertex="1">
+          <mxGeometry x="0" y="0" width="800" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="p28-feed" parent="1" style="rounded=0;dashed=1;fillColor=#17221d;strokeColor=#8fa99b;fontColor=#c9d4ce;fontSize=17;align=center;whiteSpace=wrap;html=1;" value="实时无人机摄像头画面
+本局堑壕、拐角与敌人
+低饱和灰绿/黑白 + 轻噪点/扫描线/暗角
+沿堑壕侦察 → 返航出生处 → 降落" vertex="1">
+          <mxGeometry x="35" y="75" width="730" height="385" as="geometry" />
+        </mxCell>
+        <mxCell id="p28-status" parent="1" style="fillColor=#111d18;strokeColor=#496b5a;fontColor=#c8ff6a;fontSize=16;align=left;spacing=12;whiteSpace=wrap;html=1;" value="LIVE | 无人机侦察 | 侦察用时：服务DTO" vertex="1">
+          <mxGeometry x="35" y="25" width="560" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="p28-back" parent="1" style="rounded=1;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;" value="返回 / 取消" vertex="1">
+          <mxGeometry x="620" y="25" width="145" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="p28-reticle" parent="1" style="rounded=0;fillColor=none;strokeColor=#c8ff6a;strokeWidth=2;fontColor=#c8ff6a;fontSize=25;align=center;verticalAlign=middle;" value="+" vertex="1">
+          <mxGeometry x="310" y="200" width="180" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="p28-flow" parent="1" style="fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;spacing=12;whiteSpace=wrap;html=1;" value="开始 → 玩家视角起飞约3秒 → 监控侦察 → 返航 → 降落 → 恢复玩家主视角 → 开战
+开战前全员禁用拿枪/射击/移动/投掷；训练计时尚未开始
+VR用稳定观察屏显示同一视频并保留HMD跟踪；遥测无有效数据时隐藏" vertex="1">
+          <mxGeometry x="35" y="480" width="730" height="95" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using VRShooting.Common;
 using VRShooting.Contracts;
+using VRShooting.Application.Events;
 
 namespace VRShooting.Application.Combat
 {
@@ -12,6 +13,7 @@ namespace VRShooting.Application.Combat
         readonly IUIRouter router;
         readonly ICombatSceneLoader loader;
         readonly ICombatSummaryStore store;
+        readonly IGameEventBus events;
         CancellationTokenSource loading;
         ICombatSceneLease scene;
         TrainingMode? mode;
@@ -22,13 +24,15 @@ namespace VRShooting.Application.Combat
         ScreenId screen = ScreenId.MainMenu;
         public CombatMission Mission { get; private set; }
         public CombatApplicationSnapshotDto Snapshot => new CombatApplicationSnapshotDto { Screen = screen, Mode = mode,
-            Busy = busy, Error = error, SessionId = Mission?.SessionId, Summary = Mission?.Summary };
+            Busy = busy, Error = error, SessionId = Mission?.SessionId, Summary = Mission?.Summary, DroneRecon = Mission?.Opening };
         public event Action<CombatApplicationSnapshotDto> Changed;
-        public CombatApplicationCoordinator(IUIRouter router, ICombatSceneLoader loader, ICombatSummaryStore store)
+        public CombatApplicationCoordinator(IUIRouter router, ICombatSceneLoader loader, ICombatSummaryStore store,
+            IGameEventBus eventBus=null)
         {
             this.router = router ?? throw new ArgumentNullException(nameof(router));
             this.loader = loader ?? new UnavailableSceneLoader();
             this.store = store ?? throw new ArgumentNullException(nameof(store));
+            events=eventBus;
         }
         public ServiceResult<Unit> OpenMode(TrainingMode selected)
         {
@@ -97,6 +101,12 @@ namespace VRShooting.Application.Combat
                 if (!started.Success) { CleanupScene(); Navigate(MapScreen); return Reject(started.ErrorCode); }
                 var attached = scene.Activate(Mission.Core, Mission.World, Mission.State, Mission.Hud, Mission.Squad, Mission.Grenades, Mission, Mission.SessionId);
                 if (!attached.Success) { CleanupScene(); Navigate(MapScreen); return Reject(attached.ErrorCode); }
+                if(mode==TrainingMode.Trench)
+                {
+                    var routed=Navigate(ScreenId.TrenchDroneRecon);if(!routed.Success)return routed;
+                    var opening=Mission.StartOpening();
+                    return opening.Success?Ok():Reject(opening.ErrorCode);
+                }
                 return Navigate(mode == TrainingMode.Trench ? ScreenId.TrenchHud : ScreenId.UrbanStreetHud);
             }
             catch (Exception) { CleanupScene(); Navigate(MapScreen); return Reject(ErrorCode.ResourceUnavailable); }
@@ -104,7 +114,7 @@ namespace VRShooting.Application.Combat
         public ServiceResult<Unit> Retry()
         {
             var guard = Guard(); if (!guard.Success) return guard;
-            if (Mission == null || !Mission.Summary.HasValue || scene == null) return Fail(ErrorCode.InvalidState);
+            if (Mission == null || (!Mission.Summary.HasValue && Mission.Opening?.Phase!=DroneReconPhase.Error) || scene == null) return Fail(ErrorCode.InvalidState);
             busy = true; error = ErrorCode.None; Publish();
             try
             {
@@ -140,11 +150,25 @@ namespace VRShooting.Application.Combat
             var guard = Guard(); if (!guard.Success) return guard;
             return Mission == null ? Fail(ErrorCode.InvalidState) : Mission.Advance();
         }
-        void CreateMission() { Mission = new CombatMission(scene); Mission.Changed += OnMission; }
+        void CreateMission() { Mission = new CombatMission(scene); Mission.Changed += OnMission; Mission.CombatStarted+=OnCombatStarted; }
+        void OnCombatStarted(TrainingSessionDto value)
+        {
+            if(disposed||Mission==null||value.SessionId!=Mission.SessionId)return;
+            var previous=publishing;publishing=true;
+            try {events?.Publish(new SessionStartedEvent {Session=value});}
+            finally {publishing=previous;}
+        }
         void OnMission()
         {
             if (disposed || busy || Mission == null) return;
             if (Mission.Summary.HasValue) Navigate(mode == TrainingMode.Trench ? ScreenId.TrenchResults : ScreenId.UrbanResults);
+            else if(Mission.Trench!=null && Mission.Opening.HasValue)
+            {
+                var opening=Mission.Opening.Value;
+                if(opening.Phase==DroneReconPhase.Error)error=opening.ErrorCode;
+                if(Mission.HasCombatStarted&&opening.Phase==DroneReconPhase.Ready&&!opening.CharacterActionsLocked)Navigate(ScreenId.TrenchHud);
+                else Publish();
+            }
             else if (Mission.Urban != null && Mission.SessionId.Length > 0)
             {
                 var state = Mission.Urban.GetSession(Mission.SessionId);
@@ -159,7 +183,7 @@ namespace VRShooting.Application.Combat
             try
             {
                 var old = Mission; Mission = null;
-                if (old != null) { old.Changed -= OnMission; old.Dispose(); }
+                if (old != null) { old.Changed -= OnMission; old.CombatStarted-=OnCombatStarted; old.Dispose(); }
                 scene?.Deactivate();
             }
             finally { disposingScene = wasDisposing; }

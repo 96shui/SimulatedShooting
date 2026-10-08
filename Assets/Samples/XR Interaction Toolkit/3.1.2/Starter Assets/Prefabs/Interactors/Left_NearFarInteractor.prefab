@@ -562,7 +562,7 @@ MonoBehaviour:
   m_FarInteractionCaster: {fileID: 1255647619390271626}
   m_FarAttachMode: 1
   m_EnableUIInteraction: 1
-  m_BlockUIOnInteractableSelection: 1
+  m_BlockUIOnInteractableSelection: 0
   m_UIHoverEntered:
     m_PersistentCalls:
       m_Calls: []

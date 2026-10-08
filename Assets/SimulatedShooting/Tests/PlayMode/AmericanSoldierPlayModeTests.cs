@@ -63,5 +63,29 @@ namespace SimulatedShooting.Tests.PlayMode
             }
             Assert.That(maxAngle, Is.GreaterThan(1f), "Navigation must animate the leg during a stride");
         }
+
+        [UnityTest]
+        public IEnumerator Bdd23_EnemyShotHasSoundAndCorpseHidesAfterFiveSeconds()
+        {
+            yield return SceneManager.LoadSceneAsync("CombatScene");
+            yield return null;
+            var fixture = Object.FindObjectOfType<CombatSceneFixture>();
+            var enemy = fixture.Actors.First(a => !a.EntityId.StartsWith("teammate"));
+            Assert.That(enemy.ShotClip, Is.Not.Null);
+            Assert.That(enemy.HideCorpseAfterDelay, Is.True);
+            Assert.That(enemy.Audio.spatialBlend, Is.EqualTo(1f));
+            enemy.PlayShot("bdd23-audible-shot");
+            enemy.PlayShot("bdd23-audible-shot");
+            Assert.That(enemy.ShotAudioFeedbackCount, Is.EqualTo(1));
+
+            enemy.ApplyDead(true);
+            Assert.That(enemy.VisualRoot.gameObject.activeSelf, Is.True);
+            yield return new WaitForSeconds(5.1f);
+            Assert.That(enemy.VisualRoot.gameObject.activeSelf, Is.False);
+            Assert.That(enemy.IsDead, Is.True, "Hiding the corpse must not revive the enemy.");
+
+            enemy.ApplyDead(false);
+            Assert.That(enemy.VisualRoot.gameObject.activeSelf, Is.True);
+        }
     }
 }

@@ -60,18 +60,21 @@ namespace VRShooting.Tests.PlayMode.UI
         {
             yield return OpenHudAndCompletePassingRound();
 
-            FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment").onClick.Invoke();
-            yield return null;
-
-            FindButton("Button_ZeroingImpactAnalysis_NextRound").onClick.Invoke();
-            yield return null;
-
             Assert.AreEqual(ScreenId.ZeroingFinalRating, services.Router.Current);
+            Assert.IsFalse(FindById("Screen_ZeroingImpactAnalysis").activeSelf,
+                "BDD07: a passing round must bypass the adjustment screen.");
             Assert.IsTrue(FindById("Screen_ZeroingFinalRating").activeSelf);
             Assert.That(FindText("Text_ZeroingFinalRating_Grade").text, Does.Contain("优秀"));
             Assert.That(FindText("Text_ZeroingFinalRating_Rounds").text, Does.Contain("第1轮：通过"));
             Assert.That(FindText("Text_ZeroingFinalRating_Rounds").text, Does.Contain("第2轮：未使用"));
             Assert.That(FindText("Text_ZeroingFinalRating_ImpactThumbnails").text, Does.Contain("第1轮"));
+            Assert.That(FindById("Image_ZeroingImpactAnalysis_Target").GetComponent<TacticalTargetPlot>(), Is.Not.Null);
+            for (var round = 1; round <= 3; round++)
+            {
+                var plot = FindById("Image_ZeroingFinalRating_Target_Round" + round).GetComponent<TacticalTargetPlot>();
+                Assert.That(plot, Is.Not.Null);
+                Assert.That(plot.ImpactCount, Is.EqualTo(round == 1 ? 3 : 0));
+            }
         }
 
         [UnityTest]
@@ -103,10 +106,7 @@ namespace VRShooting.Tests.PlayMode.UI
         IEnumerator OpenFinalRating()
         {
             yield return OpenHudAndCompletePassingRound();
-            FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment").onClick.Invoke();
-            yield return null;
-            FindButton("Button_ZeroingImpactAnalysis_NextRound").onClick.Invoke();
-            yield return null;
+            Assert.AreEqual(ScreenId.ZeroingFinalRating,services.Router.Current);
         }
 
         IEnumerator OpenHudAndCompletePassingRound()

@@ -30,6 +30,9 @@ namespace SimulatedShooting.Scene
         public Transform ResultsAnchor;
         public Transform ProjectionAnchor;
         public Transform Drone;
+        public GameObject DroneVisualPrefab;
+        // Optional authored observations; an empty array uses current trench search/enemy locations.
+        public Transform[] DroneReconWaypoints = Array.Empty<Transform>();
         public CombatActorView EnemyPrefab;
         public CombatActorView TeammatePrefab;
         public GameObject TrainingRiflePrefab;

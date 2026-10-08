@@ -30,17 +30,18 @@ namespace VRShooting.Application.Combat
             this.navigation=navigation??throw new ArgumentNullException(nameof(navigation)); this.config=config??CombatConfigDto.Default;
             if(!this.config.Validate().Success) throw new ArgumentException("Invalid configuration");
         }
-        public ServiceResult<Unit> Start(string id,Vector3 position,Vector3 forward)
+        public ServiceResult<Unit> Start(string id,Vector3 position,Vector3 forward,bool canMove=true)
         {
             if(disposed||publishing) return Fail(ErrorCode.InvalidState);
             if(string.IsNullOrWhiteSpace(id)||!Finite(position)||!Direction(forward)) return Fail(ErrorCode.InvalidInput);
             session=id; playerPosition=position; playerForward=forward.normalized; playerHealth=config.PlayerHealth;
-            revision=sequence=0; active=true; acknowledged.Clear(); path.Clear();
+            revision=sequence=0; active=canMove; acknowledged.Clear(); path.Clear();
             path.Add(position-playerForward*config.SquadSpacing*2); path.Add(position);
             for(var i=0;i<2;i++)
             {
                 members[i]=new Member { Id=session+".teammate-"+(i+2), Position=position-playerForward*config.SquadSpacing*(i+1),
-                    Forward=i==0?playerForward:-playerForward, State=SquadMemberState.Following };
+                    Forward=i==0?playerForward:-playerForward,
+                    State=canMove?SquadMemberState.Following:SquadMemberState.HoldingPosition };
             }
             dirty=true; Publish(); return Ok();
         }

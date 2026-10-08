@@ -17,18 +17,22 @@ namespace VRShooting.Tests.EditMode
         FakeCombatClock clock;
         FakeCombatWorld navigation;
         TrenchService service;
+        TrenchOpeningTestDriver opening;
         string id;
         int events;
         [SetUp] public void Setup()
         {
             clock = new FakeCombatClock(); navigation = new FakeCombatWorld(); events = 0;
-            service = new TrenchService(P3Fixtures.TrenchDefinition, clock, new SeededCombatRandom(), navigation);
+            opening=new TrenchOpeningTestDriver(clock);
+            service = new TrenchService(P3Fixtures.TrenchDefinition, clock, new SeededCombatRandom(), navigation,recon:opening.Service);
         }
-        [TearDown] public void Cleanup() => service.Dispose();
+        [TearDown] public void Cleanup() {service.Dispose();opening.Dispose();}
         void Start(int seed = 3)
         {
             var started = service.StartSession("trench-a","training-rifle",RandomSeed.Fixed(seed));
             Assert.That(started.Success, Is.True, started.Message); id = started.Data.SessionId;
+            Assert.That(started.Data.State,Is.EqualTo(SessionState.Preparing));
+            opening.StartCombat(service,id);
         }
         CombatEntityVisualDto[] Enemies => service.GetVisualSnapshot(id).Data.Entities.Where(e => e.Role == CombatEntityRole.Enemy).ToArray();
         CombatShotDto Shoot()
@@ -61,7 +65,7 @@ namespace VRShooting.Tests.EditMode
         {
             Start(42); var positions = Enemies.Select(e=>e.Position).ToArray();
             service.Cancel(id); Start(42); Assert.That(Enemies.Select(e=>e.Position),Is.EqualTo(positions));
-            service.Dispose(); service = new TrenchService(P3Fixtures.TrenchDefinition.WithSpawnPoints(P3Fixtures.TrenchDefinition.SpawnPoints.Reverse().ToArray()),clock,new SeededCombatRandom(),navigation);
+            service.Dispose(); service = new TrenchService(P3Fixtures.TrenchDefinition.WithSpawnPoints(P3Fixtures.TrenchDefinition.SpawnPoints.Reverse().ToArray()),clock,new SeededCombatRandom(),navigation,recon:opening.Service);
             Start(42); Assert.That(Enemies.Select(e=>e.Position),Is.EqualTo(positions));
         }
         [Test] public void SpawnedEnemiesFaceTheTrenchEntrance()
@@ -76,7 +80,7 @@ namespace VRShooting.Tests.EditMode
         }
         [TestCase(3)] [TestCase(5)] public void EnemyCountBoundariesCanBeInjected(int count)
         {
-            service.Dispose(); service = new TrenchService(P3Fixtures.TrenchDefinition,clock,new CountRandom(count),navigation);
+            service.Dispose(); service = new TrenchService(P3Fixtures.TrenchDefinition,clock,new CountRandom(count),navigation,recon:opening.Service);
             Start(); Assert.That(Enemies.Length,Is.EqualTo(count)); Assert.That(Enemies.Select(e=>e.Position).Distinct().Count(),Is.EqualTo(count));
         }
         [Test] public void MapWeaponAndSceneErrorsDoNotCreateSession()
@@ -84,7 +88,7 @@ namespace VRShooting.Tests.EditMode
             Assert.That(service.SelectMap("trench-b").ErrorCode,Is.EqualTo(ErrorCode.NotFound));
             Assert.That(service.StartSession("trench-a","",RandomSeed.Fixed(1)).ErrorCode,Is.EqualTo(ErrorCode.InvalidState));
             Assert.That(service.GetBriefing("trench-a","unknown",RandomSeed.Fixed(1)).ErrorCode,Is.EqualTo(ErrorCode.NotFound));
-            service.Dispose(); service = new TrenchService(P3Fixtures.TrenchDefinition.WithSpawnPoints(Array.Empty<SceneSpawnPointDto>()),clock,new SeededCombatRandom(),navigation);
+            service.Dispose(); service = new TrenchService(P3Fixtures.TrenchDefinition.WithSpawnPoints(Array.Empty<SceneSpawnPointDto>()),clock,new SeededCombatRandom(),navigation,recon:opening.Service);
             Assert.That(service.StartSession("trench-a","training-rifle",RandomSeed.Fixed(1)).ErrorCode,Is.EqualTo(ErrorCode.ResourceUnavailable));
         }
         [Test] public void SearchOnlyAndKillOnlyDoNotWin_ThenCombinedWinsOnce()
@@ -112,7 +116,7 @@ namespace VRShooting.Tests.EditMode
         }
         [Test] public void SameBatchDeathWinsAndRetainsFinalSearchAndKill()
         {
-            service.Dispose(); service=new TrenchService(P3Fixtures.TrenchDefinition,clock,new SeededCombatRandom(),navigation,CombatConfigDto.Default.WithPlayerHealth(5));
+            service.Dispose(); service=new TrenchService(P3Fixtures.TrenchDefinition,clock,new SeededCombatRandom(),navigation,CombatConfigDto.Default.WithPlayerHealth(5),recon:opening.Service);
             Start(); var enemies=Enemies;
             foreach(var enemy in enemies.Skip(1)) { Hit(enemy.EntityId,Shoot()); service.Advance(id); }
             var final=enemies[0]; var shot=Shoot();

@@ -39,6 +39,7 @@ namespace VRShooting.Unity.UI
         P3TrenchBriefingView trenchBriefingView;
         P3TrenchHudView trenchHudView;
         P3TrenchResultsView trenchResultsView;
+        P3DroneReconView droneReconView;
         P3UrbanMapSelectionView urbanMapView;
         P3UrbanStreetHudView urbanStreetView;
         P3UrbanBuildingHudView urbanBuildingView;
@@ -51,6 +52,7 @@ namespace VRShooting.Unity.UI
         public P3TrenchBriefingView TrenchBriefingView => trenchBriefingView;
         public P3TrenchHudView TrenchHudView => trenchHudView;
         public P3TrenchResultsView TrenchResultsView => trenchResultsView;
+        public P3DroneReconView DroneReconView => droneReconView;
         public P3UrbanMapSelectionView UrbanMapView => urbanMapView;
         public P3UrbanStreetHudView UrbanStreetView => urbanStreetView;
         public P3UrbanBuildingHudView UrbanBuildingView => urbanBuildingView;
@@ -100,11 +102,13 @@ namespace VRShooting.Unity.UI
             BuildTrenchBriefing();
             BuildTrenchHud();
             BuildTrenchResults();
+            BuildDroneRecon();
             BuildUrbanMapSelection();
             BuildUrbanStreetHud();
             BuildUrbanBuildingHud();
             BuildUrbanResults();
             TacticalUIStyle.Apply(transform);
+            foreach(var item in GetComponentsInChildren<Transform>(true))item.gameObject.layer=5;
             SetAllPagesActive(false);
             if (showOnAwake) Show(VisibleScreen);
         }
@@ -214,6 +218,7 @@ namespace VRShooting.Unity.UI
 
         void BuildCanvas()
         {
+            gameObject.layer=5;
             canvas = GetComponent<Canvas>();
             if (canvas == null) canvas = gameObject.AddComponent<Canvas>();
             if (canvas == null) throw new InvalidOperationException("P3CombatUIRoot requires a Canvas");
@@ -399,7 +404,7 @@ namespace VRShooting.Unity.UI
         RectTransform CreatePage(ScreenId screen, string title)
         {
             var page = Rect("Screen_" + screen, transform as RectTransform, Vector2.one*.5f, Vector2.one*.5f, new Vector2(-960,-540), new Vector2(960,540));
-            bool hud=screen==ScreenId.TrenchHud||screen==ScreenId.UrbanStreetHud||screen==ScreenId.UrbanBuildingHud;
+            bool hud=screen==ScreenId.TrenchHud||screen==ScreenId.UrbanStreetHud||screen==ScreenId.UrbanBuildingHud||screen==ScreenId.TrenchDroneRecon;
             var frame=AddPanel(page, "Panel_" + screen + "_Frame", new Vector2(30, 30), new Vector2(1890, 1050), new Color32(7, 16, 13, (byte)(hud?0:242)));
             if(hud)frame.GetComponentInChildren<Image>().raycastTarget=false;
             var titleId = "Text_" + screen + "_Title";
@@ -407,6 +412,34 @@ namespace VRShooting.Unity.UI
             AddTestId(page.gameObject, "Screen_" + screen);
             pages[screen] = page.gameObject;
             return page;
+        }
+        void BuildDroneRecon()
+        {
+            var page=CreatePage(ScreenId.TrenchDroneRecon,"无人机 · 开场侦察");
+            var panel=Rect("Panel_TrenchDroneRecon_Monitor",page,Vector2.zero,Vector2.zero,new Vector2(180,170),new Vector2(1740,940));
+            var feedRect=Rect("Image_TrenchDroneRecon_Feed",panel,Vector2.zero,Vector2.one,Vector2.zero,Vector2.zero);
+            var feed=feedRect.gameObject.AddComponent<RawImage>();feed.raycastTarget=false;AddTestId(feed.gameObject,feed.name);
+            var aspect=feedRect.gameObject.AddComponent<AspectRatioFitter>();
+            aspect.aspectMode=AspectRatioFitter.AspectMode.FitInParent;aspect.aspectRatio=16f/9f;
+            var reticle=Rect("Hud_DroneRecon_Reticle",page,Vector2.zero,Vector2.zero,new Vector2(850,445),new Vector2(1070,665));
+            AddTestId(reticle.gameObject,reticle.name);
+            var tint=new Color(.78f,.88f,.78f,.85f);
+            AddImage(reticle,"Reticle_Left",new Vector2(0,95),new Vector2(60,98),tint).raycastTarget=false;
+            AddImage(reticle,"Reticle_Right",new Vector2(160,95),new Vector2(220,98),tint).raycastTarget=false;
+            AddImage(reticle,"Reticle_Upper",new Vector2(108,155),new Vector2(111,220),tint).raycastTarget=false;
+            AddImage(reticle,"Reticle_Lower",new Vector2(108,0),new Vector2(111,60),tint).raycastTarget=false;
+            for(var i=0;i<7;i++)
+            {AddImage(panel,"Scale_Left_"+i,new Vector2(0,i*100+70),new Vector2(16,i*100+72),tint).raycastTarget=false;
+                AddImage(panel,"Scale_Right_"+i,new Vector2(1544,i*100+70),new Vector2(1560,i*100+72),tint).raycastTarget=false;}
+            var phase=AddLabel(page,"Text_TrenchDroneRecon_Phase","准备无人机",30,new Vector2(200,95),new Vector2(1050,150),TextAlignmentOptions.Left);
+            var status=AddLabel(page,"Text_TrenchDroneRecon_FeedStatus","视频未就绪",25,new Vector2(200,875),new Vector2(620,930),TextAlignmentOptions.Left);
+            var elapsed=AddLabel(page,"Text_TrenchDroneRecon_Elapsed","",25,new Vector2(1240,875),new Vector2(1700,930),TextAlignmentOptions.Right);
+            var telemetry=AddLabel(page,"Text_TrenchDroneRecon_Telemetry","高度 --   速度 --",24,new Vector2(700,875),new Vector2(1250,930),TextAlignmentOptions.Center);
+            var error=AddLabel(page,"Text_TrenchDroneRecon_Error","",23,new Vector2(200,30),new Vector2(1350,85),TextAlignmentOptions.Left);
+            var back=AddButton(page,"Button_TrenchDroneRecon_Back","返回地图",new Vector2(1510,80),new Vector2(1740,145),false);
+            var retry=AddButton(page,"Button_TrenchDroneRecon_Retry","重新开始",new Vector2(1240,80),new Vector2(1470,145),true);
+            droneReconView=page.gameObject.AddComponent<P3DroneReconView>();
+            droneReconView.Configure(feed,panel.gameObject,reticle.gameObject,phase,status,elapsed,telemetry,error,back,retry);
         }
 
         P3MapCardView CreateMapCard(RectTransform parent, string suffix, string name, Vector2 min, Vector2 max)
@@ -503,6 +536,7 @@ namespace VRShooting.Unity.UI
         static RectTransform Rect(string name, Transform parent, Vector2 anchorMin, Vector2 anchorMax, Vector2 offsetMin, Vector2 offsetMax)
         {
             var go = new GameObject(name, typeof(RectTransform));
+            go.layer=5;
             var rect = go.GetComponent<RectTransform>();
             rect.SetParent(parent, false);
             rect.anchorMin = anchorMin;

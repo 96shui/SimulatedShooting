@@ -1,0 +1,1 @@
+actualDroneClip=DroneRotor_Mavic_Recorded duration=8.7 loadState=Loaded volume=0.65 spatialBlend=1 loop=True sharedClipAfterReset=True

@@ -48,7 +48,7 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.AreEqual(3, analysis.Data.Shots.Count);
             Assert.AreEqual(-8f, analysis.Data.AverageOffsetCm.x, 0.01f);
             Assert.AreEqual(12f, analysis.Data.AverageOffsetCm.y, 0.01f);
-            Assert.AreEqual(VerticalAdjustmentDirection.CounterClockwise, analysis.Data.VerticalDirection);
+            Assert.AreEqual(VerticalAdjustmentDirection.Clockwise, analysis.Data.VerticalDirection);
             Assert.AreEqual(HorizontalAdjustmentDirection.Forward, analysis.Data.HorizontalDirection);
             Assert.AreEqual(188f, analysis.Data.FrontSightDegreesToAdjust, 0.01f);
             Assert.AreEqual(4, analysis.Data.RearSightClicksToAdjust);
@@ -92,22 +92,22 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.IsTrue(horizontal.Success, horizontal.Message);
             Assert.IsTrue(vertical.Success, vertical.Message);
             Assert.AreEqual(new Vector2(-8f, 12f), vertical.Data.AverageOffsetCm);
-            Assert.AreEqual(new Vector2(9f, -13f), vertical.Data.ProposedCorrectionCm);
-            Assert.AreEqual(new Vector2(1f, -1f), vertical.Data.PreviewAverageOffsetCm);
+            Assert.AreEqual(new Vector2(10f, -12.064f), vertical.Data.ProposedCorrectionCm);
+            Assert.That(Vector2.Distance(new Vector2(2f, -.064f), vertical.Data.PreviewAverageOffsetCm), Is.LessThan(.001f));
 
             var applied = zeroing.ApplyAdjustment(session.SessionId, 1);
             var duplicate = zeroing.ApplyAdjustment(session.SessionId, 1);
             Assert.IsTrue(applied.Success, applied.Message);
             Assert.IsTrue(duplicate.Success, duplicate.Message);
-            Assert.AreEqual(new Vector2(9f, -13f), applied.Data.ProposedCorrectionCm);
-            Assert.AreEqual(originalOffset + new Vector2(9f, -13f),
+            Assert.AreEqual(new Vector2(10f, -12.064f), applied.Data.ProposedCorrectionCm);
+            Assert.AreEqual(originalOffset + new Vector2(10f, -12.064f),
                 zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm);
             Assert.IsTrue(zeroing.ContinueAfterAnalysis(session.SessionId).Success);
 
             var sameAim = new Vector2(-8f, 12f) - originalOffset;
             var nextShot = RecordImpact(session.SessionId, sameAim);
             Assert.IsTrue(nextShot.Success, nextShot.Message);
-            Assert.AreEqual(new Vector2(1f, -1f), nextShot.Data.ImpactPointCm);
+            Assert.That(Vector2.Distance(new Vector2(2f, -.064f), nextShot.Data.ImpactPointCm), Is.LessThan(.001f));
         }
 
         [Test]
@@ -175,7 +175,6 @@ namespace VRShooting.Tests.EditMode.Application
         {
             var session = StartZeroingSession();
             CompleteRoundWithImpacts(session.SessionId, new Vector2(1f, 1f));
-            zeroing.ApplyAdjustment(session.SessionId, 1);
 
             var result = zeroing.GetFinalResult(session.SessionId);
 
@@ -192,7 +191,6 @@ namespace VRShooting.Tests.EditMode.Application
             zeroing.ApplyAdjustment(session.SessionId, 1);
             zeroing.ContinueAfterAnalysis(session.SessionId);
             CompleteRoundWithImpacts(session.SessionId, new Vector2(1f, 1f));
-            zeroing.ApplyAdjustment(session.SessionId, 2);
 
             var result = zeroing.GetFinalResult(session.SessionId);
 
@@ -208,7 +206,6 @@ namespace VRShooting.Tests.EditMode.Application
             FailRound(session.SessionId);
             FailRound(session.SessionId);
             CompleteRoundWithImpacts(session.SessionId, new Vector2(1f, 1f));
-            zeroing.ApplyAdjustment(session.SessionId, 3);
 
             var result = zeroing.GetFinalResult(session.SessionId);
 
@@ -242,6 +239,27 @@ namespace VRShooting.Tests.EditMode.Application
 
             Assert.IsFalse(next.Success);
             Assert.AreEqual(ErrorCode.InvalidState, next.ErrorCode);
+        }
+
+        // BDD07: terminal rounds preserve the raw score and require no final correction.
+        [TestCase(1,ResultGrade.Excellent)]
+        [TestCase(2,ResultGrade.Good)]
+        [TestCase(3,ResultGrade.Pass)]
+        [TestCase(0,ResultGrade.Fail)]
+        public void TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(int passRound,ResultGrade expected)
+        {
+            var session=StartZeroingSession();
+            var finalRound=passRound==0?3:passRound;
+            for(var round=1;round<finalRound;round++)FailRound(session.SessionId);
+            RecordThreeImpacts(session.SessionId,passRound==0?new Vector2(12,12):Vector2.zero);
+            var analysis=zeroing.CompleteRound(session.SessionId).Data;
+            Assert.IsTrue(analysis.FinalResultAvailable);
+            Assert.IsFalse(analysis.AdjustmentApplied);
+            Assert.AreEqual(expected,zeroing.GetFinalResult(session.SessionId).Data.Grade);
+            Assert.IsTrue(zeroing.ContinueAfterAnalysis(session.SessionId).Success);
+            Assert.AreEqual(ErrorCode.InvalidState,zeroing.ApplyAdjustment(session.SessionId,finalRound).ErrorCode);
+            Assert.AreEqual(ErrorCode.InvalidState,zeroing.AdjustImpactPoint(session.SessionId,finalRound,ZeroingAdjustmentAxis.Horizontal,1).ErrorCode);
+            Assert.AreEqual(finalRound,zeroing.GetSession(session.SessionId).Data.CurrentRound);
         }
 
         [Test]
@@ -321,9 +339,9 @@ namespace VRShooting.Tests.EditMode.Application
         {
             CompleteRoundWithImpacts(sessionId, new Vector2(-8f, 12f));
             var round = zeroing.GetSession(sessionId).Data.CurrentRound;
-            zeroing.ApplyAdjustment(sessionId, round);
             if (round < 3)
             {
+                zeroing.ApplyAdjustment(sessionId, round);
                 var next = zeroing.ContinueAfterAnalysis(sessionId);
                 Assert.IsTrue(next.Success, next.Message);
             }

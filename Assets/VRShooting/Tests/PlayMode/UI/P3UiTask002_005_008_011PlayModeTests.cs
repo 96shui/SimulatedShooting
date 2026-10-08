@@ -77,7 +77,7 @@ namespace VRShooting.Tests.PlayMode.UI
                     RandomSeed.Fixed(7), visual);
                 yield return null;
 
-                Assert.That(visual.PlayCount, Is.EqualTo(1));
+                Assert.That(visual.PlayCount, Is.Zero, "BDD28: briefing preview must not start takeoff.");
                 Assert.That(Text(view, "objectives").text, Does.Contain("保持小队队形"));
                 Assert.That(Text(view, "squad").text, Does.Contain("玩家"));
                 Assert.That(Text(view, "squad").text, Does.Contain("二号队友"));

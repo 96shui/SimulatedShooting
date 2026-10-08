@@ -8,7 +8,7 @@ namespace SimulatedShooting.Scene
 {
     public static class CombatSceneDefinitionBuilder
     {
-        public static CombatSceneDefinitionDto Build(CombatSceneBindings binding, TrainingMode mode)
+        public static CombatSceneDefinitionDto Build(CombatSceneBindings binding, TrainingMode mode,Vector3? resolvedPlayerSpawn=null)
         {
             bool trench = mode == TrainingMode.Trench;
             string map = trench ? P3ContractIds.TrenchMap : P3ContractIds.UrbanMap;
@@ -23,7 +23,7 @@ namespace SimulatedShooting.Scene
                             MapPosition = binding.Maps.First(m => m.Id == "urban-" + f.FloorId.Last() + "f").WorldToMap(r.transform.position) }).ToArray() }).ToArray();
             return new CombatSceneDefinitionDto { MapId = map, SceneId = trench ? P3ContractIds.TrenchScene : P3ContractIds.UrbanScene,
                 Mode = mode, Projections = projections, Floors = floors,
-                PlayerSpawnPosition=(trench?binding.TrenchEntry:binding.UrbanEntry).position,
+                PlayerSpawnPosition=resolvedPlayerSpawn??(trench?binding.TrenchEntry:binding.UrbanEntry).position,
                 PlayerSpawnForward=(trench?binding.TrenchEntry:binding.UrbanEntry).forward,
                 EntranceId = trench ? "" : P3ContractIds.UrbanEntrance,
                 EntranceWorldPosition = trench ? (Vector3?)null : points.First(p => p.Kind == CombatPointKind.Entrance).transform.position,

@@ -58,6 +58,7 @@ namespace VRShooting.Common
         public int RearSightClicksToAdjust { get; init; }
         public bool PassedTenRing { get; init; }
         public bool AdjustmentApplied { get; init; }
+        public bool FinalResultAvailable { get; init; }
 
         public static ZeroingRoundAnalysisDto Empty => new ZeroingRoundAnalysisDto
         {

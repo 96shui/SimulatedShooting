@@ -15,6 +15,7 @@ namespace VRShooting.Common
         public string SessionId { get => sessionId ?? string.Empty; init => sessionId = value ?? string.Empty; }
         public ErrorCode Error { get; init; }
         public CombatSummaryDto? Summary { get; init; }
+        public DroneReconSnapshotDto? DroneRecon { get; init; }
     }
 }
 namespace VRShooting.Application
@@ -35,5 +36,9 @@ namespace VRShooting.Application
         void Deactivate();
     }
     public interface ICombatApplicationView { void Render(CombatApplicationSnapshotDto state); }
+    public interface IDroneReconSceneLease
+    {
+        IDroneReconScenePort DroneReconScene { get; }
+    }
     public interface ICombatTickPort { ServiceResult<Unit> Advance(); }
 }

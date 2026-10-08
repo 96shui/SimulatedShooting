@@ -108,6 +108,12 @@ namespace VRShooting.Unity.UI
             }
         }
 
+        public void ConfigureVrLayout(float distance,float worldScale,float minimumBottomWorldHeight)
+        {
+            vrDistance=distance;vrWorldScale=worldScale;vrMinimumCanvasBottomHeight=minimumBottomWorldHeight;
+            if(initialized)ApplyMode(ResolveVrMode(),ResolveVrCamera(),true);
+        }
+
         bool ResolveVrMode()
         {
             if (forcedVrMode.HasValue)
@@ -209,6 +215,9 @@ namespace VRShooting.Unity.UI
             var rectTransform = transform as RectTransform;
             if (vrMode)
             {
+                TrainingUIHost.EnsureExists();
+                if (vrCamera != null)
+                    TrainingUiRayPolicy.KeepUiRayAvailable(vrCamera.transform.root.gameObject);
                 canvas.renderMode = RenderMode.WorldSpace;
                 canvas.worldCamera = vrCamera;
                 desktopRaycaster.enabled = false;

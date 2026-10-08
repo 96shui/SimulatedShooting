@@ -160,6 +160,11 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(teleportRays.Length, Is.GreaterThanOrEqualTo(2));
 
             uiRays[0].gameObject.SetActive(false);
+            uiRays[0].enabled = false;
+            uiRays[0].blockUIOnInteractableSelection = true;
+            uiRays[0].enableFarCasting = false;
+            uiRays[0].uiPressInput.inputActionReferencePerformed.action.Disable();
+            uiRays[0].uiPressInput.inputActionReferenceValue.action.Disable();
             teleportRays[0].gameObject.SetActive(true);
             xrModeController.RefreshForScene(SceneManager.GetActiveScene());
 
@@ -169,6 +174,14 @@ namespace VRShooting.Tests.PlayMode.UI
                         "/" + interactor.gameObject.activeInHierarchy + "/" + interactor.enableUIInteraction)));
             Assert.That(teleportRays.All(interactor => !interactor.gameObject.activeSelf), Is.True,
                 "Teleport rays must not replace the UI ray on a fixed menu.");
+            Assert.That(uiRays.All(ray => ray.enabled && !ray.blockUIOnInteractableSelection), Is.True);
+            Assert.That(uiRays.All(ray => ray.enableFarCasting), Is.True,
+                "XRI requires far casting to forward a controller ray to the UI input module.");
+            Assert.That(uiRays.All(ray => ray.uiPressInput.inputActionReferencePerformed.action.enabled
+                && ray.uiPressInput.inputActionReferenceValue.action.enabled), Is.True);
+            Assert.That(uiRays.All(ray => ray.uiPressInput.inputActionReferencePerformed.action.bindings
+                .Any(binding => binding.path.EndsWith("/trigger") && binding.interactions.Contains("Press"))), Is.True,
+                "SteamVR UI click must accept analog trigger input as well as a digital button.");
         }
 
         [UnityTest]

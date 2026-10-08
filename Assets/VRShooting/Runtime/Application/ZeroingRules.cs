@@ -130,7 +130,8 @@ namespace VRShooting.Application
                 HorizontalDirection = ResolveHorizontalDirection(average.x),
                 RearSightClicksToAdjust = ComputeRearSightClicks(average.x),
                 PassedTenRing = passed,
-                AdjustmentApplied = adjustmentApplied
+                AdjustmentApplied = adjustmentApplied,
+                FinalResultAvailable = shots.Count == ShotsPerRound && (passed || roundIndex >= MaxRounds)
             };
         }
 
@@ -216,8 +217,8 @@ namespace VRShooting.Application
             }
 
             return verticalOffsetCm > 0f
-                ? VerticalAdjustmentDirection.CounterClockwise
-                : VerticalAdjustmentDirection.Clockwise;
+                ? VerticalAdjustmentDirection.Clockwise
+                : VerticalAdjustmentDirection.CounterClockwise;
         }
 
         public static HorizontalAdjustmentDirection ResolveHorizontalDirection(float horizontalOffsetCm)

@@ -54,9 +54,9 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
-        public void ResolveVerticalDirection_BiasDown_UsesClockwise()
+        public void ResolveVerticalDirection_BiasDown_UsesCounterClockwise()
         {
-            Assert.AreEqual(VerticalAdjustmentDirection.Clockwise, ZeroingRules.ResolveVerticalDirection(-3f));
+            Assert.AreEqual(VerticalAdjustmentDirection.CounterClockwise, ZeroingRules.ResolveVerticalDirection(-3f));
         }
 
         [Test]

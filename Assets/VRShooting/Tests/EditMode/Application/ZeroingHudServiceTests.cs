@@ -142,7 +142,7 @@ namespace VRShooting.Tests.EditMode.Application
 
             Assert.IsTrue(analysis.Success, analysis.Message);
             Assert.AreEqual(3, analysis.Data.Shots.Count);
-            Assert.AreEqual(VerticalAdjustmentDirection.CounterClockwise, analysis.Data.VerticalDirection);
+            Assert.AreEqual(VerticalAdjustmentDirection.Clockwise, analysis.Data.VerticalDirection);
             Assert.AreEqual(HorizontalAdjustmentDirection.Forward, analysis.Data.HorizontalDirection);
         }
 

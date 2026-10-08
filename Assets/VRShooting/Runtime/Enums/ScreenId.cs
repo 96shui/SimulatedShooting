@@ -23,6 +23,7 @@ namespace VRShooting.Common
         UrbanMapSelection,
         UrbanStreetHud,
         UrbanBuildingHud,
-        UrbanResults
+        UrbanResults,
+        TrenchDroneRecon
     }
 }

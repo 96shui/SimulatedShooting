@@ -92,15 +92,17 @@ namespace VRShooting.Application
                 return ServiceResult<ZeroingRoundAnalysisDto>.Fail(failure, "zeroing session not found", ZeroingRoundAnalysisDto.Empty);
             if (record.CurrentShots.Count < ZeroingRules.ShotsPerRound || record.AppliedRounds.Contains(record.CurrentRound))
                 return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState, "round cannot be adjusted", ZeroingRoundAnalysisDto.Empty);
+            if(record.BuildAnalysis().FinalResultAvailable)
+                return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState,"final round does not require adjustment",record.BuildAnalysis());
             if (roundIndex != record.CurrentRound || direction != -1 && direction != 1 ||
                 axis != ZeroingAdjustmentAxis.Horizontal && axis != ZeroingAdjustmentAxis.Vertical)
                 return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidInput, "invalid adjustment request", ZeroingRoundAnalysisDto.Empty);
 
             var correction = record.PendingCorrectionCm ?? -ZeroingRules.ComputeAverageOffset(record.CurrentShots);
             if (axis == ZeroingAdjustmentAxis.Horizontal)
-                correction.x = Mathf.Clamp(correction.x + direction, -50f, 50f);
+                correction.x = Mathf.Clamp(correction.x + direction * ZeroingRules.CmPerRearSightClick, -50f, 50f);
             else
-                correction.y = Mathf.Clamp(correction.y + direction, -50f, 50f);
+                correction.y = Mathf.Clamp(correction.y + direction * ZeroingRules.CmPerFrontSightDegree, -50f, 50f);
             record.PendingCorrectionCm = correction;
             return ServiceResult<ZeroingRoundAnalysisDto>.Ok(CompleteRoundInternal(record, false));
         }
@@ -123,6 +125,9 @@ namespace VRShooting.Application
                 return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidInput, "round index mismatch", analysis);
             }
 
+            if(analysis.FinalResultAvailable)
+                return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState,"final round does not require adjustment",analysis);
+
             if (!analysis.AdjustmentApplied)
             {
                 record.CurrentAdjustment = ZeroingRules.ApplyCorrection(record.CurrentAdjustment, analysis.ProposedCorrectionCm);
@@ -143,7 +148,11 @@ namespace VRShooting.Application
                 return ServiceResult<ZeroingSessionDto>.Fail(failure, "zeroing session not found", ZeroingSessionDto.Empty);
             }
 
+            if(record.CurrentShots.Count<ZeroingRules.ShotsPerRound)
+                return ServiceResult<ZeroingSessionDto>.Fail(ErrorCode.InvalidState,"round requires 3 shots",record.ToSessionDto(AllowsRecording(record.SessionId)));
             var analysis = CompleteRoundInternal(record, false);
+            if(analysis.FinalResultAvailable)
+                return ServiceResult<ZeroingSessionDto>.Ok(record.ToSessionDto(AllowsRecording(record.SessionId)));
             if (!analysis.AdjustmentApplied)
             {
                 return ServiceResult<ZeroingSessionDto>.Fail(ErrorCode.InvalidState, "adjustment must be applied first", record.ToSessionDto(AllowsRecording(record.SessionId)));

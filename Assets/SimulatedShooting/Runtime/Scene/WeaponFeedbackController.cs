@@ -18,9 +18,12 @@ namespace SimulatedShooting.Scene
         AudioSource weaponAudioSource;
         ParticleSystem muzzleFlash;
         ParticleSystemRenderer muzzleFlashRenderer;
+        MuzzleBlastVfx muzzleBlast;
         Material tracerMaterial;
         Material projectileMaterial;
         Material impactMaterial;
+        Material fleshImpactMaterial;
+        Texture2D fleshImpactTexture;
         bool grabSubscribed;
         bool lastRearSelected;
         int validShotFeedbackCount;
@@ -87,6 +90,8 @@ namespace SimulatedShooting.Scene
             DestroyRuntimeMaterial(tracerMaterial);
             DestroyRuntimeMaterial(projectileMaterial);
             DestroyRuntimeMaterial(impactMaterial);
+            DestroyRuntimeMaterial(fleshImpactMaterial);
+            if (fleshImpactTexture != null) Destroy(fleshImpactTexture);
         }
 
         public void PlayValidShot(
@@ -95,7 +100,8 @@ namespace SimulatedShooting.Scene
             Vector3 end,
             bool hit,
             Vector3 hitPoint,
-            Vector3 hitNormal)
+            Vector3 hitNormal,
+            bool hitFlesh = false)
         {
             EnsureRuntimeResources();
             validShotFeedbackCount++;
@@ -113,6 +119,7 @@ namespace SimulatedShooting.Scene
                 }
                 muzzleFlash.Play(true);
             }
+            if (muzzleBlast != null) muzzleBlast.Play();
 
             if (tracerRoot == null)
             {
@@ -131,7 +138,7 @@ namespace SimulatedShooting.Scene
                 tracerMaterial,
                 bulletFlybyClip,
                 shotIndex,
-                hit ? () => PlayImpact(hitPoint, hitNormal, shotIndex) : null);
+                hit ? () => PlayImpact(hitPoint, hitNormal, shotIndex, hitFlesh) : null);
         }
 
         public void PlayPickupForTests()
@@ -160,22 +167,34 @@ namespace SimulatedShooting.Scene
             }
         }
 
-        void PlayImpact(Vector3 point, Vector3 normal, int shotIndex)
+        public void PlayConfirmedFleshImpact(Vector3 point, Vector3 normal, int shotIndex)
+        {
+            PlayImpact(point, normal, shotIndex, true);
+        }
+
+        void PlayImpact(Vector3 point, Vector3 normal, int shotIndex, bool hitFlesh)
         {
             impactFeedbackCount++;
-            var impact = new GameObject($"ImpactFeedback_ZeroingTarget_{shotIndex:000}");
+            var impact = new GameObject(hitFlesh
+                ? $"ImpactFeedback_Flesh_{shotIndex:000}"
+                : $"ImpactFeedback_ZeroingTarget_{shotIndex:000}");
             impact.transform.SetPositionAndRotation(
                 point + normal.normalized * 0.006f,
                 normal.sqrMagnitude > 0.0001f
                     ? Quaternion.LookRotation(normal.normalized)
                     : Quaternion.identity);
-            impact.AddComponent<SceneTestId>().Id = "ZeroingRange.Target.ImpactFeedback";
+            impact.AddComponent<SceneTestId>().Id = hitFlesh
+                ? "Combat.Actor.FleshImpactFeedback" : "ZeroingRange.Target.ImpactFeedback";
 
-            var particles = impact.AddComponent<ParticleSystem>();
-            ConfigureImpactParticles(particles);
-            particles.Play(true);
+            // Surface hits retain their event marker and audio, without the artificial spark burst.
+            if (hitFlesh)
+            {
+                var mist = impact.AddComponent<RecordedBloodMistVfx>();
+                if (!mist.Initialize(shotIndex)) Debug.LogWarning("ActionVFX Blood Mist material is missing.", impact);
 
-            if (targetImpactClips != null && targetImpactClips.Length > 0)
+            }
+
+            if (!hitFlesh && targetImpactClips != null && targetImpactClips.Length > 0)
             {
                 var clip = targetImpactClips[Mathf.Abs(shotIndex) % targetImpactClips.Length];
                 if (clip != null)
@@ -184,7 +203,35 @@ namespace SimulatedShooting.Scene
                 }
             }
 
-            impact.AddComponent<TimedSelfDestruct>().Configure(0.75f);
+            impact.AddComponent<TimedSelfDestruct>().Configure(hitFlesh ? .9f : .75f);
+        }
+
+        void ConfigureFleshImpactParticles(ParticleSystem particles)
+        {
+            particles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            var main = particles.main;
+            main.loop = false;
+            main.playOnAwake = false;
+            main.duration = 0.08f;
+            main.startLifetime = new ParticleSystem.MinMaxCurve(0.08f, 0.2f);
+            main.startSpeed = new ParticleSystem.MinMaxCurve(0.15f, 0.6f);
+            main.startSize = new ParticleSystem.MinMaxCurve(0.012f, 0.042f);
+            main.startColor = new ParticleSystem.MinMaxGradient(
+                new Color(0.22f, 0.035f, 0.025f, 0.7f),
+                new Color(0.36f, 0.09f, 0.06f, 0.3f));
+            main.simulationSpace = ParticleSystemSimulationSpace.World;
+            main.gravityModifier = 0.2f;
+            main.maxParticles = 12;
+            var emission = particles.emission;
+            emission.rateOverTime = 0f;
+            emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 5, 8) });
+            var shape = particles.shape;
+            shape.shapeType = ParticleSystemShapeType.Cone;
+            shape.angle = 35f;
+            shape.radius = 0.01f;
+            var renderer = particles.GetComponent<ParticleSystemRenderer>();
+            renderer.renderMode = ParticleSystemRenderMode.Billboard;
+            renderer.sharedMaterial = fleshImpactMaterial;
         }
 
         void EnsureRuntimeResources()
@@ -193,7 +240,7 @@ namespace SimulatedShooting.Scene
             {
                 tracerMaterial = CreateMaterial(
                     "Runtime_Tracer_training-rifle",
-                    new Color(1f, 0.70f, 0.10f, 1f),
+                    Color.white,
                     true);
             }
 
@@ -260,6 +307,26 @@ namespace SimulatedShooting.Scene
                 return;
             }
 
+            if (fleshImpactMaterial == null)
+            {
+                fleshImpactMaterial = CreateMaterial("Runtime_FleshImpact_training-rifle", Color.white, true);
+                fleshImpactTexture = new Texture2D(32, 32, TextureFormat.RGBA32, false)
+                { name = "Runtime_SoftFleshImpact", wrapMode = TextureWrapMode.Clamp };
+                for (var y = 0; y < 32; y++)
+                for (var x = 0; x < 32; x++)
+                {
+                    var dx = (x - 15.5f) / 15.5f;
+                    var dy = (y - 15.5f) / 15.5f;
+                    var alpha = Mathf.Pow(Mathf.Clamp01(1f - dx * dx - dy * dy), 2f);
+                    fleshImpactTexture.SetPixel(x, y, new Color(1f, 1f, 1f, alpha));
+                }
+                fleshImpactTexture.Apply(false, true);
+                fleshImpactMaterial.mainTexture = fleshImpactTexture;
+            }
+
+            if (muzzleBlast == null)
+                muzzleBlast = muzzle.GetComponent<MuzzleBlastVfx>() ?? muzzle.gameObject.AddComponent<MuzzleBlastVfx>();
+
             if (muzzleFlash == null)
             {
                 var flashObject = new GameObject("MuzzleFlash_training-rifle");
@@ -273,19 +340,19 @@ namespace SimulatedShooting.Scene
             var main = muzzleFlash.main;
             main.loop = false;
             main.playOnAwake = false;
-            main.duration = 0.08f;
-            main.startLifetime = new ParticleSystem.MinMaxCurve(0.025f, 0.065f);
-            main.startSpeed = new ParticleSystem.MinMaxCurve(2.5f, 5.5f);
-            main.startSize = new ParticleSystem.MinMaxCurve(0.035f, 0.085f);
+            main.duration = 0.045f;
+            main.startLifetime = new ParticleSystem.MinMaxCurve(0.018f, 0.04f);
+            main.startSpeed = new ParticleSystem.MinMaxCurve(1.2f, 3f);
+            main.startSize = new ParticleSystem.MinMaxCurve(0.008f, 0.024f);
             main.startColor = new ParticleSystem.MinMaxGradient(
-                new Color(1f, 0.94f, 0.45f, 1f),
-                new Color(1f, 0.20f, 0.03f, 0.75f));
+                new Color(1f, 0.94f, 0.68f, 0.75f),
+                new Color(1f, 0.45f, 0.16f, 0.35f));
             main.simulationSpace = ParticleSystemSimulationSpace.World;
             main.maxParticles = 20;
 
             var emission = muzzleFlash.emission;
             emission.rateOverTime = 0f;
-            emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 7, 12) });
+            emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 3, 5) });
 
             var shape = muzzleFlash.shape;
             shape.enabled = true;
@@ -298,39 +365,6 @@ namespace SimulatedShooting.Scene
             muzzleFlashRenderer.lengthScale = 2.2f;
             muzzleFlashRenderer.velocityScale = 0.06f;
             muzzleFlashRenderer.sharedMaterial = null;
-        }
-
-        void ConfigureImpactParticles(ParticleSystem particles)
-        {
-            particles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            var main = particles.main;
-            main.loop = false;
-            main.playOnAwake = false;
-            main.duration = 0.12f;
-            main.startLifetime = new ParticleSystem.MinMaxCurve(0.12f, 0.34f);
-            main.startSpeed = new ParticleSystem.MinMaxCurve(0.7f, 2.4f);
-            main.startSize = new ParticleSystem.MinMaxCurve(0.008f, 0.026f);
-            main.startColor = new ParticleSystem.MinMaxGradient(
-                new Color(1f, 0.72f, 0.12f, 1f),
-                new Color(0.45f, 0.28f, 0.12f, 0.3f));
-            main.simulationSpace = ParticleSystemSimulationSpace.World;
-            main.gravityModifier = 0.55f;
-            main.maxParticles = 24;
-
-            var emission = particles.emission;
-            emission.rateOverTime = 0f;
-            emission.SetBursts(new[] { new ParticleSystem.Burst(0f, 7, 13) });
-
-            var shape = particles.shape;
-            shape.enabled = true;
-            shape.shapeType = ParticleSystemShapeType.Hemisphere;
-            shape.radius = 0.012f;
-
-            var renderer = particles.GetComponent<ParticleSystemRenderer>();
-            renderer.renderMode = ParticleSystemRenderMode.Stretch;
-            renderer.lengthScale = 2.2f;
-            renderer.velocityScale = 0.12f;
-            renderer.sharedMaterial = impactMaterial;
         }
 
         void SubscribeGrab()

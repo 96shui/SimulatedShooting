@@ -30,6 +30,8 @@ namespace VRShooting.Unity.UI
             view.TrenchBriefingView.StartRequested+=StartMission;
             view.TrenchBriefingView.BackRequested+=Back;
             view.TrenchBriefingView.ViewMapRequested+=ToggleMap;
+            view.DroneReconView.BackRequested+=Back;
+            view.DroneReconView.RetryRequested+=Retry;
             view.TrenchResultsView.RetryRequested+=Retry;
             view.UrbanResultsView.RetryRequested+=Retry;
             view.TrenchResultsView.BackToMainMenuRequested+=Return;
@@ -71,6 +73,12 @@ namespace VRShooting.Unity.UI
                 view.GetComponent<TrainingUICanvasAdapter>()?.ForcePlacementForTests();
             }
             var m=app.Mission;
+            if(state.Screen==ScreenId.TrenchDroneRecon&&state.DroneRecon.HasValue)
+            {
+                var opening=state.DroneRecon.Value;
+                var video=(m?.DroneScenePort as IDroneReconVideoSource)?.ResolveVideo(opening.FeedBindingId);
+                view.DroneReconView.Apply(opening,video,state.Busy);
+            }
             if(m!=null && state.Screen==ScreenId.TrenchBriefing)
             {
                 var brief=m.Trench.GetBriefing(m.Definition.MapId,P3ContractIds.TrainingWeapon,RandomSeed.Fixed(20260916));

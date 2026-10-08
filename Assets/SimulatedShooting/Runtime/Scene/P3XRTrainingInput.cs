@@ -10,20 +10,28 @@ namespace SimulatedShooting.Scene
     public sealed class P3XRTrainingInput : IXRTrainingInput
     {
         readonly InputSystemXRTrainingInput desktop=new InputSystemXRTrainingInput();
-        bool rear,front,oldRear,oldFront,oldTrigger,trigger;
+        bool rear,front,oldRear,oldFront,oldTrigger,trigger,grenadeHeld,oldGrenadeHeld,grenadePressed;
         public bool IsVr {get;private set;}
         public void Sample(bool vr)
         {
-            IsVr=vr; oldRear=rear;oldFront=front;oldTrigger=trigger;
-            if(vr) { rear=Held(XRController.rightHand,"gripPressed");front=Held(XRController.leftHand,"gripPressed"); }
+            IsVr=vr; oldRear=rear;oldFront=front;oldTrigger=trigger;oldGrenadeHeld=grenadeHeld;
+            if(vr)
+            {
+                rear=Held(XRController.rightHand,"gripPressed");front=Held(XRController.leftHand,"gripPressed");
+                var right=UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.RightHand);
+                bool xrPrimary=right.isValid&&right.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton,out bool pressed)&&pressed;
+                grenadeHeld=Held(XRController.rightHand,"primaryButton")||xrPrimary;
+                grenadePressed=Pressed(XRController.rightHand,"primaryButton")||(grenadeHeld&&!oldGrenadeHeld);
+            }
             else
             {
                 if(Keyboard.current?.eKey.wasPressedThisFrame==true)rear=!rear;
                 if(Keyboard.current?.gKey.wasPressedThisFrame==true)front=!front;
+                grenadeHeld=false;grenadePressed=Keyboard.current?.hKey.wasPressedThisFrame==true;
             }
             trigger=desktop.TriggerHeld;
         }
-        public void Reset() { rear=front=oldRear=oldFront=oldTrigger=trigger=false; }
+        public void Reset() { rear=front=oldRear=oldFront=oldTrigger=trigger=grenadeHeld=oldGrenadeHeld=grenadePressed=false; }
         public bool PosturePressed => IsVr ? Pressed(XRController.leftHand,"secondaryButton") : Keyboard.current?.cKey.wasPressedThisFrame==true;
         public bool ConfirmPressed=>IsVr ? Pressed(XRController.leftHand,"primaryButton") : desktop.ConfirmPressed;
         public bool BackPressed=>desktop.BackPressed;
@@ -38,7 +46,10 @@ namespace SimulatedShooting.Scene
         public bool LeftGripHeld=>front;
         public bool LeftGripReleased=>!front&&oldFront;
         public bool ReloadPressed=>IsVr ? Pressed(XRController.leftHand,"primary2DAxisClick") : desktop.ReloadPressed;
-        public bool GrenadePressed=>IsVr && Pressed(XRController.rightHand,"primaryButton");
+        public bool GrenadePressed=>grenadePressed;
+        public bool GrenadeHeld=>grenadeHeld;
+        public void ClearOpeningToggles()
+        {if(!IsVr)rear=front=oldRear=oldFront=false;grenadePressed=false;}
         public bool SwitchShoulderPressed=>IsVr ? Pressed(XRController.rightHand,"secondaryButton") : desktop.SwitchShoulderPressed;
         public bool AimPressed=>desktop.AimPressed;
         public bool AimHeld=>desktop.AimHeld;

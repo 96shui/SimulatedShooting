@@ -1,0 +1,7 @@
+prepare=True message= grenadeBinding=M67 resource fallback
+camera=Camera_Mode3_DroneFeed rendersDefault=True
+camera=Camera_NoVR rendersDefault=True
+camera=Main Camera rendersDefault=True
+audio=Mode3_RotorLoop duration=2 volume=0.65 blend=1 rolloff=Linear range=4-50 rms=0.21112866647517 loops=True
+takeoff=True flying=True
+afterAdvanceFlying=True

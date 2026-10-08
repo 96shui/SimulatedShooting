@@ -8,8 +8,10 @@
     "Unity.ugui",
     "Unity.XR.Interaction.Toolkit",
     "Unity.XR.CoreUtils",
+    "Unity.InputSystem",
     "VRShooting.Contracts",
-    "VRShooting.P3.TestSupport"
+    "VRShooting.P3.TestSupport",
+    "VRShooting.Gameplay.TestSupport"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

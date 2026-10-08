@@ -100,6 +100,7 @@ namespace VRShooting.Unity.UI
             }
 
             ownedEventSystem.gameObject.SetActive(true);
+            ownedEventSystem.enabled = true;
         }
 
         static void EnsureXrInputModule(EventSystem eventSystem)
@@ -123,6 +124,7 @@ namespace VRShooting.Unity.UI
             }
 
             inputModule.enableXRInput = true;
+            inputModule.enabled = true;
             inputModule.enableMouseInput = true;
             inputModule.enableTouchInput = true;
             inputModule.enableGamepadInput = true;

@@ -6,6 +6,7 @@ using NUnit.Framework;
 using UnityEngine;
 using VRShooting.Application;
 using VRShooting.Application.Combat;
+using VRShooting.Application.Events;
 using VRShooting.Common;
 using VRShooting.Contracts;
 using VRShooting.P3.TestSupport;
@@ -18,10 +19,12 @@ namespace VRShooting.Tests.EditMode
         CombatApplicationFixture fixture;
         CombatApplicationCoordinator app;
         CombatApplicationFixture.Lease lease;
+        GameEventBus events;
         [SetUp] public void Setup()
         {
             fixture = new CombatApplicationFixture();
-            app = new CombatApplicationCoordinator(new UIRouter(new GameEventBus()), fixture, fixture);
+            events=new GameEventBus();
+            app = new CombatApplicationCoordinator(new UIRouter(events), fixture, fixture,events);
         }
         [TearDown] public void Cleanup() => app.Dispose();
         void Prepare(TrainingMode mode)
@@ -35,6 +38,7 @@ namespace VRShooting.Tests.EditMode
         { Assert.That(task.IsCompleted, "Controlled loader completion must be synchronous"); return task.GetAwaiter().GetResult(); }
         void Die()
         {
+            if(app.Mission.Trench!=null&&app.Mission.Opening?.CharacterActionsLocked==true)CompleteOpening();
             var id = app.Mission.SessionId;
             var core = app.Mission.Core;
             var enemy = core.GetSnapshot(id).Data.Visual.Entities.First(e => e.Role == CombatEntityRole.Enemy);
@@ -51,7 +55,68 @@ namespace VRShooting.Tests.EditMode
             Assert.That(app.Mission.SessionId, Is.Empty); Assert.That(lease.Activations, Is.Zero);
             Assert.That(app.Start().Success); Assert.That(lease.Activations, Is.EqualTo(1));
             Assert.That(app.Start().ErrorCode, Is.EqualTo(ErrorCode.Busy));
+            Assert.That(app.Snapshot.Screen, Is.EqualTo(ScreenId.TrenchDroneRecon));
+            Assert.That(app.Mission.Core.GetSnapshot(app.Mission.SessionId).Data.State,Is.EqualTo(SessionState.Preparing));
+            CompleteOpening();
             Assert.That(app.Snapshot.Screen, Is.EqualTo(ScreenId.TrenchHud));
+        }
+        void CompleteOpening()
+        {
+            for(var step=0;step<5;step++)
+            {
+                var phase=lease.DroneScene.Current.Phase;
+                Assert.That(lease.DroneScene.Locked,Is.True);
+                lease.DroneScene.CompleteCurrentStep();
+                lease.TestClock.Advance(phase==DroneReconPhase.PlayerTakeoff?3:phase==DroneReconPhase.DroneLanding?2:.1);
+                Assert.That(app.Advance().Success,Is.True);
+            }
+            Assert.That(lease.DroneScene.Locked,Is.False);
+            Assert.That(app.Mission.Opening.Value.Phase,Is.EqualTo(DroneReconPhase.Ready));
+        }
+        [Test] public void CombatStartEventOccursOnceAfterUnlockAndReadyPauseCannotStartCombat()
+        {
+            var starts=0;
+            using var subscription=events.Subscribe<SessionStartedEvent>(value=>
+            {starts++;Assert.That(value.Session.State,Is.EqualTo(SessionState.Running));Assert.That(lease.DroneScene.Locked,Is.False);});
+            Prepare(TrainingMode.Trench);app.Start();Assert.That(starts,Is.Zero);
+            app.Mission.DroneRecon.Changed+=value=>{if(value.Phase==DroneReconPhase.Ready&&value.CharacterActionsLocked)app.Mission.OpeningPaused=true;};
+            for(var step=0;step<5;step++)
+            {
+                var phase=lease.DroneScene.Current.Phase;lease.DroneScene.CompleteCurrentStep();
+                lease.TestClock.Advance(phase==DroneReconPhase.PlayerTakeoff?3:phase==DroneReconPhase.DroneLanding?2:.1);
+                Assert.That(app.Advance().Success,Is.True);
+            }
+            Assert.That(starts,Is.Zero);Assert.That(lease.DroneScene.Locked,Is.True);
+            Assert.That(app.Mission.Core.GetSnapshot(app.Mission.SessionId).Data.State,Is.EqualTo(SessionState.Preparing));
+            app.Mission.OpeningPaused=false;Assert.That(app.Advance().Success,Is.True);
+            Assert.That(starts,Is.EqualTo(1));app.Advance();Assert.That(starts,Is.EqualTo(1));
+        }
+        [Test] public void TrackingLossDuringSceneUnlockRetriesCommitWithoutStartingHudEarly()
+        {
+            var starts=0;
+            using var subscription=events.Subscribe<SessionStartedEvent>(_=>starts++);
+            Prepare(TrainingMode.Trench);Assert.That(app.Start().Success,Is.True);
+            var id=app.Mission.SessionId;
+            app.Mission.DroneRecon.Changed+=value=>{
+                if(value.Phase==DroneReconPhase.Ready&&!value.CharacterActionsLocked)
+                    app.Mission.Core.SetTracking(id,false);
+            };
+            for(var step=0;step<5;step++)
+            {
+                var phase=lease.DroneScene.Current.Phase;lease.DroneScene.CompleteCurrentStep();
+                lease.TestClock.Advance(phase==DroneReconPhase.PlayerTakeoff?3:phase==DroneReconPhase.DroneLanding?2:.1);
+                var result=app.Advance();
+                Assert.That(result.Success,Is.EqualTo(step<4));
+            }
+            Assert.That(starts,Is.Zero);Assert.That(app.Mission.HasCombatStarted,Is.False);
+            Assert.That(app.Snapshot.Screen,Is.EqualTo(ScreenId.TrenchDroneRecon));
+            Assert.That(app.Mission.Core.SetTracking(id,true).Success,Is.True);
+            Assert.That(app.Snapshot.Screen,Is.EqualTo(ScreenId.TrenchDroneRecon),
+                "Tracking recovery cannot navigate to HUD before the final combat commit.");
+            Assert.That(app.Advance().Success,Is.True);
+            Assert.That(starts,Is.EqualTo(1));Assert.That(app.Mission.HasCombatStarted,Is.True);
+            Assert.That(app.Snapshot.Screen,Is.EqualTo(ScreenId.TrenchHud));
+            app.Advance();Assert.That(starts,Is.EqualTo(1));
         }
         [Test] public void LoadFailureLeavesRecoverableMap_AndBusyRejectsAnotherSelection()
         {

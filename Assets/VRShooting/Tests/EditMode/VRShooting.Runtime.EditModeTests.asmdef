@@ -4,7 +4,8 @@
   "references": [
     "VRShooting.Runtime",
     "VRShooting.Contracts",
-    "VRShooting.P3.TestSupport"
+    "VRShooting.P3.TestSupport",
+    "VRShooting.Gameplay.TestSupport"
   ],
   "includePlatforms": [
     "Editor"

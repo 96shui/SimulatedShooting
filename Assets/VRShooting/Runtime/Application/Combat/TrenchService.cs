@@ -19,6 +19,7 @@ namespace VRShooting.Application.Combat
         readonly CombatCoreService core;
         readonly SquadFormationService squad;
         readonly SquadGrenadeTacticService grenades;
+        readonly IDroneReconService recon;
         readonly HashSet<string> searched=new HashSet<string>(), inRange=new HashSet<string>(), killed=new HashSet<string>();
         readonly Dictionary<string,Vector3> estimates=new Dictionary<string,Vector3>();
         readonly Dictionary<string,CombatInputDto> received=new Dictionary<string,CombatInputDto>();
@@ -44,11 +45,13 @@ namespace VRShooting.Application.Combat
         public event Action<CombatVisualSnapshotDto> VisualChanged;
 
         public TrenchService(CombatSceneDefinitionDto definition,ICombatClock clock,ICombatRandom random,
-            ICombatNavigationPort navigation,CombatConfigDto? config=null,Func<string> sessionIdFactory=null)
+            ICombatNavigationPort navigation,CombatConfigDto? config=null,Func<string> sessionIdFactory=null,
+            IDroneReconService recon=null)
         {
             this.definition=definition; this.clock=clock??throw new ArgumentNullException(nameof(clock));
             this.random=random??throw new ArgumentNullException(nameof(random)); this.config=config??CombatConfigDto.Default;
             nextSessionId=sessionIdFactory??(()=>Guid.NewGuid().ToString("N"));
+            this.recon=recon;
             core=new CombatCoreService(clock,this.config); squad=new SquadFormationService(clock,navigation,this.config);
             grenades=new SquadGrenadeTacticService(clock,core,squad,this.config);
             core.Changed+=OnCore; squad.Changed+=OnSquad;
@@ -72,6 +75,8 @@ namespace VRShooting.Application.Combat
                 PlannedSquad=new SquadStatusDto {Members=Array.AsReadOnly(members),CommandMenuAvailable=false},ProjectedMap=BuildMap(true)});
         }
         public ServiceResult<TrenchSessionDto> StartSession(string mapId,string weaponId,RandomSeed seed)
+            => PrepareSession(mapId,weaponId,seed);
+        public ServiceResult<TrenchSessionDto> PrepareSession(string mapId,string weaponId,RandomSeed seed)
         {
             var valid=ValidateStart(mapId,weaponId); if(!valid.Success)return Fail<TrenchSessionDto>(valid.ErrorCode);
             if(publishing||batch||starting||(!cancelled&&!hasResult&&session.Length>0))return Fail<TrenchSessionDto>(ErrorCode.Busy);
@@ -93,15 +98,49 @@ namespace VRShooting.Application.Combat
             starting=true;
             try
             {
-                var started=core.Start(id,TrainingMode.Trench,spawns); if(!started.Success)return Fail<TrenchSessionDto>(started.ErrorCode);
+                var started=core.Prepare(id,spawns,definition.PlayerSpawnPosition,SpawnForward());
+                if(!started.Success)return Fail<TrenchSessionDto>(started.ErrorCode);
                 session=id;combat=started.Data;revision=0;elapsed=0;lastNow=clock.Now;cancelled=hasResult=false;pendingOutcome=null;
                 searched.Clear();inRange.Clear();killed.Clear();estimates.Clear();received.Clear();pending.Clear();
                 foreach(var pair in selected)estimates.Add(pair.Key,pair.Value);
-                squad.Start(id,definition.PlayerSpawnPosition,SpawnForward());dirty=true;
+                squad.Start(id,definition.PlayerSpawnPosition,SpawnForward(),false);dirty=true;
                 grenades.Start(id);
             }
             finally {starting=false;}
             Publish();return ServiceResult<TrenchSessionDto>.Ok(snapshot);
+        }
+        public ServiceResult<TrenchSessionDto> BeginCombat(string id)
+        {
+            var valid=Boundary(id); if(!valid.Success)return Fail<TrenchSessionDto>(valid.ErrorCode);
+            if(cancelled||hasResult)return Fail<TrenchSessionDto>(ErrorCode.InvalidState);
+            if(combat.State==SessionState.Running)return ServiceResult<TrenchSessionDto>.Ok(snapshot);
+            var ready=recon?.GetSnapshot(id);
+            if(combat.State!=SessionState.Preparing||!combat.TrackingValid||!ready.HasValue||!ready.Value.Success)
+                return Fail<TrenchSessionDto>(ErrorCode.InvalidState);
+            var opening=ready.Value.Data;
+            if(opening.SessionId!=id||opening.Phase!=DroneReconPhase.Ready||
+                opening.ViewMode!=DroneReconViewMode.Player||!opening.CharacterActionsLocked||
+                string.IsNullOrWhiteSpace(opening.SequenceId)||string.IsNullOrWhiteSpace(opening.StepId))
+                return Fail<TrenchSessionDto>(ErrorCode.InvalidState);
+            batch=true;
+            try
+            {
+                pending.Clear();received.Clear();inRange.Clear();lastNow=clock.Now;
+                var begun=core.BeginPreparedCombat(id);
+                if(!begun.Success)return Fail<TrenchSessionDto>(begun.ErrorCode);
+                combat=core.GetSnapshot(id).Data;dirty=true;
+            }
+            finally {batch=false;}
+            Publish();return ServiceResult<TrenchSessionDto>.Ok(snapshot);
+        }
+        public ServiceResult<Unit> CompleteCombatStart(string id)
+        {
+            var valid=Boundary(id);if(!valid.Success)return valid;
+            var opening=recon?.GetSnapshot(id);
+            if(cancelled||hasResult||!opening.HasValue||!opening.Value.Success||
+                opening.Value.Data.Phase!=DroneReconPhase.Ready||opening.Value.Data.CharacterActionsLocked)
+                return Fail<Unit>(ErrorCode.InvalidState);
+            return core.CompletePreparedCombat(id);
         }
         public ServiceResult<TrenchSessionDto> GetSession(string id)=>Matches(id)?ServiceResult<TrenchSessionDto>.Ok(snapshot):Fail<TrenchSessionDto>(ErrorCode.NotFound);
         public ServiceResult<TrenchResultDto> GetResult(string id)=>Matches(id)&&hasResult?ServiceResult<TrenchResultDto>.Ok(result):Fail<TrenchResultDto>(ErrorCode.NotFound);
@@ -113,7 +152,7 @@ namespace VRShooting.Application.Combat
         public ServiceResult<Unit> Submit(CombatInputDto input)
         {
             var valid=Guard(input.SessionId);if(!valid.Success)return valid;
-            if(cancelled||hasResult||combat.State!=SessionState.Running||!combat.TrackingValid)return Fail<Unit>(ErrorCode.InvalidState);
+            if(cancelled||hasResult||combat.State!=SessionState.Running||core.OpeningCommitLocked||!combat.TrackingValid)return Fail<Unit>(ErrorCode.InvalidState);
             if(string.IsNullOrWhiteSpace(input.EventId))return Fail<Unit>(ErrorCode.InvalidInput);
             if(received.TryGetValue(input.EventId,out var old))return old.Equals(input)?Ok():Fail<Unit>(ErrorCode.InvalidInput);
             if(input.Kind!=CombatInputKind.AreaPresence&&input.Kind!=CombatInputKind.NavigationResult)
@@ -135,6 +174,7 @@ namespace VRShooting.Application.Combat
         {
             var valid=Guard(id);if(!valid.Success)return valid;
             if(hasResult||cancelled)return Ok();
+            if(combat.State==SessionState.Preparing||core.OpeningCommitLocked)return Fail<Unit>(ErrorCode.InvalidState);
             if(pending.Any(p=>p.Tick!=clock.Tick))return Fail<Unit>(ErrorCode.InvalidState);
             batch=true;
             try
@@ -221,11 +261,11 @@ namespace VRShooting.Application.Combat
         void UpdateSquad()
         {
             var player=combat.Visual.Entities[0];
-            squad.UpdatePlayer(player.Position,player.Forward,!cancelled&&!hasResult&&combat.State==SessionState.Running&&combat.TrackingValid,combat.Player.Health);
+            squad.UpdatePlayer(player.Position,player.Forward,!cancelled&&!hasResult&&!core.OpeningCommitLocked&&combat.State==SessionState.Running&&combat.TrackingValid,combat.Player.Health);
         }
         void AccumulateTime()
         {
-            if(!hasResult&&!cancelled&&combat.State==SessionState.Running&&combat.TrackingValid&&clock.Now>=lastNow)
+            if(!hasResult&&!cancelled&&!core.OpeningCommitLocked&&combat.State==SessionState.Running&&combat.TrackingValid&&clock.Now>=lastNow)
             {elapsed+=clock.Now-lastNow;if(clock.Now>lastNow)dirty=true;}
             lastNow=clock.Now;
         }

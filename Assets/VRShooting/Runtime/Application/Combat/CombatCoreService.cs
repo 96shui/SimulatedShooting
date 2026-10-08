@@ -36,6 +36,7 @@ namespace VRShooting.Application.Combat
         public event Action<CombatCoreSnapshotDto> Changed;
         public event Action<CombatFeedbackDto> Feedback;
         public bool HasPendingInputs => pending.Count > 0;
+        internal bool OpeningCommitLocked {get;private set;}
 
         public CombatCoreService(ICombatClock clock, CombatConfigDto? config = null)
         {
@@ -45,10 +46,18 @@ namespace VRShooting.Application.Combat
         }
 
         public ServiceResult<CombatCoreSnapshotDto> Start(string sessionId, TrainingMode mode, IReadOnlyList<CombatEntityVisualDto> spawns)
+            => Initialize(sessionId, mode, spawns, false, Vector3.zero, Vector3.forward);
+
+        internal ServiceResult<CombatCoreSnapshotDto> Prepare(string sessionId, IReadOnlyList<CombatEntityVisualDto> spawns,
+            Vector3 playerPosition, Vector3 playerForward)
+            => Initialize(sessionId, TrainingMode.Trench, spawns, true, playerPosition, playerForward);
+
+        ServiceResult<CombatCoreSnapshotDto> Initialize(string sessionId, TrainingMode mode,
+            IReadOnlyList<CombatEntityVisualDto> spawns, bool preparing, Vector3 playerPosition, Vector3 playerForward)
         {
             if (disposed || publishing) return Fail<CombatCoreSnapshotDto>(ErrorCode.InvalidState);
             if (string.IsNullOrWhiteSpace(sessionId) || (mode != TrainingMode.Trench && mode != TrainingMode.Urban) || spawns == null ||
-                !ValidClock()) return Fail<CombatCoreSnapshotDto>(ErrorCode.InvalidInput);
+                !ValidClock() || !Finite(playerPosition) || !ValidDirection(playerForward)) return Fail<CombatCoreSnapshotDto>(ErrorCode.InvalidInput);
             if (sessionIds.Contains(sessionId)) return Fail<CombatCoreSnapshotDto>(ErrorCode.InvalidState);
             var ids = new HashSet<string>(StringComparer.Ordinal);
             foreach (var spawn in spawns)
@@ -66,7 +75,9 @@ namespace VRShooting.Application.Combat
             }
             enemies.Sort((a,b) => StringComparer.Ordinal.Compare(a.Id,b.Id));
             health = config.PlayerHealth; posture = PlayerPosture.Standing; corner = false; tracked = true;
-            position = Vector3.zero; forward = Vector3.forward; state = SessionState.Running;
+            position = playerPosition; forward = playerForward.normalized;
+            state = preparing ? SessionState.Preparing : SessionState.Running;
+            OpeningCommitLocked=preparing;
             revision = 0; attackSequence = 0; lastNow = clock.Now; lastTick = clock.Tick;
             reloadAt = double.PositiveInfinity; dirty = true; Publish();
             return ServiceResult<CombatCoreSnapshotDto>.Ok(snapshot);
@@ -82,7 +93,27 @@ namespace VRShooting.Application.Combat
                 return Failure(ErrorCode.InvalidInput);
             if (state == next) return Ok();
             if (Terminal(state)) return Failure(ErrorCode.InvalidState);
+            // Only the owning trench service may commit a prepared session.
+            if (OpeningCommitLocked && next != SessionState.Cancelled)
+                return Failure(ErrorCode.InvalidState);
             state = next; Suspend(); dirty = true; Publish(); return Ok();
+        }
+        internal ServiceResult<Unit> BeginPreparedCombat(string sessionId)
+        {
+            var guard = Guard(sessionId); if (!guard.Success) return guard;
+            if (state != SessionState.Preparing || !tracked) return Failure(ErrorCode.InvalidState);
+            Suspend(); received.Clear();
+            weapons.SetGripState(new WeaponGripStateInputDto { SessionId = session, HoldState = WeaponHoldState.Dropped });
+            lastNow = clock.Now; lastTick = clock.Tick;
+            state = SessionState.Running; dirty = true; Publish(); return Ok();
+        }
+        internal ServiceResult<Unit> CompletePreparedCombat(string sessionId)
+        {
+            var guard=Guard(sessionId);if(!guard.Success)return guard;
+            if(state!=SessionState.Running||!tracked)return Failure(ErrorCode.InvalidState);
+            if(!OpeningCommitLocked)return Ok();
+            OpeningCommitLocked=false;lastNow=clock.Now;lastTick=clock.Tick;
+            dirty=true;Publish();return Ok();
         }
         public ServiceResult<Unit> SetTracking(string sessionId, bool value)
         {
@@ -155,7 +186,8 @@ namespace VRShooting.Application.Combat
         {
             var guard = Guard(sessionId);
             if (!guard.Success) return ServiceResult<IReadOnlyList<string>>.Fail(guard.ErrorCode, guard.Message);
-            if (!Active || string.IsNullOrWhiteSpace(grenadeId) || string.IsNullOrWhiteSpace(throwerId) || !Finite(blastPosition) || !Finite(radius) || radius <= 0)
+            if (!Active) return ServiceResult<IReadOnlyList<string>>.Fail(ErrorCode.InvalidState);
+            if (string.IsNullOrWhiteSpace(grenadeId) || string.IsNullOrWhiteSpace(throwerId) || !Finite(blastPosition) || !Finite(radius) || radius <= 0)
                 return ServiceResult<IReadOnlyList<string>>.Fail(ErrorCode.InvalidInput, "Invalid grenade explosion");
             if (pending.Count > 0) return ServiceResult<IReadOnlyList<string>>.Fail(ErrorCode.Busy, "Resolve grenade at an Advance boundary");
             if ((throwerId!=session+".teammate-2"&&throwerId!=session+".teammate-3") || exposedTargets==null)
@@ -348,7 +380,7 @@ namespace VRShooting.Application.Combat
             }
             finally { feedback.Clear(); publishing = false; }
         }
-        bool Active => state == SessionState.Running && health > 0 && tracked;
+        bool Active => state == SessionState.Running && !OpeningCommitLocked && health > 0 && tracked;
         bool Matches(string id) => !disposed && session.Length > 0 && session == id;
         bool ValidClock() => !double.IsNaN(clock.Now) && !double.IsInfinity(clock.Now) && clock.Now >= 0 && clock.Tick >= 0 &&
             clock.Now + config.EnemyAttackInterval > clock.Now && clock.Now + config.ReloadSeconds > clock.Now;

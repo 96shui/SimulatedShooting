@@ -7,6 +7,7 @@ namespace SimulatedShooting.Scene
 {
     public sealed class CombatActorView : MonoBehaviour
     {
+        const float CorpseVisibleSeconds = 5f;
         static readonly RaycastHit[] GroundHits = new RaycastHit[32];
         public string EntityId;
         public Transform VisualRoot;
@@ -16,10 +17,13 @@ namespace SimulatedShooting.Scene
         public Collider HitCollider;
         public AudioSource Audio;
         public AudioClip HitClip;
+        public AudioClip ShotClip;
+        public bool HideCorpseAfterDelay;
         public NavMeshAgent Agent;
         public CombatSoldierAnimation SoldierAnimation;
         public bool IsDead { get; private set; }
         public int HitFeedbackCount { get; private set; }
+        public int ShotAudioFeedbackCount { get; private set; }
         public event Action<string, bool> NavigationReported;
         readonly HashSet<string> feedback = new HashSet<string>();
         bool moving;
@@ -32,12 +36,46 @@ namespace SimulatedShooting.Scene
         CapsuleCollider standingHitCapsule;
         Vector3 standingHitCenter;
         bool feetAligned;
-        float flashUntil;
+        MuzzleBlastVfx muzzleBlast;
+        float deathTime;
+        bool actionsLocked;
+        bool soldierWasEnabled;
+        readonly Dictionary<Animator,float> frozenAnimators = new Dictionary<Animator,float>();
+        public bool ActionsLocked => actionsLocked;
+        public Vector3 GroundedFeetPosition => new Vector3(transform.position.x,
+            groundTerrain != null ? GroundHeight() : transform.position.y, transform.position.z);
+        public void SetActionsLocked(bool value)
+        {
+            if(actionsLocked==value)return;
+            actionsLocked=value;moving=false;
+            if(Agent!=null&&Agent.enabled&&Agent.isOnNavMesh){Agent.ResetPath();Agent.isStopped=value;}
+            if(value)
+            {
+                if(Audio!=null)Audio.Stop();
+                foreach(var animator in GetComponentsInChildren<Animator>(true))
+                {frozenAnimators[animator]=animator.speed;animator.speed=0;}
+                if(SoldierAnimation!=null){soldierWasEnabled=SoldierAnimation.enabled;SoldierAnimation.enabled=false;}
+            }
+            else
+            {
+                foreach(var item in frozenAnimators)if(item.Key!=null)item.Key.speed=item.Value;
+                frozenAnimators.Clear();
+                if(SoldierAnimation!=null)SoldierAnimation.enabled=soldierWasEnabled;
+            }
+        }
 
         void Awake()
         {
             standingVisualPosition = VisualRoot.localPosition;
             standingVisualRotation = VisualRoot.localRotation;
+            if (Audio != null)
+            {
+                Audio.spatialBlend = 1f;
+                Audio.rolloffMode = AudioRolloffMode.Logarithmic;
+                Audio.minDistance = 2f;
+                Audio.maxDistance = 65f;
+                Audio.dopplerLevel = 0f;
+            }
         }
 
         public void MatchVisualToTerrain(Terrain terrain)
@@ -94,30 +132,52 @@ namespace SimulatedShooting.Scene
 
         public void PlayHit(string eventId)
         {
-            if (string.IsNullOrEmpty(eventId) || !feedback.Add("hit:" + eventId)) return;
+            if (actionsLocked || string.IsNullOrEmpty(eventId) || !feedback.Add("hit:" + eventId)) return;
             HitFeedbackCount++;
             Audio.PlayOneShot(HitClip);
             if (SoldierAnimation != null) SoldierAnimation.Hit();
         }
 
-        public void PlayShot(string eventId)
+        public void PlayShot(string eventId, Vector3? targetPosition = null)
         {
-            if (IsDead || string.IsNullOrEmpty(eventId) || !feedback.Add("shot:" + eventId)) return;
-            MuzzleFlash.SetActive(true);
-            flashUntil = Time.time + 0.08f;
+            if (actionsLocked || IsDead || string.IsNullOrEmpty(eventId) || !feedback.Add("shot:" + eventId)) return;
+            if (Audio != null && ShotClip != null)
+            {
+                Audio.PlayOneShot(ShotClip, 0.85f);
+                ShotAudioFeedbackCount++;
+            }
+            // The prefab's old solid mesh flash is deliberately kept inactive.
+            if (MuzzleFlash != null) MuzzleFlash.SetActive(false);
+            if (Muzzle != null)
+            {
+                if (muzzleBlast == null)
+                    muzzleBlast = Muzzle.GetComponent<MuzzleBlastVfx>() ?? Muzzle.gameObject.AddComponent<MuzzleBlastVfx>();
+                muzzleBlast.Play();
+                if (targetPosition.HasValue)
+                {
+                    var tracerObject = new GameObject("Tracer_Enemy_" + eventId);
+                    tracerObject.transform.SetParent(transform.parent, true);
+                    var tracer = tracerObject.AddComponent<BallisticTracerVisual>();
+                    tracer.Configure(Muzzle.position, targetPosition.Value,
+                        null, null, null, null, 0, null);
+                }
+            }
             if (SoldierAnimation != null) SoldierAnimation.Shot();
         }
 
         public void PlayGrenadeThrow()
         {
-            if (IsDead || SoldierAnimation == null) return;
+            if (actionsLocked || IsDead || SoldierAnimation == null) return;
             SoldierAnimation.GrenadeThrow();
         }
 
         public void ApplyDead(bool dead)
         {
+            if(actionsLocked)return;
             if (IsDead == dead) return;
             IsDead = dead;
+            deathTime = dead ? Time.time : 0f;
+            if (!dead && VisualRoot != null) VisualRoot.gameObject.SetActive(true);
             moving = false;
             if (Agent.enabled && Agent.isOnNavMesh) Agent.ResetPath();
             Agent.enabled = !dead;
@@ -125,7 +185,7 @@ namespace SimulatedShooting.Scene
             VisualRoot.localRotation = standingVisualRotation * (dead && SoldierAnimation == null ? Quaternion.Euler(-90, 0, 0) : Quaternion.identity);
             if (SoldierAnimation != null) SoldierAnimation.SetDead(dead);
             HitCollider.enabled = !dead;
-            MuzzleFlash.SetActive(false);
+            if (MuzzleFlash != null) MuzzleFlash.SetActive(false);
         }
 
         public bool CanSee(Vector3 target, LayerMask mask)
@@ -135,6 +195,7 @@ namespace SimulatedShooting.Scene
 
         public void MoveTo(Vector3 destination, Quaternion facing)
         {
+            if(actionsLocked)return;
             moving = false;
             if (Agent.enabled && Agent.isOnNavMesh) Agent.ResetPath();
             var path = new NavMeshPath();
@@ -152,7 +213,9 @@ namespace SimulatedShooting.Scene
 
         void Update()
         {
-            if (MuzzleFlash.activeSelf && Time.time >= flashUntil) MuzzleFlash.SetActive(false);
+            if (HideCorpseAfterDelay && IsDead && VisualRoot != null && VisualRoot.gameObject.activeSelf
+                && Time.time - deathTime >= CorpseVisibleSeconds)
+                VisualRoot.gameObject.SetActive(false);
             if (!moving || Agent.pathPending) return;
             if (Agent.pathStatus != NavMeshPathStatus.PathComplete)
             {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
 
 namespace VRShooting.Unity.UI
 {
@@ -25,16 +26,46 @@ namespace VRShooting.Unity.UI
             foreach (var ray in xrOrigin.GetComponentsInChildren<XRRayInteractor>(true))
             {
                 if (!ray.enableUIInteraction)
+                {
                     ray.gameObject.SetActive(false);
+                    continue;
+                }
+
+                ray.blockUIOnInteractableSelection = false;
+                EnsureActiveHierarchy(ray.transform, xrOrigin.transform);
+                ray.enabled = true;
+                EnsureUiPressEnabled(ray.uiPressInput);
             }
 
             foreach (var ray in xrOrigin.GetComponentsInChildren<NearFarInteractor>(true))
             {
                 ray.enableUIInteraction = true;
-                for (var current = ray.transform; current != null && current != xrOrigin.transform;
-                     current = current.parent)
-                    current.gameObject.SetActive(true);
+                // XRI resets the UI model when far casting is disabled, even if
+                // enableUIInteraction and the trigger action are both enabled.
+                ray.enableFarCasting = true;
+                ray.blockUIOnInteractableSelection = false;
+                ray.enabled = true;
+                EnsureActiveHierarchy(ray.transform, xrOrigin.transform);
+                EnsureUiPressEnabled(ray.uiPressInput);
             }
+        }
+
+        static void EnsureActiveHierarchy(Transform target, Transform origin)
+        {
+            for (var current = target; current != null && current != origin; current = current.parent)
+                current.gameObject.SetActive(true);
+        }
+
+        static void EnsureUiPressEnabled(XRInputButtonReader input)
+        {
+            if (input == null) return;
+            if (input.inputSourceMode == XRInputButtonReader.InputSourceMode.InputActionReference)
+            {
+                input.inputActionReferencePerformed?.action?.Enable();
+                input.inputActionReferenceValue?.action?.Enable();
+            }
+            else
+                input.EnableDirectActionIfModeUsed();
         }
     }
 }

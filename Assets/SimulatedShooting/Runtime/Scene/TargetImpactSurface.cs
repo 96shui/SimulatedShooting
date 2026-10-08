@@ -41,6 +41,8 @@ namespace SimulatedShooting.Scene
         public float FaceHeightCm => faceHeightMetres * 100f;
         public float TenRingRadiusCm => tenRingRadiusMetres * 100f;
 
+        void Awake() => ChestTargetArtwork.Apply(this);
+
         public void Configure(Collider surfaceCollider, Transform center, Transform markerRoot, Material markerMaterial)
         {
             impactCollider = surfaceCollider;

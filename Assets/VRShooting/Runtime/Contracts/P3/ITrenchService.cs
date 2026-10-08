@@ -12,6 +12,8 @@ namespace VRShooting.Application
         ServiceResult<TrenchMapDto> SelectMap(string mapId);
         ServiceResult<TrenchBriefingDto> GetBriefing(string mapId, string weaponId, RandomSeed seed);
         ServiceResult<TrenchSessionDto> StartSession(string mapId, string weaponId, RandomSeed seed);
+        ServiceResult<TrenchSessionDto> PrepareSession(string mapId, string weaponId, RandomSeed seed);
+        ServiceResult<TrenchSessionDto> BeginCombat(string sessionId);
         ServiceResult<TrenchSessionDto> GetSession(string sessionId);
         ServiceResult<TrenchResultDto> GetResult(string sessionId);
         ServiceResult<TrenchSessionDto> MarkSearchNode(string sessionId, string nodeId);

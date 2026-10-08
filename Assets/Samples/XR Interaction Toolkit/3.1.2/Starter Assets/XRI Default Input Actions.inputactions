@@ -1133,6 +1133,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "Analog trigger UI fallback",
+                    "id": "90e2e2e6-b794-491f-9367-d8c58dd55942",
+                    "path": "<XRController>{LeftHand}/trigger",
+                    "interactions": "Press(pressPoint=0.5)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UI Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "",
                     "id": "a5bf6a12-a026-46d1-a793-7252c49aaf66",
                     "path": "<MetaAimHand>{LeftHand}/indexPressed",
@@ -2219,6 +2230,17 @@
                     "id": "92bb5b8f-bf48-4dab-af05-50a865773895",
                     "path": "<XRController>{RightHand}/{TriggerButton}",
                     "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UI Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Analog trigger UI fallback",
+                    "id": "f755a482-6e32-4653-8f31-a9f9dabd5475",
+                    "path": "<XRController>{RightHand}/trigger",
+                    "interactions": "Press(pressPoint=0.5)",
                     "processors": "",
                     "groups": "",
                     "action": "UI Press",

@@ -18,6 +18,8 @@
 
 `MainScene` 的 VR 输入约定：左摇杆只接连续移动，右摇杆只接一种转向方式；右摇杆不得接移动，左摇杆不得接转向。真实 VR 移动由 XR Locomotion Provider 执行，无 VR 玩家移动替身不得再次移动 XR Origin。
 
+VR 菜单通过 XRUIInputModule、TrackedDeviceGraphicRaycaster 和手柄 UI 射线交互。切入 VR 时须启用输入模块、射线组件及其 UI Press 动作；UI Press 同时支持数字扳机按钮和模拟 trigger 的 0.5 按压阈值。物体选择不得阻断菜单 UI；传送射线不得替代菜单射线。NearFarInteractor 必须启用远距离投射（enableFarCasting），否则 XRI 会清空 UI 输入模型；菜单射线组件及其父层级必须激活。业务射击与 UI 点击仍走各自输入适配入口。
+
 ## UI Prefab 命名
 
 | 类型 | 命名格式 | 示例 |

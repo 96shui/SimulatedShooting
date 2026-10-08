@@ -66,9 +66,12 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.IsTrue(FindById("Image_ZeroingImpactAnalysis_Impact_1").activeSelf);
             Assert.IsTrue(FindById("Image_ZeroingImpactAnalysis_Impact_2").activeSelf);
             Assert.IsTrue(FindById("Image_ZeroingImpactAnalysis_Impact_3").activeSelf);
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_VerticalOffset").text, Does.Contain("偏上"));
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_HorizontalOffset").text, Does.Contain("水平偏差"));
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("逆时针"));
+
+            Assert.IsFalse(FindById("Text_ZeroingImpactAnalysis_Suggestion").activeSelf);
+            FindButton("Button_ZeroingImpactAnalysis_Help").onClick.Invoke();
+            Assert.IsTrue(FindById("Text_ZeroingImpactAnalysis_Suggestion").activeSelf);
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_Suggestion").text, Does.Contain("调整1度约0.064厘米"));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("顺时针"));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain("觇孔"));
         }
 
@@ -108,7 +111,7 @@ namespace VRShooting.Tests.PlayMode.UI
 
             var preview = services.Zeroing.CompleteRound(sessionId).Data;
             Assert.AreEqual(before.AverageOffsetCm, preview.AverageOffsetCm);
-            Assert.AreEqual(before.ProposedCorrectionCm + new Vector2(1f, -1f), preview.ProposedCorrectionCm);
+            Assert.AreEqual(before.ProposedCorrectionCm + new Vector2(2f, -.064f), preview.ProposedCorrectionCm);
             Assert.That(FindText("Text_ZeroingImpactAnalysis_PreviewAverage").text, Does.Contain("预览"));
             var averageMarker = FindById("Image_ZeroingImpactAnalysis_AverageCenter");
             var previewMarker = FindById("Image_ZeroingImpactAnalysis_AdjustedCenter");
@@ -124,6 +127,27 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.IsTrue(services.Zeroing.CompleteRound(sessionId).Data.AdjustmentApplied);
         }
 
+        [UnityTest]
+        public IEnumerator Screen06_OneDegreeMovesBlueMarkerVerticallyWithoutChangingHorizontal()
+        {
+            // BDD06 2026-10-07: preserve real scale even for subpixel movement.
+            yield return OpenHudAndCompleteRound();
+            var marker = FindById("Image_ZeroingImpactAnalysis_AdjustedCenter").GetComponent<RectTransform>();
+            var before = marker.anchoredPosition;
+            var sessionId = services.TrainingSessions.Current.SessionId;
+            var analysis = services.Zeroing.CompleteRound(sessionId).Data;
+            FindButton("Button_ZeroingImpactAnalysis_VerticalPlus").onClick.Invoke();
+            yield return null;
+            var after = services.Zeroing.CompleteRound(sessionId).Data;
+            Assert.That(after.PreviewAverageOffsetCm.y - analysis.PreviewAverageOffsetCm.y,
+                Is.EqualTo(.064f).Within(.0001f));
+            Assert.That(marker.anchoredPosition.x, Is.EqualTo(before.x).Within(.0001f));
+            var expected = TacticalTargetPlot.MapImpactPointCm(new Rect(76.5f, 62.5f, 255f, 255f), after.PreviewAverageOffsetCm);
+            Assert.That(Vector2.Distance(marker.anchoredPosition, expected), Is.LessThan(.001f));
+            Assert.That(marker.anchoredPosition.y, Is.GreaterThan(before.y));
+            FindButton("Button_ZeroingImpactAnalysis_VerticalMinus").onClick.Invoke();
+            Assert.That(Vector2.Distance(marker.anchoredPosition, before), Is.LessThan(.001f));
+        }
         [UnityTest]
         public IEnumerator Screen06_BackToMainMenuButtonReturnsToMainMenu()
         {
@@ -155,17 +179,8 @@ namespace VRShooting.Tests.PlayMode.UI
             Fire(new Vector3(12f, -8f, 100f));
             yield return null;
 
-            var apply = FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment");
-            apply.onClick.Invoke();
-            yield return null;
-
-            var next = FindButton("Button_ZeroingImpactAnalysis_NextRound");
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_NextRound").text, Does.Contain("查看评级"));
-
-            next.onClick.Invoke();
-            yield return null;
-
             Assert.AreEqual(ScreenId.ZeroingFinalRating, services.Router.Current);
+            Assert.IsFalse(FindById("Screen_ZeroingImpactAnalysis").activeSelf);
             Assert.IsTrue(FindById("Screen_ZeroingFinalRating").activeSelf);
         }
 

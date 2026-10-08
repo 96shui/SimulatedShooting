@@ -57,11 +57,11 @@ namespace VRShooting.Common
             GpuBudgetMilliseconds = 11f,
             LoadBudgetSeconds = 5f,
             SteadyStateGcBytesPerFrame = 0,
-            GrenadeDetectionRange = 12f,
+            GrenadeDetectionRange = 18f,
             GrenadeBlastRadius = 5f,
             GrenadeFuseSeconds = 1.25f,
-            GrenadeCooldownSeconds = 8f,
-            GrenadeThrowSpeed = 12f,
+            GrenadeCooldownSeconds = 3f,
+            GrenadeThrowSpeed = 20f,
             FireMode = WeaponFireMode.SingleShot,
             InitialAmmo = new AmmoDto { CurrentMagazine = 30, ReserveAmmo = 120, MagazineCapacity = 30 }
         };

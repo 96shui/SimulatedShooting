@@ -36,7 +36,10 @@ namespace VRShooting.Application.Combat
             core.Changed+=OnCore;
         }
         public void Configure(ICombatGrenadeWorld value)=>world=value;
-        public void RequestFirstTeammateThrow(){if(active&&!disposed)requested=true;}
+        public void RequestFirstTeammateThrow()
+        {
+            if(active&&!disposed&&!suspended&&!Current.HasValue&&clock.Now+1e-8>=nextAllowed)requested=true;
+        }
         public ServiceResult<Unit> Start(string id)
         {
             if(disposed)return Fail(ErrorCode.InvalidState);
@@ -77,36 +80,31 @@ namespace VRShooting.Application.Combat
                 GrenadeExploded?.Invoke(new GrenadeExplosionDto{SessionId=session,GrenadeId=plan.GrenadeId,ThrowerId=plan.ThrowerId,Position=projectile,Targets=result.Data,Time=clock.Now});
                 return Ok();
             }
-            if(clock.Now+1e-8<nextAllowed||!requested)return Ok();
+            if(!requested)return Ok();
             requested=false;
-            GrenadeThrowPlanDto best=default;int bestCount=1;
+            if(clock.Now+1e-8<nextAllowed)return Ok();
             var enemies=snapshot.Data.Visual.Entities.Where(e=>e.Role==CombatEntityRole.Enemy&&e.State!=CombatEntityState.Dead).OrderBy(e=>e.EntityId,StringComparer.Ordinal).ToArray();
+            if(enemies.Length==0)return Ok();
             foreach(var member in squad.GetMembers(session).Where(m=>m.Role==SquadMemberRole.TeammateTwo&&m.State!=SquadMemberState.Down))
             {
                 if(!world.TryGetThrowPose(member.MemberId,out var feet,out var origin))continue;
-                var nearby=enemies.Where(e=>Vector3.Distance(e.Position,feet)<=config.GrenadeDetectionRange).ToArray();
-                for(int i=0;i<nearby.Length;i++)for(int j=i+1;j<nearby.Length;j++)
-                {
-                    var target=(nearby[i].Position+nearby[j].Position)*.5f+Vector3.up*.08f;
-                    int count=nearby.Count(e=>Vector3.Distance(e.Position,target)<=config.GrenadeBlastRadius&&world.IsExposed(target,e.Position));
-                    if(count<=bestCount)continue;
-                    var previous=origin;bool blocked=false;
-                    for(int step=1;step<=32;step++)
-                    {
-                        var next=GrenadeTrajectory.Position(origin,target,step/32f);
-                        if(world.Sweep(previous,next,out _)){blocked=true;break;}previous=next;
-                    }
-                    if(blocked)continue;
-                    float flight=Mathf.Max(.15f,Vector3.Distance(origin,target)/config.GrenadeThrowSpeed);
-                    bestCount=count;best=new GrenadeThrowPlanDto{SessionId=session,ThrowerId=member.MemberId,GrenadeId=session+".grenade-"+(sequence+1).ToString("000"),
-                        Origin=origin,Target=target,ThrowTime=clock.Now,WindupSeconds=.65f,FlightSeconds=flight,
-                        ExplosionTime=clock.Now+.65f+flight+config.GrenadeFuseSeconds,BlastRadius=config.GrenadeBlastRadius,ThrowSpeed=config.GrenadeThrowSpeed};
-                }
+                var nearest=enemies.OrderBy(e=>Vector3.Distance(e.Position,feet)).ThenBy(e=>e.EntityId,StringComparer.Ordinal).First();
+                var offset=nearest.Position-feet;
+                var horizontal=new Vector3(offset.x,0,offset.z);
+                if(horizontal.sqrMagnitude<.0001f)horizontal=new Vector3(origin.x-feet.x,0,origin.z-feet.z);
+                if(horizontal.sqrMagnitude<.0001f)horizontal=Vector3.forward;
+                var distance=Mathf.Min(horizontal.magnitude,config.GrenadeDetectionRange);
+                var target=horizontal.normalized*distance+feet+Vector3.up*.08f;
+                if(offset.magnitude<=config.GrenadeDetectionRange)target=nearest.Position+Vector3.up*.08f;
+                float flight=Mathf.Max(.15f,Vector3.Distance(origin,target)/config.GrenadeThrowSpeed);
+                var plan=new GrenadeThrowPlanDto{SessionId=session,ThrowerId=member.MemberId,GrenadeId=session+".grenade-"+(sequence+1).ToString("000"),
+                    Origin=origin,Target=target,ThrowTime=clock.Now,WindupSeconds=.65f,FlightSeconds=flight,
+                    ExplosionTime=clock.Now+.65f+flight+config.GrenadeFuseSeconds,BlastRadius=config.GrenadeBlastRadius,ThrowSpeed=config.GrenadeThrowSpeed};
+                var accepted=squad.SetGrenadeState(session,plan.ThrowerId,true);if(!accepted.Success)return accepted;
+                sequence++;Current=plan;projectile=plan.Origin;released=landed=false;lastFlightTime=plan.ThrowTime+plan.WindupSeconds;
+                nextAllowed=plan.ThrowTime+config.GrenadeCooldownSeconds;GrenadeThrown?.Invoke(plan);return Ok();
             }
-            if(bestCount<2)return Ok();
-            var accepted=squad.SetGrenadeState(session,best.ThrowerId,true);if(!accepted.Success)return accepted;
-            sequence++;Current=best;projectile=best.Origin;released=landed=false;lastFlightTime=best.ThrowTime+best.WindupSeconds;
-            nextAllowed=best.ExplosionTime+config.GrenadeCooldownSeconds;GrenadeThrown?.Invoke(best);return Ok();
+            return Ok();
         }
         void Clear()
         {

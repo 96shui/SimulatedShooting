@@ -10,7 +10,11 @@
     "Unity.XR.Interaction.Toolkit",
     "Unity.XR.CoreUtils",
     "Unity.InputSystem",
-    "VRShooting.Contracts"
+    "VRShooting.Contracts",
+    "Unity.XR.Management",
+    "Unity.XR.Management.Editor",
+    "Unity.XR.OpenXR",
+    "Unity.XR.OpenXR.Editor"
   ],
   "includePlatforms": [
     "Editor"

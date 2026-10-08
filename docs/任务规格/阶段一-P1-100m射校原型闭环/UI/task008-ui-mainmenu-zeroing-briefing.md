@@ -20,6 +20,8 @@ UI
 
 ## 交付内容
 
+2026-10-03 用户追加 SteamVR 后扳机 UI 排查：保持 VR UI 射线、XRUIInputModule 及 UI Press 动作启用，UI 点击兼容数字扳机与模拟 trigger 阈值，不因物体选择而阻断菜单。BDD02「SteamVR 手柄后扳机点击主菜单」与接口11约定同步；更新 SceneOwnedUIFlowTests 的射线恢复检查。本轮按用户要求不运行测试，VR 实机点击仍待确认。
+
 - `Screen_MainMenu`
 - `Button_MainMenu_OpenZeroing`
 - `Screen_ZeroingBriefing`
@@ -74,3 +76,5 @@ UI
 - 所有按钮和关键文本有稳定 `UITestId`。
 - UI 不包含评级、偏移、弹药计算逻辑。
 - PlayMode 测试通过。
+
+2026-10-03 继续排查：确认 XRI 3.1.2 在远距离投射关闭时会重置 UI 模型，补充恢复 enableFarCasting 和射线父层级激活；左手 NearFar Prefab 关闭物体选择阻断 UI（右手继承该 Prefab）。补充既有输入替身恢复断言，未运行测试、未验证 VR 实机。

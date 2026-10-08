@@ -129,7 +129,7 @@ namespace VRShooting.Application
             {
                 CombatScenesAvailable = combatScenes != null,
                 Combat = new CombatApplicationCoordinator(router, combatScenes, combatStore ??
-                    new CombatSummaryFileStore(System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "CombatResults")))
+                    new CombatSummaryFileStore(System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "CombatResults")),eventBus)
             };
         }
     }

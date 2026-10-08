@@ -194,7 +194,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 if(mode==TrainingMode.Trench)
                 {
                     yield return ClickWithController(ui.TrenchBriefingView.StartButton,runtime.PlayerCamera);
-                    Assert.That(app.Snapshot.Screen,Is.EqualTo(ScreenId.TrenchHud),"Incoming rig must click the start button");
+                    Assert.That(app.Snapshot.Screen,Is.EqualTo(ScreenId.TrenchDroneRecon),"Incoming rig must click start without bypassing recon");
                 }
                 app.ReturnToMainMenu();
                 while(SceneManager.GetSceneByPath(UnityCombatSceneLoader.ScenePathFor(mode)).isLoaded)yield return null;

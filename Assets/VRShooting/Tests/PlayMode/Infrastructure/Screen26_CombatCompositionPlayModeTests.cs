@@ -30,6 +30,7 @@ namespace VRShooting.Tests.PlayMode
             var lease = new CombatApplicationFixture.Lease(mode); fixture.Complete(0, lease);
             yield return new WaitUntil(() => view.Load.IsCompleted); Assert.That(view.Load.Result.Success);
             if (mode == TrainingMode.Trench) { Assert.That(lease.Activations, Is.Zero); view.Start.onClick.Invoke(); }
+            if(mode==TrainingMode.Trench)CompleteOpening(app,lease);
             var id = app.Mission.SessionId; var mission = app.Mission; var sequence = 0;
             void Range(string key)
             {
@@ -59,6 +60,7 @@ namespace VRShooting.Tests.PlayMode
             }
             Assert.That(app.Snapshot.Summary.Value.Victory); Assert.That(view.Status.text, Does.Contain("Victory"));
             var oldId = id; view.Retry.onClick.Invoke(); if (mode == TrainingMode.Trench) view.Start.onClick.Invoke();
+            if(mode==TrainingMode.Trench)CompleteOpening(app,lease);
             Assert.That(mission.Core.GetSnapshot(oldId).Success, Is.False); mission = app.Mission; id = mission.SessionId;
             Assert.That(id, Is.Not.EqualTo(oldId)); Assert.That(lease.Activations, Is.EqualTo(2));
             var attacker = mission.Core.GetSnapshot(id).Data.Visual.Entities.First(e => e.Role == CombatEntityRole.Enemy);
@@ -70,6 +72,18 @@ namespace VRShooting.Tests.PlayMode
             Assert.That(lease.Disposals, Is.Zero); fixture.SaveFails = false; view.Return.onClick.Invoke(); yield return null;
             Assert.That(view.Status.text, Does.Contain("MainMenu")); Assert.That(fixture.Saved.Single().SessionId, Is.EqualTo(id));
             Assert.That(lease.Disposals, Is.EqualTo(1)); Assert.That(app.Mission, Is.Null);
+        }
+        static void CompleteOpening(CombatApplicationCoordinator app,CombatApplicationFixture.Lease lease)
+        {
+            Assert.That(app.Snapshot.Screen,Is.EqualTo(ScreenId.TrenchDroneRecon));
+            for(var step=0;step<5;step++)
+            {
+                var phase=lease.DroneScene.Current.Phase;
+                lease.DroneScene.CompleteCurrentStep();
+                lease.TestClock.Advance(phase==DroneReconPhase.PlayerTakeoff?3:phase==DroneReconPhase.DroneLanding?2:.1);
+                Assert.That(app.Advance().Success,Is.True);
+            }
+            Assert.That(app.Snapshot.Screen,Is.EqualTo(ScreenId.TrenchHud));
         }
         sealed class ButtonView : ICombatApplicationView, IDisposable
         {

@@ -64,7 +64,7 @@ namespace SimulatedShooting.Scene
             }
             finally {PreparingProductionScene=false;loads.Release();}
         }
-        sealed class Lease:ICombatSceneLease
+        sealed class Lease:ICombatSceneLease,IDroneReconSceneLease
         {
             readonly UnityEngine.SceneManagement.Scene scene;
             CombatSceneRuntime runtime;
@@ -73,6 +73,7 @@ namespace SimulatedShooting.Scene
             public ICombatClock Clock=>runtime.Clock;
             public ICombatRandom Random {get;}=new SeededCombatRandom();
             public ICombatNavigationPort Navigation=>runtime;
+            public IDroneReconScenePort DroneReconScene=>runtime.DroneRecon;
             public ServiceResult<Unit> Activate(ICombatCoreService core,ICombatWorldInputPort world,ICombatStateService state,IHUDService hud,ISquadCommandService squad,ICombatGrenadeTacticService grenades,ICombatTickPort tick,string sessionId)
                 =>runtime.Activate(core,world,state,grenades,tick,sessionId);
             public void Deactivate(){if(runtime!=null)runtime.Deactivate();}

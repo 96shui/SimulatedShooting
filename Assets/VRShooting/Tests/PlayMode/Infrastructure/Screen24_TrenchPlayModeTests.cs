@@ -19,7 +19,8 @@ namespace VRShooting.Tests.PlayMode
         [UnityTest] public IEnumerator FakeScene_BriefingCombatVictoryRetryFailure_UpdatesHudAndUnsubscribes()
         {
             var clock=new FakeCombatClock();var nav=new FakeCombatWorld();
-            using var service=new TrenchService(P3Fixtures.TrenchDefinition,clock,new SeededCombatRandom(),nav,CombatConfigDto.Default.WithPlayerHealth(5));
+            using var opening=new TrenchOpeningTestDriver(clock);
+            using var service=new TrenchService(P3Fixtures.TrenchDefinition,clock,new SeededCombatRandom(),nav,CombatConfigDto.Default.WithPlayerHealth(5),recon:opening.Service);
             var scene=SceneManager.CreateScene("TrenchServiceTestScene");
             var view=new GameObject("Hud_Trench_Probe",typeof(RectTransform),typeof(CanvasRenderer),typeof(Text));
             SceneManager.MoveGameObjectToScene(view,scene);var probe=view.AddComponent<TrenchHudProbe>();probe.Bind(service);
@@ -27,6 +28,7 @@ namespace VRShooting.Tests.PlayMode
             {
                 Assert.That(service.GetBriefing("trench-a","training-rifle",RandomSeed.Fixed(12)).Success); Assert.That(nav.NavigationRequests,Is.Empty);
                 string id=service.StartSession("trench-a","training-rifle",RandomSeed.Fixed(12)).Data.SessionId;
+                opening.StartCombat(service,id);
                 Assert.That(probe.LastText,Does.Contain("30/120"));int results=0;service.ResultReady+=_=>results++;
                 var targets=service.GetVisualSnapshot(id).Data.Entities.Where(e=>e.Role==CombatEntityRole.Enemy).ToArray();
                 service.Submit(new CombatInputDto {SessionId=id,Tick=clock.Tick,EventId="search",Kind=CombatInputKind.AreaPresence,EntityId="trench-a.node-001",Flag=true});service.Advance(id);
@@ -41,6 +43,7 @@ namespace VRShooting.Tests.PlayMode
                 Assert.That(service.GetResult(id).Data.Victory);Assert.That(results,Is.EqualTo(1));Assert.That(service.GetHud(id).Data.CanShoot,Is.False);
                 var oldId=id;service.Cancel(id);service.GetBriefing("trench-a","training-rifle",RandomSeed.Fixed(12));
                 id=service.StartSession("trench-a","training-rifle",RandomSeed.Fixed(12)).Data.SessionId;Assert.That(id,Is.Not.EqualTo(oldId));
+                opening.StartCombat(service,id);
                 Assert.That(probe.LastText,Does.Contain("30/120"));var attacker=service.GetVisualSnapshot(id).Data.Entities.First(e=>e.Role==CombatEntityRole.Enemy);
                 service.Submit(new CombatInputDto {SessionId=id,Tick=clock.Tick,EventId="see",Kind=CombatInputKind.Perception,EntityId=attacker.EntityId,
                     TargetId=id+".player",Position=Vector3.forward*10,Direction=Vector3.back,Flag=true});service.Advance(id);
@@ -56,8 +59,10 @@ namespace VRShooting.Tests.PlayMode
         [UnityTest] public IEnumerator FakeNavigation_AcknowledgesActualSquadPositions_AndStopsAtCancel()
         {
             var clock=new FakeCombatClock();var nav=new FakeCombatWorld();
-            using var service=new TrenchService(P3Fixtures.TrenchDefinition,clock,new SeededCombatRandom(),nav);
+            using var opening=new TrenchOpeningTestDriver(clock);
+            using var service=new TrenchService(P3Fixtures.TrenchDefinition,clock,new SeededCombatRandom(),nav,recon:opening.Service);
             var id=service.StartSession("trench-a","training-rifle",RandomSeed.Fixed(1)).Data.SessionId;
+            opening.StartCombat(service,id);
             service.Submit(new CombatInputDto {SessionId=id,Tick=clock.Tick,EventId="pose",Kind=CombatInputKind.PlayerPose,EntityId=id+".player",Position=Vector3.forward*4,Direction=Vector3.forward});
             service.Advance(id);Assert.That(nav.NavigationRequests.Count,Is.EqualTo(2));
             foreach(var request in nav.NavigationRequests.ToArray())

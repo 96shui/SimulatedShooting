@@ -267,6 +267,8 @@ MonoBehaviour:
   HitCollider: {fileID: 8261267849103251028}
   Audio: {fileID: 6971026388268851429}
   HitClip: {fileID: 8300000, guid: dad6d45f973b5f54792f6026eac5842f, type: 3}
+  ShotClip: {fileID: 8300000, guid: e9c360d8d5f0f7e4cbbe111d3682e485, type: 3}
+  HideCorpseAfterDelay: 1
   Agent: {fileID: 8561504606765231166}
   SoldierAnimation: {fileID: 2793649047320468549}
 --- !u!136 &8261267849103251028
