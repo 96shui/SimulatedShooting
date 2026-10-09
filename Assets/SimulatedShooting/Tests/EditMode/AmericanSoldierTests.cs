@@ -9,6 +9,20 @@ namespace SimulatedShooting.Tests.EditMode
     public class AmericanSoldierTests
     {
         [Test]
+        public void Bdd23_Task019_EnemyDeathCryIsBoundAndReadyForSpatialPlayback()
+        {
+            var enemy=AssetDatabase.LoadAssetAtPath<GameObject>("Assets/SimulatedShooting/Prefabs/Combat/Actor_Enemy.prefab").GetComponent<CombatActorView>();
+            var friend=AssetDatabase.LoadAssetAtPath<GameObject>("Assets/SimulatedShooting/Prefabs/Combat/Actor_Teammate.prefab").GetComponent<CombatActorView>();
+            Assert.That(enemy.DeathClip,Is.Not.Null);
+            Assert.That(friend.DeathClip,Is.Null,"Enemy scream must not be automatically assigned to teammates");
+            Assert.That(enemy.DeathClip.channels,Is.EqualTo(1));
+            Assert.That(enemy.DeathClip.length,Is.InRange(.5f,2.5f));
+            Assert.That(enemy.DeathClip.loadState,Is.EqualTo(AudioDataLoadState.Loaded));
+            var samples=new float[enemy.DeathClip.samples];
+            Assert.That(enemy.DeathClip.GetData(samples,0),Is.True);
+            Assert.That(samples.Max(v=>Mathf.Abs(v)),Is.InRange(.5f,.99f),"Death audio must be audible without clipped samples");
+        }
+        [Test]
         public void Bdd23_Task014_D3EnemyAndD4TeammateHaveDistinctSkinnedModels()
         {
             foreach (var role in new[] { "Enemy", "Teammate" })

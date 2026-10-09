@@ -18,6 +18,7 @@ namespace SimulatedShooting.Scene
         public AudioSource Audio;
         public AudioClip HitClip;
         public AudioClip ShotClip;
+        public AudioClip DeathClip;
         public bool HideCorpseAfterDelay;
         public NavMeshAgent Agent;
         public CombatSoldierAnimation SoldierAnimation;
@@ -25,6 +26,9 @@ namespace SimulatedShooting.Scene
         public int HitFeedbackCount { get; private set; }
         public int ShotAudioFeedbackCount { get; private set; }
         public int ShotVisualFeedbackCount { get; private set; }
+        public int DeathAudioFeedbackCount { get; private set; }
+        public AudioSource DeathVoiceSource => deathVoice;
+        AudioSource deathVoice;
         public event Action<string, bool> NavigationReported;
         readonly HashSet<string> feedback = new HashSet<string>();
         bool moving;
@@ -53,6 +57,7 @@ namespace SimulatedShooting.Scene
             if(value)
             {
                 if(Audio!=null)Audio.Stop();
+                if(deathVoice!=null)deathVoice.Stop();
                 foreach(var animator in GetComponentsInChildren<Animator>(true))
                 {frozenAnimators[animator]=animator.speed;animator.speed=0;}
                 if(SoldierAnimation!=null){soldierWasEnabled=SoldierAnimation.enabled;SoldierAnimation.enabled=false;}
@@ -178,6 +183,8 @@ namespace SimulatedShooting.Scene
             if(actionsLocked)return;
             if (IsDead == dead) return;
             IsDead = dead;
+            if(dead)PlayDeathCry();
+            else if(deathVoice!=null)deathVoice.Stop();
             deathTime = dead ? Time.time : 0f;
             if (!dead && VisualRoot != null) VisualRoot.gameObject.SetActive(true);
             moving = false;
@@ -188,6 +195,22 @@ namespace SimulatedShooting.Scene
             if (SoldierAnimation != null) SoldierAnimation.SetDead(dead);
             HitCollider.enabled = !dead;
             if (MuzzleFlash != null) MuzzleFlash.SetActive(false);
+        }
+
+        void PlayDeathCry()
+        {
+            if(DeathClip==null)return;
+            if(deathVoice==null)
+            {
+                var voiceObject=new GameObject("EnemyDeathVoice");
+                voiceObject.transform.SetParent(SoldierAnimation!=null?SoldierAnimation.Chest:PerceptionOrigin!=null?PerceptionOrigin:transform,false);
+                deathVoice=voiceObject.AddComponent<AudioSource>();
+                deathVoice.playOnAwake=false;deathVoice.loop=false;deathVoice.spatialBlend=1;
+                deathVoice.rolloffMode=AudioRolloffMode.Logarithmic;
+                deathVoice.minDistance=2;deathVoice.maxDistance=35;deathVoice.dopplerLevel=0;
+                deathVoice.volume=.9f;
+            }
+            deathVoice.clip=DeathClip;deathVoice.Play();DeathAudioFeedbackCount++;
         }
 
         public bool CanSee(Vector3 target, LayerMask mask)

@@ -203,11 +203,16 @@ namespace SimulatedShooting.Tests.PlayMode
                 input.Release(XRTrainingInputButton.Trigger);Sample(runtime.PlayerRoot.position,origin,(center-origin).normalized);
                 input.Press(XRTrainingInputButton.Trigger);Sample(runtime.PlayerRoot.position,origin,(center-origin).normalized);
                 Assert.That(target.IsDead, Is.False, "First bullet must leave one health unit");
+                Assert.That(target.DeathAudioFeedbackCount,Is.Zero,"First hit must not play a death scream");
                 input.Release(XRTrainingInputButton.Trigger);Sample(runtime.PlayerRoot.position,origin,(center-origin).normalized);
                 input.Press(XRTrainingInputButton.Trigger);Sample(runtime.PlayerRoot.position,origin,(center-origin).normalized);
                 Physics.Raycast(origin,(center-origin).normalized,out var diagnosticHit,10,~(1<<2),QueryTriggerInteraction.Ignore);
                 Assert.That(target.IsDead,Is.True,target.EntityId+" must die from real physics hit; first="+(diagnosticHit.collider!=null?diagnosticHit.collider.name:"none")+"; overlap="+string.Join(",",Physics.OverlapSphere(origin,.01f,~(1<<2),QueryTriggerInteraction.Ignore).Select(c=>c.name))+"; ammo="+app.Mission.Core.GetSnapshot(firstSession).Data.Ammo.CurrentMagazine);
                 Assert.That(target.HitFeedbackCount,Is.EqualTo(2));
+                Assert.That(target.DeathAudioFeedbackCount,Is.EqualTo(1),"Second physical bullet triggers one death cry");
+                Assert.That(target.DeathVoiceSource.isPlaying,Is.True,"Death cry must start with the collapse");
+                target.ApplyDead(true);
+                Assert.That(target.DeathAudioFeedbackCount,Is.EqualTo(1),"Repeated death snapshots must not replay the cry");
             }
             input.Release(XRTrainingInputButton.Trigger);
             if(mode==TrainingMode.Trench)
