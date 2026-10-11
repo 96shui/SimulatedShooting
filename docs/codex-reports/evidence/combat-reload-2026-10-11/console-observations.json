@@ -1,0 +1,54 @@
+{
+  "total": 164,
+  "truncated": false,
+  "observations": [
+    {
+      "count": 157,
+      "type": "Error",
+      "message": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.",
+      "file": "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Scripts/GazeInputManager.cs"
+    },
+    {
+      "count": 1,
+      "type": "Warning",
+      "message": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.",
+      "file": ""
+    },
+    {
+      "count": 1,
+      "type": "Error",
+      "message": "Failed to get haptic capabilities of SceneHandoffController:/SceneHandoffController1, error code -1. Continuing assuming a single haptic channel.",
+      "file": "./Library/PackageCache/com.unity.xr.interaction.toolkit@3.1.2/Runtime/Inputs/Haptics/HapticImpulseCommandChannelGroup.cs"
+    },
+    {
+      "count": 1,
+      "type": "Error",
+      "message": "Failed to get haptic capabilities of SceneHandoffController:/SceneHandoffController, error code -1. Continuing assuming a single haptic channel.",
+      "file": "./Library/PackageCache/com.unity.xr.interaction.toolkit@3.1.2/Runtime/Inputs/Haptics/HapticImpulseCommandChannelGroup.cs"
+    },
+    {
+      "count": 1,
+      "type": "Error",
+      "message": "There can be only one active Event System.",
+      "file": "./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs"
+    },
+    {
+      "count": 1,
+      "type": "Error",
+      "message": "There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene",
+      "file": "./Library/PackageCache/com.unity.ugui@1.0.0/Runtime/EventSystem/EventSystem.cs"
+    },
+    {
+      "count": 1,
+      "type": "Error",
+      "message": "Call to StopSubsystems without an initialized manager.Please make sure wait for initialization to complete before calling this API.",
+      "file": "./Library/PackageCache/com.unity.xr.management@4.5.1/Runtime/XRManagerSettings.cs"
+    },
+    {
+      "count": 1,
+      "type": "Error",
+      "message": "Unloading the last loaded scene Assets/Scenes/CombatScene.unity(build index: 4), is not supported. Please use SceneManager.LoadScene()/EditorSceneManager.OpenScene() to switch to another scene.",
+      "file": "./Library/PackageCache/com.unity.test-framework@1.1.33/UnityEditor.TestRunner/TestRunner/EditModeRunner.cs"
+    }
+  ]
+}

@@ -105,7 +105,7 @@ namespace VRShooting.Application.Weapons
                     DisplayName = weapon.DisplayName,
                     Type = weapon.Type,
                     MagazineCapacity = mode == TrainingMode.MovingTarget ? MovingTargetRules.TotalAmmo : 30,
-                    MaxReserveAmmo = mode == TrainingMode.MovingTarget ? 0 : 120,
+                    MaxReserveAmmo = mode == TrainingMode.MovingTarget ? 0 : 60,
                     Recoil = weapon.Recoil,
                     ApplicableModes = weapon.ApplicableModes
                 };
@@ -117,6 +117,7 @@ namespace VRShooting.Application.Weapons
                 Weapon = weapon,
                 CurrentMagazine = weapon.MagazineCapacity,
                 ReserveAmmo = weapon.MaxReserveAmmo,
+                UsesCombatMagazines = resolvedWeaponId == TrainingRifleId && (mode == TrainingMode.Trench || mode == TrainingMode.Urban),
                 FireMode = mode == TrainingMode.MovingTarget
                     ? WeaponFireMode.InitialTwoThenAutomatic
                     : WeaponFireMode.SingleShot,
@@ -491,10 +492,18 @@ namespace VRShooting.Application.Weapons
                 return ServiceResult<AmmoDto>.Ok(ToAmmoDto(state));
             }
 
-            var needed = state.Weapon.MagazineCapacity - state.CurrentMagazine;
-            var loaded = Mathf.Min(needed, state.ReserveAmmo);
-            state.CurrentMagazine += loaded;
-            state.ReserveAmmo -= loaded;
+            if (state.UsesCombatMagazines)
+            {
+                state.CurrentMagazine = state.Weapon.MagazineCapacity;
+                state.ReserveAmmo -= state.Weapon.MagazineCapacity;
+            }
+            else
+            {
+                var needed = state.Weapon.MagazineCapacity - state.CurrentMagazine;
+                var loaded = Mathf.Min(needed, state.ReserveAmmo);
+                state.CurrentMagazine += loaded;
+                state.ReserveAmmo -= loaded;
+            }
             state.IsReloading = false;
 
             var ammo = ToAmmoDto(state);
@@ -759,6 +768,7 @@ namespace VRShooting.Application.Weapons
             public int CurrentMagazine;
             public int ReserveAmmo;
             public bool IsReloading;
+            public bool UsesCombatMagazines;
             public WeaponFireMode FireMode;
             public ShoulderSide ShoulderSide;
             public WeaponAimMode AimMode;

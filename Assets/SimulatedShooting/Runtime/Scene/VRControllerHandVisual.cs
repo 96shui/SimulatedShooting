@@ -31,6 +31,8 @@ namespace SimulatedShooting.Scene
         bool overrideGripForTests;
         bool testGripState;
         bool gripPosePreviewActive;
+        Transform presentationGrip;
+        float presentationCurl01;
 
         public VirtualHandSide HandSide => handSide;
         public Transform ModelRoot => modelRoot;
@@ -49,6 +51,17 @@ namespace SimulatedShooting.Scene
         public bool GripPosePreviewActive => gripPosePreviewActive;
         public bool UsesCustomFingerPose => useCustomFingerPose;
         public Transform GripAnchor => gripAnchor;
+        public bool HasPresentationGrip => presentationGrip != null;
+        public float PresentationCurl01 => presentationCurl01;
+
+        // Only the rendered hand follows this anchor; tracked controllers/interactors stay untouched.
+        public void SetPresentationGrip(Transform anchor, float curl01 = 0)
+        {
+            EnsureConfigured();
+            presentationGrip = anchor;
+            presentationCurl01 = anchor != null ? Mathf.Clamp01(curl01) : 0;
+            UpdateVisualPose(1f);
+        }
 
         public void BindWeapon(TrainingRifleGrabInteractable grab)
         {
@@ -192,7 +205,7 @@ namespace SimulatedShooting.Scene
                 targetPose,
                 Mathf.Max(0.01f, poseBlendSpeed) * Mathf.Max(0f, deltaTime));
 
-            if (gripping && gripAnchor != null)
+            if (gripping && (presentationGrip != null || gripAnchor != null))
             {
                 AlignToGripAnchor();
             }
@@ -207,18 +220,20 @@ namespace SimulatedShooting.Scene
 
         void AlignToGripAnchor()
         {
-            if (gripAnchor == null)
+            var anchor = presentationGrip != null ? presentationGrip : gripAnchor;
+            if (anchor == null)
             {
                 return;
             }
 
             transform.SetPositionAndRotation(
-                gripAnchor.TransformPoint(gripPositionOffset),
-                gripAnchor.rotation * Quaternion.Euler(gripRotationOffset));
+                anchor.TransformPoint(gripPositionOffset),
+                anchor.rotation * Quaternion.Euler(gripRotationOffset));
         }
 
         bool ResolveGripState()
         {
+            if (presentationGrip != null) return true;
             if (overrideGripForTests)
             {
                 return testGripState;
@@ -387,10 +402,21 @@ namespace SimulatedShooting.Scene
                     continue;
                 }
 
+                var offset = bone.RotationOffset;
+                if (presentationCurl01 > 0)
+                {
+                    var name = bone.Transform.name;
+                    var thumb = name.IndexOf("Thumb", StringComparison.OrdinalIgnoreCase) >= 0;
+                    var curl = name.EndsWith("Proximal", StringComparison.OrdinalIgnoreCase) ? (thumb ? 42f : 60f)
+                        : name.EndsWith("Intermediate", StringComparison.OrdinalIgnoreCase) ? 70f
+                        : name.EndsWith("Distal", StringComparison.OrdinalIgnoreCase) ? 30f
+                        : thumb ? 26f : 0;
+                    offset.x = Mathf.Lerp(offset.x, Mathf.Max(offset.x, curl), presentationCurl01);
+                }
                 bone.Transform.localRotation =
                     bone.OpenRotation * Quaternion.SlerpUnclamped(
                         Quaternion.identity,
-                        Quaternion.Euler(bone.RotationOffset),
+                        Quaternion.Euler(offset),
                         amount);
             }
         }

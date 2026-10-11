@@ -369,6 +369,8 @@ namespace VRShooting.Application.Combat
                 Player = new PlayerStatusDto { Health = health, MaxHealth = config.PlayerHealth, IsAlive = health > 0, Posture = posture,
                     Shoulder = weapon.ShoulderSide, CornerShootingAvailable = corner },
                 Ammo = weapons.GetAmmo(session).Data,
+                ReloadStartedAt = double.IsPositiveInfinity(reloadAt) ? 0 : reloadAt - config.ReloadSeconds,
+                ReloadDurationSeconds = config.ReloadSeconds,
                 Weapon = new WeaponControlStateDto { SessionId = session, WeaponId = weapon.WeaponId,
                     CurrentMagazine = weapon.CurrentMagazine, ReserveAmmo = weapon.ReserveAmmo, CanShoot = Active && weapon.CanShoot,
                     FireMode = weapon.FireMode, ShoulderSide = weapon.ShoulderSide, AimMode = weapon.AimMode,

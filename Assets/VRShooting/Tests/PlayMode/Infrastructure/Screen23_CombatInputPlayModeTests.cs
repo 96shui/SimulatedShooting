@@ -50,7 +50,7 @@ namespace VRShooting.Tests.PlayMode
             Step(controller,input,clock, seconds: .5); Assert.That(core.GetSnapshot(Session).Data.Ammo.CurrentMagazine, Is.EqualTo(29));
             input.Release(XRTrainingInputButton.Trigger); input.Press(XRTrainingInputButton.Reload); Step(controller,input,clock);
             Assert.That(core.GetSnapshot(Session).Data.Ammo.IsReloading); Step(controller,input,clock, seconds: 2);
-            Assert.That(core.GetSnapshot(Session).Data.Ammo.ReserveAmmo, Is.EqualTo(119));
+            Assert.That(core.GetSnapshot(Session).Data.Ammo.ReserveAmmo, Is.EqualTo(30));
             input.Press(XRTrainingInputButton.SwitchShoulder); input.SetAxes(Vector2.up, Vector2.right);
             Step(controller,input,clock,Frame(posture: PlayerPosture.Crouching));
             Assert.That(core.GetSnapshot(Session).Data.Player.Shoulder, Is.EqualTo(ShoulderSide.Left));

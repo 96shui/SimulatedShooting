@@ -106,7 +106,7 @@ namespace VRShooting.Tests.PlayMode.UI
                 presenter.Initialize(service, view, navigation, "trench-hud");
                 yield return null;
 
-                Assert.That(Text(view, "ammo").text, Does.Contain("30 / 120"));
+                Assert.That(Text(view, "ammo").text, Does.Contain("30 / 60"));
                 Assert.That(Text(view, "health").text, Does.Contain("100"));
                 Assert.That(view.MiniMap.RenderedMarkerCount, Is.EqualTo(1));
                 Assert.That(Text(view, "posture").text, Does.Contain("起立"));

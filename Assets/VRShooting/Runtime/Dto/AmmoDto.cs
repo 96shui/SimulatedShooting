@@ -9,6 +9,7 @@ namespace VRShooting.Common
         public int ReserveAmmo { get; init; }
         public int MagazineCapacity { get; init; }
         public bool IsReloading { get; init; }
+        public int ReserveMagazines => MagazineCapacity > 0 ? ReserveAmmo / MagazineCapacity : 0;
 
         public static AmmoDto Empty => default;
     }

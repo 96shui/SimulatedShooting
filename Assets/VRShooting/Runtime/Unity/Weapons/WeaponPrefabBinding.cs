@@ -13,6 +13,7 @@ namespace VRShooting.Unity.Weapons
         [SerializeField] private Transform rearHandGrip;
         [SerializeField] private Transform frontHandGrip;
         [SerializeField] private Transform magazinePoint;
+        [SerializeField] private Transform magazineVisual;
         [SerializeField] private Transform leftShoulderPoint;
         [SerializeField] private Transform rightShoulderPoint;
 
@@ -24,6 +25,7 @@ namespace VRShooting.Unity.Weapons
         public Transform RearHandGrip => rearHandGrip;
         public Transform FrontHandGrip => frontHandGrip;
         public Transform MagazinePoint => magazinePoint;
+        public Transform MagazineVisual => magazineVisual;
         public Transform LeftShoulderPoint => leftShoulderPoint;
         public Transform RightShoulderPoint => rightShoulderPoint;
 

@@ -104,22 +104,22 @@ namespace VRShooting.Tests.EditMode
             Advance(10);Assert.That(kinds.Count,Is.EqualTo(11));
             Assert.That(core.Start("fresh-five-hit",mode,new[]{Spawn()}).Data.Player.Health,Is.EqualTo(5));
         }
-        [Test] public void Ammo_DualGrip_SingleShot_AndTimedReloadConserveTotal()
+        [Test] public void Ammo_DualGrip_SingleShot_AndTimedMagazineReplacement()
         {
-            Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(30)); Assert.That(State.Ammo.ReserveAmmo, Is.EqualTo(120));
+            Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(30)); Assert.That(State.Ammo.ReserveAmmo, Is.EqualTo(60));
             Assert.That(core.Fire(new WeaponFireInputDto { SessionId = Session, AimDirection = Vector3.forward }).Success, Is.False);
             Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(30)); Grip(); Fire();
             Assert.That(State.Weapon.FireMode, Is.EqualTo(WeaponFireMode.SingleShot));
             Assert.That(core.Reload(Session).Success); Assert.That(State.Weapon.CanShoot, Is.False);
             Advance(1.99); Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(29));
-            Advance(.01); Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(30)); Assert.That(State.Ammo.ReserveAmmo, Is.EqualTo(119));
+            Advance(.01); Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(30)); Assert.That(State.Ammo.ReserveAmmo, Is.EqualTo(30));
         }
         [Test] public void EmptyAmmoAndInvalidGrip_DoNotConsume()
         {
             Grip(); for (int i = 0; i < 30; i++) Fire();
             Assert.That(State.Weapon.CanShoot, Is.False);
             Assert.That(core.Fire(new WeaponFireInputDto { SessionId = Session, AimDirection = Vector3.forward }).Success, Is.False);
-            Assert.That(State.Ammo.ReserveAmmo, Is.EqualTo(120));
+            Assert.That(State.Ammo.ReserveAmmo, Is.EqualTo(60));
             Assert.That(core.SetGrip(new WeaponGripStateInputDto { SessionId = Session, HoldState = WeaponHoldState.TwoHandHeld }).ErrorCode, Is.EqualTo(ErrorCode.InvalidInput));
         }
         [Test] public void VisibleRangeAngle_AndOcclusionGateAttacks()
@@ -168,7 +168,7 @@ namespace VRShooting.Tests.EditMode
         {
             Grip(); Fire(); core.Reload(Session); See(); core.SetState(Session, state); Advance(100);
             Assert.That(State.Player.Health, Is.EqualTo(5)); Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(29));
-            Assert.That(State.Ammo.ReserveAmmo, Is.EqualTo(120)); Assert.That(State.Ammo.IsReloading, Is.False);
+            Assert.That(State.Ammo.ReserveAmmo, Is.EqualTo(60)); Assert.That(State.Ammo.IsReloading, Is.False);
             Assert.That(State.Weapon.CanShoot, Is.False);
             if (state != SessionState.Paused) Assert.That(core.SetState(Session, SessionState.Running).ErrorCode, Is.EqualTo(ErrorCode.InvalidState));
         }

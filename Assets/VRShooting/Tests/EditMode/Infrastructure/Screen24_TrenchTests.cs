@@ -99,7 +99,7 @@ namespace VRShooting.Tests.EditMode
             Assert.That(service.CompleteIfReady(id).ErrorCode,Is.EqualTo(ErrorCode.InvalidState));
             Search(); service.Advance(id); var result=service.GetResult(id).Data;
             Assert.That(result.Victory); Assert.That(result.EnemyKilled,Is.EqualTo(result.EnemyTotal));
-            Assert.That(result.RemainingAmmo,Is.EqualTo(150-2*result.EnemyTotal));
+            Assert.That(result.RemainingAmmo,Is.EqualTo(90-2*result.EnemyTotal));
             Assert.That(service.CompleteIfReady(id).Data.Equals(result)); Assert.That(results,Is.EqualTo(1));
         }
         [Test] public void ValidationAndIdempotenceCannotFakeKillsOrSearch()

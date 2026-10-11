@@ -91,6 +91,63 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return RunDeathFlow(mode);
         }
 
+        // task020 / BDD23: command -> production service -> real magazine/hand -> DTO HUD.
+        [UnityTest] public IEnumerator Bdd23_Trench_ProductionMagazineReload() => ReloadFlow(TrainingMode.Trench);
+        [UnityTest] public IEnumerator Bdd23_Urban_ProductionMagazineReload() => ReloadFlow(TrainingMode.Urban);
+        IEnumerator ReloadFlow(TrainingMode mode)
+        {
+            yield return SceneManager.LoadSceneAsync("MainScene"); yield return null;
+            app=GameMain.Instance.Services.Combat; ui=GameMain.Instance.GetComponent<P3LiveUIController>().View;
+            Assert.That(app.OpenMode(mode).Success);
+            var load=app.SelectMapAsync(mode==TrainingMode.Trench?"trench-a":"urban-a",VRShooting.Contracts.RandomSeed.Fixed(20260916));
+            while(!load.IsCompleted)yield return null;
+            Assert.That(load.Result.Success,Is.True,load.Result.Message);
+            runtime=Object.FindObjectOfType<CombatSceneRuntime>(); runtime.ManualStepping=true;
+            input=new ManualXRTrainingInput(); runtime.InputOverride=input;
+            if(mode==TrainingMode.Trench)app.Start();
+            yield return CompleteOpening();
+            var id=app.Mission.SessionId;
+            var ammo=app.Mission.Core.GetSnapshot(id).Data.Ammo;
+            Assert.That(ammo.ReserveMagazines,Is.EqualTo(2));
+            Assert.That(runtime.ReloadPresentation.Magazine,Is.Not.Null);
+            input.Press(XRTrainingInputButton.RightGrip);input.Press(XRTrainingInputButton.LeftGrip);
+            Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
+            input.Press(XRTrainingInputButton.Trigger);
+            Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
+            input.Release(XRTrainingInputButton.Trigger);input.Press(XRTrainingInputButton.Reload);
+            Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
+            Assert.That(runtime.ReloadPresentation.IsAnimating,Is.True);
+            input.Release(XRTrainingInputButton.Reload);
+            yield return new WaitForSecondsRealtime(.12f); // Production presenter refreshes HUD at 10 Hz.
+            yield return null;
+            var hudName=mode==TrainingMode.Trench?"Hud_Trench_Ammo":"Hud_UrbanStreet_Ammo";
+            var text=ui.transform.Find("Screen_"+app.Snapshot.Screen+"/"+hudName).GetComponent<TMPro.TMP_Text>();
+            Assert.That(text.text,Does.Contain("换弹中"));
+            Assert.That(text.text,Does.Contain("备用弹匣 2"));
+            input.Press(XRTrainingInputButton.Trigger);
+            runtime.Step(1f);input.AdvanceFrame();runtime.ReloadPresentation.Sample();
+            Assert.That(app.Mission.Core.GetSnapshot(id).Data.Ammo.CurrentMagazine,Is.EqualTo(29),"Firing is blocked during animation");
+            Assert.That(runtime.PlayerCamera.WorldToViewportPoint(runtime.ReloadPresentation.ReloadHandAnchor.position).y,Is.LessThan(0));
+            runtime.Step(1f);input.AdvanceFrame();
+            ammo=app.Mission.Core.GetSnapshot(id).Data.Ammo;
+            Assert.That(ammo.CurrentMagazine,Is.EqualTo(30));Assert.That(ammo.ReserveMagazines,Is.EqualTo(1));
+            Assert.That(runtime.ReloadPresentation.IsAnimating,Is.False);
+            yield return new WaitForSecondsRealtime(.12f);
+            yield return null;
+            Assert.That(text.text,Does.Contain("备用弹匣 1"));
+            Assert.That(text.text,Does.Not.Contain("换弹中"));
+            input.Release(XRTrainingInputButton.Trigger);
+            Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
+            input.Press(XRTrainingInputButton.Trigger);
+            Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
+            input.Release(XRTrainingInputButton.Trigger);input.Press(XRTrainingInputButton.Reload);
+            Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
+            Assert.That(runtime.ReloadPresentation.IsAnimating,Is.True,"A new reload press must start the second reload");
+            Assert.That(app.ReturnToMainMenu().Success);
+            yield return null;yield return null;
+            Assert.That(Object.FindObjectOfType<CombatRifleReloadPresentation>(),Is.Null);
+        }
+
         [UnityTest]
         public IEnumerator Bdd27_DesktopThrowSpawnsVisibleM67UntilExplosion()
         {

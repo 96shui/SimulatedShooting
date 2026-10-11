@@ -39,7 +39,7 @@ namespace VRShooting.Tests.PlayMode.Infrastructure
                     Doors = new[] { new CombatDoorVisualDto { RoomId = "room", Open = true } }
                 });
                 yield return null;
-                Assert.That(textObject.GetComponent<Text>().text, Is.EqualTo("Building:30/120"));
+                Assert.That(textObject.GetComponent<Text>().text, Is.EqualTo("Building:30/60"));
                 Assert.That(actor.transform.position, Is.EqualTo(new Vector3(1, 2, 3)));
                 Assert.That(door.activeSelf, Is.False);
                 Assert.That(fake.SubscriberCount, Is.EqualTo(1));

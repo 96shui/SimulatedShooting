@@ -67,7 +67,7 @@ namespace VRShooting.Common
             GrenadeCooldownSeconds = 3f,
             GrenadeThrowSpeed = 20f,
             FireMode = WeaponFireMode.SingleShot,
-            InitialAmmo = new AmmoDto { CurrentMagazine = 30, ReserveAmmo = 120, MagazineCapacity = 30 }
+            InitialAmmo = new AmmoDto { CurrentMagazine = 30, ReserveAmmo = 60, MagazineCapacity = 30 }
         };
 
         public ServiceResult<Unit> Validate()
@@ -107,7 +107,7 @@ namespace VRShooting.Common
             if (SteadyStateGcBytesPerFrame < 0) return Invalid(nameof(SteadyStateGcBytesPerFrame));
             if (CpuBudgetMilliseconds > 1000f / TargetRefreshHz || GpuBudgetMilliseconds > 1000f / TargetRefreshHz) return Invalid("frame budgets");
             if (FireMode != WeaponFireMode.SingleShot) return Invalid(nameof(FireMode));
-            if (InitialAmmo.MagazineCapacity != 30 || InitialAmmo.CurrentMagazine != 30 || InitialAmmo.ReserveAmmo != 120 || InitialAmmo.IsReloading) return Invalid(nameof(InitialAmmo));
+            if (InitialAmmo.MagazineCapacity != 30 || InitialAmmo.CurrentMagazine != 30 || InitialAmmo.ReserveAmmo != 60 || InitialAmmo.IsReloading) return Invalid(nameof(InitialAmmo));
             return ServiceResult<Unit>.Ok(Unit.Value);
         }
 

@@ -59,6 +59,8 @@ namespace SimulatedShooting.Scene
         float pitch,recoil;
         long sequence;
         WeaponFeedbackController weaponFeedback;
+        CombatRifleReloadPresentation reloadPresentation;
+        public CombatRifleReloadPresentation ReloadPresentation => reloadPresentation;
         readonly List<Sprite> mapSprites=new List<Sprite>();
         bool wasTracked=true;
         bool characterActionsLocked;
@@ -208,6 +210,10 @@ namespace SimulatedShooting.Scene
             rifle=Instantiate(binding.TrainingRiflePrefab,transform);
             weapon=rifle.GetComponent<WeaponPrefabBinding>();grab=rifle.GetComponent<TrainingRifleGrabInteractable>();
             VRHandPresentation.EnsureOnRig(xrOrigin, grab);
+            reloadPresentation=rifle.AddComponent<CombatRifleReloadPresentation>();
+            reloadPresentation.Configure(weapon,eye,xrOrigin,vr,()=>Clock.Now);
+            core.Changed+=UpdateReloadPresentation;
+            reloadPresentation.ApplySnapshot(core.GetSnapshot(session).Data);
             var spawn=player.position;
             var standingFeet=new Vector3(eye.transform.position.x,player.position.y,eye.transform.position.z);
             var correctedRack=binding.WeaponAnchor.position+standingFeet-binding.TrenchEntry.position;
@@ -233,6 +239,10 @@ namespace SimulatedShooting.Scene
             return ServiceResult<Unit>.Ok(Unit.Value);
         }
         void Update(){if(active&&!ManualStepping)Step(Time.deltaTime);}
+        void UpdateReloadPresentation(CombatCoreSnapshotDto snapshot)
+        {
+            if(snapshot.SessionId==session&&reloadPresentation!=null)reloadPresentation.ApplySnapshot(snapshot);
+        }
         public ServiceResult<Unit> SetCharacterActionsLocked(string id,bool locked)
         {
             if(!active||id!=session)return ServiceResult<Unit>.Fail(ErrorCode.NotFound);
@@ -617,6 +627,8 @@ namespace SimulatedShooting.Scene
             active=false;
             awaitingInputRelease=false;
             if(state!=null)state.VisualChanged-=ApplyVisual;if(core!=null)core.Feedback-=Feedback;
+            if(core!=null)core.Changed-=UpdateReloadPresentation;
+            if(reloadPresentation!=null)reloadPresentation.enabled=false;
             if(grenades!=null){grenades.GrenadeThrown-=OnGrenadeThrown;grenades.GrenadeExploded-=OnGrenadeExploded;grenades.GrenadeCancelled-=OnGrenadeCancelled;}
             controller?.Dispose();controller=null;
             foreach(var actor in actors.Values)if(actor!=null){actor.NavigationReported-=NavigationReported;actor.gameObject.SetActive(false);Destroy(actor.gameObject);}
@@ -626,7 +638,7 @@ namespace SimulatedShooting.Scene
             if(grenadeMaterial!=null){Destroy(grenadeMaterial);grenadeMaterial=null;}
             if(rifle!=null){if(grab!=null)grab.ResetToRack();rifle.SetActive(false);Destroy(rifle);}
             if(binding!=null&&mode==TrainingMode.Trench)binding.WeaponAnchor.gameObject.SetActive(true);
-            rifle=null;weapon=null;grab=null;core=null;world=null;state=null;grenades=null;tick=null;session="";
+            rifle=null;weapon=null;grab=null;reloadPresentation=null;core=null;world=null;state=null;grenades=null;tick=null;session="";
         }
         public void RestoreMainScene()
         {

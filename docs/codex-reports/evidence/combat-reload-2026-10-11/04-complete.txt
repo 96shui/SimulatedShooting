@@ -1,0 +1,6 @@
+eye=(0.00, 1.65, 0.00) rifle=(0.13, 1.48, 0.28)
+default enabled=True active=True bounds=Center: (0.13, 1.44, 0.34), Extents: (0.03, 0.11, 0.39)
+Visual_training-rifle_Magazine enabled=True active=True bounds=Center: (0.14, 1.38, 0.32), Extents: (0.01, 0.09, 0.06)
+Prompt_training-rifle_Pickup enabled=True active=False bounds=Center: (0.13, 1.66, 0.24), Extents: (0.00, 0.00, 0.00)
+LeftHand enabled=True active=True bounds=Center: (0.11, 1.44, 0.43), Extents: (0.08, 0.06, 0.09)
+RightHand enabled=True active=True bounds=Center: (0.13, 1.40, 0.19), Extents: (0.08, 0.08, 0.07)

@@ -1,0 +1,178 @@
+using System;
+using System.Collections;
+using NUnit.Framework;
+using SimulatedShooting.Scene;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.TestTools;
+using VRShooting.Application.Combat;
+using VRShooting.Common;
+using VRShooting.Contracts;
+using VRShooting.Input;
+using VRShooting.Unity.Weapons;
+
+namespace SimulatedShooting.Tests.PlayMode
+{
+    // task020 / BDD23: real rifle and human hand assets, service-owned reload, no hardware needed.
+    public sealed class CombatMagazineReloadPlayModeTests
+    {
+        GameObject rifle, cameraObject, testRig;
+        CombatCoreService core;
+        CombatSceneClock clock;
+        CombatRifleReloadPresentation presentation;
+        Camera eye;
+        Vector3 seatedPosition;
+
+        [UnitySetUp] public IEnumerator Setup()
+        {
+            yield return SceneManager.LoadSceneAsync("CombatScene");
+            var bindings = UnityEngine.Object.FindObjectOfType<CombatSceneBindings>();
+            foreach (var fixture in bindings.GetComponentsInChildren<CombatSceneFixture>(true)) fixture.enabled = false;
+            cameraObject = new GameObject("ReloadTestEye"); eye = cameraObject.AddComponent<Camera>();
+            eye.nearClipPlane = .02f;
+            eye.stereoTargetEye = StereoTargetEyeMask.None;
+            eye.cullingMask = ~0;
+            eye.transform.position = new Vector3(0, 1.65f, 0);
+            rifle = UnityEngine.Object.Instantiate(bindings.TrainingRiflePrefab);
+            rifle.GetComponent<TrainingRifleGrabInteractable>().enabled = false;
+            rifle.GetComponent<Rigidbody>().isKinematic = true;
+            rifle.transform.position = eye.transform.position + new Vector3(.13f, -.17f, .28f);
+            rifle.GetComponent<Rigidbody>().position = rifle.transform.position;
+            rifle.GetComponent<TrainingRifleGrabInteractable>().CaptureRackPose();
+            var weapon = rifle.GetComponent<WeaponPrefabBinding>();
+            Assert.That(weapon.MagazineVisual, Is.Not.Null, "Install removable QBZ191 magazine before delivery");
+            seatedPosition = weapon.MagazineVisual.localPosition;
+            clock = new CombatSceneClock();
+            core = new CombatCoreService(clock);
+            presentation = rifle.AddComponent<CombatRifleReloadPresentation>();
+            presentation.Configure(weapon, eye, null, false, () => clock.Now);
+            core.Changed += presentation.ApplySnapshot;
+            core.Start("reload-play", TrainingMode.Trench, Array.Empty<CombatEntityVisualDto>());
+            core.SetGrip(new WeaponGripStateInputDto { SessionId = "reload-play", HoldState = WeaponHoldState.TwoHandHeld,
+                RearHandTracked = true, FrontHandTracked = true, Stability01 = 1 });
+            yield return null;
+        }
+
+        [UnityTest] public IEnumerator HandPullsMagazineBelowViewThenSeatsBeforeAmmoCompletes()
+        {
+            Fire(); core.Reload("reload-play");
+            Assert.That(presentation.LeftHand.HasRenderableHand, Is.True);
+            Step(.50f);
+            Assert.That(presentation.Magazine.localPosition.y, Is.LessThan(seatedPosition.y - .08f));
+            Assert.That(presentation.LeftHand.HasPresentationGrip, Is.True);
+            Assert.That(presentation.LeftHand.PresentationCurl01, Is.GreaterThan(.99f), "Fingers close around the magazine rather than retaining the flat support pose");
+            Capture("01-pull");
+            Step(.50f);
+            Assert.That(presentation.Progress01, Is.EqualTo(.5f).Within(.001f));
+            var handViewport = eye.WorldToViewportPoint(presentation.ReloadHandAnchor.position);
+            Assert.That(handViewport.y, Is.LessThan(0), "Magazine and hand travel beneath the player frustum");
+            Assert.That(presentation.Magazine.GetComponent<MeshRenderer>().enabled, Is.False);
+            Capture("02-below-view");
+            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.CurrentMagazine, Is.EqualTo(29));
+            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.ReserveAmmo, Is.EqualTo(60));
+            Step(.70f);
+            Assert.That(presentation.Magazine.GetComponent<MeshRenderer>().enabled, Is.True);
+            Capture("03-insert");
+            Step(.29f);
+            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.IsReloading, Is.True);
+            Step(.02f);
+            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.CurrentMagazine, Is.EqualTo(30));
+            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.ReserveMagazines, Is.EqualTo(1));
+            Assert.That(presentation.IsAnimating, Is.False);
+            Assert.That(presentation.Magazine.localPosition, Is.EqualTo(seatedPosition));
+            Assert.That(eye.transform.position, Is.EqualTo(new Vector3(0, 1.65f, 0)));
+            Capture("04-complete");
+            yield return null;
+        }
+
+        [UnityTest] public IEnumerator CancelRestoresVisibleMagazineAndKeepsBothSpares()
+        {
+            Fire(); core.Reload("reload-play"); Step(1f);
+            core.SetState("reload-play", SessionState.Paused);
+            Assert.That(presentation.IsAnimating, Is.False);
+            Assert.That(presentation.Magazine.localPosition, Is.EqualTo(seatedPosition));
+            Assert.That(presentation.Magazine.GetComponent<MeshRenderer>().enabled, Is.True);
+            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.ReserveMagazines, Is.EqualTo(2));
+            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.CurrentMagazine, Is.EqualTo(29));
+            Step(5f);
+            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.CurrentMagazine, Is.EqualTo(29));
+            yield return null;
+        }
+
+        [UnityTest] public IEnumerator MovingAndRotatingEyeKeepsOffscreenMagazineBelowView()
+        {
+            Fire(); core.Reload("reload-play"); Step(1f);
+            foreach (var pitch in new[] { -60f, 0f, 60f })
+            {
+                eye.transform.SetPositionAndRotation(new Vector3(3, 1.1f, -2), Quaternion.Euler(pitch, 90, 0));
+                rifle.transform.SetPositionAndRotation(eye.transform.TransformPoint(new Vector3(.13f, -.17f, .28f)), eye.transform.rotation);
+                presentation.Sample();
+                Assert.That(eye.WorldToViewportPoint(presentation.ReloadHandAnchor.position).y, Is.LessThan(0));
+            }
+            yield return null;
+        }
+
+        [UnityTest] public IEnumerator VrAnimationPreservesControllersGripAnchorsAndHmd()
+        {
+            core.Changed -= presentation.ApplySnapshot;
+            foreach (var hand in rifle.GetComponentsInChildren<VRControllerHandVisual>(true)) hand.gameObject.SetActive(false);
+            UnityEngine.Object.Destroy(presentation); yield return null;
+            testRig = new GameObject("ReloadTrackedRig");
+            var controller = new GameObject("Left Controller").transform;
+            controller.SetParent(testRig.transform, false); controller.position = new Vector3(-.2f, 1.2f, .3f);
+            var handObject = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("Combat/Hands/VirtualHand_Left"), controller, false);
+            handObject.GetComponent<VRControllerHandVisual>().BindWeapon(rifle.GetComponent<TrainingRifleGrabInteractable>());
+            var weapon = rifle.GetComponent<WeaponPrefabBinding>();
+            var rear = weapon.RearHandGrip.position; var front = weapon.FrontHandGrip.position;
+            var trackedPosition = controller.position; var trackedRotation = controller.rotation;
+            var headPosition = eye.transform.position; var headRotation = eye.transform.rotation;
+            presentation = rifle.AddComponent<CombatRifleReloadPresentation>();
+            presentation.Configure(weapon, eye, testRig, true, () => clock.Now);
+            core.Changed += presentation.ApplySnapshot;
+            presentation.ApplySnapshot(core.GetSnapshot("reload-play").Data);
+            Fire(); core.Reload("reload-play"); Step(1f);
+            Assert.That(presentation.LeftHand.HasPresentationGrip, Is.True);
+            Assert.That(controller.position, Is.EqualTo(trackedPosition)); Assert.That(controller.rotation, Is.EqualTo(trackedRotation));
+            Assert.That(weapon.RearHandGrip.position, Is.EqualTo(rear)); Assert.That(weapon.FrontHandGrip.position, Is.EqualTo(front));
+            Assert.That(eye.transform.position, Is.EqualTo(headPosition)); Assert.That(eye.transform.rotation, Is.EqualTo(headRotation));
+            core.SetTracking("reload-play", false);
+            Assert.That(presentation.LeftHand.HasPresentationGrip, Is.False);
+            Assert.That(presentation.LeftHand.PresentationCurl01, Is.Zero);
+            Assert.That(presentation.Magazine.localPosition, Is.EqualTo(seatedPosition));
+            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.ReserveMagazines, Is.EqualTo(2));
+            yield return null;
+        }
+
+        void Fire() => Assert.That(core.Fire(new WeaponFireInputDto { SessionId = "reload-play", AimDirection = Vector3.forward }).Success);
+        void Step(float seconds) { clock.Step(seconds); core.Advance("reload-play"); presentation.Sample(); }
+        void Capture(string name)
+        {
+            const string folder = "docs/codex-reports/evidence/combat-reload-2026-10-11";
+            System.IO.Directory.CreateDirectory(folder);
+            var target = RenderTexture.GetTemporary(960, 720, 24);
+            var previousTarget = eye.targetTexture; var previousActive = RenderTexture.active;
+            var pixels = new Texture2D(960, 720, TextureFormat.RGB24, false);
+            try
+            {
+                eye.targetTexture = target; eye.Render(); RenderTexture.active = target;
+                pixels.ReadPixels(new Rect(0, 0, 960, 720), 0, 0); pixels.Apply();
+                System.IO.File.WriteAllBytes(folder + "/" + name + ".png", pixels.EncodeToPNG());
+                System.IO.File.WriteAllText(folder + "/" + name + ".txt", "eye=" + eye.transform.position + " rifle=" + rifle.transform.position + "\n" +
+                    string.Join("\n", Array.ConvertAll(rifle.GetComponentsInChildren<Renderer>(true), r => r.name + " enabled=" + r.enabled + " active=" + r.gameObject.activeInHierarchy + " bounds=" + r.bounds)));
+            }
+            finally
+            {
+                eye.targetTexture = previousTarget; RenderTexture.active = previousActive;
+                RenderTexture.ReleaseTemporary(target); UnityEngine.Object.Destroy(pixels);
+            }
+        }
+        [UnityTearDown] public IEnumerator Cleanup()
+        {
+            if (core != null) { core.Changed -= presentation.ApplySnapshot; core.Dispose(); }
+            if (rifle != null) UnityEngine.Object.Destroy(rifle);
+            if (cameraObject != null) UnityEngine.Object.Destroy(cameraObject);
+            if (testRig != null) UnityEngine.Object.Destroy(testRig);
+            yield return null;
+        }
+    }
+}

@@ -35,6 +35,8 @@ VR 菜单通过 XRUIInputModule、TrackedDeviceGraphicRaycaster 和手柄 UI 射
 
 ## 武器 Prefab 与场景绑定
 
+2026-10-11 task020：共用训练步枪增加 `WeaponPrefabBinding.MagazineVisual`，绑定独立的 `Visual_training-rifle_Magazine` 网格，原 `MagazinePoint` 作为拔匣/装入锚点。`CombatReloadInstaller` 用分离的QBZ191身体/弹匣网格更新Prefab；保留原材质、握把、碰撞体和测试ID。P3运行时安装 `CombatRifleReloadPresentation`，从核心快照与时钟采样动作；P1/P2仅使用原位网格。桌面两只人物手使用现有Resources/Combat/Hands资源，VR左人物手临时跟随表现锚点，实际控制器/XRI/HMD不移动。
+
 P1/P2 训练武器必须在卧姿射击点正前方可见，并提供稳定绑定点供 XR、无 VR 调试输入和 PlayMode Test 使用。
 
 | 类型 | 命名格式 | 示例 |

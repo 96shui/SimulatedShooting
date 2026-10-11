@@ -29,7 +29,7 @@ namespace VRShooting.Tests.PlayMode
                 Assert.That(service.GetBriefing("trench-a","training-rifle",RandomSeed.Fixed(12)).Success); Assert.That(nav.NavigationRequests,Is.Empty);
                 string id=service.StartSession("trench-a","training-rifle",RandomSeed.Fixed(12)).Data.SessionId;
                 opening.StartCombat(service,id);
-                Assert.That(probe.LastText,Does.Contain("30/120"));int results=0;service.ResultReady+=_=>results++;
+                Assert.That(probe.LastText,Does.Contain("30/60"));int results=0;service.ResultReady+=_=>results++;
                 var targets=service.GetVisualSnapshot(id).Data.Entities.Where(e=>e.Role==CombatEntityRole.Enemy).ToArray();
                 service.Submit(new CombatInputDto {SessionId=id,Tick=clock.Tick,EventId="search",Kind=CombatInputKind.AreaPresence,EntityId="trench-a.node-001",Flag=true});service.Advance(id);
                 Assert.That(service.GetResult(id).Success,Is.False);
@@ -47,7 +47,7 @@ namespace VRShooting.Tests.PlayMode
                 var oldId=id;service.Cancel(id);service.GetBriefing("trench-a","training-rifle",RandomSeed.Fixed(12));
                 id=service.StartSession("trench-a","training-rifle",RandomSeed.Fixed(12)).Data.SessionId;Assert.That(id,Is.Not.EqualTo(oldId));
                 opening.StartCombat(service,id);
-                Assert.That(probe.LastText,Does.Contain("30/120"));var attacker=service.GetVisualSnapshot(id).Data.Entities.First(e=>e.Role==CombatEntityRole.Enemy);
+                Assert.That(probe.LastText,Does.Contain("30/60"));var attacker=service.GetVisualSnapshot(id).Data.Entities.First(e=>e.Role==CombatEntityRole.Enemy);
                 service.Submit(new CombatInputDto {SessionId=id,Tick=clock.Tick,EventId="see",Kind=CombatInputKind.Perception,EntityId=attacker.EntityId,
                     TargetId=id+".player",Position=Vector3.forward*10,Direction=Vector3.back,Flag=true});service.Advance(id);
                 clock.Advance(1);service.Advance(id);Assert.That(service.GetResult(id).Data.Victory,Is.False);Assert.That(results,Is.EqualTo(2));

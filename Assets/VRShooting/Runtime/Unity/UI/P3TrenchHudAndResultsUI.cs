@@ -93,7 +93,8 @@ namespace VRShooting.Unity.UI
                 (hud.Player.IsAlive ? "" : " · 已失去战斗能力"));
             P3UiText.SetText(ammoText, "弹药：" + P3UiText.Ammo(hud.Ammo) +
                 (hud.Ammo.IsReloading ? " · 换弹中" : "") +
-                "\n当前弹匣 " + hud.Ammo.CurrentMagazine + " · 备用 " + hud.Ammo.ReserveAmmo);
+                "\n备用弹匣 " + hud.Ammo.ReserveMagazines +
+                (hud.Ammo.IsReloading ? " · 装填中" : " · R / 左摇杆按压换弹"));
             P3UiText.SetText(postureText, "姿态：" + P3UiText.Posture(hud.Player.Posture));
             P3UiText.SetText(shoulderText, "射击肩：" + P3UiText.Shoulder(hud.Player.Shoulder));
             P3UiText.SetText(cornerText, "拐角射击：" + (hud.Player.CornerShootingAvailable ? "可用" : "不可用"));

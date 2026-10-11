@@ -1,0 +1,15 @@
+{
+  "job_id": "dcea7d3c704c4fb897052a6b97c81494",
+  "status": "succeeded",
+  "mode": "PlayMode",
+  "started_unix_ms": 1791716070040,
+  "finished_unix_ms": 1791716303070,
+  "summary": {
+    "total": 218,
+    "passed": 218,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 230.516633,
+    "resultState": "Passed"
+  }
+}

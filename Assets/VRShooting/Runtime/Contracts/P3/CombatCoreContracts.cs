@@ -47,6 +47,8 @@ namespace VRShooting.Common
         public SessionState State { get; init; }
         public PlayerStatusDto Player { get; init; }
         public AmmoDto Ammo { get; init; }
+        public double ReloadStartedAt { get; init; }
+        public float ReloadDurationSeconds { get; init; }
         public WeaponControlStateDto Weapon { get; init; }
         public CombatVisualSnapshotDto Visual { get; init; }
     }
