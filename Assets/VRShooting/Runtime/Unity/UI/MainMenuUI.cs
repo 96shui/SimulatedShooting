@@ -69,6 +69,7 @@ namespace VRShooting.Unity.UI
         IDisposable screenSubscription;
         IDisposable zeroingRoundSubscription;
         RectTransform mainMenuScreen;
+        RectTransform aboutCreatorsPanel;
         RectTransform zeroingBriefingScreen;
         RectTransform zeroingPickupScreen;
         RectTransform zeroingHudScreen;
@@ -296,6 +297,14 @@ namespace VRShooting.Unity.UI
             }
 
             TacticalUIStyle.Apply(transform);
+            if (aboutCreatorsPanel != null)
+            {
+                // The shared theme disables raycasts on decorative panels; this modal must block clicks.
+                var blocker = aboutCreatorsPanel.GetComponent<Image>();
+                blocker.sprite = null;
+                blocker.color = new Color32(7, 16, 13, 250);
+                blocker.raycastTarget = true;
+            }
             ConfigurePresentationView();
         }
 
@@ -513,6 +522,23 @@ namespace VRShooting.Unity.UI
 
             AddPanel(parent, "Panel_MainMenu_BottomStatus", new Vector2(120, 55), new Vector2(1800, 115), new Color32(17, 29, 24, 210), new Color32(56, 84, 71, 255),
                 "单机训练  /  LOCAL SIMULATION                                     选择科目后查看任务简报");
+
+            var aboutButton = AddButton(parent, "Button_MainMenu_AboutCreators", "关于制作人",
+                new Vector2(1360, 165), new Vector2(1750, 240), false);
+            aboutCreatorsPanel = CreateScreen(parent, "Panel_MainMenu_AboutCreators");
+            AddPanel(aboutCreatorsPanel, "Panel_MainMenu_CreatorsFrame", new Vector2(250, 260), new Vector2(1670, 820),
+                new Color32(11, 19, 16, 255), new Color32(45, 156, 255, 255));
+            AddLabel(aboutCreatorsPanel, "Text_MainMenu_AboutCreatorsTitle", "关于制作人", 40,
+                FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(400, 650), new Vector2(1520, 740),
+                new Color32(143, 217, 255, 255));
+            AddLabel(aboutCreatorsPanel, "Text_MainMenu_Creators", "制作人：李延鹏、李龙乾", 64,
+                FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(330, 440), new Vector2(1590, 610),
+                new Color32(231, 242, 235, 255));
+            var closeAboutButton = AddButton(aboutCreatorsPanel, "Button_MainMenu_CloseAboutCreators", "返回",
+                new Vector2(805, 315), new Vector2(1115, 395), false);
+            aboutButton.onClick.AddListener(() => aboutCreatorsPanel.gameObject.SetActive(true));
+            closeAboutButton.onClick.AddListener(() => aboutCreatorsPanel.gameObject.SetActive(false));
+            aboutCreatorsPanel.gameObject.SetActive(false);
 
         }
 
@@ -850,6 +876,10 @@ namespace VRShooting.Unity.UI
 
         void ShowScreen(ScreenId screen)
         {
+            if (screen != ScreenId.MainMenu && aboutCreatorsPanel != null)
+            {
+                aboutCreatorsPanel.gameObject.SetActive(false);
+            }
             ActiveScreen = screen;
             if (mainMenuScreen != null)
             {

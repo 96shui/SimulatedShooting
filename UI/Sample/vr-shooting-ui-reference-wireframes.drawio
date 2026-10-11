@@ -63,7 +63,7 @@
         <mxCell id="p02-b4" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="城镇攻防" vertex="1">
           <mxGeometry height="42" width="145" x="585" y="304" as="geometry" />
         </mxCell>
-        <mxCell id="p02-b5" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="武器库" vertex="1">
+        <mxCell id="p02-b5" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="关于制作人" vertex="1">
           <mxGeometry height="42" width="145" x="585" y="357" as="geometry" />
         </mxCell>
         <mxCell id="p02-b6" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="设置" vertex="1">

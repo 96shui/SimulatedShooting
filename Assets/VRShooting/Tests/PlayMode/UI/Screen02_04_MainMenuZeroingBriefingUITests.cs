@@ -246,6 +246,35 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(rules.text, Does.Contain("通过条件"));
         }
 
+        [UnityTest]
+        public IEnumerator Screen02_AboutCreators_ShowsLargeCreditsAndReturnsWithoutStartingTraining()
+        {
+            // BDD02：查看关于制作人并返回；task008 制作人信息补充。
+            var panel = FindById("Panel_MainMenu_AboutCreators");
+            Assert.That(panel.activeSelf, Is.False);
+            for (var i = 0; i < 2; i++)
+            {
+                FindButton("Button_MainMenu_AboutCreators").onClick.Invoke();
+                yield return null;
+                Assert.That(panel.activeInHierarchy, Is.True);
+                Assert.That(panel.GetComponent<Image>().raycastTarget, Is.True);
+                var text = FindById("Text_MainMenu_Creators").GetComponent<TextMeshProUGUI>();
+                Assert.That(text.text, Is.EqualTo("制作人：李延鹏、李龙乾"));
+                Assert.That(text.fontSize, Is.GreaterThanOrEqualTo(60));
+                Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
+                Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
+                FindButton("Button_MainMenu_CloseAboutCreators").onClick.Invoke();
+                Assert.That(panel.activeSelf, Is.False);
+            }
+            FindButton("Button_MainMenu_AboutCreators").onClick.Invoke();
+            services.Router.HandleUIEvent(UIEventId.MainMenu_OpenZeroing, ScreenId.MainMenu);
+            Assert.That(panel.activeSelf, Is.False);
+            FindButton("Button_ZeroingBriefing_Back").onClick.Invoke();
+            Assert.That(panel.activeInHierarchy, Is.False);
+            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
+            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.ZeroingBriefing));
+        }
+
         Button FindButton(string id)
         {
             var go = FindById(id);
