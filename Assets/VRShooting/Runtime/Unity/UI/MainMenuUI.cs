@@ -1032,7 +1032,7 @@ namespace VRShooting.Unity.UI
             SetAnalysisText(zeroingAnalysisFrontSightText, "准心柱", FormatFrontSight(analysis));
             SetAnalysisText(zeroingAnalysisRearSightText, "觇孔", FormatRearSight(analysis));
             if (zeroingAnalysisCorrectionXText != null)
-                zeroingAnalysisCorrectionXText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.x / ZeroingRules.CmPerRearSightClick, "向前", "向后", "格");
+                zeroingAnalysisCorrectionXText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.x / ZeroingRules.CmPerRearSightClick, "向前", "向后", "格", "0");
             if (zeroingAnalysisCorrectionYText != null)
                 zeroingAnalysisCorrectionYText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.y / ZeroingRules.CmPerFrontSightDegree, "逆时针", "顺时针", "°");
             if (zeroingAnalysisPreviewText != null)
@@ -1439,10 +1439,10 @@ namespace VRShooting.Unity.UI
             return (x < 0f ? "偏左 " : "偏右 ") + FormatCm(x);
         }
 
-        static string FormatMechanicalCorrection(float value, string positive, string negative, string unit)
+        static string FormatMechanicalCorrection(float value, string positive, string negative, string unit, string numberFormat = "0.#")
         {
             if (Mathf.Abs(value) < .001f) return "0" + unit;
-            return (value > 0 ? positive : negative) + " " + Mathf.Abs(value).ToString("0.#", CultureInfo.InvariantCulture) + unit;
+            return (value > 0 ? positive : negative) + " " + Mathf.Abs(value).ToString(numberFormat, CultureInfo.InvariantCulture) + unit;
         }
         static string FormatFrontSight(ZeroingRoundAnalysisDto analysis)
         {

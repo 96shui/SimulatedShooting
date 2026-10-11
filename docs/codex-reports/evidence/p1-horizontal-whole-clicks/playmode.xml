@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Passed" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-11 09:19:34Z" end-time="2026-10-11 09:19:34Z" duration="0.5028529">
+  <test-suite type="TestSuite" id="1000" name="zeroing-whole-clicks-60423e14953c4f66a19a9e104756092c" fullname="zeroing-whole-clicks-60423e14953c4f66a19a9e104756092c" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-11 09:19:34Z" end-time="2026-10-11 09:19:34Z" duration="0.502853" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1012" name="Zeroing.UI.Validation.Tests.dll" fullname="C:/Users/ADMINI~1/AppData/Local/Temp/zeroing-whole-clicks-60423e14953c4f66a19a9e104756092c/Library/ScriptAssemblies/Zeroing.UI.Validation.Tests.dll" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-11 09:19:34Z" end-time="2026-10-11 09:19:34Z" duration="0.493405" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="3568" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1013" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-11 09:19:34Z" end-time="2026-10-11 09:19:34Z" duration="0.492582" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1014" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-11 09:19:34Z" end-time="2026-10-11 09:19:34Z" duration="0.489082" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1015" name="PlayMode" fullname="VRShooting.Tests.PlayMode" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-11 09:19:34Z" end-time="2026-10-11 09:19:34Z" duration="0.488597" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestSuite" id="1016" name="UI" fullname="VRShooting.Tests.PlayMode.UI" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-11 09:19:34Z" end-time="2026-10-11 09:19:34Z" duration="0.488054" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="1003" name="Screen06_ZeroingImpactAnalysisUITests" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-11 09:19:34Z" end-time="2026-10-11 09:19:34Z" duration="0.486711" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1011" name="Bdd06_HorizontalFractionalMean_ShowsWholeClicksAcrossZero" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_HorizontalFractionalMean_ShowsWholeClicksAcrossZero" methodname="Bdd06_HorizontalFractionalMean_ShowsWholeClicksAcrossZero" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1685674701" result="Passed" start-time="2026-10-11 09:19:34Z" end-time="2026-10-11 09:19:34Z" duration="0.474764" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

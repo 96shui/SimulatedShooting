@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="42" result="Passed" total="42" passed="42" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.0933419">
+  <test-suite type="TestSuite" id="1054" name="zeroing-whole-clicks-60423e14953c4f66a19a9e104756092c" fullname="zeroing-whole-clicks-60423e14953c4f66a19a9e104756092c" runstate="Runnable" testcasecount="42" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.093342" total="42" passed="42" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1103" name="Zeroing.Validation.Tests.dll" fullname="C:/Users/ADMINI~1/AppData/Local/Temp/zeroing-whole-clicks-60423e14953c4f66a19a9e104756092c/Library/ScriptAssemblies/Zeroing.Validation.Tests.dll" runstate="Runnable" testcasecount="42" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.080881" total="42" passed="42" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="14736" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1104" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="42" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.080523" total="42" passed="42" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1105" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="42" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.080381" total="42" passed="42" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1106" name="EditMode" fullname="VRShooting.Tests.EditMode" runstate="Runnable" testcasecount="42" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.080247" total="42" passed="42" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestSuite" id="1107" name="Application" fullname="VRShooting.Tests.EditMode.Application" runstate="Runnable" testcasecount="42" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.080055" total="42" passed="42" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="1056" name="ZeroingRulesTests" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.032909" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-suite type="ParameterizedMethod" id="1069" name="Bdd06_DefaultCorrection_UsesWholeHorizontalClicks" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_DefaultCorrection_UsesWholeHorizontalClicks" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.014280" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+                  <properties />
+                  <test-case id="1063" name="Bdd06_DefaultCorrection_UsesWholeHorizontalClicks(-0.3f,2.0f)" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_DefaultCorrection_UsesWholeHorizontalClicks(-0.3f,2.0f)" methodname="Bdd06_DefaultCorrection_UsesWholeHorizontalClicks" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="1639502450" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.008905" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1064" name="Bdd06_DefaultCorrection_UsesWholeHorizontalClicks(0.3f,-2.0f)" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_DefaultCorrection_UsesWholeHorizontalClicks(0.3f,-2.0f)" methodname="Bdd06_DefaultCorrection_UsesWholeHorizontalClicks" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="685413130" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000208" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1065" name="Bdd06_DefaultCorrection_UsesWholeHorizontalClicks(-3.1f,4.0f)" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_DefaultCorrection_UsesWholeHorizontalClicks(-3.1f,4.0f)" methodname="Bdd06_DefaultCorrection_UsesWholeHorizontalClicks" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="1402980656" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000134" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1066" name="Bdd06_DefaultCorrection_UsesWholeHorizontalClicks(3.1f,-4.0f)" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_DefaultCorrection_UsesWholeHorizontalClicks(3.1f,-4.0f)" methodname="Bdd06_DefaultCorrection_UsesWholeHorizontalClicks" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="222240950" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000092" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1067" name="Bdd06_DefaultCorrection_UsesWholeHorizontalClicks(0.0f,0.0f)" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_DefaultCorrection_UsesWholeHorizontalClicks(0.0f,0.0f)" methodname="Bdd06_DefaultCorrection_UsesWholeHorizontalClicks" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="1537276452" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000084" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1068" name="Bdd06_DefaultCorrection_UsesWholeHorizontalClicks(-4.0f,4.0f)" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_DefaultCorrection_UsesWholeHorizontalClicks(-4.0f,4.0f)" methodname="Bdd06_DefaultCorrection_UsesWholeHorizontalClicks" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="424227122" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000089" asserts="0">
+                    <properties />
+                  </test-case>
+                </test-suite>
+                <test-case id="1071" name="ComputeFinalGrade_MapsPassedRoundToGrade" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeFinalGrade_MapsPassedRoundToGrade" methodname="ComputeFinalGrade_MapsPassedRoundToGrade" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="1899644583" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.001188" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1060" name="ComputeFrontSightDegrees_UsesCeilingAnd064CmPerDegree" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeFrontSightDegrees_UsesCeilingAnd064CmPerDegree" methodname="ComputeFrontSightDegrees_UsesCeilingAnd064CmPerDegree" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="534255490" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000778" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1061" name="ComputeRearSightClicks_UsesCeilingAndTwoCmPerClick" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeRearSightClicks_UsesCeilingAndTwoCmPerClick" methodname="ComputeRearSightClicks_UsesCeilingAndTwoCmPerClick" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="484917524" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000435" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1058" name="GenerateFixedOffset_DifferentSeeds_ProduceDifferentOffsets" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.GenerateFixedOffset_DifferentSeeds_ProduceDifferentOffsets" methodname="GenerateFixedOffset_DifferentSeeds_ProduceDifferentOffsets" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="1470880191" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000824" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1057" name="GenerateFixedOffset_FixedSeed_IsReproducible" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.GenerateFixedOffset_FixedSeed_IsReproducible" methodname="GenerateFixedOffset_FixedSeed_IsReproducible" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="325955585" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000213" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1059" name="GenerateFixedOffset_IsInsideTargetOutsideTenRing" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.GenerateFixedOffset_IsInsideTargetOutsideTenRing" methodname="GenerateFixedOffset_IsInsideTargetOutsideTenRing" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="487266087" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.002319" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1072" name="ResolveAimPointFromWeaponShot_UsesTargetOffsetConvention" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ResolveAimPointFromWeaponShot_UsesTargetOffsetConvention" methodname="ResolveAimPointFromWeaponShot_UsesTargetOffsetConvention" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="2137311942" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000706" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1070" name="ResolveHorizontalDirection_BiasRight_UsesBackward" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ResolveHorizontalDirection_BiasRight_UsesBackward" methodname="ResolveHorizontalDirection_BiasRight_UsesBackward" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="593112751" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000227" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1062" name="ResolveVerticalDirection_BiasDown_UsesCounterClockwise" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ResolveVerticalDirection_BiasDown_UsesCounterClockwise" methodname="ResolveVerticalDirection_BiasDown_UsesCounterClockwise" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="99126661" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000220" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1073" name="ZeroingServiceTests" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" testcasecount="27" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.045960" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1085" name="AdjustImpactPoint_RejectsIncompleteOrAppliedRoundAndInvalidDirection" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.AdjustImpactPoint_RejectsIncompleteOrAppliedRoundAndInvalidDirection" methodname="AdjustImpactPoint_RejectsIncompleteOrAppliedRoundAndInvalidDirection" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="331187742" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.018191" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1077" name="AdjustImpactPoint_UsesSeparateAxesAndAffectsNextRoundOnce" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.AdjustImpactPoint_UsesSeparateAxesAndAffectsNextRoundOnce" methodname="AdjustImpactPoint_UsesSeparateAxesAndAffectsNextRoundOnce" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="620303121" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.003629" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1076" name="ApplyAdjustment_IsIdempotentForSameRound" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ApplyAdjustment_IsIdempotentForSameRound" methodname="ApplyAdjustment_IsIdempotentForSameRound" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1558149763" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000692" asserts="0">
+                  <properties />
+                </test-case>
+                <test-suite type="ParameterizedMethod" id="1084" name="Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.007118" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+                  <properties />
+                  <test-case id="1078" name="Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound(-0.3f,2.0f)" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound(-0.3f,2.0f)" methodname="Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1180654461" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.002747" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1079" name="Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound(0.3f,-2.0f)" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound(0.3f,-2.0f)" methodname="Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1349801312" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000588" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1080" name="Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound(-3.1f,4.0f)" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound(-3.1f,4.0f)" methodname="Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="34116429" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000558" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1081" name="Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound(3.1f,-4.0f)" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound(3.1f,-4.0f)" methodname="Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="319544546" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000550" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1082" name="Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound(0.0f,0.0f)" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound(0.0f,0.0f)" methodname="Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1709862626" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000548" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1083" name="Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound(-4.0f,4.0f)" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound(-4.0f,4.0f)" methodname="Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="651832290" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000674" asserts="0">
+                    <properties />
+                  </test-case>
+                </test-suite>
+                <test-case id="1088" name="CompleteRound_BeforeThreeShots_ReturnsInvalidState" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.CompleteRound_BeforeThreeShots_ReturnsInvalidState" methodname="CompleteRound_BeforeThreeShots_ReturnsInvalidState" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1837800010" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000464" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1075" name="CompleteRound_CalculatesOffsetDirectionsAndAdjustmentAmounts" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.CompleteRound_CalculatesOffsetDirectionsAndAdjustmentAmounts" methodname="CompleteRound_CalculatesOffsetDirectionsAndAdjustmentAmounts" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="664602898" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000762" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1100" name="ContinueAfterAnalysis_StartsNextRound_ResetsShotsToThree" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ContinueAfterAnalysis_StartsNextRound_ResetsShotsToThree" methodname="ContinueAfterAnalysis_StartsNextRound_ResetsShotsToThree" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1683354140" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000659" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1094" name="ContinueAfterAnalysis_WithoutApply_ReturnsInvalidState" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ContinueAfterAnalysis_WithoutApply_ReturnsInvalidState" methodname="ContinueAfterAnalysis_WithoutApply_ReturnsInvalidState" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="415556073" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000528" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1093" name="GetFinalResult_AllRoundsFail_ReturnsFail" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_AllRoundsFail_ReturnsFail" methodname="GetFinalResult_AllRoundsFail_ReturnsFail" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1363519547" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.001353" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1090" name="GetFinalResult_PassRound1_ReturnsExcellent" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound1_ReturnsExcellent" methodname="GetFinalResult_PassRound1_ReturnsExcellent" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1939144611" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000447" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1091" name="GetFinalResult_PassRound2_ReturnsGood" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound2_ReturnsGood" methodname="GetFinalResult_PassRound2_ReturnsGood" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="592838621" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000455" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1092" name="GetFinalResult_PassRound3_ReturnsPass" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound3_ReturnsPass" methodname="GetFinalResult_PassRound3_ReturnsPass" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1404426439" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000475" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1101" name="GetSession_NotFound_ReturnsNotFound" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetSession_NotFound_ReturnsNotFound" methodname="GetSession_NotFound_ReturnsNotFound" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="619410090" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000315" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1086" name="RecordShot_AcceptsUpToThreeShotsPerRound" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_AcceptsUpToThreeShotsPerRound" methodname="RecordShot_AcceptsUpToThreeShotsPerRound" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1654629904" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000346" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1089" name="RecordShot_AllInsideTenRing_PassedTenRingTrue" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_AllInsideTenRing_PassedTenRingTrue" methodname="RecordShot_AllInsideTenRing_PassedTenRingTrue" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1757703776" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000378" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1087" name="RecordShot_FourthShot_ReturnsInvalidState" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_FourthShot_ReturnsInvalidState" methodname="RecordShot_FourthShot_ReturnsInvalidState" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="2057973541" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000488" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1074" name="StartSession_FixedSeed_ProducesReproducibleOffset" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.StartSession_FixedSeed_ProducesReproducibleOffset" methodname="StartSession_FixedSeed_ProducesReproducibleOffset" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1420897458" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.001567" asserts="0">
+                  <properties />
+                </test-case>
+                <test-suite type="ParameterizedMethod" id="1099" name="TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.002758" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                  <properties />
+                  <test-case id="1095" name="TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(1,Excellent)" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(1,Excellent)" methodname="TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="844224363" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000704" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1096" name="TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(2,Good)" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(2,Good)" methodname="TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="434264729" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000297" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1097" name="TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(3,Pass)" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(3,Pass)" methodname="TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="897591551" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000293" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1098" name="TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(0,Fail)" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(0,Fail)" methodname="TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1084877976" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.000288" asserts="0">
+                    <properties />
+                  </test-case>
+                </test-suite>
+                <test-case id="1102" name="WeaponShotResultEvent_RecordsShotUsingTargetOffsetConvention" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.WeaponShotResultEvent_RecordsShotUsingTargetOffsetConvention" methodname="WeaponShotResultEvent_RecordsShotUsingTargetOffsetConvention" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1260535236" result="Passed" start-time="2026-10-11 09:14:30Z" end-time="2026-10-11 09:14:30Z" duration="0.001024" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

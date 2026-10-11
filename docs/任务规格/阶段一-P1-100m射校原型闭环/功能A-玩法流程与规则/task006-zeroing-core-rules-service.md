@@ -19,6 +19,8 @@
 
 ## 交付内容
 
+2026-10-11：落实 BDD06「水平调整只允许整格」与接口04整格约束；默认补偿向上取整到2cm整数倍，按钮跨零、边界、应用和下一轮均保持整格。补充 EditMode 参数化回归及应用幂等断言。
+
 - `IZeroingService` 或等效服务。
 - `ZeroingSessionDto`
 - `ZeroingShotDto`

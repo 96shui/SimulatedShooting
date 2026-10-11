@@ -110,6 +110,42 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.That(Vector2.Distance(new Vector2(2f, -.064f), nextShot.Data.ImpactPointCm), Is.LessThan(.001f));
         }
 
+        [TestCase(-0.3f, 2f)]
+        [TestCase(0.3f, -2f)]
+        [TestCase(-3.1f, 4f)]
+        [TestCase(3.1f, -4f)]
+        [TestCase(0f, 0f)]
+        [TestCase(-4f, 4f)]
+        public void Bdd06_HorizontalWholeClicks_DefaultStepApplyAndNextRound(float x, float expected)
+        {
+            var session = StartZeroingSession();
+            RecordThreeImpacts(session.SessionId, new Vector2(x, 12f));
+            var initial = zeroing.CompleteRound(session.SessionId).Data;
+            Assert.That(initial.ProposedCorrectionCm.x, Is.EqualTo(expected).Within(.001f));
+            Assert.That(initial.PreviewAverageOffsetCm.x, Is.EqualTo(x + expected).Within(.001f));
+            var adjusted = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Horizontal, -1).Data;
+            Assert.That(adjusted.ProposedCorrectionCm.x, Is.EqualTo(expected - 2f).Within(.001f));
+            Assert.That(adjusted.ProposedCorrectionCm.y, Is.EqualTo(-12f).Within(.001f));
+            for (var i = 0; i < 30; i++)
+            {
+                adjusted = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Horizontal, 1).Data;
+                Assert.That(adjusted.ProposedCorrectionCm.x % 2f, Is.EqualTo(0f));
+            }
+            Assert.That(adjusted.ProposedCorrectionCm.x, Is.EqualTo(50f));
+            for (var i = 0; i < 55; i++)
+                adjusted = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Horizontal, -1).Data;
+            Assert.That(adjusted.ProposedCorrectionCm.x, Is.EqualTo(-50f));
+            var applied = zeroing.ApplyAdjustment(session.SessionId, 1);
+            Assert.IsTrue(applied.Success, applied.Message);
+            Assert.IsTrue(zeroing.ApplyAdjustment(session.SessionId, 1).Success);
+            Assert.That(zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm.x,
+                Is.EqualTo(session.FixedImpactOffsetCm.x - 50f).Within(.001f));
+            Assert.IsTrue(zeroing.ContinueAfterAnalysis(session.SessionId).Success);
+            var next = RecordImpact(session.SessionId, new Vector2(x, 12f) - session.FixedImpactOffsetCm);
+            Assert.IsTrue(next.Success, next.Message);
+            Assert.That(next.Data.ImpactPointCm.x, Is.EqualTo(x - 50f).Within(.001f));
+        }
+
         [Test]
         public void AdjustImpactPoint_RejectsIncompleteOrAppliedRoundAndInvalidDirection()
         {

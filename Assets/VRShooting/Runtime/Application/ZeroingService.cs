@@ -98,7 +98,7 @@ namespace VRShooting.Application
                 axis != ZeroingAdjustmentAxis.Horizontal && axis != ZeroingAdjustmentAxis.Vertical)
                 return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidInput, "invalid adjustment request", ZeroingRoundAnalysisDto.Empty);
 
-            var correction = record.PendingCorrectionCm ?? -ZeroingRules.ComputeAverageOffset(record.CurrentShots);
+            var correction = record.PendingCorrectionCm ?? ZeroingRules.ComputeDefaultCorrection(ZeroingRules.ComputeAverageOffset(record.CurrentShots));
             if (axis == ZeroingAdjustmentAxis.Horizontal)
                 correction.x = Mathf.Clamp(correction.x + direction * ZeroingRules.CmPerRearSightClick, -50f, 50f);
             else
@@ -372,7 +372,7 @@ namespace VRShooting.Application
                     CurrentRound,
                     CurrentShots,
                     AppliedRounds.Contains(CurrentRound),
-                    PendingCorrectionCm ?? -ZeroingRules.ComputeAverageOffset(CurrentShots));
+                    PendingCorrectionCm ?? ZeroingRules.ComputeDefaultCorrection(ZeroingRules.ComputeAverageOffset(CurrentShots)));
             }
 
             public bool UpsertAnalysis(ZeroingRoundAnalysisDto analysis)
