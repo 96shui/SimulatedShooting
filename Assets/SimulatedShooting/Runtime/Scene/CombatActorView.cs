@@ -74,14 +74,23 @@ namespace SimulatedShooting.Scene
         {
             standingVisualPosition = VisualRoot != null ? VisualRoot.localPosition : Vector3.zero;
             standingVisualRotation = VisualRoot != null ? VisualRoot.localRotation : Quaternion.identity;
-            if (Audio != null)
-            {
-                Audio.spatialBlend = 1f;
-                Audio.rolloffMode = AudioRolloffMode.Logarithmic;
-                Audio.minDistance = 2f;
-                Audio.maxDistance = 65f;
-                Audio.dopplerLevel = 0f;
-            }
+            ConfigureShotAudio();
+        }
+
+        void ConfigureShotAudio()
+        {
+            if(Audio==null)Audio=gameObject.AddComponent<AudioSource>();
+            Audio.enabled=true;Audio.playOnAwake=false;Audio.loop=false;Audio.mute=false;Audio.volume=1f;
+            Audio.spatialBlend=1f;Audio.rolloffMode=AudioRolloffMode.Linear;
+            Audio.minDistance=8f;Audio.maxDistance=65f;Audio.dopplerLevel=0f;Audio.priority=32;
+        }
+
+        public void TurnTowards(Vector3 target,float seconds)
+        {
+            if(actionsLocked||IsDead||seconds<=0)return;
+            var direction=target-transform.position;direction.y=0;
+            if(direction.sqrMagnitude<.0001f)return;
+            transform.rotation=Quaternion.RotateTowards(transform.rotation,Quaternion.LookRotation(direction),180f*seconds);
         }
 
         public void MatchVisualToTerrain(Terrain terrain)
@@ -150,6 +159,7 @@ namespace SimulatedShooting.Scene
             ShotVisualFeedbackCount++;
             if (Audio != null && ShotClip != null)
             {
+                ConfigureShotAudio();
                 Audio.PlayOneShot(ShotClip, 0.85f);
                 ShotAudioFeedbackCount++;
             }

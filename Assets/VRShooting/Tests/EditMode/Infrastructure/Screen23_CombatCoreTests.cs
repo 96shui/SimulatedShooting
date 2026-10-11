@@ -77,26 +77,33 @@ namespace VRShooting.Tests.EditMode
                 }
             }
             Assert.That(hitCount, Is.EqualTo(2));
-            Assert.That(core.Start("fresh-two-hit", mode, new[] { Spawn() }).Data.Player.Health, Is.EqualTo(2));
-            Assert.That(core.GetSnapshot("fresh-two-hit").Data.Player.MaxHealth, Is.EqualTo(2));
+            Assert.That(core.Start("fresh-two-hit", mode, new[] { Spawn() }).Data.Player.Health, Is.EqualTo(5));
+            Assert.That(core.GetSnapshot("fresh-two-hit").Data.Player.MaxHealth, Is.EqualTo(5));
             Assert.That(core.GetSnapshot("fresh-two-hit").Data.Visual.Entities.Any(e => e.CorpseVisible), Is.False);
         }
 
-        [Test]
-        public void Bdd23_Task019_PlayerTwoHitsDieAndBothAttacksHaveOrderedFeedback()
+        [TestCase(TrainingMode.Trench)]
+        [TestCase(TrainingMode.Urban)]
+        public void Bdd23_PlayerFifthEnemyBulletKillsAndFeedbackRemainsOrdered(TrainingMode mode)
         {
-            var kinds = new System.Collections.Generic.List<CombatFeedbackKind>();
-            core.Feedback += f => kinds.Add(f.Kind);
-            See(); Advance(1);
-            Assert.That(State.Player.Health, Is.EqualTo(1)); Assert.That(State.Player.MaxHealth, Is.EqualTo(2));
-            Assert.That(State.Player.IsAlive, Is.True);
-            Advance(1);
-            Assert.That(State.Player.Health, Is.Zero); Assert.That(State.State, Is.EqualTo(SessionState.Failed));
-            CollectionAssert.AreEqual(new[] { CombatFeedbackKind.EnemyAttack, CombatFeedbackKind.PlayerDamaged,
-                CombatFeedbackKind.EnemyAttack, CombatFeedbackKind.PlayerDamaged, CombatFeedbackKind.PlayerDied }, kinds);
-            Advance(10); Assert.That(kinds.Count, Is.EqualTo(5));
+            core.Dispose();core=new CombatCoreService(clock);
+            core.Start(Session,mode,new[]{Spawn()});
+            var kinds=new System.Collections.Generic.List<CombatFeedbackKind>();
+            core.Feedback+=f=>kinds.Add(f.Kind);
+            See();
+            for(var hit=1;hit<=5;hit++)
+            {
+                Advance(1);
+                Assert.That(State.Player.Health,Is.EqualTo(5-hit));
+                Assert.That(State.Player.MaxHealth,Is.EqualTo(5));
+                Assert.That(State.State,Is.EqualTo(hit<5?SessionState.Running:SessionState.Failed));
+                Assert.That(kinds[(hit-1)*2],Is.EqualTo(CombatFeedbackKind.EnemyAttack));
+                Assert.That(kinds[(hit-1)*2+1],Is.EqualTo(CombatFeedbackKind.PlayerDamaged));
+            }
+            Assert.That(kinds.Last(),Is.EqualTo(CombatFeedbackKind.PlayerDied));
+            Advance(10);Assert.That(kinds.Count,Is.EqualTo(11));
+            Assert.That(core.Start("fresh-five-hit",mode,new[]{Spawn()}).Data.Player.Health,Is.EqualTo(5));
         }
-
         [Test] public void Ammo_DualGrip_SingleShot_AndTimedReloadConserveTotal()
         {
             Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(30)); Assert.That(State.Ammo.ReserveAmmo, Is.EqualTo(120));
@@ -117,11 +124,11 @@ namespace VRShooting.Tests.EditMode
         }
         [Test] public void VisibleRangeAngle_AndOcclusionGateAttacks()
         {
-            Advance(10); Assert.That(State.Player.Health, Is.EqualTo(2));
+            Advance(10); Assert.That(State.Player.Health, Is.EqualTo(5));
             core.Submit(Sight(position: new Vector3(0, 0, 31))); core.Advance(Session); Advance(2);
             core.Submit(Sight(forward: Vector3.forward)); core.Advance(Session); Advance(2);
-            Assert.That(State.Player.Health, Is.EqualTo(2)); See(); Advance(1); Assert.That(State.Player.Health, Is.EqualTo(1));
-            core.Submit(Sight(false)); core.Advance(Session); Advance(20); Assert.That(State.Player.Health, Is.EqualTo(1));
+            Assert.That(State.Player.Health, Is.EqualTo(5)); See(); Advance(1); Assert.That(State.Player.Health, Is.EqualTo(4));
+            core.Submit(Sight(false)); core.Advance(Session); Advance(20); Assert.That(State.Player.Health, Is.EqualTo(4));
         }
         [Test] public void LargeTickMatchesSmallTicks_AndDoesNotAttackBeforeDiscovery()
         {
@@ -145,7 +152,7 @@ namespace VRShooting.Tests.EditMode
             Advance(100); Assert.That(hits, Is.EqualTo(1)); Assert.That(deaths, Is.EqualTo(1));
             var enemy = State.Visual.Entities.Single(e => e.EntityId == Enemy);
             Assert.That(enemy.State, Is.EqualTo(CombatEntityState.Dead)); Assert.That(enemy.CorpseVisible);
-            Assert.That(State.Player.Health, Is.EqualTo(2));
+            Assert.That(State.Player.Health, Is.EqualTo(5));
         }
         [Test] public void UnknownShotAndInvalidInput_DoNotPublishOrChange()
         {
@@ -160,7 +167,7 @@ namespace VRShooting.Tests.EditMode
         public void LifecycleCancelsReloadAndAttacks(SessionState state)
         {
             Grip(); Fire(); core.Reload(Session); See(); core.SetState(Session, state); Advance(100);
-            Assert.That(State.Player.Health, Is.EqualTo(2)); Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(29));
+            Assert.That(State.Player.Health, Is.EqualTo(5)); Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(29));
             Assert.That(State.Ammo.ReserveAmmo, Is.EqualTo(120)); Assert.That(State.Ammo.IsReloading, Is.False);
             Assert.That(State.Weapon.CanShoot, Is.False);
             if (state != SessionState.Paused) Assert.That(core.SetState(Session, SessionState.Running).ErrorCode, Is.EqualTo(ErrorCode.InvalidState));
@@ -168,9 +175,9 @@ namespace VRShooting.Tests.EditMode
         [Test] public void TrackingLossSuspendsAttacksAndRequiresNewPerception()
         {
             Grip(); See(); core.SetTracking(Session, false); Advance(100);
-            Assert.That(State.Weapon.CanShoot, Is.False); Assert.That(State.Player.Health, Is.EqualTo(2));
-            core.SetTracking(Session, true); Advance(10); Assert.That(State.Player.Health, Is.EqualTo(2));
-            See(); Advance(1); Assert.That(State.Player.Health, Is.EqualTo(1));
+            Assert.That(State.Weapon.CanShoot, Is.False); Assert.That(State.Player.Health, Is.EqualTo(5));
+            core.SetTracking(Session, true); Advance(10); Assert.That(State.Player.Health, Is.EqualTo(5));
+            See(); Advance(1); Assert.That(State.Player.Health, Is.EqualTo(4));
         }
         [Test] public void DeathIsClampedAndOnce_SameBatchEnemyKillDoesNotRestorePlayer()
         {
@@ -189,8 +196,8 @@ namespace VRShooting.Tests.EditMode
             var damage = new CombatInputDto { SessionId = Session, EventId = "damage-1", Tick = clock.Tick,
                 Kind = CombatInputKind.Hit, EntityId = Enemy, TargetId = Player, Value = 1, Flag = true };
             Assert.That(core.Submit(damage).Success); Assert.That(core.Submit(damage).Success); core.Advance(Session);
-            Assert.That(State.Player.Health, Is.EqualTo(1)); Assert.That(core.Submit(damage).Success);
-            Advance(1); Assert.That(State.Player.Health, Is.EqualTo(0));
+            Assert.That(State.Player.Health, Is.EqualTo(4)); Assert.That(core.Submit(damage).Success);
+            Advance(1); Assert.That(State.Player.Health, Is.EqualTo(3));
         }
         [Test] public void NewSessionInvalidatesOldFactsAndDisposalStopsNotifications()
         {
@@ -233,7 +240,7 @@ namespace VRShooting.Tests.EditMode
                 Tick = clock.Tick, Kind = CombatInputKind.Perception, EntityId = Enemy, TargetId = Player,
                 Position = sight.Position, Direction = sight.Direction, Flag = false }).ErrorCode, Is.EqualTo(ErrorCode.InvalidInput));
             clock.Advance(1); Assert.That(core.Advance(Session).ErrorCode, Is.EqualTo(ErrorCode.InvalidState));
-            Assert.That(State.Player.Health, Is.EqualTo(2));
+            Assert.That(State.Player.Health, Is.EqualTo(5));
             core.SetState(Session, SessionState.Paused); Assert.That(core.Advance(Session).Success);
         }
         [Test] public void OldShotCannotPenetrateMultipleEnemies_AndInvalidStartPreservesSession()

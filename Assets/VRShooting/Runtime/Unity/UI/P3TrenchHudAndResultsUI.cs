@@ -21,7 +21,7 @@ namespace VRShooting.Unity.UI
         [SerializeField] protected TMP_Text promptText;
         [SerializeField] protected TMP_Text stateText;
         [SerializeField] protected P3MiniMapView miniMap;
-        readonly Image[] healthCells = new Image[2];
+        readonly Image[] healthCells = new Image[5];
 
         public HudDto LastHud { get; private set; }
         public SquadStatusDto LastSquad { get; private set; }
@@ -58,8 +58,8 @@ namespace VRShooting.Unity.UI
                 for (var index = 0; index < healthCells.Length; index++)
                 {
                     var fill = TacticalUIStyle.Artwork(track, "Hud_Combat_HealthCell_" + (index + 1), null, Vector2.zero, Vector2.one);
-                    fill.rectTransform.anchorMin = new Vector2(index * .5f, 0);
-                    fill.rectTransform.anchorMax = new Vector2((index + 1) * .5f, 1);
+                    fill.rectTransform.anchorMin = new Vector2((float)index / healthCells.Length, 0);
+                    fill.rectTransform.anchorMax = new Vector2((float)(index + 1) / healthCells.Length, 1);
                     fill.rectTransform.offsetMin = new Vector2(index == 0 ? 0 : 2, 0);
                     fill.rectTransform.offsetMax = new Vector2(index == 0 ? -2 : 0, 0);
                     fill.color = new Color32(109, 223, 187, 255);
@@ -77,6 +77,7 @@ namespace VRShooting.Unity.UI
             // Older UI fixtures omit MaxHealth; production always supplies the configured maximum.
             var maximum = hud.Player.MaxHealth > 0 ? hud.Player.MaxHealth : PlayerStatusDto.Default.MaxHealth;
             var fraction = Mathf.Clamp01(hud.Player.Health / maximum);
+            var visibleCells=Mathf.CeilToInt(fraction*healthCells.Length-.0001f);
             var lowHealth = fraction <= .5f || !hud.Player.IsAlive;
             if (healthText != null) healthText.color = lowHealth ? warning : normal;
             if (ammoText != null) ammoText.color = hud.Ammo.IsReloading
@@ -85,7 +86,7 @@ namespace VRShooting.Unity.UI
             for (var index = 0; index < healthCells.Length; index++)
             {
                 if (healthCells[index] == null) continue;
-                healthCells[index].enabled = fraction * healthCells.Length > index;
+                healthCells[index].enabled = index<visibleCells;
                 healthCells[index].color = lowHealth ? warning : new Color32(109, 223, 187, 255);
             }
             P3UiText.SetText(healthText, "生命：" + Mathf.RoundToInt(hud.Player.Health) + " / " + Mathf.RoundToInt(maximum) +

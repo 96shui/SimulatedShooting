@@ -307,7 +307,7 @@ namespace SimulatedShooting.Scene
                     world.Submit(new CombatInputDto{SessionId=session,EventId="navigation-"+ ++sequence,Tick=Clock.Tick,Kind=CombatInputKind.NavigationResult,
                         EntityId=n.request.EntityId,TargetId=n.request.RequestId,Position=n.position,Direction=n.forward,Flag=n.arrived});
                 }
-                CollectPerception(frame.PlayerPosition);
+                CollectPerception(frame.PlayerPosition,delta);
             }
             // Squad commands do not depend on the rifle's grip/input pipeline succeeding.
             var grenadeResult=AdvanceGrenadeCommand(input);
@@ -377,12 +377,13 @@ namespace SimulatedShooting.Scene
             var accepted=world.Submit(new CombatInputDto{SessionId=session,EventId="area-"+ ++sequence,Tick=Clock.Tick,Kind=CombatInputKind.AreaPresence,EntityId=id,Flag=inside});
             if(accepted.Success)presence[id]=inside;
         }
-        void CollectPerception(Vector3 playerPosition)
+        void CollectPerception(Vector3 playerPosition,float seconds)
         {
             var snapshot=core.GetSnapshot(session).Data.Visual;
             foreach(var entity in snapshot.Entities)
             {
                 if(entity.Role!=CombatEntityRole.Enemy||entity.State==CombatEntityState.Dead||!actors.TryGetValue(entity.EntityId,out var actor))continue;
+                if(entity.State==CombatEntityState.Attacking)actor.TurnTowards(playerPosition,seconds);
                 var direction=playerPosition+Vector3.up*1.2f-actor.PerceptionOrigin.position;
                 bool visible=!Physics.Raycast(actor.PerceptionOrigin.position,direction.normalized,out var hit,Mathf.Max(0,direction.magnitude-.25f),~(1<<2),QueryTriggerInteraction.Ignore);
                 if(mode==TrainingMode.Urban && world is UrbanService urban)
@@ -511,7 +512,10 @@ namespace SimulatedShooting.Scene
                 if(toward.sqrMagnitude>.001f)thrower.transform.rotation=Quaternion.LookRotation(toward);
                 thrower.PlayGrenadeThrow();
             }
-            var prefab = binding.GrenadePrefab ?? Resources.Load<GameObject>("Combat/Grenade_M67") ?? Resources.Load<GameObject>("Combat/m67_low");
+            // Serialized Unity references can be native-null without being CLR null.
+            var prefab=binding.GrenadePrefab;
+            if(prefab==null)prefab=Resources.Load<GameObject>("Combat/Grenade_M67");
+            if(prefab==null)prefab=Resources.Load<GameObject>("Combat/m67_low");
             if(prefab==null){Debug.LogWarning("Grenade model resource is missing.",this);return;}
             // Keep the imported FBX's unit scale/pivot separate from the world-space projectile.
             var grenade=new GameObject("Grenade_M67_"+plan.GrenadeId);
@@ -520,20 +524,12 @@ namespace SimulatedShooting.Scene
             var model=Instantiate(prefab,grenade.transform);
             model.transform.localPosition=Vector3.zero;
             model.transform.localRotation=Quaternion.identity;
-            foreach(var child in model.GetComponentsInChildren<Transform>(true))
-            {child.gameObject.SetActive(true);child.gameObject.layer=0;}
-            foreach(var collider in model.GetComponentsInChildren<Collider>(true))collider.enabled=false;
-            foreach(var lod in model.GetComponentsInChildren<LODGroup>(true))lod.ForceLOD(0);
+            if(!CombatGrenadeProjectile.NormalizeModel(model,.22f))
+                Debug.LogWarning("Grenade prefab has no usable mesh bounds: "+prefab.name,this);
             var renderers=model.GetComponentsInChildren<Renderer>(true);
             if(renderers.Length==0)Debug.LogWarning("Grenade prefab has no renderers: "+prefab.name,this);
             if(renderers.Length>0)
             {
-                var bounds=renderers[0].bounds;for(var i=1;i<renderers.Length;i++)bounds.Encapsulate(renderers[i].bounds);
-                if(bounds.size.y>.001f)model.transform.localScale*=.22f/bounds.size.y;
-                // The model rotates about its centre and rests above the collision surface.
-                bounds=renderers[0].bounds;for(var i=1;i<renderers.Length;i++)bounds.Encapsulate(renderers[i].bounds);
-                model.transform.position+=grenade.transform.position-bounds.center;
-                foreach(var mesh in renderers){mesh.enabled=true;mesh.forceRenderingOff=false;}
                 if(grenadeMaterial==null)
                 {
                     var shader=Shader.Find("Universal Render Pipeline/Lit")??Shader.Find("Standard");

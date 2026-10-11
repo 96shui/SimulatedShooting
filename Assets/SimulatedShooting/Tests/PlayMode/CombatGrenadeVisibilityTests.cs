@@ -6,6 +6,28 @@ using VRShooting.Common;
 
 public sealed class CombatGrenadeVisibilityTests
 {
+    [Test]
+    public void Bdd27_ImportedModelNormalizesBeforeFirstRenderedFrame()
+    {
+        var parent=new GameObject("GrenadeWorldRoot");
+        try
+        {
+            var prefab=Resources.Load<GameObject>("Combat/m67_low");
+            Assert.That(prefab,Is.Not.Null);
+            var model=Object.Instantiate(prefab,parent.transform);
+            foreach(var renderer in model.GetComponentsInChildren<Renderer>(true))
+            { renderer.enabled=false;renderer.forceRenderingOff=true; }
+            model.SetActive(false);
+            Assert.That(CombatGrenadeProjectile.NormalizeModel(model,.22f),Is.True);
+            var bounds=CombatGrenadeProjectile.GetModelBounds(model);
+            Assert.That(bounds.size.y,Is.EqualTo(.22f).Within(.001f));
+            Assert.That(Vector3.Distance(bounds.center,parent.transform.position),Is.LessThan(.001f));
+            foreach(var renderer in model.GetComponentsInChildren<Renderer>(true))
+            { Assert.That(renderer.enabled&&renderer.gameObject.activeInHierarchy,Is.True);Assert.That(renderer.forceRenderingOff,Is.False); }
+            Assert.That(parent.transform.lossyScale,Is.EqualTo(Vector3.one));
+        }
+        finally { Object.DestroyImmediate(parent); }
+    }
     // BDD27: the visible grenade remains at the authoritative location until explosion/cancellation.
     [Test]
     public void ServiceDrivenGrenadeDoesNotExpireFromPresentationTime()

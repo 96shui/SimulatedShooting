@@ -13,6 +13,42 @@ namespace SimulatedShooting.Scene
         bool launched;
         Vector3 previousPosition;
 
+        public static Bounds GetModelBounds(GameObject model)
+        {
+            var result=new Bounds();var initialized=false;
+            foreach(var renderer in model.GetComponentsInChildren<Renderer>(true))
+            {
+                var filter=renderer.GetComponent<MeshFilter>();
+                var mesh=filter!=null?filter.sharedMesh:(renderer as SkinnedMeshRenderer)?.sharedMesh;
+                if(mesh==null)continue;
+                var local=mesh.bounds;
+                for(var corner=0;corner<8;corner++)
+                {
+                    var point=renderer.transform.TransformPoint(local.center+Vector3.Scale(local.extents,
+                        new Vector3((corner&1)==0?-1:1,(corner&2)==0?-1:1,(corner&4)==0?-1:1)));
+                    if(!initialized){result=new Bounds(point,Vector3.zero);initialized=true;}
+                    else result.Encapsulate(point);
+                }
+            }
+            return result;
+        }
+
+        public static bool NormalizeModel(GameObject model,float height)
+        {
+            foreach(var child in model.GetComponentsInChildren<Transform>(true))
+            {child.gameObject.SetActive(true);child.gameObject.layer=0;}
+            foreach(var collider in model.GetComponentsInChildren<Collider>(true))collider.enabled=false;
+            foreach(var lod in model.GetComponentsInChildren<LODGroup>(true))lod.ForceLOD(0);
+            foreach(var renderer in model.GetComponentsInChildren<Renderer>(true))
+            {renderer.enabled=true;renderer.forceRenderingOff=false;}
+            var bounds=GetModelBounds(model);
+            if(bounds.size.y<=.00001f)return false;
+            var centre=model.transform.parent!=null?model.transform.parent.position:model.transform.position;
+            model.transform.localScale*=height/bounds.size.y;
+            model.transform.position+=centre-GetModelBounds(model).center;
+            return true;
+        }
+
         public void Launch(GrenadeThrowPlanDto throwPlan, Action onExpired, Func<Vector3> actualPosition)
         {
             plan = throwPlan; expired = onExpired; positionProvider = actualPosition; elapsed = 0; launched = true;

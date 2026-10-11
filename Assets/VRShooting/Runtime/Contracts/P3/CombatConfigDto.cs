@@ -38,7 +38,7 @@ namespace VRShooting.Common
         public AmmoDto InitialAmmo { get; init; }
         public static CombatConfigDto Default => new CombatConfigDto
         {
-            PlayerHealth = 2f,
+            PlayerHealth = 5f,
             EnemyHealth = 2f,
             PlayerBulletDamage = 1f,
             EnemyDamage = 1f,

@@ -31,6 +31,7 @@ namespace SimulatedShooting.Scene
                 fireball.sortingOrder = 10;
             }
             particles = gameObject.AddComponent<ParticleSystem>();
+            particles.Stop(true,ParticleSystemStopBehavior.StopEmittingAndClear);
             var main = particles.main; main.duration = Lifetime; main.loop = false; main.playOnAwake = false; main.startLifetime = new ParticleSystem.MinMaxCurve(.18f, .5f);
             main.startSpeed = new ParticleSystem.MinMaxCurve(4f, 11f); main.startSize = new ParticleSystem.MinMaxCurve(.015f, .065f);
             main.startColor = new ParticleSystem.MinMaxGradient(new Color(.17f,.16f,.14f,1f), new Color(.47f,.43f,.36f,.8f));

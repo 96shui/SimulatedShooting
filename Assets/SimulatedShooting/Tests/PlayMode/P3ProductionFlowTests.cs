@@ -88,6 +88,95 @@ namespace SimulatedShooting.Tests.PlayMode
         }
         IEnumerator DeathFlow(TrainingMode mode)
         {
+            yield return RunDeathFlow(mode);
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd27_DesktopThrowSpawnsVisibleM67UntilExplosion()
+        {
+            yield return SceneManager.LoadSceneAsync("MainScene");yield return null;
+            app=GameMain.Instance.Services.Combat;ui=GameMain.Instance.GetComponent<P3LiveUIController>().View;
+            Assert.That(app.OpenMode(TrainingMode.Trench).Success,Is.True);
+            var load=app.SelectMapAsync("trench-a",VRShooting.Contracts.RandomSeed.Fixed(20260916));
+            while(!load.IsCompleted)yield return null;
+            Assert.That(load.Result.Success,Is.True,load.Result.Message);
+            runtime=Object.FindObjectOfType<CombatSceneRuntime>();runtime.ManualStepping=true;
+            input=new ManualXRTrainingInput();runtime.InputOverride=input;
+            ui.TrenchBriefingView.StartButton.onClick.Invoke();
+            yield return CompleteOpening();
+            runtime.FrameOverride=new CombatInputFrameDto {HeadTracked=true,RearHandTracked=true,FrontHandTracked=true,
+                PlayerPosition=runtime.PlayerRoot.position,PlayerForward=runtime.PlayerRoot.forward,
+                MuzzlePosition=runtime.PlayerCamera.transform.position,AimDirection=runtime.PlayerCamera.transform.forward};
+            var previousBackground=UnityEngine.InputSystem.InputSystem.settings.backgroundBehavior;
+            UnityEngine.InputSystem.InputSystem.settings.backgroundBehavior=UnityEngine.InputSystem.InputSettings.BackgroundBehavior.IgnoreFocus;
+#if UNITY_EDITOR
+            var previousEditorInput=UnityEngine.InputSystem.InputSystem.settings.editorInputBehaviorInPlayMode;
+            UnityEngine.InputSystem.InputSystem.settings.editorInputBehaviorInPlayMode=
+                UnityEngine.InputSystem.InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+#endif
+            var keyboard=UnityEngine.InputSystem.InputSystem.AddDevice<UnityEngine.InputSystem.Keyboard>();
+            keyboard.MakeCurrent();UnityEngine.InputSystem.InputSystem.EnableDevice(keyboard);
+            try
+            {
+                var controls=new P3XRTrainingInput();runtime.InputOverride=controls;
+                controls.Sample(false);
+                UnityEngine.InputSystem.InputSystem.QueueStateEvent(keyboard,
+                    new UnityEngine.InputSystem.LowLevel.KeyboardState(UnityEngine.InputSystem.Key.H));
+                yield return null;keyboard.MakeCurrent();controls.Sample(false);
+                Assert.That(controls.GrenadePressed,Is.True,"Input System must expose the H press edge");
+                runtime.Step(.02f);
+                var tactic=app.Mission.Trench.GrenadeTactics;
+                Assert.That(tactic.Current.HasValue,Is.True,"Desktop H must reach the production grenade command: "+
+                    runtime.LastFrameResult.ErrorCode+" / "+app.Mission.Core.GetSnapshot(app.Mission.SessionId).Data.State+
+                    " / locked="+runtime.CharacterActionsLocked+" / actors="+string.Join(",",runtime.Actors.Keys));
+                var exploded=false;tactic.GrenadeExploded+=value=>exploded=true;
+                // Isolate projectile lifetime from the separately tested player-death cancellation rule.
+                var safePosition=runtime.PlayerRoot.position+Vector3.right*1000;
+                Place(safePosition);
+                runtime.FrameOverride=new CombatInputFrameDto {HeadTracked=true,RearHandTracked=true,FrontHandTracked=true,
+                    PlayerPosition=safePosition,PlayerForward=Vector3.forward,
+                    MuzzlePosition=safePosition+Vector3.up*1.4f,AimDirection=Vector3.forward};
+                var projectile=runtime.GetComponentsInChildren<CombatGrenadeProjectile>().Single();
+                var model=projectile.transform.GetChild(0).gameObject;
+                // The launched root pitches/tumbles; measure the authored model height in its upright frame.
+                var launchRotation=projectile.transform.rotation;
+                projectile.transform.rotation=Quaternion.identity;
+                var uprightHeight=CombatGrenadeProjectile.GetModelBounds(model).size.y;
+                projectile.transform.rotation=launchRotation;
+                Assert.That(uprightHeight,Is.EqualTo(.22f).Within(.001f));
+                Assert.That(Vector3.Distance(projectile.transform.lossyScale,Vector3.one),Is.LessThan(.0001f));
+                foreach(var renderer in model.GetComponentsInChildren<Renderer>(true))
+                {
+                    Assert.That(renderer.enabled&&renderer.gameObject.activeInHierarchy&&!renderer.forceRenderingOff,Is.True);
+                    Assert.That(renderer.sharedMaterial,Is.Not.Null);
+                    Assert.That(renderer.sharedMaterial.GetFloat("_Surface"),Is.EqualTo(0));
+                }
+                UnityEngine.InputSystem.InputSystem.QueueStateEvent(keyboard,new UnityEngine.InputSystem.LowLevel.KeyboardState());
+                yield return null;controls.Sample(false);
+                runtime.Step(.75f);yield return null;
+                Assert.That(projectile!=null&&projectile.gameObject.activeInHierarchy,Is.True,"Released grenade remains visible");
+                Assert.That(Vector3.Distance(projectile.transform.position,tactic.ProjectilePosition),Is.LessThan(.001f));
+                CaptureGrenadeEvidence(model);
+                runtime.Step(.75f);yield return null;
+                Assert.That(projectile!=null,Is.True,"Landed grenade remains until its service fuse expires");
+                runtime.Step(2f);yield return null;
+                Assert.That(exploded,Is.True,"The model must survive until the real service explosion: "+
+                    runtime.LastFrameResult.ErrorCode+" / "+app.Mission.Core.GetSnapshot(app.Mission.SessionId).Data.State+
+                    " / now="+runtime.Clock.Now+" / active="+tactic.Current.HasValue);
+                Assert.That(runtime.GetComponentsInChildren<CombatGrenadeProjectile>().Length,Is.Zero);
+            }
+            finally
+            {
+                UnityEngine.InputSystem.InputSystem.RemoveDevice(keyboard);
+                UnityEngine.InputSystem.InputSystem.settings.backgroundBehavior=previousBackground;
+#if UNITY_EDITOR
+                UnityEngine.InputSystem.InputSystem.settings.editorInputBehaviorInPlayMode=previousEditorInput;
+#endif
+            }
+        }
+
+        IEnumerator RunDeathFlow(TrainingMode mode)
+        {
             yield return SceneManager.LoadSceneAsync("MainScene");yield return null;
             app=GameMain.Instance.Services.Combat;ui=GameMain.Instance.GetComponent<P3LiveUIController>().View;
             Assert.That(app.OpenMode(mode).Success,Is.True);
@@ -144,6 +233,36 @@ namespace SimulatedShooting.Tests.PlayMode
             if(mode==TrainingMode.Trench)ui.TrenchResultsView.BackButton.onClick.Invoke();else ui.UrbanResultsView.BackButton.onClick.Invoke();
             Assert.That(app.Snapshot.Screen,Is.EqualTo(ScreenId.MainMenu));
             yield return null;
+        }
+        static void CaptureGrenadeEvidence(GameObject model)
+        {
+            if(SystemInfo.graphicsDeviceType==UnityEngine.Rendering.GraphicsDeviceType.Null)return;
+            var cameraObject=new GameObject("GrenadeEvidenceCamera");
+            var target=new RenderTexture(256,256,24);var pixels=new Texture2D(256,256,TextureFormat.RGB24,false);
+            var previous=RenderTexture.active;
+            var nodes=model.GetComponentsInChildren<Transform>(true);var layers=nodes.Select(n=>n.gameObject.layer).ToArray();
+            try
+            {
+                foreach(var node in nodes)node.gameObject.layer=31;
+                var bounds=CombatGrenadeProjectile.GetModelBounds(model);
+                var camera=cameraObject.AddComponent<Camera>();camera.enabled=false;camera.cullingMask=1<<31;
+                camera.clearFlags=CameraClearFlags.SolidColor;camera.backgroundColor=Color.black;
+                camera.orthographic=true;camera.orthographicSize=bounds.extents.magnitude*1.1f;
+                camera.transform.position=bounds.center+new Vector3(1,.4f,-1).normalized;
+                camera.transform.LookAt(bounds.center);camera.nearClipPlane=.01f;camera.farClipPlane=3;
+                camera.targetTexture=target;camera.Render();RenderTexture.active=target;
+                pixels.ReadPixels(new Rect(0,0,256,256),0,0);pixels.Apply();
+                Assert.That(pixels.GetPixels().Count(p=>p.maxColorComponent>.08f),Is.GreaterThan(100),
+                    "The actual in-flight M67 renderer must produce visible pixels");
+                var path=System.IO.Path.Combine(Application.dataPath,"../Evidence");
+                System.IO.Directory.CreateDirectory(path);
+                System.IO.File.WriteAllBytes(System.IO.Path.Combine(path,"P3-production-M67-in-flight.png"),pixels.EncodeToPNG());
+            }
+            finally
+            {
+                for(var i=0;i<nodes.Length;i++)nodes[i].gameObject.layer=layers[i];
+                RenderTexture.active=previous;target.Release();Object.Destroy(target);Object.Destroy(pixels);Object.Destroy(cameraObject);
+            }
         }
         static bool CanStandInFront(CombatActorView actor)
         {

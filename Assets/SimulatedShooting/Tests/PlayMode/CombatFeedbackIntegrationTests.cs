@@ -17,6 +17,26 @@ namespace SimulatedShooting.Tests.PlayMode
 {
     public sealed class CombatFeedbackIntegrationTests
     {
+        [Test]
+        public void Bdd23_TurnIsSmoothHorizontalAndStopsWhenActionsLock()
+        {
+            var root=new GameObject("EnemyTurnTest");
+            try
+            {
+                var actor=root.AddComponent<CombatActorView>();
+                var position=root.transform.position;
+                actor.TurnTowards(new Vector3(10,20,0),.1f);
+                Assert.That(Quaternion.Angle(root.transform.rotation,Quaternion.identity),Is.EqualTo(18f).Within(.01f));
+                Assert.That(root.transform.position,Is.EqualTo(position));
+                Assert.That(root.transform.forward.y,Is.EqualTo(0).Within(.001f));
+                actor.SetActionsLocked(true);var rotation=root.transform.rotation;
+                actor.TurnTowards(Vector3.back,1);
+                Assert.That(root.transform.rotation,Is.EqualTo(rotation));
+                actor.SetActionsLocked(false);actor.TurnTowards(Vector3.right,1);
+                Assert.That(Vector3.Angle(root.transform.forward,Vector3.right),Is.LessThan(.01f));
+            }
+            finally { UnityEngine.Object.DestroyImmediate(root); }
+        }
         // BDD23 task019: real map, perception ray, core attacks and production feedback adapter.
         [UnityTest] public IEnumerator TrenchEnemyAttacksShowShotTracerAudioAndPlayerBlood() => Validate(TrainingMode.Trench);
         [UnityTest] public IEnumerator UrbanEnemyAttacksShowShotTracerAudioAndPlayerBlood() => Validate(TrainingMode.Urban);
@@ -45,7 +65,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 Assert.That(listeners.Length, Is.EqualTo(1), string.Join(";", listeners.Select(l => l.name + "@" + l.gameObject.scene.name)));
                 var enemy = runtime.Actors[enemyId];
                 Assert.That(enemy.SoldierAnimation.Rifle.GetComponentsInChildren<Renderer>(true).Any(r => r.enabled && r.gameObject.activeInHierarchy), Is.True, "Enemy must hold a visible rifle");
-                var position = enemy.PerceptionOrigin.position + enemy.transform.forward * 1.2f;
+                var position = enemy.PerceptionOrigin.position + enemy.transform.forward * 1.2f + enemy.transform.right * .5f;
                 position.y = enemy.GroundedFeetPosition.y + .05f;
                 var body = runtime.PlayerRoot.GetComponent<CharacterController>();
                 body.enabled = false;
@@ -58,12 +78,23 @@ namespace SimulatedShooting.Tests.PlayMode
                     PlayerPosition = position, PlayerForward = -enemy.transform.forward,
                     MuzzlePosition = position + Vector3.up * 1.2f, AimDirection = -enemy.transform.forward };
                 runtime.Step(.01f);
-                Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(2));
-                runtime.Step(1.01f);
-                Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(1), "Production line of sight must reach the service");
+                Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(5));
+                var angle=Vector3.Angle(enemy.transform.forward,Vector3.ProjectOnPlane(position-enemy.transform.position,Vector3.up));
+                runtime.Step(.05f);
+                Assert.That(Vector3.Angle(enemy.transform.forward,Vector3.ProjectOnPlane(position-enemy.transform.position,Vector3.up)),Is.LessThan(angle));
+                Assert.That(enemy.ShotVisualFeedbackCount,Is.Zero,"Enemy turns during its existing discovery interval");
+                runtime.Step(.1f);
+                runtime.Step(.86f);
+                Assert.That(Vector3.Angle(enemy.transform.forward,Vector3.ProjectOnPlane(position-enemy.transform.position,Vector3.up)),Is.LessThan(1f));
+                Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(4), "Production line of sight must reach the service");
                 Assert.That(enemy.ShotVisualFeedbackCount, Is.EqualTo(1));
                 Assert.That(enemy.ShotAudioFeedbackCount, Is.EqualTo(1));
                 Assert.That(enemy.Audio.isPlaying, Is.True);
+                Assert.That(enemy.Audio.enabled&&!enemy.Audio.mute,Is.True);
+                Assert.That(enemy.Audio.spatialBlend,Is.EqualTo(1));
+                Assert.That(enemy.Audio.rolloffMode,Is.EqualTo(AudioRolloffMode.Linear));
+                Assert.That(enemy.Audio.minDistance,Is.GreaterThanOrEqualTo(8));
+                Assert.That(enemy.Audio.maxDistance,Is.GreaterThan(30));
                 var tracer = runtime.GetComponentsInChildren<BallisticTracerVisual>().Single(t => t.name.StartsWith("Tracer_Enemy_"));
                 Assert.That(tracer.HasProjectileVisual, Is.True);
                 Assert.That(tracer.GetComponent<LineRenderer>().endWidth, Is.GreaterThan(.005f));
@@ -76,11 +107,17 @@ namespace SimulatedShooting.Tests.PlayMode
                 yield return new WaitForSeconds(.1f);
                 Assert.That(enemy.SoldierAnimation.Animator.GetCurrentAnimatorStateInfo(0).IsName("Shot"), Is.True);
                 runtime.Step(1.01f);
+                Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(3));
+                runtime.Step(1.01f);
+                Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(2));
+                runtime.Step(1.01f);
+                Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(1));
+                runtime.Step(1.01f);
                 Assert.That(core.GetSnapshot(session).Data.State, Is.EqualTo(SessionState.Failed));
-                Assert.That(runtime.PlayerDamageFeedbackCount, Is.EqualTo(2), "The fatal shot also has blood feedback");
-                Assert.That(enemy.ShotAudioFeedbackCount, Is.EqualTo(2));
+                Assert.That(runtime.PlayerDamageFeedbackCount, Is.EqualTo(5), "The fatal shot also has blood feedback");
+                Assert.That(enemy.ShotAudioFeedbackCount, Is.EqualTo(5));
                 runtime.Step(10);
-                Assert.That(enemy.ShotVisualFeedbackCount, Is.EqualTo(2), "No new shots after death");
+                Assert.That(enemy.ShotVisualFeedbackCount, Is.EqualTo(5), "No new shots after death");
             }
             finally { core?.Dispose(); lease.Dispose(); }
             yield return null;
