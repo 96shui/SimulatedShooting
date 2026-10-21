@@ -209,14 +209,6 @@ namespace VRShooting.Application
             return Mathf.CeilToInt(Mathf.Abs(horizontalOffsetCm) / CmPerRearSightClick);
         }
 
-        public static Vector2 ComputeDefaultCorrection(Vector2 averageOffsetCm)
-        {
-            var correction = -averageOffsetCm;
-            correction.x = -Mathf.Sign(averageOffsetCm.x) *
-                ComputeRearSightClicks(averageOffsetCm.x) * CmPerRearSightClick;
-            return correction;
-        }
-
         public static VerticalAdjustmentDirection ResolveVerticalDirection(float verticalOffsetCm)
         {
             if (Mathf.Abs(verticalOffsetCm) < 0.001f)

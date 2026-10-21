@@ -59,20 +59,6 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.AreEqual(VerticalAdjustmentDirection.CounterClockwise, ZeroingRules.ResolveVerticalDirection(-3f));
         }
 
-        [TestCase(-0.3f, 2f)]
-        [TestCase(0.3f, -2f)]
-        [TestCase(-3.1f, 4f)]
-        [TestCase(3.1f, -4f)]
-        [TestCase(0f, 0f)]
-        [TestCase(-4f, 4f)]
-        public void Bdd06_DefaultCorrection_UsesWholeHorizontalClicks(float x, float expected)
-        {
-            var correction = ZeroingRules.ComputeDefaultCorrection(new Vector2(x, 12f));
-            Assert.That(correction.x, Is.EqualTo(expected));
-            Assert.That(correction.y, Is.EqualTo(-12f));
-            Assert.That(correction.x % ZeroingRules.CmPerRearSightClick, Is.EqualTo(0f));
-        }
-
         [Test]
         public void ResolveHorizontalDirection_BiasRight_UsesBackward()
         {
