@@ -48,6 +48,8 @@ namespace VRShooting.Unity.UI
             Place("Text_MovingTargetResults_ScrollHint", 350, 597, 1220, 35);
             Place("Button_MovingTargetResults_BackToModeSelection", 485, 150, 350, 75);
             Place("Button_MovingTargetResults_Retry", 1085, 150, 350, 75);
+            Place("Button_MovingTargetResults_Help", 860, 150, 200, 75);
+            Place("Panel_MovingTargetResults_Help", 350, 250, 1220, 340);
             foreach (var mode in new[] { "Trench", "Urban" })
             {
                 Place("Text_" + mode + "Results_Outcome", 50, 610, 750, 90);

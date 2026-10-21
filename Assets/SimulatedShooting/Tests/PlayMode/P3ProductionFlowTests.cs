@@ -117,6 +117,9 @@ namespace SimulatedShooting.Tests.PlayMode
             input.Release(XRTrainingInputButton.Trigger);input.Press(XRTrainingInputButton.Reload);
             Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
             Assert.That(runtime.ReloadPresentation.IsAnimating,Is.True);
+            Assert.That(runtime.ReloadPresentation.GetComponent<TrainingRifleGrabInteractable>().FrontHandInteractionLocked,
+                Is.EqualTo(mode==TrainingMode.Trench));
+            Assert.That(app.Mission.Core.GetSnapshot(id).Data.Weapon.TwoHandGripActive,Is.EqualTo(mode!=TrainingMode.Trench));
             input.Release(XRTrainingInputButton.Reload);
             yield return new WaitForSecondsRealtime(.12f); // Production presenter refreshes HUD at 10 Hz.
             yield return null;
@@ -136,8 +139,17 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return null;
             Assert.That(text.text,Does.Contain("备用弹匣 1"));
             Assert.That(text.text,Does.Not.Contain("换弹中"));
+            Assert.That(text.text,Does.Contain(mode==TrainingMode.Trench?"左手柄X键":"左摇杆按压"));
+            Assert.That(runtime.ReloadPresentation.GetComponent<TrainingRifleGrabInteractable>().FrontHandInteractionLocked,Is.False);
             input.Release(XRTrainingInputButton.Trigger);
+            if(mode==TrainingMode.Trench)input.Release(XRTrainingInputButton.LeftGrip);
             Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
+            if(mode==TrainingMode.Trench)
+            {
+                input.Press(XRTrainingInputButton.LeftGrip);
+                Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
+                Assert.That(app.Mission.Core.GetSnapshot(id).Data.Weapon.TwoHandGripActive,Is.True);
+            }
             input.Press(XRTrainingInputButton.Trigger);
             Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
             input.Release(XRTrainingInputButton.Trigger);input.Press(XRTrainingInputButton.Reload);
@@ -221,6 +233,15 @@ namespace SimulatedShooting.Tests.PlayMode
                     runtime.LastFrameResult.ErrorCode+" / "+app.Mission.Core.GetSnapshot(app.Mission.SessionId).Data.State+
                     " / now="+runtime.Clock.Now+" / active="+tactic.Current.HasValue);
                 Assert.That(runtime.GetComponentsInChildren<CombatGrenadeProjectile>().Length,Is.Zero);
+                var blast=runtime.GetComponentsInChildren<CombatExplosionVfx>().Single();
+                var blastAudio=blast.GetComponent<AudioSource>();
+                Assert.That(blastAudio.clip.name,Is.EqualTo("GrenadeExplosion_Heavy"),"Production H input must play the replacement blast asset");
+                Assert.That(blastAudio.volume,Is.EqualTo(1f));
+                Assert.That(blastAudio.rolloffMode,Is.EqualTo(AudioRolloffMode.Linear));
+                Assert.That(blastAudio.isPlaying,Is.True);
+                Assert.That(app.ReturnToMainMenu().Success);
+                yield return null;yield return null;
+                Assert.That(blast==null,Is.True,"Leaving the session must reclaim its audio tail");
             }
             finally
             {

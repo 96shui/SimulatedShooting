@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR;
+using Unity.XR.CoreUtils;
+using UnityEngine.XR.Interaction.Toolkit.Inputs;
+using UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Movement;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning;
@@ -167,9 +170,18 @@ namespace VRShooting.Unity.UI
 
                 SetXrOriginActive(scene, true, vrCamera);
                 ConfigureMenuLocomotion(vrCamera);
+                RestoreMenuInput(vrCamera);
                 SetSceneCamera(scene, vrCamera);
                 if (uiModeChanged)
+                {
                     TrainingUiRayPolicy.KeepUiRayAvailable(vrCamera.transform.root.gameObject);
+                    foreach (var curve in vrCamera.transform.root.GetComponentsInChildren<CurveVisualController>(true))
+                    {
+                        curve.lineDynamicsMode = LineDynamicsMode.Traditional;
+                        curve.extendLineToEmptyHit = true;
+                        curve.restingVisualLineLength = 2f;
+                    }
+                }
             }
             else
             {
@@ -196,6 +208,10 @@ namespace VRShooting.Unity.UI
 
         static void ConfigureMenuLocomotion(Camera camera)
         {
+            var origin = camera.GetComponentInParent<XROrigin>();
+            // XROrigin applies zero in Floor mode and this offset only in Device/Unbounded mode.
+            if (origin != null && !Mathf.Approximately(origin.CameraYOffset, 1.65f))
+                origin.CameraYOffset = 1.65f;
             var rig = camera.transform.root;
             var move = rig.GetComponentInChildren<ContinuousMoveProvider>(true);
             if (move != null)
@@ -205,6 +221,20 @@ namespace VRShooting.Unity.UI
                 snap.leftHandTurnInput.inputSourceMode = XRInputValueReader.InputSourceMode.Unused;
             var smooth = rig.GetComponentInChildren<ContinuousTurnProvider>(true);
             if (smooth != null) smooth.enabled = false;
+        }
+
+        static void RestoreMenuInput(Camera camera)
+        {
+            foreach (var manager in camera.transform.root.GetComponentsInChildren<InputActionManager>(true))
+            {
+                if (!manager.isActiveAndEnabled) continue;
+                foreach (var asset in manager.actionAssets)
+                {
+                    if (asset == null) continue;
+                    foreach (var action in asset)
+                        if (!action.enabled) action.Enable();
+                }
+            }
         }
 
         static Camera ResolveXrCamera(UnityEngine.SceneManagement.Scene scene)

@@ -23,6 +23,10 @@ namespace SimulatedShooting.Scene
         CombatCoreSnapshotDto snapshot;
         Func<double> now;
         bool vr;
+        bool suspendLeftGrip, leftControlSuspended;
+        TrainingRifleGrabInteractable grab;
+        Transform trackedHandParent;
+        Vector3 trackedHandScale;
 
         public bool IsAnimating { get; private set; }
         public float Progress01 { get; private set; }
@@ -30,9 +34,10 @@ namespace SimulatedShooting.Scene
         public Transform ReloadHandAnchor => handAnchor;
         public VRControllerHandVisual LeftHand => leftHand;
 
-        public void Configure(WeaponPrefabBinding binding, Camera playerEye, GameObject rig, bool realVr, Func<double> clock)
+        public void Configure(WeaponPrefabBinding binding, Camera playerEye, GameObject rig, bool realVr, Func<double> clock, bool suspendLeftGripDuringReload = false)
         {
             weapon = binding; eye = playerEye; vr = realVr; now = clock;
+            grab = GetComponent<TrainingRifleGrabInteractable>(); suspendLeftGrip = suspendLeftGripDuringReload;
             magazine = binding.MagazineVisual;
             if (magazine == null) throw new InvalidOperationException("Missing removable magazine on combat rifle");
             magazinePosition = magazine.localPosition; magazineRotation = magazine.localRotation;
@@ -78,19 +83,31 @@ namespace SimulatedShooting.Scene
         [BeforeRenderOrder(UnityEngine.XR.Interaction.Toolkit.XRInteractionUpdateOrder.k_BeforeRenderOrder + 2)]
         public void Sample()
         {
-            if (weapon == null || magazine == null || eye == null) return;
+            if (!isActiveAndEnabled || weapon == null || magazine == null || eye == null) return;
             var holding = snapshot.Weapon.TwoHandGripActive;
+            var rearHolding = holding || snapshot.Weapon.HoldState == WeaponHoldState.RearHandHeld;
             if (!vr)
             {
-                leftHand.gameObject.SetActive(holding);
-                rightHand.gameObject.SetActive(holding);
-                rightHand.SetPresentationGrip(holding ? weapon.RearHandGrip : null);
+                leftHand.gameObject.SetActive(holding || rearHolding && snapshot.Ammo.IsReloading);
+                rightHand.gameObject.SetActive(rearHolding);
+                rightHand.SetPresentationGrip(rearHolding ? weapon.RearHandGrip : null);
             }
             if (!snapshot.Ammo.IsReloading || snapshot.State != SessionState.Running || !snapshot.TrackingValid)
             {
                 Restore();
                 if (!vr) leftHand.SetPresentationGrip(holding ? weapon.FrontHandGrip : null);
                 return;
+            }
+            if (suspendLeftGrip && !leftControlSuspended)
+            {
+                leftControlSuspended = true;
+                grab?.SetFrontHandInteractionLocked(true);
+                if (vr)
+                {
+                    trackedHandParent = leftHand.transform.parent;
+                    trackedHandScale = leftHand.transform.localScale;
+                    leftHand.transform.SetParent(handAnchor, true);
+                }
             }
             IsAnimating = true;
             Progress01 = Mathf.Clamp01((float)((now() - snapshot.ReloadStartedAt) / snapshot.ReloadDurationSeconds));
@@ -135,6 +152,17 @@ namespace SimulatedShooting.Scene
 
         void Restore()
         {
+            if (leftControlSuspended)
+            {
+                leftControlSuspended = false;
+                if (vr && leftHand != null)
+                {
+                    leftHand.transform.SetParent(trackedHandParent, false);
+                    leftHand.transform.localScale = trackedHandScale;
+                    trackedHandParent = null;
+                }
+                grab?.SetFrontHandInteractionLocked(false);
+            }
             if (IsAnimating && weapon != null)
             {
                 weapon.RecoilRoot.localPosition = recoilPosition;

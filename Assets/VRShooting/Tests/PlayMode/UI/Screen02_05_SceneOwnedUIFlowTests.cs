@@ -190,10 +190,10 @@ namespace VRShooting.Tests.PlayMode.UI
             var origin = Object.FindObjectOfType<XROrigin>(true);
             Assert.That(origin, Is.Not.Null, "MainScene must contain an XR Origin.");
             Assert.That(origin.RequestedTrackingOriginMode, Is.EqualTo(XROrigin.TrackingOriginMode.Floor));
-            Assert.That(origin.CameraYOffset, Is.EqualTo(0f).Within(0.001f));
+            Assert.That(origin.CameraYOffset, Is.EqualTo(1.65f).Within(0.001f), "Configured offset is used only if the runtime falls back to Device tracking.");
             Assert.That(origin.CameraFloorOffsetObject, Is.Not.Null);
-            Assert.That(origin.CameraFloorOffsetObject.transform.localPosition.y,
-                Is.EqualTo(0f).Within(0.001f));
+            if (origin.CurrentTrackingOriginMode == UnityEngine.XR.TrackingOriginModeFlags.Floor)
+                Assert.That(origin.CameraFloorOffsetObject.transform.localPosition.y, Is.EqualTo(0f).Within(0.001f));
 
             xrModeController.SetVrModeForTests(true);
             var vrCamera = xrModeController.VrCamera;

@@ -6,6 +6,8 @@ using VRShooting.Application.Weapons;
 using VRShooting.Common;
 using VRShooting.Contracts;
 using VRShooting.P3.TestSupport;
+using VRShooting.Input;
+using VRShooting.Application;
 
 namespace VRShooting.Tests.EditMode
 {
@@ -98,6 +100,42 @@ namespace VRShooting.Tests.EditMode
             Assert.That(p1.CurrentMagazine, Is.EqualTo(3)); Assert.That(p1.ReserveAmmo, Is.EqualTo(6));
             Assert.That(p2.CurrentMagazine, Is.EqualTo(10)); Assert.That(p2.ReserveAmmo, Is.Zero);
         }
+
+        [TestCase(TrainingMode.Trench, false)] [TestCase(TrainingMode.Urban, true)]
+        public void ReloadInputLocksModeThreeFrontGripUntilReleaseAndNewPress(TrainingMode mode, bool keepsFrontGrip)
+        {
+            var clock = new FakeCombatClock();
+            using var core = Start(clock, mode);
+            var input = new ManualXRTrainingInput();
+            using var controller = new CombatInputController("reload", mode, core, input, clock, new NoHit(), new NoMove());
+            var frame = new CombatInputFrameDto { HeadTracked = true, RearHandTracked = true, FrontHandTracked = true,
+                RearGripInRange = true, FrontGripInRange = true, IsRealVr = true,
+                AimDirection = Vector3.forward, PlayerForward = Vector3.forward };
+            void Step(double seconds = .01)
+            {
+                clock.Advance(seconds); Assert.That(controller.Step(frame, (float)seconds).Success); input.AdvanceFrame();
+            }
+            input.Press(XRTrainingInputButton.RightGrip); input.Press(XRTrainingInputButton.LeftGrip); Step();
+            Fire(core); input.Press(XRTrainingInputButton.Reload); Step();
+            Assert.That(core.GetSnapshot("reload").Data.Ammo.IsReloading, Is.True);
+            Assert.That(core.GetSnapshot("reload").Data.Weapon.TwoHandGripActive, Is.EqualTo(keepsFrontGrip));
+            input.Release(XRTrainingInputButton.LeftGrip); Step(.2);
+            input.Press(XRTrainingInputButton.LeftGrip); input.Press(XRTrainingInputButton.Trigger); Step(.2);
+            Assert.That(core.GetSnapshot("reload").Data.Weapon.TwoHandGripActive, Is.EqualTo(keepsFrontGrip));
+            Assert.That(core.GetSnapshot("reload").Data.Ammo.CurrentMagazine, Is.EqualTo(29));
+            Step(2);
+            Assert.That(core.GetSnapshot("reload").Data.Ammo.IsReloading, Is.False);
+            Assert.That(core.GetSnapshot("reload").Data.Weapon.TwoHandGripActive, Is.EqualTo(keepsFrontGrip));
+            input.Release(XRTrainingInputButton.LeftGrip); input.Release(XRTrainingInputButton.Trigger); Step();
+            input.Press(XRTrainingInputButton.LeftGrip); Step();
+            Assert.That(core.GetSnapshot("reload").Data.Weapon.TwoHandGripActive, Is.True);
+            input.Press(XRTrainingInputButton.Trigger); Step();
+            Assert.That(core.GetSnapshot("reload").Data.Ammo.CurrentMagazine, Is.EqualTo(29));
+        }
+        sealed class NoHit : ICombatShotQuery
+        { public CombatRayHitDto Cast(Vector3 origin, Vector3 direction) => new CombatRayHitDto(); }
+        sealed class NoMove : ICombatLocomotionPort
+        { public ServiceResult<Unit> Apply(CombatLocomotionIntentDto intent) => ServiceResult<Unit>.Ok(Unit.Value); }
 
         static CombatCoreService Start(FakeCombatClock clock, TrainingMode mode)
         {

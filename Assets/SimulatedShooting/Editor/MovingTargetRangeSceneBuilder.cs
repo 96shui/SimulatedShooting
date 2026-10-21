@@ -18,7 +18,7 @@ namespace SimulatedShooting.Editor
         const string SloganDisciplineTexturePath =
             "Assets/SimulatedShooting/Art/Environment/MovingTargetRange/MovingTargetSloganDiscipline.png";
         const string SloganDataWinsTexturePath =
-            "Assets/SimulatedShooting/Art/Environment/MovingTargetRange/MovingTargetSloganDataWins.png";
+            "Assets/SimulatedShooting/Art/Environment/MovingTargetRange/ZeroingSloganIronFistVictory.png";
         const string DistanceTextMaterialPath =
             "Assets/SimulatedShooting/Art/Materials/RangeDistanceText.mat";
         const string MudDiffusePath =
@@ -81,6 +81,9 @@ namespace SimulatedShooting.Editor
             CreateFixedTargets(root, fixedTarget, targetBoard, tenRing, impactMarker, concrete);
             CreatePlayerAnchors(root, concrete);
             CreateLighting(root);
+            RangeIronFistVictoryRepair.PatchScene(scene,"MovingTargetRange");
+            RangeSideSloganAuthoring.PatchScene(scene,"MovingTargetRange");
+            ModularGlovedArmsAuthoring.PatchSceneHands(scene);
             ProneRangeSceneMigration.PatchOpenMovingTargetRangeScene();
             MarkRenderersStatic(root.Find("Environment"));
             MarkRenderersStatic(root.Find("MovingTargetRoute_40m"));
@@ -139,13 +142,11 @@ namespace SimulatedShooting.Editor
                 });
             AddTestId(discipline, "MovingTargetRange.Visual.Slogan.ExcellentConduct");
 
-            var dataWins = CreateSloganGroup("Slogan_数据致胜", "数据致胜", environment,
+            var dataWins = CreateSloganGroup("Slogan_铁拳胜利", "铁拳胜利", environment,
                 new Vector3(0f, 15.5f, 135.5f), sloganDataWins, new[]
                 {
-                    new Rect(0.130f, 0.374f, 0.136f, 0.243f), new Rect(0.331f, 0.374f, 0.136f, 0.243f),
-                    new Rect(0.535f, 0.374f, 0.137f, 0.243f), new Rect(0.735f, 0.374f, 0.138f, 0.243f)
+                    new Rect(0,0,.25f,1),new Rect(.25f,0,.25f,1),new Rect(.5f,0,.25f,1),new Rect(.75f,0,.25f,1)
                 }, 11f, new Vector2(7f, 7f));
-            dataWins.transform.Find("Character_数").localPosition = new Vector3(-30f, -7f, -24.8f);
             foreach (var renderer in dataWins.GetComponentsInChildren<Renderer>(true))
                 renderer.transform.localPosition = new Vector3(renderer.transform.localPosition.x, -7f, -24.8f);
             AddTestId(dataWins, "MovingTargetRange.Visual.Slogan.DataWins");

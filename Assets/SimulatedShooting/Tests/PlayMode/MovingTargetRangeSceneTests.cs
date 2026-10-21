@@ -209,7 +209,7 @@ namespace SimulatedShooting.Tests.PlayMode
             var camera = Find("MovingTargetRange.Camera.NoVR").GetComponent<Camera>();
 
             Assert.That(dataWins, Is.Not.Null);
-            Assert.That(dataWins.name, Is.EqualTo("Slogan_数据致胜"));
+            Assert.That(dataWins.name, Is.EqualTo("Slogan_铁拳胜利"));
             Assert.That(dataWins.transform.position.x, Is.Zero.Within(0.001f));
             Assert.That(dataWins.transform.position.y, Is.LessThan(winBattles.transform.position.y - 6f));
             Assert.That(dataWins.GetComponentsInChildren<Renderer>(true).Length, Is.EqualTo(4));
@@ -222,16 +222,16 @@ namespace SimulatedShooting.Tests.PlayMode
         {
             var dataWins = Find("MovingTargetRange.Visual.Slogan.DataWins");
             var characterRenderers = dataWins.GetComponentsInChildren<Renderer>(true);
-            var numberCharacter = characterRenderers.Single(renderer => renderer.name == "Character_数");
+            var numberCharacter = characterRenderers.Single(renderer => renderer.name == "Character_铁");
 
             Assert.That(characterRenderers.Length, Is.EqualTo(4));
             Assert.That(characterRenderers.All(renderer =>
                 Mathf.Approximately(renderer.transform.localPosition.y, numberCharacter.transform.localPosition.y) &&
                 Mathf.Approximately(renderer.transform.localPosition.z, numberCharacter.transform.localPosition.z)),
-                Is.True, "数据致胜四个字必须与“数”字保持同一水平面和高度。");
+                Is.True, "铁拳胜利四个字必须与“铁”字保持同一水平面和高度。");
             Assert.That(characterRenderers.All(renderer =>
                 Mathf.Approximately(renderer.bounds.size.y, numberCharacter.bounds.size.y)),
-                Is.True, "数据致胜四个字必须与“数”字保持相同字高。");
+                Is.True, "铁拳胜利四个字必须与“铁”字保持相同字高。");
         }
 
         [Test]

@@ -71,7 +71,7 @@ namespace VRShooting.Application.Combat
             var members=new[]{new SquadMemberDto {MemberId="preview.player",Role=SquadMemberRole.Player,Health=config.PlayerHealth,WorldPosition=spawn},
                 new SquadMemberDto {MemberId="preview.teammate-2",Role=SquadMemberRole.TeammateTwo,Health=config.PlayerHealth,WorldPosition=spawn-forward*config.SquadSpacing},
                 new SquadMemberDto {MemberId="preview.teammate-3",Role=SquadMemberRole.TeammateThree,Health=config.PlayerHealth,WorldPosition=spawn-forward*config.SquadSpacing*2}};
-            return ServiceResult<TrenchBriefingDto>.Ok(new TrenchBriefingDto {MapId=mapId,EnemyEstimateMin=3,EnemyEstimateMax=5,
+            return ServiceResult<TrenchBriefingDto>.Ok(new TrenchBriefingDto {MapId=mapId,EnemyEstimateMin=5,EnemyEstimateMax=7,
                 PlannedSquad=new SquadStatusDto {Members=Array.AsReadOnly(members),CommandMenuAvailable=false},ProjectedMap=BuildMap(true)});
         }
         public ServiceResult<TrenchSessionDto> StartSession(string mapId,string weaponId,RandomSeed seed)
@@ -82,8 +82,8 @@ namespace VRShooting.Application.Combat
             if(publishing||batch||starting||(!cancelled&&!hasResult&&session.Length>0))return Fail<TrenchSessionDto>(ErrorCode.Busy);
             var id=nextSessionId(); if(string.IsNullOrWhiteSpace(id))return Fail<TrenchSessionDto>(ErrorCode.InvalidInput);
             var candidates=definition.SpawnPoints.OrderBy(p=>p.PointId,StringComparer.Ordinal).ToList();
-            random.Reset(seed); var count=random.NextInt(3,6);
-            if(count<3||count>5)return Fail<TrenchSessionDto>(ErrorCode.InvalidInput);
+            random.Reset(seed); var count=random.NextInt(5,8);
+            if(count<5||count>7)return Fail<TrenchSessionDto>(ErrorCode.InvalidInput);
             var spawns=new List<CombatEntityVisualDto>(); var selected=new Dictionary<string,Vector3>();
             for(var i=0;i<count;i++)
             {
@@ -299,7 +299,7 @@ namespace VRShooting.Application.Combat
             }
             finally{publishing=false;}
         }
-        TrenchMapDto Map()=>new TrenchMapDto {MapId=definition.MapId,DisplayName="堑壕地图 A",Difficulty=DifficultyLevel.Medium,MinEnemyCount=3,MaxEnemyCount=5,
+        TrenchMapDto Map()=>new TrenchMapDto {MapId=definition.MapId,DisplayName="堑壕地图 A",Difficulty=DifficultyLevel.Medium,MinEnemyCount=5,MaxEnemyCount=7,
             SearchNodes=definition.SearchNodes,EnemyEstimateAreas=EstimateAreas()};
         IReadOnlyList<MapAreaDto> EstimateAreas()=>Array.AsReadOnly(definition.SpawnPoints.GroupBy(p=>p.EstimateAreaId).Select(g=>
         {var p=Project(g.First().EstimatePosition);return new MapAreaDto {AreaId=g.Key,Label="敌情预估",Severity=HudSeverity.Danger,NormalizedRect=new Rect(p.x-.02f,p.y-.02f,.04f,.04f)};}).ToArray());

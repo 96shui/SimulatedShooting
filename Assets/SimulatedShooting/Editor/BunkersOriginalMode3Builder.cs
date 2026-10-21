@@ -147,6 +147,7 @@ namespace SimulatedShooting.Editor
             points.Add(Point(binding.transform, terrain, "trench-corner-1", CombatPointKind.Corner, new Vector2(326, 282)));
             points.Add(Point(binding.transform, terrain, "trench-corner-2", CombatPointKind.Corner, new Vector2(333, 273)));
             binding.Points = points.ToArray();
+            ApplyMissionTuning(binding);
 
             BuildNavigation(binding);
             binding.Maps = new[] { new CombatMapBinding { Id = "trench-a", Min = MapMin, Max = MapMax, Plan = CapturePlan() } };
@@ -163,6 +164,18 @@ namespace SimulatedShooting.Editor
             EditorBuildSettings.scenes = buildScenes.ToArray();
             AssetDatabase.SaveAssets();
             Debug.Log("Original demo Mode 3 scene saved: " + ScenePath);
+        }
+
+        // Applies to the existing scene without rebuilding terrain, navigation or user edits.
+        public static void ApplyMissionTuning(CombatSceneBindings binding)
+        {
+            var redundant = binding.Points.Where(p => p != null && p.Kind == CombatPointKind.SearchNode &&
+                (p.Id == "trench-node-3" || p.Id == "trench-node-6" || p.Id == "trench-node-8")).ToArray();
+            binding.Points = binding.Points.Where(p => p != null && !redundant.Contains(p)).ToArray();
+            foreach (var point in redundant) Object.DestroyImmediate(point.gameObject);
+            foreach (var point in binding.Points.Where(p => p.Kind == CombatPointKind.SearchNode && p.RegionId == "trench-a"))
+                if (point.Volume != null) point.Volume.size = new Vector3(5f, point.Volume.size.y, 5f);
+            EditorUtility.SetDirty(binding);
         }
 
         static Vector3 At(Terrain terrain, float x, float z)

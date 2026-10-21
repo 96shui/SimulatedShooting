@@ -12,9 +12,10 @@ namespace VRShooting.Tests.Editor
     {
         const string RequestPath = "Logs/p3-task001-request.json";
         const string ActiveKey = "P3Task001.ActiveResultPath";
+        const string RefreshKey = "P3Task001.RefreshedRequest";
         static readonly TestRunnerApi Api;
         static double nextPoll;
-        [Serializable] public sealed class Request { public string mode; public string filter; public string name; }
+        [Serializable] public sealed class Request { public string mode; public string filter; public string name; public bool resetInterruptedRun; }
         static P3ContractTestRunner()
         {
             Api = ScriptableObject.CreateInstance<TestRunnerApi>();
@@ -26,12 +27,34 @@ namespace VRShooting.Tests.Editor
             if (EditorApplication.timeSinceStartup < nextPoll) return;
             nextPoll = EditorApplication.timeSinceStartup + 1;
             if (EditorApplication.isCompiling || EditorApplication.isUpdating || EditorApplication.isPlayingOrWillChangePlaymode
-                || SessionState.GetString(ActiveKey, "").Length != 0 || !File.Exists(RequestPath)) return;
+                || !File.Exists(RequestPath)) return;
             try
             {
-                var request = JsonUtility.FromJson<Request>(File.ReadAllText(RequestPath));
+                var requestText = File.ReadAllText(RequestPath);
+                var request = JsonUtility.FromJson<Request>(requestText);
                 if (request == null || (request.mode != "EditMode" && request.mode != "PlayMode")) throw new ArgumentException("mode must be EditMode or PlayMode");
                 if (string.IsNullOrWhiteSpace(request.name) || request.name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || request.name.Contains("..")) throw new ArgumentException("name must be a file name");
+                var previousRun = SessionState.GetString(ActiveKey, "");
+                if (previousRun.Length != 0)
+                {
+                    if (!request.resetInterruptedRun) return;
+                    // Explicit recovery after a PlayMode run was stopped before RunFinished.
+                    File.WriteAllText(previousRun + ".status", "Interrupted before completion; result not counted");
+                    SessionState.EraseString(ActiveKey);
+                }
+                // An unfocused Editor may still have the previous test assembly loaded.
+                // Refresh first, then let compilation/domain reload finish before executing.
+                if (SessionState.GetString(RefreshKey, "") != requestText)
+                {
+                    SessionState.SetString(RefreshKey, requestText);
+                    AssetDatabase.Refresh();
+                    return;
+                }
+                if (EditorUtility.scriptCompilationFailed)
+                {
+                    SessionState.EraseString(RefreshKey);
+                    return;
+                }
                 Directory.CreateDirectory("Logs/p3-task001");
                 var path = Path.GetFullPath("Logs/p3-task001/" + request.name + ".xml");
                 File.Delete(RequestPath);

@@ -11,10 +11,12 @@ namespace SimulatedShooting.Scene
     {
         readonly InputSystemXRTrainingInput desktop=new InputSystemXRTrainingInput();
         bool rear,front,oldRear,oldFront,oldTrigger,trigger,grenadeHeld,oldGrenadeHeld,grenadePressed;
+        bool reloadHeld,oldReloadHeld,reloadPressed;
+        public bool ReloadWithLeftX { get; set; } = true;
         public bool IsVr {get;private set;}
         public void Sample(bool vr)
         {
-            IsVr=vr; oldRear=rear;oldFront=front;oldTrigger=trigger;oldGrenadeHeld=grenadeHeld;
+            IsVr=vr; oldRear=rear;oldFront=front;oldTrigger=trigger;oldGrenadeHeld=grenadeHeld;oldReloadHeld=reloadHeld;
             if(vr)
             {
                 rear=Held(XRController.rightHand,"gripPressed");front=Held(XRController.leftHand,"gripPressed");
@@ -22,18 +24,24 @@ namespace SimulatedShooting.Scene
                 bool xrPrimary=right.isValid&&right.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton,out bool pressed)&&pressed;
                 grenadeHeld=Held(XRController.rightHand,"primaryButton")||xrPrimary;
                 grenadePressed=Pressed(XRController.rightHand,"primaryButton")||(grenadeHeld&&!oldGrenadeHeld);
+                var left=UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.LeftHand);
+                var reloadUsage=ReloadWithLeftX ? UnityEngine.XR.CommonUsages.primaryButton : UnityEngine.XR.CommonUsages.primary2DAxisClick;
+                var legacyReload=left.isValid&&left.TryGetFeatureValue(reloadUsage,out bool reload)&&reload;
+                reloadHeld=Held(XRController.leftHand,ReloadWithLeftX?"primaryButton":"primary2DAxisClick")||legacyReload;
+                reloadPressed=reloadHeld&&!oldReloadHeld;
             }
             else
             {
                 if(Keyboard.current?.eKey.wasPressedThisFrame==true)rear=!rear;
                 if(Keyboard.current?.gKey.wasPressedThisFrame==true)front=!front;
                 grenadeHeld=false;grenadePressed=Keyboard.current?.hKey.wasPressedThisFrame==true;
+                reloadHeld=reloadPressed=false;
             }
             trigger=desktop.TriggerHeld;
         }
-        public void Reset() { rear=front=oldRear=oldFront=oldTrigger=trigger=grenadeHeld=oldGrenadeHeld=grenadePressed=false; }
+        public void Reset() { rear=front=oldRear=oldFront=oldTrigger=trigger=grenadeHeld=oldGrenadeHeld=grenadePressed=reloadHeld=oldReloadHeld=reloadPressed=false; }
         public bool PosturePressed => IsVr ? Pressed(XRController.leftHand,"secondaryButton") : Keyboard.current?.cKey.wasPressedThisFrame==true;
-        public bool ConfirmPressed=>IsVr ? Pressed(XRController.leftHand,"primaryButton") : desktop.ConfirmPressed;
+        public bool ConfirmPressed=>IsVr ? !ReloadWithLeftX&&Pressed(XRController.leftHand,"primaryButton") : desktop.ConfirmPressed;
         public bool BackPressed=>desktop.BackPressed;
         public bool TriggerPressed=>trigger&&!oldTrigger;
         public bool TriggerHeld=>trigger;
@@ -45,7 +53,7 @@ namespace SimulatedShooting.Scene
         public bool LeftGripPressed=>front&&!oldFront;
         public bool LeftGripHeld=>front;
         public bool LeftGripReleased=>!front&&oldFront;
-        public bool ReloadPressed=>IsVr ? Pressed(XRController.leftHand,"primary2DAxisClick") : desktop.ReloadPressed;
+        public bool ReloadPressed=>IsVr ? reloadPressed : desktop.ReloadPressed;
         public bool GrenadePressed=>grenadePressed;
         public bool GrenadeHeld=>grenadeHeld;
         public void ClearOpeningToggles()

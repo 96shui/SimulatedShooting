@@ -4057,7 +4057,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.2, y: 2.6, z: 3.2}
+  m_Size: {x: 5, y: 2.6, z: 5}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &173702921
 Transform:
@@ -6650,80 +6650,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2009686584}
   m_Enabled: 1
---- !u!1 &272357761
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 272357764}
-  - component: {fileID: 272357762}
-  - component: {fileID: 272357763}
-  m_Layer: 0
-  m_Name: Point_trench-node-8
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &272357762
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 272357761}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 240eb9bf995976444a793ae237253ca5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Id: trench-node-8
-  RegionId: trench-a
-  FloorId: 
-  RoomId: 
-  Kind: 0
-  Volume: {fileID: 272357763}
-  Door: {fileID: 0}
-  EstimateAnchor: {fileID: 0}
---- !u!65 &272357763
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 272357761}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.2, y: 2.6, z: 3.2}
-  m_Center: {x: 0, y: 1, z: 0}
---- !u!4 &272357764
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 272357761}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 332, y: 0.9902954, z: 253}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2034809262}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &274007586
 GameObject:
   m_ObjectHideFlags: 0
@@ -8927,80 +8853,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353792106}
   m_Mesh: {fileID: 4300004, guid: f1af48fa8835e774ba5c61c87a1bab08, type: 3}
---- !u!1 &360454766
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 360454769}
-  - component: {fileID: 360454767}
-  - component: {fileID: 360454768}
-  m_Layer: 0
-  m_Name: Point_trench-node-6
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &360454767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 360454766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 240eb9bf995976444a793ae237253ca5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Id: trench-node-6
-  RegionId: trench-a
-  FloorId: 
-  RoomId: 
-  Kind: 0
-  Volume: {fileID: 360454768}
-  Door: {fileID: 0}
-  EstimateAnchor: {fileID: 0}
---- !u!65 &360454768
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 360454766}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.2, y: 2.6, z: 3.2}
-  m_Center: {x: 0, y: 1, z: 0}
---- !u!4 &360454769
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 360454766}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 345, y: 1.9776611, z: 281}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2034809262}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &369783054
 GameObject:
   m_ObjectHideFlags: 0
@@ -12367,7 +12219,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.2, y: 2.6, z: 3.2}
+  m_Size: {x: 5, y: 2.6, z: 5}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &512353461
 Transform:
@@ -21204,80 +21056,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 839804877}
   m_Mesh: {fileID: 4300000, guid: 16f3b2f5579c5994190fd534ad36e20f, type: 3}
---- !u!1 &841531972
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 841531975}
-  - component: {fileID: 841531973}
-  - component: {fileID: 841531974}
-  m_Layer: 0
-  m_Name: Point_trench-node-3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &841531973
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841531972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 240eb9bf995976444a793ae237253ca5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Id: trench-node-3
-  RegionId: trench-a
-  FloorId: 
-  RoomId: 
-  Kind: 0
-  Volume: {fileID: 841531974}
-  Door: {fileID: 0}
-  EstimateAnchor: {fileID: 0}
---- !u!65 &841531974
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841531972}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.2, y: 2.6, z: 3.2}
-  m_Center: {x: 0, y: 1, z: 0}
---- !u!4 &841531975
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 841531972}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 311, y: 2.0783768, z: 282}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2034809262}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &844295269
 GameObject:
   m_ObjectHideFlags: 0
@@ -26811,7 +26589,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.2, y: 2.6, z: 3.2}
+  m_Size: {x: 5, y: 2.6, z: 5}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &1103560557
 Transform:
@@ -27861,7 +27639,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.2, y: 2.6, z: 3.2}
+  m_Size: {x: 5, y: 2.6, z: 5}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &1155749920
 Transform:
@@ -29573,7 +29351,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.2, y: 2.6, z: 3.2}
+  m_Size: {x: 5, y: 2.6, z: 5}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &1207046408
 Transform:
@@ -49653,12 +49431,9 @@ MonoBehaviour:
   Points:
   - {fileID: 512353459}
   - {fileID: 1207046406}
-  - {fileID: 841531973}
   - {fileID: 1155749918}
   - {fileID: 173702919}
-  - {fileID: 360454767}
   - {fileID: 1103560555}
-  - {fileID: 272357762}
   - {fileID: 1401521674}
   - {fileID: 678377589}
   - {fileID: 1561582670}
@@ -49720,12 +49495,9 @@ Transform:
   - {fileID: 743649158}
   - {fileID: 512353461}
   - {fileID: 1207046408}
-  - {fileID: 841531975}
   - {fileID: 1155749920}
   - {fileID: 173702921}
-  - {fileID: 360454769}
   - {fileID: 1103560557}
-  - {fileID: 272357764}
   - {fileID: 1401521675}
   - {fileID: 678377591}
   - {fileID: 1561582671}

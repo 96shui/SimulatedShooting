@@ -83,3 +83,6 @@ crashlytics-build.properties
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# Local extraction staging and backups; selected runtime assets live under Assets/.
+/TempAssetResearch/

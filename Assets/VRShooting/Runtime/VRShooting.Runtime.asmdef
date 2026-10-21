@@ -6,6 +6,7 @@
     "Unity.TextMeshPro",
     "Unity.ugui",
     "Unity.XR.Interaction.Toolkit",
+    "Unity.XR.CoreUtils",
     "VRShooting.Contracts"
   ],
   "includePlatforms": [],

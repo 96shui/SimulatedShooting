@@ -3,6 +3,10 @@
 All files below are used as spatial one-shot feedback. Audio failure never changes
 weapon, ammo, hit, or session state.
 
+## P3 grenade heavy explosion
+
+`Assets/Resources/Combat/Audio/GrenadeExplosion_Heavy.wav` replaces the previous procedural half-second noise with Mike Koenig's [Grenade Explosion](https://soundbible.com/1467-Grenade-Explosion.html), CC BY 3.0. Source, processing script and checksum are retained under that folder's `Source~/`; attribution and modifications are documented in `GrenadeExplosion_Heavy.ATTRIBUTION.md`. The normal 18m throw remains clearly audible using full source gain and a 12–100m linear spatial falloff; the full 2.54s tail plays before cleanup.
+
 ## P3 enemy death cry
 
 - File: `Voices/enemy-death-uh-ah.wav`

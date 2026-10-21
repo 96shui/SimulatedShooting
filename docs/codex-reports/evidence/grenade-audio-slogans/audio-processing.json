@@ -1,0 +1,15 @@
+{
+  "source": "https://soundbible.com/1467-Grenade-Explosion.html",
+  "author": "Mike Koenig",
+  "license": "CC BY 3.0",
+  "source_sha256": "e2f6e630948943da62f319de07ad3bc5d476748c506524ec554671f1e66ce9e0",
+  "output_sha256": "d234a532c1b0fb89d7afd725fcd7b9741e1a40fe2d9e5268fd5c23c4ad0a6f98",
+  "sample_rate": 48000,
+  "channels": 1,
+  "seconds": 2.5375208333333332,
+  "source_peak": 0.8963623046875,
+  "processed_peak": 0.97998046875,
+  "source_attack_rms": 0.25581000528808717,
+  "processed_attack_rms": 0.3842461643671605,
+  "processing": "Stereo downmix; +2.6 dB broad 85 Hz bell; soft limiter; 40 ms tail fade; peak 0.98; PCM16 mono, original duration."
+}

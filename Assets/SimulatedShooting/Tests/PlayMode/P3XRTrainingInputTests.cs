@@ -45,7 +45,7 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return null;
             input.Sample(true);
             Assert.That(input.MoveAxis.y,Is.GreaterThan(.5f));Assert.That(input.TurnAxis.x,Is.GreaterThan(.7f));
-            Assert.That(input.GrenadePressed,Is.True,"right A grenade");Assert.That(input.ReloadPressed,Is.True,"left stick click reload");Assert.That(input.ConfirmPressed,Is.True,"left primary confirm");
+            Assert.That(input.GrenadePressed,Is.True,"right A grenade");Assert.That(input.ReloadPressed,Is.True,"left X reload");Assert.That(input.ConfirmPressed,Is.False,"X must not also submit an interaction command in mode three");
             InputSystem.QueueDeltaStateEvent(right.GetChildControl<ButtonControl>("secondaryButton"),1f);
             InputSystem.QueueDeltaStateEvent(left.GetChildControl<ButtonControl>("secondaryButton"),1f);
             yield return null;input.Sample(true);
@@ -65,6 +65,27 @@ namespace SimulatedShooting.Tests.PlayMode
             InputSystem.QueueDeltaStateEvent(right.GetChildControl<ButtonControl>("primaryButton"),0f);
             yield return null;input.Sample(true);
             Assert.That(input.GrenadePressed,Is.False);
+        }
+        [UnityTest] public IEnumerator Screen23_ModeThreeXReloadUsesPressEdgesAndModeFourKeepsStickBinding()
+        {
+            yield return null;
+            var trench=new P3XRTrainingInput();var urban=new P3XRTrainingInput { ReloadWithLeftX=false };
+            trench.Sample(true);urban.Sample(true);
+            InputSystem.QueueDeltaStateEvent(left.GetChildControl<ButtonControl>("primary2DAxisClick"),1f);
+            yield return null;trench.Sample(true);urban.Sample(true);
+            Assert.That(trench.ReloadPressed,Is.False,"left stick click must not reload mode three");
+            Assert.That(urban.ReloadPressed,Is.True);
+            InputSystem.QueueDeltaStateEvent(left.GetChildControl<ButtonControl>("primaryButton"),1f);
+            yield return null;trench.Sample(true);urban.Sample(true);
+            Assert.That(trench.ReloadPressed,Is.True);Assert.That(trench.ConfirmPressed,Is.False);
+            Assert.That(urban.ReloadPressed,Is.False);Assert.That(urban.ConfirmPressed,Is.True);
+            trench.Sample(true);Assert.That(trench.ReloadPressed,Is.False,"resampling a held X must not repeat");
+            yield return null;trench.Sample(true);Assert.That(trench.ReloadPressed,Is.False);
+            InputSystem.QueueDeltaStateEvent(left.GetChildControl<ButtonControl>("primaryButton"),0f);
+            yield return null;trench.Sample(true);Assert.That(trench.ReloadPressed,Is.False);
+            InputSystem.QueueDeltaStateEvent(left.GetChildControl<ButtonControl>("primaryButton"),1f);
+            yield return null;trench.Sample(true);Assert.That(trench.ReloadPressed,Is.True);
+            trench.Reset();trench.Sample(false);Assert.That(trench.ReloadPressed,Is.False);
         }
         [UnityTest] public IEnumerator Screen23_VrGripsRetainIndependentPressHoldReleaseEdges()
         {

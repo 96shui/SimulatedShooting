@@ -1,0 +1,5 @@
+eye=(-0.03, 0.72, 0.30)
+Character_铁 redPixels=142 bounds=Center: (-16.50, 9.46, 110.70), Extents: (3.50, 3.50, 0.00)
+Character_拳 redPixels=134 bounds=Center: (-5.50, 9.46, 110.70), Extents: (3.50, 3.50, 0.00)
+Character_胜 redPixels=168 bounds=Center: (5.50, 9.46, 110.70), Extents: (3.50, 3.50, 0.00)
+Character_利 redPixels=161 bounds=Center: (16.50, 9.46, 110.70), Extents: (3.50, 3.50, 0.00)

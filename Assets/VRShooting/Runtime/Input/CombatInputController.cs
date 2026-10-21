@@ -61,8 +61,9 @@ namespace VRShooting.Input
             }
             if (!input.RightGripHeld) rearHeld = false;
             if (input.RightGripPressed && frame.RearGripInRange) rearHeld = true;
-            if (!input.LeftGripHeld || !rearHeld) frontHeld = false;
-            if (rearHeld && input.LeftGripPressed && frame.FrontGripInRange) frontHeld = true;
+            var frontLocked = mode == TrainingMode.Trench && query.Data.Ammo.IsReloading;
+            if (!input.LeftGripHeld || !rearHeld || frontLocked) frontHeld = false;
+            if (!frontLocked && rearHeld && input.LeftGripPressed && frame.FrontGripInRange) frontHeld = true;
             result = core.SetGrip(new WeaponGripStateInputDto { SessionId = session,
                 HoldState = frontHeld ? WeaponHoldState.TwoHandHeld : rearHeld ? WeaponHoldState.RearHandHeld : WeaponHoldState.Dropped,
                 RearHandTracked = rearHeld, FrontHandTracked = frontHeld, Stability01 = frontHeld ? 1 : .3f });
@@ -79,7 +80,18 @@ namespace VRShooting.Input
                 Tick = clock.Tick, Kind = CombatInputKind.PlayerPose, EntityId = session + ".player",
                 Position = frame.PlayerPosition, Direction = frame.PlayerForward });
             if (!result.Success) return result;
-            if (input.ReloadPressed) core.Reload(session);
+            if (input.ReloadPressed)
+            {
+                var reload = core.Reload(session);
+                if (reload.Success && mode == TrainingMode.Trench && core.GetSnapshot(session).Data.Ammo.IsReloading)
+                {
+                    frontHeld = false;
+                    result = core.SetGrip(new WeaponGripStateInputDto { SessionId = session,
+                        HoldState = rearHeld ? WeaponHoldState.RearHandHeld : WeaponHoldState.Dropped,
+                        RearHandTracked = rearHeld, FrontHandTracked = false, Stability01 = .3f });
+                    if (!result.Success) return result;
+                }
+            }
             if (pressed)
             {
                 var shot = core.Fire(new WeaponFireInputDto { SessionId = session, MuzzlePosition = frame.MuzzlePosition,

@@ -436,6 +436,12 @@
         <mxCell id="p11-back" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="返回模式选择" vertex="1">
           <mxGeometry height="38" width="130" x="410" y="420" as="geometry" />
         </mxCell>
+        <mxCell id="p11-help" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=15;fontStyle=1;" value="帮助" vertex="1">
+          <mxGeometry height="38" width="90" x="555" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="p11-help-note" parent="1" style="text;html=1;align=center;whiteSpace=wrap;fontColor=#8fa99b;fontSize=12;" value="帮助默认收起；点击后在记录区域显示移动射击方法全文，再次点击恢复记录。保留摘要和底部操作。" vertex="1">
+          <mxGeometry height="50" width="560" x="120" y="485" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

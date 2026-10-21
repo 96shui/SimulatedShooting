@@ -5,6 +5,9 @@ using SimulatedShooting.Scene;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using VRShooting.Application.Combat;
 using VRShooting.Common;
 using VRShooting.Contracts;
@@ -127,19 +130,96 @@ namespace SimulatedShooting.Tests.PlayMode
             var trackedPosition = controller.position; var trackedRotation = controller.rotation;
             var headPosition = eye.transform.position; var headRotation = eye.transform.rotation;
             presentation = rifle.AddComponent<CombatRifleReloadPresentation>();
-            presentation.Configure(weapon, eye, testRig, true, () => clock.Now);
+            var handLocalPosition = handObject.transform.localPosition;
+            var handLocalRotation = handObject.transform.localRotation;
+            presentation.Configure(weapon, eye, testRig, true, () => clock.Now, true);
             core.Changed += presentation.ApplySnapshot;
             presentation.ApplySnapshot(core.GetSnapshot("reload-play").Data);
             Fire(); core.Reload("reload-play"); Step(1f);
             Assert.That(presentation.LeftHand.HasPresentationGrip, Is.True);
+            Assert.That(rifle.GetComponent<TrainingRifleGrabInteractable>().FrontHandInteractionLocked, Is.True);
+            Assert.That(handObject.transform.parent, Is.EqualTo(presentation.ReloadHandAnchor), "The animated hand is detached from the tracked controller");
             Assert.That(controller.position, Is.EqualTo(trackedPosition)); Assert.That(controller.rotation, Is.EqualTo(trackedRotation));
             Assert.That(weapon.RearHandGrip.position, Is.EqualTo(rear)); Assert.That(weapon.FrontHandGrip.position, Is.EqualTo(front));
             Assert.That(eye.transform.position, Is.EqualTo(headPosition)); Assert.That(eye.transform.rotation, Is.EqualTo(headRotation));
+            var animatedPosition = handObject.transform.position;
+            var animatedRotation = handObject.transform.rotation;
+            controller.SetPositionAndRotation(new Vector3(3, 2, -2), Quaternion.Euler(75, 45, 15));
+            yield return null; presentation.Sample();
+            Assert.That(Vector3.Distance(handObject.transform.position, animatedPosition), Is.LessThan(.0001f));
+            Assert.That(Quaternion.Angle(handObject.transform.rotation, animatedRotation), Is.LessThan(.01f));
             core.SetTracking("reload-play", false);
             Assert.That(presentation.LeftHand.HasPresentationGrip, Is.False);
             Assert.That(presentation.LeftHand.PresentationCurl01, Is.Zero);
             Assert.That(presentation.Magazine.localPosition, Is.EqualTo(seatedPosition));
+            Assert.That(rifle.GetComponent<TrainingRifleGrabInteractable>().FrontHandInteractionLocked, Is.False);
+            Assert.That(handObject.transform.parent, Is.EqualTo(controller));
+            Assert.That(handObject.transform.localPosition, Is.EqualTo(handLocalPosition));
+            Assert.That(Quaternion.Angle(handObject.transform.localRotation, handLocalRotation), Is.LessThan(.01f));
             Assert.That(core.GetSnapshot("reload-play").Data.Ammo.ReserveMagazines, Is.EqualTo(2));
+            yield return null;
+        }
+
+        [UnityTest] public IEnumerator ModeThreeCompletionAndDisableRestoreLeftControllerControl()
+        {
+            core.Changed -= presentation.ApplySnapshot;
+            UnityEngine.Object.Destroy(presentation); yield return null;
+            testRig = new GameObject("ReloadRestoreRig");
+            var controller = new GameObject("Left Controller").transform; controller.SetParent(testRig.transform, false);
+            var hand = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("Combat/Hands/VirtualHand_Left"), controller, false);
+            var grab = rifle.GetComponent<TrainingRifleGrabInteractable>();
+            hand.GetComponent<VRControllerHandVisual>().BindWeapon(grab);
+            presentation = rifle.AddComponent<CombatRifleReloadPresentation>();
+            presentation.Configure(rifle.GetComponent<WeaponPrefabBinding>(), eye, testRig, true, () => clock.Now, true);
+            core.Changed += presentation.ApplySnapshot;
+            presentation.ApplySnapshot(core.GetSnapshot("reload-play").Data);
+            core.Reload("reload-play");
+            Assert.That(grab.FrontHandInteractionLocked, Is.False, "A full magazine must not lock the hand");
+            Assert.That(hand.transform.parent, Is.EqualTo(controller));
+            Fire(); core.Reload("reload-play"); Step(1f);
+            Assert.That(grab.FrontHandInteractionLocked, Is.True);
+            Step(1.01f);
+            Assert.That(grab.FrontHandInteractionLocked, Is.False);
+            Assert.That(presentation.LeftHand.HasPresentationGrip, Is.False);
+            Assert.That(hand.transform.parent, Is.EqualTo(controller));
+            var local = hand.transform.localPosition;
+            controller.position += Vector3.right;
+            Assert.That(hand.transform.localPosition, Is.EqualTo(local), "The hand once again follows its controller");
+            Fire(); core.Reload("reload-play"); Step(.2f);
+            presentation.enabled = false;
+            Step(.3f);
+            Assert.That(grab.FrontHandInteractionLocked, Is.False);
+            Assert.That(hand.transform.parent, Is.EqualTo(controller));
+            Assert.That(presentation.LeftHand.HasPresentationGrip, Is.False);
+            yield return null;
+        }
+
+        [UnityTest] public IEnumerator ModeThreeFrontGripLockCancelsLeftSelectionAndKeepsRightHandHoldingRifle()
+        {
+            testRig = new GameObject("ReloadSelectRig");
+            var manager = testRig.AddComponent<XRInteractionManager>();
+            var grab = rifle.GetComponent<TrainingRifleGrabInteractable>(); grab.interactionManager = manager; grab.enabled = true;
+            XRDirectInteractor Hand(InteractorHandedness side)
+            {
+                var node = new GameObject(side.ToString()); node.transform.SetParent(testRig.transform);
+                node.AddComponent<SphereCollider>().isTrigger = true;
+                var hand = node.AddComponent<XRDirectInteractor>(); hand.interactionManager = manager; hand.handedness = side;
+                return hand;
+            }
+            var right = Hand(InteractorHandedness.Right); var left = Hand(InteractorHandedness.Left);
+            right.transform.position = grab.RearAttach.position; left.transform.position = grab.FrontAttach.position;
+            manager.SelectEnter((IXRSelectInteractor)right, (IXRSelectInteractable)grab);
+            manager.SelectEnter((IXRSelectInteractor)left, (IXRSelectInteractable)grab);
+            Assert.That(grab.FrontHandSelected && grab.RearHandSelected, Is.True);
+            grab.SetFrontHandInteractionLocked(true);
+            Assert.That(grab.FrontHandSelected, Is.False); Assert.That(grab.RearHandSelected, Is.True);
+            Assert.That(grab.IsSelectableBy((IXRSelectInteractor)left), Is.False);
+            Assert.That(grab.IsHoverableBy((IXRHoverInteractor)left), Is.False);
+            grab.SetFrontHandInteractionLocked(false);
+            Assert.That(grab.IsSelectableBy((IXRSelectInteractor)left), Is.True);
+            manager.SelectEnter((IXRSelectInteractor)left, (IXRSelectInteractable)grab);
+            Assert.That(grab.FrontHandSelected, Is.True);
+            grab.ResetToRack();
             yield return null;
         }
 
@@ -147,7 +227,7 @@ namespace SimulatedShooting.Tests.PlayMode
         void Step(float seconds) { clock.Step(seconds); core.Advance("reload-play"); presentation.Sample(); }
         void Capture(string name)
         {
-            const string folder = "docs/codex-reports/evidence/combat-reload-2026-10-11";
+            const string folder = "Logs/task020-x-reload-evidence";
             System.IO.Directory.CreateDirectory(folder);
             var target = RenderTexture.GetTemporary(960, 720, 24);
             var previousTarget = eye.targetTexture; var previousActive = RenderTexture.active;

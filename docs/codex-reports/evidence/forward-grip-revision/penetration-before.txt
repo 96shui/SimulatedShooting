@@ -1,0 +1,2 @@
+GlovedArm_Left deepVertices=14 depth=0.009579051 worst=(0.0084, -0.0083, 0.2170) bones=L_IndexDistal:9,L_IndexIntermediate:5
+GlovedArm_Right deepVertices=70 depth=0.01206966 worst=(-0.0056, -0.0587, -0.1098) bones=R_IndexDistal:36,R_MiddleIntermediate:11,R_RingIntermediate:10,R_RingProximal:6,R_LittleIntermediate:5,R_MiddleProximal:2

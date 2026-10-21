@@ -1,0 +1,2 @@
+Left offset=(-0.0442, -0.0526, -0.0418) rotation=(-20.00, 25.00, 180.00) fingers=15
+Right offset=(0.0387, -0.0107, -0.0164) rotation=(-60.00, -15.00, -90.00) fingers=15

@@ -103,6 +103,9 @@ namespace SimulatedShooting.Editor
             AddTestId(root, "ZeroingRange.Root");
             root.AddComponent<ZeroingRangeSessionBootstrap>();
             CreateScene(root.transform);
+            RangeIronFistVictoryRepair.PatchScene(scene,"ZeroingRange");
+            RangeSideSloganAuthoring.PatchScene(scene,"ZeroingRange");
+            ModularGlovedArmsAuthoring.PatchSceneHands(scene);
             ProneRangeSceneMigration.PatchOpenZeroingRangeScene();
             EditorSceneManager.SaveScene(scene, ScenePath);
             AddSceneToBuildSettings();

@@ -1,0 +1,131 @@
+{
+  "baseline": "8a5782d",
+  "mode": "PlayMode",
+  "result": "Passed",
+  "total": "30",
+  "passed": "30",
+  "failed": "0",
+  "skipped": "0",
+  "tests": [
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.CancelRestoresVisibleMagazineAndKeepsBothSpares",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.HandPullsMagazineBelowViewThenSeatsBeforeAmmoCompletes",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.ModeThreeCompletionAndDisableRestoreLeftControllerControl",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.ModeThreeFrontGripLockCancelsLeftSelectionAndKeepsRightHandHoldingRifle",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.MovingAndRotatingEyeKeepsOffscreenMagazineBelowView",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.VrAnimationPreservesControllersGripAnchorsAndHmd",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_GrenadeCommandRemainsAvailableWhileBothGripsAreHeld",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_ModeThreeXReloadUsesPressEdgesAndModeFourKeepsStickBinding",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_VrGripsRetainIndependentPressHoldReleaseEdges",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_VrSticksAndFaceButtonsReachP3Commands",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.VRHandPresentationTests.Bdd23_Task019_HideHardwareModelsKeepHandsAndUiRaysIncludingLateModels",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd23_Task019_TrenchReconThenTrackedHandsGrabStableRifle",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen00_MovingRangeHeadAndBothHandsReceiveDevicePoses",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen00_RangeAutomaticallyChoosesRunningDisplay",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen02_MainMenuEyeHeightVisibleRaysAndTrackedTriggerRecover",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen02_MainMenuUsesLeftMoveAndRightSnapTurnOnly",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen14_18_TrackedTriggerClicksMapsAndBriefingAcrossRigHandoff",
+      "result": "Passed"
+    },
+    {
+      "name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen18_21_VrActionsAndTrackedPosesSurviveUrbanLoadAndReturn",
+      "result": "Passed"
+    },
+    {
+      "name": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_AboutCreators_ShowsLargeCreditsAndReturnsWithoutStartingTraining",
+      "result": "Passed"
+    },
+    {
+      "name": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_InputInfrastructure_SupportsDesktopAndXrPointers",
+      "result": "Passed"
+    },
+    {
+      "name": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_MainMenuOpenZeroingButton_RoutesToZeroingBriefing",
+      "result": "Passed"
+    },
+    {
+      "name": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton",
+      "result": "Passed"
+    },
+    {
+      "name": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist",
+      "result": "Passed"
+    },
+    {
+      "name": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu",
+      "result": "Passed"
+    },
+    {
+      "name": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup",
+      "result": "Passed"
+    },
+    {
+      "name": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingStartButton_IsIdempotentForRepeatedClicks",
+      "result": "Passed"
+    },
+    {
+      "name": "VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_05_ClickZeroingWaitsForPickupThenShowsSceneOwnedHud",
+      "result": "Passed"
+    },
+    {
+      "name": "VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_MainScene_SwitchesBetweenDesktopAndVrUiModes",
+      "result": "Passed"
+    },
+    {
+      "name": "VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_MainScene_TeleportRayCannotDisableModeSelectionUiRay",
+      "result": "Passed"
+    },
+    {
+      "name": "VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_MainScene_VrUsesFloorTrackingAndReadableStabilizedMenu",
+      "result": "Passed"
+    }
+  ]
+}

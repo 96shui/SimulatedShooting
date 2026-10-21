@@ -87,6 +87,7 @@ namespace SimulatedShooting.Scene
         public void Prepare(CombatSceneBindings bindings,TrainingMode selected,bool? vrAvailability=null)
         {
             binding=bindings;mode=selected;
+            hardware.ReloadWithLeftX=mode==TrainingMode.Trench;
             foreach(var fixture in GetComponentsInChildren<CombatSceneFixture>(true))fixture.enabled=false;
             var xrMode=binding.GetComponent<ZeroingRangeXRModeController>();
             xrOrigin=xrMode.XrOrigin;desktopEye=xrMode.NoVrCamera;xrMode.enabled=false;
@@ -211,7 +212,7 @@ namespace SimulatedShooting.Scene
             weapon=rifle.GetComponent<WeaponPrefabBinding>();grab=rifle.GetComponent<TrainingRifleGrabInteractable>();
             VRHandPresentation.EnsureOnRig(xrOrigin, grab);
             reloadPresentation=rifle.AddComponent<CombatRifleReloadPresentation>();
-            reloadPresentation.Configure(weapon,eye,xrOrigin,vr,()=>Clock.Now);
+            reloadPresentation.Configure(weapon,eye,xrOrigin,vr,()=>Clock.Now,mode==TrainingMode.Trench);
             core.Changed+=UpdateReloadPresentation;
             reloadPresentation.ApplySnapshot(core.GetSnapshot(session).Data);
             var spawn=player.position;
@@ -342,7 +343,7 @@ namespace SimulatedShooting.Scene
             bool rightTracked=!vr||Tracked(right),leftTracked=!vr||Tracked(left),headTracked=!vr||Tracked(head);
             var r=HandPosition(right);var l=HandPosition(left);
             bool rear=!vr||grab.RearHandSelected||Vector3.Distance(r,weapon.RearHandGrip.position)<grab.RearGrabRadius;
-            bool front=!vr||grab.FrontHandSelected||Vector3.Distance(l,weapon.FrontHandGrip.position)<grab.FrontGrabRadius;
+            bool front=(!vr||grab.FrontHandSelected||Vector3.Distance(l,weapon.FrontHandGrip.position)<grab.FrontGrabRadius)&&!grab.FrontHandInteractionLocked;
             return new CombatInputFrameDto{HeadTracked=headTracked,RearHandTracked=rightTracked,FrontHandTracked=leftTracked,RearGripInRange=rear,FrontGripInRange=front,
                 IsRealVr=vr,MuzzlePosition=weapon.MuzzlePoint.position,AimDirection=weapon.AimLinePoint.forward,PlayerPosition=player.position,PlayerForward=player.forward,
                 RequestedPosture=hardware.PosturePressed?(PlayerPosture?)((PlayerPosture)(((int)snapshot.Player.Posture+1)%3)):null};
@@ -636,6 +637,8 @@ namespace SimulatedShooting.Scene
             foreach(var projectile in grenadesInFlight.Values)if(projectile!=null)Destroy(projectile.gameObject);
             grenadesInFlight.Clear();
             if(grenadeMaterial!=null){Destroy(grenadeMaterial);grenadeMaterial=null;}
+            foreach(var blast in GetComponentsInChildren<CombatExplosionVfx>(true))
+            {blast.gameObject.SetActive(false);Destroy(blast.gameObject);}
             if(rifle!=null){if(grab!=null)grab.ResetToRack();rifle.SetActive(false);Destroy(rifle);}
             if(binding!=null&&mode==TrainingMode.Trench)binding.WeaponAnchor.gameObject.SetActive(true);
             rifle=null;weapon=null;grab=null;reloadPresentation=null;core=null;world=null;state=null;grenades=null;tick=null;session="";

@@ -515,7 +515,7 @@ namespace VRShooting.Unity.UI
             openMovingTargetButton = AddButton(parent, "Button_MainMenu_OpenMovingTarget", "02   移动目标射击", new Vector2(1360, 535), new Vector2(1750, 620), false);
             openMovingTargetButton.onClick.AddListener(OnOpenMovingTargetClicked);
             var trenchButton = AddButton(parent, "Button_MainMenu_Trench", "03   堑壕射击", new Vector2(1360, 405), new Vector2(1750, 490), false);
-            var urbanButton = AddButton(parent, "Button_MainMenu_Urban", "04   城镇攻防", new Vector2(1360, 275), new Vector2(1750, 360), false);
+            var urbanButton = AddButton(parent, "Button_MainMenu_Urban", "04   城镇攻防（开发中）", new Vector2(1360, 275), new Vector2(1750, 360), false);
             trenchButton.interactable = urbanButton.interactable = services.CombatScenesAvailable;
             trenchButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Trench));
             urbanButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Urban));
@@ -1032,9 +1032,9 @@ namespace VRShooting.Unity.UI
             SetAnalysisText(zeroingAnalysisFrontSightText, "准心柱", FormatFrontSight(analysis));
             SetAnalysisText(zeroingAnalysisRearSightText, "觇孔", FormatRearSight(analysis));
             if (zeroingAnalysisCorrectionXText != null)
-                zeroingAnalysisCorrectionXText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.x / ZeroingRules.CmPerRearSightClick, "向前", "向后", "格", "0");
+                zeroingAnalysisCorrectionXText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.x / ZeroingRules.CmPerRearSightClick, "向前", "向后", "格", "0.##");
             if (zeroingAnalysisCorrectionYText != null)
-                zeroingAnalysisCorrectionYText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.y / ZeroingRules.CmPerFrontSightDegree, "逆时针", "顺时针", "°");
+                zeroingAnalysisCorrectionYText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.y / ZeroingRules.CmPerFrontSightDegree, "逆时针", "顺时针", "°", "0");
             if (zeroingAnalysisPreviewText != null)
                 zeroingAnalysisPreviewText.text = "原始均值(黄) → 调整预览(蓝) · 按住连续调节";
             if (zeroingAnalysisAppliedText != null)
@@ -1452,7 +1452,7 @@ namespace VRShooting.Unity.UI
             }
 
             var direction = analysis.VerticalDirection == VerticalAdjustmentDirection.CounterClockwise ? "逆时针" : "顺时针";
-            return direction + "调整 " + analysis.FrontSightDegreesToAdjust.ToString("0.#", CultureInfo.InvariantCulture) + "°";
+            return direction + "调整 " + analysis.FrontSightDegreesToAdjust.ToString("0", CultureInfo.InvariantCulture) + "°";
         }
 
         static string FormatRearSight(ZeroingRoundAnalysisDto analysis)
@@ -1463,7 +1463,7 @@ namespace VRShooting.Unity.UI
             }
 
             var direction = analysis.HorizontalDirection == HorizontalAdjustmentDirection.Forward ? "向前" : "向后";
-            return direction + "调整 " + analysis.RearSightClicksToAdjust + " 格";
+            return direction + "调整 " + analysis.RearSightClicksToAdjust.ToString("0.##", CultureInfo.InvariantCulture) + " 格";
         }
 
         static string FormatSuggestion(ZeroingRoundAnalysisDto analysis)

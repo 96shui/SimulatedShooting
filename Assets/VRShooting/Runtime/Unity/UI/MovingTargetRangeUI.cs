@@ -37,6 +37,10 @@ namespace VRShooting.Unity.UI
         TMP_Text hudPromptText;
         TMP_Text resultSummaryText;
         TMP_Text resultSequencesText;
+        RectTransform resultSequencesViewport;
+        TMP_Text resultScrollHint;
+        RectTransform resultHelpPanel;
+        Button resultHelpButton;
         Button startButton;
         Button settingsBackButton;
         Button retryButton;
@@ -242,6 +246,7 @@ namespace VRShooting.Unity.UI
             resultSequencesText = AddLabel(parent, "Text_MovingTargetResults_Sequences", string.Empty, 20, FontStyles.Normal,
                 new Vector2(350, 450), new Vector2(1570, 760), new Color32(231, 242, 235, 255), TextAlignmentOptions.TopLeft);
             var viewport = CreateRect("Viewport_MovingTargetResults_Sequences", parent, Vector2.zero, Vector2.zero, new Vector2(350, 450), new Vector2(1570, 760));
+            resultSequencesViewport = viewport;
             viewport.gameObject.AddComponent<RectMask2D>();
             var scroll = viewport.gameObject.AddComponent<ScrollRect>();
             var scrollSurface = viewport.gameObject.AddComponent<Image>();
@@ -258,7 +263,20 @@ namespace VRShooting.Unity.UI
             scroll.content = resultSequencesText.rectTransform;
             scroll.horizontal = false;
             scroll.movementType = ScrollRect.MovementType.Clamped;
-            AddLabel(parent, "Text_MovingTargetResults_ScrollHint", "逐发记录  ·  上下滚动查看", 18, FontStyles.Normal, new Vector2(350, 770), new Vector2(1570, 803), new Color32(143, 217, 255, 255));
+            resultScrollHint = AddLabel(parent, "Text_MovingTargetResults_ScrollHint", "逐发记录  ·  上下滚动查看", 18, FontStyles.Normal, new Vector2(350, 770), new Vector2(1570, 803), new Color32(143, 217, 255, 255));
+            AddPanel(parent, "Panel_MovingTargetResults_Help", new Vector2(350, 250), new Vector2(1570, 590));
+            resultHelpPanel = (RectTransform)parent.Find("Panel_MovingTargetResults_Help");
+            var helpText = AddLabel(resultHelpPanel, "Text_MovingTargetResults_Help",
+                "移动射击的方法通常有两种。\n\n一是跟随射击，移动武器追随目标进行射击。\n\n二是等待射击，预判目标的移动轨迹在它的运动方向上等待经过进行射击。\n\n由于物体的运动我们需要瞄准目标的前侧才能保证命中，在一百米视距上，大约在20-30cm半个靶子的身位。",
+                26, FontStyles.Normal, new Vector2(30, 20), new Vector2(1190, 320),
+                new Color32(143, 217, 255, 255), TextAlignmentOptions.TopLeft);
+            helpText.enableAutoSizing = true;
+            helpText.fontSizeMin = 24;
+            helpText.fontSizeMax = 26;
+            resultHelpButton = AddButton(parent, "Button_MovingTargetResults_Help", "帮助",
+                new Vector2(860, 150), new Vector2(1060, 225), false);
+            resultHelpButton.onClick.AddListener(() => SetResultsHelpExpanded(!resultHelpPanel.gameObject.activeSelf));
+            SetResultsHelpExpanded(false);
             resultsBackButton = AddButton(parent, "Button_MovingTargetResults_BackToModeSelection", "返回模式选择",
                 new Vector2(485, 815), new Vector2(835, 885), false);
             retryButton = AddButton(parent, "Button_MovingTargetResults_Retry", "重新训练",
@@ -270,6 +288,14 @@ namespace VRShooting.Unity.UI
         internal Button SettingsBackButton => settingsBackButton;
         internal Button RetryButton => retryButton;
         internal Button ResultsBackButton => resultsBackButton;
+
+        void SetResultsHelpExpanded(bool expanded)
+        {
+            resultHelpPanel.gameObject.SetActive(expanded);
+            resultSequencesViewport.gameObject.SetActive(!expanded);
+            resultScrollHint.gameObject.SetActive(!expanded);
+            resultHelpButton.GetComponentInChildren<TMP_Text>(true).text = expanded ? "收起帮助" : "帮助";
+        }
 
         internal void RenderSettings(float selectedSpeed, IReadOnlyList<float> availableSpeeds)
         {
@@ -284,6 +310,10 @@ namespace VRShooting.Unity.UI
 
         internal void RenderPresentation(TrainingPresentationDto dto, bool busy)
         {
+            if (!dto.LargePanelVisible || dto.ActiveScreen != ScreenId.MovingTargetResults)
+            {
+                SetResultsHelpExpanded(false);
+            }
             largePanelRoot.gameObject.SetActive(dto.LargePanelVisible);
             minimalHudRoot.gameObject.SetActive(dto.MinimalHudVisible);
             settingsScreen.gameObject.SetActive(dto.LargePanelVisible && dto.ActiveScreen == ScreenId.MovingTargetSettings);

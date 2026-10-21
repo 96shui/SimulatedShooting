@@ -22,6 +22,10 @@ namespace SimulatedShooting.Tests.PlayMode
         [UnitySetUp]
         public IEnumerator LoadScene()
         {
+            // A scene reload must not reuse the previous case's persistent weapon/ammo services.
+            if (VRShooting.Unity.Bootstrap.GameMain.Instance != null)
+                Object.Destroy(VRShooting.Unity.Bootstrap.GameMain.Instance.gameObject);
+            yield return null;
             yield return SceneManager.LoadSceneAsync("ZeroingRangeScene", LoadSceneMode.Single);
             Object.FindObjectOfType<ZeroingRangeXRModeController>().SetVrModeForTests(false);
             Physics.SyncTransforms();
@@ -516,6 +520,7 @@ namespace SimulatedShooting.Tests.PlayMode
             var initialImpacts = surface.Impacts.Count;
 
             Assert.That(controller.InitializeForTests(), Is.True);
+            AimHandsAtPrimaryTarget(controller);
             var fired = controller.FireOnceForTests();
             Physics.SyncTransforms();
 
@@ -538,6 +543,7 @@ namespace SimulatedShooting.Tests.PlayMode
             var feedback = controller.FeedbackController;
 
             Assert.That(controller.InitializeForTests(), Is.True);
+            AimHandsAtPrimaryTarget(controller);
             Assert.That(controller.FireOnceForTests(), Is.True);
             Assert.That(feedback.ValidShotFeedbackCount, Is.EqualTo(1));
             Assert.That(feedback.ImpactFeedbackCount, Is.Zero);
@@ -550,6 +556,31 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(Find("ZeroingRange.Target.ImpactFeedback"), Is.Not.Null);
             Assert.That(Find("ZeroingRange.Target.ImpactFeedback").GetComponent<ParticleSystem>(), Is.Null,
                 "Surface hits retain their event marker without the old spark effect.");
+        }
+
+        static void AimHandsAtPrimaryTarget(FirstPersonTrainingWeaponController controller)
+        {
+            // The hip-fire weapon is beside/below the eye. Aim explicitly instead of assuming
+            // an unchanged forward vector from that offset origin intersects the central face.
+            var binding = Find("ZeroingRange.Weapon.TrainingRifle").GetComponent<WeaponPrefabBinding>();
+            var surface = Find("ZeroingRange.Target.Face").GetComponent<TargetImpactSurface>();
+            controller.ConfigureVrPoseSources(null, null, null);
+            controller.AdjustFrontHandForTests(Vector2.zero);
+            for (var i = 0; i < 8; i++)
+            {
+                var ray = new Ray(binding.MuzzlePoint.position, controller.CurrentAimDirection);
+                var plane = new Plane(surface.TargetCenter.forward, surface.TargetCenter.position);
+                Assert.That(plane.Raycast(ray, out var distance), Is.True);
+                var error = ray.GetPoint(distance) - surface.TargetCenter.position;
+                var gripDistance = Vector3.Distance(binding.RearHandGrip.position, binding.FrontHandGrip.position);
+                controller.AdjustFrontHandForTests(new Vector2(-error.x, -error.y) * gripDistance / distance);
+            }
+            Physics.SyncTransforms();
+            var aimedRay = new Ray(binding.MuzzlePoint.position, controller.CurrentAimDirection);
+            var targetPlane = new Plane(surface.TargetCenter.forward, surface.TargetCenter.position);
+            Assert.That(targetPlane.Raycast(aimedRay, out var aimDistance), Is.True);
+            Assert.That(Vector3.Distance(aimedRay.GetPoint(aimDistance), surface.TargetCenter.position), Is.LessThan(.01f),
+                $"Hand aim did not converge; VR sources={controller.UsingVrPoseSources}, hold={controller.CurrentHoldState}, initialized={controller.IsInitialized}");
         }
 
         [Test]
@@ -903,7 +934,6 @@ namespace SimulatedShooting.Tests.PlayMode
             manager.SelectEnter((IXRSelectInteractor)left, (IXRSelectInteractable)grab);
             yield return null;
             Assert.That(grab.HoldState, Is.EqualTo(WeaponHoldState.TwoHandHeld));
-
             // BDD23 task019: steady tracked hands keep the rifle stable while the rig walks.
             Assert.That(grab.movementType, Is.EqualTo(XRBaseInteractable.MovementType.Instantaneous));
             yield return null;

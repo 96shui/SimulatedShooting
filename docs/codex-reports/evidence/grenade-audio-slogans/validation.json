@@ -1,0 +1,116 @@
+{
+  "baseline": "8a5782d",
+  "unity": "2022.3.62f3c1",
+  "runs": [
+    {
+      "label": "saved-scene-uv",
+      "jobId": "ac2d0d9e306d4c76b4af74c2f73cd261",
+      "status": "succeeded",
+      "summary": {
+        "total": 2,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 0.1584524,
+        "resultState": "Passed"
+      },
+      "tests": [
+        {
+          "name": "SimulatedShooting.Tests.EditMode.RangeIronFistAuthoringTests.SavedWallCharactersUseTheFourCompleteCorrectAtlasSlices(\"ZeroingRange\")",
+          "state": "Passed",
+          "message": null
+        },
+        {
+          "name": "SimulatedShooting.Tests.EditMode.RangeIronFistAuthoringTests.SavedWallCharactersUseTheFourCompleteCorrectAtlasSlices(\"MovingTargetRange\")",
+          "state": "Passed",
+          "message": null
+        }
+      ]
+    },
+    {
+      "label": "integration-and-render",
+      "jobId": "0dcd55849a1944289440a04dd28367c9",
+      "status": "succeeded",
+      "summary": {
+        "total": 9,
+        "passed": 9,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 13.9806562,
+        "resultState": "Passed"
+      },
+      "tests": [
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.GrenadeExplosionAudioPlayModeTests.DisablingExplosionStopsItsSoundImmediately",
+          "state": "Passed",
+          "message": null
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.GrenadeExplosionAudioPlayModeTests.ImportedHeavyBlastPlaysBeyondVisualLifetimeAndFinishes",
+          "state": "Passed",
+          "message": null
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_006_SceneContainsStableProneRangeBindingsAndRouteIds",
+          "state": "Passed",
+          "message": null
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_DataWinsCharactersAlignWithNumberCharacter",
+          "state": "Passed",
+          "message": null
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_HasCentredDataWinsSloganBelowWinBattles",
+          "state": "Passed",
+          "message": null
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd27_DesktopThrowSpawnsVisibleM67UntilExplosion",
+          "state": "Passed",
+          "message": null
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.RangeIronFistVictoryPlayModeTests.ModeOneFourCharactersAreReadableFromFiringEye",
+          "state": "Passed",
+          "message": null
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.RangeIronFistVictoryPlayModeTests.ModeTwoFourCharactersAreReadableFromFiringEye",
+          "state": "Passed",
+          "message": null
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_SceneContainsStableTrainingAnchorsForVrAndNoVr",
+          "state": "Passed",
+          "message": null
+        }
+      ]
+    },
+    {
+      "label": "final-native-audio",
+      "jobId": "9d46d5a9eac74ebb90143a37b9d40882",
+      "status": "succeeded",
+      "summary": {
+        "total": 2,
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 6.8910949,
+        "resultState": "Passed"
+      },
+      "tests": [
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.GrenadeExplosionAudioPlayModeTests.DisablingExplosionStopsItsSoundImmediately",
+          "state": "Passed",
+          "message": null
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.GrenadeExplosionAudioPlayModeTests.ImportedHeavyBlastPlaysBeyondVisualLifetimeAndFinishes",
+          "state": "Passed",
+          "message": null
+        }
+      ]
+    }
+  ]
+}

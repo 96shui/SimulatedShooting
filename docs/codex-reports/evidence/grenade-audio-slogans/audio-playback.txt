@@ -1,0 +1,1 @@
+clip=GrenadeExplosion_Heavy length=2.537521 listenerDistance=18 outputRms=0.3639664 sourceRms=0.333214 sourceTime=0.576 virtual=False dspTime=808.682666666667 listenerVolume=1 paused=False listeners=Camera_NoVR:True volume=1 minDistance=12 maxDistance=100

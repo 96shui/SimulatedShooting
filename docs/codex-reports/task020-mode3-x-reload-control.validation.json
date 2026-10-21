@@ -1,0 +1,156 @@
+[
+  {
+    "name": "task020-x-reload-editmode-current",
+    "result": "Passed",
+    "total": "12",
+    "passed": "12",
+    "failed": "0",
+    "testCases": [
+      {
+        "name": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.CancellationPreservesOriginalMagazineAndBothSpares(Paused)",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.CancellationPreservesOriginalMagazineAndBothSpares(Completed)",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.CancellationPreservesOriginalMagazineAndBothSpares(Failed)",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.CancellationPreservesOriginalMagazineAndBothSpares(Cancelled)",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.P1AndP2KeepTheirAmmoRules",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.ReloadInputLocksModeThreeFrontGripUntilReleaseAndNewPress(Trench,False)",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.ReloadInputLocksModeThreeFrontGripUntilReleaseAndNewPress(Urban,True)",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.TacticalReloadSpendsAWholeMagazineOnlyAtCompletion(Trench)",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.TacticalReloadSpendsAWholeMagazineOnlyAtCompletion(Urban)",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.ThreeMagazinesRunOutAfterNinetyShots(Trench)",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.ThreeMagazinesRunOutAfterNinetyShots(Urban)",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.TrackingLossCancelsWithoutDelayedCompletion",
+        "result": "Passed"
+      }
+    ]
+  },
+  {
+    "name": "task020-x-reload-playmode",
+    "result": "Passed",
+    "total": "22",
+    "passed": "22",
+    "failed": "0",
+    "testCases": [
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.CancelRestoresVisibleMagazineAndKeepsBothSpares",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.HandPullsMagazineBelowViewThenSeatsBeforeAmmoCompletes",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.ModeThreeCompletionAndDisableRestoreLeftControllerControl",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.ModeThreeFrontGripLockCancelsLeftSelectionAndKeepsRightHandHoldingRifle",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.MovingAndRotatingEyeKeepsOffscreenMagazineBelowView",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.VrAnimationPreservesControllersGripAnchorsAndHmd",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Trench_ProductionMagazineReload",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Urban_ProductionMagazineReload",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_GrenadeCommandRemainsAvailableWhileBothGripsAreHeld",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_ModeThreeXReloadUsesPressEdgesAndModeFourKeepsStickBinding",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_VrGripsRetainIndependentPressHoldReleaseEdges",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_VrSticksAndFaceButtonsReachP3Commands",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd23_Task019_TrenchReconThenTrackedHandsGrabStableRifle",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen00_MovingRangeHeadAndBothHandsReceiveDevicePoses",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen00_RangeAutomaticallyChoosesRunningDisplay",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen02_MainMenuUsesLeftMoveAndRightSnapTurnOnly",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen14_18_TrackedTriggerClicksMapsAndBriefingAcrossRigHandoff",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen18_21_VrActionsAndTrackedPosesSurviveUrbanLoadAndReturn",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.Locomotion_P1P2StayFixed_AndVrDoesNotMoveEyeHeight",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.ManualInput_PickupTwoHandsSingleShot_ReloadShoulderPostureAndCombat",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.PhysicsFirstHit_BlocksWallAndEmbeddedMuzzle",
+        "result": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.TrackingAndPause_BlockHeldTrigger_AndStopMovement",
+        "result": "Passed"
+      }
+    ]
+  }
+]

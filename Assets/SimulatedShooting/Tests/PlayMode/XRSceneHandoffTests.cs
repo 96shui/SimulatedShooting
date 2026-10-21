@@ -12,6 +12,8 @@ using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit.Inputs;
 using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Interactors.Visuals;
+using Unity.XR.CoreUtils;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Movement;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Turning;
 using UnityEngine.UI;
@@ -102,6 +104,40 @@ namespace SimulatedShooting.Tests.PlayMode
                 Assert.That(Object.FindObjectOfType<ZeroingRangeXRModeController>().IsVrMode,
                     Is.EqualTo(displays.Any(d=>d.running)),"Default scene entry must detect the headset without a forced test mode: "+scene);
             }
+        }
+
+        [UnityTest] public IEnumerator Screen02_MainMenuEyeHeightVisibleRaysAndTrackedTriggerRecover()
+        {
+            var camera = GameMain.Instance.GetComponent<MainMenuXRModeController>().VrCamera;
+            var origin = camera.GetComponentInParent<XROrigin>();
+            Assert.That(origin.RequestedTrackingOriginMode, Is.EqualTo(XROrigin.TrackingOriginMode.Floor));
+            Assert.That(origin.CameraYOffset, Is.EqualTo(1.65f).Within(.001f), "Device-origin fallback must have a standing eye offset");
+            var deviceOrigin = origin.CurrentTrackingOriginMode == TrackingOriginModeFlags.Device;
+            InputSystem.QueueDeltaStateEvent(head.centerEyePosition, new Vector3(0, deviceOrigin ? 0f : 1.65f, 0));
+            InputSystem.QueueDeltaStateEvent(head.centerEyeRotation, Quaternion.identity);
+            InputSystem.QueueDeltaStateEvent(head.isTracked, (byte)1);
+            InputSystem.QueueDeltaStateEvent(head.trackingState, 3);
+            yield return new WaitForSeconds(.3f);
+            Assert.That(origin.transform.position.y, Is.InRange(-.05f, .05f), "The rig starts at the floor instead of falling from a raised root");
+            Assert.That(camera.transform.position.y-origin.transform.position.y, Is.InRange(1.5f,1.8f));
+            if(origin.CurrentTrackingOriginMode == TrackingOriginModeFlags.Floor)
+                Assert.That(origin.CameraFloorOffsetObject.transform.localPosition.y, Is.Zero, "Floor tracking must not add a second eye height");
+            var rig=origin.gameObject;
+            var rightPose=rig.GetComponentsInChildren<TrackedPoseDriver>(true).Single(t=>t.name=="Right Controller");
+            QueueController(right,rightPose.transform.parent.InverseTransformPoint(camera.transform.position-Vector3.up*.2f),
+                Quaternion.Inverse(rightPose.transform.parent.rotation)*Quaternion.LookRotation(Vector3.up));
+            yield return new WaitForSeconds(.3f);
+            var curve=rightPose.GetComponentInChildren<CurveVisualController>(true);
+            Assert.That(curve.isActiveAndEnabled,Is.True);
+            Assert.That(curve.lineRenderer.enabled,Is.True,"A controller aiming away from the menu must still show a usable UI ray");
+            var manager=rig.GetComponent<InputActionManager>();
+            manager.DisableInput();
+            yield return null;yield return null;
+            AssertActions(rig);
+            var ui=Object.FindObjectOfType<MainMenuUI>();
+            var button=ui.GetComponentsInChildren<Button>(true).Single(b=>b.name=="Button_MainMenu_OpenZeroing");
+            yield return ClickWithController(button,camera);
+            Assert.That(GameMain.Instance.Services.Router.Current,Is.EqualTo(ScreenId.ZeroingBriefing),"The real tracked trigger must route the main-menu button");
         }
 
         [UnityTest] public IEnumerator Screen18_21_VrActionsAndTrackedPosesSurviveUrbanLoadAndReturn()

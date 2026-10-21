@@ -263,21 +263,21 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
-        public IEnumerator Bdd06_HorizontalFractionalMean_ShowsWholeClicksAcrossZero()
+        public IEnumerator Bdd06_Oct07_HorizontalFractionalMean_PreservesFractionalClicks()
         {
             yield return OpenHudAndCompleteRoundAt(new Vector3(-3.1f, 12f, 100f));
             var sessionId = services.TrainingSessions.Current.SessionId;
             var initial = services.Zeroing.CompleteRound(sessionId).Data;
             var clicks = initial.ProposedCorrectionCm.x / ZeroingRules.CmPerRearSightClick;
-            Assert.That(clicks, Is.EqualTo(Mathf.Round(clicks)));
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Not.Contain("."));
+            Assert.That(clicks, Is.EqualTo(-initial.AverageOffsetCm.x / 2f).Within(.001f));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain("."));
             for (var i = 0; i < 12; i++)
             {
                 FindButton("Button_ZeroingImpactAnalysis_HorizontalMinus").onClick.Invoke();
                 yield return null;
                 var current = services.Zeroing.CompleteRound(sessionId).Data;
                 Assert.That(current.ProposedCorrectionCm.x, Is.EqualTo(initial.ProposedCorrectionCm.x - (i + 1) * 2f));
-                Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Not.Contain("."));
+                Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain("."));
                 Assert.That(current.ProposedCorrectionCm.y, Is.EqualTo(initial.ProposedCorrectionCm.y));
             }
         }

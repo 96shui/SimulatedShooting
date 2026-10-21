@@ -34,6 +34,18 @@ namespace SimulatedShooting.Scene
         public float RearGrabRadius => rearGrabRadius;
         public float FrontGrabRadius => frontGrabRadius;
         public bool PickupPromptVisible => pickupPrompt != null && pickupPrompt.activeSelf;
+        public bool FrontHandInteractionLocked { get; private set; }
+
+        // Release only the support hand; the right hand keeps the rifle and UI interactors stay active.
+        public void SetFrontHandInteractionLocked(bool locked)
+        {
+            if (FrontHandInteractionLocked == locked) return;
+            FrontHandInteractionLocked = locked;
+            if (!locked || interactionManager == null) return;
+            for (var i = interactorsSelecting.Count - 1; i >= 0; i--)
+                if (interactorsSelecting[i].handedness == InteractorHandedness.Left)
+                    interactionManager.SelectCancel(interactorsSelecting[i], this);
+        }
 
         protected override void Awake()
         {
@@ -139,6 +151,7 @@ namespace SimulatedShooting.Scene
 
         public override bool IsHoverableBy(IXRHoverInteractor interactor)
         {
+            if (FrontHandInteractionLocked && interactor.handedness == InteractorHandedness.Left) return false;
             if (interactor is IXRSelectInteractor selecting && interactorsSelecting.Contains(selecting))
             {
                 return base.IsHoverableBy(interactor);
@@ -149,6 +162,7 @@ namespace SimulatedShooting.Scene
 
         public override bool IsSelectableBy(IXRSelectInteractor interactor)
         {
+            if (FrontHandInteractionLocked && interactor.handedness == InteractorHandedness.Left) return false;
             if (interactorsSelecting.Contains(interactor))
             {
                 return base.IsSelectableBy(interactor);
@@ -179,7 +193,7 @@ namespace SimulatedShooting.Scene
                 case InteractorHandedness.Right:
                     return !RearHandSelected && IsWithinRadius(handPosition, RearAttach, rearGrabRadius);
                 case InteractorHandedness.Left:
-                    return RearHandSelected && !FrontHandSelected &&
+                    return !FrontHandInteractionLocked && RearHandSelected && !FrontHandSelected &&
                            IsWithinRadius(handPosition, FrontAttach, frontGrabRadius);
                 default:
                     return false;

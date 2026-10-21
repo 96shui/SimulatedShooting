@@ -6,6 +6,7 @@ namespace SimulatedShooting.Scene
     public sealed class CombatExplosionVfx : MonoBehaviour
     {
         const string AtlasResourcePath = "Combat/VFX/GrenadeBlast/Explosion01-nofire_5x5";
+        const string BlastAudioResourcePath = "Combat/Audio/GrenadeExplosion_Heavy";
         const float FireballSeconds = 0.78f;
         static Sprite[] fireballFrames;
         public float Lifetime = 1.2f;
@@ -44,13 +45,13 @@ namespace SimulatedShooting.Scene
             renderer.renderMode = ParticleSystemRenderMode.Stretch;
             renderer.lengthScale = 1.3f;
             flash = gameObject.AddComponent<Light>(); flash.type = LightType.Point; flash.color = new Color(1f,.86f,.68f); flash.intensity = 5f; flash.range = 6f;
-            sound = gameObject.AddComponent<AudioSource>(); sound.spatialBlend = 1f; sound.minDistance = 2f; sound.maxDistance = 28f; sound.playOnAwake = false;
-            var clip = AudioClip.Create("GrenadeExplosionProcedural", 22050 / 2, 1, 22050, false);
-            var samples = new float[22050 / 2];
-            var noise = new System.Random(7319);
-            var low = 0f;
-            for (var i=0;i<samples.Length;i++) { var t=i/(float)samples.Length; low=Mathf.Lerp(low,(float)noise.NextDouble()*2f-1f,.14f); var envelope=Mathf.Exp(-8f*t); samples[i]=(low*.75f+Mathf.Sin(i*.012f)*.25f)*envelope*.65f; }
-            clip.SetData(samples,0); sound.clip=clip; sound.Play();
+            sound = gameObject.AddComponent<AudioSource>();
+            sound.spatialBlend = 1f; sound.minDistance = 12f; sound.maxDistance = 100f;
+            sound.rolloffMode = AudioRolloffMode.Linear; sound.volume = 1f; sound.priority = 16;
+            sound.playOnAwake = false; sound.loop = false; sound.dopplerLevel = 0f;
+            sound.clip = Resources.Load<AudioClip>(BlastAudioResourcePath);
+            if (sound.clip != null) sound.Play();
+            else Debug.LogError("Missing heavy grenade explosion audio: " + BlastAudioResourcePath, this);
             particles.Play();
         }
 
@@ -72,8 +73,12 @@ namespace SimulatedShooting.Scene
                 }
             }
             flash.intensity = Mathf.Lerp(5f, 0f, Mathf.Clamp01(age / .07f));
-            if (age >= Lifetime) Destroy(gameObject);
+            flash.enabled = age < .07f;
+            var audioLifetime = sound != null && sound.clip != null ? sound.clip.length / sound.pitch + .1f : 0f;
+            if (age >= Mathf.Max(Lifetime, audioLifetime)) Destroy(gameObject);
         }
+
+        void OnDisable() { if (sound != null) sound.Stop(); }
 
         static void EnsureFireballFrames()
         {
