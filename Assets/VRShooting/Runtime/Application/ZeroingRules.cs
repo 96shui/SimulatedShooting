@@ -217,8 +217,8 @@ namespace VRShooting.Application
             }
 
             return verticalOffsetCm > 0f
-                ? VerticalAdjustmentDirection.Clockwise
-                : VerticalAdjustmentDirection.CounterClockwise;
+                ? VerticalAdjustmentDirection.CounterClockwise
+                : VerticalAdjustmentDirection.Clockwise;
         }
 
         public static HorizontalAdjustmentDirection ResolveHorizontalDirection(float horizontalOffsetCm)

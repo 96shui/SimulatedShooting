@@ -102,7 +102,7 @@ namespace VRShooting.Application
             if (axis == ZeroingAdjustmentAxis.Horizontal)
                 correction.x = Mathf.Clamp(correction.x + direction * ZeroingRules.CmPerRearSightClick, -50f, 50f);
             else
-                correction.y = Mathf.Clamp(correction.y + direction * ZeroingRules.CmPerFrontSightDegree, -50f, 50f);
+                correction.y += direction * ZeroingRules.CmPerFrontSightDegree;
             record.PendingCorrectionCm = correction;
             return ServiceResult<ZeroingRoundAnalysisDto>.Ok(CompleteRoundInternal(record, false));
         }
@@ -130,8 +130,11 @@ namespace VRShooting.Application
 
             if (!analysis.AdjustmentApplied)
             {
-                record.CurrentAdjustment = ZeroingRules.ApplyCorrection(record.CurrentAdjustment, analysis.ProposedCorrectionCm);
-                record.FixedImpactOffsetCm += analysis.ProposedCorrectionCm;
+                // c57823f records mechanical adjustment without rewriting the fixed shot bias.
+                // Manual overrides are retained only to support the existing UI controls.
+                record.CurrentAdjustment = record.PendingCorrectionCm.HasValue
+                    ? ZeroingRules.ApplyCorrection(record.CurrentAdjustment, analysis.ProposedCorrectionCm)
+                    : ZeroingRules.ApplyAdjustment(record.CurrentAdjustment, analysis);
                 record.AppliedRounds.Add(roundIndex);
                 analysis = record.BuildAnalysis();
                 record.UpsertAnalysis(analysis);

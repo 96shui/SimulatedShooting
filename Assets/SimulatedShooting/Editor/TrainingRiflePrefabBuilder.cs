@@ -142,7 +142,7 @@ namespace SimulatedShooting.Editor
             rearGrip.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Grip.RearHand";
             var frontGrip = CreateAnchor("Grip_training-rifle_FrontHand", visualRoot, QbzFrontGripPosition);
             frontGrip.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Grip.FrontHand";
-            var muzzle = CreateAnchor("Muzzle_training-rifle", recoilRoot, new Vector3(0.006f, -0.004f, 0.451f));
+            var muzzle = CreateAnchor("Muzzle_training-rifle", recoilRoot, new Vector3(-0.0057595f, -0.004324f, 0.452702f));
             muzzle.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.Muzzle";
             var aimLine = CreateAnchor("AimLine_training-rifle", recoilRoot, new Vector3(0.006f, 0.047f, -0.118f));
             aimLine.gameObject.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.AimLine";

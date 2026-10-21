@@ -54,9 +54,10 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
-        public void ResolveVerticalDirection_BiasDown_UsesCounterClockwise()
+        public void September25_VerticalSuggestionUsesArchivedDirections()
         {
-            Assert.AreEqual(VerticalAdjustmentDirection.CounterClockwise, ZeroingRules.ResolveVerticalDirection(-3f));
+            Assert.AreEqual(VerticalAdjustmentDirection.Clockwise, ZeroingRules.ResolveVerticalDirection(-3f));
+            Assert.AreEqual(VerticalAdjustmentDirection.CounterClockwise, ZeroingRules.ResolveVerticalDirection(3f));
         }
 
         [Test]
@@ -87,6 +88,15 @@ namespace VRShooting.Tests.EditMode.Application
 
             Assert.AreEqual(-8f, aim.x, 0.01f);
             Assert.AreEqual(12f, aim.y, 0.01f);
+        }
+
+        [Test]
+        public void September25_RayProjectionRetainsArchivedDistanceConvention()
+        {
+            var origin = new Vector3(.2f, .4f, 3f);
+            var aim = ZeroingRules.ResolveAimPointFromRay(origin, new Vector3(.3f, -.2f, 97f), 100f);
+            Assert.That(aim.x, Is.EqualTo(50.927834f).Within(.001f));
+            Assert.That(aim.y, Is.EqualTo(19.381443f).Within(.001f));
         }
     }
 }

@@ -1,0 +1,820 @@
+{
+  "date": "2026-10-21",
+  "restoredBaseline": "c57823fe132ddca38d5ebc716ce497ce9ec42495",
+  "scope": "Restore the previously completed c57823f checkpoint; preserve current UI/chest and the verified muzzle alignment. Later physical-zeroing, random-bias and half-click changes removed.",
+  "controllerByteForByteMatch": true,
+  "all28HistoricalMethodsMatch": true,
+  "protectedFilesUnchanged": 69,
+  "totalPassed": 68,
+  "groups": {
+    "EditMode": {
+      "job_id": "aba119db14404ac9b1da5bcf1262d0cb",
+      "status": "succeeded",
+      "mode": "EditMode",
+      "started_unix_ms": 1792596731645,
+      "finished_unix_ms": 1792596737422,
+      "last_update_unix_ms": 1792596737422,
+      "progress": {
+        "completed": 38,
+        "total": 325,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1792596737156,
+        "last_finished_test_full_name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.WeaponShotResultEvent_RecordsShotUsingTargetOffsetConvention",
+        "last_finished_unix_ms": 1792596737157,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "EditMode",
+        "summary": {
+          "total": 38,
+          "passed": 38,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 1.7430526,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(\"Assets/Scenes/ZeroingRangeScene.unity\")",
+            "fullName": "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(\"Assets/Scenes/ZeroingRangeScene.unity\")",
+            "state": "Passed",
+            "durationSeconds": 0.1803053,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(\"Assets/Scenes/MovingTargetRangeScene.unity\")",
+            "fullName": "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(\"Assets/Scenes/MovingTargetRangeScene.unity\")",
+            "state": "Passed",
+            "durationSeconds": 0.0782945,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "SharedPrefabMuzzleMatchesActualMeshOpening",
+            "fullName": "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SharedPrefabMuzzleMatchesActualMeshOpening",
+            "state": "Passed",
+            "durationSeconds": 0.0136648,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ComputeFinalGrade_MapsPassedRoundToGrade",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeFinalGrade_MapsPassedRoundToGrade",
+            "state": "Passed",
+            "durationSeconds": 0.005114,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ComputeFrontSightDegrees_UsesCeilingAnd064CmPerDegree",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeFrontSightDegrees_UsesCeilingAnd064CmPerDegree",
+            "state": "Passed",
+            "durationSeconds": 0.001535,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ComputeRearSightClicks_UsesCeilingAndTwoCmPerClick",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeRearSightClicks_UsesCeilingAndTwoCmPerClick",
+            "state": "Passed",
+            "durationSeconds": 0.0004126,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GenerateFixedOffset_DifferentSeeds_ProduceDifferentOffsets",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.GenerateFixedOffset_DifferentSeeds_ProduceDifferentOffsets",
+            "state": "Passed",
+            "durationSeconds": 0.0010784,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GenerateFixedOffset_FixedSeed_IsReproducible",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.GenerateFixedOffset_FixedSeed_IsReproducible",
+            "state": "Passed",
+            "durationSeconds": 0.0002773,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GenerateFixedOffset_IsInsideTargetOutsideTenRing",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.GenerateFixedOffset_IsInsideTargetOutsideTenRing",
+            "state": "Passed",
+            "durationSeconds": 0.0007179,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ResolveAimPointFromWeaponShot_UsesTargetOffsetConvention",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ResolveAimPointFromWeaponShot_UsesTargetOffsetConvention",
+            "state": "Passed",
+            "durationSeconds": 0.0010732,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ResolveHorizontalDirection_BiasRight_UsesBackward",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ResolveHorizontalDirection_BiasRight_UsesBackward",
+            "state": "Passed",
+            "durationSeconds": 0.000248,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "September25_RayProjectionRetainsArchivedDistanceConvention",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.September25_RayProjectionRetainsArchivedDistanceConvention",
+            "state": "Passed",
+            "durationSeconds": 0.0009546,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "September25_VerticalSuggestionUsesArchivedDirections",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.September25_VerticalSuggestionUsesArchivedDirections",
+            "state": "Passed",
+            "durationSeconds": 0.0003108,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "AdjustImpactPoint_RejectsIncompleteOrAppliedRoundAndInvalidDirection",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.AdjustImpactPoint_RejectsIncompleteOrAppliedRoundAndInvalidDirection",
+            "state": "Passed",
+            "durationSeconds": 0.0218472,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ApplyAdjustment_IsIdempotentForSameRound",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ApplyAdjustment_IsIdempotentForSameRound",
+            "state": "Passed",
+            "durationSeconds": 0.0012992,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Bdd06_VerticalAdjustmentCanContinueForMultipleTurnsAndApplyOnce(-1)",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalAdjustmentCanContinueForMultipleTurnsAndApplyOnce(-1)",
+            "state": "Passed",
+            "durationSeconds": 0.010259,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Bdd06_VerticalAdjustmentCanContinueForMultipleTurnsAndApplyOnce(1)",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalAdjustmentCanContinueForMultipleTurnsAndApplyOnce(1)",
+            "state": "Passed",
+            "durationSeconds": 0.0059306,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Bdd06_VerticalAdjustmentDoesNotTruncateALargeSuggestedAngle(64.0f,-1)",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalAdjustmentDoesNotTruncateALargeSuggestedAngle(64.0f,-1)",
+            "state": "Passed",
+            "durationSeconds": 0.0033179,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "Bdd06_VerticalAdjustmentDoesNotTruncateALargeSuggestedAngle(-64.0f,1)",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalAdjustmentDoesNotTruncateALargeSuggestedAngle(-64.0f,1)",
+            "state": "Passed",
+            "durationSeconds": 0.000846,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CompleteRound_BeforeThreeShots_ReturnsInvalidState",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.CompleteRound_BeforeThreeShots_ReturnsInvalidState",
+            "state": "Passed",
+            "durationSeconds": 0.0008759,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "CompleteRound_CalculatesOffsetDirectionsAndAdjustmentAmounts",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.CompleteRound_CalculatesOffsetDirectionsAndAdjustmentAmounts",
+            "state": "Passed",
+            "durationSeconds": 0.0016096,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ContinueAfterAnalysis_StartsNextRound_ResetsShotsToThree",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ContinueAfterAnalysis_StartsNextRound_ResetsShotsToThree",
+            "state": "Passed",
+            "durationSeconds": 0.0049151,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "ContinueAfterAnalysis_WithoutApply_ReturnsInvalidState",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ContinueAfterAnalysis_WithoutApply_ReturnsInvalidState",
+            "state": "Passed",
+            "durationSeconds": 0.0005793,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GetFinalResult_AllRoundsFail_ReturnsFail",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_AllRoundsFail_ReturnsFail",
+            "state": "Passed",
+            "durationSeconds": 0.0029998,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GetFinalResult_PassRound1_ReturnsExcellent",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound1_ReturnsExcellent",
+            "state": "Passed",
+            "durationSeconds": 0.0004547,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GetFinalResult_PassRound2_ReturnsGood",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound2_ReturnsGood",
+            "state": "Passed",
+            "durationSeconds": 0.000561,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GetFinalResult_PassRound3_ReturnsPass",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound3_ReturnsPass",
+            "state": "Passed",
+            "durationSeconds": 0.000496,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "GetSession_NotFound_ReturnsNotFound",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetSession_NotFound_ReturnsNotFound",
+            "state": "Passed",
+            "durationSeconds": 0.0003113,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RecordShot_AcceptsUpToThreeShotsPerRound",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_AcceptsUpToThreeShotsPerRound",
+            "state": "Passed",
+            "durationSeconds": 0.0003239,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RecordShot_AllInsideTenRing_PassedTenRingTrue",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_AllInsideTenRing_PassedTenRingTrue",
+            "state": "Passed",
+            "durationSeconds": 0.000366,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "RecordShot_FourthShot_ReturnsInvalidState",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_FourthShot_ReturnsInvalidState",
+            "state": "Passed",
+            "durationSeconds": 0.0004966,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "September25_ManualPreviewKeepsUiButApplyRetainsArchivedFixedOffset",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.September25_ManualPreviewKeepsUiButApplyRetainsArchivedFixedOffset",
+            "state": "Passed",
+            "durationSeconds": 0.0011951,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "StartSession_FixedSeed_ProducesReproducibleOffset",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.StartSession_FixedSeed_ProducesReproducibleOffset",
+            "state": "Passed",
+            "durationSeconds": 0.0016684,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(1,Excellent)",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(1,Excellent)",
+            "state": "Passed",
+            "durationSeconds": 0.000909,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(2,Good)",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(2,Good)",
+            "state": "Passed",
+            "durationSeconds": 0.0003189,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(3,Pass)",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(3,Pass)",
+            "state": "Passed",
+            "durationSeconds": 0.0003096,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(0,Fail)",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(0,Fail)",
+            "state": "Passed",
+            "durationSeconds": 0.000271,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          },
+          {
+            "name": "WeaponShotResultEvent_RecordsShotUsingTargetOffsetConvention",
+            "fullName": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.WeaponShotResultEvent_RecordsShotUsingTargetOffsetConvention",
+            "state": "Passed",
+            "durationSeconds": 0.0012919,
+            "message": null,
+            "stackTrace": null,
+            "output": ""
+          }
+        ]
+      }
+    },
+    "PlayMode": {
+      "job_id": "7feb0b55c44f4c71b85017a9eebfac0f",
+      "status": "succeeded",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792596752408,
+      "finished_unix_ms": 1792596769972,
+      "last_update_unix_ms": 1792596769972,
+      "progress": {
+        "completed": 23,
+        "total": 325,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1792596769534,
+        "last_finished_test_full_name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto",
+        "last_finished_unix_ms": 1792596769806,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 23,
+          "passed": 23,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 14.4335511,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,0.0f)",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,0.0f)",
+            "state": "Passed",
+            "durationSeconds": 1.0426813,
+            "message": null,
+            "stackTrace": null,
+            "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+          },
+          {
+            "name": "Bdd06_CentralTargetPhysicalHitAndCentimetres(20.0f,0.0f)",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(20.0f,0.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.6686921,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+          },
+          {
+            "name": "Bdd06_CentralTargetPhysicalHitAndCentimetres(-20.0f,0.0f)",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(-20.0f,0.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.4573759,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+          },
+          {
+            "name": "Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,20.0f)",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,20.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.49571,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+          },
+          {
+            "name": "Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,-20.0f)",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,-20.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.4690823,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+          },
+          {
+            "name": "September25_CentralAimKeepsPhysicalHitsAndArchivedAdjustmentBookkeeping",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_CentralAimKeepsPhysicalHitsAndArchivedAdjustmentBookkeeping",
+            "state": "Passed",
+            "durationSeconds": 0.8013488,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nFirst mean=(-3.17, -21.11); correction=(3.17, 21.11); next mean=(-3.17, -21.11); service ten-ring=False; visible next-round ten-ring=True\r\n"
+          },
+          {
+            "name": "September25_ManualPreviewDoesNotMovePhysicalBulletHoles",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_ManualPreviewDoesNotMovePhysicalBulletHoles",
+            "state": "Passed",
+            "durationSeconds": 0.6679736,
+            "message": null,
+            "stackTrace": null,
+            "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          },
+          {
+            "name": "September25_OffFaceSnapshotUsesArchivedPhysicalHit(40.0f,0.0f)",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_OffFaceSnapshotUsesArchivedPhysicalHit(40.0f,0.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.4741691,
+            "message": null,
+            "stackTrace": null,
+            "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+          },
+          {
+            "name": "September25_OffFaceSnapshotUsesArchivedPhysicalHit(0.0f,40.0f)",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_OffFaceSnapshotUsesArchivedPhysicalHit(0.0f,40.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.4640068,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+          },
+          {
+            "name": "September25_OffFaceSnapshotUsesArchivedPhysicalHit(0.0f,-40.0f)",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_OffFaceSnapshotUsesArchivedPhysicalHit(0.0f,-40.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.4603204,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+          },
+          {
+            "name": "September25_ShotAndTracerUseFrozenActualMuzzlePosition(0.0f,0.0f,0.0f)",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_ShotAndTracerUseFrozenActualMuzzlePosition(0.0f,0.0f,0.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.4493396,
+            "message": null,
+            "stackTrace": null,
+            "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+          },
+          {
+            "name": "September25_ShotAndTracerUseFrozenActualMuzzlePosition(8.0f,25.0f,15.0f)",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_ShotAndTracerUseFrozenActualMuzzlePosition(8.0f,25.0f,15.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.4995716,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+          },
+          {
+            "name": "September25_ShotAndTracerUseFrozenActualMuzzlePosition(-12.0f,-20.0f,-30.0f)",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_ShotAndTracerUseFrozenActualMuzzlePosition(-12.0f,-20.0f,-30.0f)",
+            "state": "Passed",
+            "durationSeconds": 0.4682234,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+          },
+          {
+            "name": "Bdd06_LargeSuggestedFrontSightAngleRemainsAdjustableInUi",
+            "fullName": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_LargeSuggestedFrontSightAngleRemainsAdjustableInUi",
+            "state": "Passed",
+            "durationSeconds": 0.28853,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          },
+          {
+            "name": "Bdd06_Oct07_HorizontalFractionalMean_PreservesFractionalClicks",
+            "fullName": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_Oct07_HorizontalFractionalMean_PreservesFractionalClicks",
+            "state": "Passed",
+            "durationSeconds": 0.7123497,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          },
+          {
+            "name": "Bdd06_VerticalLongHoldRepeatsOneDegreeAtConstantSpeedAndReleaseDoesNotAddClick",
+            "fullName": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_VerticalLongHoldRepeatsOneDegreeAtConstantSpeedAndReleaseDoesNotAddClick",
+            "state": "Passed",
+            "durationSeconds": 2.8006545,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          },
+          {
+            "name": "Screen06_ApplyAdjustmentUpdatesStateAndNextRoundReturnsToHud",
+            "fullName": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ApplyAdjustmentUpdatesStateAndNextRoundReturnsToHud",
+            "state": "Passed",
+            "durationSeconds": 0.3384127,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          },
+          {
+            "name": "Screen06_BackToMainMenuButtonReturnsToMainMenu",
+            "fullName": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_BackToMainMenuButtonReturnsToMainMenu",
+            "state": "Passed",
+            "durationSeconds": 0.3273903,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          },
+          {
+            "name": "Screen06_HelpOwnsAllTipsAndResetsOnNextRound",
+            "fullName": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_HelpOwnsAllTipsAndResetsOnNextRound",
+            "state": "Passed",
+            "durationSeconds": 0.6065231,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          },
+          {
+            "name": "Screen06_ManualAxisButtonsPreviewAndCommitCorrection",
+            "fullName": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ManualAxisButtonsPreviewAndCommitCorrection",
+            "state": "Passed",
+            "durationSeconds": 0.3687921,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          },
+          {
+            "name": "Screen06_OneDegreeMovesBlueMarkerVerticallyWithoutChangingHorizontal",
+            "fullName": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_OneDegreeMovesBlueMarkerVerticallyWithoutChangingHorizontal",
+            "state": "Passed",
+            "durationSeconds": 0.315533,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          },
+          {
+            "name": "Screen06_ThirdRoundPrimaryActionOpensFinalRating",
+            "fullName": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThirdRoundPrimaryActionOpensFinalRating",
+            "state": "Passed",
+            "durationSeconds": 0.4205329,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          },
+          {
+            "name": "Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto",
+            "fullName": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto",
+            "state": "Passed",
+            "durationSeconds": 0.2722833,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          }
+        ]
+      }
+    },
+    "SharedWeaponAndP2": {
+      "job_id": "a100d4be8e874140ac3a4faa604c2018",
+      "status": "succeeded",
+      "mode": "PlayMode",
+      "started_unix_ms": 1792596796257,
+      "finished_unix_ms": 1792596805500,
+      "last_update_unix_ms": 1792596805500,
+      "progress": {
+        "completed": 7,
+        "total": 241,
+        "current_test_full_name": null,
+        "current_test_started_unix_ms": 1792596804495,
+        "last_finished_test_full_name": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_ValidShotPlaysOneFeedbackStackAndArrivesAtRecordedImpact",
+        "last_finished_unix_ms": 1792596805319,
+        "stuck_suspected": false,
+        "editor_is_focused": false,
+        "blocked_reason": null,
+        "failures_so_far": [],
+        "failures_capped": false
+      },
+      "error": null,
+      "result": {
+        "mode": "PlayMode",
+        "summary": {
+          "total": 7,
+          "passed": 7,
+          "failed": 0,
+          "skipped": 0,
+          "durationSeconds": 6.1551642,
+          "resultState": "Passed"
+        },
+        "results": [
+          {
+            "name": "P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore",
+            "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore",
+            "state": "Passed",
+            "durationSeconds": 1.498598,
+            "message": null,
+            "stackTrace": null,
+            "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          },
+          {
+            "name": "P2_RealComposition_RunsPickupCountdownVisualResultAndRetry",
+            "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RealComposition_RunsPickupCountdownVisualResultAndRetry",
+            "state": "Passed",
+            "durationSeconds": 0.645375,
+            "message": null,
+            "stackTrace": null,
+            "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          },
+          {
+            "name": "P2_RealTrigger_QuickTapFiresTwo_ForbiddenHoldDoesNotResume",
+            "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RealTrigger_QuickTapFiresTwo_ForbiddenHoldDoesNotResume",
+            "state": "Passed",
+            "durationSeconds": 1.3115964,
+            "message": null,
+            "stackTrace": null,
+            "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          },
+          {
+            "name": "P2_RetryRequiresFreshPickup_AndReenabledControllerReceivesInput",
+            "fullName": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RetryRequiresFreshPickup_AndReenabledControllerReceivesInput",
+            "state": "Passed",
+            "durationSeconds": 0.6090007,
+            "message": null,
+            "stackTrace": null,
+            "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          },
+          {
+            "name": "Task005_InvalidShotProducesNoAudioTracerOrImpactFeedback",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_InvalidShotProducesNoAudioTracerOrImpactFeedback",
+            "state": "Passed",
+            "durationSeconds": 0.5589669,
+            "message": null,
+            "stackTrace": null,
+            "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+          },
+          {
+            "name": "Task005_NoVrFirstPersonWeaponFiresVisibleTracerAndTargetImpact",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_NoVrFirstPersonWeaponFiresVisibleTracerAndTargetImpact",
+            "state": "Passed",
+            "durationSeconds": 0.4720418,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+          },
+          {
+            "name": "Task005_ValidShotPlaysOneFeedbackStackAndArrivesAtRecordedImpact",
+            "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_ValidShotPlaysOneFeedbackStackAndArrivesAtRecordedImpact",
+            "state": "Passed",
+            "durationSeconds": 0.8240534,
+            "message": null,
+            "stackTrace": null,
+            "output": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+          }
+        ]
+      }
+    }
+  },
+  "console": {
+    "success": true,
+    "message": "Retrieved 12 log entries.",
+    "data": [
+      {
+        "type": "Log",
+        "message": "<b><color=#2EA3FF>MCP-FOR-UNITY</color></b>: [TestRunnerNoThrottle] Applied No Throttling for test run.",
+        "file": "./Library/PackageCache/com.coplaydev.unity-mcp@11836003a5/Editor/Helpers/McpLog.cs",
+        "line": 40,
+        "stackTrace": "UnityEngine.Debug:Log (object)\nMCPForUnity.Editor.Helpers.McpLog:Info (string,bool) (at ./Library/PackageCache/com.coplaydev.unity-mcp@11836003a5/Editor/Helpers/McpLog.cs:40)\nMCPForUnity.Editor.Services.TestRunnerNoThrottle:ApplyNoThrottling () (at ./Library/PackageCache/com.coplaydev.unity-mcp@11836003a5/Editor/Services/TestRunnerNoThrottle.cs:101)\nMCPForUnity.Editor.Services.TestRunnerNoThrottle/TestCallbacks:RunStarted (UnityEditor.TestTools.TestRunner.Api.ITestAdaptor) (at ./Library/PackageCache/com.coplaydev.unity-mcp@11836003a5/Editor/Services/TestRunnerNoThrottle.cs:138)\nUnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)"
+      },
+      {
+        "type": "Error",
+        "message": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.",
+        "file": "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Scripts/GazeInputManager.cs",
+        "line": 55,
+        "stackTrace": "UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager:Awake ()\nSimulatedShooting.Scene.ZeroingRangeXRModeController:ApplyMode (bool,bool) (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:107)\nSimulatedShooting.Scene.ZeroingRangeXRModeController:Awake () (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:36)"
+      },
+      {
+        "type": "Log",
+        "message": "[GameStateManager] 状态初始化为: InGame",
+        "file": "Assets/VRShooting/Runtime/Application/GameStateManager.cs",
+        "line": 42,
+        "stackTrace": "UnityEngine.Debug:Log (object)\nVRShooting.Application.GameStateManager:Init () (at Assets/VRShooting/Runtime/Application/GameStateManager.cs:42)\nVRShooting.Infrastructure.BaseManager`1<VRShooting.Application.GameStateManager>:get_Instance () (at Assets/VRShooting/Runtime/Infrastructure/BaseManager.cs:17)\nVRShooting.Unity.Bootstrap.GameMain:InitManagers () (at Assets/VRShooting/Runtime/Unity/Bootstrap/GameMain.cs:50)\nVRShooting.Unity.Bootstrap.GameMain:Awake () (at Assets/VRShooting/Runtime/Unity/Bootstrap/GameMain.cs:40)\nUnityEngine.GameObject:AddComponent<VRShooting.Unity.Bootstrap.GameMain> ()\nSimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests/<SetUp>d__0:MoveNext () (at Assets/SimulatedShooting/Tests/PlayMode/MovingTargetRangeIntegrationTests.cs:32)\nUnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)"
+      },
+      {
+        "type": "Warning",
+        "message": "There are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.",
+        "file": "",
+        "line": 0,
+        "stackTrace": null
+      },
+      {
+        "type": "Error",
+        "message": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.",
+        "file": "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Scripts/GazeInputManager.cs",
+        "line": 55,
+        "stackTrace": "UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager:Awake ()\nSimulatedShooting.Scene.ZeroingRangeXRModeController:ApplyMode (bool,bool) (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:107)\nSimulatedShooting.Scene.ZeroingRangeXRModeController:Awake () (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:36)"
+      },
+      {
+        "type": "Error",
+        "message": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.",
+        "file": "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Scripts/GazeInputManager.cs",
+        "line": 55,
+        "stackTrace": "UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager:Awake ()\nSimulatedShooting.Scene.ZeroingRangeXRModeController:ApplyMode (bool,bool) (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:107)\nSimulatedShooting.Scene.ZeroingRangeXRModeController:Awake () (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:36)"
+      },
+      {
+        "type": "Error",
+        "message": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.",
+        "file": "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Scripts/GazeInputManager.cs",
+        "line": 55,
+        "stackTrace": "UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager:Awake ()\nSimulatedShooting.Scene.ZeroingRangeXRModeController:ApplyMode (bool,bool) (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:107)\nSimulatedShooting.Scene.ZeroingRangeXRModeController:Awake () (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:36)"
+      },
+      {
+        "type": "Error",
+        "message": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.",
+        "file": "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Scripts/GazeInputManager.cs",
+        "line": 55,
+        "stackTrace": "UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager:Awake ()\nSimulatedShooting.Scene.ZeroingRangeXRModeController:ApplyMode (bool,bool) (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:107)\nSimulatedShooting.Scene.ZeroingRangeXRModeController:Awake () (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:36)"
+      },
+      {
+        "type": "Log",
+        "message": "[GameStateManager] 状态初始化为: InGame",
+        "file": "Assets/VRShooting/Runtime/Application/GameStateManager.cs",
+        "line": 42,
+        "stackTrace": "UnityEngine.Debug:Log (object)\nVRShooting.Application.GameStateManager:Init () (at Assets/VRShooting/Runtime/Application/GameStateManager.cs:42)\nVRShooting.Infrastructure.BaseManager`1<VRShooting.Application.GameStateManager>:get_Instance () (at Assets/VRShooting/Runtime/Infrastructure/BaseManager.cs:17)\nVRShooting.Unity.Bootstrap.GameMain:InitManagers () (at Assets/VRShooting/Runtime/Unity/Bootstrap/GameMain.cs:50)\nVRShooting.Unity.Bootstrap.GameMain:Awake () (at Assets/VRShooting/Runtime/Unity/Bootstrap/GameMain.cs:40)\nUnityEngine.GameObject:AddComponent<VRShooting.Unity.Bootstrap.GameMain> ()\nSimulatedShooting.Scene.ZeroingRangeSessionBootstrap:EnsureServices () (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeSessionBootstrap.cs:63)\nSimulatedShooting.Scene.ZeroingRangeSessionBootstrap:Awake () (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeSessionBootstrap.cs:29)\nUnityEngine.GameObject:AddComponent<SimulatedShooting.Scene.ZeroingRangeSessionBootstrap> ()\nSimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests:EnsureBootstrap () (at Assets/SimulatedShooting/Tests/PlayMode/ZeroingRangeSceneTests.cs:45)\nSimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests/<LoadScene>d__0:MoveNext () (at Assets/SimulatedShooting/Tests/PlayMode/ZeroingRangeSceneTests.cs:32)\nUnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)"
+      },
+      {
+        "type": "Error",
+        "message": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.",
+        "file": "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Scripts/GazeInputManager.cs",
+        "line": 55,
+        "stackTrace": "UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager:Awake ()\nSimulatedShooting.Scene.ZeroingRangeXRModeController:ApplyMode (bool,bool) (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:107)\nSimulatedShooting.Scene.ZeroingRangeXRModeController:Awake () (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:36)"
+      },
+      {
+        "type": "Error",
+        "message": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.",
+        "file": "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Scripts/GazeInputManager.cs",
+        "line": 55,
+        "stackTrace": "UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager:Awake ()\nSimulatedShooting.Scene.ZeroingRangeXRModeController:ApplyMode (bool,bool) (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:107)\nSimulatedShooting.Scene.ZeroingRangeXRModeController:Awake () (at Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeXRModeController.cs:36)"
+      },
+      {
+        "type": "Log",
+        "message": "<b><color=#2EA3FF>MCP-FOR-UNITY</color></b>: [TestRunnerNoThrottle] Restored Interaction Mode after test run.",
+        "file": "./Library/PackageCache/com.coplaydev.unity-mcp@11836003a5/Editor/Helpers/McpLog.cs",
+        "line": 40,
+        "stackTrace": "UnityEngine.Debug:Log (object)\nMCPForUnity.Editor.Helpers.McpLog:Info (string,bool) (at ./Library/PackageCache/com.coplaydev.unity-mcp@11836003a5/Editor/Helpers/McpLog.cs:40)\nMCPForUnity.Editor.Services.TestRunnerNoThrottle:RestoreThrottling () (at ./Library/PackageCache/com.coplaydev.unity-mcp@11836003a5/Editor/Services/TestRunnerNoThrottle.cs:114)\nMCPForUnity.Editor.Services.TestRunnerNoThrottle/TestCallbacks:RunFinished (UnityEditor.TestTools.TestRunner.Api.ITestResultAdaptor) (at ./Library/PackageCache/com.coplaydev.unity-mcp@11836003a5/Editor/Services/TestRunnerNoThrottle.cs:143)\nUnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)"
+      }
+    ]
+  },
+  "vrHardwareVerified": false,
+  "backup": ".git/codex-backups/before-push-c578-checkpoint"
+}

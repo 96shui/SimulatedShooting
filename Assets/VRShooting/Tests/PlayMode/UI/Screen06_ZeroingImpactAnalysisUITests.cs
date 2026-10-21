@@ -75,7 +75,7 @@ namespace VRShooting.Tests.PlayMode.UI
             FindButton("Button_ZeroingImpactAnalysis_Help").onClick.Invoke();
             AssertHelpVisible(true);
             Assert.That(FindText("Text_ZeroingImpactAnalysis_Suggestion").text, Does.Contain("调整1度约0.064厘米"));
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("顺时针"));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("逆时针"));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain("觇孔"));
         }
 
@@ -231,6 +231,53 @@ namespace VRShooting.Tests.PlayMode.UI
 
             Assert.AreEqual(ScreenId.MainMenu, services.Router.Current);
             Assert.IsTrue(FindById("Screen_MainMenu").activeSelf);
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd06_VerticalLongHoldRepeatsOneDegreeAtConstantSpeedAndReleaseDoesNotAddClick()
+        {
+            yield return OpenHudAndCompleteRound();
+            var id = services.TrainingSessions.Current.SessionId;
+            var before = services.Zeroing.CompleteRound(id).Data.PreviewAverageOffsetCm;
+            var button = FindButton("Button_ZeroingImpactAnalysis_VerticalPlus");
+            var repeating = button.GetComponent<RepeatingAdjustmentButton>();
+            var pointer = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current);
+            repeating.OnPointerDown(pointer);
+            yield return new WaitForSecondsRealtime(2.25f);
+            repeating.OnPointerUp(pointer);
+            var held = services.Zeroing.CompleteRound(id).Data.PreviewAverageOffsetCm;
+            Assert.That(held.y - before.y, Is.GreaterThan(.064f));
+            Assert.That(held.y - before.y, Is.LessThan(3f),
+                "Long hold must keep the original one-degree step, without switching to five or fifteen degrees.");
+            Assert.That(held.x, Is.EqualTo(before.x));
+            button.onClick.Invoke();
+            yield return new WaitForSecondsRealtime(.2f);
+            Assert.That(services.Zeroing.CompleteRound(id).Data.PreviewAverageOffsetCm, Is.EqualTo(held),
+                "Pointer release must not add a step or keep repeating.");
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd06_LargeSuggestedFrontSightAngleRemainsAdjustableInUi()
+        {
+            yield return OpenHudAndCompleteRoundAt(new Vector3(-8f, 80f, 100f));
+            var id = services.TrainingSessions.Current.SessionId;
+            var before = services.Zeroing.CompleteRound(id).Data;
+            Assert.That(before.FrontSightDegreesToAdjust, Is.GreaterThan(781f));
+            var button = FindButton("Button_ZeroingImpactAnalysis_VerticalMinus");
+            for (var i = 0; i < 20; i++)
+            {
+                Assert.That(button.interactable, Is.True);
+                button.onClick.Invoke();
+            }
+            var after = services.Zeroing.CompleteRound(id).Data;
+            Assert.That(after.ProposedCorrectionCm.y,
+                Is.EqualTo(before.ProposedCorrectionCm.y - 20f * .064f).Within(.002f));
+            var degrees = Mathf.Abs(after.ProposedCorrectionCm.y / ZeroingRules.CmPerFrontSightDegree)
+                .ToString("0", System.Globalization.CultureInfo.InvariantCulture);
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionY").text, Does.Contain(degrees));
+            Assert.That(button.interactable, Is.True);
+            FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment").onClick.Invoke();
+            Assert.That(button.interactable, Is.False, "Only committing the adjustment should lock this round.");
         }
 
         [UnityTest]

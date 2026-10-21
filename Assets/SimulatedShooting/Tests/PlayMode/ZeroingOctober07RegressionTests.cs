@@ -15,7 +15,7 @@ using VRShooting.Unity.Weapons;
 
 namespace SimulatedShooting.Tests.PlayMode
 {
-    // BDD06 October 7 rollback, P1 task006/task012/task013.
+    // BDD06: physical zeroing from the c57823f base, current chest target/UI.
     // Uses the saved scene and real snapshot/raycast/fire/record path, not injected hit coordinates.
     public sealed class ZeroingOctober07RegressionTests
     {
@@ -83,18 +83,87 @@ namespace SimulatedShooting.Tests.PlayMode
         {
             var offset = services.Zeroing.GetSession(controller.SessionId).Data.FixedImpactOffsetCm;
             var input = AimAndSnapshot(xCm, yCm);
-            Assert.That(input.Hit, Is.True, $"Central target missed: muzzle={input.MuzzlePosition}, direction={input.AimDirection}, hit={input.HitPoint}");
-            Assert.That(input.HitPoint.x, Is.EqualTo(xCm).Within(.02f));
-            Assert.That(input.HitPoint.y, Is.EqualTo(yCm).Within(.02f));
+            var expected = new Vector2(xCm, yCm);
+            var onFace = true;
+            Assert.That(input.Hit, Is.EqualTo(onFace));
+            Assert.That(input.HitPoint.x, Is.EqualTo(expected.x).Within(.02f));
+            Assert.That(input.HitPoint.y, Is.EqualTo(expected.y).Within(.02f));
+            Assert.That(Physics.Raycast(input.MuzzlePosition, input.AimDirection, out var physical, 150f), Is.True);
             Assert.That(services.WeaponControl.Fire(input).Success, Is.True);
-            Assert.That(target.Impacts.Count, Is.EqualTo(1));
-            Assert.That(Vector2.Distance(target.Impacts[0].OffsetCm, new Vector2(xCm, yCm)), Is.LessThan(.03f));
+            Assert.That(target.Impacts.Count, Is.EqualTo(onFace ? 1 : 0));
+            if (onFace)
+                Assert.That(Vector2.Distance(target.Impacts[0].OffsetCm, expected), Is.LessThan(.03f));
             Assert.That(recorded.Count, Is.EqualTo(1));
             Assert.That(Vector2.Distance(recorded[0].ImpactPointCm, new Vector2(xCm, yCm) + offset), Is.LessThan(.03f));
+            var tracer = Object.FindObjectOfType<BallisticTracerVisual>();
+            Assert.That(tracer, Is.Not.Null);
+            var end = (Vector3)typeof(BallisticTracerVisual)
+                .GetField("end", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(tracer);
+            Assert.That(Vector3.Distance(end, physical.point), Is.LessThan(.0003f),
+                "The archived tracer must end at the physical raycast hit.");
+        }
+
+        [TestCase(40f, 0f)]
+        [TestCase(0f, 40f)]
+        [TestCase(0f, -40f)]
+        public void September25_OffFaceSnapshotUsesArchivedPhysicalHit(float xCm, float yCm)
+        {
+            var input = AimAndSnapshot(xCm, yCm);
+            Assert.That(input.Hit, Is.False);
+            var hit = Physics.Raycast(input.MuzzlePosition, input.AimDirection, out var physical, 150f);
+            var expected = hit ? physical.point : input.MuzzlePosition + input.AimDirection * ZeroingRules.DistanceMeters;
+            Assert.That(Vector3.Distance(input.HitPoint, expected), Is.LessThan(.0003f));
+        }
+
+        [TestCase(0f, 0f, 0f)]
+        [TestCase(8f, 25f, 15f)]
+        [TestCase(-12f, -20f, -30f)]
+        public void September25_ShotAndTracerUseFrozenActualMuzzlePosition(float pitch, float yaw, float roll)
+        {
+            weapon.transform.SetPositionAndRotation(new Vector3(.3f, 1.4f, .5f), Quaternion.Euler(pitch, yaw, roll));
+            weapon.RecoilRoot.localRotation = Quaternion.Euler(-2f, 1f, 3f);
+            Physics.SyncTransforms();
+            var snapshot = (WeaponFireInputDto)typeof(FirstPersonTrainingWeaponController)
+                .GetMethod("BuildFireSnapshot", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(controller, null);
+            var muzzle = weapon.MuzzlePoint.position;
+            Assert.That(Vector3.Distance(snapshot.MuzzlePosition, muzzle), Is.LessThan(.00001f));
+            Assert.That(Vector3.Distance(snapshot.AimDirection, weapon.AimLinePoint.forward.normalized), Is.LessThan(.00001f));
+            Assert.That(services.WeaponControl.Fire(snapshot).Success, Is.True);
+            weapon.transform.position += Vector3.right;
+            Assert.That(Vector3.Distance(controller.LastShotMuzzlePosition, muzzle), Is.LessThan(.00001f));
+            var tracer = Object.FindObjectOfType<BallisticTracerVisual>();
+            var start = (Vector3)typeof(BallisticTracerVisual)
+                .GetField("start", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(tracer);
+            Assert.That(Vector3.Distance(start, muzzle), Is.LessThan(.00001f),
+                "Moving the weapon after firing must not move the recorded bullet origin.");
         }
 
         [UnityTest]
-        public IEnumerator Bdd06_CentralAimDefaultAdjustmentNextRoundThreeTenRingHits()
+        public IEnumerator September25_ManualPreviewDoesNotMovePhysicalBulletHoles()
+        {
+            var id = controller.SessionId;
+            for (var i = 0; i < 3; i++)
+            {
+                Assert.That(services.WeaponControl.Fire(AimAndSnapshot(0, 0)).Success, Is.True);
+                yield return null;
+            }
+            Assert.That(services.Zeroing.AdjustImpactPoint(id, 1, ZeroingAdjustmentAxis.Horizontal, 1).Success, Is.True);
+            for (var i = 0; i < 100; i++)
+                Assert.That(services.Zeroing.AdjustImpactPoint(id, 1, ZeroingAdjustmentAxis.Vertical, 1).Success, Is.True);
+            var before = services.Zeroing.CompleteRound(id).Data;
+            var preview = before.PreviewAverageOffsetCm;
+            Assert.That(preview.x, Is.EqualTo(2f).Within(.001f));
+            Assert.That(preview.y, Is.EqualTo(6.4f).Within(.01f));
+            Assert.That(services.Zeroing.ApplyAdjustment(id, 1).Success, Is.True);
+            Assert.That(services.Presentation.ContinueNextRound(id).Success, Is.True);
+            Assert.That(services.WeaponControl.Fire(AimAndSnapshot(0, 0)).Success, Is.True);
+            Assert.That(Vector2.Distance(recorded.Last().ImpactPointCm, before.AverageOffsetCm), Is.LessThan(.03f));
+            Assert.That(target.Impacts.Last().OffsetCm.magnitude, Is.LessThan(.03f));
+            Assert.That(recorded.Last().InsideTenRing, Is.False, "Do not force an off-centre shot into the ten ring.");
+        }
+
+        [UnityTest]
+        public IEnumerator September25_CentralAimKeepsPhysicalHitsAndArchivedAdjustmentBookkeeping()
         {
             var id = controller.SessionId;
             for (var i = 0; i < 3; i++)
@@ -121,10 +190,17 @@ namespace SimulatedShooting.Tests.PlayMode
             var next = services.Zeroing.CompleteRound(id).Data;
             Assert.That(next.RoundIndex, Is.EqualTo(2));
             Assert.That(next.Shots.Count, Is.EqualTo(3));
-            Assert.That(next.Shots.All(s => s.InsideTenRing), Is.True);
-            Assert.That(next.PassedTenRing, Is.True);
+            Assert.That(next.PassedTenRing, Is.False);
+            Assert.That(Vector2.Distance(next.AverageOffsetCm, analysis.AverageOffsetCm), Is.LessThan(.03f));
             Assert.That(target.Impacts.Count, Is.EqualTo(6));
+            Assert.That(target.Impacts.Skip(3).All(s => s.InsideTenRing), Is.True,
+                "The archived physical hits remain where the gun was aimed.");
+            TestContext.WriteLine($"First mean={analysis.AverageOffsetCm}; correction={analysis.ProposedCorrectionCm}; " +
+                $"next mean={next.AverageOffsetCm}; service ten-ring={next.PassedTenRing}; " +
+                $"visible next-round ten-ring={target.Impacts.Skip(3).All(s => s.InsideTenRing)}");
         }
+
+
 
     }
 }

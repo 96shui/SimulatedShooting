@@ -48,7 +48,7 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.AreEqual(3, analysis.Data.Shots.Count);
             Assert.AreEqual(-8f, analysis.Data.AverageOffsetCm.x, 0.01f);
             Assert.AreEqual(12f, analysis.Data.AverageOffsetCm.y, 0.01f);
-            Assert.AreEqual(VerticalAdjustmentDirection.Clockwise, analysis.Data.VerticalDirection);
+            Assert.AreEqual(VerticalAdjustmentDirection.CounterClockwise, analysis.Data.VerticalDirection);
             Assert.AreEqual(HorizontalAdjustmentDirection.Forward, analysis.Data.HorizontalDirection);
             Assert.AreEqual(188f, analysis.Data.FrontSightDegreesToAdjust, 0.01f);
             Assert.AreEqual(4, analysis.Data.RearSightClicksToAdjust);
@@ -76,7 +76,7 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
-        public void AdjustImpactPoint_UsesSeparateAxesAndAffectsNextRoundOnce()
+        public void September25_ManualPreviewKeepsUiButApplyRetainsArchivedFixedOffset()
         {
             // BDD 06: three-shot mean is immutable; player moves only the pending correction.
             var session = StartZeroingSession();
@@ -100,14 +100,14 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.IsTrue(applied.Success, applied.Message);
             Assert.IsTrue(duplicate.Success, duplicate.Message);
             Assert.AreEqual(new Vector2(10f, -12.064f), applied.Data.ProposedCorrectionCm);
-            Assert.AreEqual(originalOffset + new Vector2(10f, -12.064f),
+            Assert.AreEqual(originalOffset,
                 zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm);
             Assert.IsTrue(zeroing.ContinueAfterAnalysis(session.SessionId).Success);
 
             var sameAim = new Vector2(-8f, 12f) - originalOffset;
             var nextShot = RecordImpact(session.SessionId, sameAim);
             Assert.IsTrue(nextShot.Success, nextShot.Message);
-            Assert.That(Vector2.Distance(new Vector2(2f, -.064f), nextShot.Data.ImpactPointCm), Is.LessThan(.001f));
+            Assert.That(Vector2.Distance(new Vector2(-8f, 12f), nextShot.Data.ImpactPointCm), Is.LessThan(.001f));
         }
 
         [Test]
@@ -122,6 +122,43 @@ namespace VRShooting.Tests.EditMode.Application
             zeroing.ApplyAdjustment(session.SessionId, 1);
             var applied = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Horizontal, 1);
             Assert.AreEqual(ErrorCode.InvalidState, applied.ErrorCode);
+        }
+
+        [TestCase(64f, -1)]
+        [TestCase(-64f, 1)]
+        public void Bdd06_VerticalAdjustmentDoesNotTruncateALargeSuggestedAngle(float biasCm, int direction)
+        {
+            var session = StartZeroingSession();
+            RecordThreeImpacts(session.SessionId, new Vector2(0f, biasCm));
+            var before = zeroing.CompleteRound(session.SessionId).Data;
+            Assert.That(before.FrontSightDegreesToAdjust, Is.GreaterThan(780f));
+            var step = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Vertical, direction);
+            Assert.That(step.Success, Is.True);
+            Assert.That(step.Data.ProposedCorrectionCm.y,
+                Is.EqualTo(before.ProposedCorrectionCm.y + direction * .064f).Within(.001f),
+                "One degree must remain one degree, even beyond the former 50cm cutoff.");
+            Assert.That(step.Data.ProposedCorrectionCm.x, Is.EqualTo(before.ProposedCorrectionCm.x));
+        }
+
+        [TestCase(-1)]
+        [TestCase(1)]
+        public void Bdd06_VerticalAdjustmentCanContinueForMultipleTurnsAndApplyOnce(int direction)
+        {
+            var session = StartZeroingSession();
+            RecordThreeImpacts(session.SessionId, new Vector2(-8f, 12f));
+            var before = zeroing.CompleteRound(session.SessionId).Data;
+            for (var i = 0; i < 1600; i++)
+                Assert.That(zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Vertical, direction).Success, Is.True);
+            var adjusted = zeroing.CompleteRound(session.SessionId).Data;
+            Assert.That(adjusted.ProposedCorrectionCm.y,
+                Is.EqualTo(before.ProposedCorrectionCm.y + direction * 1600f * .064f).Within(.01f));
+            Assert.That(adjusted.ProposedCorrectionCm.x, Is.EqualTo(before.ProposedCorrectionCm.x));
+            Assert.That(adjusted.AverageOffsetCm, Is.EqualTo(before.AverageOffsetCm));
+            Assert.That(zeroing.ApplyAdjustment(session.SessionId, 1).Success, Is.True);
+            var applied = zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm;
+            Assert.That(zeroing.ApplyAdjustment(session.SessionId, 1).Success, Is.True);
+            Assert.That(zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm, Is.EqualTo(applied));
+            Assert.That(applied.y, Is.EqualTo(session.FixedImpactOffsetCm.y).Within(.001f));
         }
 
         [Test]
