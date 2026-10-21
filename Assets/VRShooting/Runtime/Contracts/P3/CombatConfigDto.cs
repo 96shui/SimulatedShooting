@@ -70,6 +70,9 @@ namespace VRShooting.Common
             InitialAmmo = new AmmoDto { CurrentMagazine = 30, ReserveAmmo = 60, MagazineCapacity = 30 }
         };
 
+        public static CombatConfigDto ForMode(TrainingMode mode)
+            => mode == TrainingMode.Trench ? Default.WithPlayerHealth(10f) : Default;
+
         public ServiceResult<Unit> Validate()
         {
             if (!Positive(PlayerHealth)) return Invalid(nameof(PlayerHealth));

@@ -270,14 +270,17 @@ namespace SimulatedShooting.Tests.PlayMode
                 Assert.That(Quaternion.Angle(Quaternion.Inverse(rightPose.transform.rotation)*rifle.transform.rotation,heldRotation),Is.LessThan(.5f));
             }
             var hands=rig.GetComponentsInChildren<VRControllerHandVisual>();
+            var flags=System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic;
+            var handRender=typeof(VRControllerHandVisual).GetMethod("UpdateBeforeRender",flags);
+            // Coroutine resumes before LateUpdate: sample the baseline at the same
+            // real render phase as the comparison, not a one-frame-old visual pose.
+            foreach(var hand in hands)handRender.Invoke(hand,null);
             var gripOffsets=hands.Select(h=>h.GripAnchor.InverseTransformPoint(h.transform.position)).ToArray();
             // Simulate an origin change after Dynamic update and run Unity's real render callbacks.
             rig.transform.position+=rig.transform.forward*.03f;
-            var flags=System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic;
             // Invoke the production XRI/hand callbacks without re-entering native input updates in the test runner.
             var managerRender=typeof(UnityEngine.XR.Interaction.Toolkit.XRInteractionManager).GetMethod("OnBeforeRender",flags);
             managerRender.Invoke(rifle.interactionManager,null);
-            var handRender=typeof(VRControllerHandVisual).GetMethod("UpdateBeforeRender",flags);
             var order=(BeforeRenderOrderAttribute)System.Attribute.GetCustomAttribute(handRender,typeof(BeforeRenderOrderAttribute));
             Assert.That(order.order,Is.GreaterThan(UnityEngine.XR.Interaction.Toolkit.XRInteractionUpdateOrder.k_BeforeRenderOrder));
             foreach(var hand in hands)handRender.Invoke(hand,null);
@@ -289,20 +292,27 @@ namespace SimulatedShooting.Tests.PlayMode
             var aimRotation=heldCamera.transform.rotation;
             var rearTarget=heldCamera.transform.position+heldCamera.transform.forward*.45f-heldCamera.transform.up*.18f+heldCamera.transform.right*.1f;
             var gripDelta=rifle.transform.InverseTransformDirection(rifle.FrontAttach.position-rifle.RearAttach.position);
-            var frontTarget=rearTarget+aimRotation*heldOffset+(aimRotation*heldRotation)*gripDelta;
-            QueueController(right,rightPose.transform.parent.InverseTransformPoint(rearTarget),Quaternion.Inverse(rightPose.transform.parent.rotation)*aimRotation);
+            // Account for the rack-pickup rotation/attachment offset: aim the actual
+            // rifle forward, rather than keeping its former sideways rack orientation.
+            var controllerRotation=aimRotation*Quaternion.Inverse(heldRotation);
+            var controllerPosition=rearTarget-controllerRotation*heldOffset;
+            var frontTarget=rearTarget+aimRotation*gripDelta;
+            QueueController(right,rightPose.transform.parent.InverseTransformPoint(controllerPosition),Quaternion.Inverse(rightPose.transform.parent.rotation)*controllerRotation);
             QueueController(left,leftPose.transform.parent.InverseTransformPoint(frontTarget),Quaternion.Inverse(leftPose.transform.parent.rotation)*aimRotation);
             yield return new WaitForSeconds(.15f);
             Assert.That(rifle.RearHandSelected&&rifle.FrontHandSelected,Is.True,"Raising to aim must keep both grips");
             foreach(var hand in hands)
             {
                 var renderer=hand.ModelRoot.GetComponentsInChildren<Renderer>().First(r=>r.enabled&&!r.forceRenderingOff&&r.gameObject.activeInHierarchy);
-                var point=heldCamera.WorldToViewportPoint(renderer.bounds.center);
+                // Approved forearms extend below the frame. The palm must be visible,
+                // and the real skinned mesh must intersect the HMD frustum.
+                var point=heldCamera.WorldToViewportPoint(hand.transform.position);
+                Assert.That(GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(heldCamera),renderer.bounds),Is.True);
                 Assert.That(point.z,Is.GreaterThan(heldCamera.nearClipPlane),"Hand must be in front of the HMD near plane");
                 Assert.That(point.x,Is.InRange(0f,1f),"Human hand must be in the HMD horizontal view");
                 Assert.That(point.y,Is.InRange(0f,1f),"Human hand must be in the HMD vertical view");
             }
-            PresentationEvidence.Capture(heldCamera,"VR-human-hands-"+rifle.gameObject.scene.name);
+            PresentationEvidence.Capture(heldCamera,"VR-human-hands-"+rifle.gameObject.scene.name,"Logs/range-assist-evidence");
         }
 
         [UnityTest] public IEnumerator Screen14_18_TrackedTriggerClicksMapsAndBriefingAcrossRigHandoff()

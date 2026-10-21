@@ -12,7 +12,8 @@ namespace VRShooting.Application.Combat
     public sealed class CombatCoreService : ICombatCoreService
     {
         readonly ICombatClock clock;
-        readonly CombatConfigDto config;
+        CombatConfigDto config;
+        readonly bool hasExplicitConfig;
         readonly WeaponControlService weapons = new WeaponControlService();
         readonly List<Enemy> enemies = new List<Enemy>();
         readonly Dictionary<string, Enemy> enemyById = new Dictionary<string, Enemy>(StringComparer.Ordinal);
@@ -42,6 +43,7 @@ namespace VRShooting.Application.Combat
         {
             this.clock = clock ?? throw new ArgumentNullException(nameof(clock));
             this.config = config ?? CombatConfigDto.Default;
+            hasExplicitConfig = config.HasValue;
             if (!this.config.Validate().Success) throw new ArgumentException("Invalid combat configuration", nameof(config));
         }
 
@@ -64,6 +66,7 @@ namespace VRShooting.Application.Combat
                 if (string.IsNullOrWhiteSpace(spawn.EntityId) || spawn.EntityId == sessionId + ".player" || !ids.Add(spawn.EntityId) ||
                     spawn.Role != CombatEntityRole.Enemy || !Finite(spawn.Position) || !ValidDirection(spawn.Forward))
                     return Fail<CombatCoreSnapshotDto>(ErrorCode.InvalidInput);
+            if (!hasExplicitConfig) config = CombatConfigDto.ForMode(mode);
             weapons.ReleaseSession(session);
             session = sessionId; playerId = session + ".player"; sessionIds.Add(session);
             weapons.StartSession(session, WeaponControlService.TrainingRifleId, mode);

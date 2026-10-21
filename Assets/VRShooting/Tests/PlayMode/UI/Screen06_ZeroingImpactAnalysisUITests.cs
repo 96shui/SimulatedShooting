@@ -75,7 +75,7 @@ namespace VRShooting.Tests.PlayMode.UI
             FindButton("Button_ZeroingImpactAnalysis_Help").onClick.Invoke();
             AssertHelpVisible(true);
             Assert.That(FindText("Text_ZeroingImpactAnalysis_Suggestion").text, Does.Contain("调整1度约0.064厘米"));
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("逆时针"));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("顺时针"));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain("觇孔"));
         }
 
@@ -136,7 +136,7 @@ namespace VRShooting.Tests.PlayMode.UI
                 foreach(var text in zeroingRangeUi.GetComponentsInChildren<TMP_Text>())text.ForceMeshUpdate();
                 camera.Render();RenderTexture.active=target;
                 texture.ReadPixels(new Rect(0,0,1920,1080),0,0);texture.Apply();
-                var folder=System.IO.Path.Combine(UnityEngine.Application.dataPath,"../Temp/GoalRepair/images");
+                var folder=System.IO.Path.Combine(UnityEngine.Application.dataPath,"../Logs/range-assist-evidence");
                 System.IO.Directory.CreateDirectory(folder);
                 System.IO.File.WriteAllBytes(System.IO.Path.Combine(folder,name+".png"),texture.EncodeToPNG());
             }
@@ -185,6 +185,9 @@ namespace VRShooting.Tests.PlayMode.UI
             var preview = services.Zeroing.CompleteRound(sessionId).Data;
             Assert.AreEqual(before.AverageOffsetCm, preview.AverageOffsetCm);
             Assert.AreEqual(before.ProposedCorrectionCm + new Vector2(2f, -.064f), preview.ProposedCorrectionCm);
+            var clicks = Mathf.Abs(preview.ProposedCorrectionCm.x / 2f).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture);
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain(clicks), "Help must show the current pending clicks, not the original rounded suggestion.");
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("顺时针"), "Help and the actual pending downward correction must agree.");
             Assert.That(FindText("Text_ZeroingImpactAnalysis_PreviewAverage").text, Does.Contain("预览"));
             var averageMarker = FindById("Image_ZeroingImpactAnalysis_AverageCenter");
             var previewMarker = FindById("Image_ZeroingImpactAnalysis_AdjustedCenter");
@@ -365,7 +368,8 @@ namespace VRShooting.Tests.PlayMode.UI
                 AimMode = WeaponAimMode.AimDownSights,
                 ShoulderSide = ShoulderSide.Right,
                 Hit = true,
-                HitPoint = hitPoint,
+                // The UI fixture supplies target centimetres; the current range sentinel is 25m.
+                HitPoint = new Vector3(hitPoint.x, hitPoint.y, 25f),
                 HitObjectId = "Target_100m"
             });
 

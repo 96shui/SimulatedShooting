@@ -145,9 +145,9 @@ namespace SimulatedShooting.Tests.PlayMode
 
     internal static class PresentationEvidence
     {
-        internal static void Capture(Camera camera,string name)
+        internal static void Capture(Camera camera,string name,string outputDirectory=null)
         {
-            var output=System.IO.Path.Combine(Application.dataPath,"../Temp/GoalRepair/images");
+            var output=outputDirectory??System.IO.Path.Combine(Application.dataPath,"../Temp/GoalRepair/images");
             System.IO.Directory.CreateDirectory(output);
             var target=new RenderTexture(1280,960,24);
             var texture=new Texture2D(1280,960,TextureFormat.RGB24,false);

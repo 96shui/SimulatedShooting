@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -23,12 +25,20 @@ namespace SimulatedShooting.Scene
         Quaternion rackRotation;
         bool rackPoseCaptured;
         bool isOnRack = true;
+        bool transferringHands;
+        HashSet<IXRSelectInteractor> previousSelectors;
+        Vector3 rightShoulderVisualScale;
+        bool visualScaleCaptured;
+
+        public ShoulderSide Shoulder { get; private set; } = ShoulderSide.Right;
+        public InteractorHandedness RearHandedness => Shoulder == ShoulderSide.Left ? InteractorHandedness.Left : InteractorHandedness.Right;
+        public InteractorHandedness FrontHandedness => Shoulder == ShoulderSide.Left ? InteractorHandedness.Right : InteractorHandedness.Left;
 
         public event Action<WeaponHoldState, bool, bool> HoldStateChanged;
 
         public WeaponHoldState HoldState => ResolveHoldState();
-        public bool RearHandSelected => HasSelectingHand(InteractorHandedness.Right);
-        public bool FrontHandSelected => HasSelectingHand(InteractorHandedness.Left);
+        public bool RearHandSelected => HasSelectingHand(RearHandedness);
+        public bool FrontHandSelected => HasSelectingHand(FrontHandedness);
         public Transform RearAttach => weaponBinding != null ? weaponBinding.RearHandGrip : attachTransform;
         public Transform FrontAttach => weaponBinding != null ? weaponBinding.FrontHandGrip : secondaryAttachTransform;
         public float RearGrabRadius => rearGrabRadius;
@@ -43,7 +53,7 @@ namespace SimulatedShooting.Scene
             FrontHandInteractionLocked = locked;
             if (!locked || interactionManager == null) return;
             for (var i = interactorsSelecting.Count - 1; i >= 0; i--)
-                if (interactorsSelecting[i].handedness == InteractorHandedness.Left)
+                if (interactorsSelecting[i].handedness == FrontHandedness)
                     interactionManager.SelectCancel(interactorsSelecting[i], this);
         }
 
@@ -106,6 +116,47 @@ namespace SimulatedShooting.Scene
             SyncAttachTransforms();
         }
 
+        public void SetShoulder(ShoulderSide shoulder)
+        {
+            if (Shoulder == shoulder) return;
+            weaponBinding ??= GetComponent<WeaponPrefabBinding>();
+            if (!visualScaleCaptured && weaponBinding != null && weaponBinding.VisualRoot != null)
+            {
+                rightShoulderVisualScale = weaponBinding.VisualRoot.localScale;
+                visualScaleCaptured = true;
+            }
+            var selected = interactorsSelecting.ToArray();
+            previousSelectors = new HashSet<IXRSelectInteractor>(selected);
+            transferringHands = true;
+            try
+            {
+                if (interactionManager != null)
+                    foreach (var interactor in selected) interactionManager.SelectCancel(interactor, this);
+                Shoulder = shoulder;
+                if (visualScaleCaptured)
+                {
+                    var scale = rightShoulderVisualScale;
+                    if (shoulder == ShoulderSide.Left) scale.x = -scale.x;
+                    weaponBinding.VisualRoot.localScale = scale;
+                }
+                VRHandPresentation.ApplyShoulder(this, shoulder);
+                // Re-enter rear first: XRI's primary selection must follow the new trigger hand.
+                var rear = selected.FirstOrDefault(i => i.handedness == RearHandedness);
+                var front = selected.FirstOrDefault(i => i.handedness == FrontHandedness);
+                if (interactionManager != null && rear != null)
+                {
+                    interactionManager.SelectEnter(rear, this);
+                    if (front != null && !FrontHandInteractionLocked) interactionManager.SelectEnter(front, this);
+                }
+            }
+            finally
+            {
+                transferringHands = false;
+                previousSelectors = null;
+            }
+            PublishHoldState();
+        }
+
         public void CaptureRackPose()
         {
             rackPosition = transform.position;
@@ -146,12 +197,13 @@ namespace SimulatedShooting.Scene
                     interactionManager.SelectCancel(interactorsSelecting[interactorsSelecting.Count - 1], this);
                 }
             }
+            SetShoulder(ShoulderSide.Right);
             ReturnToRack();
         }
 
         public override bool IsHoverableBy(IXRHoverInteractor interactor)
         {
-            if (FrontHandInteractionLocked && interactor.handedness == InteractorHandedness.Left) return false;
+            if (FrontHandInteractionLocked && interactor.handedness == FrontHandedness) return false;
             if (interactor is IXRSelectInteractor selecting && interactorsSelecting.Contains(selecting))
             {
                 return base.IsHoverableBy(interactor);
@@ -162,7 +214,9 @@ namespace SimulatedShooting.Scene
 
         public override bool IsSelectableBy(IXRSelectInteractor interactor)
         {
-            if (FrontHandInteractionLocked && interactor.handedness == InteractorHandedness.Left) return false;
+            if (FrontHandInteractionLocked && interactor.handedness == FrontHandedness) return false;
+            if (transferringHands && previousSelectors != null && previousSelectors.Contains(interactor))
+                return base.IsSelectableBy(interactor);
             if (interactorsSelecting.Contains(interactor))
             {
                 return base.IsSelectableBy(interactor);
@@ -173,12 +227,12 @@ namespace SimulatedShooting.Scene
 
         public override Transform GetAttachTransform(IXRInteractor interactor)
         {
-            if (interactor != null && interactor.handedness == InteractorHandedness.Left && FrontAttach != null)
+            if (interactor != null && interactor.handedness == FrontHandedness && FrontAttach != null)
             {
                 return FrontAttach;
             }
 
-            if (interactor != null && interactor.handedness == InteractorHandedness.Right && RearAttach != null)
+            if (interactor != null && interactor.handedness == RearHandedness && RearAttach != null)
             {
                 return RearAttach;
             }
@@ -188,22 +242,18 @@ namespace SimulatedShooting.Scene
 
         public bool IsHandAllowed(InteractorHandedness handedness, Vector3 handPosition)
         {
-            switch (handedness)
-            {
-                case InteractorHandedness.Right:
-                    return !RearHandSelected && IsWithinRadius(handPosition, RearAttach, rearGrabRadius);
-                case InteractorHandedness.Left:
-                    return !FrontHandInteractionLocked && RearHandSelected && !FrontHandSelected &&
-                           IsWithinRadius(handPosition, FrontAttach, frontGrabRadius);
-                default:
-                    return false;
-            }
+            if (handedness == RearHandedness)
+                return !RearHandSelected && IsWithinRadius(handPosition, RearAttach, rearGrabRadius);
+            if (handedness == FrontHandedness)
+                return !FrontHandInteractionLocked && RearHandSelected && !FrontHandSelected &&
+                    IsWithinRadius(handPosition, FrontAttach, frontGrabRadius);
+            return false;
         }
 
         protected override void OnHoverEntered(HoverEnterEventArgs args)
         {
             base.OnHoverEntered(args);
-            if (args.interactorObject.handedness == InteractorHandedness.Right && !RearHandSelected)
+            if (args.interactorObject.handedness == RearHandedness && !RearHandSelected)
             {
                 SetPromptVisible(true);
             }
@@ -234,10 +284,10 @@ namespace SimulatedShooting.Scene
 
         protected override void OnSelectExited(SelectExitEventArgs args)
         {
-            var releasedRearHand = args.interactorObject.handedness == InteractorHandedness.Right;
+            var releasedRearHand = args.interactorObject.handedness == RearHandedness;
             base.OnSelectExited(args);
 
-            if (releasedRearHand && interactionManager != null)
+            if (releasedRearHand && !transferringHands && interactionManager != null)
             {
                 for (var index = interactorsSelecting.Count - 1; index >= 0; index--)
                 {
@@ -299,6 +349,7 @@ namespace SimulatedShooting.Scene
 
         void PublishHoldState()
         {
+            if (transferringHands) return;
             HoldStateChanged?.Invoke(ResolveHoldState(), RearHandSelected, FrontHandSelected);
         }
 

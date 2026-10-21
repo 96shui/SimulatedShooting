@@ -46,30 +46,46 @@ namespace VRShooting.Input
                 return Fail(ErrorCode.InvalidInput);
             var query = core.GetSnapshot(session); if (!query.Success) return Fail(query.ErrorCode);
             lastFrame = clock.Tick;
-            var pressed = input.TriggerHeld && !triggerWasHeld;
-            triggerWasHeld = input.TriggerHeld;
+            (input as IShoulderAwareTrainingInput)?.SetShoulder(query.Data.Player.Shoulder);
             bool tracking = frame.HeadTracked && frame.RearHandTracked && frame.FrontHandTracked;
             var result = core.SetTracking(session, tracking); if (!result.Success) return result;
             bool active = tracking && query.Data.State == SessionState.Running && query.Data.Player.IsAlive;
             if (!active)
             {
+                triggerWasHeld = input.TriggerHeld;
                 rearHeld = frontHeld = false; turnLatched = Math.Abs(input.TurnAxis.x) > .2f;
                 var stopped = locomotion.Apply(CombatLocomotionPolicy.Intent(mode, false, query.Data.Player.Posture,
                     Vector2.zero, 0, frame.IsRealVr, deltaSeconds, config));
                 if (!stopped.Success) return stopped;
                 return core.Advance(session);
             }
-            if (!input.RightGripHeld) rearHeld = false;
-            if (input.RightGripPressed && frame.RearGripInRange) rearHeld = true;
+            var switched = input.SwitchShoulderPressed;
+            if (switched)
+            {
+                result = core.ToggleShoulder(session); if (!result.Success) return result;
+                query = core.GetSnapshot(session);
+                (input as IShoulderAwareTrainingInput)?.SetShoulder(query.Data.Player.Shoulder);
+                var previousRear = rearHeld;
+                rearHeld = frontHeld;
+                frontHeld = previousRear && rearHeld;
+            }
+            var leftShoulder = query.Data.Player.Shoulder == ShoulderSide.Left;
+            var rearGripHeld = leftShoulder ? input.LeftGripHeld : input.RightGripHeld;
+            var rearGripPressed = leftShoulder ? input.LeftGripPressed : input.RightGripPressed;
+            var frontGripHeld = leftShoulder ? input.RightGripHeld : input.LeftGripHeld;
+            var frontGripPressed = leftShoulder ? input.RightGripPressed : input.LeftGripPressed;
+            var pressed = !switched && input.TriggerHeld && !triggerWasHeld;
+            triggerWasHeld = input.TriggerHeld;
+            if (!rearGripHeld) rearHeld = false;
+            if (!switched && rearGripPressed && frame.RearGripInRange) rearHeld = true;
             var frontLocked = mode == TrainingMode.Trench && query.Data.Ammo.IsReloading;
-            if (!input.LeftGripHeld || !rearHeld || frontLocked) frontHeld = false;
-            if (!frontLocked && rearHeld && input.LeftGripPressed && frame.FrontGripInRange) frontHeld = true;
+            if (!frontGripHeld || !rearHeld || frontLocked) frontHeld = false;
+            if (!switched && !frontLocked && rearHeld && frontGripPressed && frame.FrontGripInRange) frontHeld = true;
             result = core.SetGrip(new WeaponGripStateInputDto { SessionId = session,
                 HoldState = frontHeld ? WeaponHoldState.TwoHandHeld : rearHeld ? WeaponHoldState.RearHandHeld : WeaponHoldState.Dropped,
                 RearHandTracked = rearHeld, FrontHandTracked = frontHeld, Stability01 = frontHeld ? 1 : .3f });
             if (!result.Success) return result;
             if (frame.RequestedPosture.HasValue) { result = core.SetPosture(session, frame.RequestedPosture.Value); if (!result.Success) return result; }
-            if (input.SwitchShoulderPressed) { result = core.ToggleShoulder(session); if (!result.Success) return result; }
             var player = core.GetSnapshot(session).Data.Player;
             float snap = 0;
             if (Math.Abs(input.TurnAxis.x) < .2f) turnLatched = false;

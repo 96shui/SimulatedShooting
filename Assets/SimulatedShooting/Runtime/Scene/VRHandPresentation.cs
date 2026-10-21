@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using VRShooting.Common;
 
 namespace SimulatedShooting.Scene
 {
@@ -42,6 +44,22 @@ namespace SimulatedShooting.Scene
                 var controller = hand.transform.parent.gameObject;
                 var presentation = controller.GetComponent<VRHandPresentation>() ?? controller.AddComponent<VRHandPresentation>();
                 presentation.RefreshModels();
+            }
+            if (grab != null) ApplyShoulder(grab, grab.Shoulder);
+        }
+
+        public static void ApplyShoulder(TrainingRifleGrabInteractable weapon, ShoulderSide side)
+        {
+            var hands = FindObjectsOfType<VRControllerHandVisual>(true).Where(h => h.Weapon == weapon).ToArray();
+            // Capture all home parents before moving either source hand to the other controller.
+            var homes = hands.ToDictionary(h => h, h => h.HomeControllerParent);
+            foreach (var hand in hands)
+            {
+                var home = homes[hand];
+                var partner = hands.FirstOrDefault(h => h.SourceHandSide != hand.SourceHandSide &&
+                    (homes[h] == home || home != null && homes[h] != null && homes[h].parent == home.parent));
+                var parent = side == ShoulderSide.Left && partner != null ? homes[partner] : home;
+                hand.SetShoulderPresentation(side, parent);
             }
         }
 

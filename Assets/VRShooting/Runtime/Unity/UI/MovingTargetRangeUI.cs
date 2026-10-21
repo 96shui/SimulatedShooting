@@ -185,7 +185,7 @@ namespace VRShooting.Unity.UI
             AddLabel(parent, "Text_MovingTargetSetup_Title", "移动目标射击", 52, FontStyles.Bold,
                 new Vector2(500, 225), new Vector2(1420, 315), new Color32(231, 242, 235, 255));
             AddLabel(parent, "Text_MovingTargetSetup_Rules",
-                "卧姿固定射击位  ·  两发起射 / 长按连射  ·  左端停留禁射",
+                "50m 卧姿固定射击位  ·  两发起射 / 长按连射  ·  左端停留禁射",
                 25, FontStyles.Bold, new Vector2(430, 330), new Vector2(1490, 380), new Color32(143, 217, 255, 255));
 
             var speeds = new[] { 3f, 4f, 5f };
@@ -267,7 +267,7 @@ namespace VRShooting.Unity.UI
             AddPanel(parent, "Panel_MovingTargetResults_Help", new Vector2(350, 250), new Vector2(1570, 590));
             resultHelpPanel = (RectTransform)parent.Find("Panel_MovingTargetResults_Help");
             var helpText = AddLabel(resultHelpPanel, "Text_MovingTargetResults_Help",
-                "移动射击的方法通常有两种。\n\n一是跟随射击，移动武器追随目标进行射击。\n\n二是等待射击，预判目标的移动轨迹在它的运动方向上等待经过进行射击。\n\n由于物体的运动我们需要瞄准目标的前侧才能保证命中，在一百米视距上，大约在20-30cm半个靶子的身位。",
+                "当前射击距离为50米。\n\n一是跟随射击，移动武器追随目标进行射击。\n\n二是等待射击，预判目标的移动轨迹，在它的运动方向上等待经过。\n\n根据目标速度适当前置瞄准；射击距离已缩短，不再套用原100米的固定提前量。",
                 26, FontStyles.Normal, new Vector2(30, 20), new Vector2(1190, 320),
                 new Color32(143, 217, 255, 255), TextAlignmentOptions.TopLeft);
             helpText.enableAutoSizing = true;

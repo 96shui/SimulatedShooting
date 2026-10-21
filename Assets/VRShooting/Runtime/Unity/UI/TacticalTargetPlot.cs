@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using VRShooting.Application;
 
 namespace VRShooting.Unity.UI
 {
@@ -19,7 +20,7 @@ namespace VRShooting.Unity.UI
         public static readonly Vector2 ArtworkCentreUv = new Vector2(538f/1068f,1f-638f/1051f);
         public int ImpactCount => impacts.Count;
         public const float TargetSideCm = 50f;
-        public const float TenRingDiameterCm = 10f;
+        public const float TenRingDiameterCm = ZeroingRules.TenRingRadiusCm * 2f;
         public static bool IsOnTarget(Vector2 point)
             => !float.IsNaN(point.x) && !float.IsNaN(point.y) &&
                 Mathf.Abs(point.x)<=TargetSideCm*.5f && Mathf.Abs(point.y)<=TargetSideCm*.5f;
@@ -57,6 +58,8 @@ namespace VRShooting.Unity.UI
             var rect = HitRegion(outer);
             var side = rect.width;
             Quad(vh,ArtworkRect(GetPixelAdjustedRect()),Color.white);
+            Circle(vh, rect.center, side * TenRingDiameterCm / TargetSideCm * .5f,
+                Mathf.Max(1f, side * .004f), new Color32(247, 185, 85, 255));
             foreach (var point in impacts)
             {
                 var position = MapImpactPointCm(outer, point);

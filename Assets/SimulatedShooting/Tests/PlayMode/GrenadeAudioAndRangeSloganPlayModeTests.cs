@@ -122,6 +122,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 sourceRms=Mathf.Max(sourceRms,Mathf.Sqrt(ownOutput.Average(v=>v*v)));
                 yield return null;
             }
+            Directory.CreateDirectory("Logs/grenade-slogan-repair");
             File.WriteAllText("Logs/grenade-slogan-repair/audio-playback.txt","clip="+source.clip.name+" length="+source.clip.length+
                 " listenerDistance="+Vector3.Distance(listener.transform.position,explosion.transform.position)+" outputRms="+outputRms+
                 " sourceRms="+sourceRms+" sourceTime="+source.time+" virtual="+source.isVirtual+" dspTime="+AudioSettings.dspTime+

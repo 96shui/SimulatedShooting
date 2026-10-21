@@ -3,17 +3,26 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.XR;
 using VRShooting.Input;
+using VRShooting.Common;
 
 namespace SimulatedShooting.Scene
 {
     // P3-only hardware adapter. Desktop grip toggles keep both hands available for WASD/mouse.
-    public sealed class P3XRTrainingInput : IXRTrainingInput
+    public sealed class P3XRTrainingInput : IXRTrainingInput, IShoulderAwareTrainingInput
     {
         readonly InputSystemXRTrainingInput desktop=new InputSystemXRTrainingInput();
         bool rear,front,oldRear,oldFront,oldTrigger,trigger,grenadeHeld,oldGrenadeHeld,grenadePressed;
         bool reloadHeld,oldReloadHeld,reloadPressed;
         public bool ReloadWithLeftX { get; set; } = true;
         public bool IsVr {get;private set;}
+        ShoulderSide shoulder = ShoulderSide.Right;
+        public void SetShoulder(ShoulderSide value)
+        {
+            if (shoulder == value) return;
+            shoulder = value;
+            desktop.SetShoulder(value);
+            oldTrigger = trigger = false;
+        }
         public void Sample(bool vr)
         {
             IsVr=vr; oldRear=rear;oldFront=front;oldTrigger=trigger;oldGrenadeHeld=grenadeHeld;oldReloadHeld=reloadHeld;
@@ -39,7 +48,7 @@ namespace SimulatedShooting.Scene
             }
             trigger=desktop.TriggerHeld;
         }
-        public void Reset() { rear=front=oldRear=oldFront=oldTrigger=trigger=grenadeHeld=oldGrenadeHeld=grenadePressed=reloadHeld=oldReloadHeld=reloadPressed=false; }
+        public void Reset() { SetShoulder(ShoulderSide.Right); rear=front=oldRear=oldFront=oldTrigger=trigger=grenadeHeld=oldGrenadeHeld=grenadePressed=reloadHeld=oldReloadHeld=reloadPressed=false; }
         public bool PosturePressed => IsVr ? Pressed(XRController.leftHand,"secondaryButton") : Keyboard.current?.cKey.wasPressedThisFrame==true;
         public bool ConfirmPressed=>IsVr ? !ReloadWithLeftX&&Pressed(XRController.leftHand,"primaryButton") : desktop.ConfirmPressed;
         public bool BackPressed=>desktop.BackPressed;

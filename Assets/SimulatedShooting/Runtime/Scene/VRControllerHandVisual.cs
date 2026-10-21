@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using VRShooting.Common;
 
 namespace SimulatedShooting.Scene
 {
@@ -33,8 +34,20 @@ namespace SimulatedShooting.Scene
         bool gripPosePreviewActive;
         Transform presentationGrip;
         float presentationCurl01;
+        bool mirrored;
+        bool controllerParentCaptured;
+        Transform homeControllerParent;
+        Transform trackedControllerParent;
+        Vector3 openLocalScale = Vector3.one;
+        readonly List<ModelNodePose> sourceModelPose = new List<ModelNodePose>();
+        readonly List<MirroredSkin> mirroredSkins = new List<MirroredSkin>();
 
-        public VirtualHandSide HandSide => handSide;
+        public VirtualHandSide HandSide => mirrored
+            ? (handSide == VirtualHandSide.Right ? VirtualHandSide.Left : VirtualHandSide.Right) : handSide;
+        public VirtualHandSide SourceHandSide => handSide;
+        public TrainingRifleGrabInteractable Weapon => grabInteractable;
+        public Transform HomeControllerParent { get { CaptureControllerParent(); return homeControllerParent; } }
+        public Transform TrackedControllerParent => trackedControllerParent;
         public Transform ModelRoot => modelRoot;
         public bool IsGripping => ResolveGripState();
         public float GripPose01 => gripPose01;
@@ -60,7 +73,114 @@ namespace SimulatedShooting.Scene
             EnsureConfigured();
             presentationGrip = anchor;
             presentationCurl01 = anchor != null ? Mathf.Clamp01(curl01) : 0;
+            if (anchor == null && trackedControllerParent != null && transform.parent != trackedControllerParent)
+                transform.SetParent(trackedControllerParent, false);
             UpdateVisualPose(1f);
+        }
+
+        public void SetShoulderPresentation(ShoulderSide side, Transform controller)
+        {
+            EnsureConfigured();
+            var nextMirror = side == ShoulderSide.Left;
+            if (mirrored != nextMirror) ApplyModelMirror(nextMirror);
+            mirrored = nextMirror;
+            trackedControllerParent = controller;
+            if (presentationGrip == null && controller != null && transform.parent != controller)
+                transform.SetParent(controller, false);
+            if (gripPosePreviewActive) RefreshGripPosePreview();
+            else UpdateVisualPose(0f);
+        }
+
+        void CaptureControllerParent()
+        {
+            if (controllerParentCaptured) return;
+            controllerParentCaptured = true;
+            homeControllerParent = trackedControllerParent = transform.parent;
+            openLocalScale = transform.localScale;
+        }
+
+        static Quaternion MirrorRotation(Quaternion rotation)
+            => new Quaternion(rotation.x, -rotation.y, -rotation.z, rotation.w);
+
+        void ApplyModelMirror(bool value)
+        {
+            if (modelRoot == null) return;
+            if (sourceModelPose.Count == 0)
+            {
+                foreach (var node in modelRoot.GetComponentsInChildren<Transform>(true))
+                    sourceModelPose.Add(new ModelNodePose(node));
+                var reflection = Matrix4x4.Scale(new Vector3(-1, 1, 1));
+                foreach (var renderer in modelRoot.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+                {
+                    var original = renderer.sharedMesh;
+                    if (original == null) continue;
+                    var mesh = Instantiate(original);
+                    mesh.name = original.name + "_MirroredShoulder";
+                    mesh.hideFlags = HideFlags.DontSave;
+                    var vertices = mesh.vertices;
+                    for (var i = 0; i < vertices.Length; i++) vertices[i].x = -vertices[i].x;
+                    mesh.vertices = vertices;
+                    var normals = mesh.normals;
+                    for (var i = 0; i < normals.Length; i++) normals[i].x = -normals[i].x;
+                    mesh.normals = normals;
+                    var tangents = mesh.tangents;
+                    for (var i = 0; i < tangents.Length; i++) { tangents[i].x = -tangents[i].x; tangents[i].w = -tangents[i].w; }
+                    mesh.tangents = tangents;
+                    for (var submesh = 0; submesh < mesh.subMeshCount; submesh++)
+                    {
+                        var triangles = mesh.GetTriangles(submesh);
+                        for (var i = 0; i < triangles.Length; i += 3)
+                        { var swap = triangles[i]; triangles[i] = triangles[i + 2]; triangles[i + 2] = swap; }
+                        mesh.SetTriangles(triangles, submesh);
+                    }
+                    var bindposes = mesh.bindposes;
+                    for (var i = 0; i < bindposes.Length; i++) bindposes[i] = reflection * bindposes[i] * reflection;
+                    mesh.bindposes = bindposes;
+                    mesh.RecalculateBounds();
+                    mirroredSkins.Add(new MirroredSkin(renderer, original, mesh));
+                }
+            }
+            foreach (var pose in sourceModelPose)
+            {
+                var position = pose.Position;
+                if (value) position.x = -position.x;
+                pose.Node.localPosition = position;
+                pose.Node.localRotation = value ? MirrorRotation(pose.Rotation) : pose.Rotation;
+            }
+            foreach (var skin in mirroredSkins)
+            {
+                skin.Renderer.sharedMesh = value ? skin.Mirrored : skin.Original;
+                var bounds = skin.Bounds;
+                if (value) { var center = bounds.center; center.x = -center.x; bounds.center = center; }
+                skin.Renderer.localBounds = bounds;
+            }
+        }
+
+        void OnDestroy()
+        {
+            foreach (var skin in mirroredSkins)
+                if (skin.Mirrored != null)
+                {
+                    if (Application.isPlaying) Destroy(skin.Mirrored);
+                    else DestroyImmediate(skin.Mirrored);
+                }
+        }
+
+        readonly struct ModelNodePose
+        {
+            public readonly Transform Node;
+            public readonly Vector3 Position;
+            public readonly Quaternion Rotation;
+            public ModelNodePose(Transform node) { Node = node; Position = node.localPosition; Rotation = node.localRotation; }
+        }
+
+        readonly struct MirroredSkin
+        {
+            public readonly SkinnedMeshRenderer Renderer;
+            public readonly Mesh Original, Mirrored;
+            public readonly Bounds Bounds;
+            public MirroredSkin(SkinnedMeshRenderer renderer, Mesh original, Mesh mirror)
+            { Renderer = renderer; Original = original; Mirrored = mirror; Bounds = renderer.localBounds; }
         }
 
         public void BindWeapon(TrainingRifleGrabInteractable grab)
@@ -94,6 +214,8 @@ namespace SimulatedShooting.Scene
             openLocalPosition = transform.localPosition;
             openLocalRotation = transform.localRotation;
             configured = true;
+            controllerParentCaptured = false;
+            CaptureControllerParent();
             PrepareModelForManualPose();
             CacheFingerBones();
             ApplyFingerPose(0f);
@@ -166,8 +288,7 @@ namespace SimulatedShooting.Scene
             }
 
             ApplyFingerPose(0f);
-            transform.localPosition = openLocalPosition;
-            transform.localRotation = openLocalRotation;
+            ApplyOpenPose();
             gripPose01 = 0f;
             gripPosePreviewActive = false;
         }
@@ -179,6 +300,7 @@ namespace SimulatedShooting.Scene
 
         void EnsureConfigured()
         {
+            CaptureControllerParent();
             if (configured)
             {
                 return;
@@ -211,8 +333,7 @@ namespace SimulatedShooting.Scene
             }
             else
             {
-                transform.localPosition = openLocalPosition;
-                transform.localRotation = openLocalRotation;
+                ApplyOpenPose();
             }
 
             ApplyFingerPose(gripPose01);
@@ -226,9 +347,29 @@ namespace SimulatedShooting.Scene
                 return;
             }
 
-            transform.SetPositionAndRotation(
-                anchor.TransformPoint(gripPositionOffset),
-                anchor.rotation * Quaternion.Euler(gripRotationOffset));
+            var world = anchor.localToWorldMatrix * Matrix4x4.TRS(
+                gripPositionOffset, Quaternion.Euler(gripRotationOffset), openLocalScale);
+            // Reflect the mesh/bindposes and rig locally instead of leaving a negative
+            // world scale on a SkinnedMeshRenderer (Unity's baked skinning distorts it).
+            if (mirrored) world *= Matrix4x4.Scale(new Vector3(-1, 1, 1));
+            var local = transform.parent != null ? transform.parent.worldToLocalMatrix * world : world;
+            var x = (Vector3)local.GetColumn(0);
+            var y = (Vector3)local.GetColumn(1);
+            var z = (Vector3)local.GetColumn(2);
+            transform.localPosition = local.GetColumn(3);
+            transform.localRotation = Quaternion.LookRotation(z, y);
+            var reflected = Vector3.Dot(Vector3.Cross(x, y), z) < 0;
+            transform.localScale = new Vector3(x.magnitude * (reflected ? -1 : 1), y.magnitude, z.magnitude);
+        }
+
+        void ApplyOpenPose()
+        {
+            transform.localPosition = mirrored
+                ? new Vector3(-openLocalPosition.x, openLocalPosition.y, openLocalPosition.z) : openLocalPosition;
+            transform.localRotation = mirrored
+                ? new Quaternion(openLocalRotation.x, -openLocalRotation.y, -openLocalRotation.z, openLocalRotation.w) : openLocalRotation;
+            var scale = openLocalScale;
+            transform.localScale = scale;
         }
 
         bool ResolveGripState()
@@ -413,11 +554,11 @@ namespace SimulatedShooting.Scene
                         : thumb ? 26f : 0;
                     offset.x = Mathf.Lerp(offset.x, Mathf.Max(offset.x, curl), presentationCurl01);
                 }
-                bone.Transform.localRotation =
-                    bone.OpenRotation * Quaternion.SlerpUnclamped(
+                var rotation = bone.OpenRotation * Quaternion.SlerpUnclamped(
                         Quaternion.identity,
                         Quaternion.Euler(offset),
                         amount);
+                bone.Transform.localRotation = mirrored ? MirrorRotation(rotation) : rotation;
             }
         }
 

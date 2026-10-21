@@ -58,7 +58,7 @@ namespace VRShooting.Tests.EditMode
             Assert.That(service.GetBriefing("trench-a","training-rifle",RandomSeed.Fixed(3)).Success);
             Assert.That(service.GetSession("any").ErrorCode,Is.EqualTo(ErrorCode.NotFound));
             Assert.That(navigation.NavigationRequests.Count,Is.Zero);
-            Start(); Assert.That(Enemies.Length,Is.InRange(3,5));
+            Start(); Assert.That(Enemies.Length,Is.InRange(5,7));
             Assert.That(service.StartSession("trench-a","training-rifle",RandomSeed.Fixed(3)).ErrorCode,Is.EqualTo(ErrorCode.Busy));
         }
         [Test] public void FixedSeedAndSortedCandidatesProduceSamePositionsAcrossRetries()
@@ -78,7 +78,7 @@ namespace VRShooting.Tests.EditMode
                 Assert.That(Vector3.Dot(enemy.Forward, toEntrance.normalized), Is.GreaterThan(.99f), enemy.EntityId);
             }
         }
-        [TestCase(3)] [TestCase(5)] public void EnemyCountBoundariesCanBeInjected(int count)
+        [TestCase(5)] [TestCase(7)] public void EnemyCountBoundariesCanBeInjected(int count)
         {
             service.Dispose(); service = new TrenchService(P3Fixtures.TrenchDefinition,clock,new CountRandom(count),navigation,recon:opening.Service);
             Start(); Assert.That(Enemies.Length,Is.EqualTo(count)); Assert.That(Enemies.Select(e=>e.Position).Distinct().Count(),Is.EqualTo(count));

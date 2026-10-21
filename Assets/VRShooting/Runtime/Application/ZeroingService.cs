@@ -130,11 +130,11 @@ namespace VRShooting.Application
 
             if (!analysis.AdjustmentApplied)
             {
-                // c57823f records mechanical adjustment without rewriting the fixed shot bias.
-                // Manual overrides are retained only to support the existing UI controls.
-                record.CurrentAdjustment = record.PendingCorrectionCm.HasValue
-                    ? ZeroingRules.ApplyCorrection(record.CurrentAdjustment, analysis.ProposedCorrectionCm)
-                    : ZeroingRules.ApplyAdjustment(record.CurrentAdjustment, analysis);
+                // Commit the same signed correction that was previewed. Historical shots
+                // stay immutable; only subsequent rounds use the updated effective bias.
+                record.FixedImpactOffsetCm += analysis.ProposedCorrectionCm;
+                record.CurrentAdjustment = ZeroingRules.ApplyCorrection(
+                    record.CurrentAdjustment, analysis.ProposedCorrectionCm);
                 record.AppliedRounds.Add(roundIndex);
                 analysis = record.BuildAnalysis();
                 record.UpsertAnalysis(analysis);
@@ -229,7 +229,7 @@ namespace VRShooting.Application
                 FireTime = 0d
             };
 
-            RecordShotInternal(record, input);
+            RecordShotInternal(record, input, evt.Result.ShotSequence);
         }
 
         void OnPresentationChanged(TrainingPresentationChangedEvent evt)
@@ -254,7 +254,7 @@ namespace VRShooting.Application
             return !presentationShootingAllowed.TryGetValue(sessionId, out var allowed) || allowed;
         }
 
-        ServiceResult<ZeroingShotDto> RecordShotInternal(ZeroingSessionRecord record, ShotInputDto input)
+        ServiceResult<ZeroingShotDto> RecordShotInternal(ZeroingSessionRecord record, ShotInputDto input, int weaponShotSequence = 0)
         {
             if (!AllowsRecording(record.SessionId))
             {
@@ -271,7 +271,7 @@ namespace VRShooting.Application
             var aimPoint = ZeroingRules.ResolveAimPointCm(input.AimDirection);
             var impact = ZeroingRules.ComputeImpactPoint(aimPoint, record.FixedImpactOffsetCm);
             var shot = record.AddShot(impact, Mathf.Clamp01(input.WeaponStability));
-            eventBus.Publish(new ZeroingShotRecordedEvent { SessionId = record.SessionId, Shot = shot });
+            eventBus.Publish(new ZeroingShotRecordedEvent { SessionId = record.SessionId, Shot = shot, WeaponShotSequence = weaponShotSequence });
 
             if (record.CurrentShots.Count == ZeroingRules.ShotsPerRound)
             {
