@@ -132,21 +132,21 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [Test]
-        public void Task004_TargetHasSpecifiedDimensionsAtOneHundredMetres()
+        public void Bdd29_TargetHasSpecifiedDimensionsAtTwentyFiveMetres()
         {
-            var shootingPosition = Find("ZeroingRange.ShootingPosition").transform;
-            var target = Find("ZeroingRange.Target.Primary").transform;
+            var player = Find("ZeroingRange.FiringStation.Root").GetComponent<TrainingRangeSceneBindings>().PlayerRootAnchor;
+            var target = Find("ZeroingRange.Target.Center").transform;
             var backer = Find("ZeroingRange.Target.Backer").GetComponent<Renderer>();
             var face = Find("ZeroingRange.Target.Face").GetComponent<Renderer>();
-            var tenRing = Find("ZeroingRange.Target.TenRing").GetComponent<Renderer>();
+            var tenRing = target.GetComponentInChildren<LineRenderer>();
 
-            Assert.That(Vector3.Distance(shootingPosition.position, target.position), Is.EqualTo(100f).Within(0.001f));
+            Assert.That(Vector3.Dot(target.position - player.position, player.forward), Is.EqualTo(25f).Within(0.001f));
             Assert.That(backer.bounds.size.x, Is.EqualTo(1.4f).Within(0.001f));
             Assert.That(backer.bounds.size.y, Is.EqualTo(1.6f).Within(0.001f));
             Assert.That(face.bounds.size.x, Is.EqualTo(0.5f).Within(0.001f));
             Assert.That(face.bounds.size.y, Is.EqualTo(0.5f).Within(0.001f));
-            Assert.That(tenRing.bounds.size.x, Is.EqualTo(0.1f).Within(0.001f));
-            Assert.That(tenRing.bounds.size.y, Is.EqualTo(0.1f).Within(0.001f));
+            Assert.That(tenRing.GetPosition(0).x * 2, Is.EqualTo(0.2f).Within(0.001f));
+            Assert.That(tenRing.GetPosition(tenRing.positionCount / 4).y * 2, Is.EqualTo(0.2f).Within(0.001f));
         }
 
         [Test]
@@ -211,7 +211,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(impact.OffsetCm.x, Is.EqualTo(0f).Within(0.01f));
             Assert.That(impact.OffsetCm.y, Is.EqualTo(0f).Within(0.01f));
             Assert.That(impact.InsideTenRing, Is.True);
-            Assert.That(surface.TenRingRadiusCm, Is.EqualTo(5f).Within(0.001f));
+            Assert.That(surface.TenRingRadiusCm, Is.EqualTo(10f).Within(0.001f));
             Assert.That(Find("ZeroingRange.Target.Center"), Is.Not.Null);
             Assert.That(surface.Impacts.Count, Is.EqualTo(1));
             Assert.That(surface.ImpactMarkerRoot.childCount, Is.EqualTo(1));
@@ -715,7 +715,7 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [Test]
-        public void Task013_VirtualHandGripPoseUsesUprightRearGripAndPalmUpFrontSupport()
+        public void Bdd29_VirtualHandGripPreservesTheApprovedRightShoulderRotations()
         {
             // BDD: 05-100m射击HUD / 虚拟手使用手部网格并在持枪时切换握持姿势
             var rightVisual = Find("ZeroingRange.Origin.VR.VirtualHand.Right")
@@ -728,11 +728,9 @@ namespace SimulatedShooting.Tests.PlayMode
             rightVisual.SetGripForTests(true);
             leftVisual.SetGripForTests(true);
 
-            Assert.That(Vector3.Dot(rightVisual.transform.forward, rearGrip.up), Is.GreaterThan(0.95f),
-                "The rear-hand wrist axis should be upright along the pistol grip");
-            Assert.That(Vector3.Dot(-leftVisual.transform.up, frontGrip.up), Is.GreaterThan(0.95f),
-                "The front-hand palm normal should face upward beneath the handguard");
-            Assert.That(Vector3.Distance(leftVisual.transform.position, frontGrip.position), Is.LessThan(0.06f));
+            // ApprovedForwardGripAuthoring / approved-forward-grip evidence is the frozen source.
+            Assert.That(Quaternion.Angle(rightVisual.transform.rotation, rearGrip.rotation * Quaternion.Euler(-30, -15, -90)), Is.LessThan(.01f));
+            Assert.That(Quaternion.Angle(leftVisual.transform.rotation, frontGrip.rotation * Quaternion.Euler(-20, 65, 180)), Is.LessThan(.01f));
         }
 
         [Test]
@@ -800,14 +798,12 @@ namespace SimulatedShooting.Tests.PlayMode
 
             var rearPalm = rearGrip.InverseTransformPoint(rightVisual.transform.position);
             var supportPalm = frontGrip.InverseTransformPoint(leftVisual.transform.position);
-            Assert.That(rearPalm.z, Is.InRange(0.01f, 0.045f),
-                "The firing hand should close around the pistol grip, not float behind it");
-            Assert.That(supportPalm.y, Is.InRange(-0.065f, -0.04f),
-                "The support palm should sit below the handguard instead of intersecting its side");
+            Assert.That(Vector3.Distance(rearPalm, new Vector3(.049f, -.010f, -.032f)), Is.LessThan(.0001f), "Preserve the approved trigger-hand contact offset.");
+            Assert.That(Vector3.Distance(supportPalm, new Vector3(-.0478f, -.0516f, -.0082f)), Is.LessThan(.0001f), "Preserve the approved support-hand contact offset.");
         }
 
         [Test]
-        public void Task013_RifleGripUsesStraightTriggerFingerAndOpenFrontHandWrap()
+        public void Bdd29_RifleFingersFollowTheApprovedContactDirections()
         {
             // BDD: 05-100m射击HUD / 虚拟手使用手部网格并在持枪时切换握持姿势
             var rightVisual = Find("ZeroingRange.Origin.VR.VirtualHand.Right")
@@ -820,37 +816,33 @@ namespace SimulatedShooting.Tests.PlayMode
                     transform.name.IndexOf(finger, System.StringComparison.OrdinalIgnoreCase) >= 0 &&
                     transform.name.EndsWith(segment, System.StringComparison.OrdinalIgnoreCase));
 
-            var rightIndexProximal = Joint(rightVisual, "Index", "Proximal");
-            var rightIndexIntermediate = Joint(rightVisual, "Index", "Intermediate");
-            var rightMiddleIntermediate = Joint(rightVisual, "Middle", "Intermediate");
-            var leftIndexIntermediate = Joint(leftVisual, "Index", "Intermediate");
-            var leftIndexDistal = Joint(leftVisual, "Index", "Distal");
-            var leftThumbProximal = Joint(leftVisual, "Thumb", "Proximal");
-
-            rightVisual.SetGripForTests(false);
-            leftVisual.SetGripForTests(false);
-            var rightIndexProximalOpen = rightIndexProximal.localRotation;
-            var rightIndexIntermediateOpen = rightIndexIntermediate.localRotation;
-            var rightMiddleIntermediateOpen = rightMiddleIntermediate.localRotation;
-            var leftIndexIntermediateOpen = leftIndexIntermediate.localRotation;
-            var leftIndexDistalOpen = leftIndexDistal.localRotation;
-            var leftThumbProximalOpen = leftThumbProximal.localRotation;
-
             rightVisual.SetGripForTests(true);
             leftVisual.SetGripForTests(true);
-
-            Assert.That(Quaternion.Angle(rightIndexProximalOpen, rightIndexProximal.localRotation),
-                Is.InRange(65f, 95f), "The trigger finger should turn toward the trigger at its base joint");
-            Assert.That(Quaternion.Angle(rightIndexIntermediateOpen, rightIndexIntermediate.localRotation),
-                Is.LessThan(20f), "The trigger finger should remain relatively straight");
-            Assert.That(Quaternion.Angle(rightMiddleIntermediateOpen, rightMiddleIntermediate.localRotation),
-                Is.InRange(55f, 80f), "The lower fingers should naturally wrap the rear grip");
-            Assert.That(Quaternion.Angle(leftIndexIntermediateOpen, leftIndexIntermediate.localRotation),
-                Is.InRange(19.9f, 40f), "The support fingers should only bend gently upward");
-            Assert.That(Quaternion.Angle(leftIndexDistalOpen, leftIndexDistal.localRotation),
-                Is.LessThan(20f), "The support fingertips should not hook through the handguard");
-            Assert.That(Quaternion.Angle(leftThumbProximalOpen, leftThumbProximal.localRotation),
-                Is.InRange(5f, 25f), "The support thumb should keep an open web with the index finger");
+            var rear = Find("ZeroingRange.Weapon.Grip.RearHand").transform;
+            var front = Find("ZeroingRange.Weapon.Grip.FrontHand").transform;
+            // Independent, named contact targets from the approved right-shoulder reference,
+            // not the obsolete pre-approval Euler-angle ranges or a recomputed pose snapshot.
+            var contacts = new[]
+            {
+                (rightVisual, rear, "Index", new Vector3(-.25f,.03f,.967f), new Vector3(-.7f,.08f,.71f)),
+                (rightVisual, rear, "Middle", new Vector3(-.65f,-.2f,.733f), new Vector3(-.97f,0,-.24f)),
+                (rightVisual, rear, "Ring", new Vector3(-.83f,0,.56f), new Vector3(-.94f,0,-.34f)),
+                (rightVisual, rear, "Little", new Vector3(-.9f,0,.436f), new Vector3(-.93f,0,-.37f)),
+                (rightVisual, rear, "Thumb", new Vector3(-.95f,.2f,.24f), new Vector3(-.85f,.25f,.46f)),
+                (leftVisual, front, "Index", new Vector3(.985f,.174f,0), Vector3.up),
+                (leftVisual, front, "Middle", new Vector3(.866f,.5f,0), new Vector3(.087f,.996f,0)),
+                (leftVisual, front, "Ring", new Vector3(.866f,.5f,0), new Vector3(.087f,.996f,0)),
+                (leftVisual, front, "Little", new Vector3(.866f,.5f,0), new Vector3(.087f,.996f,0)),
+                (leftVisual, front, "Thumb", new Vector3(.8f,.5f,.2f), new Vector3(.5f,.2f,.84f))
+            };
+            foreach (var contact in contacts)
+            {
+                var proximal = Joint(contact.Item1, contact.Item3, "Proximal");
+                var intermediate = Joint(contact.Item1, contact.Item3, "Intermediate");
+                var distal = Joint(contact.Item1, contact.Item3, "Distal");
+                Assert.That(Vector3.Angle(contact.Item2.InverseTransformDirection(intermediate.position - proximal.position), contact.Item4), Is.LessThan(.1f), contact.Item1.HandSide + " " + contact.Item3 + " proximal");
+                Assert.That(Vector3.Angle(contact.Item2.InverseTransformDirection(distal.position - intermediate.position), contact.Item5), Is.LessThan(.1f), contact.Item1.HandSide + " " + contact.Item3 + " intermediate");
+            }
         }
 
         [UnityTest]

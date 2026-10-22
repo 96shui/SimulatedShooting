@@ -78,7 +78,8 @@ namespace SimulatedShooting.Tests.PlayMode
                     PlayerPosition = position, PlayerForward = -enemy.transform.forward,
                     MuzzlePosition = position + Vector3.up * 1.2f, AimDirection = -enemy.transform.forward };
                 runtime.Step(.01f);
-                Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(5));
+                var maxHealth = mode == TrainingMode.Trench ? 10 : 5;
+                Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(maxHealth));
                 var angle=Vector3.Angle(enemy.transform.forward,Vector3.ProjectOnPlane(position-enemy.transform.position,Vector3.up));
                 runtime.Step(.05f);
                 Assert.That(Vector3.Angle(enemy.transform.forward,Vector3.ProjectOnPlane(position-enemy.transform.position,Vector3.up)),Is.LessThan(angle));
@@ -86,7 +87,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 runtime.Step(.1f);
                 runtime.Step(.86f);
                 Assert.That(Vector3.Angle(enemy.transform.forward,Vector3.ProjectOnPlane(position-enemy.transform.position,Vector3.up)),Is.LessThan(1f));
-                Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(4), "Production line of sight must reach the service");
+                Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(maxHealth - 1), "Production line of sight must reach the service");
                 Assert.That(enemy.ShotVisualFeedbackCount, Is.EqualTo(1));
                 Assert.That(enemy.ShotAudioFeedbackCount, Is.EqualTo(1));
                 Assert.That(enemy.Audio.isPlaying, Is.True);
@@ -106,18 +107,17 @@ namespace SimulatedShooting.Tests.PlayMode
                 PresentationEvidence.Capture(runtime.PlayerCamera, mode + "-enemy-shot-player-blood");
                 yield return new WaitForSeconds(.1f);
                 Assert.That(enemy.SoldierAnimation.Animator.GetCurrentAnimatorStateInfo(0).IsName("Shot"), Is.True);
-                runtime.Step(1.01f);
-                Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(3));
-                runtime.Step(1.01f);
-                Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(2));
-                runtime.Step(1.01f);
-                Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(1));
-                runtime.Step(1.01f);
+                for (var hit = 2; hit <= maxHealth; hit++)
+                {
+                    runtime.Step(1.01f);
+                    Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(maxHealth - hit));
+                    if (hit < maxHealth) Assert.That(core.GetSnapshot(session).Data.Player.IsAlive, Is.True);
+                }
                 Assert.That(core.GetSnapshot(session).Data.State, Is.EqualTo(SessionState.Failed));
-                Assert.That(runtime.PlayerDamageFeedbackCount, Is.EqualTo(5), "The fatal shot also has blood feedback");
-                Assert.That(enemy.ShotAudioFeedbackCount, Is.EqualTo(5));
+                Assert.That(runtime.PlayerDamageFeedbackCount, Is.EqualTo(maxHealth), "The fatal shot also has blood feedback");
+                Assert.That(enemy.ShotAudioFeedbackCount, Is.EqualTo(maxHealth));
                 runtime.Step(10);
-                Assert.That(enemy.ShotVisualFeedbackCount, Is.EqualTo(5), "No new shots after death");
+                Assert.That(enemy.ShotVisualFeedbackCount, Is.EqualTo(maxHealth), "No new shots after death");
             }
             finally { core?.Dispose(); lease.Dispose(); }
             yield return null;

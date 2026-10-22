@@ -76,7 +76,7 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
-        public void September25_ManualPreviewKeepsUiButApplyRetainsArchivedFixedOffset()
+        public void Bdd29_OneClickCorrectionMovesNextRoundImpactExactlyOnceWithoutRewritingHistory()
         {
             // BDD 06: three-shot mean is immutable; player moves only the pending correction.
             var session = StartZeroingSession();
@@ -91,7 +91,7 @@ namespace VRShooting.Tests.EditMode.Application
             var vertical = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Vertical, -1);
             Assert.IsTrue(horizontal.Success, horizontal.Message);
             Assert.IsTrue(vertical.Success, vertical.Message);
-            Assert.AreEqual(new Vector2(-8f, 12f), vertical.Data.AverageOffsetCm);
+            Assert.That(Vector2.Distance(new Vector2(-8f, 12f), vertical.Data.AverageOffsetCm), Is.LessThan(.001f));
             Assert.AreEqual(new Vector2(10f, -12.064f), vertical.Data.ProposedCorrectionCm);
             Assert.That(Vector2.Distance(new Vector2(2f, -.064f), vertical.Data.PreviewAverageOffsetCm), Is.LessThan(.001f));
 
@@ -100,14 +100,15 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.IsTrue(applied.Success, applied.Message);
             Assert.IsTrue(duplicate.Success, duplicate.Message);
             Assert.AreEqual(new Vector2(10f, -12.064f), applied.Data.ProposedCorrectionCm);
-            Assert.AreEqual(originalOffset,
-                zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm);
+            Assert.That(Vector2.Distance(originalOffset + new Vector2(10f, -12.064f),
+                zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm), Is.LessThan(.001f));
+            Assert.AreEqual(initial.Shots[0].ImpactPointCm, applied.Data.Shots[0].ImpactPointCm);
             Assert.IsTrue(zeroing.ContinueAfterAnalysis(session.SessionId).Success);
 
             var sameAim = new Vector2(-8f, 12f) - originalOffset;
             var nextShot = RecordImpact(session.SessionId, sameAim);
             Assert.IsTrue(nextShot.Success, nextShot.Message);
-            Assert.That(Vector2.Distance(new Vector2(-8f, 12f), nextShot.Data.ImpactPointCm), Is.LessThan(.001f));
+            Assert.That(Vector2.Distance(new Vector2(2f, -.064f), nextShot.Data.ImpactPointCm), Is.LessThan(.001f));
         }
 
         [Test]
@@ -158,7 +159,7 @@ namespace VRShooting.Tests.EditMode.Application
             var applied = zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm;
             Assert.That(zeroing.ApplyAdjustment(session.SessionId, 1).Success, Is.True);
             Assert.That(zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm, Is.EqualTo(applied));
-            Assert.That(applied.y, Is.EqualTo(session.FixedImpactOffsetCm.y).Within(.001f));
+            Assert.That(applied.y, Is.EqualTo(session.FixedImpactOffsetCm.y + adjusted.ProposedCorrectionCm.y).Within(.001f));
         }
 
         [Test]

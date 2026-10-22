@@ -15,7 +15,7 @@ using VRShooting.Unity.Weapons;
 
 namespace SimulatedShooting.Tests.PlayMode
 {
-    // BDD06: physical zeroing from the c57823f base, current chest target/UI.
+    // BDD06/29: saved-scene gun ray, committed correction, bullet holes and scoring agree.
     // Uses the saved scene and real snapshot/raycast/fire/record path, not injected hit coordinates.
     public sealed class ZeroingOctober07RegressionTests
     {
@@ -65,7 +65,7 @@ namespace SimulatedShooting.Tests.PlayMode
 
         WeaponFireInputDto AimAndSnapshot(float xCm, float yCm)
         {
-            var origin = new Vector3(0, 1.5f, 0);
+            var origin = Object.FindObjectOfType<TrainingRangeSceneBindings>().PlayerRootAnchor.position + Vector3.up * 1.5f;
             var point = target.TargetCenter.TransformPoint(new Vector3(xCm * .01f, yCm * .01f, 0));
             weapon.transform.SetPositionAndRotation(Vector3.zero, Quaternion.LookRotation(point - origin));
             weapon.transform.position += origin - weapon.MuzzlePoint.position;
@@ -90,29 +90,35 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(input.HitPoint.y, Is.EqualTo(expected.y).Within(.02f));
             Assert.That(Physics.Raycast(input.MuzzlePosition, input.AimDirection, out var physical, 150f), Is.True);
             Assert.That(services.WeaponControl.Fire(input).Success, Is.True);
-            Assert.That(target.Impacts.Count, Is.EqualTo(onFace ? 1 : 0));
-            if (onFace)
-                Assert.That(Vector2.Distance(target.Impacts[0].OffsetCm, expected), Is.LessThan(.03f));
+            var corrected = expected + offset;
+            var correctedOnFace = Mathf.Abs(corrected.x) <= 25f && Mathf.Abs(corrected.y) <= 25f;
+            Assert.That(target.Impacts.Count, Is.EqualTo(correctedOnFace ? 1 : 0));
+            if (correctedOnFace)
+            {
+                Assert.That(Vector2.Distance(target.Impacts[0].OffsetCm, corrected), Is.LessThan(.03f));
+                Assert.That(target.Impacts[0].InsideTenRing, Is.EqualTo(recorded[0].InsideTenRing));
+            }
             Assert.That(recorded.Count, Is.EqualTo(1));
             Assert.That(Vector2.Distance(recorded[0].ImpactPointCm, new Vector2(xCm, yCm) + offset), Is.LessThan(.03f));
             var tracer = Object.FindObjectOfType<BallisticTracerVisual>();
             Assert.That(tracer, Is.Not.Null);
             var end = (Vector3)typeof(BallisticTracerVisual)
                 .GetField("end", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(tracer);
-            Assert.That(Vector3.Distance(end, physical.point), Is.LessThan(.0003f),
-                "The archived tracer must end at the physical raycast hit.");
+            var visiblePoint = target.TargetCenter.TransformPoint(new Vector3(corrected.x * .01f, corrected.y * .01f, 0));
+            Assert.That(Vector3.Distance(end, visiblePoint), Is.LessThan(.0003f),
+                "The tracer must end at the same corrected point that the service scored.");
         }
 
         [TestCase(40f, 0f)]
         [TestCase(0f, 40f)]
         [TestCase(0f, -40f)]
-        public void September25_OffFaceSnapshotUsesArchivedPhysicalHit(float xCm, float yCm)
+        public void Bdd29_OffFaceSnapshotKeepsTheSameTargetCentimetreConvention(float xCm, float yCm)
         {
             var input = AimAndSnapshot(xCm, yCm);
             Assert.That(input.Hit, Is.False);
-            var hit = Physics.Raycast(input.MuzzlePosition, input.AimDirection, out var physical, 150f);
-            var expected = hit ? physical.point : input.MuzzlePosition + input.AimDirection * ZeroingRules.DistanceMeters;
-            Assert.That(Vector3.Distance(input.HitPoint, expected), Is.LessThan(.0003f));
+            Assert.That(input.HitPoint.x, Is.EqualTo(xCm).Within(.03f));
+            Assert.That(input.HitPoint.y, Is.EqualTo(yCm).Within(.03f));
+            Assert.That(input.HitPoint.z, Is.EqualTo(25f));
         }
 
         [TestCase(0f, 0f, 0f)]
@@ -139,41 +145,41 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [UnityTest]
-        public IEnumerator September25_ManualPreviewDoesNotMovePhysicalBulletHoles()
+        public IEnumerator Bdd29_ManualAdjustmentMovesVisibleImpactsWithoutSnappingToTenRing()
         {
             var id = controller.SessionId;
             for (var i = 0; i < 3; i++)
             {
-                Assert.That(services.WeaponControl.Fire(AimAndSnapshot(0, 0)).Success, Is.True);
+                Assert.That(services.WeaponControl.Fire(AimAndSnapshot(20, 0)).Success, Is.True);
                 yield return null;
             }
             Assert.That(services.Zeroing.AdjustImpactPoint(id, 1, ZeroingAdjustmentAxis.Horizontal, 1).Success, Is.True);
-            for (var i = 0; i < 100; i++)
+            for (var i = 0; i < 300; i++)
                 Assert.That(services.Zeroing.AdjustImpactPoint(id, 1, ZeroingAdjustmentAxis.Vertical, 1).Success, Is.True);
             var before = services.Zeroing.CompleteRound(id).Data;
             var preview = before.PreviewAverageOffsetCm;
             Assert.That(preview.x, Is.EqualTo(2f).Within(.001f));
-            Assert.That(preview.y, Is.EqualTo(6.4f).Within(.01f));
+            Assert.That(preview.y, Is.EqualTo(19.2f).Within(.01f));
             Assert.That(services.Zeroing.ApplyAdjustment(id, 1).Success, Is.True);
             Assert.That(services.Presentation.ContinueNextRound(id).Success, Is.True);
-            Assert.That(services.WeaponControl.Fire(AimAndSnapshot(0, 0)).Success, Is.True);
-            Assert.That(Vector2.Distance(recorded.Last().ImpactPointCm, before.AverageOffsetCm), Is.LessThan(.03f));
-            Assert.That(target.Impacts.Last().OffsetCm.magnitude, Is.LessThan(.03f));
+            Assert.That(services.WeaponControl.Fire(AimAndSnapshot(20, 0)).Success, Is.True);
+            Assert.That(Vector2.Distance(recorded.Last().ImpactPointCm, preview), Is.LessThan(.03f));
+            Assert.That(Vector2.Distance(target.Impacts.Last().OffsetCm, preview), Is.LessThan(.03f));
             Assert.That(recorded.Last().InsideTenRing, Is.False, "Do not force an off-centre shot into the ten ring.");
         }
 
         [UnityTest]
-        public IEnumerator September25_CentralAimKeepsPhysicalHitsAndArchivedAdjustmentBookkeeping()
+        public IEnumerator Bdd29_DefaultCorrectionMakesTheSameGunRayScoreAndShowTenRingNextRound()
         {
             var id = controller.SessionId;
             for (var i = 0; i < 3; i++)
             {
-                Assert.That(services.WeaponControl.Fire(AimAndSnapshot(0, 0)).Success, Is.True);
+                Assert.That(services.WeaponControl.Fire(AimAndSnapshot(20, 0)).Success, Is.True);
                 // Unity removes each impact marker's temporary primitive collider at frame end.
                 yield return null;
             }
             var analysis = services.Zeroing.CompleteRound(id).Data;
-            Assert.That(analysis.PassedTenRing, Is.False, "Historical initial bias is outside the ten ring.");
+            Assert.That(analysis.PassedTenRing, Is.False, "A deliberately off-centre gun ray must not auto-pass.");
             Assert.That(analysis.PreviewAverageOffsetCm.magnitude, Is.LessThan(.001f));
             Assert.That(services.Zeroing.ApplyAdjustment(id, 1).Success, Is.True);
             var firstApplied = services.Zeroing.GetSession(id).Data.FixedImpactOffsetCm;
@@ -182,7 +188,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(services.Presentation.ContinueNextRound(id).Success, Is.True);
             for (var i = 0; i < 3; i++)
             {
-                var shot = AimAndSnapshot(0, 0);
+                var shot = AimAndSnapshot(20, 0);
                 Assert.That(shot.Hit, Is.True, "The central face must remain hittable after adjustment.");
                 Assert.That(services.WeaponControl.Fire(shot).Success, Is.True);
                 yield return null;
@@ -190,11 +196,10 @@ namespace SimulatedShooting.Tests.PlayMode
             var next = services.Zeroing.CompleteRound(id).Data;
             Assert.That(next.RoundIndex, Is.EqualTo(2));
             Assert.That(next.Shots.Count, Is.EqualTo(3));
-            Assert.That(next.PassedTenRing, Is.False);
-            Assert.That(Vector2.Distance(next.AverageOffsetCm, analysis.AverageOffsetCm), Is.LessThan(.03f));
-            Assert.That(target.Impacts.Count, Is.EqualTo(6));
-            Assert.That(target.Impacts.Skip(3).All(s => s.InsideTenRing), Is.True,
-                "The archived physical hits remain where the gun was aimed.");
+            Assert.That(next.PassedTenRing, Is.True);
+            Assert.That(next.AverageOffsetCm.magnitude, Is.LessThan(.03f));
+            Assert.That(target.Impacts.TakeLast(3).All(s => s.InsideTenRing), Is.True,
+                "The visible bullet holes must agree with the next-round ten-ring result.");
             TestContext.WriteLine($"First mean={analysis.AverageOffsetCm}; correction={analysis.ProposedCorrectionCm}; " +
                 $"next mean={next.AverageOffsetCm}; service ten-ring={next.PassedTenRing}; " +
                 $"visible next-round ten-ring={target.Impacts.Skip(3).All(s => s.InsideTenRing)}");

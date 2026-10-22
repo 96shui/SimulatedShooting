@@ -29,14 +29,23 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
-        public void GenerateFixedOffset_IsInsideTargetOutsideTenRing()
+        public void Bdd29_InitialBiasIsSmallAndReproducibleAcrossSeeds()
         {
-            var offset = ZeroingRules.GenerateFixedOffset(RandomSeed.Fixed(100));
-            var distance = offset.magnitude;
-
-            Assert.Greater(distance, ZeroingRules.TenRingRadiusCm);
-            Assert.LessOrEqual(distance, ZeroingRules.TargetHalfSizeCm);
+            for (var seed = 0; seed < 100; seed++)
+            {
+                var offset = ZeroingRules.GenerateFixedOffset(RandomSeed.Fixed(seed));
+                Assert.That(offset.magnitude, Is.InRange(3f, 8f));
+                Assert.That(offset, Is.EqualTo(ZeroingRules.GenerateFixedOffset(RandomSeed.Fixed(seed))));
+            }
         }
+
+        [TestCase(10f, 0f, true)]
+        [TestCase(6f, 8f, true)]
+        [TestCase(-10f, 0f, true)]
+        [TestCase(10.001f, 0f, false)]
+        [TestCase(8f, 8f, false)]
+        public void Bdd29_TenRingUsesTheLargerInclusiveCircularBoundary(float x, float y, bool expected)
+            => Assert.That(ZeroingRules.IsInsideTenRing(new Vector2(x, y)), Is.EqualTo(expected));
 
         [Test]
         public void ComputeFrontSightDegrees_UsesCeilingAnd064CmPerDegree()
@@ -91,12 +100,12 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
-        public void September25_RayProjectionRetainsArchivedDistanceConvention()
+        public void Bdd29_RayProjectionAccountsForMuzzleDepth()
         {
             var origin = new Vector3(.2f, .4f, 3f);
             var aim = ZeroingRules.ResolveAimPointFromRay(origin, new Vector3(.3f, -.2f, 97f), 100f);
-            Assert.That(aim.x, Is.EqualTo(50.927834f).Within(.001f));
-            Assert.That(aim.y, Is.EqualTo(19.381443f).Within(.001f));
+            Assert.That(aim.x, Is.EqualTo(50f).Within(.001f));
+            Assert.That(aim.y, Is.EqualTo(20f).Within(.001f));
         }
     }
 }

@@ -94,7 +94,9 @@ namespace SimulatedShooting.Tests.PlayMode
         // task020 / BDD23: command -> production service -> real magazine/hand -> DTO HUD.
         [UnityTest] public IEnumerator Bdd23_Trench_ProductionMagazineReload() => ReloadFlow(TrainingMode.Trench);
         [UnityTest] public IEnumerator Bdd23_Urban_ProductionMagazineReload() => ReloadFlow(TrainingMode.Urban);
-        IEnumerator ReloadFlow(TrainingMode mode)
+        [UnityTest] public IEnumerator Bdd29_Trench_LeftShoulderProductionMagazineReload() => ReloadFlow(TrainingMode.Trench, true);
+        [UnityTest] public IEnumerator Bdd29_Urban_LeftShoulderProductionMagazineReload() => ReloadFlow(TrainingMode.Urban, true);
+        IEnumerator ReloadFlow(TrainingMode mode, bool leftShoulder = false)
         {
             yield return SceneManager.LoadSceneAsync("MainScene"); yield return null;
             app=GameMain.Instance.Services.Combat; ui=GameMain.Instance.GetComponent<P3LiveUIController>().View;
@@ -106,6 +108,14 @@ namespace SimulatedShooting.Tests.PlayMode
             input=new ManualXRTrainingInput(); runtime.InputOverride=input;
             if(mode==TrainingMode.Trench)app.Start();
             yield return CompleteOpening();
+            if (leftShoulder)
+            {
+                input.Press(XRTrainingInputButton.SwitchShoulder);
+                Sample(runtime.PlayerRoot.position, runtime.PlayerCamera.transform.position, Vector3.up);
+                input.Release(XRTrainingInputButton.SwitchShoulder);
+                Assert.That(runtime.ReloadPresentation.GetComponent<TrainingRifleGrabInteractable>().Shoulder, Is.EqualTo(ShoulderSide.Left));
+                Assert.That(runtime.ReloadPresentation.LeftHand.HandSide, Is.EqualTo(VirtualHandSide.Right), "Right support hand must execute a left-shoulder reload.");
+            }
             var id=app.Mission.SessionId;
             var ammo=app.Mission.Core.GetSnapshot(id).Data.Ammo;
             Assert.That(ammo.ReserveMagazines,Is.EqualTo(2));
@@ -142,11 +152,12 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(text.text,Does.Contain(mode==TrainingMode.Trench?"左手柄X键":"左摇杆按压"));
             Assert.That(runtime.ReloadPresentation.GetComponent<TrainingRifleGrabInteractable>().FrontHandInteractionLocked,Is.False);
             input.Release(XRTrainingInputButton.Trigger);
-            if(mode==TrainingMode.Trench)input.Release(XRTrainingInputButton.LeftGrip);
+            var supportGrip = leftShoulder ? XRTrainingInputButton.RightGrip : XRTrainingInputButton.LeftGrip;
+            if(mode==TrainingMode.Trench)input.Release(supportGrip);
             Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
             if(mode==TrainingMode.Trench)
             {
-                input.Press(XRTrainingInputButton.LeftGrip);
+                input.Press(supportGrip);
                 Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
                 Assert.That(app.Mission.Core.GetSnapshot(id).Data.Weapon.TwoHandGripActive,Is.True);
             }

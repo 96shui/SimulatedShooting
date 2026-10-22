@@ -37,6 +37,34 @@ namespace VRShooting.Tests.PlayMode
             clock.Advance(seconds); var result = controller.Step(frame ?? Frame(), (float)seconds);
             Assert.That(result.Success, Is.True, result.Message); input.AdvanceFrame();
         }
+        [TestCase(TrainingMode.Trench)]
+        [TestCase(TrainingMode.Urban)]
+        public void Bdd29_LeftShoulderUsesLeftRearGripAndRightSupportAndNeverFiresOnSwitch(TrainingMode mode)
+        {
+            var clock = new FakeCombatClock();
+            using var core = new CombatCoreService(clock);
+            Assert.That(core.Start(Session, mode, System.Array.Empty<CombatEntityVisualDto>()).Success);
+            var input = new ManualXRTrainingInput();
+            using var controller = new CombatInputController(Session, mode, core, input, clock, new RayFake(), new MoveFake());
+            input.Press(XRTrainingInputButton.SwitchShoulder); input.Press(XRTrainingInputButton.Trigger);
+            Step(controller, input, clock);
+            Assert.That(core.GetSnapshot(Session).Data.Player.Shoulder, Is.EqualTo(ShoulderSide.Left));
+            Assert.That(core.GetSnapshot(Session).Data.Ammo.CurrentMagazine, Is.EqualTo(30));
+            input.Release(XRTrainingInputButton.Trigger);
+            input.Release(XRTrainingInputButton.SwitchShoulder);
+            input.Press(XRTrainingInputButton.LeftGrip); Step(controller, input, clock);
+            Assert.That(core.GetSnapshot(Session).Data.Weapon.HoldState, Is.EqualTo(WeaponHoldState.RearHandHeld));
+            input.Press(XRTrainingInputButton.RightGrip); Step(controller, input, clock);
+            Assert.That(core.GetSnapshot(Session).Data.Weapon.TwoHandGripActive, Is.True);
+            input.Press(XRTrainingInputButton.Trigger); Step(controller, input, clock);
+            Assert.That(core.GetSnapshot(Session).Data.Ammo.CurrentMagazine, Is.EqualTo(29));
+            input.Press(XRTrainingInputButton.SwitchShoulder); Step(controller, input, clock, seconds: .5);
+            Assert.That(core.GetSnapshot(Session).Data.Player.Shoulder, Is.EqualTo(ShoulderSide.Right));
+            Assert.That(core.GetSnapshot(Session).Data.Weapon.TwoHandGripActive, Is.True);
+            Assert.That(core.GetSnapshot(Session).Data.Ammo.CurrentMagazine, Is.EqualTo(29));
+            input.Release(XRTrainingInputButton.RightGrip); Step(controller, input, clock);
+            Assert.That(core.GetSnapshot(Session).Data.Weapon.HoldState, Is.EqualTo(WeaponHoldState.Dropped));
+        }
         [UnityTest] public IEnumerator ManualInput_PickupTwoHandsSingleShot_ReloadShoulderPostureAndCombat()
         {
             var clock = new FakeCombatClock(); using var core = Start(clock);

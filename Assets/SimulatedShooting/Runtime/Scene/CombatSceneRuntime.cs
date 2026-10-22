@@ -242,7 +242,11 @@ namespace SimulatedShooting.Scene
         void Update(){if(active&&!ManualStepping)Step(Time.deltaTime);}
         void UpdateReloadPresentation(CombatCoreSnapshotDto snapshot)
         {
-            if(snapshot.SessionId==session&&reloadPresentation!=null)reloadPresentation.ApplySnapshot(snapshot);
+            if(snapshot.SessionId!=session)return;
+            hardware.SetShoulder(snapshot.Player.Shoulder);
+            (InputOverride as IShoulderAwareTrainingInput)?.SetShoulder(snapshot.Player.Shoulder);
+            grab?.SetShoulder(snapshot.Player.Shoulder);
+            if(reloadPresentation!=null)reloadPresentation.ApplySnapshot(snapshot);
         }
         public ServiceResult<Unit> SetCharacterActionsLocked(string id,bool locked)
         {
@@ -260,6 +264,8 @@ namespace SimulatedShooting.Scene
             if(!active)return;
             Clock.Step(delta);
             var snapshot=core.GetSnapshot(session);if(!snapshot.Success)return;
+            hardware.SetShoulder(snapshot.Data.Player.Shoulder);
+            (InputOverride as IShoulderAwareTrainingInput)?.SetShoulder(snapshot.Data.Player.Shoulder);
             if(snapshot.Data.State!=SessionState.Running||characterActionsLocked)
             {
                 foreach(var actor in actors.Values)if(actor.Agent.enabled&&actor.Agent.isOnNavMesh)actor.Agent.isStopped=true;
@@ -292,7 +298,7 @@ namespace SimulatedShooting.Scene
             }
             if(!vr&&InputOverride==null)
             {
-                if(input.RightGripHeld)
+                if(snapshot.Data.Player.Shoulder==ShoulderSide.Left?input.LeftGripHeld:input.RightGripHeld)
                 {
                     var mouse=Mouse.current?.delta.ReadValue()??Vector2.zero;
                     player.Rotate(0,mouse.x*.12f,0);pitch=Mathf.Clamp(pitch-mouse.y*.12f,-75,75);
@@ -341,10 +347,11 @@ namespace SimulatedShooting.Scene
         {
             var head=InputDevices.GetDeviceAtXRNode(XRNode.Head);var right=InputDevices.GetDeviceAtXRNode(XRNode.RightHand);var left=InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
             bool rightTracked=!vr||Tracked(right),leftTracked=!vr||Tracked(left),headTracked=!vr||Tracked(head);
-            var r=HandPosition(right);var l=HandPosition(left);
+            var leftShoulder=snapshot.Player.Shoulder==ShoulderSide.Left;
+            var r=HandPosition(leftShoulder?left:right);var l=HandPosition(leftShoulder?right:left);
             bool rear=!vr||grab.RearHandSelected||Vector3.Distance(r,weapon.RearHandGrip.position)<grab.RearGrabRadius;
             bool front=(!vr||grab.FrontHandSelected||Vector3.Distance(l,weapon.FrontHandGrip.position)<grab.FrontGrabRadius)&&!grab.FrontHandInteractionLocked;
-            return new CombatInputFrameDto{HeadTracked=headTracked,RearHandTracked=rightTracked,FrontHandTracked=leftTracked,RearGripInRange=rear,FrontGripInRange=front,
+            return new CombatInputFrameDto{HeadTracked=headTracked,RearHandTracked=leftShoulder?leftTracked:rightTracked,FrontHandTracked=leftShoulder?rightTracked:leftTracked,RearGripInRange=rear,FrontGripInRange=front,
                 IsRealVr=vr,MuzzlePosition=weapon.MuzzlePoint.position,AimDirection=weapon.AimLinePoint.forward,PlayerPosition=player.position,PlayerForward=player.forward,
                 RequestedPosture=hardware.PosturePressed?(PlayerPosture?)((PlayerPosture)(((int)snapshot.Player.Posture+1)%3)):null};
         }
@@ -494,7 +501,12 @@ namespace SimulatedShooting.Scene
                     weaponFeedback.PlayValidShot((int)++sequence,origin,hit?contact.point:origin+direction*100,
                         hit && !fleshHit,contact.point,contact.normal,false);
                 }
-                if(vr) {InputDevices.GetDeviceAtXRNode(XRNode.RightHand).SendHapticImpulse(0,.35f,.08f);InputDevices.GetDeviceAtXRNode(XRNode.LeftHand).SendHapticImpulse(0,.2f,.06f);}
+                if(vr)
+                {
+                    var leftShoulder=core.GetSnapshot(session).Data.Player.Shoulder==ShoulderSide.Left;
+                    InputDevices.GetDeviceAtXRNode(leftShoulder?XRNode.LeftHand:XRNode.RightHand).SendHapticImpulse(0,.35f,.08f);
+                    InputDevices.GetDeviceAtXRNode(leftShoulder?XRNode.RightHand:XRNode.LeftHand).SendHapticImpulse(0,.2f,.06f);
+                }
             }
             if(actors.TryGetValue(feedback.Kind==CombatFeedbackKind.EnemyHit?feedback.TargetId:feedback.EntityId,out var actor))
             {
@@ -661,11 +673,12 @@ namespace SimulatedShooting.Scene
         // a Single scene load, when reactivating departing roots creates orphan XR managers.
         void OnDestroy(){Deactivate();foreach(var sprite in mapSprites)if(sprite!=null)Destroy(sprite);mapSprites.Clear();}
         static void SetLayer(GameObject root,int layer){foreach(var t in root.GetComponentsInChildren<Transform>(true))t.gameObject.layer=layer;}
-        sealed class InputRouter:IXRTrainingInput
+        sealed class InputRouter:IXRTrainingInput,IShoulderAwareTrainingInput
         {
             readonly CombatSceneRuntime owner;
             IXRTrainingInput Input=>owner.InputOverride??owner.hardware;
             public InputRouter(CombatSceneRuntime owner){this.owner=owner;}
+            public void SetShoulder(ShoulderSide side)=>(Input as IShoulderAwareTrainingInput)?.SetShoulder(side);
             public bool ConfirmPressed=>Input.ConfirmPressed;
             public bool BackPressed=>Input.BackPressed;
             public bool TriggerPressed=>Input.TriggerPressed;

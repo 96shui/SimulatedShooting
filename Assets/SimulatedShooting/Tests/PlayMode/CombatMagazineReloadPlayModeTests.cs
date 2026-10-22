@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using SimulatedShooting.Scene;
 using UnityEngine;
@@ -99,6 +101,104 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(core.GetSnapshot("reload-play").Data.Ammo.CurrentMagazine, Is.EqualTo(29));
             Step(5f);
             Assert.That(core.GetSnapshot("reload-play").Data.Ammo.CurrentMagazine, Is.EqualTo(29));
+            yield return null;
+        }
+
+        [UnityTest] public IEnumerator Bdd29_ReloadMagazineArmsAndFingersMirrorAtEveryCriticalPose()
+        {
+            Fire(); core.Reload("reload-play");
+            var grab = rifle.GetComponent<TrainingRifleGrabInteractable>();
+            var rightPosition = rifle.transform.position;
+            var eyeLocal = eye.transform.InverseTransformPoint(rightPosition); eyeLocal.x = -eyeLocal.x;
+            var leftPosition = eye.transform.TransformPoint(eyeLocal);
+            foreach (var seconds in new[] { .5f, .5f, .7f })
+            {
+                Step(seconds);
+                var rightGeometry = ReloadGeometry();
+                Capture("mirror-right-" + presentation.Progress01.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));
+                Assert.That(core.ToggleShoulder("reload-play").Success, Is.True);
+                grab.SetShoulder(ShoulderSide.Left);
+                rifle.transform.position = leftPosition; presentation.Sample();
+                Capture("mirror-left-" + presentation.Progress01.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));
+                var leftGeometry = ReloadGeometry();
+                Assert.That(presentation.LeftHand.HandSide, Is.EqualTo(VirtualHandSide.Right));
+                Assert.That(leftGeometry.Length, Is.EqualTo(rightGeometry.Length));
+                for (var i = 0; i < rightGeometry.Length; i++)
+                {
+                    var expected = rightGeometry[i]; expected.x = -expected.x;
+                    Assert.That(Vector3.Distance(leftGeometry[i], expected), Is.LessThan(.0001f),
+                        "Reload pose " + presentation.Progress01 + ", rendered vertex " + i);
+                }
+                Assert.That(core.ToggleShoulder("reload-play").Success, Is.True);
+                grab.SetShoulder(ShoulderSide.Right);
+                rifle.transform.position = rightPosition; presentation.Sample();
+                var restored = ReloadGeometry();
+                for (var i = 0; i < restored.Length; i++)
+                    Assert.That(Vector3.Distance(restored[i], rightGeometry[i]), Is.LessThan(.0001f));
+            }
+            Assert.That(eye.transform.position, Is.EqualTo(new Vector3(0, 1.65f, 0)));
+            yield return null;
+        }
+
+        Vector3[] ReloadGeometry()
+        {
+            var points = new List<Vector3> { eye.transform.InverseTransformPoint(presentation.ReloadHandAnchor.position) };
+            foreach (var filter in presentation.Magazine.GetComponentsInChildren<MeshFilter>(true))
+            {
+                // Production magazine meshes are GPU-only. The eight named local box
+                // corners exercise its complete affine pose without changing import flags.
+                var bounds = filter.sharedMesh.bounds;
+                foreach (var x in new[] { bounds.min.x, bounds.max.x })
+                    foreach (var y in new[] { bounds.min.y, bounds.max.y })
+                        foreach (var z in new[] { bounds.min.z, bounds.max.z })
+                            points.Add(eye.transform.InverseTransformPoint(filter.transform.TransformPoint(new Vector3(x, y, z))));
+            }
+            foreach (var hand in rifle.GetComponentsInChildren<VRControllerHandVisual>(true).OrderBy(h => h.SourceHandSide))
+                foreach (var skin in hand.ModelRoot.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+                {
+                    var mesh = new Mesh();
+                    try
+                    {
+                        skin.BakeMesh(mesh, false);
+                        foreach (var point in mesh.vertices)
+                            points.Add(eye.transform.InverseTransformPoint(skin.transform.TransformPoint(point)));
+                    }
+                    finally { UnityEngine.Object.DestroyImmediate(mesh); }
+                }
+            return points.ToArray();
+        }
+
+        [UnityTest] public IEnumerator Bdd29_SwitchingShoulderDuringVrReloadRestoresTheNewSupportController()
+        {
+            core.Changed -= presentation.ApplySnapshot;
+            foreach (var hand in rifle.GetComponentsInChildren<VRControllerHandVisual>(true)) hand.gameObject.SetActive(false);
+            UnityEngine.Object.Destroy(presentation); yield return null;
+            testRig = new GameObject("ShoulderReloadRig");
+            var leftController = new GameObject("Left Controller").transform;
+            var rightController = new GameObject("Right Controller").transform;
+            leftController.SetParent(testRig.transform, false); rightController.SetParent(testRig.transform, false);
+            leftController.position = new Vector3(-.2f, 1.2f, .3f); rightController.position = new Vector3(.2f, 1.1f, .2f);
+            var leftPose = leftController.localToWorldMatrix; var rightPose = rightController.localToWorldMatrix;
+            var grab = rifle.GetComponent<TrainingRifleGrabInteractable>();
+            foreach (var side in new[] { VirtualHandSide.Left, VirtualHandSide.Right })
+            {
+                var parent = side == VirtualHandSide.Left ? leftController : rightController;
+                var hand = UnityEngine.Object.Instantiate(Resources.Load<GameObject>("Combat/Hands/VirtualHand_" + side), parent, false);
+                hand.GetComponent<VRControllerHandVisual>().BindWeapon(grab);
+            }
+            presentation = rifle.AddComponent<CombatRifleReloadPresentation>();
+            presentation.Configure(rifle.GetComponent<WeaponPrefabBinding>(), eye, testRig, true, () => clock.Now, true);
+            core.Changed += presentation.ApplySnapshot;
+            Fire(); core.Reload("reload-play"); Step(.5f);
+            Assert.That(grab.FrontHandInteractionLocked, Is.True);
+            core.ToggleShoulder("reload-play"); grab.SetShoulder(ShoulderSide.Left); presentation.Sample();
+            Assert.That(presentation.LeftHand.HandSide, Is.EqualTo(VirtualHandSide.Right));
+            Step(1.51f);
+            Assert.That(presentation.IsAnimating, Is.False);
+            Assert.That(presentation.LeftHand.transform.parent, Is.SameAs(rightController));
+            Assert.That(grab.FrontHandInteractionLocked, Is.False);
+            Assert.That(leftController.localToWorldMatrix, Is.EqualTo(leftPose));
+            Assert.That(rightController.localToWorldMatrix, Is.EqualTo(rightPose));
             yield return null;
         }
 
@@ -219,6 +319,44 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(grab.IsSelectableBy((IXRSelectInteractor)left), Is.True);
             manager.SelectEnter((IXRSelectInteractor)left, (IXRSelectInteractable)grab);
             Assert.That(grab.FrontHandSelected, Is.True);
+            grab.ResetToRack();
+            yield return null;
+        }
+
+        [UnityTest] public IEnumerator Bdd29_RealXriSelectionsTransferRearFirstAndLockOnlyTheNewSupportHand()
+        {
+            testRig = new GameObject("ShoulderSelectRig");
+            var manager = testRig.AddComponent<XRInteractionManager>();
+            var grab = rifle.GetComponent<TrainingRifleGrabInteractable>(); grab.interactionManager = manager; grab.enabled = true;
+            XRDirectInteractor Hand(InteractorHandedness side)
+            {
+                var node = new GameObject(side.ToString()); node.transform.SetParent(testRig.transform);
+                node.AddComponent<SphereCollider>().isTrigger = true;
+                var hand = node.AddComponent<XRDirectInteractor>(); hand.interactionManager = manager; hand.handedness = side;
+                return hand;
+            }
+            var right = Hand(InteractorHandedness.Right); var left = Hand(InteractorHandedness.Left);
+            right.transform.position = grab.RearAttach.position; left.transform.position = grab.FrontAttach.position;
+            manager.SelectEnter((IXRSelectInteractor)right, (IXRSelectInteractable)grab);
+            manager.SelectEnter((IXRSelectInteractor)left, (IXRSelectInteractable)grab);
+            var leftPose = left.transform.localToWorldMatrix; var rightPose = right.transform.localToWorldMatrix;
+            grab.SetShoulder(ShoulderSide.Left);
+            Assert.That(grab.RearHandSelected && grab.FrontHandSelected, Is.True);
+            Assert.That(grab.interactorsSelecting[0], Is.SameAs(left));
+            Assert.That(grab.GetAttachTransform((IXRInteractor)left), Is.SameAs(grab.RearAttach));
+            Assert.That(grab.GetAttachTransform((IXRInteractor)right), Is.SameAs(grab.FrontAttach));
+            Assert.That(left.transform.localToWorldMatrix, Is.EqualTo(leftPose));
+            Assert.That(right.transform.localToWorldMatrix, Is.EqualTo(rightPose));
+            grab.SetFrontHandInteractionLocked(true);
+            Assert.That(grab.RearHandSelected, Is.True); Assert.That(grab.FrontHandSelected, Is.False);
+            Assert.That(grab.IsSelectableBy((IXRSelectInteractor)right), Is.False);
+            Assert.That(grab.IsHoverableBy((IXRHoverInteractor)right), Is.False);
+            grab.SetFrontHandInteractionLocked(false);
+            right.transform.position = grab.FrontAttach.position;
+            manager.SelectEnter((IXRSelectInteractor)right, (IXRSelectInteractable)grab);
+            grab.SetShoulder(ShoulderSide.Right);
+            Assert.That(grab.interactorsSelecting[0], Is.SameAs(right));
+            Assert.That(grab.RearHandSelected && grab.FrontHandSelected, Is.True);
             grab.ResetToRack();
             yield return null;
         }

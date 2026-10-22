@@ -6,6 +6,7 @@ namespace VRShooting.Application.Events
     {
         public string SessionId { get; init; }
         public ZeroingShotDto Shot { get; init; }
+        public int WeaponShotSequence { get; init; }
     }
 
     public readonly struct ZeroingRoundCompletedEvent

@@ -48,16 +48,17 @@ namespace SimulatedShooting.Scene
             magazineRenderers = magazine.GetComponentsInChildren<Renderer>(true);
             originalVisibility = magazineRenderers.Select(r => r.enabled).ToArray();
             handAnchor = new GameObject("Grip_training-rifle_ReloadHand").transform;
-            handAnchor.SetParent(transform, false);
+            handAnchor.SetParent(weapon.VisualRoot, false);
             rearHandAnchor = new GameObject("Grip_training-rifle_ReloadRearHand").transform;
-            rearHandAnchor.SetParent(transform, false);
+            rearHandAnchor.SetParent(weapon.VisualRoot, false);
             if (vr)
-                leftHand = rig.GetComponentsInChildren<VRControllerHandVisual>(true).First(h => h.HandSide == VirtualHandSide.Left);
+                leftHand = rig.GetComponentsInChildren<VRControllerHandVisual>(true).First(h => h.SourceHandSide == VirtualHandSide.Left);
             else
             {
                 leftHand = CreateHand(VirtualHandSide.Left);
                 rightHand = CreateHand(VirtualHandSide.Right);
             }
+            VRHandPresentation.ApplyShoulder(grab, grab != null ? grab.Shoulder : ShoulderSide.Right);
         }
 
         VRControllerHandVisual CreateHand(VirtualHandSide side)
@@ -120,13 +121,13 @@ namespace SimulatedShooting.Scene
             if (!vr)
             {
                 var rear = weapon.RecoilRoot.TransformPoint(weapon.RecoilRoot.parent.InverseTransformPoint(weapon.RearHandGrip.position) - recoilPosition);
-                rearHandAnchor.SetPositionAndRotation(rear, weapon.RearHandGrip.rotation * lean);
+                SetAnchorPose(rearHandAnchor, rear, weapon.RearHandGrip);
                 rightHand.SetPresentationGrip(rearHandAnchor);
             }
             var seated = weapon.MagazinePoint.position;
             var pulled = seated - weapon.transform.up * .17f;
             // Position below the current viewing frustum, even while walking or looking down.
-            var hidden = eye.transform.TransformPoint(new Vector3(-.20f, -.85f, .12f));
+            var hidden = eye.transform.TransformPoint(new Vector3(snapshot.Player.Shoulder == ShoulderSide.Left ? .20f : -.20f, -.85f, .12f));
             Vector3 pivot;
             if (p < .15f) pivot = seated;
             else if (p < .30f) pivot = Vector3.Lerp(seated, pulled, Ease(p, .15f, .30f));
@@ -135,19 +136,28 @@ namespace SimulatedShooting.Scene
             else if (p < .82f) pivot = Vector3.Lerp(hidden, pulled, Ease(p, .62f, .82f));
             else if (p < .90f) pivot = Vector3.Lerp(pulled, seated, Ease(p, .82f, .90f));
             else pivot = seated;
-            var rotation = magazine.parent.rotation * magazineRotation;
             var tilt = p >= .30f && p < .82f ? Mathf.Sin(Ease(p, .30f, .82f) * Mathf.PI) * -18f : 0;
-            rotation *= Quaternion.Euler(0, 0, tilt);
-            magazine.SetPositionAndRotation(pivot - rotation * pivotInMesh, rotation);
+            // Animate in the source rifle frame. VisualRoot reflects the complete
+            // magazine pose, including its pivot and tilt, in left-shoulder mode.
+            magazine.localRotation = magazineRotation * Quaternion.Euler(0, 0, tilt);
+            magazine.localPosition = magazine.parent.InverseTransformPoint(pivot)
+                - magazine.localRotation * Vector3.Scale(magazine.localScale, pivotInMesh);
             for (var i = 0; i < magazineRenderers.Length; i++)
                 magazineRenderers[i].enabled = originalVisibility[i] && !(p >= .48f && p < .62f);
             var handPosition = pivot;
             var front = weapon.RecoilRoot.TransformPoint(frontInRecoil);
             if (p < .15f) handPosition = Vector3.Lerp(front, seated, Ease(p, 0, .15f));
             if (p >= .90f) handPosition = Vector3.Lerp(seated, front, Ease(p, .90f, 1));
-            handAnchor.SetPositionAndRotation(handPosition, weapon.FrontHandGrip.rotation);
+            SetAnchorPose(handAnchor, handPosition, weapon.FrontHandGrip);
             var curl = p < .25f ? Ease(p, .15f, .25f) : p > .90f ? 1 - Ease(p, .90f, 1) : 1;
             leftHand.SetPresentationGrip(handAnchor, curl);
+        }
+
+        static void SetAnchorPose(Transform anchor, Vector3 position, Transform grip)
+        {
+            var localGrip = anchor.parent.worldToLocalMatrix * grip.localToWorldMatrix;
+            anchor.localPosition = anchor.parent.InverseTransformPoint(position);
+            anchor.localRotation = Quaternion.LookRotation(localGrip.GetColumn(2), localGrip.GetColumn(1));
         }
 
         void Restore()
@@ -157,7 +167,7 @@ namespace SimulatedShooting.Scene
                 leftControlSuspended = false;
                 if (vr && leftHand != null)
                 {
-                    leftHand.transform.SetParent(trackedHandParent, false);
+                    leftHand.transform.SetParent(leftHand.TrackedControllerParent != null ? leftHand.TrackedControllerParent : trackedHandParent, false);
                     leftHand.transform.localScale = trackedHandScale;
                     trackedHandParent = null;
                 }

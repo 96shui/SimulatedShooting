@@ -13,6 +13,7 @@ namespace VRShooting.Application.Combat
     {
         readonly CombatSceneDefinitionDto definition;
         readonly CombatConfigDto config;
+        readonly float teammateHealth;
         readonly ICombatClock clock;
         readonly ICombatRandom random;
         readonly Func<string> nextSessionId;
@@ -49,10 +50,12 @@ namespace VRShooting.Application.Combat
             IDroneReconService recon=null)
         {
             this.definition=definition; this.clock=clock??throw new ArgumentNullException(nameof(clock));
-            this.random=random??throw new ArgumentNullException(nameof(random)); this.config=config??CombatConfigDto.Default;
+            this.random=random??throw new ArgumentNullException(nameof(random)); this.config=config??CombatConfigDto.ForMode(TrainingMode.Trench);
+            var squadConfig = config ?? CombatConfigDto.Default;
+            teammateHealth = squadConfig.PlayerHealth;
             nextSessionId=sessionIdFactory??(()=>Guid.NewGuid().ToString("N"));
             this.recon=recon;
-            core=new CombatCoreService(clock,this.config); squad=new SquadFormationService(clock,navigation,this.config);
+            core=new CombatCoreService(clock,this.config); squad=new SquadFormationService(clock,navigation,squadConfig);
             grenades=new SquadGrenadeTacticService(clock,core,squad,this.config);
             core.Changed+=OnCore; squad.Changed+=OnSquad;
         }
@@ -69,8 +72,8 @@ namespace VRShooting.Application.Combat
             var spawn=definition.PlayerSpawnPosition;
             var forward=SpawnForward();
             var members=new[]{new SquadMemberDto {MemberId="preview.player",Role=SquadMemberRole.Player,Health=config.PlayerHealth,WorldPosition=spawn},
-                new SquadMemberDto {MemberId="preview.teammate-2",Role=SquadMemberRole.TeammateTwo,Health=config.PlayerHealth,WorldPosition=spawn-forward*config.SquadSpacing},
-                new SquadMemberDto {MemberId="preview.teammate-3",Role=SquadMemberRole.TeammateThree,Health=config.PlayerHealth,WorldPosition=spawn-forward*config.SquadSpacing*2}};
+                new SquadMemberDto {MemberId="preview.teammate-2",Role=SquadMemberRole.TeammateTwo,Health=teammateHealth,WorldPosition=spawn-forward*config.SquadSpacing},
+                new SquadMemberDto {MemberId="preview.teammate-3",Role=SquadMemberRole.TeammateThree,Health=teammateHealth,WorldPosition=spawn-forward*config.SquadSpacing*2}};
             return ServiceResult<TrenchBriefingDto>.Ok(new TrenchBriefingDto {MapId=mapId,EnemyEstimateMin=5,EnemyEstimateMax=7,
                 PlannedSquad=new SquadStatusDto {Members=Array.AsReadOnly(members),CommandMenuAvailable=false},ProjectedMap=BuildMap(true)});
         }

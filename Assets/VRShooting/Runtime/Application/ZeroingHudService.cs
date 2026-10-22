@@ -9,7 +9,6 @@ namespace VRShooting.Application
 {
     public sealed class ZeroingHudService : IHUDService
     {
-        const string DistanceLabel = "100m";
 
         readonly IGameEventBus eventBus;
         readonly ITrainingSessionService trainingSessions;
@@ -251,14 +250,8 @@ namespace VRShooting.Application
 
         static string FormatDistance(ZeroingSessionDto zeroingSession)
         {
-            if (zeroingSession.DistanceMeters <= 0f)
-            {
-                return DistanceLabel;
-            }
-
-            return Mathf.Approximately(zeroingSession.DistanceMeters, 100f)
-                ? DistanceLabel
-                : zeroingSession.DistanceMeters + "m";
+            var distance = zeroingSession.DistanceMeters > 0f ? zeroingSession.DistanceMeters : ZeroingRules.DistanceMeters;
+            return distance.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture) + "m";
         }
 
         static string FormatImpactRecord(IReadOnlyList<ZeroingShotDto> shots)

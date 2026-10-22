@@ -44,6 +44,9 @@ namespace SimulatedShooting.Scene
         XRTrainingInputCommandDispatcher dispatcher;
         IDisposable inputSubscription;
         IDisposable shotSubscription;
+        IDisposable zeroingShotSubscription;
+        ZeroingShotDto latestZeroingShot;
+        int latestZeroingShotSequence;
         Material tracerMaterial;
 
         WeaponControlStateDto currentState;
@@ -67,6 +70,8 @@ namespace SimulatedShooting.Scene
         bool hasCurrentState;
         bool grabSubscribed;
         bool latestRaycastHit;
+        bool shoulderChangedThisFrame;
+        bool triggerNeedsRelease;
         RaycastHit latestRaycast;
 
         public bool IsInitialized => initialized;
@@ -185,6 +190,8 @@ namespace SimulatedShooting.Scene
             inputSubscription = null;
             shotSubscription?.Dispose();
             shotSubscription = null;
+            zeroingShotSubscription?.Dispose();
+            zeroingShotSubscription = null;
             dispatcher = null;
             initialized = false;
         }
@@ -333,6 +340,7 @@ namespace SimulatedShooting.Scene
                 dispatcher = new XRTrainingInputCommandDispatcher(input, eventBus);
                 inputSubscription = eventBus.Subscribe<XRTrainingInputCommandEvent>(HandleInputCommand);
                 shotSubscription = eventBus.Subscribe<WeaponShotResultEvent>(HandleWeaponShotResult);
+                zeroingShotSubscription = eventBus.Subscribe<ZeroingShotRecordedEvent>(HandleZeroingShotRecorded);
             }
 
             weaponService = services.WeaponControl;
@@ -351,9 +359,8 @@ namespace SimulatedShooting.Scene
                 return;
             }
 
-            currentState = start.Data;
-            hasCurrentState = true;
             boundSessionId = sessionId;
+            ApplyStateResult(start);
             if (!poseCaptured)
             {
                 headPosition = viewCamera.transform.position;
@@ -381,10 +388,13 @@ namespace SimulatedShooting.Scene
             currentState = default;
             lastShot = default;
             lastVisualizedShotSequence = 0;
+            latestZeroingShotSequence = 0;
+            latestZeroingShot = default;
             latestRaycastHit = false;
             latestRaycast = default;
             simulatedRearGripHeld = false;
             simulatedFrontGripHeld = false;
+            shoulderChangedThisFrame = triggerNeedsRelease = false;
             frontHandOffset = Vector2.zero;
             RestoreRecoilPose();
             if (poseCaptured && viewCamera != null && !ShouldUseVrPoseSources())
@@ -491,35 +501,37 @@ namespace SimulatedShooting.Scene
                     ApplyStateResult(weaponService.ToggleShoulder(SessionId));
                     break;
                 case XRTrainingInputCommandType.RightGripPressed:
-                    if (!ShouldUseVrPoseSources())
-                    {
-                        simulatedRearGripHeld = true;
-                        UpdateGripState();
-                    }
+                    SetSimulatedGrip(true, true);
                     break;
                 case XRTrainingInputCommandType.RightGripReleased:
-                    if (!ShouldUseVrPoseSources())
-                    {
-                        simulatedRearGripHeld = false;
-                        simulatedFrontGripHeld = false;
-                        UpdateGripState();
-                    }
+                    SetSimulatedGrip(true, false);
                     break;
                 case XRTrainingInputCommandType.LeftGripPressed:
-                    if (!ShouldUseVrPoseSources() && simulatedRearGripHeld)
-                    {
-                        simulatedFrontGripHeld = true;
-                        UpdateGripState();
-                    }
+                    SetSimulatedGrip(false, true);
                     break;
                 case XRTrainingInputCommandType.LeftGripReleased:
-                    if (!ShouldUseVrPoseSources())
-                    {
-                        simulatedFrontGripHeld = false;
-                        UpdateGripState();
-                    }
+                    SetSimulatedGrip(false, false);
                     break;
             }
+        }
+
+        void SetSimulatedGrip(bool physicalRight, bool held)
+        {
+            if (ShouldUseVrPoseSources()) return;
+            var isRear = physicalRight == (CurrentShoulder == ShoulderSide.Right);
+            if (isRear)
+            {
+                simulatedRearGripHeld = held;
+                if (!held) simulatedFrontGripHeld = false;
+                else
+                {
+                    var supportPressed = physicalRight ? input.LeftGripPressed : input.RightGripPressed;
+                    var supportHeld = physicalRight ? input.LeftGripHeld : input.RightGripHeld;
+                    if (supportPressed && supportHeld) simulatedFrontGripHeld = true;
+                }
+            }
+            else simulatedFrontGripHeld = held && simulatedRearGripHeld;
+            UpdateGripState();
         }
 
         void UpdateAimModeFromInput()
@@ -789,6 +801,24 @@ namespace SimulatedShooting.Scene
                 return;
             }
 
+            if (shoulderChangedThisFrame)
+            {
+                shoulderChangedThisFrame = false;
+                return;
+            }
+            if (triggerNeedsRelease)
+            {
+                if (!input.TriggerHeld)
+                {
+                    triggerNeedsRelease = false;
+                    // Cancellation disarms the service too. A neutral adapter frame must
+                    // rearm that sequence, even when the old physical trigger stays held.
+                    services.WeaponFire.Tick(SessionId, 0f,
+                        new WeaponTriggerStateInputDto { SessionId = SessionId, Released = true }, BuildFireSnapshot());
+                }
+                return;
+            }
+
             services.WeaponFire.Tick(
                 SessionId,
                 deltaTime,
@@ -801,6 +831,13 @@ namespace SimulatedShooting.Scene
                     Released = input.TriggerReleased
                 },
                 BuildFireSnapshot());
+        }
+
+        void HandleZeroingShotRecorded(ZeroingShotRecordedEvent evt)
+        {
+            if (evt.SessionId != boundSessionId) return;
+            latestZeroingShot = evt.Shot;
+            latestZeroingShotSequence = evt.WeaponShotSequence;
         }
 
         void HandleWeaponShotResult(WeaponShotResultEvent evt)
@@ -864,13 +901,20 @@ namespace SimulatedShooting.Scene
             var visualEnd = latestRaycastHit
                 ? latestRaycast.point
                 : result.MuzzlePosition + result.AimDirection * MaxShotDistance;
-            // Physical impact feedback is independent of whether this collider scores.
-            SpawnTracer(result.MuzzlePosition, visualEnd, latestRaycastHit, latestRaycast);
-            if (result.Hit && targetSurface != null)
+            var corrected = targetSurface != null && latestZeroingShotSequence > 0 &&
+                latestZeroingShotSequence == result.ShotSequence;
+            if (corrected)
             {
-                targetSurface.TryRecordWorldPoint(
-                    latestRaycastHit ? latestRaycast.point : result.HitPoint,
-                    out _);
+                var point = latestZeroingShot.ImpactPointCm;
+                visualEnd = targetSurface.TargetCenter.TransformPoint(new Vector3(point.x * .01f, point.y * .01f, 0));
+                var onFace = targetSurface.TryRecordWorldPoint(visualEnd, out _);
+                SpawnTracer(result.MuzzlePosition, visualEnd, onFace, latestRaycast, -targetSurface.TargetCenter.forward);
+            }
+            else
+            {
+                SpawnTracer(result.MuzzlePosition, visualEnd, latestRaycastHit, latestRaycast);
+                if (result.Hit && targetSurface != null)
+                    targetSurface.TryRecordWorldPoint(latestRaycastHit ? latestRaycast.point : result.HitPoint, out _);
             }
 
             if (movingTargetHitAdapter != null && latestRaycastHit && latestRaycast.collider != null)
@@ -908,6 +952,11 @@ namespace SimulatedShooting.Scene
 
         Vector3 ResolveHitPointForService(RaycastHit raycastHit, bool hit, Vector3 muzzle, Vector3 direction)
         {
+            if (services != null && services.TrainingSessions.HasActiveSession &&
+                services.TrainingSessions.Current.Mode == TrainingMode.Zeroing100m && targetSurface != null &&
+                targetSurface.TryProjectRay(new Ray(muzzle, direction), out var targetOffset))
+                return new Vector3(targetOffset.x, targetOffset.y, ZeroingRules.DistanceMeters);
+
             if (!hit)
             {
                 return muzzle + direction * ZeroingRules.DistanceMeters;
@@ -985,7 +1034,7 @@ namespace SimulatedShooting.Scene
             return viewCamera != null ? viewCamera.transform.forward : Vector3.forward;
         }
 
-        void SpawnTracer(Vector3 start, Vector3 end, bool hit, RaycastHit raycastHit)
+        void SpawnTracer(Vector3 start, Vector3 end, bool hit, RaycastHit raycastHit, Vector3 normalOverride = default)
         {
             if (tracerRoot == null)
             {
@@ -1000,8 +1049,8 @@ namespace SimulatedShooting.Scene
                     start,
                     end,
                     hit,
-                    hit ? raycastHit.point : end,
-                    hit ? raycastHit.normal : Vector3.zero);
+                    end,
+                    hit ? (normalOverride.sqrMagnitude > 0 ? normalOverride : raycastHit.normal) : Vector3.zero);
                 return;
             }
 
@@ -1053,8 +1102,20 @@ namespace SimulatedShooting.Scene
         {
             if (result.Success)
             {
+                var changed = hasCurrentState && currentState.ShoulderSide != result.Data.ShoulderSide;
                 currentState = result.Data;
                 hasCurrentState = true;
+                if (changed)
+                {
+                    var previousRear = simulatedRearGripHeld;
+                    simulatedRearGripHeld = simulatedFrontGripHeld;
+                    simulatedFrontGripHeld = previousRear && simulatedRearGripHeld;
+                    shoulderChangedThisFrame = triggerNeedsRelease = true;
+                    services?.AutomaticFire.Cancel(SessionId, WeaponFireStopReason.WeaponBecameInvalid);
+                }
+                (input as IShoulderAwareTrainingInput)?.SetShoulder(currentState.ShoulderSide);
+                if (hapticOutput is InputSystemWeaponHapticOutput haptics) haptics.Shoulder = currentState.ShoulderSide;
+                grabInteractable?.SetShoulder(currentState.ShoulderSide);
             }
         }
 

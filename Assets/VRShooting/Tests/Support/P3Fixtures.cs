@@ -94,7 +94,8 @@ namespace VRShooting.P3.TestSupport
         {
             var list = new List<SceneSpawnPointDto>();
             var map = urban ? P3ContractIds.UrbanMap : P3ContractIds.TrenchMap;
-            for (var i = 0; i < (urban ? 8 : 5); i++)
+            // Main's frozen trench contract requires seven navigable candidates (BDD24).
+            for (var i = 0; i < (urban ? 8 : 7); i++)
             {
                 var building = urban && i >= 2;
                 var floor = building ? (i - 2) / 2 + 1 : 0;

@@ -42,12 +42,16 @@ namespace VRShooting.Tests.EditMode.UI
                 }
                 var expected = TacticalTargetPlot.MapImpactPointCm(rect.rect, point);
                 var markerCentre = Vector2.zero;
+                var markerVertices = 0;
                 for (var index = 4; index < mesh.vertexCount; index++)
                 {
+                    if (mesh.colors32[index].g > 80) continue; // Gold assisted boundary is not an impact.
                     markerCentre += (Vector2)mesh.vertices[index];
+                    markerVertices++;
                     Assert.That(mesh.uv[index], Is.EqualTo(new Vector2(.08f, .9f)));
                 }
-                markerCentre /= mesh.vertexCount - 4;
+                Assert.That(markerVertices, Is.GreaterThan(0));
+                markerCentre /= markerVertices;
                 Assert.That(Vector2.Distance(markerCentre, expected), Is.LessThan(.001f));
             }
             finally { Object.DestroyImmediate(mesh); Object.DestroyImmediate(root); }
@@ -66,7 +70,35 @@ namespace VRShooting.Tests.EditMode.UI
             Assert.That(TacticalTargetPlot.MapImpactPointCm(rect, new Vector2(0f, -25f)).y, Is.EqualTo(region.yMin).Within(.001f));
             Assert.That(TacticalTargetPlot.MapImpactPointCm(rect, new Vector2(5f, 0f)).x - region.center.x,
                 Is.EqualTo(art.width*202f/1068f*.5f).Within(.001f));
-            Assert.That(TacticalTargetPlot.TenRingDiameterCm, Is.EqualTo(10f));
+            Assert.That(TacticalTargetPlot.TenRingDiameterCm, Is.EqualTo(20f));
+        }
+
+        [TestCase(100f)]
+        [TestCase(255f)]
+        [TestCase(500f)]
+        public void Bdd29_RenderedAssistedTenRingShowsTheLargerTwentyCentimetreBoundary(float side)
+        {
+            var root = new GameObject("AssistedTenRing", typeof(RectTransform), typeof(Canvas));
+            Mesh mesh = null;
+            try
+            {
+                root.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+                var rect = root.GetComponent<RectTransform>(); rect.sizeDelta = Vector2.one * side;
+                var plot = root.AddComponent<TacticalTargetPlot>();
+                plot.Rebuild(UnityEngine.UI.CanvasUpdate.PreRender);
+                mesh = Object.Instantiate(root.GetComponent<CanvasRenderer>().GetMesh());
+                var region = TacticalTargetPlot.HitRegion(rect.rect);
+                var radius = 0f; var count = 0;
+                var vertices = mesh.vertices; var colors = mesh.colors32;
+                for (var i = 0; i < vertices.Length; i++)
+                {
+                    if (colors[i].r != 247 || colors[i].g != 185) continue;
+                    radius = Mathf.Max(radius, Vector2.Distance(vertices[i], region.center)); count++;
+                }
+                Assert.That(count, Is.GreaterThan(0), "The actual UI mesh must draw a distinct assisted boundary.");
+                Assert.That(radius, Is.EqualTo(region.width * .2f).Within(.001f), "Radius 10cm on a 50cm target.");
+            }
+            finally { Object.DestroyImmediate(mesh); Object.DestroyImmediate(root); }
         }
 
         [Test]

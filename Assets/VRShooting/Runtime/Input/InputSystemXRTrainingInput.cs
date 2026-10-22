@@ -2,15 +2,37 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.XR;
+using VRShooting.Common;
 
 namespace VRShooting.Input
 {
-    public sealed class InputSystemXRTrainingInput : IXRTrainingInput
+    public sealed class InputSystemXRTrainingInput : IXRTrainingInput, IShoulderAwareTrainingInput
     {
         int lastXrFrame = -1;
         bool xrTriggerHeld;
         bool xrTriggerPressed;
         bool xrTriggerReleased;
+        ShoulderSide shoulder = ShoulderSide.Right;
+        bool needsTriggerRelease;
+        XRController TriggerController => shoulder == ShoulderSide.Left ? XRController.leftHand : XRController.rightHand;
+
+        public void SetShoulder(ShoulderSide value)
+        {
+            if (shoulder == value) return;
+            shoulder = value;
+            needsTriggerRelease = true;
+            xrTriggerHeld = xrTriggerPressed = xrTriggerReleased = false;
+            lastXrFrame = -1;
+        }
+
+        bool WaitingForTriggerRelease()
+        {
+            if (!needsTriggerRelease) return false;
+            if (ReadXrAxis(TriggerController, "trigger") <= WeaponTriggerHysteresis.ReleaseThreshold &&
+                !IsPressed(Mouse.current?.leftButton) && !IsPressed(Keyboard.current?.fKey) &&
+                !IsPressed(Gamepad.current?.rightTrigger)) needsTriggerRelease = false;
+            return needsTriggerRelease;
+        }
 
         public bool ConfirmPressed =>
             WasPressedThisFrame(Keyboard.current?.enterKey) ||
@@ -21,17 +43,17 @@ namespace VRShooting.Input
             WasPressedThisFrame(Keyboard.current?.escapeKey) ||
             WasPressedThisFrame(Gamepad.current?.buttonEast);
 
-        public bool TriggerPressed =>
+        public bool TriggerPressed => !WaitingForTriggerRelease() && (
             ReadXrTriggerPressed() ||
             WasPressedThisFrame(Mouse.current?.leftButton) ||
             WasPressedThisFrame(Keyboard.current?.fKey) ||
-            WasPressedThisFrame(Gamepad.current?.rightTrigger);
+            WasPressedThisFrame(Gamepad.current?.rightTrigger));
 
-        public bool TriggerHeld =>
+        public bool TriggerHeld => !WaitingForTriggerRelease() && (
             ReadXrTriggerHeld() ||
             IsPressed(Mouse.current?.leftButton) ||
             IsPressed(Keyboard.current?.fKey) ||
-            IsPressed(Gamepad.current?.rightTrigger);
+            IsPressed(Gamepad.current?.rightTrigger));
 
         public bool TriggerReleased =>
             ReadXrTriggerReleased() ||
@@ -40,7 +62,7 @@ namespace VRShooting.Input
             WasReleasedThisFrame(Gamepad.current?.rightTrigger);
 
         public float RightTriggerValue => Mathf.Max(
-            ReadXrAxis(XRController.rightHand, "trigger"),
+            ReadXrAxis(TriggerController, "trigger"),
             Gamepad.current != null ? Gamepad.current.rightTrigger.ReadValue() : 0f);
 
         public bool RightGripPressed =>
@@ -72,6 +94,7 @@ namespace VRShooting.Input
             WasPressedThisFrame(Gamepad.current?.buttonWest);
 
         public bool SwitchShoulderPressed =>
+            WasPressedThisFrame(ReadXrButton(XRController.rightHand, "secondaryButton")) ||
             WasPressedThisFrame(Keyboard.current?.qKey) ||
             WasPressedThisFrame(Gamepad.current?.rightShoulder);
 
@@ -166,7 +189,7 @@ namespace VRShooting.Input
             lastXrFrame = Time.frameCount;
             xrTriggerPressed = false;
             xrTriggerReleased = false;
-            var value = ReadXrAxis(XRController.rightHand, "trigger");
+            var value = WaitingForTriggerRelease() ? 0 : ReadXrAxis(TriggerController, "trigger");
             if (WeaponTriggerHysteresis.CrossedPress(xrTriggerHeld, value))
             {
                 xrTriggerHeld = true;

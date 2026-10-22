@@ -154,7 +154,7 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [Test]
-        public void Bdd09_DayHud_UsesOneHundredMetreRangeAndFortyMetreRoute()
+        public void Bdd29_DayHud_UsesFiftyMetreRangeAndFortyMetreRoute()
         {
             var shooting = Find("MovingTargetRange.ShootingPosition").transform.position;
             var route = Find("MovingTargetRange.Route.Root").transform.position;
@@ -162,7 +162,7 @@ namespace SimulatedShooting.Tests.PlayMode
             var left = Find("MovingTargetRange.Route.LeftEndpoint").transform.position;
 
             var horizontalRange = Vector2.Distance(new Vector2(shooting.x, shooting.z), new Vector2(route.x, route.z));
-            Assert.That(horizontalRange, Is.EqualTo(100f).Within(0.10f));
+            Assert.That(horizontalRange, Is.EqualTo(50f).Within(0.10f));
             Assert.That(Vector3.Distance(right, left), Is.EqualTo(40f).Within(0.05f));
             Assert.That(Vector3.Distance((right + left) * 0.5f, route), Is.LessThan(0.001f));
         }

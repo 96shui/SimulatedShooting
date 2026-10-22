@@ -13,9 +13,11 @@ namespace VRShooting.Application
     {
         public const int MaxRounds = 3;
         public const int ShotsPerRound = 3;
-        public const float DistanceMeters = 100f;
-        public const float TenRingRadiusCm = 5f;
+        public const float DistanceMeters = 25f;
+        public const float TenRingRadiusCm = 10f;
         public const float TargetHalfSizeCm = 25f;
+        public const float MinInitialOffsetRadiusCm = 3f;
+        public const float MaxInitialOffsetRadiusCm = 8f;
         public const float CmPerRearSightClick = 2f;
         public const float CmPerFrontSightDegree = 0.064f;
 
@@ -23,8 +25,8 @@ namespace VRShooting.Application
         {
             var rng = new System.Random(seed.Value);
             var angle = rng.NextDouble() * Math.PI * 2d;
-            var minRadius = TenRingRadiusCm + 0.01f;
-            var maxRadius = TargetHalfSizeCm;
+            var minRadius = MinInitialOffsetRadiusCm;
+            var maxRadius = MaxInitialOffsetRadiusCm;
             var radius = minRadius + rng.NextDouble() * (maxRadius - minRadius);
             return new Vector2(
                 (float)(Math.Cos(angle) * radius),
@@ -75,7 +77,7 @@ namespace VRShooting.Application
                 return Vector2.zero;
             }
 
-            var travel = targetDistanceMeters / normalized.z;
+            var travel = (targetDistanceMeters - origin.z) / normalized.z;
             var hit = origin + normalized * travel;
             return new Vector2(hit.x * 100f, hit.y * 100f);
         }

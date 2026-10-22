@@ -81,7 +81,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(rifle, Is.Not.Null, "A grabbable rifle must replace the briefing preview");
             Assert.That(binding.WeaponAnchor.gameObject.activeSelf, Is.False);
             Assert.That(Vector3.Distance(rifle.RearAttach.position, runtime.PlayerCamera.transform.position), Is.LessThan(1.25f));
-            Assert.That(runtime.Actors.Values.Count(a => a.EntityId.Contains(".enemy-")), Is.InRange(3, 5));
+            Assert.That(runtime.Actors.Values.Count(a => a.EntityId.Contains(".enemy-")), Is.InRange(5, 7));
             Assert.That(runtime.Actors.Values.Count(a => a.EntityId.Contains(".teammate-")), Is.EqualTo(2));
             var start = runtime.PlayerRoot.position;
             var forward = runtime.PlayerRoot.forward;
