@@ -11,6 +11,8 @@ namespace SimulatedShooting.Scene
     {
         readonly List<Renderer> hidden = new List<Renderer>();
         readonly List<Renderer> renderers = new List<Renderer>();
+        readonly Dictionary<Renderer,bool> menuHandRenderers = new Dictionary<Renderer,bool>();
+        Unity.XR.CoreUtils.XROrigin menuOrigin;
         float nextScan;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -64,7 +66,7 @@ namespace SimulatedShooting.Scene
         }
 
         void OnEnable() { RefreshModels(); Application.onBeforeRender += HideHardware; }
-        void OnDisable() { Application.onBeforeRender -= HideHardware; }
+        void OnDisable() { Application.onBeforeRender -= HideHardware; RestoreMenuHands(); }
         void LateUpdate()
         {
             if (Time.unscaledTime >= nextScan) RefreshModels();
@@ -80,16 +82,64 @@ namespace SimulatedShooting.Scene
                 if (!(renderer is MeshRenderer) && !(renderer is SkinnedMeshRenderer)) continue;
                 // Scene rigs are inactive during hand installation and scene handoff.
                 // Include inactive parents so human hands never enter the hardware hide list.
-                if (renderer.GetComponentInParent<VRControllerHandVisual>(true) != null) continue;
+                if (renderer.GetComponentInParent<VRControllerHandVisual>(true) != null)
+                {
+                    if(gameObject.scene.name=="MainScene"&&!menuHandRenderers.ContainsKey(renderer))
+                        menuHandRenderers.Add(renderer,renderer.forceRenderingOff);
+                    continue;
+                }
                 // A selected weapon can be parented by a custom rig; its mesh is not hardware.
                 if (renderer.GetComponentInParent<TrainingRifleGrabInteractable>(true) != null) continue;
                 hidden.Add(renderer);
             }
             HideHardware();
         }
+        [BeforeRenderOrder(UnityEngine.XR.Interaction.Toolkit.XRInteractionUpdateOrder.k_BeforeRenderOrder + 2)]
         void HideHardware()
         {
             foreach (var renderer in hidden) if (renderer != null) renderer.enabled = false;
+            UpdateMenuHandVisibility();
+        }
+
+        void RestoreMenuHands()
+        {
+            foreach(var entry in menuHandRenderers)
+                if(entry.Key!=null)entry.Key.forceRenderingOff=entry.Value;
+            menuHandRenderers.Clear();
+        }
+
+        void UpdateMenuHandVisibility()
+        {
+            if(gameObject.scene.name!="MainScene")
+            {
+                if(menuHandRenderers.Count>0)RestoreMenuHands();
+                return;
+            }
+            if(menuOrigin==null)menuOrigin=GetComponentInParent<Unity.XR.CoreUtils.XROrigin>(true);
+            var camera=menuOrigin!=null?menuOrigin.Camera:null;
+            if(camera==null)return;
+            var eye=camera.transform.position;
+            var visible=HasPositionTracking()&&Vector3.SqrMagnitude(transform.position-eye)>=.15f*.15f;
+            foreach(var entry in menuHandRenderers)
+            {
+                var renderer=entry.Key;
+                if(renderer==null)continue;
+                // Hide only the mesh, never the tracked controller, UI ray or its input.
+                // The forearm can extend behind a valid hand and still enclose the eye.
+                renderer.forceRenderingOff=entry.Value||!visible||renderer.bounds.SqrDistance(eye)<.03f*.03f;
+            }
+        }
+
+        bool HasPositionTracking()
+        {
+            var left=gameObject.name.StartsWith("Left");
+            var device=left?UnityEngine.InputSystem.XR.XRController.leftHand:UnityEngine.InputSystem.XR.XRController.rightHand;
+            if(device!=null&&device.added)
+                return device.enabled&&device.isTracked.isPressed&&(device.trackingState.ReadValue()&1)!=0;
+            var legacy=UnityEngine.XR.InputDevices.GetDeviceAtXRNode(left?UnityEngine.XR.XRNode.LeftHand:UnityEngine.XR.XRNode.RightHand);
+            return legacy.isValid&&legacy.TryGetFeatureValue(UnityEngine.XR.CommonUsages.isTracked,out var tracked)&&tracked&&
+                legacy.TryGetFeatureValue(UnityEngine.XR.CommonUsages.trackingState,out var state)&&
+                (state&UnityEngine.XR.InputTrackingState.Position)!=0;
         }
     }
 }

@@ -15,6 +15,9 @@ namespace VRShooting.Common
         public WeaponAimMode AimMode { get; init; }
         public ShoulderSide ShoulderSide { get; init; }
         public bool Hit { get; init; }
+        public bool HasTargetPlaneSample { get; init; }
+        public bool TargetPlaneRayValid { get; init; }
+        public Vector2 TargetPlanePointCm { get; init; }
         public Vector3 HitPoint { get; init; }
         public string HitObjectId { get; init; }
     }

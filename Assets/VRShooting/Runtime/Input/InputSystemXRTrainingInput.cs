@@ -94,7 +94,6 @@ namespace VRShooting.Input
             WasPressedThisFrame(Gamepad.current?.buttonWest);
 
         public bool SwitchShoulderPressed =>
-            WasPressedThisFrame(ReadXrButton(XRController.rightHand, "secondaryButton")) ||
             WasPressedThisFrame(Keyboard.current?.qKey) ||
             WasPressedThisFrame(Gamepad.current?.rightShoulder);
 

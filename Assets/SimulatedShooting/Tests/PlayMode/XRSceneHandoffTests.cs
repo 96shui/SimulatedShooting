@@ -72,7 +72,101 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return null;
         }
 
+        // BDD02: a retained empty/removed-device filter must not freeze native tracking.
+        [UnityTest] public IEnumerator Screen02_MenuRecoversEmptyAndRemovedDeviceFilters()
+        {
+            var camera=GameMain.Instance.GetComponent<MainMenuXRModeController>().VrCamera;
+            var asset=camera.GetComponentInParent<InputActionManager>().actionAssets.First();
+            asset.Disable();
+            asset.devices=new UnityEngine.InputSystem.InputDevice[0];
+            yield return null;yield return null;
+            Assert.That(asset.devices.HasValue,Is.False,"Empty devices blocks every native head/hand binding");
+            Assert.That(camera.GetComponent<TrackedPoseDriver>().positionInput.action.controls.Count,Is.GreaterThan(0));
+            var removed=InputSystem.AddDevice<XRHMD>();
+            asset.Disable();asset.devices=new UnityEngine.InputSystem.InputDevice[]{removed};
+            InputSystem.RemoveDevice(removed);
+            yield return null;yield return null;
+            Assert.That(asset.devices.HasValue,Is.False,"Removed test devices must not remain an exclusive filter");
+            asset.Disable();asset.devices=new UnityEngine.InputSystem.InputDevice[]{head,left,right};
+            yield return null;yield return null;
+            Assert.That(asset.devices.HasValue,Is.True,"A live-device test filter must be preserved");
+            Assert.That(asset.devices.Value.Count,Is.EqualTo(3));
+            yield return CheckTrackedHead(camera);
+        }
+
         // BDD 02 "主菜单双摇杆各司其职".
+        [UnityTest] public IEnumerator Bdd34_MenuHandsHideUntilTrackedAndRecoverWithoutDisablingUi()
+        {
+            var camera=GameMain.Instance.GetComponent<MainMenuXRModeController>().VrCamera;
+            var rig=camera.GetComponentInParent<XROrigin>().gameObject;
+            var hands=rig.GetComponentsInChildren<VRControllerHandVisual>();
+            var rightHand=hands.Single(h=>h.SourceHandSide==VirtualHandSide.Right);
+            var leftHand=hands.Single(h=>h.SourceHandSide==VirtualHandSide.Left);
+            bool Hidden(VRControllerHandVisual hand)=>hand.ModelRoot.GetComponentsInChildren<Renderer>(true).All(r=>r.forceRenderingOff);
+            InputSystem.QueueDeltaStateEvent(head.centerEyePosition,new Vector3(0,1.4f,0));
+            InputSystem.QueueDeltaStateEvent(head.isTracked,(byte)1);InputSystem.QueueDeltaStateEvent(head.trackingState,3);
+            InputSystem.QueueDeltaStateEvent(right.isTracked,(byte)0);InputSystem.QueueDeltaStateEvent(right.trackingState,0);
+            InputSystem.QueueDeltaStateEvent(left.isTracked,(byte)0);InputSystem.QueueDeltaStateEvent(left.trackingState,0);
+            yield return null;yield return null;yield return null;
+            Assert.That(Hidden(rightHand)&&Hidden(leftHand),Is.True,"Untracked arm meshes must not fill the menu camera");
+            Assert.That(rig.GetComponentsInChildren<NearFarInteractor>().Any(r=>r.isActiveAndEnabled&&r.enableUIInteraction),Is.True);
+            CaptureMenuOcclusionEvidence(camera,"main-menu-after-untracked");
+            var rightPosition=new Vector3(.3f,1f,.6f);var leftPosition=new Vector3(-.3f,1f,.6f);
+            QueueController(right,rightPosition);QueueController(left,leftPosition);
+            yield return null;yield return null;yield return null;
+            Assert.That(Hidden(rightHand)||Hidden(leftHand),Is.False,"Tracked hands away from the eye must become visible");
+            Assert.That(rightHand.ModelRoot.GetComponentsInChildren<Renderer>().All(r=>!r.forceRenderingOff),Is.True);
+            var skin=rightHand.ModelRoot.GetComponentsInChildren<SkinnedMeshRenderer>().First();
+            var modelPosition=rightHand.ModelRoot.position;
+            rightHand.ModelRoot.position+=camera.transform.position-skin.bounds.center;
+            yield return null;yield return null;
+            Assert.That(skin.forceRenderingOff,Is.True,"A forearm enclosing the eye must hide even when its tracked hand is farther away");
+            rightHand.ModelRoot.position=modelPosition;
+            yield return null;yield return null;
+            QueueController(right,head.centerEyePosition.ReadValue());
+            yield return null;yield return null;yield return null;
+            Assert.That(Hidden(rightHand),Is.True,"Even a tracked hand must not render inside the head");
+            Assert.That(Hidden(leftHand),Is.False);
+            QueueController(right,rightPosition);yield return new WaitForSeconds(.65f);
+            Assert.That(Hidden(rightHand),Is.False,"A periodic model rescan must preserve the original visibility state");
+            InputSystem.QueueDeltaStateEvent(right.isTracked,(byte)0);InputSystem.QueueDeltaStateEvent(right.trackingState,0);
+            yield return null;yield return null;yield return null;
+            Assert.That(Hidden(rightHand),Is.True,"Tracking loss must hide the last stale arm pose");
+            QueueController(right,rightPosition);yield return null;yield return null;yield return null;
+            Assert.That(Hidden(rightHand),Is.False);
+            CaptureMenuOcclusionEvidence(camera,"main-menu-after-tracked");
+        }
+
+        [UnityTest] public IEnumerator Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands()
+        {
+            yield return SceneManager.LoadSceneAsync("ZeroingRangeScene");
+            Object.FindObjectOfType<ZeroingRangeXRModeController>().SetVrModeForTests(true);
+            InputSystem.QueueDeltaStateEvent(right.isTracked,(byte)0);InputSystem.QueueDeltaStateEvent(right.trackingState,0);
+            InputSystem.QueueDeltaStateEvent(left.isTracked,(byte)0);InputSystem.QueueDeltaStateEvent(left.trackingState,0);
+            yield return null;yield return null;
+            var hands=Object.FindObjectsOfType<VRControllerHandVisual>();
+            Assert.That(hands.Length,Is.EqualTo(2));
+            Assert.That(hands.SelectMany(h=>h.ModelRoot.GetComponentsInChildren<Renderer>()).All(r=>!r.forceRenderingOff),Is.True);
+        }
+
+        static void CaptureMenuOcclusionEvidence(Camera camera,string name)
+        {
+#if UNITY_EDITOR
+            const string folder="docs/codex-reports/evidence/main-menu-hand-occlusion-20261023";
+            System.IO.Directory.CreateDirectory(folder);
+            var texture=new Texture2D(1280,800,TextureFormat.RGB24,false);
+            var render=RenderTexture.GetTemporary(1280,800,24);
+            var previous=camera.targetTexture;var active=RenderTexture.active;var aspect=camera.aspect;
+            try
+            {
+                camera.targetTexture=render;camera.aspect=1.6f;camera.Render();RenderTexture.active=render;
+                texture.ReadPixels(new Rect(0,0,1280,800),0,0);texture.Apply();
+                System.IO.File.WriteAllBytes(folder+"/"+name+".png",texture.EncodeToPNG());
+            }
+            finally{camera.targetTexture=previous;camera.aspect=aspect;RenderTexture.active=active;RenderTexture.ReleaseTemporary(render);Object.Destroy(texture);}
+#endif
+        }
+
         [UnityTest] public IEnumerator Screen02_MainMenuUsesLeftMoveAndRightSnapTurnOnly()
         {
             var rig=GameMain.Instance.GetComponent<MainMenuXRModeController>().VrCamera.transform.root;
@@ -429,7 +523,10 @@ namespace SimulatedShooting.Tests.PlayMode
             foreach(var entry in deviceFilters)
             {
                 entry.Key.Disable();
-                entry.Key.devices=entry.Value;
+                // Do not implicitly convert an InputDevice[] null to a populated
+                // nullable ReadOnlyArray: that creates an empty exclusive filter.
+                if(entry.Value==null) entry.Key.devices=null;
+                else entry.Key.devices=entry.Value;
             }
             deviceFilters.Clear();
             foreach(var device in new UnityEngine.InputSystem.InputDevice[]{head,left,right})

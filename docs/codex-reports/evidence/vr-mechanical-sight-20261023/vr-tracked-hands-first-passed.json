@@ -1,0 +1,79 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "_meta": {
+      "fastmcp": {
+        "wrap_result": true
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"5f5929d2ef8e41c39d9f6792327e199c\",\"status\":\"succeeded\",\"mode\":\"PlayMode\",\"started_unix_ms\":1792719953077,\"finished_unix_ms\":1792719960390,\"last_update_unix_ms\":1792719960390,\"progress\":{\"completed\":2,\"total\":261,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792719957666,\"last_finished_test_full_name\":\"SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound\",\"last_finished_unix_ms\":1792719960206,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"PlayMode\",\"summary\":{\"total\":2,\"passed\":2,\"failed\":0,\"skipped\":0,\"durationSeconds\":4.2387552,\"resultState\":\"Passed\"},\"results\":[{\"name\":\"Bdd33_HeadMotionDoesNotChangeGunLineAndSupportReleaseBlocksFire\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_HeadMotionDoesNotChangeGunLineAndSupportReleaseBlocksFire\",\"state\":\"Passed\",\"durationSeconds\":1.5164255,\"message\":null,\"stackTrace\":null,\"output\":\"Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n[GameStateManager] 状态初始化为: InGame\\r\\n\"},{\"name\":\"Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound\",\"state\":\"Passed\",\"durationSeconds\":2.5398738,\"message\":null,\"stackTrace\":null,\"output\":\"Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n[GameStateManager] 状态初始化为: InGame\\r\\n\"}]}},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Test job status retrieved.",
+        "error": null,
+        "data": {
+          "job_id": "5f5929d2ef8e41c39d9f6792327e199c",
+          "status": "succeeded",
+          "mode": "PlayMode",
+          "started_unix_ms": 1792719953077,
+          "finished_unix_ms": 1792719960390,
+          "last_update_unix_ms": 1792719960390,
+          "progress": {
+            "completed": 2,
+            "total": 261,
+            "current_test_full_name": null,
+            "current_test_started_unix_ms": 1792719957666,
+            "last_finished_test_full_name": "SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound",
+            "last_finished_unix_ms": 1792719960206,
+            "stuck_suspected": false,
+            "editor_is_focused": false,
+            "blocked_reason": null,
+            "failures_so_far": [],
+            "failures_capped": false
+          },
+          "error": null,
+          "result": {
+            "mode": "PlayMode",
+            "summary": {
+              "total": 2,
+              "passed": 2,
+              "failed": 0,
+              "skipped": 0,
+              "durationSeconds": 4.2387552,
+              "resultState": "Passed"
+            },
+            "results": [
+              {
+                "name": "Bdd33_HeadMotionDoesNotChangeGunLineAndSupportReleaseBlocksFire",
+                "fullName": "SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_HeadMotionDoesNotChangeGunLineAndSupportReleaseBlocksFire",
+                "state": "Passed",
+                "durationSeconds": 1.5164255,
+                "message": null,
+                "stackTrace": null,
+                "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+              },
+              {
+                "name": "Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound",
+                "fullName": "SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound",
+                "state": "Passed",
+                "durationSeconds": 2.5398738,
+                "message": null,
+                "stackTrace": null,
+                "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\n"
+              }
+            ]
+          }
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  }
+}

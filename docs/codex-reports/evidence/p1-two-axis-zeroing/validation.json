@@ -1,0 +1,352 @@
+{
+  "date": "2026-10-21",
+  "unity": "2022.3.62f3c1",
+  "scope": "P1 BDD06; task006/task012/task013/UI task010",
+  "beforeFix": {
+    "jobId": "b83cd1f7402843a2b42a47ce393f56c1",
+    "status": "failed",
+    "summary": null,
+    "failures": [
+      {
+        "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,0.0f)",
+        "message": "  The physical marker must show the same compensated impact as the score.\r\n  Expected: less than 0.0299999993f\r\n  But was:  21.3483334f\r\n"
+      },
+      {
+        "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(20.0f,0.0f)",
+        "message": "  The physical marker must show the same compensated impact as the score.\r\n  Expected: less than 0.0299999993f\r\n  But was:  21.3483925f\r\n"
+      },
+      {
+        "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(-20.0f,0.0f)",
+        "message": "  The physical marker must show the same compensated impact as the score.\r\n  Expected: less than 0.0299999993f\r\n  But was:  21.3482742f\r\n"
+      },
+      {
+        "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,20.0f)",
+        "message": "  The physical marker must show the same compensated impact as the score.\r\n  Expected: less than 0.0299999993f\r\n  But was:  21.3487396f\r\n"
+      },
+      {
+        "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,-20.0f)",
+        "message": "  The physical marker must show the same compensated impact as the score.\r\n  Expected: less than 0.0299999993f\r\n  But was:  21.3479309f\r\n"
+      },
+      {
+        "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_OffFaceAimUsesBoundTargetPlaneWithoutUnitJump(40.0f,0.0f)",
+        "message": "  Crossing the face edge must not switch metres, centimetres, or target origin.\r\n  Expected: less than 0.0299999993f\r\n  But was:  39.628334f\r\n"
+      },
+      {
+        "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_OffFaceAimUsesBoundTargetPlaneWithoutUnitJump(0.0f,40.0f)",
+        "message": "  Crossing the face edge must not switch metres, centimetres, or target origin.\r\n  Expected: less than 0.0299999993f\r\n  But was:  38.0999336f\r\n"
+      },
+      {
+        "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_OffFaceAimUsesBoundTargetPlaneWithoutUnitJump(0.0f,-40.0f)",
+        "message": "  Crossing the face edge must not switch metres, centimetres, or target origin.\r\n  Expected: less than 0.0299999993f\r\n  But was:  41.0999336f\r\n"
+      },
+      {
+        "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_TwoAxisManualCorrectionMovesPhysicalAndRecordedImpactTogether",
+        "message": "  Expected: less than 0.0299999993f\r\n  But was:  6.70514345f\r\n"
+      }
+    ],
+    "tests": []
+  },
+  "editMode": {
+    "jobId": "520891fbb7984d558345f15be67ac35d",
+    "status": "succeeded",
+    "summary": {
+      "total": 31,
+      "passed": 31,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 0.8297353,
+      "resultState": "Passed"
+    },
+    "failures": [],
+    "tests": [
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_RayPlaneIntersectionUsesActualMuzzleDepth",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeFinalGrade_MapsPassedRoundToGrade",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeFrontSightDegrees_UsesCeilingAnd064CmPerDegree",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeRearSightClicks_UsesCeilingAndTwoCmPerClick",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.GenerateFixedOffset_DifferentSeeds_ProduceDifferentOffsets",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.GenerateFixedOffset_FixedSeed_IsReproducible",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.GenerateFixedOffset_IsInsideTargetOutsideTenRing",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ResolveAimPointFromWeaponShot_UsesTargetOffsetConvention",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ResolveHorizontalDirection_BiasRight_UsesBackward",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ResolveVerticalDirection_BiasDown_UsesCounterClockwise",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.AdjustImpactPoint_RejectsIncompleteOrAppliedRoundAndInvalidDirection",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.AdjustImpactPoint_UsesSeparateAxesAndAffectsNextRoundOnce",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ApplyAdjustment_IsIdempotentForSameRound",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.CompleteRound_BeforeThreeShots_ReturnsInvalidState",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.CompleteRound_CalculatesOffsetDirectionsAndAdjustmentAmounts",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ContinueAfterAnalysis_StartsNextRound_ResetsShotsToThree",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ContinueAfterAnalysis_WithoutApply_ReturnsInvalidState",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_AllRoundsFail_ReturnsFail",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound1_ReturnsExcellent",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound2_ReturnsGood",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound3_ReturnsPass",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetSession_NotFound_ReturnsNotFound",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_AcceptsUpToThreeShotsPerRound",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_AllInsideTenRing_PassedTenRingTrue",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_FourthShot_ReturnsInvalidState",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.StartSession_FixedSeed_ProducesReproducibleOffset",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(1,Excellent)",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(2,Good)",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(3,Pass)",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(0,Fail)",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.WeaponShotResultEvent_RecordsShotUsingTargetOffsetConvention",
+        "state": "Passed"
+      }
+    ]
+  },
+  "playMode": {
+    "jobId": "fb5241168ad549a4aebd75523c554b7c",
+    "status": "succeeded",
+    "summary": {
+      "total": 19,
+      "passed": 19,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 12.5549356,
+      "resultState": "Passed"
+    },
+    "failures": [],
+    "tests": [
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralAimDefaultAdjustmentNextRoundThreeTenRingHits",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,0.0f)",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(20.0f,0.0f)",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(-20.0f,0.0f)",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,20.0f)",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,-20.0f)",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_OffFaceAimUsesBoundTargetPlaneWithoutUnitJump(40.0f,0.0f)",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_OffFaceAimUsesBoundTargetPlaneWithoutUnitJump(0.0f,40.0f)",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_OffFaceAimUsesBoundTargetPlaneWithoutUnitJump(0.0f,-40.0f)",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_TwoAxisManualCorrectionMovesPhysicalAndRecordedImpactTogether",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_Oct07_HorizontalFractionalMean_PreservesFractionalClicks",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_VerticalLongHoldAcceleratesAndReleaseDoesNotAddClick",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ApplyAdjustmentUpdatesStateAndNextRoundReturnsToHud",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_BackToMainMenuButtonReturnsToMainMenu",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_HelpOwnsAllTipsAndResetsOnNextRound",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ManualAxisButtonsPreviewAndCommitCorrection",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_OneDegreeMovesBlueMarkerVerticallyWithoutChangingHorizontal",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThirdRoundPrimaryActionOpensFinalRating",
+        "state": "Passed"
+      },
+      {
+        "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto",
+        "state": "Passed"
+      }
+    ]
+  },
+  "sharedWeaponAndP2Regression": {
+    "jobId": "717238c4859a4096b2f0d85c909392eb",
+    "status": "succeeded",
+    "summary": {
+      "total": 7,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "durationSeconds": 5.8189299,
+      "resultState": "Passed"
+    },
+    "failures": [],
+    "tests": [
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RealComposition_RunsPickupCountdownVisualResultAndRetry",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RealTrigger_QuickTapFiresTwo_ForbiddenHoldDoesNotResume",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RetryRequiresFreshPickup_AndReenabledControllerReceivesInput",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_InvalidShotProducesNoAudioTracerOrImpactFeedback",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_NoVrFirstPersonWeaponFiresVisibleTracerAndTargetImpact",
+        "state": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_ValidShotPlaysOneFeedbackStackAndArrivesAtRecordedImpact",
+        "state": "Passed"
+      }
+    ]
+  },
+  "liveBeforeAdjustment": {
+    "stage": "before_adjustment",
+    "sessionId": "bb90eb8ab52a403297d4610a6ccec531",
+    "average": "(-3.1748, -21.1109)",
+    "correction": "(3.1748, 21.1109)",
+    "markerCount": 3,
+    "lastMarker": "(-3.1748, -21.1109)",
+    "targetCenter": "(0.0000, 1.5000, 99.9880)"
+  },
+  "liveAfterAdjustment": {
+    "stage": "after_adjustment",
+    "applied": true,
+    "continued": true,
+    "round": 2,
+    "mean": "(0.0000, 0.0000)",
+    "passedTenRing": true,
+    "markerCount": 6,
+    "lastMarker": "(0.0000, 0.0000)",
+    "visibleTenRing": true
+  },
+  "finalConsoleErrors": [
+    {
+      "type": "Error",
+      "message": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.",
+      "file": "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Scripts/GazeInputManager.cs",
+      "line": 55,
+      "stackTrace": null
+    }
+  ],
+  "vrHardwareVerified": false
+}

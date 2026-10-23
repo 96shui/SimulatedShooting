@@ -30,7 +30,6 @@ namespace SimulatedShooting.Editor
             {
                 CaptureShoulder(ShoulderSide.Right);
                 CaptureShoulder(ShoulderSide.Left);
-                CaptureRanges();
             }
             catch (Exception exception) { Debug.LogException(exception); throw; }
             finally
@@ -94,32 +93,6 @@ namespace SimulatedShooting.Editor
             {
                 EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
                 foreach (var mesh in meshes) if (mesh != null) UnityEngine.Object.DestroyImmediate(mesh);
-            }
-        }
-
-        static void CaptureRanges()
-        {
-            foreach (var prefix in new[] { "ZeroingRange", "MovingTargetRange" })
-            {
-                var scene = EditorSceneManager.OpenScene("Assets/Scenes/" + prefix + "Scene.unity", OpenSceneMode.Single);
-                var ids = scene.GetRootGameObjects().SelectMany(r => r.GetComponentsInChildren<SceneTestId>(true)).ToArray();
-                if (prefix == "ZeroingRange")
-                {
-                    var surface = ids.Single(n => n.Id == prefix + ".Target.Face").GetComponent<TargetImpactSurface>();
-                    ChestTargetArtwork.Apply(surface);
-                }
-                var eye = ids.Single(n => n.Id == prefix + ".Camera.NoVR").GetComponent<Camera>();
-                Save(eye, prefix == "ZeroingRange" ? "p1-player-25m" : "p2-player-50m");
-                if (prefix != "ZeroingRange") continue;
-                var target = ids.Single(n => n.Id == prefix + ".Target.Primary").transform;
-                var center = ids.Single(n => n.Id == prefix + ".Target.Center").transform;
-                foreach (var node in target.GetComponentsInChildren<Transform>(true)) node.gameObject.layer = 30;
-                var detail = new GameObject("PhysicalTargetEvidenceCamera").AddComponent<Camera>();
-                detail.cullingMask = 1 << 30; detail.clearFlags = CameraClearFlags.SolidColor;
-                detail.backgroundColor = new Color(.1f, .13f, .16f);
-                detail.transform.position = center.position - center.forward;
-                detail.transform.LookAt(center); detail.orthographic = true; detail.orthographicSize = .37f;
-                Save(detail, "p1-physical-assisted-target");
             }
         }
 

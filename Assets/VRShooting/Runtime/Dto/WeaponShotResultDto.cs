@@ -17,6 +17,9 @@ namespace VRShooting.Common
         public float Stability01 { get; init; }
         public int ShotSequence { get; init; }
         public bool Hit { get; init; }
+        public bool HasTargetPlaneSample { get; init; }
+        public bool TargetPlaneRayValid { get; init; }
+        public Vector2 TargetPlanePointCm { get; init; }
         public Vector3 HitPoint { get; init; }
         public string HitObjectId { get; init; }
         public WeaponAimMode AimMode { get; init; }

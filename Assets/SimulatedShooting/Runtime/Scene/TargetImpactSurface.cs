@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using VRShooting.Application;
 
 namespace SimulatedShooting.Scene
 {
@@ -28,6 +27,7 @@ namespace SimulatedShooting.Scene
         [SerializeField] private Material impactMarkerMaterial;
         [SerializeField] private float faceWidthMetres = 0.5f;
         [SerializeField] private float faceHeightMetres = 0.5f;
+        [SerializeField] private float tenRingRadiusMetres = 0.05f;
         [SerializeField] private float markerDiameterMetres = 0.018f;
 
         private readonly List<TargetImpactPoint> impacts = new List<TargetImpactPoint>();
@@ -39,7 +39,7 @@ namespace SimulatedShooting.Scene
         public IReadOnlyList<TargetImpactPoint> Impacts => impacts;
         public float FaceWidthCm => faceWidthMetres * 100f;
         public float FaceHeightCm => faceHeightMetres * 100f;
-        public float TenRingRadiusCm => ZeroingRules.TenRingRadiusCm;
+        public float TenRingRadiusCm => tenRingRadiusMetres * 100f;
 
         void Awake() => ChestTargetArtwork.Apply(this);
 
@@ -102,18 +102,6 @@ namespace SimulatedShooting.Scene
             return true;
         }
 
-        // A miss uses exactly the same target origin and units as an on-face hit.
-        public bool TryProjectRay(Ray ray, out Vector2 offsetCm)
-        {
-            offsetCm = default;
-            if (targetCenter == null) return false;
-            var plane = new Plane(targetCenter.forward, targetCenter.position);
-            if (!plane.Raycast(ray, out var distance)) return false;
-            var point = targetCenter.InverseTransformPoint(ray.GetPoint(distance));
-            offsetCm = new Vector2(point.x, point.y) * 100f;
-            return true;
-        }
-
         public void ClearImpacts()
         {
             impacts.Clear();
@@ -128,6 +116,18 @@ namespace SimulatedShooting.Scene
                 else
                     DestroyImmediate(marker);
             }
+        }
+
+        // Unbounded target-local centimetres, independent of which Collider was hit.
+        public bool TryProjectRay(Ray ray, out Vector2 offsetCm, out float distance)
+        {
+            offsetCm = default;
+            distance = 0;
+            if (targetCenter == null || !new Plane(targetCenter.forward, targetCenter.position).Raycast(ray, out distance))
+                return false;
+            var local = targetCenter.InverseTransformPoint(ray.GetPoint(distance));
+            offsetCm = new Vector2(local.x, local.y) * 100f;
+            return true;
         }
 
         private void CreateImpactMarker(TargetImpactPoint impact)
@@ -155,12 +155,11 @@ namespace SimulatedShooting.Scene
 
             Gizmos.color = Color.red;
             const int segments = 32;
-            var radiusMetres = TenRingRadiusCm * .01f;
-            var previous = new Vector3(radiusMetres, 0f, 0f);
+            var previous = new Vector3(tenRingRadiusMetres, 0f, 0f);
             for (var index = 1; index <= segments; index++)
             {
                 var angle = index * Mathf.PI * 2f / segments;
-                var next = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0f) * radiusMetres;
+                var next = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0f) * tenRingRadiusMetres;
                 Gizmos.DrawLine(previous, next);
                 previous = next;
             }

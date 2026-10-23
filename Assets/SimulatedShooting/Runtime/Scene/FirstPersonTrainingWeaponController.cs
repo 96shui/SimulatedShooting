@@ -47,6 +47,7 @@ namespace SimulatedShooting.Scene
         IDisposable zeroingShotSubscription;
         ZeroingShotDto latestZeroingShot;
         int latestZeroingShotSequence;
+        readonly RaycastHit[] shotHits = new RaycastHit[64];
         Material tracerMaterial;
 
         WeaponControlStateDto currentState;
@@ -70,8 +71,6 @@ namespace SimulatedShooting.Scene
         bool hasCurrentState;
         bool grabSubscribed;
         bool latestRaycastHit;
-        bool shoulderChangedThisFrame;
-        bool triggerNeedsRelease;
         RaycastHit latestRaycast;
 
         public bool IsInitialized => initialized;
@@ -359,8 +358,9 @@ namespace SimulatedShooting.Scene
                 return;
             }
 
+            currentState = start.Data;
+            hasCurrentState = true;
             boundSessionId = sessionId;
-            ApplyStateResult(start);
             if (!poseCaptured)
             {
                 headPosition = viewCamera.transform.position;
@@ -394,7 +394,6 @@ namespace SimulatedShooting.Scene
             latestRaycast = default;
             simulatedRearGripHeld = false;
             simulatedFrontGripHeld = false;
-            shoulderChangedThisFrame = triggerNeedsRelease = false;
             frontHandOffset = Vector2.zero;
             RestoreRecoilPose();
             if (poseCaptured && viewCamera != null && !ShouldUseVrPoseSources())
@@ -501,37 +500,35 @@ namespace SimulatedShooting.Scene
                     ApplyStateResult(weaponService.ToggleShoulder(SessionId));
                     break;
                 case XRTrainingInputCommandType.RightGripPressed:
-                    SetSimulatedGrip(true, true);
+                    if (!ShouldUseVrPoseSources())
+                    {
+                        simulatedRearGripHeld = true;
+                        UpdateGripState();
+                    }
                     break;
                 case XRTrainingInputCommandType.RightGripReleased:
-                    SetSimulatedGrip(true, false);
+                    if (!ShouldUseVrPoseSources())
+                    {
+                        simulatedRearGripHeld = false;
+                        simulatedFrontGripHeld = false;
+                        UpdateGripState();
+                    }
                     break;
                 case XRTrainingInputCommandType.LeftGripPressed:
-                    SetSimulatedGrip(false, true);
+                    if (!ShouldUseVrPoseSources() && simulatedRearGripHeld)
+                    {
+                        simulatedFrontGripHeld = true;
+                        UpdateGripState();
+                    }
                     break;
                 case XRTrainingInputCommandType.LeftGripReleased:
-                    SetSimulatedGrip(false, false);
+                    if (!ShouldUseVrPoseSources())
+                    {
+                        simulatedFrontGripHeld = false;
+                        UpdateGripState();
+                    }
                     break;
             }
-        }
-
-        void SetSimulatedGrip(bool physicalRight, bool held)
-        {
-            if (ShouldUseVrPoseSources()) return;
-            var isRear = physicalRight == (CurrentShoulder == ShoulderSide.Right);
-            if (isRear)
-            {
-                simulatedRearGripHeld = held;
-                if (!held) simulatedFrontGripHeld = false;
-                else
-                {
-                    var supportPressed = physicalRight ? input.LeftGripPressed : input.RightGripPressed;
-                    var supportHeld = physicalRight ? input.LeftGripHeld : input.RightGripHeld;
-                    if (supportPressed && supportHeld) simulatedFrontGripHeld = true;
-                }
-            }
-            else simulatedFrontGripHeld = held && simulatedRearGripHeld;
-            UpdateGripState();
         }
 
         void UpdateAimModeFromInput()
@@ -772,13 +769,15 @@ namespace SimulatedShooting.Scene
                 return 0f;
             }
 
-            var kickDuration = Mathf.Max(0.001f, impulse.KickDurationSeconds);
+            // Range bursts fire again at 100ms. A 300ms presentation spring used
+            // to leave the next real gun ray several metres above a 100m target.
+            var kickDuration = Mathf.Min(.035f, Mathf.Max(.001f, impulse.KickDurationSeconds));
             if (elapsed <= kickDuration)
             {
                 return Mathf.SmoothStep(0f, 1f, elapsed / kickDuration);
             }
 
-            var settleDuration = Mathf.Max(0.001f, impulse.SettleDurationSeconds);
+            var settleDuration = Mathf.Min(.045f, Mathf.Max(.001f, impulse.SettleDurationSeconds));
             var settle = Mathf.Clamp01((elapsed - kickDuration) / settleDuration);
             return 1f - Mathf.SmoothStep(0f, 1f, settle);
         }
@@ -801,24 +800,6 @@ namespace SimulatedShooting.Scene
                 return;
             }
 
-            if (shoulderChangedThisFrame)
-            {
-                shoulderChangedThisFrame = false;
-                return;
-            }
-            if (triggerNeedsRelease)
-            {
-                if (!input.TriggerHeld)
-                {
-                    triggerNeedsRelease = false;
-                    // Cancellation disarms the service too. A neutral adapter frame must
-                    // rearm that sequence, even when the old physical trigger stays held.
-                    services.WeaponFire.Tick(SessionId, 0f,
-                        new WeaponTriggerStateInputDto { SessionId = SessionId, Released = true }, BuildFireSnapshot());
-                }
-                return;
-            }
-
             services.WeaponFire.Tick(
                 SessionId,
                 deltaTime,
@@ -831,13 +812,6 @@ namespace SimulatedShooting.Scene
                     Released = input.TriggerReleased
                 },
                 BuildFireSnapshot());
-        }
-
-        void HandleZeroingShotRecorded(ZeroingShotRecordedEvent evt)
-        {
-            if (evt.SessionId != boundSessionId) return;
-            latestZeroingShot = evt.Shot;
-            latestZeroingShotSequence = evt.WeaponShotSequence;
         }
 
         void HandleWeaponShotResult(WeaponShotResultEvent evt)
@@ -863,13 +837,31 @@ namespace SimulatedShooting.Scene
                 ? weaponBinding.MuzzlePoint.position
                 : Vector3.zero;
             var direction = ResolveAimDirection();
+            // Converge the real muzzle onto the sighted point. Parallel muzzle/sight
+            // rays retain the model's 5cm bore offset even when the sights are on target.
+            var aim = weaponBinding != null ? weaponBinding.AimLinePoint : null;
+            var isZeroing = services != null && services.TrainingSessions.HasActiveSession &&
+                services.TrainingSessions.Current.Mode == TrainingMode.Zeroing100m;
+            var planeTransform = isZeroing ? targetSurface?.TargetCenter : movingTargetHitAdapter?.TargetCollider?.transform;
+            if (aim != null && planeTransform != null &&
+                new Plane(planeTransform.forward, planeTransform.position).Raycast(new Ray(aim.position, direction), out var sightDistance))
+            {
+                var sightPoint = aim.position + direction * sightDistance;
+                if ((sightPoint - muzzle).sqrMagnitude > .0001f) direction = (sightPoint - muzzle).normalized;
+            }
             var rawDirection = weaponBinding != null
                 ? weaponBinding.transform.forward.normalized
                 : Vector3.forward;
-            var physicalHit = Physics.Raycast(muzzle, direction, out var raycastHit, MaxShotDistance);
+            var physicalHit = RaycastShot(muzzle, direction, out var raycastHit);
             latestRaycastHit = physicalHit;
             latestRaycast = raycastHit;
             var targetHit = IsScoringTargetHit(raycastHit, physicalHit);
+            var planePoint = Vector2.zero;
+            var planeDistance = 0f;
+            var planeValid = isZeroing && targetSurface != null &&
+                targetSurface.TryProjectRay(new Ray(muzzle, direction), out planePoint, out planeDistance);
+            if (planeValid && physicalHit && raycastHit.distance < planeDistance - .01f && !targetHit)
+                planeValid = false;
             return new WeaponFireInputDto
             {
                 SessionId = SessionId,
@@ -883,6 +875,9 @@ namespace SimulatedShooting.Scene
                 AimMode = hasCurrentState ? currentState.AimMode : WeaponAimMode.HipFire,
                 ShoulderSide = hasCurrentState ? currentState.ShoulderSide : ShoulderSide.Right,
                 Hit = targetHit,
+                HasTargetPlaneSample = isZeroing && targetSurface != null,
+                TargetPlaneRayValid = planeValid,
+                TargetPlanePointCm = planePoint,
                 HitPoint = ResolveHitPointForService(raycastHit, physicalHit, muzzle, direction),
                 HitObjectId = targetHit ? ResolveTestId(raycastHit.collider.transform) : string.Empty
             };
@@ -902,7 +897,7 @@ namespace SimulatedShooting.Scene
                 ? latestRaycast.point
                 : result.MuzzlePosition + result.AimDirection * MaxShotDistance;
             var corrected = targetSurface != null && latestZeroingShotSequence > 0 &&
-                latestZeroingShotSequence == result.ShotSequence;
+                latestZeroingShotSequence == result.ShotSequence && !latestZeroingShot.MissedTargetPlane;
             if (corrected)
             {
                 var point = latestZeroingShot.ImpactPointCm;
@@ -913,7 +908,7 @@ namespace SimulatedShooting.Scene
             else
             {
                 SpawnTracer(result.MuzzlePosition, visualEnd, latestRaycastHit, latestRaycast);
-                if (result.Hit && targetSurface != null)
+                if (!result.HasTargetPlaneSample && result.Hit && targetSurface != null && movingTargetHitAdapter == null)
                     targetSurface.TryRecordWorldPoint(latestRaycastHit ? latestRaycast.point : result.HitPoint, out _);
             }
 
@@ -929,6 +924,33 @@ namespace SimulatedShooting.Scene
 
             ApplyRecoil(result.RecoilImpulse);
             hapticOutput?.SendShotImpulse(result.RecoilImpulse, result.FrontHandTracked);
+        }
+
+        void HandleZeroingShotRecorded(ZeroingShotRecordedEvent evt)
+        {
+            if (evt.SessionId != boundSessionId) return;
+            latestZeroingShot = evt.Shot;
+            latestZeroingShotSequence = evt.WeaponShotSequence;
+        }
+
+        bool RaycastShot(Vector3 origin, Vector3 direction, out RaycastHit closest)
+        {
+            // Moving targets are driven by service updates, between FixedUpdate ticks.
+            Physics.SyncTransforms();
+            closest = default;
+            var count = Physics.RaycastNonAlloc(origin, direction, shotHits, MaxShotDistance,
+                Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+            var distance = float.PositiveInfinity;
+            for (var i = 0; i < count; i++)
+            {
+                var hit = shotHits[i];
+                if (weaponBinding != null && hit.collider.transform.IsChildOf(weaponBinding.transform)) continue;
+                if (hit.collider.GetComponentInParent<VRControllerHandVisual>() != null) continue;
+                if (hit.distance >= distance) continue;
+                closest = hit;
+                distance = hit.distance;
+            }
+            return !float.IsPositiveInfinity(distance);
         }
 
         bool FireCurrentWeapon()
@@ -952,11 +974,6 @@ namespace SimulatedShooting.Scene
 
         Vector3 ResolveHitPointForService(RaycastHit raycastHit, bool hit, Vector3 muzzle, Vector3 direction)
         {
-            if (services != null && services.TrainingSessions.HasActiveSession &&
-                services.TrainingSessions.Current.Mode == TrainingMode.Zeroing100m && targetSurface != null &&
-                targetSurface.TryProjectRay(new Ray(muzzle, direction), out var targetOffset))
-                return new Vector3(targetOffset.x, targetOffset.y, ZeroingRules.DistanceMeters);
-
             if (!hit)
             {
                 return muzzle + direction * ZeroingRules.DistanceMeters;
@@ -1102,20 +1119,8 @@ namespace SimulatedShooting.Scene
         {
             if (result.Success)
             {
-                var changed = hasCurrentState && currentState.ShoulderSide != result.Data.ShoulderSide;
                 currentState = result.Data;
                 hasCurrentState = true;
-                if (changed)
-                {
-                    var previousRear = simulatedRearGripHeld;
-                    simulatedRearGripHeld = simulatedFrontGripHeld;
-                    simulatedFrontGripHeld = previousRear && simulatedRearGripHeld;
-                    shoulderChangedThisFrame = triggerNeedsRelease = true;
-                    services?.AutomaticFire.Cancel(SessionId, WeaponFireStopReason.WeaponBecameInvalid);
-                }
-                (input as IShoulderAwareTrainingInput)?.SetShoulder(currentState.ShoulderSide);
-                if (hapticOutput is InputSystemWeaponHapticOutput haptics) haptics.Shoulder = currentState.ShoulderSide;
-                grabInteractable?.SetShoulder(currentState.ShoulderSide);
             }
         }
 

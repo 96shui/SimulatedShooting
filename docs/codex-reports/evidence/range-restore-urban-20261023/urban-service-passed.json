@@ -1,0 +1,169 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "_meta": {
+      "fastmcp": {
+        "wrap_result": true
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"df227aed438a4274ad3928fa07c670c9\",\"status\":\"succeeded\",\"mode\":\"EditMode\",\"started_unix_ms\":1792691923694,\"finished_unix_ms\":1792691925659,\"last_update_unix_ms\":1792691925659,\"progress\":{\"completed\":12,\"total\":333,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792691925216,\"last_finished_test_full_name\":\"VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds\",\"last_finished_unix_ms\":1792691925222,\"stuck_suspected\":false,\"editor_is_focused\":true,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"EditMode\",\"summary\":{\"total\":12,\"passed\":12,\"failed\":0,\"skipped\":0,\"durationSeconds\":0.1959626,\"resultState\":\"Passed\"},\"results\":[{\"name\":\"Bdd31_AllKillsWithoutRoomChecksCompletesOnceWithActualSearchCount\",\"fullName\":\"VRShooting.Tests.EditMode.Screen25_UrbanTests.Bdd31_AllKillsWithoutRoomChecksCompletesOnceWithActualSearchCount\",\"state\":\"Passed\",\"durationSeconds\":0.0779721,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"DeathCompetesWithLastCheckAndKill_AndWins\",\"fullName\":\"VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins\",\"state\":\"Passed\",\"durationSeconds\":0.0125957,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"DoorAndCheckAreSeparate_AliveRoomEnemyBlocksCheck\",\"fullName\":\"VRShooting.Tests.EditMode.Screen25_UrbanTests.DoorAndCheckAreSeparate_AliveRoomEnemyBlocksCheck\",\"state\":\"Passed\",\"durationSeconds\":0.0056824,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"EmptyRoomStillNeedsDoorAndCheckArea\",\"fullName\":\"VRShooting.Tests.EditMode.Screen25_UrbanTests.EmptyRoomStillNeedsDoorAndCheckArea\",\"state\":\"Passed\",\"durationSeconds\":0.0022474,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"MapAndConfigurationAndUnknownIdsFailWithoutSideEffects\",\"fullName\":\"VRShooting.Tests.EditMode.Screen25_UrbanTests.MapAndConfigurationAndUnknownIdsFailWithoutSideEffects\",\"state\":\"Passed\",\"durationSeconds\":0.0031096,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"RandomCountEndpoints(False)\",\"fullName\":\"VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(False)\",\"state\":\"Passed\",\"durationSeconds\":0.001464,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"RandomCountEndpoints(True)\",\"fullName\":\"VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(True)\",\"state\":\"Passed\",\"durationSeconds\":0.0006912,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps\",\"fullName\":\"VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps\",\"state\":\"Passed\",\"durationSeconds\":0.006102,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"RetryResetsDoorsAndSnapshotsWithoutChangingOldResult\",\"fullName\":\"VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult\",\"state\":\"Passed\",\"durationSeconds\":0.0062515,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies\",\"fullName\":\"VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies\",\"state\":\"Passed\",\"durationSeconds\":0.0030211,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime\",\"fullName\":\"VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime\",\"state\":\"Passed\",\"durationSeconds\":0.0013584,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"SeedAndOwnershipAreStableAndCountsWithinBounds\",\"fullName\":\"VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds\",\"state\":\"Passed\",\"durationSeconds\":0.0063244,\"message\":null,\"stackTrace\":null,\"output\":\"\"}]}},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Test job status retrieved.",
+        "error": null,
+        "data": {
+          "job_id": "df227aed438a4274ad3928fa07c670c9",
+          "status": "succeeded",
+          "mode": "EditMode",
+          "started_unix_ms": 1792691923694,
+          "finished_unix_ms": 1792691925659,
+          "last_update_unix_ms": 1792691925659,
+          "progress": {
+            "completed": 12,
+            "total": 333,
+            "current_test_full_name": null,
+            "current_test_started_unix_ms": 1792691925216,
+            "last_finished_test_full_name": "VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds",
+            "last_finished_unix_ms": 1792691925222,
+            "stuck_suspected": false,
+            "editor_is_focused": true,
+            "blocked_reason": null,
+            "failures_so_far": [],
+            "failures_capped": false
+          },
+          "error": null,
+          "result": {
+            "mode": "EditMode",
+            "summary": {
+              "total": 12,
+              "passed": 12,
+              "failed": 0,
+              "skipped": 0,
+              "durationSeconds": 0.1959626,
+              "resultState": "Passed"
+            },
+            "results": [
+              {
+                "name": "Bdd31_AllKillsWithoutRoomChecksCompletesOnceWithActualSearchCount",
+                "fullName": "VRShooting.Tests.EditMode.Screen25_UrbanTests.Bdd31_AllKillsWithoutRoomChecksCompletesOnceWithActualSearchCount",
+                "state": "Passed",
+                "durationSeconds": 0.0779721,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "DeathCompetesWithLastCheckAndKill_AndWins",
+                "fullName": "VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins",
+                "state": "Passed",
+                "durationSeconds": 0.0125957,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "DoorAndCheckAreSeparate_AliveRoomEnemyBlocksCheck",
+                "fullName": "VRShooting.Tests.EditMode.Screen25_UrbanTests.DoorAndCheckAreSeparate_AliveRoomEnemyBlocksCheck",
+                "state": "Passed",
+                "durationSeconds": 0.0056824,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "EmptyRoomStillNeedsDoorAndCheckArea",
+                "fullName": "VRShooting.Tests.EditMode.Screen25_UrbanTests.EmptyRoomStillNeedsDoorAndCheckArea",
+                "state": "Passed",
+                "durationSeconds": 0.0022474,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "MapAndConfigurationAndUnknownIdsFailWithoutSideEffects",
+                "fullName": "VRShooting.Tests.EditMode.Screen25_UrbanTests.MapAndConfigurationAndUnknownIdsFailWithoutSideEffects",
+                "state": "Passed",
+                "durationSeconds": 0.0031096,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "RandomCountEndpoints(False)",
+                "fullName": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(False)",
+                "state": "Passed",
+                "durationSeconds": 0.001464,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "RandomCountEndpoints(True)",
+                "fullName": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(True)",
+                "state": "Passed",
+                "durationSeconds": 0.0006912,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps",
+                "fullName": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps",
+                "state": "Passed",
+                "durationSeconds": 0.006102,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "RetryResetsDoorsAndSnapshotsWithoutChangingOldResult",
+                "fullName": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult",
+                "state": "Passed",
+                "durationSeconds": 0.0062515,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies",
+                "fullName": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies",
+                "state": "Passed",
+                "durationSeconds": 0.0030211,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime",
+                "fullName": "VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime",
+                "state": "Passed",
+                "durationSeconds": 0.0013584,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "SeedAndOwnershipAreStableAndCountsWithinBounds",
+                "fullName": "VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds",
+                "state": "Passed",
+                "durationSeconds": 0.0063244,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              }
+            ]
+          }
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  }
+}

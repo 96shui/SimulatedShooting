@@ -231,6 +231,17 @@ namespace VRShooting.Unity.UI
                 foreach (var asset in manager.actionAssets)
                 {
                     if (asset == null) continue;
+                    // An empty exclusive device list binds nothing. With domain reload
+                    // disabled it can survive a test run (array null converts to a
+                    // non-null ReadOnlyArray). Removed devices are equally unusable.
+                    var devices = asset.devices;
+                    if (devices.HasValue)
+                    {
+                        var hasLiveDevice = false;
+                        foreach (var device in devices.Value)
+                            if (device != null && device.added) { hasLiveDevice = true; break; }
+                        if (!hasLiveDevice) asset.devices = null;
+                    }
                     foreach (var action in asset)
                         if (!action.enabled) action.Enable();
                 }

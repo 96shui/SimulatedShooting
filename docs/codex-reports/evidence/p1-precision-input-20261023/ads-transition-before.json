@@ -1,0 +1,54 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "_meta": {
+      "fastmcp": {
+        "wrap_result": true
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"a86ee7bcf8ed465c990af8ac52c8788e\",\"status\":\"failed\",\"mode\":\"PlayMode\",\"started_unix_ms\":1792718171828,\"finished_unix_ms\":1792718175738,\"last_update_unix_ms\":1792718175738,\"progress\":{\"completed\":1,\"total\":265,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792718174697,\"last_finished_test_full_name\":\"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd32_EnteringAdsUsesFineSensitivityOnTheSameInputFrame\",\"last_finished_unix_ms\":1792718175594,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd32_EnteringAdsUsesFineSensitivityOnTheSameInputFrame\",\"message\":\"  Entering ADS must not apply one last frame of coarse hip sensitivity\\r\\n  Expected: less than 1.27446592f\\r\\n  But was:  75.8299103f\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Test job status retrieved.",
+        "error": null,
+        "data": {
+          "job_id": "a86ee7bcf8ed465c990af8ac52c8788e",
+          "status": "failed",
+          "mode": "PlayMode",
+          "started_unix_ms": 1792718171828,
+          "finished_unix_ms": 1792718175738,
+          "last_update_unix_ms": 1792718175738,
+          "progress": {
+            "completed": 1,
+            "total": 265,
+            "current_test_full_name": null,
+            "current_test_started_unix_ms": 1792718174697,
+            "last_finished_test_full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd32_EnteringAdsUsesFineSensitivityOnTheSameInputFrame",
+            "last_finished_unix_ms": 1792718175594,
+            "stuck_suspected": false,
+            "editor_is_focused": false,
+            "blocked_reason": null,
+            "failures_so_far": [
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd32_EnteringAdsUsesFineSensitivityOnTheSameInputFrame",
+                "message": "  Entering ADS must not apply one last frame of coarse hip sensitivity\r\n  Expected: less than 1.27446592f\r\n  But was:  75.8299103f\r\n"
+              }
+            ],
+            "failures_capped": false
+          },
+          "error": null,
+          "result": null
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  }
+}

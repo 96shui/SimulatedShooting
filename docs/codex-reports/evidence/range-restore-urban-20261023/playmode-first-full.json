@@ -1,0 +1,66 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "_meta": {
+      "fastmcp": {
+        "wrap_result": true
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"4244f97c8144434ab1bf8732bbe447df\",\"status\":\"failed\",\"mode\":\"PlayMode\",\"started_unix_ms\":1792692171564,\"finished_unix_ms\":1792692397727,\"last_update_unix_ms\":1792692397727,\"progress\":{\"completed\":259,\"total\":259,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792692397366,\"last_finished_test_full_name\":\"VRShooting.Tests.PlayMode.UI.Screen28_DroneMonitorUiTests.ReconfiguringMonitorReleasesOldMaterialAndKeepsOneCommandListener\",\"last_finished_unix_ms\":1792692397529,\"stuck_suspected\":false,\"editor_is_focused\":true,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_ShotProducesLocalRecoilAndTwoHandHapticsThenSettles\",\"message\":\"  Expected: in range (2.2,4.5)\\r\\n  But was:  1.79313231f\\r\\n\"},{\"full_name\":\"VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.SceneFactsDriveStreetBuildingDoorsVictoryAndRetry\",\"message\":\"  Expected: False\\r\\n  But was:  True\\r\\n\"},{\"full_name\":\"VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry\",\"message\":\"  Expected: True\\r\\n  But was:  False\\r\\n\"},{\"full_name\":\"VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet\",\"message\":\"  Expected: String containing \\\"搜索楼房\\\"\\r\\n  But was:  \\\"任务信息\\n消灭建筑与街道的全部敌人即可完成\\n房间搜索为可选记录\\n队友保持三人纵队\\n失败条件：玩家死亡\\\"\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Test job status retrieved.",
+        "error": null,
+        "data": {
+          "job_id": "4244f97c8144434ab1bf8732bbe447df",
+          "status": "failed",
+          "mode": "PlayMode",
+          "started_unix_ms": 1792692171564,
+          "finished_unix_ms": 1792692397727,
+          "last_update_unix_ms": 1792692397727,
+          "progress": {
+            "completed": 259,
+            "total": 259,
+            "current_test_full_name": null,
+            "current_test_started_unix_ms": 1792692397366,
+            "last_finished_test_full_name": "VRShooting.Tests.PlayMode.UI.Screen28_DroneMonitorUiTests.ReconfiguringMonitorReleasesOldMaterialAndKeepsOneCommandListener",
+            "last_finished_unix_ms": 1792692397529,
+            "stuck_suspected": false,
+            "editor_is_focused": true,
+            "blocked_reason": null,
+            "failures_so_far": [
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_ShotProducesLocalRecoilAndTwoHandHapticsThenSettles",
+                "message": "  Expected: in range (2.2,4.5)\r\n  But was:  1.79313231f\r\n"
+              },
+              {
+                "full_name": "VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.SceneFactsDriveStreetBuildingDoorsVictoryAndRetry",
+                "message": "  Expected: False\r\n  But was:  True\r\n"
+              },
+              {
+                "full_name": "VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry",
+                "message": "  Expected: True\r\n  But was:  False\r\n"
+              },
+              {
+                "full_name": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet",
+                "message": "  Expected: String containing \"搜索楼房\"\r\n  But was:  \"任务信息\n消灭建筑与街道的全部敌人即可完成\n房间搜索为可选记录\n队友保持三人纵队\n失败条件：玩家死亡\"\r\n"
+              }
+            ],
+            "failures_capped": false
+          },
+          "error": null,
+          "result": null
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  }
+}

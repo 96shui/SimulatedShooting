@@ -130,11 +130,8 @@ namespace VRShooting.Application
 
             if (!analysis.AdjustmentApplied)
             {
-                // Commit the same signed correction that was previewed. Historical shots
-                // stay immutable; only subsequent rounds use the updated effective bias.
                 record.FixedImpactOffsetCm += analysis.ProposedCorrectionCm;
-                record.CurrentAdjustment = ZeroingRules.ApplyCorrection(
-                    record.CurrentAdjustment, analysis.ProposedCorrectionCm);
+                record.CurrentAdjustment = ZeroingRules.ApplyCorrection(record.CurrentAdjustment, analysis.ProposedCorrectionCm);
                 record.AppliedRounds.Add(roundIndex);
                 analysis = record.BuildAnalysis();
                 record.UpsertAnalysis(analysis);
@@ -220,7 +217,9 @@ namespace VRShooting.Application
                 return;
             }
 
-            var aimPoint = ZeroingRules.ResolveAimPointFromWeaponShot(evt.Result);
+            var aimPoint = evt.Result.HasTargetPlaneSample
+                ? evt.Result.TargetPlanePointCm
+                : ZeroingRules.ResolveAimPointFromWeaponShot(evt.Result);
             var input = new ShotInputDto
             {
                 WeaponPosition = evt.Result.MuzzlePosition,
@@ -229,7 +228,8 @@ namespace VRShooting.Application
                 FireTime = 0d
             };
 
-            RecordShotInternal(record, input, evt.Result.ShotSequence);
+            RecordShotInternal(record, input, evt.Result.ShotSequence,
+                evt.Result.HasTargetPlaneSample && !evt.Result.TargetPlaneRayValid);
         }
 
         void OnPresentationChanged(TrainingPresentationChangedEvent evt)
@@ -254,7 +254,8 @@ namespace VRShooting.Application
             return !presentationShootingAllowed.TryGetValue(sessionId, out var allowed) || allowed;
         }
 
-        ServiceResult<ZeroingShotDto> RecordShotInternal(ZeroingSessionRecord record, ShotInputDto input, int weaponShotSequence = 0)
+        ServiceResult<ZeroingShotDto> RecordShotInternal(ZeroingSessionRecord record, ShotInputDto input,
+            int weaponShotSequence = 0, bool missedTargetPlane = false)
         {
             if (!AllowsRecording(record.SessionId))
             {
@@ -270,7 +271,7 @@ namespace VRShooting.Application
 
             var aimPoint = ZeroingRules.ResolveAimPointCm(input.AimDirection);
             var impact = ZeroingRules.ComputeImpactPoint(aimPoint, record.FixedImpactOffsetCm);
-            var shot = record.AddShot(impact, Mathf.Clamp01(input.WeaponStability));
+            var shot = record.AddShot(impact, Mathf.Clamp01(input.WeaponStability), missedTargetPlane);
             eventBus.Publish(new ZeroingShotRecordedEvent { SessionId = record.SessionId, Shot = shot, WeaponShotSequence = weaponShotSequence });
 
             if (record.CurrentShots.Count == ZeroingRules.ShotsPerRound)
@@ -339,7 +340,7 @@ namespace VRShooting.Application
             public List<ZeroingRoundAnalysisDto> Analyses { get; } = new List<ZeroingRoundAnalysisDto>();
             public HashSet<int> AppliedRounds { get; } = new HashSet<int>();
 
-            public ZeroingShotDto AddShot(Vector2 impactPointCm, float stability)
+            public ZeroingShotDto AddShot(Vector2 impactPointCm, float stability, bool missedTargetPlane = false)
             {
                 var shot = new ZeroingShotDto
                 {
@@ -347,7 +348,8 @@ namespace VRShooting.Application
                     ShotIndex = CurrentShots.Count + 1,
                     ImpactPointCm = impactPointCm,
                     WeaponStability = stability,
-                    InsideTenRing = ZeroingRules.IsInsideTenRing(impactPointCm)
+                    InsideTenRing = !missedTargetPlane && ZeroingRules.IsInsideTenRing(impactPointCm),
+                    MissedTargetPlane = missedTargetPlane
                 };
                 CurrentShots.Add(shot);
                 return shot;

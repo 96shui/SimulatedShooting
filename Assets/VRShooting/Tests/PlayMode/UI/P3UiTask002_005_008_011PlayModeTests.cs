@@ -185,7 +185,8 @@ namespace VRShooting.Tests.PlayMode.UI
                 Assert.That(Text(view, "selected").text, Does.Contain("城镇地图 A"));
                 Assert.That(Text(view, "enemy").text, Does.Contain("1-2"));
                 Assert.That(Text(view, "enemy").text, Does.Contain("3-6"));
-                Assert.That(Text(view, "conditions").text, Does.Contain("搜索楼房"));
+                Assert.That(Text(view, "conditions").text, Does.Contain("全部敌人即可完成"));
+                Assert.That(Text(view, "conditions").text, Does.Contain("房间搜索为可选记录"));
                 view.SelectButton.onClick.Invoke();
                 CollectionAssert.AreEqual(
                     new[] { "SelectMap:" + P3ContractIds.UrbanMap, "StartSession:" + P3ContractIds.UrbanMap },

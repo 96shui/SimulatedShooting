@@ -449,6 +449,9 @@ namespace VRShooting.Application.Weapons
                 AimMode = snapshot.AimMode,
                 ShoulderSide = snapshot.ShoulderSide,
                 Hit = snapshot.Hit,
+                HasTargetPlaneSample = snapshot.HasTargetPlaneSample,
+                TargetPlaneRayValid = snapshot.TargetPlaneRayValid,
+                TargetPlanePointCm = snapshot.TargetPlanePointCm,
                 HitPoint = snapshot.HitPoint,
                 HitObjectId = snapshot.HitObjectId
             };

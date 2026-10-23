@@ -1,0 +1,54 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "_meta": {
+      "fastmcp": {
+        "wrap_result": true
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"6aedec255f3a4ea980fa11851551ab55\",\"status\":\"failed\",\"mode\":\"PlayMode\",\"started_unix_ms\":1792731254073,\"finished_unix_ms\":1792731258849,\"last_update_unix_ms\":1792731258849,\"progress\":{\"completed\":1,\"total\":264,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792731257094,\"last_finished_test_full_name\":\"SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen02_MenuRecoversEmptyAndRemovedDeviceFilters\",\"last_finished_unix_ms\":1792731258708,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen02_MenuRecoversEmptyAndRemovedDeviceFilters\",\"message\":\"  Empty devices blocks every native head/hand binding\\r\\n  Expected: False\\r\\n  But was:  True\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Test job status retrieved.",
+        "error": null,
+        "data": {
+          "job_id": "6aedec255f3a4ea980fa11851551ab55",
+          "status": "failed",
+          "mode": "PlayMode",
+          "started_unix_ms": 1792731254073,
+          "finished_unix_ms": 1792731258849,
+          "last_update_unix_ms": 1792731258849,
+          "progress": {
+            "completed": 1,
+            "total": 264,
+            "current_test_full_name": null,
+            "current_test_started_unix_ms": 1792731257094,
+            "last_finished_test_full_name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen02_MenuRecoversEmptyAndRemovedDeviceFilters",
+            "last_finished_unix_ms": 1792731258708,
+            "stuck_suspected": false,
+            "editor_is_focused": false,
+            "blocked_reason": null,
+            "failures_so_far": [
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen02_MenuRecoversEmptyAndRemovedDeviceFilters",
+                "message": "  Empty devices blocks every native head/hand binding\r\n  Expected: False\r\n  But was:  True\r\n"
+              }
+            ],
+            "failures_capped": false
+          },
+          "error": null,
+          "result": null
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  }
+}

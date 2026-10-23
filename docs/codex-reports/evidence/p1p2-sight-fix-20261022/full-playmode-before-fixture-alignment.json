@@ -1,0 +1,98 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "_meta": {
+      "fastmcp": {
+        "wrap_result": true
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"d11033ace8984850be990fb6b6abe6a6\",\"status\":\"failed\",\"mode\":\"PlayMode\",\"started_unix_ms\":1792671205887,\"finished_unix_ms\":1792671439872,\"last_update_unix_ms\":1792671439872,\"progress\":{\"completed\":256,\"total\":333,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792671439567,\"last_finished_test_full_name\":\"VRShooting.Tests.PlayMode.UI.Screen28_DroneMonitorUiTests.ReconfiguringMonitorReleasesOldMaterialAndKeepsOneCommandListener\",\"last_finished_unix_ms\":1792671439759,\"stuck_suspected\":false,\"editor_is_focused\":true,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd12_14_15_ModeThreeLoadsOriginalDemoAndUsesNewPlan\",\"message\":\"  Spawn may shift to avoid embedded trench geometry\\r\\n  Expected: less than 0.800000012f\\r\\n  But was:  1.04011011f\\r\\n\"},{\"full_name\":\"SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd14_NewTrenchAllowsContinuousMovementAndFiring\",\"message\":\"  Player feet must start above the actual terrain or authored floor\\r\\n  Expected: in range (2.467265,2.707265)\\r\\n  But was:  2.20142412f\\r\\n\"},{\"full_name\":\"SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_DayHud_UsesOneHundredMetreRangeAndFortyMetreRoute\",\"message\":\"  Expected: 100.0f +/- 0.100000001f\\r\\n  But was:  50.0f\\r\\n\"},{\"full_name\":\"SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd23_Task019_TrenchReconThenTrackedHandsGrabStableRifle\",\"message\":\"  Human hand must be in the HMD vertical view\\r\\n  Expected: in range (0,1)\\r\\n  But was:  -0.244398654f\\r\\n\"},{\"full_name\":\"SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen00_MovingRangeHeadAndBothHandsReceiveDevicePoses\",\"message\":\"  Human hand must be in the HMD vertical view\\r\\n  Expected: in range (0,1)\\r\\n  But was:  -0.244704187f\\r\\n\"},{\"full_name\":\"SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen18_21_VrActionsAndTrackedPosesSurviveUrbanLoadAndReturn\",\"message\":\"  Human hand must be in the HMD vertical view\\r\\n  Expected: in range (0,1)\\r\\n  But was:  -0.244700253f\\r\\n\"},{\"full_name\":\"SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_TargetHasSpecifiedDimensionsAtOneHundredMetres\",\"message\":\"  Expected: 100.0f +/- 0.00100000005f\\r\\n  But was:  25.3120041f\\r\\n\"},{\"full_name\":\"SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_AdsViewAlignsToGunLineAndFrontHandChangesAimDirection\",\"message\":\"  Expected: greater than 1.0f\\r\\n  But was:  0.0f\\r\\n\"},{\"full_name\":\"SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_GripPalmsSitOnThePistolGripAndBelowTheHandguard\",\"message\":\"  The firing hand should close around the pistol grip, not float behind it\\r\\n  Expected: in range (0.01,0.045)\\r\\n  But was:  -0.0319999903f\\r\\n\"},{\"full_name\":\"SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_RifleGripUsesStraightTriggerFingerAndOpenFrontHandWrap\",\"message\":\"  The trigger finger should turn toward the trigger at its base joint\\r\\n  Expected: in range (65,95)\\r\\n  But was:  31.3917313f\\r\\n\"},{\"full_name\":\"SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_VirtualHandGripPoseUsesUprightRearGripAndPalmUpFrontSupport\",\"message\":\"  The rear-hand wrist axis should be upright along the pistol grip\\r\\n  Expected: greater than 0.949999988f\\r\\n  But was:  0.50000006f\\r\\n\"},{\"full_name\":\"VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist\",\"message\":\"  Expected: String containing \\\"射击距离：100m\\\"\\r\\n  But was:  \\\"射校科目：100m（视觉距离25m）\\n射击模式：单发射\\n每轮弹数：3发\\n训练轮次：共3轮\\n目标规格：50cm x 50cm 胸靶\\n10环直径：10cm\\n通过条件：3发全部进入10环\\\"\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Test job status retrieved.",
+        "error": null,
+        "data": {
+          "job_id": "d11033ace8984850be990fb6b6abe6a6",
+          "status": "failed",
+          "mode": "PlayMode",
+          "started_unix_ms": 1792671205887,
+          "finished_unix_ms": 1792671439872,
+          "last_update_unix_ms": 1792671439872,
+          "progress": {
+            "completed": 256,
+            "total": 333,
+            "current_test_full_name": null,
+            "current_test_started_unix_ms": 1792671439567,
+            "last_finished_test_full_name": "VRShooting.Tests.PlayMode.UI.Screen28_DroneMonitorUiTests.ReconfiguringMonitorReleasesOldMaterialAndKeepsOneCommandListener",
+            "last_finished_unix_ms": 1792671439759,
+            "stuck_suspected": false,
+            "editor_is_focused": true,
+            "blocked_reason": null,
+            "failures_so_far": [
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd12_14_15_ModeThreeLoadsOriginalDemoAndUsesNewPlan",
+                "message": "  Spawn may shift to avoid embedded trench geometry\r\n  Expected: less than 0.800000012f\r\n  But was:  1.04011011f\r\n"
+              },
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd14_NewTrenchAllowsContinuousMovementAndFiring",
+                "message": "  Player feet must start above the actual terrain or authored floor\r\n  Expected: in range (2.467265,2.707265)\r\n  But was:  2.20142412f\r\n"
+              },
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_DayHud_UsesOneHundredMetreRangeAndFortyMetreRoute",
+                "message": "  Expected: 100.0f +/- 0.100000001f\r\n  But was:  50.0f\r\n"
+              },
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd23_Task019_TrenchReconThenTrackedHandsGrabStableRifle",
+                "message": "  Human hand must be in the HMD vertical view\r\n  Expected: in range (0,1)\r\n  But was:  -0.244398654f\r\n"
+              },
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen00_MovingRangeHeadAndBothHandsReceiveDevicePoses",
+                "message": "  Human hand must be in the HMD vertical view\r\n  Expected: in range (0,1)\r\n  But was:  -0.244704187f\r\n"
+              },
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen18_21_VrActionsAndTrackedPosesSurviveUrbanLoadAndReturn",
+                "message": "  Human hand must be in the HMD vertical view\r\n  Expected: in range (0,1)\r\n  But was:  -0.244700253f\r\n"
+              },
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_TargetHasSpecifiedDimensionsAtOneHundredMetres",
+                "message": "  Expected: 100.0f +/- 0.00100000005f\r\n  But was:  25.3120041f\r\n"
+              },
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_AdsViewAlignsToGunLineAndFrontHandChangesAimDirection",
+                "message": "  Expected: greater than 1.0f\r\n  But was:  0.0f\r\n"
+              },
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_GripPalmsSitOnThePistolGripAndBelowTheHandguard",
+                "message": "  The firing hand should close around the pistol grip, not float behind it\r\n  Expected: in range (0.01,0.045)\r\n  But was:  -0.0319999903f\r\n"
+              },
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_RifleGripUsesStraightTriggerFingerAndOpenFrontHandWrap",
+                "message": "  The trigger finger should turn toward the trigger at its base joint\r\n  Expected: in range (65,95)\r\n  But was:  31.3917313f\r\n"
+              },
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_VirtualHandGripPoseUsesUprightRearGripAndPalmUpFrontSupport",
+                "message": "  The rear-hand wrist axis should be upright along the pistol grip\r\n  Expected: greater than 0.949999988f\r\n  But was:  0.50000006f\r\n"
+              },
+              {
+                "full_name": "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist",
+                "message": "  Expected: String containing \"射击距离：100m\"\r\n  But was:  \"射校科目：100m（视觉距离25m）\n射击模式：单发射\n每轮弹数：3发\n训练轮次：共3轮\n目标规格：50cm x 50cm 胸靶\n10环直径：10cm\n通过条件：3发全部进入10环\"\r\n"
+              }
+            ],
+            "failures_capped": false
+          },
+          "error": null,
+          "result": null
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  }
+}

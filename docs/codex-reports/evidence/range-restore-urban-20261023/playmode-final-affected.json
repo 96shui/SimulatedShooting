@@ -1,0 +1,322 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "_meta": {
+      "fastmcp": {
+        "wrap_result": true
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"79290b6214144731a3d3a923fc827623\",\"status\":\"succeeded\",\"mode\":\"PlayMode\",\"started_unix_ms\":1792692483791,\"finished_unix_ms\":1792692517370,\"last_update_unix_ms\":1792692517370,\"progress\":{\"completed\":29,\"total\":334,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792692517084,\"last_finished_test_full_name\":\"VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce\",\"last_finished_unix_ms\":1792692517219,\"stuck_suspected\":false,\"editor_is_focused\":true,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"PlayMode\",\"summary\":{\"total\":29,\"passed\":29,\"failed\":0,\"skipped\":0,\"durationSeconds\":30.7943165,\"resultState\":\"Passed\"},\"results\":[{\"name\":\"Bdd23_Trench_ProductionMagazineReload\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Trench_ProductionMagazineReload\",\"state\":\"Passed\",\"durationSeconds\":2.8634104,\"message\":null,\"stackTrace\":null,\"output\":\"[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"},{\"name\":\"Bdd23_Urban_ProductionMagazineReload\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Urban_ProductionMagazineReload\",\"state\":\"Passed\",\"durationSeconds\":1.8293195,\"message\":null,\"stackTrace\":null,\"output\":\"[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"},{\"name\":\"Bdd27_DesktopThrowSpawnsVisibleM67UntilExplosion\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd27_DesktopThrowSpawnsVisibleM67UntilExplosion\",\"state\":\"Passed\",\"durationSeconds\":2.1055463,\"message\":null,\"stackTrace\":null,\"output\":\"[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"},{\"name\":\"Bdd29_Trench_LeftShoulderProductionMagazineReload\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd29_Trench_LeftShoulderProductionMagazineReload\",\"state\":\"Passed\",\"durationSeconds\":1.7695149,\"message\":null,\"stackTrace\":null,\"output\":\"[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"},{\"name\":\"Bdd29_Urban_LeftShoulderProductionMagazineReload\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd29_Urban_LeftShoulderProductionMagazineReload\",\"state\":\"Passed\",\"durationSeconds\":1.736991,\"message\":null,\"stackTrace\":null,\"output\":\"[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"},{\"name\":\"Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene\",\"state\":\"Passed\",\"durationSeconds\":2.4332478,\"message\":null,\"stackTrace\":null,\"output\":\"[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"},{\"name\":\"Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds\",\"state\":\"Passed\",\"durationSeconds\":2.2449471,\"message\":null,\"stackTrace\":null,\"output\":\"[GameStateManager] 状态改变为: MainMenu\\r\\n\"},{\"name\":\"Screen17_Trench_DeathThreeRetriesTrackingAndMovement\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen17_Trench_DeathThreeRetriesTrackingAndMovement\",\"state\":\"Passed\",\"durationSeconds\":2.5102679,\"message\":null,\"stackTrace\":null,\"output\":\"[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"},{\"name\":\"Screen17_Trench_ProductionVictoryRetryAndReturn\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen17_Trench_ProductionVictoryRetryAndReturn\",\"state\":\"Passed\",\"durationSeconds\":1.810464,\"message\":null,\"stackTrace\":null,\"output\":\"[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"},{\"name\":\"Screen21_Urban_DeathThreeRetriesTrackingAndMovement\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_DeathThreeRetriesTrackingAndMovement\",\"state\":\"Passed\",\"durationSeconds\":1.4025967,\"message\":null,\"stackTrace\":null,\"output\":\"[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"},{\"name\":\"Screen21_Urban_ProductionVictoryRetryAndReturn\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_ProductionVictoryRetryAndReturn\",\"state\":\"Passed\",\"durationSeconds\":2.3421127,\"message\":null,\"stackTrace\":null,\"output\":\"[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"},{\"name\":\"Bdd30_P2SightedShotsHitAcrossTheRouteUsingEachCurrentSnapshot\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.RangeSightHitRegressionTests.Bdd30_P2SightedShotsHitAcrossTheRouteUsingEachCurrentSnapshot\",\"state\":\"Passed\",\"durationSeconds\":0.5662448,\"message\":null,\"stackTrace\":null,\"output\":\"Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"},{\"name\":\"Bdd31_P2SecondShotRecoversWithoutManuallyResettingRecoil\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.RangeSightHitRegressionTests.Bdd31_P2SecondShotRecoversWithoutManuallyResettingRecoil\",\"state\":\"Passed\",\"durationSeconds\":0.4224481,\"message\":null,\"stackTrace\":null,\"output\":\"Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nRange recoil angle at the next-shot deadline: 0\\r\\nRange recoil angle at the next-shot deadline: 0\\r\\nRange recoil angle at the next-shot deadline: 0\\r\\nRange recoil angle at the next-shot deadline: 0\\r\\nRange recoil angle at the next-shot deadline: 0\\r\\n\"},{\"name\":\"Bdd31_DesktopRifleStaysVisibleAndReachableBeforePickup\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.UrbanPickupRegressionTests.Bdd31_DesktopRifleStaysVisibleAndReachableBeforePickup\",\"state\":\"Passed\",\"durationSeconds\":1.5032919,\"message\":null,\"stackTrace\":null,\"output\":\"[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"},{\"name\":\"Bdd31_VrRifleStaysVisibleAndReachableAfterHeadCalibration\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.UrbanPickupRegressionTests.Bdd31_VrRifleStaysVisibleAndReachableAfterHeadCalibration\",\"state\":\"Passed\",\"durationSeconds\":1.4401967,\"message\":null,\"stackTrace\":null,\"output\":\"Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"},{\"name\":\"Task013_ShotProducesLocalRecoilAndTwoHandHapticsThenSettles\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_ShotProducesLocalRecoilAndTwoHandHapticsThenSettles\",\"state\":\"Passed\",\"durationSeconds\":0.5871452,\"message\":null,\"stackTrace\":null,\"output\":\"Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n[GameStateManager] 状态初始化为: InGame\\r\\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\\r\\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\\r\\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\\r\\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\\r\\n\"},{\"name\":\"BuildingFailureKeepsCountsAndOldSessionInputsAreRejected\",\"fullName\":\"VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.BuildingFailureKeepsCountsAndOldSessionInputsAreRejected\",\"state\":\"Passed\",\"durationSeconds\":0.1084266,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"SceneFactsDriveStreetBuildingDoorsVictoryAndRetry\",\"fullName\":\"VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.SceneFactsDriveStreetBuildingDoorsVictoryAndRetry\",\"state\":\"Passed\",\"durationSeconds\":0.3420296,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"TrenchButtonsDriveVictoryRetryFailureAndPersistenceRecovery\",\"fullName\":\"VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.TrenchButtonsDriveVictoryRetryFailureAndPersistenceRecovery\",\"state\":\"Passed\",\"durationSeconds\":0.5172184,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry\",\"fullName\":\"VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry\",\"state\":\"Passed\",\"durationSeconds\":0.4341217,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"P3UiRoot_BuildsAllPagesAndFrozenTestIds\",\"fullName\":\"VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.P3UiRoot_BuildsAllPagesAndFrozenTestIds\",\"state\":\"Passed\",\"durationSeconds\":0.1389954,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing\",\"fullName\":\"VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing\",\"state\":\"Passed\",\"durationSeconds\":0.1379829,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand\",\"fullName\":\"VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand\",\"state\":\"Passed\",\"durationSeconds\":0.1359559,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents\",\"fullName\":\"VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents\",\"state\":\"Passed\",\"durationSeconds\":0.1370708,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent\",\"fullName\":\"VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent\",\"state\":\"Passed\",\"durationSeconds\":0.1379906,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"Screen18_UrbanMapSelection_RendersRangesAndStartsStreet\",\"fullName\":\"VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet\",\"state\":\"Passed\",\"durationSeconds\":0.1367867,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible\",\"fullName\":\"VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible\",\"state\":\"Passed\",\"durationSeconds\":0.1345299,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands\",\"fullName\":\"VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands\",\"state\":\"Passed\",\"durationSeconds\":0.135965,\"message\":null,\"stackTrace\":null,\"output\":\"\"},{\"name\":\"Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce\",\"fullName\":\"VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce\",\"state\":\"Passed\",\"durationSeconds\":0.1335799,\"message\":null,\"stackTrace\":null,\"output\":\"\"}]}},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Test job status retrieved.",
+        "error": null,
+        "data": {
+          "job_id": "79290b6214144731a3d3a923fc827623",
+          "status": "succeeded",
+          "mode": "PlayMode",
+          "started_unix_ms": 1792692483791,
+          "finished_unix_ms": 1792692517370,
+          "last_update_unix_ms": 1792692517370,
+          "progress": {
+            "completed": 29,
+            "total": 334,
+            "current_test_full_name": null,
+            "current_test_started_unix_ms": 1792692517084,
+            "last_finished_test_full_name": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce",
+            "last_finished_unix_ms": 1792692517219,
+            "stuck_suspected": false,
+            "editor_is_focused": true,
+            "blocked_reason": null,
+            "failures_so_far": [],
+            "failures_capped": false
+          },
+          "error": null,
+          "result": {
+            "mode": "PlayMode",
+            "summary": {
+              "total": 29,
+              "passed": 29,
+              "failed": 0,
+              "skipped": 0,
+              "durationSeconds": 30.7943165,
+              "resultState": "Passed"
+            },
+            "results": [
+              {
+                "name": "Bdd23_Trench_ProductionMagazineReload",
+                "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Trench_ProductionMagazineReload",
+                "state": "Passed",
+                "durationSeconds": 2.8634104,
+                "message": null,
+                "stackTrace": null,
+                "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              },
+              {
+                "name": "Bdd23_Urban_ProductionMagazineReload",
+                "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Urban_ProductionMagazineReload",
+                "state": "Passed",
+                "durationSeconds": 1.8293195,
+                "message": null,
+                "stackTrace": null,
+                "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              },
+              {
+                "name": "Bdd27_DesktopThrowSpawnsVisibleM67UntilExplosion",
+                "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd27_DesktopThrowSpawnsVisibleM67UntilExplosion",
+                "state": "Passed",
+                "durationSeconds": 2.1055463,
+                "message": null,
+                "stackTrace": null,
+                "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              },
+              {
+                "name": "Bdd29_Trench_LeftShoulderProductionMagazineReload",
+                "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd29_Trench_LeftShoulderProductionMagazineReload",
+                "state": "Passed",
+                "durationSeconds": 1.7695149,
+                "message": null,
+                "stackTrace": null,
+                "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              },
+              {
+                "name": "Bdd29_Urban_LeftShoulderProductionMagazineReload",
+                "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd29_Urban_LeftShoulderProductionMagazineReload",
+                "state": "Passed",
+                "durationSeconds": 1.736991,
+                "message": null,
+                "stackTrace": null,
+                "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              },
+              {
+                "name": "Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene",
+                "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene",
+                "state": "Passed",
+                "durationSeconds": 2.4332478,
+                "message": null,
+                "stackTrace": null,
+                "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              },
+              {
+                "name": "Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds",
+                "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds",
+                "state": "Passed",
+                "durationSeconds": 2.2449471,
+                "message": null,
+                "stackTrace": null,
+                "output": "[GameStateManager] 状态改变为: MainMenu\r\n"
+              },
+              {
+                "name": "Screen17_Trench_DeathThreeRetriesTrackingAndMovement",
+                "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen17_Trench_DeathThreeRetriesTrackingAndMovement",
+                "state": "Passed",
+                "durationSeconds": 2.5102679,
+                "message": null,
+                "stackTrace": null,
+                "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              },
+              {
+                "name": "Screen17_Trench_ProductionVictoryRetryAndReturn",
+                "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen17_Trench_ProductionVictoryRetryAndReturn",
+                "state": "Passed",
+                "durationSeconds": 1.810464,
+                "message": null,
+                "stackTrace": null,
+                "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              },
+              {
+                "name": "Screen21_Urban_DeathThreeRetriesTrackingAndMovement",
+                "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_DeathThreeRetriesTrackingAndMovement",
+                "state": "Passed",
+                "durationSeconds": 1.4025967,
+                "message": null,
+                "stackTrace": null,
+                "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              },
+              {
+                "name": "Screen21_Urban_ProductionVictoryRetryAndReturn",
+                "fullName": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_ProductionVictoryRetryAndReturn",
+                "state": "Passed",
+                "durationSeconds": 2.3421127,
+                "message": null,
+                "stackTrace": null,
+                "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              },
+              {
+                "name": "Bdd30_P2SightedShotsHitAcrossTheRouteUsingEachCurrentSnapshot",
+                "fullName": "SimulatedShooting.Tests.PlayMode.RangeSightHitRegressionTests.Bdd30_P2SightedShotsHitAcrossTheRouteUsingEachCurrentSnapshot",
+                "state": "Passed",
+                "durationSeconds": 0.5662448,
+                "message": null,
+                "stackTrace": null,
+                "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              },
+              {
+                "name": "Bdd31_P2SecondShotRecoversWithoutManuallyResettingRecoil",
+                "fullName": "SimulatedShooting.Tests.PlayMode.RangeSightHitRegressionTests.Bdd31_P2SecondShotRecoversWithoutManuallyResettingRecoil",
+                "state": "Passed",
+                "durationSeconds": 0.4224481,
+                "message": null,
+                "stackTrace": null,
+                "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nRange recoil angle at the next-shot deadline: 0\r\nRange recoil angle at the next-shot deadline: 0\r\nRange recoil angle at the next-shot deadline: 0\r\nRange recoil angle at the next-shot deadline: 0\r\nRange recoil angle at the next-shot deadline: 0\r\n"
+              },
+              {
+                "name": "Bdd31_DesktopRifleStaysVisibleAndReachableBeforePickup",
+                "fullName": "SimulatedShooting.Tests.PlayMode.UrbanPickupRegressionTests.Bdd31_DesktopRifleStaysVisibleAndReachableBeforePickup",
+                "state": "Passed",
+                "durationSeconds": 1.5032919,
+                "message": null,
+                "stackTrace": null,
+                "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              },
+              {
+                "name": "Bdd31_VrRifleStaysVisibleAndReachableAfterHeadCalibration",
+                "fullName": "SimulatedShooting.Tests.PlayMode.UrbanPickupRegressionTests.Bdd31_VrRifleStaysVisibleAndReachableAfterHeadCalibration",
+                "state": "Passed",
+                "durationSeconds": 1.4401967,
+                "message": null,
+                "stackTrace": null,
+                "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              },
+              {
+                "name": "Task013_ShotProducesLocalRecoilAndTwoHandHapticsThenSettles",
+                "fullName": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_ShotProducesLocalRecoilAndTwoHandHapticsThenSettles",
+                "state": "Passed",
+                "durationSeconds": 0.5871452,
+                "message": null,
+                "stackTrace": null,
+                "output": "Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态初始化为: InGame\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\nThere are 2 audio listeners in the scene. Please ensure there is always exactly one audio listener in the scene.\r\n"
+              },
+              {
+                "name": "BuildingFailureKeepsCountsAndOldSessionInputsAreRejected",
+                "fullName": "VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.BuildingFailureKeepsCountsAndOldSessionInputsAreRejected",
+                "state": "Passed",
+                "durationSeconds": 0.1084266,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "SceneFactsDriveStreetBuildingDoorsVictoryAndRetry",
+                "fullName": "VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.SceneFactsDriveStreetBuildingDoorsVictoryAndRetry",
+                "state": "Passed",
+                "durationSeconds": 0.3420296,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "TrenchButtonsDriveVictoryRetryFailureAndPersistenceRecovery",
+                "fullName": "VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.TrenchButtonsDriveVictoryRetryFailureAndPersistenceRecovery",
+                "state": "Passed",
+                "durationSeconds": 0.5172184,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry",
+                "fullName": "VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry",
+                "state": "Passed",
+                "durationSeconds": 0.4341217,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "P3UiRoot_BuildsAllPagesAndFrozenTestIds",
+                "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.P3UiRoot_BuildsAllPagesAndFrozenTestIds",
+                "state": "Passed",
+                "durationSeconds": 0.1389954,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing",
+                "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing",
+                "state": "Passed",
+                "durationSeconds": 0.1379829,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand",
+                "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand",
+                "state": "Passed",
+                "durationSeconds": 0.1359559,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents",
+                "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents",
+                "state": "Passed",
+                "durationSeconds": 0.1370708,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent",
+                "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent",
+                "state": "Passed",
+                "durationSeconds": 0.1379906,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "Screen18_UrbanMapSelection_RendersRangesAndStartsStreet",
+                "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet",
+                "state": "Passed",
+                "durationSeconds": 0.1367867,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible",
+                "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible",
+                "state": "Passed",
+                "durationSeconds": 0.1345299,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands",
+                "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands",
+                "state": "Passed",
+                "durationSeconds": 0.135965,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              },
+              {
+                "name": "Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce",
+                "fullName": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce",
+                "state": "Passed",
+                "durationSeconds": 0.1335799,
+                "message": null,
+                "stackTrace": null,
+                "output": ""
+              }
+            ]
+          }
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  }
+}

@@ -60,6 +60,27 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
+        public IEnumerator Bdd30_HelpShowsRoundAdviceNotTheEditedOrAppliedAmount()
+        {
+            yield return OpenHudAndCompleteRound();
+            FindButton("Button_ZeroingImpactAnalysis_Help").onClick.Invoke();
+            var help = FindText("Text_ZeroingImpactAnalysis_Suggestion").text;
+            var front = FindText("Text_ZeroingImpactAnalysis_FrontSight").text;
+            var rear = FindText("Text_ZeroingImpactAnalysis_RearSight").text;
+            var pending = FindText("Text_ZeroingImpactAnalysis_CorrectionX").text;
+            Assert.That(help, Does.Contain("本轮建议"));
+            for (var i = 0; i < 4; i++)
+                FindButton("Button_ZeroingImpactAnalysis_HorizontalPlus").onClick.Invoke();
+            FindButton("Button_ZeroingImpactAnalysis_VerticalPlus").onClick.Invoke();
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Is.Not.EqualTo(pending));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_Suggestion").text, Is.EqualTo(help));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Is.EqualTo(front));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Is.EqualTo(rear));
+            FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment").onClick.Invoke();
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_Suggestion").text, Is.EqualTo(help));
+        }
+
+        [UnityTest]
         public IEnumerator Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto()
         {
             yield return OpenHudAndCompleteRound();
@@ -136,7 +157,7 @@ namespace VRShooting.Tests.PlayMode.UI
                 foreach(var text in zeroingRangeUi.GetComponentsInChildren<TMP_Text>())text.ForceMeshUpdate();
                 camera.Render();RenderTexture.active=target;
                 texture.ReadPixels(new Rect(0,0,1920,1080),0,0);texture.Apply();
-                var folder=System.IO.Path.Combine(UnityEngine.Application.dataPath,"../Logs/range-assist-evidence");
+                var folder=System.IO.Path.Combine(UnityEngine.Application.dataPath,"../Temp/GoalRepair/images");
                 System.IO.Directory.CreateDirectory(folder);
                 System.IO.File.WriteAllBytes(System.IO.Path.Combine(folder,name+".png"),texture.EncodeToPNG());
             }
@@ -185,9 +206,6 @@ namespace VRShooting.Tests.PlayMode.UI
             var preview = services.Zeroing.CompleteRound(sessionId).Data;
             Assert.AreEqual(before.AverageOffsetCm, preview.AverageOffsetCm);
             Assert.AreEqual(before.ProposedCorrectionCm + new Vector2(2f, -.064f), preview.ProposedCorrectionCm);
-            var clicks = Mathf.Abs(preview.ProposedCorrectionCm.x / 2f).ToString("0.##", System.Globalization.CultureInfo.InvariantCulture);
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain(clicks), "Help must show the current pending clicks, not the original rounded suggestion.");
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("顺时针"), "Help and the actual pending downward correction must agree.");
             Assert.That(FindText("Text_ZeroingImpactAnalysis_PreviewAverage").text, Does.Contain("预览"));
             var averageMarker = FindById("Image_ZeroingImpactAnalysis_AverageCenter");
             var previewMarker = FindById("Image_ZeroingImpactAnalysis_AdjustedCenter");
@@ -368,8 +386,7 @@ namespace VRShooting.Tests.PlayMode.UI
                 AimMode = WeaponAimMode.AimDownSights,
                 ShoulderSide = ShoulderSide.Right,
                 Hit = true,
-                // The UI fixture supplies target centimetres; the current range sentinel is 25m.
-                HitPoint = new Vector3(hitPoint.x, hitPoint.y, 25f),
+                HitPoint = hitPoint,
                 HitObjectId = "Target_100m"
             });
 

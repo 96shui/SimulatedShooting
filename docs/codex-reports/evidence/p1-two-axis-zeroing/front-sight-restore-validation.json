@@ -1,0 +1,281 @@
+{
+  "date": "2026-10-21",
+  "scope": "P1 BDD06 front sight original one-degree repeat and removal of vertical 50cm cutoff",
+  "vrHardwareVerified": false,
+  "checks": {
+    "beforeFix": {
+      "jobId": "f4c075b77a3844f3bd0046fff80b441f",
+      "status": "failed",
+      "summary": null,
+      "failures": [
+        {
+          "full_name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalAdjustmentCanContinueForMultipleTurnsAndApplyOnce(-1)",
+          "message": "  Expected: -114.400002f +/- 0.00999999978f\r\n  But was:  -50.0f\r\n"
+        },
+        {
+          "full_name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalAdjustmentCanContinueForMultipleTurnsAndApplyOnce(1)",
+          "message": "  Expected: 90.4000015f +/- 0.00999999978f\r\n  But was:  50.0f\r\n"
+        },
+        {
+          "full_name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalAdjustmentDoesNotTruncateALargeSuggestedAngle(64.0f,-1)",
+          "message": "  One degree must remain one degree, even beyond the former 50cm cutoff.\r\n  Expected: -64.064003f +/- 0.00100000005f\r\n  But was:  -50.0f\r\n"
+        },
+        {
+          "full_name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalAdjustmentDoesNotTruncateALargeSuggestedAngle(-64.0f,1)",
+          "message": "  One degree must remain one degree, even beyond the former 50cm cutoff.\r\n  Expected: 64.064003f +/- 0.00100000005f\r\n  But was:  50.0f\r\n"
+        }
+      ],
+      "tests": []
+    },
+    "editMode": {
+      "jobId": "68718750c8574007bdeaa14f64d35089",
+      "status": "succeeded",
+      "summary": {
+        "total": 35,
+        "passed": 35,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 0.9853244,
+        "resultState": "Passed"
+      },
+      "failures": [],
+      "tests": [
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_RayPlaneIntersectionUsesActualMuzzleDepth",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeFinalGrade_MapsPassedRoundToGrade",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeFrontSightDegrees_UsesCeilingAnd064CmPerDegree",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeRearSightClicks_UsesCeilingAndTwoCmPerClick",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.GenerateFixedOffset_DifferentSeeds_ProduceDifferentOffsets",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.GenerateFixedOffset_FixedSeed_IsReproducible",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.GenerateFixedOffset_IsInsideTargetOutsideTenRing",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ResolveAimPointFromWeaponShot_UsesTargetOffsetConvention",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ResolveHorizontalDirection_BiasRight_UsesBackward",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ResolveVerticalDirection_BiasDown_UsesCounterClockwise",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.AdjustImpactPoint_RejectsIncompleteOrAppliedRoundAndInvalidDirection",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.AdjustImpactPoint_UsesSeparateAxesAndAffectsNextRoundOnce",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ApplyAdjustment_IsIdempotentForSameRound",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalAdjustmentCanContinueForMultipleTurnsAndApplyOnce(-1)",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalAdjustmentCanContinueForMultipleTurnsAndApplyOnce(1)",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalAdjustmentDoesNotTruncateALargeSuggestedAngle(64.0f,-1)",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalAdjustmentDoesNotTruncateALargeSuggestedAngle(-64.0f,1)",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.CompleteRound_BeforeThreeShots_ReturnsInvalidState",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.CompleteRound_CalculatesOffsetDirectionsAndAdjustmentAmounts",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ContinueAfterAnalysis_StartsNextRound_ResetsShotsToThree",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ContinueAfterAnalysis_WithoutApply_ReturnsInvalidState",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_AllRoundsFail_ReturnsFail",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound1_ReturnsExcellent",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound2_ReturnsGood",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound3_ReturnsPass",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetSession_NotFound_ReturnsNotFound",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_AcceptsUpToThreeShotsPerRound",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_AllInsideTenRing_PassedTenRingTrue",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_FourthShot_ReturnsInvalidState",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.StartSession_FixedSeed_ProducesReproducibleOffset",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(1,Excellent)",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(2,Good)",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(3,Pass)",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(0,Fail)",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.EditMode.Application.ZeroingServiceTests.WeaponShotResultEvent_RecordsShotUsingTargetOffsetConvention",
+          "state": "Passed"
+        }
+      ]
+    },
+    "playMode": {
+      "jobId": "1ec9d71b49ff49deba54886122fa8d87",
+      "status": "succeeded",
+      "summary": {
+        "total": 20,
+        "passed": 20,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 13.0025144,
+        "resultState": "Passed"
+      },
+      "failures": [],
+      "tests": [
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralAimDefaultAdjustmentNextRoundThreeTenRingHits",
+          "state": "Passed"
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,0.0f)",
+          "state": "Passed"
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(20.0f,0.0f)",
+          "state": "Passed"
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(-20.0f,0.0f)",
+          "state": "Passed"
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,20.0f)",
+          "state": "Passed"
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,-20.0f)",
+          "state": "Passed"
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_OffFaceAimUsesBoundTargetPlaneWithoutUnitJump(40.0f,0.0f)",
+          "state": "Passed"
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_OffFaceAimUsesBoundTargetPlaneWithoutUnitJump(0.0f,40.0f)",
+          "state": "Passed"
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_OffFaceAimUsesBoundTargetPlaneWithoutUnitJump(0.0f,-40.0f)",
+          "state": "Passed"
+        },
+        {
+          "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_TwoAxisManualCorrectionMovesPhysicalAndRecordedImpactTogether",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_LargeSuggestedFrontSightAngleRemainsAdjustableInUi",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_Oct07_HorizontalFractionalMean_PreservesFractionalClicks",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_VerticalLongHoldRepeatsOneDegreeAtConstantSpeedAndReleaseDoesNotAddClick",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ApplyAdjustmentUpdatesStateAndNextRoundReturnsToHud",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_BackToMainMenuButtonReturnsToMainMenu",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_HelpOwnsAllTipsAndResetsOnNextRound",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ManualAxisButtonsPreviewAndCommitCorrection",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_OneDegreeMovesBlueMarkerVerticallyWithoutChangingHorizontal",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThirdRoundPrimaryActionOpensFinalRating",
+          "state": "Passed"
+        },
+        {
+          "name": "VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto",
+          "state": "Passed"
+        }
+      ]
+    }
+  }
+}

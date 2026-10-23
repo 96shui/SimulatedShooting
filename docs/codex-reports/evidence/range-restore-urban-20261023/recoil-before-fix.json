@@ -1,0 +1,54 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "_meta": {
+      "fastmcp": {
+        "wrap_result": true
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"779ad4003438421da21d8faa95098f78\",\"status\":\"failed\",\"mode\":\"PlayMode\",\"started_unix_ms\":1792691609189,\"finished_unix_ms\":1792691612996,\"last_update_unix_ms\":1792691612996,\"progress\":{\"completed\":1,\"total\":334,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792691612095,\"last_finished_test_full_name\":\"SimulatedShooting.Tests.PlayMode.RangeSightHitRegressionTests.Bdd31_P2SecondShotRecoversWithoutManuallyResettingRecoil\",\"last_finished_unix_ms\":1792691612883,\"stuck_suspected\":false,\"editor_is_focused\":true,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"SimulatedShooting.Tests.PlayMode.RangeSightHitRegressionTests.Bdd31_P2SecondShotRecoversWithoutManuallyResettingRecoil\",\"message\":\"  Sighted target missed at progress 0.11\\r\\n  Expected: True\\r\\n  But was:  False\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Test job status retrieved.",
+        "error": null,
+        "data": {
+          "job_id": "779ad4003438421da21d8faa95098f78",
+          "status": "failed",
+          "mode": "PlayMode",
+          "started_unix_ms": 1792691609189,
+          "finished_unix_ms": 1792691612996,
+          "last_update_unix_ms": 1792691612996,
+          "progress": {
+            "completed": 1,
+            "total": 334,
+            "current_test_full_name": null,
+            "current_test_started_unix_ms": 1792691612095,
+            "last_finished_test_full_name": "SimulatedShooting.Tests.PlayMode.RangeSightHitRegressionTests.Bdd31_P2SecondShotRecoversWithoutManuallyResettingRecoil",
+            "last_finished_unix_ms": 1792691612883,
+            "stuck_suspected": false,
+            "editor_is_focused": true,
+            "blocked_reason": null,
+            "failures_so_far": [
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.RangeSightHitRegressionTests.Bdd31_P2SecondShotRecoversWithoutManuallyResettingRecoil",
+                "message": "  Sighted target missed at progress 0.11\r\n  Expected: True\r\n  But was:  False\r\n"
+              }
+            ],
+            "failures_capped": false
+          },
+          "error": null,
+          "result": null
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  }
+}

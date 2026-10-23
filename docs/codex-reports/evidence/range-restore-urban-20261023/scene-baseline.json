@@ -1,0 +1,12 @@
+{
+  "Assets/Scenes/ZeroingRangeScene.unity": {
+    "baseline_commit": "54073a0",
+    "byte_equal": true,
+    "gameobjects": 731
+  },
+  "Assets/Scenes/MovingTargetRangeScene.unity": {
+    "baseline_commit": "54073a0",
+    "byte_equal": true,
+    "gameobjects": 726
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "contents": [
+      {
+        "uri": "mcpforunity://scene/gameobject/-7280624",
+        "mimeType": "text/plain",
+        "text": "{\"success\":true,\"message\":null,\"error\":null,\"data\":{\"instanceID\":-7280624,\"name\":\"Main Camera\",\"tag\":\"MainCamera\",\"layer\":0,\"layerName\":\"Default\",\"active\":true,\"activeInHierarchy\":true,\"isStatic\":false,\"transform\":{\"position\":{\"x\":0.0,\"y\":0.0768,\"z\":-2.5893},\"localPosition\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"rotation\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"localRotation\":{\"x\":0.0,\"y\":0.0,\"z\":0.0},\"scale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0},\"lossyScale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0}},\"parent\":-7280620,\"children\":[],\"componentTypes\":[\"Transform\",\"Camera\",\"AudioListener\",\"TrackedPoseDriver\",\"UniversalAdditionalCameraData\"],\"path\":\"XR Origin (XR Rig)/Camera Offset/Main Camera\"},\"hint\":null}"
+      }
+    ]
+  }
+}

@@ -430,11 +430,8 @@ namespace SimulatedShooting.Tests.PlayMode
             }
             else
             {
-                foreach(var room in runtime.GetComponent<CombatSceneBindings>().Points.Where(p=>p.Kind==CombatPointKind.Room))
-                {
-                    Place(room.transform.position);Sample(room.transform.position,room.transform.position+Vector3.up*1.4f,Vector3.forward);
-                    Assert.That(runtime.Interact().Success,Is.True,room.RoomId);
-                }
+                Assert.That(app.Mission.Urban.GetResult(firstSession).Data.RoomsSearched,Is.Zero,
+                    "BDD31: all physical kills must finish without room-search interactions");
             }
             Assert.That(app.Snapshot.Summary.HasValue,Is.True);
             Assert.That(app.Snapshot.Summary.Value.Victory,Is.True);

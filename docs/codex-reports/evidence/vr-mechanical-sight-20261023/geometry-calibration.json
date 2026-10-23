@@ -1,0 +1,25 @@
+{
+  "source_obj": "Assets\\SimulatedShooting\\Prefabs\\Weapons\\QBC-191\\source\\QBZ-191.obj",
+  "source_sha256": "37518bd9b1bc58b69eedbfad52cc7f89b18f9929c24020ff1ae6a55df0567acc",
+  "unity_imported_rear_aperture_m": [
+    -0.0057315,
+    0.0573025,
+    -0.118108
+  ],
+  "unity_imported_front_post_tip_m": [
+    -0.005689,
+    0.05024,
+    0.228503
+  ],
+  "old_aim_origin_m": [
+    0.006,
+    0.047,
+    -0.118
+  ],
+  "old_aim_forward": [
+    0,
+    0,
+    1
+  ],
+  "visible_vs_old_ray_at_100m_m": 2.029690930881231
+}

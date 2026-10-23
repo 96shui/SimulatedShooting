@@ -13,11 +13,9 @@ namespace VRShooting.Application
     {
         public const int MaxRounds = 3;
         public const int ShotsPerRound = 3;
-        public const float DistanceMeters = 25f;
-        public const float TenRingRadiusCm = 10f;
+        public const float DistanceMeters = 100f;
+        public const float TenRingRadiusCm = 5f;
         public const float TargetHalfSizeCm = 25f;
-        public const float MinInitialOffsetRadiusCm = 3f;
-        public const float MaxInitialOffsetRadiusCm = 8f;
         public const float CmPerRearSightClick = 2f;
         public const float CmPerFrontSightDegree = 0.064f;
 
@@ -25,8 +23,8 @@ namespace VRShooting.Application
         {
             var rng = new System.Random(seed.Value);
             var angle = rng.NextDouble() * Math.PI * 2d;
-            var minRadius = MinInitialOffsetRadiusCm;
-            var maxRadius = MaxInitialOffsetRadiusCm;
+            var minRadius = TenRingRadiusCm + 0.01f;
+            var maxRadius = TargetHalfSizeCm;
             var radius = minRadius + rng.NextDouble() * (maxRadius - minRadius);
             return new Vector2(
                 (float)(Math.Cos(angle) * radius),
@@ -140,9 +138,14 @@ namespace VRShooting.Application
         public static Vector2 ComputeAverageOffset(IReadOnlyList<ZeroingShotDto> shots)
         {
             var sum = Vector2.zero;
+            var count = 0;
             for (var i = 0; i < shots.Count; i++)
+            {
+                if (shots[i].MissedTargetPlane) continue;
                 sum += shots[i].ImpactPointCm;
-            return shots.Count == 0 ? Vector2.zero : sum / shots.Count;
+                count++;
+            }
+            return count == 0 ? Vector2.zero : sum / count;
         }
 
         public static SightAdjustmentDto ApplyCorrection(SightAdjustmentDto current, Vector2 correctionCm)
@@ -219,8 +222,8 @@ namespace VRShooting.Application
             }
 
             return verticalOffsetCm > 0f
-                ? VerticalAdjustmentDirection.CounterClockwise
-                : VerticalAdjustmentDirection.Clockwise;
+                ? VerticalAdjustmentDirection.Clockwise
+                : VerticalAdjustmentDirection.CounterClockwise;
         }
 
         public static HorizontalAdjustmentDirection ResolveHorizontalDirection(float horizontalOffsetCm)

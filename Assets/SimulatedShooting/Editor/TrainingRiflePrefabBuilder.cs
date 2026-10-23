@@ -94,6 +94,19 @@ namespace SimulatedShooting.Editor
             EnsurePrefab(rebuild: true);
         }
 
+        [MenuItem("Tools/Simulated Shooting/Calibrate Training Rifle Mechanical Sights")]
+        public static void CalibrateMechanicalSights()
+        {
+            var root=PrefabUtility.LoadPrefabContents(PrefabPath);
+            try
+            {
+                TrainingRifleSightCalibration.Apply(root.GetComponent<WeaponPrefabBinding>());
+                PrefabUtility.SaveAsPrefabAsset(root,PrefabPath);
+            }
+            finally{PrefabUtility.UnloadPrefabContents(root);}
+            Debug.Log("[BDD33] Calibrated the existing QBZ191 AimLine to the visible aperture and front-post tip.");
+        }
+
         public static GameObject EnsurePrefab(bool rebuild = false)
         {
             EnsureFolder("Assets/SimulatedShooting/Prefabs");
@@ -163,6 +176,8 @@ namespace SimulatedShooting.Editor
                 magazine,
                 leftShoulder,
                 rightShoulder);
+
+            TrainingRifleSightCalibration.Apply(binding);
 
             AddWeaponColliders(root);
             var prompt = CreatePickupPrompt(root.transform);

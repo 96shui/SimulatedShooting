@@ -76,7 +76,8 @@ namespace VRShooting.Application.Combat
                 {
                     var index=random.NextInt(0,candidates.Count);if(index<0||index>=candidates.Count)return Fail<UrbanSessionDto>(ErrorCode.InvalidInput);
                     var point=candidates[index];candidates.RemoveAt(index);var enemyId=id+".enemy-"+(spawns.Count+1).ToString("000",CultureInfo.InvariantCulture);
-                    chosen.Add(enemyId,point);spawns.Add(new CombatEntityVisualDto {EntityId=enemyId,Role=CombatEntityRole.Enemy,Position=point.WorldPosition,Forward=Vector3.forward});
+                    var facing=Vector3.ProjectOnPlane((definition.EntranceWorldPosition??definition.PlayerSpawnPosition)-point.WorldPosition,Vector3.up);
+                    chosen.Add(enemyId,point);spawns.Add(new CombatEntityVisualDto {EntityId=enemyId,Role=CombatEntityRole.Enemy,Position=point.WorldPosition,Forward=facing.sqrMagnitude>.001f?facing.normalized:Vector3.forward});
                 }
             }
             starting=true;
@@ -208,7 +209,7 @@ namespace VRShooting.Application.Combat
         {
             if(hasResult||pendingOutcome.HasValue||cancelled)return;
             if(!combat.Player.IsAlive)Finish(false);
-            else if(Active&&killed.Count==enemies.Count&&rooms.Values.All(r=>r.State==RoomSearchState.Searched))Finish(true);
+            else if(Active&&enemies.Count>0&&killed.Count==enemies.Count)Finish(true);
         }
         void Finish(bool victory)
         {AccumulateTime();pendingOutcome=victory;phase=UrbanPhase.Results;core.SetState(session,victory?SessionState.Completed:SessionState.Failed);squad.Stop();dirty=true;}

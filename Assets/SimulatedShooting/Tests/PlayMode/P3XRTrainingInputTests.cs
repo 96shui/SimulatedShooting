@@ -38,16 +38,25 @@ namespace SimulatedShooting.Tests.PlayMode
             InputSystem.RemoveLayout("P3BindingTestController");
         }
 
-        [UnityTest] public IEnumerator Bdd29_RangeBSelectsLeftTriggerAndRequiresReleaseOnSwitch()
-            => VerifyShoulderRoles(new InputSystemXRTrainingInput());
+        // BDD00/09 baseline restored by the P1/P2 rollback; BDD29 applies only to P3.
+        [UnityTest] public IEnumerator RangeRollback_RightBDoesNotSwitchTheDefaultRangeAdapter()
+        {
+            var input = new InputSystemXRTrainingInput();
+            yield return null;
+            InputSystem.QueueDeltaStateEvent(right.GetChildControl<ButtonControl>("secondaryButton"), 1f);
+            yield return null;
+            Assert.That(input.SwitchShoulderPressed, Is.False);
+            InputSystem.QueueDeltaStateEvent(left.GetChildControl<AxisControl>("trigger"), 1f);
+            yield return null;
+            Assert.That(input.TriggerHeld, Is.False);
+            InputSystem.QueueDeltaStateEvent(right.GetChildControl<AxisControl>("trigger"), 1f);
+            yield return null;
+            Assert.That(input.TriggerHeld, Is.True);
+        }
 
         [UnityTest] public IEnumerator Bdd29_CombatBSelectsLeftTriggerAndRequiresReleaseOnSwitch()
             => VerifyShoulderRoles(new P3XRTrainingInput());
 
-        [UnityTest] public IEnumerator Bdd29_P1RealBInputRebindsGripPresentationAndFiresOnlyTheLeftTrigger()
-            => VerifyRangeShoulder(TrainingMode.Zeroing100m);
-        [UnityTest] public IEnumerator Bdd29_P2RealBInputRebindsGripPresentationAndFiresOnlyTheLeftTrigger()
-            => VerifyRangeShoulder(TrainingMode.MovingTarget);
         [UnityTest] public IEnumerator Bdd29_TrenchRealBInputMirrorsTheProductionRifleAndSelectsOnlyTheLeftTrigger()
             => VerifyCombatShoulder(TrainingMode.Trench);
         [UnityTest] public IEnumerator Bdd29_UrbanRealBInputMirrorsTheProductionRifleAndSelectsOnlyTheLeftTrigger()
@@ -128,73 +137,6 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return null;
         }
 
-        IEnumerator VerifyRangeShoulder(TrainingMode mode)
-        {
-            if (GameMain.Instance != null) Object.Destroy(GameMain.Instance.gameObject);
-            yield return null;
-            yield return SceneManager.LoadSceneAsync(mode == TrainingMode.Zeroing100m ? "ZeroingRangeScene" : "MovingTargetRangeScene");
-            Object.FindObjectOfType<ZeroingRangeXRModeController>().SetVrModeForTests(false);
-            if (GameMain.Instance == null) new GameObject("GameMain_ShoulderInput").AddComponent<GameMain>();
-            yield return null;
-            var services = GameMain.Instance.Services;
-            var controller = Object.FindObjectOfType<FirstPersonTrainingWeaponController>(true);
-            controller.enabled = false;
-            var rangeInput = new InputSystemXRTrainingInput();
-            controller.ConfigureServices(services, rangeInput);
-            string session;
-            if (mode == TrainingMode.MovingTarget)
-            {
-                var started = services.MovingTarget.StartSession(new MovingTargetSettingsDto { SpeedMetersPerSecond = 4f }, RandomSeed.Fixed(29));
-                Assert.That(started.Success, Is.True); session = started.Data.SessionId;
-                Assert.That(services.Presentation.ConfirmStart(session).Success, Is.True);
-            }
-            else
-            {
-                Assert.That(services.Presentation.Enter(mode).Success, Is.True);
-                Assert.That(services.Presentation.ConfirmStart("").Success, Is.True);
-                session = services.TrainingSessions.Current.SessionId;
-            }
-            Assert.That(controller.InitializeForTests(), Is.True);
-            void Step() => controller.SendMessage("Update");
-            void Button(XRController device, string control, float value)
-                => InputSystem.QueueDeltaStateEvent(device.GetChildControl<ButtonControl>(control), value);
-            Button(right, "secondaryButton", 1); yield return null; Step();
-            Assert.That(controller.CurrentShoulder, Is.EqualTo(ShoulderSide.Left));
-            Assert.That(controller.GrabInteractable.Shoulder, Is.EqualTo(ShoulderSide.Left), "The actual rifle must mirror, not just the DTO.");
-            yield return null; Step();
-            Assert.That(controller.CurrentShoulder, Is.EqualTo(ShoulderSide.Left), "Held B cannot toggle twice.");
-            Button(left, "gripPressed", 1); yield return null; Step();
-            Assert.That(controller.CurrentHoldState, Is.EqualTo(WeaponHoldState.RearHandHeld));
-            Button(right, "gripPressed", 1); yield return null; Step();
-            Assert.That(controller.TwoHandGripActive, Is.True);
-            Button(left, "gripPressed", 0); Button(right, "gripPressed", 0); yield return null; Step();
-            Button(left, "gripPressed", 1); Button(right, "gripPressed", 1); yield return null; Step();
-            Assert.That(controller.TwoHandGripActive, Is.True, "Simultaneous physical grip edges must form a left-shoulder hold too.");
-            if (mode == TrainingMode.MovingTarget) services.MovingTargetProgress.Tick(session, 3f);
-            var magazine = controller.CurrentMagazine;
-            InputSystem.QueueDeltaStateEvent(right.GetChildControl<AxisControl>("trigger"), 1f);
-            yield return null; Step();
-            Assert.That(controller.CurrentMagazine, Is.EqualTo(magazine), "Support-hand trigger must not fire.");
-            InputSystem.QueueDeltaStateEvent(left.GetChildControl<AxisControl>("trigger"), 1f);
-            yield return null; Step();
-            var sequence = services.AutomaticFire.GetState(session);
-            Assert.That(controller.CurrentMagazine, Is.LessThan(magazine),
-                "The left trigger must reach the real weapon service. input=" + rangeInput.TriggerPressed + "/" + rangeInput.TriggerHeld +
-                " canShoot=" + controller.CanShoot + " phase=" + services.Presentation.Get(session).Data.Phase +
-                " shootingAllowed=" + services.Presentation.Get(session).Data.ShootingAllowed +
-                " sequence=" + sequence.Data.Phase + "/armed=" + sequence.Data.TriggerArmedForNewSequence + "/shots=" + sequence.Data.ShotsFired);
-            var afterShot = controller.CurrentMagazine;
-            Button(right, "secondaryButton", 0); yield return null; Step();
-            // P2 may finish the initial two-shot burst before switching; capture just before B.
-            afterShot = controller.CurrentMagazine;
-            Button(right, "secondaryButton", 1); yield return null; Step();
-            Assert.That(controller.CurrentShoulder, Is.EqualTo(ShoulderSide.Right));
-            Assert.That(controller.CurrentMagazine, Is.EqualTo(afterShot), "Switching to an already-held right trigger must not fire.");
-            Assert.That(controller.GrabInteractable.Shoulder, Is.EqualTo(ShoulderSide.Right));
-            if (GameMain.Instance != null) Object.Destroy(GameMain.Instance.gameObject);
-            yield return null;
-        }
-
         IEnumerator VerifyShoulderRoles(IXRTrainingInput input)
         {
             void Sample()
@@ -206,7 +148,7 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return null; Sample();
             InputSystem.QueueDeltaStateEvent(right.GetChildControl<ButtonControl>("secondaryButton"), 1f);
             yield return null; Sample();
-            Assert.That(input.SwitchShoulderPressed, Is.True, "Right B must switch shoulders in every mode.");
+            Assert.That(input.SwitchShoulderPressed, Is.True, "Right B must switch shoulders in P3.");
             yield return null; Sample();
             Assert.That(input.SwitchShoulderPressed, Is.False, "Holding B must not switch again.");
             var shoulderInput = (object)input as IShoulderAwareTrainingInput;

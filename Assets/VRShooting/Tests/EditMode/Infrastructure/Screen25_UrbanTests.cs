@@ -91,8 +91,17 @@ namespace VRShooting.Tests.EditMode
             Assert.That(result.Victory);Assert.That(result.FloorMaps.Count,Is.EqualTo(3));Assert.That(State.Phase,Is.EqualTo(UrbanPhase.Results));
             Assert.That(service.CompleteIfReady(id).Data.Equals(result));Assert.That(outcomes,Is.EqualTo(1));
         }
-        [Test] public void AllKillsWithoutRoomChecksCannotWin()
-        {Start();Kill();Assert.That(service.CompleteIfReady(id).ErrorCode,Is.EqualTo(ErrorCode.InvalidState));Assert.That(State.RoomsSearched,Is.Zero);}
+        [Test] public void Bdd31_AllKillsWithoutRoomChecksCompletesOnceWithActualSearchCount()
+        {
+            Start();var outcomes=0;service.ResultReady+=_=>outcomes++;
+            Kill();var result=service.GetResult(id);
+            Assert.That(result.Success,Is.True,"All confirmed kills must finish mode four without room checks");
+            Assert.That(result.Data.Victory,Is.True);
+            Assert.That(result.Data.RoomsSearched,Is.Zero);
+            Assert.That(result.Data.EnemyKilled,Is.EqualTo(result.Data.EnemyTotal));
+            Assert.That(service.CompleteIfReady(id).Success,Is.True);
+            Assert.That(outcomes,Is.EqualTo(1));
+        }
         [Test] public void DeathCompetesWithLastCheckAndKill_AndWins()
         {
             service.Dispose();service=new UrbanService(P3Fixtures.UrbanDefinition,clock,new EndpointRandom(false),new FakeCombatWorld(),CombatConfigDto.Default.WithPlayerHealth(1));
@@ -105,10 +114,10 @@ namespace VRShooting.Tests.EditMode
         }
         [Test] public void RetryResetsDoorsAndSnapshotsWithoutChangingOldResult()
         {
-            Start();Enter();Kill();foreach(var room in Rooms)Check(room);var old=service.GetResult(id).Data;var oldId=id;
+            Start();Enter();Kill(EncounterGroup.Building);Check(Rooms.Last());Kill(EncounterGroup.Street);var old=service.GetResult(id).Data;var oldId=id;
             service.Cancel(id);Start();Assert.That(service.GetSession(oldId).ErrorCode,Is.EqualTo(ErrorCode.NotFound));
             Assert.That(State.Floors.SelectMany(f=>f.Rooms).All(r=>!r.DoorOpen&&r.SearchState==RoomSearchState.Unsearched));
-            Assert.That(service.GetVisualSnapshot(id).Data.Doors.All(d=>!d.Open));Assert.That(old.RoomsSearched,Is.EqualTo(3));Assert.That(State.Ammo.CurrentMagazine,Is.EqualTo(30));
+            Assert.That(service.GetVisualSnapshot(id).Data.Doors.All(d=>!d.Open));Assert.That(old.RoomsSearched,Is.EqualTo(1));Assert.That(State.Ammo.CurrentMagazine,Is.EqualTo(30));
         }
         sealed class EndpointRandom:ICombatRandom
         {readonly bool max;public EndpointRandom(bool max){this.max=max;}public void Reset(RandomSeed seed){}public int NextInt(int minInclusive,int maxExclusive)=>max?maxExclusive-1:minInclusive;}

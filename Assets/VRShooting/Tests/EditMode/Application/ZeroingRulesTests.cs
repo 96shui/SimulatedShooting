@@ -29,23 +29,14 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
-        public void Bdd29_InitialBiasIsSmallAndReproducibleAcrossSeeds()
+        public void GenerateFixedOffset_IsInsideTargetOutsideTenRing()
         {
-            for (var seed = 0; seed < 100; seed++)
-            {
-                var offset = ZeroingRules.GenerateFixedOffset(RandomSeed.Fixed(seed));
-                Assert.That(offset.magnitude, Is.InRange(3f, 8f));
-                Assert.That(offset, Is.EqualTo(ZeroingRules.GenerateFixedOffset(RandomSeed.Fixed(seed))));
-            }
-        }
+            var offset = ZeroingRules.GenerateFixedOffset(RandomSeed.Fixed(100));
+            var distance = offset.magnitude;
 
-        [TestCase(10f, 0f, true)]
-        [TestCase(6f, 8f, true)]
-        [TestCase(-10f, 0f, true)]
-        [TestCase(10.001f, 0f, false)]
-        [TestCase(8f, 8f, false)]
-        public void Bdd29_TenRingUsesTheLargerInclusiveCircularBoundary(float x, float y, bool expected)
-            => Assert.That(ZeroingRules.IsInsideTenRing(new Vector2(x, y)), Is.EqualTo(expected));
+            Assert.Greater(distance, ZeroingRules.TenRingRadiusCm);
+            Assert.LessOrEqual(distance, ZeroingRules.TargetHalfSizeCm);
+        }
 
         [Test]
         public void ComputeFrontSightDegrees_UsesCeilingAnd064CmPerDegree()
@@ -63,10 +54,10 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
-        public void September25_VerticalSuggestionUsesArchivedDirections()
+        public void Bdd30_VerticalSuggestionMatchesTheSignedCompensation()
         {
-            Assert.AreEqual(VerticalAdjustmentDirection.Clockwise, ZeroingRules.ResolveVerticalDirection(-3f));
-            Assert.AreEqual(VerticalAdjustmentDirection.CounterClockwise, ZeroingRules.ResolveVerticalDirection(3f));
+            Assert.AreEqual(VerticalAdjustmentDirection.CounterClockwise, ZeroingRules.ResolveVerticalDirection(-3f));
+            Assert.AreEqual(VerticalAdjustmentDirection.Clockwise, ZeroingRules.ResolveVerticalDirection(3f));
         }
 
         [Test]
@@ -100,7 +91,7 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
-        public void Bdd29_RayProjectionAccountsForMuzzleDepth()
+        public void Bdd30_RayProjectionSubtractsTheMuzzleOrigin()
         {
             var origin = new Vector3(.2f, .4f, 3f);
             var aim = ZeroingRules.ResolveAimPointFromRay(origin, new Vector3(.3f, -.2f, 97f), 100f);

@@ -1,0 +1,13 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "contents": [
+      {
+        "uri": "mcpforunity://scene/gameobject/-7300264",
+        "mimeType": "text/plain",
+        "text": "{\"success\":true,\"message\":null,\"error\":null,\"data\":{\"instanceID\":-7300264,\"name\":\"VirtualHand_Left(Clone)\",\"tag\":\"Untagged\",\"layer\":0,\"layerName\":\"Default\",\"active\":true,\"activeInHierarchy\":true,\"isStatic\":false,\"transform\":{\"position\":{\"x\":0.0,\"y\":0.0518000051,\"z\":-2.5093},\"localPosition\":{\"x\":0.0,\"y\":-0.025,\"z\":0.08},\"rotation\":{\"x\":8.0,\"y\":0.0,\"z\":0.0},\"localRotation\":{\"x\":8.0,\"y\":0.0,\"z\":0.0},\"scale\":{\"x\":1.0,\"y\":1.0,\"z\":1.0},\"lossyScale\":{\"x\":1.0,\"y\":0.99999994,\"z\":0.99999994}},\"parent\":-7280656,\"children\":[-7300272],\"componentTypes\":[\"Transform\",\"SceneTestId\",\"VRControllerHandVisual\"],\"path\":\"XR Origin (XR Rig)/Camera Offset/Left Controller/VirtualHand_Left(Clone)\"},\"hint\":null}"
+      }
+    ]
+  }
+}

@@ -240,7 +240,6 @@ namespace SimulatedShooting.Editor
                 if (obsoleteId != null)
                     UnityEngine.Object.DestroyImmediate(obsoleteId);
             }
-            RangeAssistanceSceneMigration.PatchScene(scene);
         }
 
         static void PatchMovingTargetRangeScene(UnityEngine.SceneManagement.Scene scene)
@@ -282,7 +281,6 @@ namespace SimulatedShooting.Editor
             CopyZeroingRangeStartArea(scene, root.transform, station, noVrCamera);
             ConfigureMovingTargetRoute(scene, route, movingTarget);
             RemoveOutOfScopeNightObjects(scene);
-            RangeAssistanceSceneMigration.PatchScene(scene);
         }
 
         static void ConfigureStation(

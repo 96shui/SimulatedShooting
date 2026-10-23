@@ -91,7 +91,7 @@ namespace SimulatedShooting.Editor
             EditorSceneManager.SaveScene(scene, ScenePath);
             AddSceneToBuildSettings();
             AssetDatabase.SaveAssets();
-            Debug.Log("[MovingTargetRangeSceneBuilder] Built MovingTargetRangeScene with a 50m range and 40m route.");
+            Debug.Log("[MovingTargetRangeSceneBuilder] Built MovingTargetRangeScene with a 100m range and 40m route.");
         }
 
         [MenuItem("Tools/Simulated Shooting/Open Moving Target Range Scene")]

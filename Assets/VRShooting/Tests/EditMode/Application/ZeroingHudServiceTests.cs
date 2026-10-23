@@ -42,7 +42,7 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.AreEqual(TrainingMode.Zeroing100m, result.Data.Mode);
             Assert.AreEqual(HudType.Zeroing, result.Data.HudType);
             Assert.AreEqual("1/3", FindLine(result.Data, "round").Value);
-            Assert.AreEqual("25m", FindLine(result.Data, "distance").Value);
+            Assert.AreEqual("100m", FindLine(result.Data, "distance").Value);
             Assert.AreEqual("3/3", FindLine(result.Data, "ammo").Value);
             Assert.AreEqual("待记录 3 发", FindLine(result.Data, "impactRecord").Value);
             Assert.AreEqual("右肩", FindLine(result.Data, "shoulder").Value);
@@ -142,8 +142,7 @@ namespace VRShooting.Tests.EditMode.Application
 
             Assert.IsTrue(analysis.Success, analysis.Message);
             Assert.AreEqual(3, analysis.Data.Shots.Count);
-            // The restored baseline direction contract remains unchanged by BDD29.
-            Assert.AreEqual(VerticalAdjustmentDirection.CounterClockwise, analysis.Data.VerticalDirection);
+            Assert.AreEqual(VerticalAdjustmentDirection.Clockwise, analysis.Data.VerticalDirection);
             Assert.AreEqual(HorizontalAdjustmentDirection.Forward, analysis.Data.HorizontalDirection);
         }
 

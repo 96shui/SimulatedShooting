@@ -1,0 +1,13 @@
+time=2026-10-23T12:57:21.9353159+08:00 playing=True inputBuffer=Dynamic reloadOptionsEnabled=False options=None
+device id=349 name=HeadTrackingOpenXR layout=XRInputV1::OpenXR::HeadTrackingOpenXR native=True enabled=True usages=
+  isTracked=1
+  trackingState=15
+  centerEyePosition=(-0.56, 0.82, 0.52)
+  devicePosition=(-0.56, 0.82, 0.52)
+menu scene=DontDestroyOnLoad enabled=True vr=True camera=Main Camera
+rig scene=MainScene active=True world=(0.00, 0.00, -2.59) mode=Floor offset=1.65
+  pose Main Camera enabled=True world=(-0.56, 0.82, -2.06) local=(-0.56, 0.82, 0.52) positionAction=True controls=/HeadTrackingOpenXR/centereyeposition:True
+  pose Gaze Interactor enabled=True world=(-0.56, 0.82, -2.06) local=(-0.56, 0.82, 0.52) positionAction=True controls=/HeadTrackingOpenXR/centereyeposition:True
+  pose Left Controller enabled=True world=(0.00, 0.00, -2.59) local=(0.00, 0.00, 0.00) positionAction=True controls=
+  pose Right Controller enabled=True world=(0.00, 0.00, -2.59) local=(0.00, 0.00, 0.00) positionAction=True controls=
+  actions XRI Default Input Actions manager=True filter=none enabled=92/92

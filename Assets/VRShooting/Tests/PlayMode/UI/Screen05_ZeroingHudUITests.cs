@@ -64,7 +64,7 @@ namespace VRShooting.Tests.PlayMode.UI
 
             Assert.IsTrue(FindById("Screen_ZeroingHud").activeSelf);
             Assert.That(FindText("Text_ZeroingHud_Round").text, Does.Contain("1/3"));
-            Assert.That(FindText("Text_ZeroingHud_Distance").text, Does.Contain("25m"));
+            Assert.That(FindText("Text_ZeroingHud_Distance").text, Does.Contain("100m"));
             Assert.That(FindText("Text_ZeroingHud_Ammo").text, Does.Contain("3/3"));
             Assert.IsNotNull(FindById("Hud_Zeroing_Stability"));
             Assert.IsNotNull(FindById("Hud_Zeroing_ImpactRecord"));
@@ -81,7 +81,7 @@ namespace VRShooting.Tests.PlayMode.UI
 
             Assert.That(FindText("Text_ZeroingHud_Ammo").text, Does.Contain("2/3"));
             Assert.That(FindText("Text_ZeroingHud_ImpactRecord").text, Does.Contain("已记录 1/3"));
-            Assert.That(FindText("Text_ZeroingHud_ImpactRecord").text, Does.Contain("10环"));
+            Assert.That(FindText("Text_ZeroingHud_ImpactRecord").text, Does.Contain("命中"));
         }
 
         [UnityTest]
@@ -157,7 +157,7 @@ namespace VRShooting.Tests.PlayMode.UI
                 AimMode = WeaponAimMode.AimDownSights,
                 ShoulderSide = services.TrainingSessions.Current.Player.Shoulder,
                 Hit = hit,
-                HitPoint = new Vector3(0f, 0f, 25f),
+                HitPoint = new Vector3(0f, 0f, 100f),
                 HitObjectId = "Target_100m"
             });
 

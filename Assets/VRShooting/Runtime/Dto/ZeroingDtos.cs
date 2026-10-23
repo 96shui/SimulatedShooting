@@ -30,6 +30,7 @@ namespace VRShooting.Common
         public Vector2 ImpactPointCm { get; init; }
         public float WeaponStability { get; init; }
         public bool InsideTenRing { get; init; }
+        public bool MissedTargetPlane { get; init; }
     }
 
     public readonly struct SightAdjustmentDto

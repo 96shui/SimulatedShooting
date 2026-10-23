@@ -132,21 +132,21 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [Test]
-        public void Bdd29_TargetHasSpecifiedDimensionsAtTwentyFiveMetres()
+        public void Bdd31_TargetKeepsItsDimensionsInTheOriginalRearRow()
         {
             var player = Find("ZeroingRange.FiringStation.Root").GetComponent<TrainingRangeSceneBindings>().PlayerRootAnchor;
             var target = Find("ZeroingRange.Target.Center").transform;
             var backer = Find("ZeroingRange.Target.Backer").GetComponent<Renderer>();
             var face = Find("ZeroingRange.Target.Face").GetComponent<Renderer>();
-            var tenRing = target.GetComponentInChildren<LineRenderer>();
+            var tenRing = Find("ZeroingRange.Target.TenRing").GetComponent<Renderer>();
 
-            Assert.That(Vector3.Dot(target.position - player.position, player.forward), Is.EqualTo(25f).Within(0.001f));
+            Assert.That(target.position.z, Is.EqualTo(100f).Within(.02f));
             Assert.That(backer.bounds.size.x, Is.EqualTo(1.4f).Within(0.001f));
             Assert.That(backer.bounds.size.y, Is.EqualTo(1.6f).Within(0.001f));
             Assert.That(face.bounds.size.x, Is.EqualTo(0.5f).Within(0.001f));
             Assert.That(face.bounds.size.y, Is.EqualTo(0.5f).Within(0.001f));
-            Assert.That(tenRing.GetPosition(0).x * 2, Is.EqualTo(0.2f).Within(0.001f));
-            Assert.That(tenRing.GetPosition(tenRing.positionCount / 4).y * 2, Is.EqualTo(0.2f).Within(0.001f));
+            Assert.That(tenRing.bounds.size.x, Is.EqualTo(0.1f).Within(0.001f));
+            Assert.That(tenRing.bounds.size.y, Is.EqualTo(0.1f).Within(0.001f));
         }
 
         [Test]
@@ -211,7 +211,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(impact.OffsetCm.x, Is.EqualTo(0f).Within(0.01f));
             Assert.That(impact.OffsetCm.y, Is.EqualTo(0f).Within(0.01f));
             Assert.That(impact.InsideTenRing, Is.True);
-            Assert.That(surface.TenRingRadiusCm, Is.EqualTo(10f).Within(0.001f));
+            Assert.That(surface.TenRingRadiusCm, Is.EqualTo(5f).Within(0.001f));
             Assert.That(Find("ZeroingRange.Target.Center"), Is.Not.Null);
             Assert.That(surface.Impacts.Count, Is.EqualTo(1));
             Assert.That(surface.ImpactMarkerRoot.childCount, Is.EqualTo(1));
@@ -568,7 +568,7 @@ namespace SimulatedShooting.Tests.PlayMode
             controller.AdjustFrontHandForTests(Vector2.zero);
             for (var i = 0; i < 8; i++)
             {
-                var ray = new Ray(binding.MuzzlePoint.position, controller.CurrentAimDirection);
+                var ray = new Ray(binding.AimLinePoint.position, controller.CurrentAimDirection);
                 var plane = new Plane(surface.TargetCenter.forward, surface.TargetCenter.position);
                 Assert.That(plane.Raycast(ray, out var distance), Is.True);
                 var error = ray.GetPoint(distance) - surface.TargetCenter.position;
@@ -576,7 +576,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 controller.AdjustFrontHandForTests(new Vector2(-error.x, -error.y) * gripDistance / distance);
             }
             Physics.SyncTransforms();
-            var aimedRay = new Ray(binding.MuzzlePoint.position, controller.CurrentAimDirection);
+            var aimedRay = new Ray(binding.AimLinePoint.position, controller.CurrentAimDirection);
             var targetPlane = new Plane(surface.TargetCenter.forward, surface.TargetCenter.position);
             Assert.That(targetPlane.Raycast(aimedRay, out var aimDistance), Is.True);
             Assert.That(Vector3.Distance(aimedRay.GetPoint(aimDistance), surface.TargetCenter.position), Is.LessThan(.01f),
@@ -609,6 +609,7 @@ namespace SimulatedShooting.Tests.PlayMode
         {
             var controller = Find("ZeroingRange.Weapon.PlayerRoot").GetComponent<FirstPersonTrainingWeaponController>();
             var camera = Find("ZeroingRange.Camera.NoVR").GetComponent<Camera>();
+            controller.ConfigureVrPoseSources(null, null, null);
             Assert.That(controller.InitializeForTests(), Is.True);
             var before = controller.CurrentAimDirection;
 
@@ -983,6 +984,7 @@ namespace SimulatedShooting.Tests.PlayMode
             var haptics = new ManualWeaponHapticOutput();
             controller.ConfigureHaptics(haptics);
             Assert.That(controller.InitializeForTests(), Is.True);
+            controller.enabled = false; // BDD31: sample the 80ms spring without variable frame gaps.
             var initialPosition = binding.RecoilRoot.localPosition;
             var initialRotation = binding.RecoilRoot.localRotation;
 
@@ -992,8 +994,8 @@ namespace SimulatedShooting.Tests.PlayMode
             var maximumDistance = 0f;
             while (sampleElapsed < 0.10f)
             {
-                yield return null;
-                sampleElapsed += Time.deltaTime;
+                controller.SendMessage("UpdateRecoil", .005f);
+                sampleElapsed += .005f;
                 maximumAngle = Mathf.Max(
                     maximumAngle,
                     Quaternion.Angle(initialRotation, binding.RecoilRoot.localRotation));
@@ -1007,9 +1009,9 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(maximumAngle, Is.InRange(2.2f, 4.5f));
             Assert.That(maximumDistance, Is.InRange(0.02f, 0.05f));
 
-            yield return new WaitForSeconds(0.35f);
             Assert.That(Quaternion.Angle(initialRotation, binding.RecoilRoot.localRotation), Is.LessThan(0.1f));
             Assert.That(Vector3.Distance(initialPosition, binding.RecoilRoot.localPosition), Is.LessThan(0.001f));
+            yield return null;
         }
 
         private static GameObject Find(string id)

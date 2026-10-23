@@ -1,0 +1,62 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "_meta": {
+      "fastmcp": {
+        "wrap_result": true
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"751f41e50d024c6088e4955bb73d0680\",\"status\":\"failed\",\"mode\":\"PlayMode\",\"started_unix_ms\":1792718005010,\"finished_unix_ms\":1792718010070,\"last_update_unix_ms\":1792718010070,\"progress\":{\"completed\":3,\"total\":262,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792718009424,\"last_finished_test_full_name\":\"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd32_AdsWasdOneFrameIsACentimetreStepAndReleaseIsStable(60)\",\"last_finished_unix_ms\":1792718009929,\"stuck_suspected\":false,\"editor_is_focused\":false,\"blocked_reason\":null,\"failures_so_far\":[{\"full_name\":\"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd32_AdsRespondsToSmallMouseTurnInput\",\"message\":\"  A small ADS mouse movement must move the real gun line by less than one centimetre\\r\\n  Expected: in range (0.02,1)\\r\\n  But was:  0.0f\\r\\n\"},{\"full_name\":\"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd32_AdsWasdOneFrameIsACentimetreStepAndReleaseIsStable(30)\",\"message\":\"  One frame of ADS micro-adjustment must not jump across the entire target\\r\\n  Expected: in range (0.1,2)\\r\\n  But was:  283.970337f\\r\\n\"},{\"full_name\":\"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd32_AdsWasdOneFrameIsACentimetreStepAndReleaseIsStable(60)\",\"message\":\"  One frame of ADS micro-adjustment must not jump across the entire target\\r\\n  Expected: in range (0.1,2)\\r\\n  But was:  141.985382f\\r\\n\"}],\"failures_capped\":false},\"error\":null,\"result\":null},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Test job status retrieved.",
+        "error": null,
+        "data": {
+          "job_id": "751f41e50d024c6088e4955bb73d0680",
+          "status": "failed",
+          "mode": "PlayMode",
+          "started_unix_ms": 1792718005010,
+          "finished_unix_ms": 1792718010070,
+          "last_update_unix_ms": 1792718010070,
+          "progress": {
+            "completed": 3,
+            "total": 262,
+            "current_test_full_name": null,
+            "current_test_started_unix_ms": 1792718009424,
+            "last_finished_test_full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd32_AdsWasdOneFrameIsACentimetreStepAndReleaseIsStable(60)",
+            "last_finished_unix_ms": 1792718009929,
+            "stuck_suspected": false,
+            "editor_is_focused": false,
+            "blocked_reason": null,
+            "failures_so_far": [
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd32_AdsRespondsToSmallMouseTurnInput",
+                "message": "  A small ADS mouse movement must move the real gun line by less than one centimetre\r\n  Expected: in range (0.02,1)\r\n  But was:  0.0f\r\n"
+              },
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd32_AdsWasdOneFrameIsACentimetreStepAndReleaseIsStable(30)",
+                "message": "  One frame of ADS micro-adjustment must not jump across the entire target\r\n  Expected: in range (0.1,2)\r\n  But was:  283.970337f\r\n"
+              },
+              {
+                "full_name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd32_AdsWasdOneFrameIsACentimetreStepAndReleaseIsStable(60)",
+                "message": "  One frame of ADS micro-adjustment must not jump across the entire target\r\n  Expected: in range (0.1,2)\r\n  But was:  141.985382f\r\n"
+              }
+            ],
+            "failures_capped": false
+          },
+          "error": null,
+          "result": null
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  }
+}

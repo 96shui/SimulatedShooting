@@ -237,12 +237,12 @@ namespace VRShooting.Tests.PlayMode.UI
             var title = FindById("Text_ZeroingBriefing_Title").GetComponent<TextMeshProUGUI>();
             var rules = FindById("Text_ZeroingBriefing_Rules").GetComponent<TextMeshProUGUI>();
 
-            Assert.That(title.text, Does.Contain("25m"));
-            Assert.That(rules.text, Does.Contain("射击距离：25m"));
-            Assert.That(rules.text, Does.Contain("10环直径：20cm"));
+            Assert.That(title.text, Does.Contain("100m"));
+            Assert.That(rules.text, Does.Contain("射击距离：100m"));
             Assert.That(rules.text, Does.Contain("射击模式：单发射"));
             Assert.That(rules.text, Does.Contain("每轮弹数：3发"));
             Assert.That(rules.text, Does.Contain("50cm x 50cm"));
+            Assert.That(rules.text, Does.Contain("10环直径：10cm"));
             Assert.That(rules.text, Does.Contain("通过条件"));
         }
 

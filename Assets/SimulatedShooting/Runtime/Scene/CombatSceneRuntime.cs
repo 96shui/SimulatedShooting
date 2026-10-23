@@ -220,6 +220,8 @@ namespace SimulatedShooting.Scene
             var correctedRack=binding.WeaponAnchor.position+standingFeet-binding.TrenchEntry.position;
             rifle.transform.SetPositionAndRotation(mode==TrainingMode.Trench?correctedRack:spawn+player.forward*.55f+Vector3.up*1.05f,
                 mode==TrainingMode.Trench?binding.WeaponAnchor.rotation:player.rotation);
+            urbanPickupPending=mode==TrainingMode.Urban;
+            if(urbanPickupPending)PlaceUrbanPickupRifle();
             if(grab!=null){grab.interactionManager=interactionManager;grab.enabled=vr&&!characterActionsLocked;grab.CaptureRackPose();}
             SetLayer(rifle,2); // IgnoreRaycast excludes the held rifle from its own physical shots.
             // The spawned rifle starts close to the player capsule. It must not push the
@@ -240,6 +242,25 @@ namespace SimulatedShooting.Scene
             return ServiceResult<Unit>.Ok(Unit.Value);
         }
         void Update(){if(active&&!ManualStepping)Step(Time.deltaTime);}
+        bool urbanPickupPending;
+        void UpdateUrbanPickupRifle(WeaponHoldState holdState)
+        {
+            if(mode!=TrainingMode.Urban||!urbanPickupPending)return;
+            var held=holdState==WeaponHoldState.RearHandHeld||holdState==WeaponHoldState.TwoHandHeld;
+            if(held||grab==null||grab.HoldState!=WeaponHoldState.OnRack)urbanPickupPending=false;
+            else PlaceUrbanPickupRifle();
+        }
+        void PlaceUrbanPickupRifle()
+        {
+            if(weapon==null||weapon.RearHandGrip==null||eye==null)return;
+            var forward=Vector3.ProjectOnPlane(eye.transform.forward,Vector3.up);
+            if(forward.sqrMagnitude<.01f)forward=player.forward;
+            forward.Normalize();
+            rifle.transform.rotation=Quaternion.LookRotation(forward,Vector3.up);
+            var reachableGrip=eye.transform.position+forward*.45f-Vector3.up*.28f;
+            rifle.transform.position+=reachableGrip-weapon.RearHandGrip.position;
+            grab?.CaptureRackPose();
+        }
         void UpdateReloadPresentation(CombatCoreSnapshotDto snapshot)
         {
             if(snapshot.SessionId!=session)return;
@@ -264,6 +285,9 @@ namespace SimulatedShooting.Scene
             if(!active)return;
             Clock.Step(delta);
             var snapshot=core.GetSnapshot(session);if(!snapshot.Success)return;
+            // Until pickup, keep the rifle in the player's reachable chest slot.
+            // Late HMD height calibration or a different gaze yaw cannot leave it behind.
+            UpdateUrbanPickupRifle(snapshot.Data.Weapon.HoldState);
             hardware.SetShoulder(snapshot.Data.Player.Shoulder);
             (InputOverride as IShoulderAwareTrainingInput)?.SetShoulder(snapshot.Data.Player.Shoulder);
             if(snapshot.Data.State!=SessionState.Running||characterActionsLocked)
@@ -329,6 +353,8 @@ namespace SimulatedShooting.Scene
             // Squad commands do not depend on the rifle's grip/input pipeline succeeding.
             var grenadeResult=AdvanceGrenadeCommand(input);
             LastFrameResult=controller.Step(frame,delta);
+            // Locomotion may change desktop eye height within this same frame.
+            UpdateUrbanPickupRifle(core.GetSnapshot(session).Data.Weapon.HoldState);
             if(!LastFrameResult.Success)return;
             LastFrameResult=tick.Advance();
             if(LastFrameResult.Success&&!grenadeResult.Success)LastFrameResult=grenadeResult;
@@ -637,7 +663,7 @@ namespace SimulatedShooting.Scene
         }
         public void Deactivate()
         {
-            active=false;
+            active=false;urbanPickupPending=false;
             awaitingInputRelease=false;
             if(state!=null)state.VisualChanged-=ApplyVisual;if(core!=null)core.Feedback-=Feedback;
             if(core!=null)core.Changed-=UpdateReloadPresentation;

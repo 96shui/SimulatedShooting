@@ -91,7 +91,7 @@ namespace VRShooting.Unity.UI
                 ? "建筑楼层：" + selectedMap.Floors.Count + " 层"
                 : "建筑楼层：--");
             P3UiText.SetText(conditionsText,
-                "任务信息\n搜索楼房\n消灭所有敌人\n队友保持三人纵队\n失败条件：玩家死亡");
+                "任务信息\n消灭建筑与街道的全部敌人即可完成\n房间搜索为可选记录\n队友保持三人纵队\n失败条件：玩家死亡");
             if (selectButton != null) selectButton.interactable = found || LastMaps.Count > 0;
         }
 
@@ -258,10 +258,10 @@ namespace VRShooting.Unity.UI
             hud = NormalizeHud(hud, session.SessionId, TrainingMode.Urban, HudType.UrbanBuilding,
                 session.Ammo, session.Player, session.MiniMap);
             var map = hud.MiniMap;
-            ApplyHud(hud, session.Squad, map, "任务状态：建筑搜索");
+            ApplyHud(hud, session.Squad, map, "任务状态：消灭全部敌人");
             P3UiText.SetText(floorText, "当前楼层：" + (string.IsNullOrWhiteSpace(session.CurrentFloorId) ? "--" : session.CurrentFloorId));
-            P3UiText.SetText(buildingProgressText, "建筑搜索：" + session.RoomsSearched + " / " + session.RoomsTotal +
-                " · " + (session.RoomsTotal == 0 ? "0%" : P3UiText.Percent((float)session.RoomsSearched / session.RoomsTotal)));
+            P3UiText.SetText(buildingProgressText, "敌人：" + (session.StreetEnemyKilled+session.BuildingEnemyKilled) + " / " + (session.StreetEnemyTotal+session.BuildingEnemyTotal) +
+                "\n搜索记录（可选）：" + session.RoomsSearched + " / " + session.RoomsTotal);
 
             var floor = FindFloor(session, session.CurrentFloorId);
             var rooms = floor.Rooms ?? Array.Empty<RoomDto>();

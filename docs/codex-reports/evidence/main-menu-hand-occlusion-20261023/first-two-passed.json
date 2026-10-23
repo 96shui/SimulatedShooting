@@ -1,0 +1,79 @@
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "_meta": {
+      "fastmcp": {
+        "wrap_result": true
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"success\":true,\"message\":\"Test job status retrieved.\",\"error\":null,\"data\":{\"job_id\":\"4b25ab223b9c4d5aae200f38f0d450da\",\"status\":\"succeeded\",\"mode\":\"PlayMode\",\"started_unix_ms\":1792725949548,\"finished_unix_ms\":1792725956685,\"last_update_unix_ms\":1792725956685,\"progress\":{\"completed\":2,\"total\":263,\"current_test_full_name\":null,\"current_test_started_unix_ms\":1792725955057,\"last_finished_test_full_name\":\"SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands\",\"last_finished_unix_ms\":1792725956544,\"stuck_suspected\":false,\"editor_is_focused\":true,\"blocked_reason\":null,\"failures_so_far\":[],\"failures_capped\":false},\"error\":null,\"result\":{\"mode\":\"PlayMode\",\"summary\":{\"total\":2,\"passed\":2,\"failed\":0,\"skipped\":0,\"durationSeconds\":4.4181535,\"resultState\":\"Passed\"},\"results\":[{\"name\":\"Bdd34_MenuHandsHideUntilTrackedAndRecoverWithoutDisablingUi\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuHandsHideUntilTrackedAndRecoverWithoutDisablingUi\",\"state\":\"Passed\",\"durationSeconds\":2.7661189,\"message\":null,\"stackTrace\":null,\"output\":\"[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"},{\"name\":\"Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands\",\"fullName\":\"SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands\",\"state\":\"Passed\",\"durationSeconds\":1.4857816,\"message\":null,\"stackTrace\":null,\"output\":\"[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n[GameStateManager] 状态改变为: MainMenu\\r\\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\\r\\n\"}]}},\"hint\":null}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "success": true,
+        "message": "Test job status retrieved.",
+        "error": null,
+        "data": {
+          "job_id": "4b25ab223b9c4d5aae200f38f0d450da",
+          "status": "succeeded",
+          "mode": "PlayMode",
+          "started_unix_ms": 1792725949548,
+          "finished_unix_ms": 1792725956685,
+          "last_update_unix_ms": 1792725956685,
+          "progress": {
+            "completed": 2,
+            "total": 263,
+            "current_test_full_name": null,
+            "current_test_started_unix_ms": 1792725955057,
+            "last_finished_test_full_name": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands",
+            "last_finished_unix_ms": 1792725956544,
+            "stuck_suspected": false,
+            "editor_is_focused": true,
+            "blocked_reason": null,
+            "failures_so_far": [],
+            "failures_capped": false
+          },
+          "error": null,
+          "result": {
+            "mode": "PlayMode",
+            "summary": {
+              "total": 2,
+              "passed": 2,
+              "failed": 0,
+              "skipped": 0,
+              "durationSeconds": 4.4181535,
+              "resultState": "Passed"
+            },
+            "results": [
+              {
+                "name": "Bdd34_MenuHandsHideUntilTrackedAndRecoverWithoutDisablingUi",
+                "fullName": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuHandsHideUntilTrackedAndRecoverWithoutDisablingUi",
+                "state": "Passed",
+                "durationSeconds": 2.7661189,
+                "message": null,
+                "stackTrace": null,
+                "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              },
+              {
+                "name": "Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands",
+                "fullName": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands",
+                "state": "Passed",
+                "durationSeconds": 1.4857816,
+                "message": null,
+                "stackTrace": null,
+                "output": "[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n[GameStateManager] 状态改变为: MainMenu\r\nCould not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.\r\n"
+              }
+            ]
+          }
+        },
+        "hint": null
+      }
+    },
+    "isError": false
+  }
+}

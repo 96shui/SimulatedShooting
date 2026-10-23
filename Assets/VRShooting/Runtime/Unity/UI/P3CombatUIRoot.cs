@@ -358,7 +358,7 @@ namespace VRShooting.Unity.UI
 
         void BuildUrbanBuildingHud()
         {
-            var page = CreatePage(ScreenId.UrbanBuildingHud, "城镇攻防 · 建筑搜索");
+            var page = CreatePage(ScreenId.UrbanBuildingHud, "城镇攻防 · 建筑清敌");
             AddPanel(page, "Panel_UrbanBuildingHud_Right", new Vector2(1360, 630), new Vector2(1870, 990), new Color32(11, 25, 20, 225));
             var map = CreateMiniMap(page, "Hud_UrbanBuilding_MiniMap", new Vector2(50, 625), new Vector2(560, 990));
             AddPanel(page, "Panel_UrbanBuildingHud_Rooms", new Vector2(50, 275), new Vector2(560, 605), new Color32(11, 25, 20, 225));

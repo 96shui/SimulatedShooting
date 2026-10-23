@@ -92,6 +92,9 @@ namespace VRShooting.Application
                     AimMode = latestFireSnapshot.AimMode,
                     ShoulderSide = latestFireSnapshot.ShoulderSide,
                     Hit = latestFireSnapshot.Hit,
+                    HasTargetPlaneSample = latestFireSnapshot.HasTargetPlaneSample,
+                    TargetPlaneRayValid = latestFireSnapshot.TargetPlaneRayValid,
+                    TargetPlanePointCm = latestFireSnapshot.TargetPlanePointCm,
                     HitPoint = latestFireSnapshot.HitPoint,
                     HitObjectId = latestFireSnapshot.HitObjectId
                 };

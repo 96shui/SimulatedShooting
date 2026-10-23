@@ -185,7 +185,7 @@ namespace VRShooting.Unity.UI
             AddLabel(parent, "Text_MovingTargetSetup_Title", "移动目标射击", 52, FontStyles.Bold,
                 new Vector2(500, 225), new Vector2(1420, 315), new Color32(231, 242, 235, 255));
             AddLabel(parent, "Text_MovingTargetSetup_Rules",
-                "50m 卧姿固定射击位  ·  两发起射 / 长按连射  ·  左端停留禁射",
+                "射击距离100m  ·  卧姿固定射击  ·  两发起射 / 长按连射  ·  左端禁射",
                 25, FontStyles.Bold, new Vector2(430, 330), new Vector2(1490, 380), new Color32(143, 217, 255, 255));
 
             var speeds = new[] { 3f, 4f, 5f };
@@ -267,7 +267,7 @@ namespace VRShooting.Unity.UI
             AddPanel(parent, "Panel_MovingTargetResults_Help", new Vector2(350, 250), new Vector2(1570, 590));
             resultHelpPanel = (RectTransform)parent.Find("Panel_MovingTargetResults_Help");
             var helpText = AddLabel(resultHelpPanel, "Text_MovingTargetResults_Help",
-                "当前射击距离为50米。\n\n一是跟随射击，移动武器追随目标进行射击。\n\n二是等待射击，预判目标的移动轨迹，在它的运动方向上等待经过。\n\n根据目标速度适当前置瞄准；射击距离已缩短，不再套用原100米的固定提前量。",
+                "当前射击距离100米。\n\n跟随射击：移动武器追随目标，使瞄准线保持在可见靶面上。\n\n等待射击：瞄准目标即将经过的位置，等靶面进入瞄准线时扣动扳机。\n\n命中以每发击发瞬间的枪线与靶面交点判定；两发起射期间也要持续跟随目标。",
                 26, FontStyles.Normal, new Vector2(30, 20), new Vector2(1190, 320),
                 new Color32(143, 217, 255, 255), TextAlignmentOptions.TopLeft);
             helpText.enableAutoSizing = true;

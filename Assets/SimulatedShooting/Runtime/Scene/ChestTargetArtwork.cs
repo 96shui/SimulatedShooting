@@ -7,13 +7,11 @@ namespace SimulatedShooting.Scene
     public static class ChestTargetArtwork
     {
         static Material material;
-        static Material assistedRingMaterial;
         public static void Apply(TargetImpactSurface surface)
         {
             if(surface.TargetCenter==null)return;
             var texture=Resources.Load<Texture2D>("UI/Tactical/ChestTargetReference");
             if(texture==null)return;
-            EnsureAssistedRing(surface);
             var root=surface.transform.parent;
             foreach(var renderer in root.GetComponentsInChildren<Renderer>(true))
                 if(renderer.name=="TargetFace_50cm"||renderer.name.StartsWith("TargetSilhouette_")||renderer.name=="TenRing_10cm")
@@ -38,34 +36,6 @@ namespace SimulatedShooting.Scene
                 }
             }
             face.GetComponent<Renderer>().sharedMaterial=material;
-        }
-
-        static void EnsureAssistedRing(TargetImpactSurface surface)
-        {
-            if (surface.TargetCenter.Find("AssistedTenRing_20cm") != null) return;
-            var node = new GameObject("AssistedTenRing_20cm");
-            node.transform.SetParent(surface.TargetCenter, false);
-            var id = surface.GetComponent<SceneTestId>();
-            if (id != null) node.AddComponent<SceneTestId>().Id = id.Id + ".AssistedTenRing";
-            var circle = node.AddComponent<LineRenderer>();
-            circle.useWorldSpace = false; circle.loop = true; circle.positionCount = 128;
-            circle.widthMultiplier = .0025f;
-            circle.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-            circle.receiveShadows = false;
-            circle.startColor = circle.endColor = new Color32(247, 185, 85, 255);
-            if (assistedRingMaterial == null)
-            {
-                assistedRingMaterial = new Material(Shader.Find("Universal Render Pipeline/Unlit") ?? Shader.Find("Unlit/Color"));
-                assistedRingMaterial.name = "AssistedTenRing_SharedUnlit";
-                assistedRingMaterial.hideFlags = HideFlags.HideAndDontSave;
-                assistedRingMaterial.color = new Color32(247, 185, 85, 255);
-            }
-            circle.sharedMaterial = assistedRingMaterial;
-            for (var i = 0; i < circle.positionCount; i++)
-            {
-                var angle = i * Mathf.PI * 2 / circle.positionCount;
-                circle.SetPosition(i, new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * (surface.TenRingRadiusCm * .01f) - Vector3.forward * .0025f);
-            }
         }
     }
 }

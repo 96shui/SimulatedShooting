@@ -21,6 +21,11 @@ namespace VRShooting.Tests.PlayMode
             service.ResultReady+=_=>results++;
             void Range(string key){service.Submit(new CombatInputDto {SessionId=id,Tick=clock.Tick,EventId="r-"+ ++sequence,Kind=CombatInputKind.AreaPresence,EntityId=key,Flag=true});service.Advance(id);}
             Range("urban-a.entrance");service.EnterBuilding(id,"urban-a.entrance");Assert.That(service.GetHud(id).Data.HudType,Is.EqualTo(HudType.UrbanBuilding));
+            foreach(var room in P3Fixtures.UrbanDefinition.Floors.SelectMany(f=>f.Rooms))
+            {
+                Range(room.RoomId+".door");Assert.That(service.OpenRoomDoor(id,room.RoomId).Success);
+                Assert.That(service.GetVisualSnapshot(id).Data.Doors.Single(d=>d.RoomId==room.RoomId).Open);
+            }
             foreach(var enemy in service.GetEnemyAssignments(id).Data)
             {
                 service.Combat.SetGrip(new WeaponGripStateInputDto {SessionId=id,HoldState=WeaponHoldState.TwoHandHeld,RearHandTracked=true,FrontHandTracked=true});
@@ -31,20 +36,15 @@ namespace VRShooting.Tests.PlayMode
                 service.Advance(id);yield return null;
                     }
             }
-            Assert.That(service.GetResult(id).Success,Is.False);
-            foreach(var room in P3Fixtures.UrbanDefinition.Floors.SelectMany(f=>f.Rooms))
-            {
-                Range(room.RoomId+".door");Assert.That(service.OpenRoomDoor(id,room.RoomId).Success);
-                Assert.That(service.GetVisualSnapshot(id).Data.Doors.Single(d=>d.RoomId==room.RoomId).Open);
-                Range(room.RoomId+".check");Assert.That(service.MarkRoomSearched(id,room.RoomId).Success);service.Advance(id);yield return null;
-            }
-            var result=service.GetResult(id).Data;Assert.That(result.Victory);Assert.That(result.FloorMaps.All(m=>m.Markers.Any(x=>x.Type==MarkerType.SearchedRoom)));
+            Assert.That(service.GetResult(id).Success,Is.True,"BDD31: all kills must complete without room checks");
+            var result=service.GetResult(id).Data;Assert.That(result.Victory);Assert.That(result.RoomsSearched,Is.Zero);
+            Assert.That(result.FloorMaps.All(m=>!m.Markers.Any(x=>x.Type==MarkerType.SearchedRoom)));
             Assert.That(results,Is.EqualTo(1));var oldId=id;service.Cancel(id);
             // Remove the current-session assertion while Start publishes its new ID.
             service.Dispose();using var retry=new UrbanService(P3Fixtures.UrbanDefinition,clock,new SeededCombatRandom(),new FakeCombatWorld());
             id=retry.StartSession("urban-a","training-rifle",RandomSeed.Fixed(4)).Data.SessionId;
             Assert.That(id,Is.Not.EqualTo(oldId));Assert.That(retry.GetSession(id).Data.RoomsSearched,Is.Zero);
-            Assert.That(retry.GetVisualSnapshot(id).Data.Doors.All(d=>!d.Open));Assert.That(result.RoomsSearched,Is.EqualTo(3));
+            Assert.That(retry.GetVisualSnapshot(id).Data.Doors.All(d=>!d.Open));Assert.That(result.RoomsSearched,Is.Zero);
         }
         [UnityTest] public IEnumerator BuildingFailureKeepsCountsAndOldSessionInputsAreRejected()
         {

@@ -56,11 +56,7 @@ namespace VRShooting.Tests.PlayMode
                 }
             }
             if (mode == TrainingMode.Trench) foreach (var node in lease.Definition.SearchNodes) Range(node.NodeId);
-            else foreach (var room in lease.Definition.Floors.SelectMany(f => f.Rooms))
-            {
-                Range(room.RoomId + ".door"); Assert.That(mission.Urban.OpenRoomDoor(id, room.RoomId).Success);
-                Range(room.RoomId + ".check"); Assert.That(mission.Urban.MarkRoomSearched(id, room.RoomId).Success); app.Advance(); yield return null;
-            }
+            else Assert.That(mission.Urban.GetResult(id).Data.RoomsSearched,Is.Zero,"BDD31: victory must not require room searches");
             Assert.That(app.Snapshot.Summary.Value.Victory); Assert.That(view.Status.text, Does.Contain("Victory"));
             var oldId = id; view.Retry.onClick.Invoke(); if (mode == TrainingMode.Trench) view.Start.onClick.Invoke();
             if(mode==TrainingMode.Trench)CompleteOpening(app,lease);
