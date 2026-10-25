@@ -8,7 +8,7 @@ namespace VRShooting.Application.Combat
         public static TrenchMapDto Trench => new TrenchMapDto { MapId=P3ContractIds.TrenchMap,
             DisplayName="堑壕训练场", Difficulty=DifficultyLevel.Low, MinEnemyCount=5, MaxEnemyCount=7 };
         public static UrbanMapDto Urban => new UrbanMapDto { MapId=P3ContractIds.UrbanMap,
-            DisplayName="城镇训练场", StreetEnemyMin=1, StreetEnemyMax=2, BuildingEnemyMin=3, BuildingEnemyMax=6,
+            DisplayName="城镇训练场", StreetEnemyMin=0, StreetEnemyMax=0, BuildingEnemyMin=3, BuildingEnemyMax=6,
             BuildingEntranceId=P3ContractIds.UrbanEntrance,
             Floors=new[]{new FloorDto{FloorId="floor-1",DisplayName="1F"},new FloorDto{FloorId="floor-2",DisplayName="2F"},new FloorDto{FloorId="floor-3",DisplayName="3F"}} };
     }

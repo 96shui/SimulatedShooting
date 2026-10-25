@@ -364,7 +364,7 @@ namespace VRShooting.Unity.UI
             AddPanel(page, "Panel_UrbanBuildingHud_Rooms", new Vector2(50, 275), new Vector2(560, 605), new Color32(11, 25, 20, 225));
             var floor = AddLabel(page, "Hud_UrbanBuilding_Floor", "当前楼层：--", 24, new Vector2(80, 530), new Vector2(530, 575), TextAlignmentOptions.Left);
             var rooms = AddLabel(page, "Hud_UrbanBuilding_Rooms", "房间：--", 21, new Vector2(80, 315), new Vector2(530, 515), TextAlignmentOptions.TopLeft);
-            var progress = AddLabel(page, "Hud_UrbanBuilding_SearchProgress", "建筑搜索：--", 24, new Vector2(80, 215), new Vector2(530, 265), TextAlignmentOptions.Left);
+            var progress = AddLabel(page, "Hud_UrbanBuilding_SearchProgress", "建筑敌人：--", 24, new Vector2(80, 215), new Vector2(530, 265), TextAlignmentOptions.Left);
             var health = AddLabel(page, "Hud_UrbanBuilding_Health", "生命：--", 26, new Vector2(1400, 915), new Vector2(1830, 965), TextAlignmentOptions.Left);
             var ammo = AddLabel(page, "Hud_UrbanBuilding_Ammo", "弹药：--", 28, new Vector2(1400, 820), new Vector2(1830, 900), TextAlignmentOptions.Left);
             var posture = AddLabel(page, "Hud_UrbanBuilding_Posture", "姿态：--", 24, new Vector2(1400, 765), new Vector2(1830, 810), TextAlignmentOptions.Left);

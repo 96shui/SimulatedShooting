@@ -15,7 +15,7 @@ namespace VRShooting.Common
         public string RoomId {get=>roomId??string.Empty;init=>roomId=value??string.Empty;}
         public EncounterGroup Group {get;init;}
     }
-    public enum CombatFeedbackKind { ShotFired, EnemyHit, EnemyDied, EnemyAttack, PlayerDamaged, PlayerDied }
+    public enum CombatFeedbackKind { ShotFired, EnemyHit, EnemyDied, EnemyAttack, PlayerDamaged, PlayerDied, TeammateAttack }
     public readonly struct CombatFeedbackDto
     {
         readonly string sessionId;
@@ -74,6 +74,8 @@ namespace VRShooting.Common
         public bool RearHandTracked { get; init; }
         public bool FrontHandTracked { get; init; }
         public bool RearGripInRange { get; init; }
+        public bool? PhysicalRearHandSelected { get; init; }
+        public bool? PhysicalFrontHandSelected { get; init; }
         public bool FrontGripInRange { get; init; }
         public bool IsRealVr { get; init; }
         public Vector3 MuzzlePosition { get; init; }

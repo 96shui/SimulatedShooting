@@ -745,7 +745,7 @@ MonoBehaviour:
   weaponBinding: {fileID: 4518482422643374010}
   pickupPrompt: {fileID: 453386759853460048}
   rearGrabRadius: 0.1
-  frontGrabRadius: 0.12
+  frontGrabRadius: 0.22
   returnDistance: 3.5
   returnBelowRackMeters: 1.4
 --- !u!1 &7245477802093341798

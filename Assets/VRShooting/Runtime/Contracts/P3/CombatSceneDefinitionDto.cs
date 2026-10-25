@@ -64,6 +64,8 @@ namespace VRShooting.Common
                     foreach (var room in floor.Rooms)
                     {
                         if (!AddId(uniqueIds, room.RoomId)) return Invalid("RoomId");
+                        if(room.EntryWorldPosition.HasValue && (!Finite(room.EntryWorldPosition.Value) ||
+                            !InsideProjection(room.EntryWorldPosition.Value,floor.FloorId))) return Invalid("Room entry position");
                         if(room.MapPosition.HasValue)
                         {
                             var p=room.MapPosition.Value;
@@ -94,7 +96,7 @@ namespace VRShooting.Common
                     return ServiceResult<Unit>.Fail(ErrorCode.ResourceUnavailable, "Invalid spawn candidate: " + point.PointId);
                 counts[(int)point.Group]++;
             }
-            if (trench ? counts[0] < 7 : counts[1] < 2 || counts[2] < 6)
+            if (trench ? counts[0] < 7 : counts[2] < 6)
                 return ServiceResult<Unit>.Fail(ErrorCode.ResourceUnavailable, "Insufficient spawn candidates for maximum configured encounter");
             return ServiceResult<Unit>.Ok(Unit.Value);
         }

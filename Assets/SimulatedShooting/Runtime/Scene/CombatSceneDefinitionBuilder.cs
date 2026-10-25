@@ -19,7 +19,7 @@ namespace SimulatedShooting.Scene
             var floors = trench ? Array.Empty<FloorDto>() : points.Where(p => p.Kind == CombatPointKind.Floor).OrderBy(p => p.FloorId)
                 .Select(f => new FloorDto { FloorId = f.FloorId, DisplayName = f.FloorId,
                     Rooms = points.Where(r => r.Kind == CombatPointKind.Room && r.FloorId == f.FloorId)
-                        .Select(r => new RoomDto { RoomId = r.RoomId, DisplayName = r.RoomId,
+                        .Select(r => new RoomDto { RoomId = r.RoomId, DisplayName = r.RoomId, EntryWorldPosition = r.transform.position,
                             MapPosition = binding.Maps.First(m => m.Id == "urban-" + f.FloorId.Last() + "f").WorldToMap(r.transform.position) }).ToArray() }).ToArray();
             return new CombatSceneDefinitionDto { MapId = map, SceneId = trench ? P3ContractIds.TrenchScene : P3ContractIds.UrbanScene,
                 Mode = mode, Projections = projections, Floors = floors,
@@ -28,7 +28,7 @@ namespace SimulatedShooting.Scene
                 EntranceId = trench ? "" : P3ContractIds.UrbanEntrance,
                 EntranceWorldPosition = trench ? (Vector3?)null : points.First(p => p.Kind == CombatPointKind.Entrance).transform.position,
                 SearchNodes = points.Where(p => p.Kind == CombatPointKind.SearchNode).Select(p => new SearchNodeDto { NodeId=p.Id, WorldPosition=p.transform.position }).ToArray(),
-                SpawnPoints = points.Where(p => p.Kind == CombatPointKind.EnemySpawn).Select(p => new SceneSpawnPointDto {
+                SpawnPoints = points.Where(p => p.Kind == CombatPointKind.EnemySpawn && (trench || !string.IsNullOrEmpty(p.FloorId))).Select(p => new SceneSpawnPointDto {
                     PointId=p.Id, EstimateAreaId=p.Id+".estimate", Group=trench ? EncounterGroup.Trench : string.IsNullOrEmpty(p.FloorId) ? EncounterGroup.Street : EncounterGroup.Building,
                     FloorId=p.FloorId, RoomId=p.RoomId, WorldPosition=p.transform.position,
                     EstimatePosition=p.EstimateAnchor!=null?p.EstimateAnchor.position:throw new InvalidOperationException("Missing estimate anchor: "+p.Id),

@@ -15,6 +15,7 @@ namespace SimulatedShooting.Scene
         float recoil;
         bool dead;
         float grenadeThrowUntil;
+        public bool IsThrowingGrenade => Time.time < grenadeThrowUntil;
         Quaternion leftGrip, rightGrip;
         Vector3 riflePosition;
         Quaternion rifleRotation;

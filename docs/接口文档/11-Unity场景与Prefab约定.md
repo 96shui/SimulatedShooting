@@ -280,3 +280,7 @@ P3 新端口、配置、错误/幂等、会话修订、场景ID与Fixture遵循 
 ### 整体接触与穿模复核
 
 用户指出右掌/指节仍与握把穿插，需整体消除明显穿模并保留食指扣扳机。采用实际枪网格定位握把、扳机和护木表面，调整掌部间距、各指包合路径和食指护圈位置；从已保存资源重新载入并做多角度接触检查。几何检查仅为编辑器中的蒙皮顶点/枪面深穿插筛查，不代替实机验收或射击/换弹流程测试。
+
+## 2026-10-25 支撑手抓取修订
+
+TrainingRifleGrabInteractable.FrontGrabRadius为0.22m，后握把保持0.10m。场景与共享XR预制体的XRDirectInteractor/NearFarInteractor使用State；握把先按住再进入有效范围也可抓取。CombatInputController以FrontGripHeld与FrontGripInRange建立支撑状态，仍须后手已持枪、追踪有效且支撑手未被换弹锁定。配置已保存，不依赖临时PlayMode参数。

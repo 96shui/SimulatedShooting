@@ -389,7 +389,7 @@ namespace VRShooting.Unity.UI
             IsSelected = selected;
             SetText(nameText, IsAvailable ? map.DisplayName : "地图不可用");
             SetText(conditionText, IsAvailable
-                ? "街道敌人：" + map.StreetEnemyMin + "-" + map.StreetEnemyMax + "\n建筑敌人：" + map.BuildingEnemyMin + "-" + map.BuildingEnemyMax
+                ? "建筑内部敌人：" + map.BuildingEnemyMin + "-" + map.BuildingEnemyMax
                 : "当前版本未开放");
             RefreshVisualState();
         }

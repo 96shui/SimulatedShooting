@@ -698,7 +698,7 @@ namespace SimulatedShooting.Editor
 
             var direct = directObject.AddComponent<XRDirectInteractor>();
             direct.handedness = handedness;
-            direct.selectActionTrigger = XRBaseInputInteractor.InputTriggerType.StateChange;
+            direct.selectActionTrigger = XRBaseInputInteractor.InputTriggerType.State;
             direct.selectInput = new XRInputButtonReader("Grip Select")
             {
                 inputSourceMode = XRInputButtonReader.InputSourceMode.InputAction,

@@ -17,8 +17,8 @@ namespace SimulatedShooting.Scene
         {
             if (string.IsNullOrEmpty(eventId) || !events.Add(eventId)) return;
             IsOpen = open;
-            // Physical leaf stays solid; navigation carving clears after the leaf has swung away.
-            if (!open) Obstacle.enabled = true;
+            // Clear the navigation gate on the same command that starts the leaf animation.
+            Obstacle.enabled = !open;
         }
 
         void Update()

@@ -8,7 +8,7 @@ namespace VRShooting.Common
     public enum DifficultyLevel { Low = 0, Medium = 1, High = 2 }
     public enum RoomSearchState { Unsearched = 0, Searching = 1, Searched = 2 }
     public enum UrbanPhase { Street = 0, Building = 1, Results = 2 }
-    public enum CombatInputKind { PlayerPose = 0, Posture = 1, Hit = 2, Perception = 3, AreaPresence = 4, NavigationResult = 5 }
+    public enum CombatInputKind { PlayerPose = 0, Posture = 1, Hit = 2, Perception = 3, AreaPresence = 4, NavigationResult = 5, TeammatePerception = 6 }
     public enum CombatEntityRole { Player = 0, Teammate = 1, Enemy = 2 }
     public enum CombatEntityState { Spawned = 0, Idle = 1, Attacking = 2, Dead = 3 }
     public enum EncounterGroup { Trench = 0, Street = 1, Building = 2 }
@@ -125,6 +125,7 @@ namespace VRShooting.Common
     /// <summary>P3.Contracts.v1; see docs/接口文档/14-P3战斗契约与独立测试基础.md.</summary>
     public readonly struct RoomDto
     {
+        public Vector3? EntryWorldPosition { get; init; }
         public Vector2? MapPosition { get; init; }
         readonly string roomId;
         public string RoomId { get => roomId ?? string.Empty; init => roomId = value ?? string.Empty; }

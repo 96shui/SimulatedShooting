@@ -515,7 +515,7 @@ namespace VRShooting.Unity.UI
             openMovingTargetButton = AddButton(parent, "Button_MainMenu_OpenMovingTarget", "02   移动目标射击", new Vector2(1360, 535), new Vector2(1750, 620), false);
             openMovingTargetButton.onClick.AddListener(OnOpenMovingTargetClicked);
             var trenchButton = AddButton(parent, "Button_MainMenu_Trench", "03   堑壕射击", new Vector2(1360, 405), new Vector2(1750, 490), false);
-            var urbanButton = AddButton(parent, "Button_MainMenu_Urban", "04   城镇攻防（开发中）", new Vector2(1360, 275), new Vector2(1750, 360), false);
+            var urbanButton = AddButton(parent, "Button_MainMenu_Urban", "04   城镇攻防", new Vector2(1360, 275), new Vector2(1750, 360), false);
             trenchButton.interactable = urbanButton.interactable = services.CombatScenesAvailable;
             trenchButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Trench));
             urbanButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Urban));
@@ -643,7 +643,7 @@ namespace VRShooting.Unity.UI
             var help = AddButton(data, "Button_ZeroingImpactAnalysis_Help", "帮助", new Vector2(28, 285), new Vector2(160, 342), false);
             zeroingAnalysisHelpButton = help;
             zeroingAnalysisSuggestionText = AddLabel(data, "Text_ZeroingImpactAnalysis_Suggestion",
-                "弹着点偏左时觇孔向前调整，弹着点偏右时觇孔向后调整，100m射击距离时觇孔调整一格为两厘米。\n\n弹着点偏上时顺时针调整准心柱，弹着点偏下时逆时针调整准心柱，100m射击距离时准心柱调整一圈约为23厘米，调整1度约0.064厘米。",
+                "弹着点偏左时觇孔向前调整，弹着点偏右时觇孔向后调整，100m射击距离时觇孔调整一格为两厘米。\n\n弹着点偏上时顺时针调整准心柱，弹着点偏下时逆时针调整准心柱，100m射击距离时准心柱调整一圈约为23厘米，每次调整5度约0.32厘米。",
                 19, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(28, 120), new Vector2(428, 270), new Color32(143, 217, 255, 255));
             zeroingAnalysisSuggestionText.enableAutoSizing = true;
             zeroingAnalysisSuggestionText.fontSizeMin = 15;
@@ -661,11 +661,11 @@ namespace VRShooting.Unity.UI
             SetZeroingHelpExpanded(false);
             AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_HorizontalLabel", "觇孔", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(18, 24), new Vector2(113, 100), new Color32(231, 242, 235, 255));
             AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalMinus", "向后", new Vector2(122, 25), new Vector2(196, 96), ZeroingAdjustmentAxis.Horizontal, -1);
-            zeroingAnalysisCorrectionXText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_CorrectionX", "0", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(202, 25), new Vector2(312, 96), new Color32(143, 217, 255, 255));
+            zeroingAnalysisCorrectionXText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_CorrectionX", "", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(202, 25), new Vector2(312, 96), new Color32(143, 217, 255, 255));
             AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalPlus", "向前", new Vector2(318, 25), new Vector2(392, 96), ZeroingAdjustmentAxis.Horizontal, 1);
             AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_VerticalLabel", "准心柱", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(475, 24), new Vector2(570, 100), new Color32(231, 242, 235, 255));
             AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_VerticalMinus", "顺时针", new Vector2(578, 25), new Vector2(652, 96), ZeroingAdjustmentAxis.Vertical, -1);
-            zeroingAnalysisCorrectionYText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_CorrectionY", "0", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(658, 25), new Vector2(768, 96), new Color32(143, 217, 255, 255));
+            zeroingAnalysisCorrectionYText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_CorrectionY", "", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(658, 25), new Vector2(768, 96), new Color32(143, 217, 255, 255));
             AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_VerticalPlus", "逆时针", new Vector2(774, 25), new Vector2(848, 96), ZeroingAdjustmentAxis.Vertical, 1);
 
             zeroingAnalysisAppliedText = AddLabel(parent, "Text_ZeroingImpactAnalysis_AppliedState", "等待应用调整", 20, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(285, 478, 245, 24), DrawioMax(285, 478, 245, 24), new Color32(143, 217, 255, 255));
@@ -1031,13 +1031,13 @@ namespace VRShooting.Unity.UI
         {
             if (zeroingAnalysisSuggestionText != null)
                 zeroingAnalysisSuggestionText.text = "本轮建议：" + FormatSuggestion(analysis) +
-                    "\n\n觇孔1格为2厘米；准心柱调整1度约0.064厘米。建议依据本轮弹着，调节值见下方控件。";
+                    "\n\n觇孔每次调整1格，1格为2厘米；准心柱每次调整5度，约0.32厘米。按方向按钮调整后点击应用。";
             SetAnalysisText(zeroingAnalysisFrontSightText, "准心柱", FormatFrontSight(analysis));
             SetAnalysisText(zeroingAnalysisRearSightText, "觇孔", FormatRearSight(analysis));
             if (zeroingAnalysisCorrectionXText != null)
-                zeroingAnalysisCorrectionXText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.x / ZeroingRules.CmPerRearSightClick, "向前", "向后", "格", "0.##");
+                zeroingAnalysisCorrectionXText.text = string.Empty;
             if (zeroingAnalysisCorrectionYText != null)
-                zeroingAnalysisCorrectionYText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.y / ZeroingRules.CmPerFrontSightDegree, "逆时针", "顺时针", "°", "0");
+                zeroingAnalysisCorrectionYText.text = string.Empty;
             if (zeroingAnalysisPreviewText != null)
                 zeroingAnalysisPreviewText.text = "原始均值(黄) → 调整预览(蓝) · 按住连续调节";
             if (zeroingAnalysisAppliedText != null)
@@ -1457,7 +1457,7 @@ namespace VRShooting.Unity.UI
             }
 
             var direction = analysis.VerticalDirection == VerticalAdjustmentDirection.CounterClockwise ? "逆时针" : "顺时针";
-            return direction + "调整 " + analysis.FrontSightDegreesToAdjust.ToString("0", CultureInfo.InvariantCulture) + "°";
+            return direction;
         }
 
         static string FormatRearSight(ZeroingRoundAnalysisDto analysis)
@@ -1468,7 +1468,7 @@ namespace VRShooting.Unity.UI
             }
 
             var direction = analysis.HorizontalDirection == HorizontalAdjustmentDirection.Forward ? "向前" : "向后";
-            return direction + "调整 " + analysis.RearSightClicksToAdjust.ToString("0.##", CultureInfo.InvariantCulture) + " 格";
+            return direction;
         }
 
         static string FormatSuggestion(ZeroingRoundAnalysisDto analysis)

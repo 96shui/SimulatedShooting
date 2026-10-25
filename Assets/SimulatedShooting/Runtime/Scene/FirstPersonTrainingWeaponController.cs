@@ -852,6 +852,26 @@ namespace SimulatedShooting.Scene
             var rawDirection = weaponBinding != null
                 ? weaponBinding.transform.forward.normalized
                 : Vector3.forward;
+            // Only rescue small edge misses; retain the original direction for direct hits.
+            var movingCollider = movingTargetHitAdapter != null ? movingTargetHitAdapter.TargetCollider : null;
+            if (!isZeroing && services != null && services.TrainingSessions.HasActiveSession &&
+                services.TrainingSessions.Current.Mode == TrainingMode.MovingTarget &&
+                movingCollider != null && movingCollider.enabled && movingCollider.gameObject.activeInHierarchy)
+            {
+                Physics.SyncTransforms();
+                var toTarget = movingCollider.bounds.center - muzzle;
+                if (toTarget.sqrMagnitude > .0001f &&
+                    Vector3.Angle(direction, toTarget) <= ZeroingRules.MovingTargetAssistAngleDegrees &&
+                    !movingCollider.Raycast(new Ray(muzzle, direction), out _, MaxShotDistance))
+                {
+                    var travel = Vector3.Dot(toTarget, direction);
+                    var passingPoint = muzzle + direction * travel;
+                    var edge = movingCollider.ClosestPoint(passingPoint);
+                    var gap = Vector3.Distance(passingPoint, edge);
+                    if (travel > 0f && gap > .00001f && gap <= ZeroingRules.MovingTargetAssistEdgeMetres)
+                        direction = (Vector3.Lerp(edge, movingCollider.bounds.center, .05f) - muzzle).normalized;
+                }
+            }
             var physicalHit = RaycastShot(muzzle, direction, out var raycastHit);
             latestRaycastHit = physicalHit;
             latestRaycast = raycastHit;
@@ -860,8 +880,8 @@ namespace SimulatedShooting.Scene
             var planeDistance = 0f;
             var planeValid = isZeroing && targetSurface != null &&
                 targetSurface.TryProjectRay(new Ray(muzzle, direction), out planePoint, out planeDistance);
-            if (planeValid && physicalHit && raycastHit.distance < planeDistance - .01f && !targetHit)
-                planeValid = false;
+            // P1 low-difficulty mode resolves forward shots on the target plane. The service
+            // owns the assisted final coordinate used by the tracer, hole and analysis.
             return new WeaponFireInputDto
             {
                 SessionId = SessionId,

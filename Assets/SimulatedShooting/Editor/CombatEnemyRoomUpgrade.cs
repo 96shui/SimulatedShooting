@@ -283,8 +283,6 @@ namespace SimulatedShooting.Editor
             SetPoint(bindings, "building-spawn-4", new Vector3(24.8f, 3.6f, 84.5f), 150, "room-22");
             SetPoint(bindings, "building-spawn-5", new Vector3(37, 7.2f, 68.5f), 225, "room-31");
             SetPoint(bindings, "building-spawn-6", new Vector3(34.5f, 7.2f, 84.5f), 205, "room-31");
-            SetPoint(bindings, "street-spawn-1", new Vector3(42.6f, 0, 68.2f), 250, null);
-            SetPoint(bindings, "street-spawn-2", new Vector3(12.7f, 0, 63.2f), 95, null);
         }
 
         static void SetPoint(CombatSceneBindings bindings, string id, Vector3 position, float yaw, string roomId)

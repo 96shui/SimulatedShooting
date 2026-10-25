@@ -73,14 +73,17 @@ namespace VRShooting.Input
             var rearGripHeld = leftShoulder ? input.LeftGripHeld : input.RightGripHeld;
             var rearGripPressed = leftShoulder ? input.LeftGripPressed : input.RightGripPressed;
             var frontGripHeld = leftShoulder ? input.RightGripHeld : input.LeftGripHeld;
-            var frontGripPressed = leftShoulder ? input.RightGripPressed : input.LeftGripPressed;
             var pressed = !switched && input.TriggerHeld && !triggerWasHeld;
             triggerWasHeld = input.TriggerHeld;
             if (!rearGripHeld) rearHeld = false;
             if (!switched && rearGripPressed && frame.RearGripInRange) rearHeld = true;
+            if (frame.IsRealVr && frame.PhysicalRearHandSelected.HasValue)
+                rearHeld = rearGripHeld && frame.PhysicalRearHandSelected.Value;
             var frontLocked = mode == TrainingMode.Trench && query.Data.Ammo.IsReloading;
             if (!frontGripHeld || !rearHeld || frontLocked) frontHeld = false;
-            if (!switched && !frontLocked && rearHeld && frontGripPressed && frame.FrontGripInRange) frontHeld = true;
+            if (!switched && !frontLocked && rearHeld && frontGripHeld && frame.FrontGripInRange) frontHeld = true;
+            if (frame.IsRealVr && frame.PhysicalFrontHandSelected.HasValue)
+                frontHeld = !frontLocked && rearHeld && frontGripHeld && frame.PhysicalFrontHandSelected.Value;
             result = core.SetGrip(new WeaponGripStateInputDto { SessionId = session,
                 HoldState = frontHeld ? WeaponHoldState.TwoHandHeld : rearHeld ? WeaponHoldState.RearHandHeld : WeaponHoldState.Dropped,
                 RearHandTracked = rearHeld, FrontHandTracked = frontHeld, Stability01 = frontHeld ? 1 : .3f });

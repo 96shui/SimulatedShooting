@@ -84,14 +84,13 @@ namespace VRShooting.Unity.UI
                 ? "当前选择：暂无地图"
                 : "当前选择：" + selectedMap.DisplayName);
             P3UiText.SetText(enemyText, found || LastMaps.Count > 0
-                ? "街道敌人：" + selectedMap.StreetEnemyMin + "-" + selectedMap.StreetEnemyMax +
-                  "\n建筑敌人：" + selectedMap.BuildingEnemyMin + "-" + selectedMap.BuildingEnemyMax
+                ? "建筑内部敌人：" + selectedMap.BuildingEnemyMin + "-" + selectedMap.BuildingEnemyMax
                 : "敌情：--");
             P3UiText.SetText(floorText, found || LastMaps.Count > 0
                 ? "建筑楼层：" + selectedMap.Floors.Count + " 层"
                 : "建筑楼层：--");
             P3UiText.SetText(conditionsText,
-                "任务信息\n消灭建筑与街道的全部敌人即可完成\n房间搜索为可选记录\n队友保持三人纵队\n失败条件：玩家死亡");
+                "任务信息\n仅清剿建筑内部敌人\n靠近门后点击开门，队友同时跟进\n消灭全部敌人即可胜利\n失败条件：玩家死亡");
             if (selectButton != null) selectButton.interactable = found || LastMaps.Count > 0;
         }
 
@@ -114,8 +113,7 @@ namespace VRShooting.Unity.UI
             SelectedMapId = mapId;
             for (var index = 0; index < mapCards.Count; index++) mapCards[index]?.SetSelected(mapCards[index].MapId == mapId);
             P3UiText.SetText(selectedMapText, "当前选择：" + selected.DisplayName);
-            P3UiText.SetText(enemyText, "街道敌人：" + selected.StreetEnemyMin + "-" + selected.StreetEnemyMax +
-                "\n建筑敌人：" + selected.BuildingEnemyMin + "-" + selected.BuildingEnemyMax);
+            P3UiText.SetText(enemyText, "建筑内部敌人：" + selected.BuildingEnemyMin + "-" + selected.BuildingEnemyMax);
             P3UiText.SetText(floorText, "建筑楼层：" + selected.Floors.Count + " 层");
             MapSelectionChanged?.Invoke(mapId);
         }
@@ -249,6 +247,8 @@ namespace VRShooting.Unity.UI
             openDoorButton = openDoor;
             checkRoomButton = checkRoom;
             exitButton = exit;
+            if(checkRoomButton!=null)checkRoomButton.gameObject.SetActive(false);
+            if(exitButton!=null)exitButton.gameObject.SetActive(false);
             BindInteractionButtons();
         }
 
@@ -260,8 +260,7 @@ namespace VRShooting.Unity.UI
             var map = hud.MiniMap;
             ApplyHud(hud, session.Squad, map, "任务状态：消灭全部敌人");
             P3UiText.SetText(floorText, "当前楼层：" + (string.IsNullOrWhiteSpace(session.CurrentFloorId) ? "--" : session.CurrentFloorId));
-            P3UiText.SetText(buildingProgressText, "敌人：" + (session.StreetEnemyKilled+session.BuildingEnemyKilled) + " / " + (session.StreetEnemyTotal+session.BuildingEnemyTotal) +
-                "\n搜索记录（可选）：" + session.RoomsSearched + " / " + session.RoomsTotal);
+            P3UiText.SetText(buildingProgressText, "建筑敌人：" + session.BuildingEnemyKilled + " / " + session.BuildingEnemyTotal);
 
             var floor = FindFloor(session, session.CurrentFloorId);
             var rooms = floor.Rooms ?? Array.Empty<RoomDto>();
@@ -272,9 +271,7 @@ namespace VRShooting.Unity.UI
                 var room = rooms[index];
                 if (string.IsNullOrWhiteSpace(CurrentRoomId) && room.SearchState != RoomSearchState.Searched)
                     CurrentRoomId = room.RoomId;
-                lines.Add(room.DisplayName + " · " + P3UiText.RoomState(room.SearchState) +
-                    (room.DoorOpen ? " · 门已开" : " · 门关闭") +
-                    (room.HasPossibleEnemyArea ? " · 敌情预估" : ""));
+                lines.Add(room.DisplayName + (room.DoorOpen ? " · 门已开" : " · 靠近后开门"));
             }
             P3UiText.SetText(roomsText, lines.Count == 0 ? "房间：暂无数据" : string.Join("\n", lines.ToArray()));
 
@@ -287,7 +284,7 @@ namespace VRShooting.Unity.UI
             if (!string.IsNullOrWhiteSpace(checkPrompt.PromptId)) CurrentRoomId = RoomIdFromPrompt(checkPrompt.PromptId);
 
             var prompt = !string.IsNullOrWhiteSpace(openPrompt.Text) ? openPrompt.Text : checkPrompt.Text;
-            if (string.IsNullOrWhiteSpace(prompt)) prompt = "观察房间状态";
+            if (string.IsNullOrWhiteSpace(prompt)) prompt = "靠近房门后点击开门，清除全部敌人即可胜利";
             P3UiText.SetText(promptText, prompt);
             if (openDoorButton != null) openDoorButton.interactable = OpenDoorInteractive;
             if (checkRoomButton != null) checkRoomButton.interactable = CheckRoomInteractive;
@@ -393,10 +390,7 @@ namespace VRShooting.Unity.UI
             if (outcomeText != null) outcomeText.color = result.Victory ? new Color32(125, 232, 189, 255) : new Color32(255, 130, 100, 255);
             P3UiText.SetText(summaryText, "城镇攻防 · 任务结算");
             P3UiText.SetText(statsText,
-                "街道清除：" + (result.StreetCleared ? "已清除" : "未清除") +
-                "\n建筑搜索完成度：" + P3UiText.Percent(result.BuildingSearchProgress01) +
-                "\n房间搜索：" + result.RoomsSearched + " / " + result.RoomsTotal +
-                "\n消灭敌人：" + result.EnemyKilled + " / " + result.EnemyTotal +
+                "消灭建筑敌人：" + result.EnemyKilled + " / " + result.EnemyTotal +
                 "\n剩余弹药：" + result.RemainingAmmo +
                 "\n队友状态：\n" + P3UiText.Squad(result.Squad) +
                 "\n用时：" + P3UiText.Time(result.ElapsedSeconds));

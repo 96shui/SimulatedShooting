@@ -167,7 +167,6 @@ namespace SimulatedShooting.Editor
             Stairs(new Vector3(7,3.6f,82),new Vector3(7,7.2f,66));
             Box("TopLanding",new Vector3(10,7.05f,64),new Vector3(14,.3f,4),concrete);
             Box("TopWalkway",new Vector3(13,7.05f,74),new Vector3(3,.3f,20),concrete);
-            for(int i=0;i<2;i++) Point("street-spawn-"+(i+1),"urban-a",CombatPointKind.EnemySpawn,new Vector3(6+i*32,0,57));
             Point("building-entrance","urban-a",CombatPointKind.Entrance,new Vector3(19,0,64),"floor-1",null,new Vector3(5,2.7f,5));
             Point("urban-route-street","urban-a",CombatPointKind.Route,new Vector3(24,0,53));
             Point("urban-route-stair-base","urban-a",CombatPointKind.Route,new Vector3(13,0,66));

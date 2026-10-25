@@ -107,7 +107,7 @@ namespace VRShooting.Application.Combat
                     var opening=Mission.StartOpening();
                     return opening.Success?Ok():Reject(opening.ErrorCode);
                 }
-                return Navigate(mode == TrainingMode.Trench ? ScreenId.TrenchHud : ScreenId.UrbanStreetHud);
+                return Navigate(mode == TrainingMode.Trench ? ScreenId.TrenchHud : ScreenId.UrbanBuildingHud);
             }
             catch (Exception) { CleanupScene(); Navigate(MapScreen); return Reject(ErrorCode.ResourceUnavailable); }
         }

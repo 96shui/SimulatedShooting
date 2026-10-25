@@ -18,13 +18,29 @@ namespace VRShooting.Application
         public const float TargetHalfSizeCm = 25f;
         public const float CmPerRearSightClick = 2f;
         public const float CmPerFrontSightDegree = 0.064f;
+        public const float FrontSightStepDegrees = 5f;
+        public const float MovingTargetAssistAngleDegrees = .5f;
+        public const float MovingTargetAssistEdgeMetres = .10f;
+
+        public static Vector2 AssistAimPoint(Vector2 aimPointCm)
+        {
+            return Vector2.ClampMagnitude(aimPointCm * .03f, 1.5f);
+        }
+
+        public static Vector2 QuantizeCorrection(Vector2 correctionCm)
+        {
+            var verticalStep = CmPerFrontSightDegree * FrontSightStepDegrees;
+            return new Vector2(
+                Mathf.Round(Mathf.Clamp(correctionCm.x, -50f, 50f) / CmPerRearSightClick) * CmPerRearSightClick,
+                Mathf.Round(Mathf.Clamp(correctionCm.y, -50f, 50f) / verticalStep) * verticalStep);
+        }
 
         public static Vector2 GenerateFixedOffset(RandomSeed seed)
         {
             var rng = new System.Random(seed.Value);
             var angle = rng.NextDouble() * Math.PI * 2d;
-            var minRadius = TenRingRadiusCm + 0.01f;
-            var maxRadius = TargetHalfSizeCm;
+            var minRadius = 6f;
+            var maxRadius = 8f;
             var radius = minRadius + rng.NextDouble() * (maxRadius - minRadius);
             return new Vector2(
                 (float)(Math.Cos(angle) * radius),
@@ -94,7 +110,7 @@ namespace VRShooting.Application
 
         public static Vector2 ComputeImpactPoint(Vector2 aimPointCm, Vector2 fixedImpactOffsetCm)
         {
-            return aimPointCm + fixedImpactOffsetCm;
+            return Vector2.ClampMagnitude(AssistAimPoint(aimPointCm) + fixedImpactOffsetCm, TargetHalfSizeCm - 1f);
         }
 
         public static bool IsInsideTenRing(Vector2 impactPointCm)
@@ -206,7 +222,7 @@ namespace VRShooting.Application
 
         public static float ComputeFrontSightDegrees(float verticalOffsetCm)
         {
-            return Mathf.Ceil(Mathf.Abs(verticalOffsetCm) / CmPerFrontSightDegree);
+            return Mathf.Ceil(Mathf.Abs(verticalOffsetCm) / (CmPerFrontSightDegree * FrontSightStepDegrees)) * FrontSightStepDegrees;
         }
 
         public static int ComputeRearSightClicks(float horizontalOffsetCm)

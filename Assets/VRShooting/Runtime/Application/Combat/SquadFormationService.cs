@@ -17,6 +17,7 @@ namespace VRShooting.Application.Combat
         readonly Dictionary<string,CombatInputDto> acknowledged = new Dictionary<string,CombatInputDto>();
         string session="";
         Vector3 playerPosition, playerForward;
+        Vector3? roomEntryTarget;
         float playerHealth;
         long revision, sequence;
         bool active, disposed, publishing, dirty;
@@ -35,7 +36,7 @@ namespace VRShooting.Application.Combat
             if(disposed||publishing) return Fail(ErrorCode.InvalidState);
             if(string.IsNullOrWhiteSpace(id)||!Finite(position)||!Direction(forward)) return Fail(ErrorCode.InvalidInput);
             session=id; playerPosition=position; playerForward=forward.normalized; playerHealth=config.PlayerHealth;
-            revision=sequence=0; active=canMove; acknowledged.Clear(); path.Clear();
+            revision=sequence=0; active=canMove; roomEntryTarget=null; acknowledged.Clear(); path.Clear();
             path.Add(position-playerForward*config.SquadSpacing*2); path.Add(position);
             for(var i=0;i<2;i++)
             {
@@ -53,6 +54,8 @@ namespace VRShooting.Application.Combat
             playerPosition=position; playerForward=forward.normalized; playerHealth=health;
             if(Vector3.Distance(path[path.Count-1],position)>.0001f) path.Add(position);
             active=canMove&&health>0;
+            if(roomEntryTarget.HasValue && (Vector3.Distance(position,roomEntryTarget.Value)<1f ||
+                Vector3.Distance(position,roomEntryTarget.Value)>12f)) roomEntryTarget=null;
             for(var i=0;i<2;i++)
             {
                 if(disposed)return Fail(ErrorCode.InvalidState);
@@ -70,7 +73,13 @@ namespace VRShooting.Application.Combat
                 }
                 if(clock.Now+1e-8<member.RetryAt) continue;
                 var target=Sample(config.SquadSpacing*(i+1),out var heading);
-                if(i==1) heading=-heading;
+                if(roomEntryTarget.HasValue)
+                {
+                    heading=Vector3.ProjectOnPlane(roomEntryTarget.Value-playerPosition,Vector3.up).normalized;
+                    if(heading.sqrMagnitude<.001f)heading=playerForward;
+                    target=roomEntryTarget.Value+Vector3.Cross(Vector3.up,heading)*(i==0?-.4f:.4f);
+                }
+                else if(i==1) heading=-heading;
                 if(Vector3.Distance(target,member.Position)<.01f && Vector3.Angle(member.Forward,heading)<1) continue;
                 var request=new CombatNavigationRequestDto {SessionId=session,RequestId=session+".nav-"+ ++sequence,
                     EntityId=member.Id,Tick=clock.Tick,Destination=target,Forward=heading};
@@ -80,6 +89,14 @@ namespace VRShooting.Application.Combat
             }
             if(disposed)return Fail(ErrorCode.InvalidState);
             TrimPath(); Publish(); return Ok();
+        }
+        internal ServiceResult<Unit> EnterRoom(string id,Vector3 insidePosition)
+        {
+            if(!Matches(id))return Fail(ErrorCode.NotFound);
+            if(!Finite(insidePosition)||!active||publishing)return Fail(ErrorCode.InvalidState);
+            roomEntryTarget=insidePosition;
+            foreach(var member in members){member.Waiting=false;member.RetryAt=clock.Now;}
+            return UpdatePlayer(playerPosition,playerForward,true,playerHealth);
         }
         public ServiceResult<Unit> Submit(CombatInputDto input)
         {
@@ -111,7 +128,9 @@ namespace VRShooting.Application.Combat
         }
         void Failure(Member member)
         {
-            member.Waiting=false; member.RetryAt=clock.Now+config.NavigationRetrySeconds;
+            // Door carving can settle one frame after opening. Retry entry promptly instead
+            // of making the squad wait the normal one-second follow retry at the doorway.
+            member.Waiting=false; member.RetryAt=clock.Now+(roomEntryTarget.HasValue?Math.Min(.15f,config.NavigationRetrySeconds):config.NavigationRetrySeconds);
             member.State=SquadMemberState.HoldingPosition; dirty=true;
             publishing=true;
             try { NavigationFailed?.Invoke(member.Request); } finally { publishing=false; }

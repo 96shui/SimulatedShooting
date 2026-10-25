@@ -67,9 +67,9 @@ namespace VRShooting.Application.Combat
             if(publishing||batch||starting||(session.Length>0&&!hasResult&&!cancelled))return Fail<UrbanSessionDto>(ErrorCode.Busy);
             var id=nextSessionId();if(string.IsNullOrWhiteSpace(id))return Fail<UrbanSessionDto>(ErrorCode.InvalidInput);
             random.Reset(seed);var chosen=new Dictionary<string,SceneSpawnPointDto>();var spawns=new List<CombatEntityVisualDto>();
-            foreach(var group in new[]{EncounterGroup.Street,EncounterGroup.Building})
+            foreach(var group in new[]{EncounterGroup.Building})
             {
-                var min=group==EncounterGroup.Street?1:3;var max=group==EncounterGroup.Street?2:6;
+                var min=3;var max=6;
                 var count=random.NextInt(min,max+1);if(count<min||count>max)return Fail<UrbanSessionDto>(ErrorCode.InvalidInput);
                 var candidates=definition.SpawnPoints.Where(p=>p.Group==group).OrderBy(p=>p.PointId,StringComparer.Ordinal).ToList();
                 for(var i=0;i<count;i++)
@@ -84,7 +84,7 @@ namespace VRShooting.Application.Combat
             try
             {
                 var started=core.Start(id,TrainingMode.Urban,spawns);if(!started.Success)return Fail<UrbanSessionDto>(started.ErrorCode);
-                session=id;combat=started.Data;revision=0;elapsed=0;lastNow=clock.Now;phase=UrbanPhase.Street;floor="";
+                session=id;combat=started.Data;revision=0;elapsed=0;lastNow=clock.Now;phase=UrbanPhase.Building;floor=definition.Floors[0].FloorId;
                 cancelled=hasResult=false;pendingOutcome=null;killed.Clear();inRange.Clear();received.Clear();pending.Clear();rooms.Clear();enemies.Clear();
                 foreach(var pair in chosen)enemies.Add(pair.Key,pair.Value);
                 foreach(var f in definition.Floors)foreach(var r in f.Rooms)rooms.Add(r.RoomId,new RoomState {Definition=r,FloorId=f.FloorId});
@@ -121,8 +121,13 @@ namespace VRShooting.Application.Combat
         {
             var guard=RoomGuard(id,roomId);if(!guard.Success)return Fail<UrbanSessionDto>(guard.ErrorCode);
             var room=rooms[roomId];if(room.Open)return ServiceResult<UrbanSessionDto>.Ok(snapshot);
-            if(!Active||phase!=UrbanPhase.Building||!inRange.Contains(roomId+".door"))return Fail<UrbanSessionDto>(ErrorCode.InvalidState);
-            room.Open=true;room.State=RoomSearchState.Searching;floor=room.FloorId;dirty=true;Publish();return ServiceResult<UrbanSessionDto>.Ok(snapshot);
+            if(!Active||!inRange.Contains(roomId+".door"))return Fail<UrbanSessionDto>(ErrorCode.InvalidState);
+            room.Open=true;room.State=RoomSearchState.Searching;phase=UrbanPhase.Building;floor=room.FloorId;dirty=true;
+            // Publish the open door before issuing navigation, so the scene clears its obstacle.
+            Publish();
+            if(room.Definition.EntryWorldPosition.HasValue)
+                squad.EnterRoom(id,room.Definition.EntryWorldPosition.Value);
+            return ServiceResult<UrbanSessionDto>.Ok(snapshot);
         }
         public ServiceResult<UrbanSessionDto> ObserveRoom(string id,string roomId)
         {var guard=RoomGuard(id,roomId);return Fail<UrbanSessionDto>(guard.Success?ErrorCode.InvalidState:guard.ErrorCode);}
@@ -238,18 +243,15 @@ namespace VRShooting.Application.Combat
                 BuildingEnemyTotal=Total(EncounterGroup.Building),BuildingEnemyKilled=Killed(EncounterGroup.Building),RoomsSearched=Searched,RoomsTotal=rooms.Count,
                 Ammo=combat.Ammo,Player=combat.Player,Squad=squadData,MiniMap=map,CurrentFloorId=phase==UrbanPhase.Street?"":floor,Floors=floors};
             var prompts=new List<HudPromptDto>();
-            if(phase==UrbanPhase.Building&&streetKilled<streetTotal)prompts.Add(new HudPromptDto {PromptId="StreetRisk",Text="街道尚有敌人，任务仍需清除街道"});
-            if(Active&&inRange.Contains(definition.EntranceId))prompts.Add(new HudPromptDto {PromptId=phase==UrbanPhase.Street?"EnterBuilding":"ExitBuilding",Text=phase==UrbanPhase.Street?"进入建筑":"返回街道",IsInteractive=true,IsEnabled=true});
-            if(Active&&phase==UrbanPhase.Building)foreach(var room in rooms.Values)
+            if(Active)foreach(var room in rooms.Values)
             {
                 var key=room.Definition.RoomId;
-                if(!room.Open&&inRange.Contains(key+".door"))prompts.Add(new HudPromptDto {PromptId=key+".OpenDoor",Text="开门",IsInteractive=true,IsEnabled=true});
-                else if(room.Open&&room.State!=RoomSearchState.Searched&&inRange.Contains(key+".check"))prompts.Add(new HudPromptDto {PromptId=key+".CheckRoom",Text="检查房间",IsInteractive=true,IsEnabled=!enemies.Any(e=>e.Value.RoomId==key&&!killed.Contains(e.Key))});
+                if(!room.Open&&inRange.Contains(key+".door"))prompts.Add(new HudPromptDto {PromptId=key+".OpenDoor",Text="开门，队友跟进",IsInteractive=true,IsEnabled=true});
             }
             hud=new HudDto {SessionId=session,Mode=TrainingMode.Urban,HudType=phase==UrbanPhase.Street?HudType.UrbanStreet:HudType.UrbanBuilding,
                 Ammo=combat.Ammo,Player=combat.Player,MiniMap=map,CanShoot=Active&&!pendingOutcome.HasValue&&combat.Weapon.CanShoot,Prompts=prompts.AsReadOnly(),
-                TextLines=Array.AsReadOnly(new[]{Line("Street","街道敌人",streetKilled+"/"+streetTotal),Line("Building","建筑敌人",snapshot.BuildingEnemyKilled+"/"+snapshot.BuildingEnemyTotal),
-                    Line("Rooms","房间检查",Searched+"/"+rooms.Count),Line("Elapsed","用时",elapsed.ToString("F1",CultureInfo.InvariantCulture))})};
+                TextLines=Array.AsReadOnly(new[]{Line("Building","建筑敌人",snapshot.BuildingEnemyKilled+"/"+snapshot.BuildingEnemyTotal),
+                    Line("Elapsed","用时",elapsed.ToString("F1",CultureInfo.InvariantCulture))})};
             visual=new CombatVisualSnapshotDto {SessionId=session,Revision=revision,Entities=combat.Visual.Entities.Concat(squad.GetVisualSnapshot(session).Data.Entities).ToArray(),
                 Doors=rooms.Select(r=>new CombatDoorVisualDto {RoomId=r.Key,Open=r.Value.Open}).ToArray()};
             var newResult=pendingOutcome.HasValue;
@@ -272,7 +274,7 @@ namespace VRShooting.Application.Combat
         }
         IReadOnlyList<FloorDto> BuildFloors()=>Array.AsReadOnly(definition.Floors.Select(f=>new FloorDto {FloorId=f.FloorId,DisplayName=f.DisplayName,
             MiniMap=BuildMap(f.FloorId),Rooms=f.Rooms.Select(r=>new RoomDto {RoomId=r.RoomId,DisplayName=r.DisplayName,MapPosition=r.MapPosition,
-                DoorOpen=rooms[r.RoomId].Open,SearchState=rooms[r.RoomId].State,HasPossibleEnemyArea=r.HasPossibleEnemyArea||definition.SpawnPoints.Any(p=>p.RoomId==r.RoomId)}).ToArray()}).ToArray());
+                DoorOpen=rooms[r.RoomId].Open,SearchState=rooms[r.RoomId].State,EntryWorldPosition=r.EntryWorldPosition,HasPossibleEnemyArea=r.HasPossibleEnemyArea||definition.SpawnPoints.Any(p=>p.RoomId==r.RoomId)}).ToArray()}).ToArray());
         MiniMapDto BuildMap(string floorId)
         {
             var markers=new List<MapMarkerDto>();
@@ -287,7 +289,7 @@ namespace VRShooting.Application.Combat
         MapMarkerDto Marker(string id,MarkerType type,Vector3 p,string floorId,string label)
         {var b=definition.Projections.First(f=>f.FloorId==floorId).WorldBoundsXZ;return new MapMarkerDto {MarkerId=id,Type=type,Label=label,NormalizedPosition=new Vector2(Mathf.Clamp01((p.x-b.x)/b.width),Mathf.Clamp01((p.z-b.y)/b.height))};}
         UrbanMapDto Map()=>new UrbanMapDto {MapId=definition.MapId,DisplayName="城镇地图 A",BuildingEntranceId=definition.EntranceId,
-            StreetEnemyMin=1,StreetEnemyMax=2,BuildingEnemyMin=3,BuildingEnemyMax=6,Floors=definition.Floors};
+            StreetEnemyMin=0,StreetEnemyMax=0,BuildingEnemyMin=3,BuildingEnemyMax=6,Floors=definition.Floors};
         bool KnownArea(string id)=>id==definition.EntranceId||definition.Floors.Any(f=>f.FloorId==id)||rooms.Keys.Any(r=>r+".door"==id||r+".check"==id);
         static HudTextLineDto Line(string key,string label,string value)=>new HudTextLineDto {Key=key,Label=label,Value=value};
         ServiceResult<Unit> ValidateMap(string map)

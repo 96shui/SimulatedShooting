@@ -40,18 +40,29 @@ namespace SimulatedShooting.Scene
         SkinnedMeshRenderer boots;
         CapsuleCollider standingHitCapsule;
         Vector3 standingHitCenter;
-        bool feetAligned;
+        Mesh bakedBoots;
+        readonly List<Vector3> bootVertices = new List<Vector3>();
+        float visualGroundOffset;
         MuzzleBlastVfx muzzleBlast;
         float deathTime;
         bool actionsLocked;
+        bool combatAiming, navigationRotation;
         bool soldierWasEnabled;
         readonly Dictionary<Animator,float> frozenAnimators = new Dictionary<Animator,float>();
         public bool ActionsLocked => actionsLocked;
+        public void SetCombatAiming(bool aiming)
+        {
+            if (combatAiming == aiming || Agent == null) return;
+            if (aiming) navigationRotation = Agent.updateRotation;
+            Agent.updateRotation = aiming ? false : navigationRotation;
+            combatAiming = aiming;
+        }
         public Vector3 GroundedFeetPosition => new Vector3(transform.position.x,
-            groundTerrain != null ? GroundHeight() : transform.position.y, transform.position.z);
+            groundGeometryRoot != null || groundTerrain != null ? GroundHeight() : transform.position.y, transform.position.z);
         public void SetActionsLocked(bool value)
         {
             if(actionsLocked==value)return;
+            if(value)SetCombatAiming(false);
             actionsLocked=value;moving=false;
             if(Agent!=null&&Agent.enabled&&Agent.isOnNavMesh){Agent.ResetPath();Agent.isStopped=value;}
             if(value)
@@ -94,28 +105,39 @@ namespace SimulatedShooting.Scene
         }
 
         public void MatchVisualToTerrain(Terrain terrain)
+            => MatchVisualToGround(terrain, terrain != null ? terrain.transform.parent : null);
+
+        public void MatchVisualToGround(Terrain terrain, Transform geometry)
         {
             groundTerrain = terrain;
-            groundGeometryRoot = terrain != null ? terrain.transform.parent : null;
-            UpdateVisualHeight();
-            if (!feetAligned && groundTerrain != null)
-            {
+            groundGeometryRoot = geometry;
+            if (boots == null && VisualRoot != null)
                 foreach (var renderer in VisualRoot.GetComponentsInChildren<SkinnedMeshRenderer>(true))
                     if (renderer.name.EndsWith("_Boots", StringComparison.Ordinal)) { boots = renderer; break; }
-                if (boots != null)
-                {
-                    var ground = GroundHeight();
-                    standingVisualPosition += Vector3.up * (ground - boots.bounds.min.y);
-                    feetAligned = true;
-                    UpdateVisualHeight();
-                }
-            }
+            if (boots != null && bakedBoots == null) bakedBoots = new Mesh { name = "CombatSoleSample" };
+            UpdateVisualHeight();
         }
 
         void UpdateVisualHeight()
         {
-            var groundOffset = groundTerrain == null ? 0f : GroundHeight() - transform.position.y;
-            VisualRoot.localPosition = standingVisualPosition + Vector3.up * groundOffset
+            if (VisualRoot == null) return;
+            if (!IsDead)
+            {
+                VisualRoot.localPosition = standingVisualPosition;
+                var sole = transform.position.y;
+                if (boots != null && bakedBoots != null)
+                {
+                    boots.BakeMesh(bakedBoots);
+                    bakedBoots.GetVertices(bootVertices);
+                    sole = float.PositiveInfinity;
+                    for (var i = 0; i < bootVertices.Count; i++)
+                        sole = Mathf.Min(sole, boots.transform.TransformPoint(bootVertices[i]).y);
+                    if (float.IsPositiveInfinity(sole)) sole = transform.position.y;
+                }
+                visualGroundOffset = GroundHeight() - sole;
+            }
+            var worldOffset = Vector3.up * visualGroundOffset;
+            VisualRoot.localPosition = standingVisualPosition + VisualRoot.parent.InverseTransformVector(worldOffset)
                 + (IsDead && SoldierAnimation == null ? new Vector3(0, .3f, 0) : Vector3.zero);
             if (HitCollider is CapsuleCollider capsule)
             {
@@ -124,23 +146,27 @@ namespace SimulatedShooting.Scene
                     standingHitCapsule = capsule;
                     standingHitCenter = capsule.center;
                 }
-                capsule.center = standingHitCenter + Vector3.up * groundOffset;
+                capsule.center = standingHitCenter + transform.InverseTransformVector(worldOffset);
             }
         }
 
         float GroundHeight()
         {
-            var terrainHeight = groundTerrain.SampleHeight(transform.position) + groundTerrain.transform.position.y;
-            var best = terrainHeight;
-            var ray = new Ray(new Vector3(transform.position.x, terrainHeight + 1.35f, transform.position.z), Vector3.down);
-            var count = Physics.RaycastNonAlloc(ray, GroundHits, 1.4f, ~0, QueryTriggerInteraction.Ignore);
+            var best = groundTerrain != null
+                ? groundTerrain.SampleHeight(transform.position) + groundTerrain.transform.position.y : transform.position.y;
+            var found = false;
+            // Probe around the navigation root, so an upper floor cannot snap to terrain below it.
+            var ray = new Ray(transform.position + Vector3.up * .5f, Vector3.down);
+            var count = Physics.RaycastNonAlloc(ray, GroundHits, 2f, ~0, QueryTriggerInteraction.Ignore);
             for (var index = 0; index < count; index++)
             {
                 var hit = GroundHits[index];
-                if (!(hit.collider is MeshCollider) || groundGeometryRoot == null
+                if (groundGeometryRoot == null
                     || !hit.collider.transform.IsChildOf(groundGeometryRoot)
+                    || hit.collider.GetComponentInParent<CombatActorView>() != null
                     || hit.normal.y < .55f) continue;
-                if (hit.point.y > best) best = hit.point.y;
+                if (!found || hit.point.y > best) best = hit.point.y;
+                found = true;
             }
             return best;
         }
@@ -172,7 +198,7 @@ namespace SimulatedShooting.Scene
                 muzzleBlast.Play();
                 if (targetPosition.HasValue)
                 {
-                    var tracerObject = new GameObject("Tracer_Enemy_" + eventId);
+                    var tracerObject = new GameObject("Tracer_Actor_" + eventId);
                     tracerObject.transform.SetParent(transform.parent, true);
                     var tracer = tracerObject.AddComponent<BallisticTracerVisual>();
                     tracer.Configure(Muzzle.position, targetPosition.Value,
@@ -193,6 +219,7 @@ namespace SimulatedShooting.Scene
             if(actionsLocked)return;
             if (IsDead == dead) return;
             IsDead = dead;
+            if(dead)SetCombatAiming(false);
             if(dead)PlayDeathCry();
             else if(deathVoice!=null)deathVoice.Stop();
             deathTime = dead ? Time.time : 0f;
@@ -260,14 +287,15 @@ namespace SimulatedShooting.Scene
             else if (Agent.remainingDistance <= Agent.stoppingDistance + 0.08f)
             {
                 moving = false;
-                transform.rotation = arrivalRotation;
+                if (!combatAiming) transform.rotation = arrivalRotation;
                 NavigationReported?.Invoke(EntityId, true);
             }
         }
 
         void LateUpdate()
         {
-            if (groundTerrain != null) UpdateVisualHeight();
+            if (!IsDead && (groundTerrain != null || groundGeometryRoot != null)) UpdateVisualHeight();
         }
+        void OnDestroy() { if (bakedBoots != null) Destroy(bakedBoots); }
     }
 }

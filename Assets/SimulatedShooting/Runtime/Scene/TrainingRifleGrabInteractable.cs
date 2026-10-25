@@ -17,7 +17,7 @@ namespace SimulatedShooting.Scene
         [SerializeField] private WeaponPrefabBinding weaponBinding;
         [SerializeField] private GameObject pickupPrompt;
         [SerializeField] private float rearGrabRadius = 0.10f;
-        [SerializeField] private float frontGrabRadius = 0.12f;
+        [SerializeField] private float frontGrabRadius = 0.22f;
         [SerializeField] private float returnDistance = 3.5f;
         [SerializeField] private float returnBelowRackMeters = 1.4f;
 
@@ -45,6 +45,7 @@ namespace SimulatedShooting.Scene
         public float FrontGrabRadius => frontGrabRadius;
         public bool PickupPromptVisible => pickupPrompt != null && pickupPrompt.activeSelf;
         public bool FrontHandInteractionLocked { get; private set; }
+        public bool ReturnDroppedWeaponToRack { get; set; } = true;
 
         // Release only the support hand; the right hand keeps the rifle and UI interactors stay active.
         public void SetFrontHandInteractionLocked(bool locked)
@@ -70,6 +71,9 @@ namespace SimulatedShooting.Scene
             attachEaseInTime = 0f;
             throwOnDetach = true;
             useDynamicAttach = false;
+            // A held grip must still select when the hand enters range a frame later.
+            foreach (var interactor in FindObjectsOfType<XRBaseInputInteractor>(true))
+                ConfigureHeldGrip(interactor);
             SyncAttachTransforms();
             SetRackPhysics(true);
         }
@@ -96,7 +100,7 @@ namespace SimulatedShooting.Scene
 
         void Update()
         {
-            if (isSelected || isOnRack || !rackPoseCaptured)
+            if (!ReturnDroppedWeaponToRack || isSelected || isOnRack || !rackPoseCaptured)
             {
                 return;
             }
@@ -252,11 +256,18 @@ namespace SimulatedShooting.Scene
 
         protected override void OnHoverEntered(HoverEnterEventArgs args)
         {
+            ConfigureHeldGrip(args.interactorObject as XRBaseInputInteractor);
             base.OnHoverEntered(args);
             if (args.interactorObject.handedness == RearHandedness && !RearHandSelected)
             {
                 SetPromptVisible(true);
             }
+        }
+
+        static void ConfigureHeldGrip(XRBaseInputInteractor interactor)
+        {
+            if (interactor is XRDirectInteractor || interactor is NearFarInteractor)
+                interactor.selectActionTrigger = XRBaseInputInteractor.InputTriggerType.State;
         }
 
         protected override void OnHoverExited(HoverExitEventArgs args)
@@ -278,7 +289,9 @@ namespace SimulatedShooting.Scene
 
         protected override void OnSelectEntering(SelectEnterEventArgs args)
         {
-            SetRackPhysics(false);
+            // Only prime the first grab's cached release state. Adding the support
+            // hand must not make an already-held Instantaneous rifle dynamic.
+            if (!isSelected) SetRackPhysics(false);
             base.OnSelectEntering(args);
         }
 
@@ -306,6 +319,15 @@ namespace SimulatedShooting.Scene
                 body.isKinematic = false;
                 body.useGravity = true;
             }
+        }
+
+        protected override void SetupRigidbodyDrop(Rigidbody body)
+        {
+            base.SetupRigidbodyDrop(body);
+            // XRI caches the pre-grab rack state; explicitly restore physical drop.
+            body.isKinematic = false;
+            body.useGravity = true;
+            body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         }
 
         void SyncAttachTransforms()

@@ -24,6 +24,9 @@ namespace VRShooting.Application.Combat
         readonly HashSet<string> resolvedGrenades = new HashSet<string>(StringComparer.Ordinal);
         readonly HashSet<string> sessionIds = new HashSet<string>(StringComparer.Ordinal);
         readonly List<CombatFeedbackDto> feedback = new List<CombatFeedbackDto>();
+        const double TeammateShotInterval = 1.5;
+        readonly SupportShooter[] support = { new SupportShooter(), new SupportShooter() };
+        long supportTick = -1;
         string session = "";
         string playerId = "";
         SessionState state;
@@ -71,6 +74,8 @@ namespace VRShooting.Application.Combat
             session = sessionId; playerId = session + ".player"; sessionIds.Add(session);
             weapons.StartSession(session, WeaponControlService.TrainingRifleId, mode);
             enemies.Clear(); enemyById.Clear(); received.Clear(); pending.Clear(); issuedShots.Clear(); spentShots.Clear(); feedback.Clear();resolvedGrenades.Clear();
+            foreach (var shooter in support) shooter.Clear();
+            supportTick = -1;
             foreach (var spawn in spawns)
             {
                 var enemy = new Enemy { Id = spawn.EntityId, Position = spawn.Position, Forward = spawn.Forward.normalized, Health = config.EnemyHealth };
@@ -231,6 +236,12 @@ namespace VRShooting.Application.Combat
                     if (!enemyById.ContainsKey(input.EntityId) || input.TargetId != playerId) return Failure(ErrorCode.NotFound);
                     if (!ValidDirection(input.Direction)) return Failure(ErrorCode.InvalidInput);
                     break;
+                case CombatInputKind.TeammatePerception:
+                    if (input.EntityId != session + ".teammate-2" && input.EntityId != session + ".teammate-3")
+                        return Failure(ErrorCode.NotFound);
+                    if (input.Flag && (!enemyById.ContainsKey(input.TargetId) || !ValidDirection(input.Direction)))
+                        return Failure(ErrorCode.InvalidInput);
+                    break;
                 case CombatInputKind.Hit:
                     if (!input.Flag || input.Value <= 0) return Failure(ErrorCode.InvalidInput);
                     if (input.TargetId == playerId)
@@ -312,10 +323,55 @@ namespace VRShooting.Application.Combat
                     Emit(CombatFeedbackKind.EnemyDied, input.EventId, playerId, enemy.Id, input.ShotId);
                 }
             }
+            AdvanceSupport();
             pending.Clear();
             if (Active && clock.Now + 1e-8 >= reloadAt)
             { weapons.CompleteReload(session); reloadAt = double.PositiveInfinity; dirty = true; }
             Publish(); return Ok();
+        }
+
+        void AdvanceSupport()
+        {
+            // The input adapter and world coordinator may both advance the same tick.
+            if (supportTick == clock.Tick) return;
+            supportTick = clock.Tick;
+            for (var index = 0; index < support.Length; index++)
+            {
+                var shooter = support[index];
+                var id = session + ".teammate-" + (index + 2);
+                CombatInputDto? latest = null;
+                foreach (var input in pending)
+                    if (input.Kind == CombatInputKind.TeammatePerception && input.EntityId == id) latest = input;
+                if (!Active || !latest.HasValue || !latest.Value.Flag) { shooter.Clear(); continue; }
+                var fact = latest.Value;
+                var target = enemyById[fact.TargetId];
+                var offset = target.Position + Vector3.up * 1.2f - fact.Position;
+                if (target.Dead || offset.magnitude > 30f ||
+                    Vector3.Angle(Vector3.ProjectOnPlane(fact.Direction, Vector3.up),
+                        Vector3.ProjectOnPlane(offset, Vector3.up)) > 12f)
+                { shooter.Clear(); continue; }
+                if (shooter.Target != target.Id)
+                {
+                    shooter.Target = target.Id;
+                    shooter.NextShot = clock.Now + TeammateShotInterval;
+                }
+                while (Active && !target.Dead && shooter.NextShot <= clock.Now + 1e-8)
+                {
+                    shooter.NextShot += TeammateShotInterval;
+                    var shot = session + ".support-" + ++attackSequence;
+                    Emit(CombatFeedbackKind.TeammateAttack, shot, id, target.Id, shot);
+                    var damage = Mathf.Min(target.Health, 1f);
+                    target.Health = Mathf.Max(0, target.Health - damage);
+                    dirty = true;
+                    Emit(CombatFeedbackKind.EnemyHit, shot, id, target.Id, shot, damage);
+                    if (target.Health <= 0)
+                    {
+                        target.Dead = true; target.State = CombatEntityState.Dead;
+                        target.CanAttack = false; target.NextAttack = double.PositiveInfinity;
+                        Emit(CombatFeedbackKind.EnemyDied, shot, id, target.Id, shot);
+                    }
+                }
+            }
         }
         void Attack(Enemy enemy, string eventId)
         {
@@ -340,6 +396,7 @@ namespace VRShooting.Application.Combat
         void Suspend() { pending.Clear(); StopTimers(); }
         void StopTimers()
         {
+            foreach (var shooter in support) shooter.Clear();
             reloadAt = double.PositiveInfinity; weapons.CancelReload(session);
             foreach (var enemy in enemies)
             {
@@ -422,6 +479,12 @@ namespace VRShooting.Application.Combat
             public float Health;
             public double NextAttack = double.PositiveInfinity;
             public CombatEntityState State = CombatEntityState.Spawned;
+        }
+        sealed class SupportShooter
+        {
+            public string Target = "";
+            public double NextShot = double.PositiveInfinity;
+            public void Clear() { Target = ""; NextShot = double.PositiveInfinity; }
         }
     }
 }

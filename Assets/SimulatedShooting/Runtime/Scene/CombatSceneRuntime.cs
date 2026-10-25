@@ -222,7 +222,7 @@ namespace SimulatedShooting.Scene
                 mode==TrainingMode.Trench?binding.WeaponAnchor.rotation:player.rotation);
             urbanPickupPending=mode==TrainingMode.Urban;
             if(urbanPickupPending)PlaceUrbanPickupRifle();
-            if(grab!=null){grab.interactionManager=interactionManager;grab.enabled=vr&&!characterActionsLocked;grab.CaptureRackPose();}
+            if(grab!=null){grab.interactionManager=interactionManager;grab.ReturnDroppedWeaponToRack=false;grab.enabled=vr&&!characterActionsLocked;grab.CaptureRackPose();}
             SetLayer(rifle,2); // IgnoreRaycast excludes the held rifle from its own physical shots.
             // The spawned rifle starts close to the player capsule. It must not push the
             // player backwards or block continuous movement while being held in VR.
@@ -349,6 +349,7 @@ namespace SimulatedShooting.Scene
                         EntityId=n.request.EntityId,TargetId=n.request.RequestId,Position=n.position,Direction=n.forward,Flag=n.arrived});
                 }
                 CollectPerception(frame.PlayerPosition,delta);
+                CollectTeammatePerception(delta);
             }
             // Squad commands do not depend on the rifle's grip/input pipeline succeeding.
             var grenadeResult=AdvanceGrenadeCommand(input);
@@ -378,6 +379,7 @@ namespace SimulatedShooting.Scene
             bool rear=!vr||grab.RearHandSelected||Vector3.Distance(r,weapon.RearHandGrip.position)<grab.RearGrabRadius;
             bool front=(!vr||grab.FrontHandSelected||Vector3.Distance(l,weapon.FrontHandGrip.position)<grab.FrontGrabRadius)&&!grab.FrontHandInteractionLocked;
             return new CombatInputFrameDto{HeadTracked=headTracked,RearHandTracked=leftShoulder?leftTracked:rightTracked,FrontHandTracked=leftShoulder?rightTracked:leftTracked,RearGripInRange=rear,FrontGripInRange=front,
+                PhysicalRearHandSelected=vr?(bool?)grab.RearHandSelected:null,PhysicalFrontHandSelected=vr?(bool?)grab.FrontHandSelected:null,
                 IsRealVr=vr,MuzzlePosition=weapon.MuzzlePoint.position,AimDirection=weapon.AimLinePoint.forward,PlayerPosition=player.position,PlayerForward=player.forward,
                 RequestedPosture=hardware.PosturePressed?(PlayerPosture?)((PlayerPosture)(((int)snapshot.Player.Posture+1)%3)):null};
         }
@@ -440,19 +442,72 @@ namespace SimulatedShooting.Scene
                     EntityId=entity.EntityId,TargetId=session+".player",Position=actor.transform.position,Direction=actor.transform.forward,Flag=visible});
             }
         }
+        readonly RaycastHit[] supportSightHits = new RaycastHit[64];
+        readonly Collider[] supportMuzzleOverlaps = new Collider[32];
+        void CollectTeammatePerception(float seconds)
+        {
+            var enemies = core.GetSnapshot(session).Data.Visual.Entities;
+            for (var number = 2; number <= 3; number++)
+            {
+                var id = session + ".teammate-" + number;
+                if (!actors.TryGetValue(id, out var teammate)) continue;
+                CombatActorView target = null;
+                var distance = 30f;
+                if (!teammate.IsDead && !teammate.ActionsLocked &&
+                    (teammate.SoldierAnimation == null || !teammate.SoldierAnimation.IsThrowingGrenade))
+                foreach (var enemy in enemies)
+                {
+                    if (enemy.Role != CombatEntityRole.Enemy || enemy.State == CombatEntityState.Dead ||
+                        !actors.TryGetValue(enemy.EntityId, out var candidate)) continue;
+                    if (mode == TrainingMode.Urban && world is UrbanService urban)
+                    {
+                        var assignment = urban.GetEnemyAssignments(session).Data.First(a => a.EntityId == enemy.EntityId);
+                        if (assignment.RoomId.Length > 0 && !binding.Doors.First(d => d.RoomId == assignment.RoomId).IsOpen) continue;
+                    }
+                    var aim = candidate.PerceptionOrigin.position - Vector3.up * .25f;
+                    var range = Vector3.Distance(teammate.Muzzle.position, aim);
+                    if (range >= distance || !SupportLineClear(teammate, candidate, aim)) continue;
+                    target = candidate; distance = range;
+                }
+                teammate.SetCombatAiming(target != null);
+                if (target != null) teammate.TurnTowards(target.transform.position, seconds);
+                core.Submit(new CombatInputDto { SessionId = session, EventId = "support-sight-" + ++sequence,
+                    Tick = Clock.Tick, Kind = CombatInputKind.TeammatePerception, EntityId = id,
+                    TargetId = target != null ? target.EntityId : "", Flag = target != null,
+                    Position = teammate.Muzzle.position, Direction = teammate.transform.forward });
+            }
+        }
+        bool SupportLineClear(CombatActorView source, CombatActorView target, Vector3 point)
+        {
+            // A ray starting inside a wall does not report that wall.
+            var overlaps = Physics.OverlapSphereNonAlloc(source.Muzzle.position, .015f, supportMuzzleOverlaps,
+                ~(1 << 2), QueryTriggerInteraction.Ignore);
+            if (overlaps == supportMuzzleOverlaps.Length) return false;
+            for (var i = 0; i < overlaps; i++)
+                if (!supportMuzzleOverlaps[i].transform.IsChildOf(source.transform) &&
+                    !supportMuzzleOverlaps[i].transform.IsChildOf(target.transform)) return false;
+            var delta = point - source.Muzzle.position;
+            var count = Physics.RaycastNonAlloc(source.Muzzle.position, delta.normalized, supportSightHits,
+                delta.magnitude, ~(1 << 2), QueryTriggerInteraction.Ignore);
+            if (count == supportSightHits.Length) return false;
+            var closest = float.PositiveInfinity;
+            Collider obstruction = null;
+            for (var i = 0; i < count; i++)
+            {
+                var hit = supportSightHits[i];
+                if (hit.collider.transform.IsChildOf(source.transform) || hit.distance >= closest) continue;
+                closest = hit.distance; obstruction = hit.collider;
+            }
+            return obstruction == null || obstruction.GetComponentInParent<CombatActorView>() == target;
+        }
         public ServiceResult<Unit> Interact()
         {
             if(!(world is UrbanService urban))return ServiceResult<Unit>.Fail(ErrorCode.InvalidState);
             var current=urban.GetSession(session);if(!current.Success)return ServiceResult<Unit>.Fail(current.ErrorCode);
-            if(presence.TryGetValue(Definition.EntranceId,out var atEntry)&&atEntry)
-            {
-                var result=current.Data.Phase==UrbanPhase.Street?urban.EnterBuilding(session,Definition.EntranceId):urban.ExitBuilding(session,Definition.EntranceId);
-                return result.Success?ServiceResult<Unit>.Ok(Unit.Value):ServiceResult<Unit>.Fail(result.ErrorCode);
-            }
             var room=binding.Points.Where(p=>p.Kind==CombatPointKind.Room).OrderBy(p=>Vector3.Distance(player.position,p.transform.position)).FirstOrDefault(p=>
-                presence.TryGetValue(p.RoomId+(p.Door.IsOpen?".check":".door"),out var present)&&present);
+                !p.Door.IsOpen && presence.TryGetValue(p.RoomId+".door",out var present)&&present);
             if(room==null)return ServiceResult<Unit>.Fail(ErrorCode.InvalidState);
-            var action=room.Door.IsOpen?urban.MarkRoomSearched(session,room.RoomId):urban.OpenRoomDoor(session,room.RoomId);
+            var action=urban.OpenRoomDoor(session,room.RoomId);
             tick.Advance();
             return action.Success?ServiceResult<Unit>.Ok(Unit.Value):ServiceResult<Unit>.Fail(action.ErrorCode);
         }
@@ -477,8 +532,7 @@ namespace SimulatedShooting.Scene
                         actor.Agent.enabled=false;
                         if(mode==TrainingMode.Trench)actor.transform.position=entity.Position;
                     }
-                    if(mode==TrainingMode.Trench)
-                        actor.MatchVisualToTerrain(binding.GeometryRoot.GetComponentInChildren<Terrain>());
+                    actor.MatchVisualToGround(binding.GeometryRoot.GetComponentInChildren<Terrain>(), binding.GeometryRoot);
                     foreach(var c in actor.GetComponentsInChildren<Collider>())Physics.IgnoreCollision(body,c);
                 }
                 bool dead=entity.State==CombatEntityState.Dead;
@@ -503,6 +557,12 @@ namespace SimulatedShooting.Scene
         {
             if(feedback.SessionId!=session)return;
             if (!confirmedFeedback.Add(feedback.Kind + ":" + feedback.EventId)) return;
+            if (feedback.Kind == CombatFeedbackKind.TeammateAttack)
+            {
+                if (actors.TryGetValue(feedback.EntityId, out var friendly) && actors.TryGetValue(feedback.TargetId, out var target))
+                    friendly.PlayShot(feedback.EventId, target.PerceptionOrigin.position - Vector3.up * .25f, true);
+                return;
+            }
             if (feedback.Kind == CombatFeedbackKind.PlayerDamaged && feedback.TargetId == session + ".player" && weaponFeedback != null)
             {
                 var normal = actors.TryGetValue(feedback.EntityId, out var attacker)
