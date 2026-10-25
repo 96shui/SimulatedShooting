@@ -13,6 +13,12 @@ namespace SimulatedShooting.Scene
 
         void OnEnable()
         {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            // Do not replace the headset budget with the desktop four-cascade profile.
+            var mobile = Resources.Load<RenderPipelineAsset>(PicoStandaloneRenderPolicy.ProfilePath);
+            if (mobile != null) QualitySettings.renderPipeline = mobile;
+            return;
+#else
             if (Profile == null || applied) return;
             previous = QualitySettings.renderPipeline;
             previousShadows = QualitySettings.shadows;
@@ -21,6 +27,7 @@ namespace SimulatedShooting.Scene
             QualitySettings.shadows = ShadowQuality.All;
             QualitySettings.shadowDistance = 90;
             applied = true;
+#endif
         }
 
         void OnDisable()

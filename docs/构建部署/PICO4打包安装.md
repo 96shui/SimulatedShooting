@@ -6,7 +6,9 @@ Unity菜单：VR Shooting → PICO 4。
 - 打包并安装启动：成功构建后，对唯一ADB已授权设备执行install -r并启动。
 - 检查设备 / 安装已有 APK 并启动：分别查询ADB状态、部署已生成APK。
 
-输出：Builds/PICO4/VRTraining-PICO4.apk；包名com.vrtraining.pico4。默认开发构建方便查看日志，不自动卸载已有应用或删除训练数据，不生成AAB。
+输出：Builds/PICO4/VRTraining-PICO4.apk；包名com.vrtraining.pico4。2026-10-25起默认正式构建（BuildOptions.None），降低开发构建开销；ADB仍可读取启动日志。不自动卸载已有应用或删除训练数据，不生成AAB。
+
+2026-10-25真机观感配置：Android Player自动加载Resources/Rendering/PicoStandalone，XR目标倍率1.25（基线1504时预期约1880）、72Hz目标、4xMSAA和完整纹理。实际尺寸/帧率以[PICO Render]和PxrMetric日志为准；配置值不能替代佩戴头显验收。
 
 需要：Unity 2022.3.62f3c1 Android Build Support，以及对应SDK、NDK r23b、JDK11。PICO OpenXR SDK固定为官方仓库提交3aa3e62bff41df618529eeb60ff02c29a515dafe。PICO 4必须启用USB调试并在头显中允许电脑调试。
 MTP位置“此电脑/PICO 4”不是可执行安装的文件系统路径；APK安装使用ADB。

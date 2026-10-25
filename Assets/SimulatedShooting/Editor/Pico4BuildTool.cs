@@ -105,7 +105,7 @@ namespace SimulatedShooting.Editor
                     throw new InvalidOperationException("MainScene must be the first enabled build scene.");
                 Directory.CreateDirectory(Path.GetDirectoryName(ApkPath));
                 var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
-                { scenes = scenes, locationPathName = ApkPath, target = BuildTarget.Android, options = BuildOptions.Development });
+                { scenes = scenes, locationPathName = ApkPath, target = BuildTarget.Android, options = BuildOptions.None });
                 File.WriteAllText("Builds/PICO4/build-result.txt", report.summary.result + "\nAPK bytes: " + (report.summary.result == BuildResult.Succeeded && File.Exists(ApkPath) ? new FileInfo(ApkPath).Length : 0) + "\nBuild data bytes: " + report.summary.totalSize + "\n");
                 if (report.summary.result != BuildResult.Succeeded) throw new InvalidOperationException("APK build failed; see Unity Console.");
                 Debug.Log("PICO APK created: " + Path.GetFullPath(ApkPath));

@@ -222,7 +222,7 @@ namespace SimulatedShooting.Editor
             {
                 var radius = 1.4f + (float)random.NextDouble() * 3.0f;
                 var patch = CreateIrregularGroundPatch($"SandPatch_{index:00}", patches,
-                    new Vector3(-105f + (float)random.NextDouble() * 210f, 0.006f,
+                    new Vector3(-105f + (float)random.NextDouble() * 210f, 0.07f,
                         4f + (float)random.NextDouble() * 91f),
                     radius, radius * (0.55f + (float)random.NextDouble() * 0.3f),
                     (float)random.NextDouble() * 180f, sandPatch, index + 17);
