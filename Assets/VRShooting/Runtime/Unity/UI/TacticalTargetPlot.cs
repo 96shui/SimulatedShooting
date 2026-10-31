@@ -10,6 +10,9 @@ namespace VRShooting.Unity.UI
     public sealed class TacticalTargetPlot : MaskableGraphic
     {
         readonly List<Vector2> impacts = new List<Vector2>();
+        readonly List<RectTransform> markers = new List<RectTransform>();
+        RectTransform averageMarker, previewMarker;
+        Vector2? averagePoint, previewPoint;
         Texture2D sceneFace;
         public override Texture mainTexture => SceneFace!=null?SceneFace:Texture2D.whiteTexture;
         Texture2D SceneFace => sceneFace!=null?sceneFace:(sceneFace=Resources.Load<Texture2D>("UI/Tactical/ChestTargetReference"));
@@ -48,7 +51,61 @@ namespace VRShooting.Unity.UI
         {
             impacts.Clear();
             if (points != null) impacts.AddRange(points);
+            while (markers.Count < impacts.Count)
+            {
+                var marker = new GameObject("ImpactMarker_" + (markers.Count + 1), typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+                marker.transform.SetParent(transform, false);
+                var image = marker.GetComponent<Image>();
+                image.color = new Color(1f, .15f, .08f, 1f);
+                image.raycastTarget = false;
+                markers.Add(marker.GetComponent<RectTransform>());
+            }
+            UpdateMarkers();
             SetVerticesDirty();
+        }
+        public void SetReferencePoints(Vector2? average, Vector2? preview)
+        {
+            averagePoint = average;
+            previewPoint = preview;
+            if (averageMarker == null) averageMarker = CreateReference("AverageMarker", new Color(1f, .82f, .1f));
+            if (previewMarker == null) previewMarker = CreateReference("PreviewMarker", new Color(.1f, .8f, 1f));
+            UpdateMarkers();
+        }
+        RectTransform CreateReference(string name, Color color)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            go.transform.SetParent(transform, false);
+            var image = go.GetComponent<Image>(); image.color = color; image.raycastTarget = false;
+            return go.GetComponent<RectTransform>();
+        }
+        void UpdateReference(RectTransform marker, Vector2? point, float size)
+        {
+            if (marker == null) return;
+            var active = point.HasValue && IsOnTarget(point.Value);
+            marker.gameObject.SetActive(active);
+            if (!active) return;
+            marker.anchorMin = marker.anchorMax = rectTransform.pivot;
+            marker.sizeDelta = Vector2.one * size;
+            marker.anchoredPosition = MapImpactPointCm(rectTransform.rect, point.Value);
+        }
+        protected override void OnRectTransformDimensionsChange()
+        {
+            base.OnRectTransformDimensionsChange();
+            UpdateMarkers();
+        }
+        void UpdateMarkers()
+        {
+            for (var i = 0; i < markers.Count; i++)
+            {
+                var active = i < impacts.Count && IsOnTarget(impacts[i]);
+                markers[i].gameObject.SetActive(active);
+                if (!active) continue;
+                markers[i].anchorMin = markers[i].anchorMax = rectTransform.pivot;
+                markers[i].sizeDelta = new Vector2(7, 7);
+                markers[i].anchoredPosition = MapImpactPointCm(rectTransform.rect, impacts[i]);
+            }
+            UpdateReference(averageMarker, averagePoint, 5f);
+            UpdateReference(previewMarker, previewPoint, 3f);
         }
         protected override void OnPopulateMesh(VertexHelper vh)
         {
@@ -57,13 +114,6 @@ namespace VRShooting.Unity.UI
             var rect = HitRegion(outer);
             var side = rect.width;
             Quad(vh,ArtworkRect(GetPixelAdjustedRect()),Color.white);
-            foreach (var point in impacts)
-            {
-                var position = MapImpactPointCm(outer, point);
-                if (!IsOnTarget(point)) continue;
-                var dotRadius = Mathf.Clamp(side * .018f, 2.5f, 5f);
-                Circle(vh, position, dotRadius, dotRadius, new Color(1f, .15f, .08f));
-            }
         }
         static void Quad(VertexHelper vh, Rect rect, Color tint)
         {

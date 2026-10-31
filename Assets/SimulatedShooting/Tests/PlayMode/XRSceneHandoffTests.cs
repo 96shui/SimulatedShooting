@@ -269,6 +269,12 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(load.Result.Success,Is.True,load.Result.Message);
             var runtime=Object.FindObjectOfType<CombatSceneRuntime>();runtime.ManualStepping=true;
             Assert.That(runtime.IsVr,Is.True);
+            Assert.That(runtime.PlayerCamera.GetComponent<AudioListener>()?.isActiveAndEnabled,Is.True,
+                "The active mode-three XR camera must own the audio listener.");
+            var shotClip = runtime.GetComponent<CombatSceneBindings>().RifleShotClip;
+            Assert.That(shotClip, Is.Not.Null);
+            Assert.That(shotClip.loadState, Is.Not.EqualTo(AudioDataLoadState.Unloaded),
+                "Combat rifle audio must be loaded before the first shot.");
             AssertActions(runtime.PlayerRoot.gameObject);
             yield return CheckTrackedHead(runtime.PlayerCamera);
             Assert.That(app.Start().Success,Is.True);

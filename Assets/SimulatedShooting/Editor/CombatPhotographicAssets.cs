@@ -21,7 +21,7 @@ namespace SimulatedShooting.Editor
                 throw new InvalidOperationException("Exit Play mode and save scene edits before applying assets.");
             ConfigureTexture(Facade + "diff.jpg", false);
             ConfigureTexture(Facade + "normal.jpg", true);
-            foreach (var name in new[] { "Eric", "Claudia" })
+            foreach (var name in new[] { "Eric" })
             {
                 var folder = Characters + name + "/";
                 ConfigureTexture(folder + "dif.jpg", false);
@@ -33,8 +33,7 @@ namespace SimulatedShooting.Editor
             }
             var scene = EditorSceneManager.OpenScene(CombatSceneBuilder.ScenePath, OpenSceneMode.Single);
             var bindings = Object.FindObjectOfType<CombatSceneBindings>();
-            var people = new[] { CreateDisplayPerson("Eric"), CreateDisplayPerson("Claudia") };
-            int personIndex = 0;
+            var person = CreateDisplayPerson("Eric");
             try
             {
                 foreach (Transform house in bindings.GeometryRoot.Find("Town_PerimeterBuildings"))
@@ -44,13 +43,17 @@ namespace SimulatedShooting.Editor
                     foundation.localPosition = new Vector3(foundation.localPosition.x, -foundation.localScale.y * .5f - .04f, foundation.localPosition.z);
                     var dummy = house.Find("Interior/TrainingDummy");
                     foreach (Transform child in dummy.Cast<Transform>().ToArray()) Object.DestroyImmediate(child.gameObject);
-                    var visual = Object.Instantiate(people[personIndex++ % people.Length], dummy);
+                    // Preserve the remaining male figures in their original houses.
+                    // The former alternating Claudia figures were removed by request.
+                    if (house.name == "South_Workshop" || house.name == "NorthWest_Tenement" ||
+                        house.name == "Rear_DamagedHouse") continue;
+                    var visual = Object.Instantiate(person, dummy);
                     visual.name = "PhotographicPerson";
                     visual.transform.localPosition = Vector3.zero;
                     visual.transform.localRotation = Quaternion.identity;
                 }
             }
-            finally { foreach (var person in people) Object.DestroyImmediate(person); }
+            finally { Object.DestroyImmediate(person); }
             ApplyFacade();
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);

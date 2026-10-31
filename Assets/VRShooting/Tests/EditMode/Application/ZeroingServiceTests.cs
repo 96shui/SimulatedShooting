@@ -26,6 +26,17 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
+        public void Bdd06_ActualAimAndCorrectionAreNotCompressedOrClamped()
+        {
+            var aim = new Vector2(40f, -32f);
+            var offset = new Vector2(-3f, 4f);
+            var impact = ZeroingRules.ComputeImpactPoint(aim, offset);
+            Assert.That(impact.x, Is.EqualTo(37f).Within(.001f));
+            Assert.That(impact.y, Is.EqualTo(-28f).Within(.001f));
+            Assert.That(ZeroingRules.IsInsideTenRing(impact), Is.False);
+        }
+
+        [Test]
         public void Bdd30_ApplyingSuggestedCorrectionActuallyZerosTheSameAimAndIsIdempotent()
         {
             var session = StartZeroingSession();

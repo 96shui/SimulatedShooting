@@ -75,6 +75,17 @@ namespace SimulatedShooting.Tests.PlayMode
                 .GetMethod("BuildFireSnapshot", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(controller, null);
         }
 
+        [Test]
+        public void Bdd06_ScoredCentralTargetHasNonBlockingHighlight()
+        {
+            var frame = target.TargetCenter.Find("ScoredTargetHighlight");
+            Assert.That(frame, Is.Not.Null);
+            Assert.That(frame.childCount, Is.EqualTo(4));
+            foreach (var collider in frame.GetComponentsInChildren<Collider>())
+                Assert.That(collider.enabled, Is.False);
+            Assert.That(Object.FindObjectsOfType<TargetImpactSurface>().Count(s => s.TargetCenter != null && s.TargetCenter.Find("ScoredTargetHighlight") != null), Is.EqualTo(1));
+        }
+
         [TestCase(0f, 0f)]
         [TestCase(20f, 0f)]
         [TestCase(-20f, 0f)]
@@ -85,7 +96,7 @@ namespace SimulatedShooting.Tests.PlayMode
             var offset = services.Zeroing.GetSession(controller.SessionId).Data.FixedImpactOffsetCm;
             var input = AimAndSnapshot(xCm, yCm);
             var expected = new Vector2(xCm, yCm);
-            var corrected = expected + offset;
+            var corrected = ZeroingRules.ComputeImpactPoint(expected, offset);
             var onFace = Mathf.Abs(corrected.x) <= 25f && Mathf.Abs(corrected.y) <= 25f;
             Assert.That(input.Hit, Is.True);
             Assert.That(input.HasTargetPlaneSample && input.TargetPlaneRayValid, Is.True);
@@ -96,9 +107,17 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(services.WeaponControl.Fire(input).Success, Is.True);
             Assert.That(target.Impacts.Count, Is.EqualTo(onFace ? 1 : 0));
             if (onFace)
+            {
                 Assert.That(Vector2.Distance(target.Impacts[0].OffsetCm, corrected), Is.LessThan(.03f));
+                var marker = target.ImpactMarkerRoot.GetChild(0);
+                Assert.That(Vector3.Dot(marker.position - target.Impacts[0].WorldPoint, -target.TargetCenter.forward),
+                    Is.EqualTo(.03f).Within(.001f), "Impact marker must be in front of the target artwork.");
+                Assert.That(marker.localScale.x, Is.GreaterThanOrEqualTo(.06f));
+            }
             Assert.That(recorded.Count, Is.EqualTo(1));
-            Assert.That(Vector2.Distance(recorded[0].ImpactPointCm, new Vector2(xCm, yCm) + offset), Is.LessThan(.03f));
+            Assert.That(Vector2.Distance(recorded[0].ImpactPointCm, corrected), Is.LessThan(.03f));
+            if (Mathf.Abs(xCm) >= 20f || Mathf.Abs(yCm) >= 20f)
+                Assert.That(recorded[0].InsideTenRing, Is.False, "Off-centre aim must not be compressed into the ten ring.");
             var tracer = Object.FindObjectOfType<BallisticTracerVisual>();
             Assert.That(tracer, Is.Not.Null);
             var end = (Vector3)typeof(BallisticTracerVisual)
@@ -121,6 +140,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(services.WeaponControl.Fire(input).Success, Is.True);
             Assert.That(Vector2.Distance(recorded.Last().ImpactPointCm, new Vector2(xCm, yCm) + bias), Is.LessThan(.03f));
             Assert.That(recorded.Last().InsideTenRing, Is.False);
+            Assert.That(target.Impacts.Count, Is.Zero, "An off-face impact must not create a hole on the target.");
         }
 
         [TestCase(0f, 0f, 0f)]
@@ -201,13 +221,14 @@ namespace SimulatedShooting.Tests.PlayMode
                 Assert.That(services.WeaponControl.Fire(AimAndSnapshot(0, 0)).Success, Is.True);
                 yield return null;
             }
+            var initialPreview = services.Zeroing.CompleteRound(id).Data.PreviewAverageOffsetCm;
             Assert.That(services.Zeroing.AdjustImpactPoint(id, 1, ZeroingAdjustmentAxis.Horizontal, 1).Success, Is.True);
-            for (var i = 0; i < 100; i++)
+            for (var i = 0; i < 20; i++)
                 Assert.That(services.Zeroing.AdjustImpactPoint(id, 1, ZeroingAdjustmentAxis.Vertical, 1).Success, Is.True);
             var before = services.Zeroing.CompleteRound(id).Data;
             var preview = before.PreviewAverageOffsetCm;
-            Assert.That(preview.x, Is.EqualTo(2f).Within(.001f));
-            Assert.That(preview.y, Is.EqualTo(6.4f).Within(.01f));
+            Assert.That(preview.x, Is.EqualTo(initialPreview.x + 2f).Within(.001f));
+            Assert.That(preview.y, Is.EqualTo(initialPreview.y + 6.4f).Within(.01f));
             Assert.That(services.Zeroing.ApplyAdjustment(id, 1).Success, Is.True);
             Assert.That(services.Presentation.ContinueNextRound(id).Success, Is.True);
             Assert.That(services.WeaponControl.Fire(AimAndSnapshot(0, 0)).Success, Is.True);
@@ -228,7 +249,7 @@ namespace SimulatedShooting.Tests.PlayMode
             }
             var analysis = services.Zeroing.CompleteRound(id).Data;
             Assert.That(analysis.PassedTenRing, Is.False, "Historical initial bias is outside the ten ring.");
-            Assert.That(analysis.PreviewAverageOffsetCm.magnitude, Is.LessThan(.001f));
+            Assert.That(analysis.PreviewAverageOffsetCm.magnitude, Is.LessThan(1.02f));
             Assert.That(services.Zeroing.ApplyAdjustment(id, 1).Success, Is.True);
             var firstApplied = services.Zeroing.GetSession(id).Data.FixedImpactOffsetCm;
             Assert.That(services.Zeroing.ApplyAdjustment(id, 1).Success, Is.True);
@@ -245,7 +266,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(next.RoundIndex, Is.EqualTo(2));
             Assert.That(next.Shots.Count, Is.EqualTo(3));
             Assert.That(next.PassedTenRing, Is.True);
-            Assert.That(next.AverageOffsetCm.magnitude, Is.LessThan(.03f));
+            Assert.That(Vector2.Distance(next.AverageOffsetCm, analysis.PreviewAverageOffsetCm), Is.LessThan(.03f));
             Assert.That(target.Impacts.Count, Is.EqualTo(6));
             Assert.That(target.Impacts.Skip(3).All(s => s.InsideTenRing), Is.True,
                 "The archived physical hits remain where the gun was aimed.");

@@ -60,6 +60,36 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
+        public IEnumerator Bdd06_AdjustmentControlsShowCurrentMechanicalValuesAndUnits()
+        {
+            yield return OpenHudAndCompleteRound();
+            var id = services.TrainingSessions.Current.SessionId;
+            var horizontal = FindButton("Button_ZeroingImpactAnalysis_HorizontalPlus");
+            var vertical = FindButton("Button_ZeroingImpactAnalysis_VerticalPlus");
+            Assert.That(horizontal.GetComponentInChildren<TextMeshProUGUI>().text, Does.Contain("2cm"));
+            Assert.That(vertical.GetComponentInChildren<TextMeshProUGUI>().text, Does.Contain("5°"));
+            Assert.That(FindButton("Button_ZeroingImpactAnalysis_HorizontalMinus").GetComponentInChildren<TextMeshProUGUI>().text, Does.Contain("2cm"));
+            Assert.That(FindButton("Button_ZeroingImpactAnalysis_VerticalMinus").GetComponentInChildren<TextMeshProUGUI>().text, Does.Contain("5°"));
+            var before = services.Zeroing.CompleteRound(id).Data.ProposedCorrectionCm;
+            horizontal.onClick.Invoke();
+            vertical.onClick.Invoke();
+            var after = services.Zeroing.CompleteRound(id).Data.ProposedCorrectionCm;
+            Assert.That(after.x, Is.EqualTo(before.x + 2f).Within(.001f));
+            Assert.That(after.y, Is.EqualTo(before.y + .32f).Within(.001f));
+            var cm = Mathf.Abs(after.x).ToString("0.#", System.Globalization.CultureInfo.InvariantCulture) + "cm";
+            var degrees = Mathf.Abs(after.y / ZeroingRules.CmPerFrontSightDegree).ToString("0", System.Globalization.CultureInfo.InvariantCulture) + "°";
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain(cm));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionY").text, Does.Contain(degrees));
+            if (Mathf.Abs(after.x) > .001f)
+                Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain(after.x > 0 ? "向前" : "向后"));
+            if (Mathf.Abs(after.y) > .001f)
+                Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionY").text, Does.Contain(after.y > 0 ? "逆时针" : "顺时针"));
+            FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment").onClick.Invoke();
+            Assert.That(horizontal.interactable, Is.False);
+            Assert.That(vertical.interactable, Is.False);
+        }
+
+        [UnityTest]
         public IEnumerator Bdd30_HelpShowsRoundAdviceNotTheEditedOrAppliedAmount()
         {
             yield return OpenHudAndCompleteRound();
@@ -91,11 +121,21 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.IsTrue(FindById("Image_ZeroingImpactAnalysis_Impact_1").activeSelf);
             Assert.IsTrue(FindById("Image_ZeroingImpactAnalysis_Impact_2").activeSelf);
             Assert.IsTrue(FindById("Image_ZeroingImpactAnalysis_Impact_3").activeSelf);
+            var coordinates = FindText("Text_ZeroingImpactAnalysis_Coordinates").text;
+            Assert.That(coordinates, Does.Contain("#1").And.Contain("#2").And.Contain("#3"));
+            Assert.That(coordinates, Does.Contain("平均(黄)").And.Contain("调整预览(蓝)").And.Contain("cm"));
+            var analysis = services.Zeroing.CompleteRound(services.TrainingSessions.Current.SessionId).Data;
+            for (var i = 0; i < analysis.Shots.Count; i++)
+            {
+                var dot = FindById("Image_ZeroingImpactAnalysis_Impact_" + (i + 1)).GetComponent<RectTransform>();
+                var expected = TacticalTargetPlot.MapImpactPointCm(new Rect(76.5f, 62.5f, 255f, 255f), analysis.Shots[i].ImpactPointCm);
+                Assert.That(Vector2.Distance(dot.anchoredPosition, expected), Is.LessThan(.01f));
+            }
 
             AssertHelpVisible(false);
             FindButton("Button_ZeroingImpactAnalysis_Help").onClick.Invoke();
             AssertHelpVisible(true);
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_Suggestion").text, Does.Contain("调整1度约0.064厘米"));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_Suggestion").text, Does.Contain("每次调整5度约0.32厘米"));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("顺时针"));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain("觇孔"));
         }
@@ -205,7 +245,7 @@ namespace VRShooting.Tests.PlayMode.UI
 
             var preview = services.Zeroing.CompleteRound(sessionId).Data;
             Assert.AreEqual(before.AverageOffsetCm, preview.AverageOffsetCm);
-            Assert.AreEqual(before.ProposedCorrectionCm + new Vector2(2f, -.064f), preview.ProposedCorrectionCm);
+            Assert.That(Vector2.Distance(before.ProposedCorrectionCm + new Vector2(2f, -.32f), preview.ProposedCorrectionCm), Is.LessThan(.001f));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_PreviewAverage").text, Does.Contain("预览"));
             var averageMarker = FindById("Image_ZeroingImpactAnalysis_AverageCenter");
             var previewMarker = FindById("Image_ZeroingImpactAnalysis_AdjustedCenter");
@@ -222,9 +262,9 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
-        public IEnumerator Screen06_OneDegreeMovesBlueMarkerVerticallyWithoutChangingHorizontal()
+        public IEnumerator Screen06_FiveDegreesMoveBlueMarkerVerticallyWithoutChangingHorizontal()
         {
-            // BDD06 2026-10-07: preserve real scale even for subpixel movement.
+            // BDD06: preserve the physical scale of one five-degree step.
             yield return OpenHudAndCompleteRound();
             var marker = FindById("Image_ZeroingImpactAnalysis_AdjustedCenter").GetComponent<RectTransform>();
             var before = marker.anchoredPosition;
@@ -234,7 +274,7 @@ namespace VRShooting.Tests.PlayMode.UI
             yield return null;
             var after = services.Zeroing.CompleteRound(sessionId).Data;
             Assert.That(after.PreviewAverageOffsetCm.y - analysis.PreviewAverageOffsetCm.y,
-                Is.EqualTo(.064f).Within(.0001f));
+                Is.EqualTo(.32f).Within(.0001f));
             Assert.That(marker.anchoredPosition.x, Is.EqualTo(before.x).Within(.0001f));
             var expected = TacticalTargetPlot.MapImpactPointCm(new Rect(76.5f, 62.5f, 255f, 255f), after.PreviewAverageOffsetCm);
             Assert.That(Vector2.Distance(marker.anchoredPosition, expected), Is.LessThan(.001f));
@@ -255,7 +295,7 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
-        public IEnumerator Bdd06_VerticalLongHoldRepeatsOneDegreeAtConstantSpeedAndReleaseDoesNotAddClick()
+        public IEnumerator Bdd06_VerticalLongHoldRepeatsFiveDegreesAndReleaseDoesNotAddClick()
         {
             yield return OpenHudAndCompleteRound();
             var id = services.TrainingSessions.Current.SessionId;
@@ -267,9 +307,9 @@ namespace VRShooting.Tests.PlayMode.UI
             yield return new WaitForSecondsRealtime(2.25f);
             repeating.OnPointerUp(pointer);
             var held = services.Zeroing.CompleteRound(id).Data.PreviewAverageOffsetCm;
-            Assert.That(held.y - before.y, Is.GreaterThan(.064f));
-            Assert.That(held.y - before.y, Is.LessThan(3f),
-                "Long hold must keep the original one-degree step, without switching to five or fifteen degrees.");
+            Assert.That(held.y - before.y, Is.GreaterThan(.32f));
+            Assert.That(held.y - before.y, Is.LessThan(12f));
+            Assert.That((held.y - before.y) / .32f, Is.EqualTo(Mathf.Round((held.y - before.y) / .32f)).Within(.001f));
             Assert.That(held.x, Is.EqualTo(before.x));
             button.onClick.Invoke();
             yield return new WaitForSecondsRealtime(.2f);
@@ -280,10 +320,10 @@ namespace VRShooting.Tests.PlayMode.UI
         [UnityTest]
         public IEnumerator Bdd06_LargeSuggestedFrontSightAngleRemainsAdjustableInUi()
         {
-            yield return OpenHudAndCompleteRoundAt(new Vector3(-8f, 80f, 100f));
+            yield return OpenHudAndCompleteRoundAt(new Vector3(-8f, 20f, 100f));
             var id = services.TrainingSessions.Current.SessionId;
             var before = services.Zeroing.CompleteRound(id).Data;
-            Assert.That(before.FrontSightDegreesToAdjust, Is.GreaterThan(781f));
+            Assert.That(before.FrontSightDegreesToAdjust, Is.GreaterThan(250f));
             var button = FindButton("Button_ZeroingImpactAnalysis_VerticalMinus");
             for (var i = 0; i < 20; i++)
             {
@@ -292,7 +332,7 @@ namespace VRShooting.Tests.PlayMode.UI
             }
             var after = services.Zeroing.CompleteRound(id).Data;
             Assert.That(after.ProposedCorrectionCm.y,
-                Is.EqualTo(before.ProposedCorrectionCm.y - 20f * .064f).Within(.002f));
+                Is.EqualTo(before.ProposedCorrectionCm.y - 20f * .32f).Within(.002f));
             var degrees = Mathf.Abs(after.ProposedCorrectionCm.y / ZeroingRules.CmPerFrontSightDegree)
                 .ToString("0", System.Globalization.CultureInfo.InvariantCulture);
             Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionY").text, Does.Contain(degrees));
@@ -331,21 +371,21 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
-        public IEnumerator Bdd06_Oct07_HorizontalFractionalMean_PreservesFractionalClicks()
+        public IEnumerator Bdd06_HorizontalFractionalMean_UsesWholeClicks()
         {
             yield return OpenHudAndCompleteRoundAt(new Vector3(-3.1f, 12f, 100f));
             var sessionId = services.TrainingSessions.Current.SessionId;
             var initial = services.Zeroing.CompleteRound(sessionId).Data;
             var clicks = initial.ProposedCorrectionCm.x / ZeroingRules.CmPerRearSightClick;
-            Assert.That(clicks, Is.EqualTo(-initial.AverageOffsetCm.x / 2f).Within(.001f));
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain("."));
+            Assert.That(clicks, Is.EqualTo(Mathf.Round(-initial.AverageOffsetCm.x / 2f)).Within(.001f));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain("cm"));
             for (var i = 0; i < 12; i++)
             {
                 FindButton("Button_ZeroingImpactAnalysis_HorizontalMinus").onClick.Invoke();
                 yield return null;
                 var current = services.Zeroing.CompleteRound(sessionId).Data;
                 Assert.That(current.ProposedCorrectionCm.x, Is.EqualTo(initial.ProposedCorrectionCm.x - (i + 1) * 2f));
-                Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain("."));
+                Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain("cm"));
                 Assert.That(current.ProposedCorrectionCm.y, Is.EqualTo(initial.ProposedCorrectionCm.y));
             }
         }

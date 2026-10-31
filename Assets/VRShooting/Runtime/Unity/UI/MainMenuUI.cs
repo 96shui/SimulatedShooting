@@ -106,10 +106,14 @@ namespace VRShooting.Unity.UI
         TextMeshProUGUI zeroingAnalysisCorrectionXText;
         TextMeshProUGUI zeroingAnalysisCorrectionYText;
         TextMeshProUGUI zeroingAnalysisPreviewText;
+        TextMeshProUGUI zeroingAnalysisCoordinatesText;
         TextMeshProUGUI zeroingFinalGradeText;
         TextMeshProUGUI zeroingFinalRoundsText;
         TextMeshProUGUI zeroingFinalThumbnailsText;
         readonly List<TacticalTargetPlot> finalTargetPlots = new List<TacticalTargetPlot>();
+        TacticalTargetPlot hudTargetPlot;
+        readonly List<Vector2> hudImpactPoints = new List<Vector2>();
+        IDisposable hudShotSubscription, hudRoundSubscription;
         TextMeshProUGUI pickupPromptText;
         TextMeshProUGUI firingStationStateText;
         Image zeroingPromptBackground;
@@ -179,6 +183,8 @@ namespace VRShooting.Unity.UI
         {
             screenSubscription?.Dispose();
             zeroingRoundSubscription?.Dispose();
+            hudShotSubscription?.Dispose();
+            hudRoundSubscription?.Dispose();
             if (presentationPresenter != null)
             {
                 presentationPresenter.SnapshotApplied -= OnPresentationSnapshotApplied;
@@ -227,6 +233,19 @@ namespace VRShooting.Unity.UI
         {
             zeroingRoundSubscription?.Dispose();
             zeroingRoundSubscription = services.EventBus.Subscribe<ZeroingRoundCompletedEvent>(OnZeroingRoundCompleted);
+            hudShotSubscription?.Dispose();
+            hudRoundSubscription?.Dispose();
+            hudShotSubscription = services.EventBus.Subscribe<ZeroingShotRecordedEvent>(evt =>
+            {
+                if (!services.TrainingSessions.HasActiveSession || evt.SessionId != services.TrainingSessions.Current.SessionId) return;
+                if (!evt.Shot.MissedTargetPlane && TacticalTargetPlot.IsOnTarget(evt.Shot.ImpactPointCm)) hudImpactPoints.Add(evt.Shot.ImpactPointCm);
+                hudTargetPlot?.SetImpacts(hudImpactPoints);
+            });
+            hudRoundSubscription = services.EventBus.Subscribe<ZeroingRoundStartedEvent>(evt =>
+            {
+                hudImpactPoints.Clear();
+                hudTargetPlot?.SetImpacts(hudImpactPoints);
+            });
         }
 
         void BuildCanvas()
@@ -651,6 +670,10 @@ namespace VRShooting.Unity.UI
             // Keep the complete help readable above the controls when expanded.
             zeroingAnalysisSuggestionText.rectTransform.offsetMax = new Vector2(428, 270);
             zeroingAnalysisSuggestionText.gameObject.SetActive(false);
+            zeroingAnalysisCoordinatesText = AddLabel(data, "Text_ZeroingImpactAnalysis_Coordinates", "", 19, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(28, 120), new Vector2(428, 270), new Color32(231, 242, 235, 255));
+            zeroingAnalysisCoordinatesText.enableAutoSizing = true;
+            zeroingAnalysisCoordinatesText.fontSizeMin = 13;
+            zeroingAnalysisCoordinatesText.fontSizeMax = 19;
             help.onClick.AddListener(() =>
             {
                 var expanded = !zeroingAnalysisSuggestionText.gameObject.activeSelf;
@@ -660,13 +683,15 @@ namespace VRShooting.Unity.UI
             zeroingAnalysisPreviewText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_PreviewAverage", "原始均值(黄) → 调整预览(蓝) · 按住连续调节", 22, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(20, 112), new Vector2(915, 145), new Color32(200, 255, 106, 255));
             SetZeroingHelpExpanded(false);
             AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_HorizontalLabel", "觇孔", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(18, 24), new Vector2(113, 100), new Color32(231, 242, 235, 255));
-            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalMinus", "向后", new Vector2(122, 25), new Vector2(196, 96), ZeroingAdjustmentAxis.Horizontal, -1);
+            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalMinus", "向后\n2cm", new Vector2(122, 25), new Vector2(196, 96), ZeroingAdjustmentAxis.Horizontal, -1);
             zeroingAnalysisCorrectionXText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_CorrectionX", "", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(202, 25), new Vector2(312, 96), new Color32(143, 217, 255, 255));
-            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalPlus", "向前", new Vector2(318, 25), new Vector2(392, 96), ZeroingAdjustmentAxis.Horizontal, 1);
+            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalPlus", "向前\n2cm", new Vector2(318, 25), new Vector2(392, 96), ZeroingAdjustmentAxis.Horizontal, 1);
             AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_VerticalLabel", "准心柱", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(475, 24), new Vector2(570, 100), new Color32(231, 242, 235, 255));
-            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_VerticalMinus", "顺时针", new Vector2(578, 25), new Vector2(652, 96), ZeroingAdjustmentAxis.Vertical, -1);
+            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_VerticalMinus", "顺时针\n5°", new Vector2(578, 25), new Vector2(652, 96), ZeroingAdjustmentAxis.Vertical, -1);
             zeroingAnalysisCorrectionYText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_CorrectionY", "", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(658, 25), new Vector2(768, 96), new Color32(143, 217, 255, 255));
-            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_VerticalPlus", "逆时针", new Vector2(774, 25), new Vector2(848, 96), ZeroingAdjustmentAxis.Vertical, 1);
+            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_VerticalPlus", "逆时针\n5°", new Vector2(774, 25), new Vector2(848, 96), ZeroingAdjustmentAxis.Vertical, 1);
+            foreach (var text in new[] { zeroingAnalysisCorrectionXText, zeroingAnalysisCorrectionYText })
+                if (text != null) { text.enableAutoSizing = true; text.fontSizeMin = 12; text.fontSizeMax = 23; }
 
             zeroingAnalysisAppliedText = AddLabel(parent, "Text_ZeroingImpactAnalysis_AppliedState", "等待应用调整", 20, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(285, 478, 245, 24), DrawioMax(285, 478, 245, 24), new Color32(143, 217, 255, 255));
             applyAdjustmentButton = AddButton(parent, "Button_ZeroingImpactAnalysis_ApplyAdjustment", "应用调整", DrawioMin(280, 505, 110, 38), DrawioMax(280, 505, 110, 38), true);
@@ -688,6 +713,7 @@ namespace VRShooting.Unity.UI
 
         void SetZeroingHelpExpanded(bool expanded)
         {
+            if (zeroingAnalysisCoordinatesText != null) zeroingAnalysisCoordinatesText.gameObject.SetActive(!expanded);
             foreach (var tip in new[] { zeroingAnalysisFrontSightText, zeroingAnalysisRearSightText,
                 zeroingAnalysisSuggestionText, zeroingAnalysisPreviewText })
                 if (tip != null) tip.gameObject.SetActive(expanded);
@@ -706,6 +732,9 @@ namespace VRShooting.Unity.UI
 
             var rounds = AddPanel(parent, "Panel_ZeroingFinalRating_Rounds", DrawioMin(345, 150, 270, 140), DrawioMax(345, 150, 270, 140), new Color32(17, 29, 24, 225), new Color32(56, 84, 71, 255));
             zeroingFinalRoundsText = AddLabel(rounds, "Text_ZeroingFinalRating_Rounds", "三轮射击记录", 22, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(28, 24), new Vector2(620, 230), new Color32(231, 242, 235, 255));
+            zeroingFinalRoundsText.enableAutoSizing = true;
+            zeroingFinalRoundsText.fontSizeMin = 10;
+            zeroingFinalRoundsText.fontSizeMax = 22;
 
             var thumbs = AddPanel(parent, "Placeholder_ZeroingFinalRating_ImpactThumbnails", DrawioMin(345, 310, 270, 70), DrawioMax(345, 310, 270, 70), new Color32(17, 29, 24, 210), new Color32(73, 107, 90, 255));
             zeroingFinalThumbnailsText = AddLabel(thumbs, "Text_ZeroingFinalRating_ImpactThumbnails", "三轮弹着分布", 16, FontStyles.Normal, TextAlignmentOptions.Left, new Vector2(365, 16), new Vector2(628, 108), new Color32(143, 217, 255, 255));
@@ -765,21 +794,8 @@ namespace VRShooting.Unity.UI
         {
             var target = CreateRect("Placeholder_ZeroingHud_TargetPaper", parent, Vector2.zero, Vector2.zero, new Vector2(65, 105), new Vector2(345, 395));
             AddTestId(target.gameObject, "Placeholder_ZeroingHud_TargetPaper");
-            AddImage(target.gameObject, new Color32(7, 16, 13, 145));
-            var outline = target.gameObject.AddComponent<Outline>();
-            outline.effectColor = new Color32(231, 242, 235, 180);
-            outline.effectDistance = new Vector2(2f, -2f);
-
-            var center = new Vector2(140f, 145f);
-            var sizes = new[] { 210f, 168f, 126f, 84f, 42f };
-            for (var i = 0; i < sizes.Length; i++)
-            {
-                var ring = CreateRect("Image_ZeroingHud_TargetRing_" + i, target, Vector2.zero, Vector2.zero, center - new Vector2(sizes[i] * 0.5f, sizes[i] * 0.5f), center + new Vector2(sizes[i] * 0.5f, sizes[i] * 0.5f));
-                AddImage(ring.gameObject, i == sizes.Length - 1 ? new Color32(231, 242, 235, 230) : new Color32(0, 0, 0, 0));
-                var ringOutline = ring.gameObject.AddComponent<Outline>();
-                ringOutline.effectColor = new Color32(231, 242, 235, 180);
-                ringOutline.effectDistance = new Vector2(1.5f, 1.5f);
-            }
+            hudTargetPlot = target.gameObject.AddComponent<TacticalTargetPlot>();
+            hudTargetPlot.raycastTarget = false;
         }
 
         void OnOpenZeroingClicked()
@@ -1029,15 +1045,17 @@ namespace VRShooting.Unity.UI
 
         void RenderImpactAnalysis(ZeroingRoundAnalysisDto analysis)
         {
+            if (zeroingAnalysisCoordinatesText != null)
+                zeroingAnalysisCoordinatesText.text = "红：弹着点（X右，Y上）\n" + FormatImpactDots(analysis) + "\n" + FormatReferencePoints(analysis);
             if (zeroingAnalysisSuggestionText != null)
                 zeroingAnalysisSuggestionText.text = "本轮建议：" + FormatSuggestion(analysis) +
-                    "\n\n觇孔每次调整1格，1格为2厘米；准心柱每次调整5度，约0.32厘米。按方向按钮调整后点击应用。";
+                    "\n\n觇孔每次调整1格，1格为2厘米；准心柱每次调整5度约0.32厘米。按方向按钮调整后点击应用。";
             SetAnalysisText(zeroingAnalysisFrontSightText, "准心柱", FormatFrontSight(analysis));
             SetAnalysisText(zeroingAnalysisRearSightText, "觇孔", FormatRearSight(analysis));
             if (zeroingAnalysisCorrectionXText != null)
-                zeroingAnalysisCorrectionXText.text = string.Empty;
+                zeroingAnalysisCorrectionXText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.x, "向前", "向后", "cm");
             if (zeroingAnalysisCorrectionYText != null)
-                zeroingAnalysisCorrectionYText.text = string.Empty;
+                zeroingAnalysisCorrectionYText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.y / ZeroingRules.CmPerFrontSightDegree, "逆时针", "顺时针", "°", "0");
             if (zeroingAnalysisPreviewText != null)
                 zeroingAnalysisPreviewText.text = "原始均值(黄) → 调整预览(蓝) · 按住连续调节";
             if (zeroingAnalysisAppliedText != null)
@@ -1092,8 +1110,8 @@ namespace VRShooting.Unity.UI
             {
                 var average = analysis.AverageOffsetCm;
                 var pos = TacticalTargetPlot.MapImpactPointCm(targetRegion, average);
-                zeroingAverageCenter.offsetMin = pos - new Vector2(7f, 7f);
-                zeroingAverageCenter.offsetMax = pos + new Vector2(7f, 7f);
+                zeroingAverageCenter.offsetMin = pos - new Vector2(4f, 4f);
+                zeroingAverageCenter.offsetMax = pos + new Vector2(4f, 4f);
                 zeroingAverageCenter.gameObject.SetActive(HasProjectedShots(analysis)&&TacticalTargetPlot.IsOnTarget(average));
             }
             if (zeroingAdjustedCenter != null)
@@ -1197,8 +1215,11 @@ namespace VRShooting.Unity.UI
                 var points = new List<Vector2>();
                 if (analysis.HasValue && analysis.Value.Shots != null)
                     foreach (var shot in analysis.Value.Shots)
-                        if (!shot.MissedTargetPlane) points.Add(shot.ImpactPointCm);
+                        if (!shot.MissedTargetPlane && TacticalTargetPlot.IsOnTarget(shot.ImpactPointCm)) points.Add(shot.ImpactPointCm);
                 finalTargetPlots[round].SetImpacts(points);
+                var hasHits = analysis.HasValue && HasProjectedShots(analysis.Value);
+                finalTargetPlots[round].SetReferencePoints(hasHits ? (Vector2?)analysis.Value.AverageOffsetCm : null,
+                    hasHits ? (Vector2?)analysis.Value.PreviewAverageOffsetCm : null);
             }
             if (zeroingFinalGradeText != null)
             {
@@ -1324,7 +1345,7 @@ namespace VRShooting.Unity.UI
                 }
 
                 var shots = analysis.Value.Shots != null ? analysis.Value.Shots.Count : 0;
-                lines.Add("第" + round + "轮：" + (analysis.Value.PassedTenRing ? "通过" : "未通过") + " / " + shots + "发 / 平均偏差 " + FormatOffsetPair(analysis.Value.AverageOffsetCm));
+                lines.Add("第" + round + "轮：" + shots + "发 " + FormatImpactDots(analysis.Value) + "\n" + FormatReferencePoints(analysis.Value));
             }
 
             return string.Join("\n", lines);
@@ -1358,10 +1379,16 @@ namespace VRShooting.Unity.UI
             for (var i = 0; i < analysis.Shots.Count; i++)
             {
                 parts.Add("#" + analysis.Shots[i].ShotIndex + " " +
-                    (analysis.Shots[i].MissedTargetPlane ? "未命中靶面" : FormatOffsetPair(analysis.Shots[i].ImpactPointCm)));
+                    (analysis.Shots[i].MissedTargetPlane || !TacticalTargetPlot.IsOnTarget(analysis.Shots[i].ImpactPointCm) ? "未命中靶面" : FormatOffsetPair(analysis.Shots[i].ImpactPointCm)));
             }
 
             return string.Join("；", parts);
+        }
+
+        static string FormatReferencePoints(ZeroingRoundAnalysisDto analysis)
+        {
+            if (!HasProjectedShots(analysis)) return "无有效命中，无法计算平均点";
+            return "平均(黄) " + FormatOffsetPair(analysis.AverageOffsetCm) + "\n调整预览(蓝) " + FormatOffsetPair(analysis.PreviewAverageOffsetCm);
         }
 
         static ZeroingRoundAnalysisDto? FindAnalysis(ZeroingResultDto result, int round)
@@ -1457,7 +1484,7 @@ namespace VRShooting.Unity.UI
             }
 
             var direction = analysis.VerticalDirection == VerticalAdjustmentDirection.CounterClockwise ? "逆时针" : "顺时针";
-            return direction;
+            return direction + " " + analysis.FrontSightDegreesToAdjust.ToString("0", CultureInfo.InvariantCulture) + "°";
         }
 
         static string FormatRearSight(ZeroingRoundAnalysisDto analysis)
@@ -1468,7 +1495,7 @@ namespace VRShooting.Unity.UI
             }
 
             var direction = analysis.HorizontalDirection == HorizontalAdjustmentDirection.Forward ? "向前" : "向后";
-            return direction;
+            return direction + " " + (analysis.RearSightClicksToAdjust * ZeroingRules.CmPerRearSightClick).ToString("0.#", CultureInfo.InvariantCulture) + "cm";
         }
 
         static string FormatSuggestion(ZeroingRoundAnalysisDto analysis)
@@ -1487,7 +1514,7 @@ namespace VRShooting.Unity.UI
         {
             if (analysis.Shots != null)
                 foreach (var shot in analysis.Shots)
-                    if (!shot.MissedTargetPlane) return true;
+                    if (!shot.MissedTargetPlane && TacticalTargetPlot.IsOnTarget(shot.ImpactPointCm)) return true;
             return false;
         }
 

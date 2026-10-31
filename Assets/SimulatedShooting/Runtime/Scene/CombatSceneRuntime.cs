@@ -132,6 +132,13 @@ namespace SimulatedShooting.Scene
                 foreach(var camera in root.GetComponentsInChildren<Camera>(true))camera.enabled=camera==eye;
                 foreach(var listener in root.GetComponentsInChildren<AudioListener>(true))listener.enabled=listener.gameObject==eye.gameObject;
             }
+            // The selected XR camera can be supplied by a rig without an AudioListener.
+            // In that case disabling every other listener would silence the whole scene.
+            EnsureCameraAudioListener(eye);
+            // Combat's shared rifle clip is imported without preloading. Ensure its audio
+            // data is requested before the first player or AI shot on Android.
+            if(binding.RifleShotClip!=null && binding.RifleShotClip.loadState==AudioDataLoadState.Unloaded)
+                binding.RifleShotClip.LoadAudioData();
             ResetPlayer();
             Definition=CombatSceneDefinitionBuilder.Build(binding,mode,
                 new Vector3(eye.transform.position.x,player.position.y,eye.transform.position.z));
@@ -153,6 +160,14 @@ namespace SimulatedShooting.Scene
                 }
             }
             binding.WeaponAnchor.gameObject.SetActive(mode==TrainingMode.Trench);
+        }
+        public static AudioListener EnsureCameraAudioListener(Camera camera)
+        {
+            if(camera==null)return null;
+            var listener=camera.GetComponent<AudioListener>();
+            if(listener==null)listener=camera.gameObject.AddComponent<AudioListener>();
+            listener.enabled=true;
+            return listener;
         }
         void ResetPlayer()
         {

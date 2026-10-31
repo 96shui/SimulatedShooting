@@ -37,7 +37,9 @@ namespace SimulatedShooting.Tests.PlayMode
             {
                 var interior = house.Find("Interior");
                 Assert.That(interior, Is.Not.Null, house.name);
-                Assert.That(interior.Find("TrainingDummy").GetComponentsInChildren<Renderer>().Any(r => r.enabled), Is.True);
+                var hasFigure = interior.Find("TrainingDummy").GetComponentsInChildren<Renderer>().Any(r => r.enabled);
+                var removedFigure = new[] { "South_Workshop", "NorthWest_Tenement", "Rear_DamagedHouse" }.Contains(house.name);
+                Assert.That(hasFigure, Is.EqualTo(!removedFigure), house.name);
                 var entrance = interior.Find("WalkEntrance");
                 var outside = entrance.position - house.forward * 2;
                 var inside = entrance.position + house.forward * 2;

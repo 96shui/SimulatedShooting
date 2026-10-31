@@ -462,6 +462,9 @@ namespace SimulatedShooting.Scene
             {
                 targetSurface = FindObjectOfType<TargetImpactSurface>();
             }
+            if (targetSurface != null && targetSurface.TargetCenter != null &&
+                movingTargetHitAdapter == null && targetSurface.GetComponent<SceneTestId>()?.Id == "ZeroingRange.Target.Face")
+                ChestTargetArtwork.ApplyHighlight(targetSurface.TargetCenter);
 
             if (movingTargetHitAdapter == null)
             {
@@ -880,8 +883,10 @@ namespace SimulatedShooting.Scene
             var planeDistance = 0f;
             var planeValid = isZeroing && targetSurface != null &&
                 targetSurface.TryProjectRay(new Ray(muzzle, direction), out planePoint, out planeDistance);
-            // P1 low-difficulty mode resolves forward shots on the target plane. The service
-            // owns the assisted final coordinate used by the tracer, hole and analysis.
+            // An obstacle in front of the target plane blocks the shot; the target's own
+            // collider may lie slightly in front of its visual centre plane.
+            if (planeValid && physicalHit && !targetHit && raycastHit.distance < planeDistance - .005f)
+                planeValid = false;
             return new WeaponFireInputDto
             {
                 SessionId = SessionId,

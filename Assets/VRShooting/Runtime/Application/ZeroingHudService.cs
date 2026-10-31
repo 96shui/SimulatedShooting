@@ -272,8 +272,9 @@ namespace VRShooting.Application
             for (var i = 0; i < shots.Count && i < ZeroingRules.ShotsPerRound; i++)
             {
                 var shot = shots[i];
-                var label = shot.InsideTenRing ? "10环" : "命中";
-                lines.Add($"#{shot.ShotIndex:00} {label}");
+                var onTarget = !shot.MissedTargetPlane && Mathf.Abs(shot.ImpactPointCm.x) <= ZeroingRules.TargetHalfSizeCm && Mathf.Abs(shot.ImpactPointCm.y) <= ZeroingRules.TargetHalfSizeCm;
+                var label = !onTarget ? "脱靶" : shot.InsideTenRing ? "10环" : "命中";
+                lines.Add(onTarget ? $"#{shot.ShotIndex:00} {label} ({shot.ImpactPointCm.x:0.0}, {shot.ImpactPointCm.y:0.0})cm" : $"#{shot.ShotIndex:00} {label}");
             }
 
             return string.Join("\n", lines);

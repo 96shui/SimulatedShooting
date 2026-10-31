@@ -22,7 +22,7 @@ namespace VRShooting.Tests.EditMode.UI
         }
         // BDD07: marker geometry must use the same calibration once and an opaque texel.
         [Test]
-        public void FinalThumbnailMarkerUsesCalibratedPositionAndOpaqueBackgroundUv()
+        public void FinalThumbnailMarkersUseCalibratedPositionAndIndependentImages()
         {
             var root = new GameObject("Thumbnail", typeof(RectTransform));
             var mesh = new Mesh();
@@ -33,22 +33,13 @@ namespace VRShooting.Tests.EditMode.UI
                 var plot = root.AddComponent<TacticalTargetPlot>();
                 var point = new Vector2(-8, 12);
                 plot.SetImpacts(new[] { point });
-                using (var helper = new UnityEngine.UI.VertexHelper())
-                {
-                    typeof(TacticalTargetPlot).GetMethod("OnPopulateMesh", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
-                        null, new[] { typeof(UnityEngine.UI.VertexHelper) }, null)
-                        .Invoke(plot, new object[] { helper });
-                    helper.FillMesh(mesh);
-                }
+                plot.SetReferencePoints(new Vector2(2, 3), new Vector2(4, 5));
                 var expected = TacticalTargetPlot.MapImpactPointCm(rect.rect, point);
-                var markerCentre = Vector2.zero;
-                for (var index = 4; index < mesh.vertexCount; index++)
-                {
-                    markerCentre += (Vector2)mesh.vertices[index];
-                    Assert.That(mesh.uv[index], Is.EqualTo(new Vector2(.08f, .9f)));
-                }
-                markerCentre /= mesh.vertexCount - 4;
-                Assert.That(Vector2.Distance(markerCentre, expected), Is.LessThan(.001f));
+                var marker = rect.Find("ImpactMarker_1").GetComponent<RectTransform>();
+                Assert.That(Vector2.Distance(marker.anchoredPosition, expected), Is.LessThan(.001f));
+                Assert.That(marker.GetComponent<UnityEngine.UI.Image>().sprite, Is.Null);
+                Assert.That(rect.Find("AverageMarker").gameObject.activeSelf, Is.True);
+                Assert.That(rect.Find("PreviewMarker").gameObject.activeSelf, Is.True);
             }
             finally { Object.DestroyImmediate(mesh); Object.DestroyImmediate(root); }
         }

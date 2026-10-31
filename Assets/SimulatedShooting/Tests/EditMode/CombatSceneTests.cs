@@ -60,6 +60,11 @@ namespace SimulatedShooting.Tests.EditMode
                 var foundationBounds = house.Find("Foundation").GetComponent<Renderer>().bounds;
                 Assert.That(floorBounds.max.y - foundationBounds.max.y, Is.GreaterThanOrEqualTo(.025f), house.name + " has coplanar floor surfaces");
                 var dummy = house.Find("Interior/TrainingDummy/PhotographicPerson");
+                if (new[] { "South_Workshop", "NorthWest_Tenement", "Rear_DamagedHouse" }.Contains(house.name))
+                {
+                    Assert.That(dummy, Is.Null, house.name + " should not contain the removed female figure");
+                    continue;
+                }
                 Assert.That(dummy, Is.Not.Null, house.name);
                 var renderers = dummy.GetComponentsInChildren<MeshRenderer>();
                 Assert.That(renderers, Is.Not.Empty);

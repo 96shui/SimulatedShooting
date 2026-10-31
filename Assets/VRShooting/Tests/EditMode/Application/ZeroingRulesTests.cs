@@ -10,6 +10,23 @@ namespace VRShooting.Tests.EditMode.Application
     public class ZeroingRulesTests
     {
         [Test]
+        public void Bdd06_OnlyAimOnBoardKeepsImpactWithinBoard()
+        {
+            Assert.That(ZeroingRules.ComputeImpactPoint(new Vector2(24, 0), new Vector2(8, 0)), Is.EqualTo(new Vector2(24.99f, 0)));
+            Assert.That(ZeroingRules.ComputeImpactPoint(new Vector2(40, 0), new Vector2(8, 0)), Is.EqualTo(new Vector2(48, 0)));
+            Assert.That(ZeroingRules.ComputeImpactPoint(new Vector2(10, 0), new Vector2(3, 0)), Is.EqualTo(new Vector2(13, 0)));
+        }
+        [Test]
+        public void Bdd06_AverageUsesOnlyHitsOnTheTarget()
+        {
+            var shots = new[] {
+                new ZeroingShotDto { ImpactPointCm = new Vector2(4, 6) },
+                new ZeroingShotDto { ImpactPointCm = new Vector2(40, 10) },
+                new ZeroingShotDto { ImpactPointCm = new Vector2(1, 2), MissedTargetPlane = true }
+            };
+            Assert.That(ZeroingRules.ComputeAverageOffset(shots), Is.EqualTo(new Vector2(4, 6)));
+        }
+        [Test]
         public void GenerateFixedOffset_FixedSeed_IsReproducible()
         {
             var first = ZeroingRules.GenerateFixedOffset(RandomSeed.Fixed(100));

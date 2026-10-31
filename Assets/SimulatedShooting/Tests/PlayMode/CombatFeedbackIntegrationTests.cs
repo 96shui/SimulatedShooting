@@ -18,6 +18,23 @@ namespace SimulatedShooting.Tests.PlayMode
     public sealed class CombatFeedbackIntegrationTests
     {
         [Test]
+        public void Bdd23_CombatCameraCreatesOrReenablesAudioListener()
+        {
+            var root = new GameObject("TestCombatCamera");
+            try
+            {
+                var camera = root.AddComponent<Camera>();
+                var listener = CombatSceneRuntime.EnsureCameraAudioListener(camera);
+                Assert.That(listener, Is.Not.Null);
+                Assert.That(listener.enabled, Is.True);
+                listener.enabled = false;
+                Assert.That(CombatSceneRuntime.EnsureCameraAudioListener(camera), Is.SameAs(listener));
+                Assert.That(listener.enabled, Is.True);
+                Assert.That(root.GetComponents<AudioListener>().Length, Is.EqualTo(1));
+            }
+            finally { UnityEngine.Object.DestroyImmediate(root); }
+        }
+        [Test]
         public void Bdd23_TurnIsSmoothHorizontalAndStopsWhenActionsLock()
         {
             var root=new GameObject("EnemyTurnTest");

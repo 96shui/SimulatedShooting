@@ -24,7 +24,7 @@ namespace VRShooting.Application
 
         public static Vector2 AssistAimPoint(Vector2 aimPointCm)
         {
-            return Vector2.ClampMagnitude(aimPointCm * .03f, 1.5f);
+            return aimPointCm;
         }
 
         public static Vector2 QuantizeCorrection(Vector2 correctionCm)
@@ -110,7 +110,13 @@ namespace VRShooting.Application
 
         public static Vector2 ComputeImpactPoint(Vector2 aimPointCm, Vector2 fixedImpactOffsetCm)
         {
-            return Vector2.ClampMagnitude(AssistAimPoint(aimPointCm) + fixedImpactOffsetCm, TargetHalfSizeCm - 1f);
+            var impact = aimPointCm + fixedImpactOffsetCm;
+            // Keep a ray aimed at the board on the board, without moving misses or
+            // compressing the aim toward the ten ring.
+            if (Mathf.Abs(aimPointCm.x) <= TargetHalfSizeCm && Mathf.Abs(aimPointCm.y) <= TargetHalfSizeCm)
+                return new Vector2(Mathf.Clamp(impact.x, -TargetHalfSizeCm + .01f, TargetHalfSizeCm - .01f),
+                    Mathf.Clamp(impact.y, -TargetHalfSizeCm + .01f, TargetHalfSizeCm - .01f));
+            return impact;
         }
 
         public static bool IsInsideTenRing(Vector2 impactPointCm)
@@ -157,7 +163,8 @@ namespace VRShooting.Application
             var count = 0;
             for (var i = 0; i < shots.Count; i++)
             {
-                if (shots[i].MissedTargetPlane) continue;
+                if (shots[i].MissedTargetPlane || Mathf.Abs(shots[i].ImpactPointCm.x) > TargetHalfSizeCm ||
+                    Mathf.Abs(shots[i].ImpactPointCm.y) > TargetHalfSizeCm) continue;
                 sum += shots[i].ImpactPointCm;
                 count++;
             }

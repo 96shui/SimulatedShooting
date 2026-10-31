@@ -135,9 +135,14 @@ namespace SimulatedShooting.Scene
             var marker = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             marker.name = $"Impact_{impacts.Count:00}";
             marker.transform.SetParent(impactMarkerRoot, true);
-            marker.transform.position = impact.WorldPoint - targetCenter.forward * 0.002f;
-            marker.transform.localScale = new Vector3(markerDiameterMetres, markerDiameterMetres, 0.004f);
-            Destroy(marker.GetComponent<Collider>());
+            // The artwork is already 1 mm in front of the plane. A 2 mm offset
+            // flickers or disappears at 100 m due to depth buffer precision.
+            marker.transform.SetPositionAndRotation(impact.WorldPoint - targetCenter.forward * 0.03f, targetCenter.rotation);
+            var diameter = Mathf.Max(markerDiameterMetres, 0.06f);
+            marker.transform.localScale = new Vector3(diameter, diameter, 0.004f);
+            var collider = marker.GetComponent<Collider>();
+            collider.enabled = false;
+            Destroy(collider);
 
             if (impactMarkerMaterial != null)
                 marker.GetComponent<Renderer>().sharedMaterial = impactMarkerMaterial;
