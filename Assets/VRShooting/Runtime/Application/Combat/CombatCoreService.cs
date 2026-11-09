@@ -15,6 +15,8 @@ namespace VRShooting.Application.Combat
         CombatConfigDto config;
         readonly bool hasExplicitConfig;
         readonly WeaponControlService weapons = new WeaponControlService();
+        readonly WeaponAutomaticFireService automaticFire;
+        readonly List<CombatShotDto> automaticShots = new List<CombatShotDto>();
         readonly List<Enemy> enemies = new List<Enemy>();
         readonly Dictionary<string, Enemy> enemyById = new Dictionary<string, Enemy>(StringComparer.Ordinal);
         readonly Dictionary<string, CombatInputDto> received = new Dictionary<string, CombatInputDto>(StringComparer.Ordinal);
@@ -45,6 +47,7 @@ namespace VRShooting.Application.Combat
         public CombatCoreService(ICombatClock clock, CombatConfigDto? config = null)
         {
             this.clock = clock ?? throw new ArgumentNullException(nameof(clock));
+            automaticFire = new WeaponAutomaticFireService(FireAutomaticShot, weapons);
             this.config = config ?? CombatConfigDto.Default;
             hasExplicitConfig = config.HasValue;
             if (!this.config.Validate().Success) throw new ArgumentException("Invalid combat configuration", nameof(config));
@@ -70,9 +73,11 @@ namespace VRShooting.Application.Combat
                     spawn.Role != CombatEntityRole.Enemy || !Finite(spawn.Position) || !ValidDirection(spawn.Forward))
                     return Fail<CombatCoreSnapshotDto>(ErrorCode.InvalidInput);
             if (!hasExplicitConfig) config = CombatConfigDto.ForMode(mode);
+            automaticFire.ReleaseSession(session);
             weapons.ReleaseSession(session);
             session = sessionId; playerId = session + ".player"; sessionIds.Add(session);
             weapons.StartSession(session, WeaponControlService.TrainingRifleId, mode);
+            automaticFire.StartSession(session, config.FireMode, WeaponAutoFireConfigDto.P2Default);
             enemies.Clear(); enemyById.Clear(); received.Clear(); pending.Clear(); issuedShots.Clear(); spentShots.Clear(); feedback.Clear();resolvedGrenades.Clear();
             foreach (var shooter in support) shooter.Clear();
             supportTick = -1;
@@ -150,6 +155,7 @@ namespace VRShooting.Application.Combat
         public ServiceResult<Unit> ToggleShoulder(string sessionId)
         {
             var guard = Guard(sessionId, true); if (!guard.Success) return guard;
+            automaticFire.Cancel(session, WeaponFireStopReason.WeaponBecameInvalid);
             weapons.ToggleShoulder(session); dirty = true; Publish(); return Ok();
         }
         public ServiceResult<Unit> SetCornerAvailable(string sessionId, bool value)
@@ -179,6 +185,32 @@ namespace VRShooting.Application.Combat
             Emit(CombatFeedbackKind.ShotFired, id, playerId, "", id); Publish();
             return ServiceResult<CombatShotDto>.Ok(new CombatShotDto { ShotId = id, Shot = shot.Data });
         }
+        ServiceResult<WeaponShotResultDto> FireAutomaticShot(WeaponFireInputDto input)
+        {
+            var result = Fire(input);
+            if (!result.Success) return ServiceResult<WeaponShotResultDto>.Fail(result.ErrorCode, result.Message);
+            automaticShots.Add(result.Data);
+            return ServiceResult<WeaponShotResultDto>.Ok(result.Data.Shot);
+        }
+
+        public ServiceResult<IReadOnlyList<CombatShotDto>> TickAutomaticFire(WeaponTriggerStateInputDto trigger,
+            float deltaSeconds, WeaponFireInputDto latestShot, bool enabled)
+        {
+            var guard = Guard(trigger.SessionId);
+            if (!guard.Success) return Fail<IReadOnlyList<CombatShotDto>>(guard.ErrorCode);
+            if (!Finite(deltaSeconds) || deltaSeconds < 0) return Fail<IReadOnlyList<CombatShotDto>>(ErrorCode.InvalidInput);
+            var allow = enabled && Active && weapons.GetState(session).Data.CanShoot;
+            automaticShots.Clear();
+            automaticFire.UpdateTrigger(new WeaponTriggerStateInputDto { SessionId = session,
+                Value01 = trigger.Value01, Pressed = allow && trigger.Pressed,
+                Held = trigger.Held, Released = trigger.Released || (!allow && !trigger.Held) });
+            if (!allow) automaticFire.Cancel(session, WeaponFireStopReason.WeaponBecameInvalid);
+            var result = automaticFire.Tick(session, deltaSeconds, latestShot);
+            return result.Success
+                ? ServiceResult<IReadOnlyList<CombatShotDto>>.Ok(automaticShots.ToArray())
+                : ServiceResult<IReadOnlyList<CombatShotDto>>.Fail(result.ErrorCode, result.Message);
+        }
+
         public ServiceResult<Unit> Reload(string sessionId)
         {
             var guard = Guard(sessionId, true); if (!guard.Success) return guard;
@@ -186,7 +218,11 @@ namespace VRShooting.Application.Combat
             if (ammo.IsReloading) return Failure(ErrorCode.Busy);
             if (!weapons.GetState(session).Data.TwoHandGripActive) return Failure(ErrorCode.InvalidState);
             var result = weapons.StartReload(session); if (!result.Success) return Failure(result.ErrorCode);
-            if (result.Data.IsReloading) { reloadAt = clock.Now + config.ReloadSeconds; dirty = true; Publish(); }
+            if (result.Data.IsReloading)
+            {
+                automaticFire.Cancel(session, WeaponFireStopReason.WeaponBecameInvalid);
+                reloadAt = clock.Now + config.ReloadSeconds; dirty = true; Publish();
+            }
             return Ok();
         }
 
@@ -393,7 +429,7 @@ namespace VRShooting.Application.Combat
                 (offset.sqrMagnitude < 1e-8 || Vector3.Angle(enemy.Forward, offset) <= config.EnemyHalfViewAngle);
         }
         bool Due(Enemy enemy) => enemy.NextAttack <= clock.Now + 1e-8;
-        void Suspend() { pending.Clear(); StopTimers(); }
+        void Suspend() { automaticFire.Cancel(session, WeaponFireStopReason.WeaponBecameInvalid); pending.Clear(); StopTimers(); }
         void StopTimers()
         {
             foreach (var shooter in support) shooter.Clear();
@@ -468,6 +504,7 @@ namespace VRShooting.Application.Combat
         public void Dispose()
         {
             if (disposed) return;
+            automaticFire.ReleaseSession(session);
             disposed = true; weapons.ReleaseSession(session); pending.Clear(); received.Clear(); feedback.Clear();
             issuedShots.Clear(); spentShots.Clear(); enemies.Clear(); enemyById.Clear(); sessionIds.Clear(); Changed = null; Feedback = null;
         }

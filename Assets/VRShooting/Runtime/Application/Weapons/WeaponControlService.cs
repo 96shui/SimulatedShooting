@@ -118,7 +118,7 @@ namespace VRShooting.Application.Weapons
                 CurrentMagazine = weapon.MagazineCapacity,
                 ReserveAmmo = weapon.MaxReserveAmmo,
                 UsesCombatMagazines = resolvedWeaponId == TrainingRifleId && (mode == TrainingMode.Trench || mode == TrainingMode.Urban),
-                FireMode = mode == TrainingMode.MovingTarget
+                FireMode = mode == TrainingMode.MovingTarget || mode == TrainingMode.Trench || mode == TrainingMode.Urban
                     ? WeaponFireMode.InitialTwoThenAutomatic
                     : WeaponFireMode.SingleShot,
                 ShoulderSide = ShoulderSide.Right,

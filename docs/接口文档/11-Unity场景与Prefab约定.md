@@ -1,5 +1,7 @@
 # 11 Unity 场景与 Prefab 约定
 
+2026-11-08：模式一固定靶 TargetBacker 仅关闭 Renderer，保留 Collider、测试ID、靶纸、靶面与弹着标记；模式三/四共享枪预制体及左X/R换弹，右摇杆按压交互。
+
 ## 2026-10-25 PICO渲染契约
 
 `PicoStandaloneRenderPolicy`仅在Android Player自动装配，加载Resources/Rendering/PicoStandalone管线，XR目标尺寸倍率1.25、viewport倍率1、4xMSAA、mip完整、各向异性4–8倍。PICO官方刷新率Feature开启并配置72Hz，固定注视点降画质仍关闭。对无RenderTexture的XR主相机设置0.05–300m裁剪；保留无人机辅助相机。独立管线使用35m、单级联2048硬阴影，关闭HDR与额外逐像素灯，保留方向光、环境光、材质和模型。`CombatSceneRenderProfile`在Android保持此管线，桌面原配置不变。策略不改业务DTO、头手跟踪、机瞄、碰撞与UI。日志记录实际XR纹理尺寸与管线，不能把配置目标当作实机帧率达标证据。

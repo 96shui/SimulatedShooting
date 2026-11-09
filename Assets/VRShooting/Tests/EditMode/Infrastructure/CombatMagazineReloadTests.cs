@@ -101,8 +101,8 @@ namespace VRShooting.Tests.EditMode
             Assert.That(p2.CurrentMagazine, Is.EqualTo(10)); Assert.That(p2.ReserveAmmo, Is.Zero);
         }
 
-        [TestCase(TrainingMode.Trench, false)] [TestCase(TrainingMode.Urban, true)]
-        public void ReloadInputLocksModeThreeFrontGripUntilReleaseAndNewPress(TrainingMode mode, bool keepsFrontGrip)
+        [TestCase(TrainingMode.Trench)] [TestCase(TrainingMode.Urban)]
+        public void ReloadInputLocksSupportGripInBothModes(TrainingMode mode)
         {
             var clock = new FakeCombatClock();
             using var core = Start(clock, mode);
@@ -118,20 +118,92 @@ namespace VRShooting.Tests.EditMode
             input.Press(XRTrainingInputButton.RightGrip); input.Press(XRTrainingInputButton.LeftGrip); Step();
             Fire(core); input.Press(XRTrainingInputButton.Reload); Step();
             Assert.That(core.GetSnapshot("reload").Data.Ammo.IsReloading, Is.True);
-            Assert.That(core.GetSnapshot("reload").Data.Weapon.TwoHandGripActive, Is.EqualTo(keepsFrontGrip));
+            Assert.That(core.GetSnapshot("reload").Data.Weapon.TwoHandGripActive, Is.False);
             input.Release(XRTrainingInputButton.LeftGrip); Step(.2);
             input.Press(XRTrainingInputButton.LeftGrip); input.Press(XRTrainingInputButton.Trigger); Step(.2);
-            Assert.That(core.GetSnapshot("reload").Data.Weapon.TwoHandGripActive, Is.EqualTo(keepsFrontGrip));
+            Assert.That(core.GetSnapshot("reload").Data.Weapon.TwoHandGripActive, Is.False);
             Assert.That(core.GetSnapshot("reload").Data.Ammo.CurrentMagazine, Is.EqualTo(29));
             Step(2);
             Assert.That(core.GetSnapshot("reload").Data.Ammo.IsReloading, Is.False);
-            Assert.That(core.GetSnapshot("reload").Data.Weapon.TwoHandGripActive, Is.EqualTo(keepsFrontGrip));
+            Assert.That(core.GetSnapshot("reload").Data.Weapon.TwoHandGripActive, Is.False);
             input.Release(XRTrainingInputButton.LeftGrip); input.Release(XRTrainingInputButton.Trigger); Step();
             input.Press(XRTrainingInputButton.LeftGrip); Step();
             Assert.That(core.GetSnapshot("reload").Data.Weapon.TwoHandGripActive, Is.True);
             input.Press(XRTrainingInputButton.Trigger); Step();
             Assert.That(core.GetSnapshot("reload").Data.Ammo.CurrentMagazine, Is.EqualTo(29));
         }
+        // BDD23 / task004: P3 uses the same two-shot and held-fire scheduler as P2.
+        [TestCase(TrainingMode.Trench)] [TestCase(TrainingMode.Urban)]
+        public void AutomaticFireUsesP2TimingAndLatestShotForEveryBullet(TrainingMode mode)
+        {
+            var clock = new FakeCombatClock();
+            using var core = Start(clock, mode);
+            var interval = WeaponAutoFireConfigDto.P2Default.ShotIntervalSeconds;
+            Assert.That(core.GetSnapshot("reload").Data.Weapon.FireMode, Is.EqualTo(WeaponFireMode.InitialTwoThenAutomatic));
+            System.Collections.Generic.IReadOnlyList<CombatShotDto> Tick(float dt, bool press, bool held, bool release, Vector3 direction)
+            {
+                clock.Advance(dt);
+                var result = core.TickAutomaticFire(new WeaponTriggerStateInputDto { SessionId = "reload", Pressed = press, Held = held, Released = release },
+                    dt, new WeaponFireInputDto { SessionId = "reload", AimDirection = direction, RawAimDirection = direction }, true);
+                Assert.That(result.Success, Is.True, result.Message);
+                return result.Data;
+            }
+            Assert.That(Tick(0, true, true, false, Vector3.forward).Count, Is.EqualTo(1));
+            Assert.That(Tick(interval * .5f, false, false, true, Vector3.right).Count, Is.Zero);
+            var second = Tick(interval * .5f, false, false, false, Vector3.right);
+            Assert.That(second.Count, Is.EqualTo(1));
+            Assert.That(second[0].Shot.AimDirection, Is.EqualTo(Vector3.right));
+            Assert.That(Tick(interval * 3, false, false, false, Vector3.forward).Count, Is.Zero);
+            Assert.That(core.GetSnapshot("reload").Data.Ammo.CurrentMagazine, Is.EqualTo(28));
+            Assert.That(Tick(0, true, true, false, Vector3.forward).Count, Is.EqualTo(1));
+            Assert.That(Tick(interval, false, true, false, Vector3.forward).Count, Is.EqualTo(1));
+            Assert.That(Tick(interval, false, true, false, Vector3.forward).Count, Is.EqualTo(1));
+            Assert.That(Tick(interval, false, false, true, Vector3.forward).Count, Is.Zero);
+        }
+
+        [TestCase(TrainingMode.Trench)] [TestCase(TrainingMode.Urban)]
+        public void AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(TrainingMode mode)
+        {
+            var clock = new FakeCombatClock();
+            using var core = Start(clock, mode);
+            var interval = WeaponAutoFireConfigDto.P2Default.ShotIntervalSeconds;
+            System.Collections.Generic.IReadOnlyList<CombatShotDto> Tick(float dt, bool press, bool held, bool release)
+            {
+                clock.Advance(dt);
+                var r = core.TickAutomaticFire(new WeaponTriggerStateInputDto { SessionId = "reload", Pressed = press, Held = held, Released = release },
+                    dt, new WeaponFireInputDto { SessionId = "reload", AimDirection = Vector3.forward, RawAimDirection = Vector3.forward }, true);
+                Assert.That(r.Success, Is.True, r.Message); return r.Data;
+            }
+            Assert.That(Tick(0, true, true, false).Count, Is.EqualTo(1));
+            Assert.That(core.Reload("reload").Success, Is.True);
+            Assert.That(Tick(interval, false, true, false).Count, Is.Zero);
+            clock.Advance(2); core.Advance("reload");
+            Assert.That(Tick(interval, false, true, false).Count, Is.Zero, "held trigger must not restart after reload");
+            Tick(0, false, false, true);
+            for (var i = 0; i < 29; i++) Assert.That(Fire(core).Success, Is.True);
+            Assert.That(Tick(0, true, true, false).Count, Is.Zero, "one remaining round cannot start a P2 sequence");
+            Assert.That(core.GetSnapshot("reload").Data.Ammo.CurrentMagazine, Is.EqualTo(1));
+        }
+
+        [TestCase(TrainingMode.Trench)] [TestCase(TrainingMode.Urban)]
+        public void AlreadyReleasedTriggerRearmsWhenReloadCancelsPendingBurst(TrainingMode mode)
+        {
+            var clock = new FakeCombatClock(); using var core = Start(clock, mode);
+            System.Collections.Generic.IReadOnlyList<CombatShotDto> Tick(float dt, bool pressed, bool held, bool released)
+            {
+                clock.Advance(dt);
+                var result = core.TickAutomaticFire(new WeaponTriggerStateInputDto { SessionId = "reload", Pressed = pressed, Held = held, Released = released },
+                    dt, new WeaponFireInputDto { SessionId = "reload", AimDirection = Vector3.forward, RawAimDirection = Vector3.forward }, true);
+                Assert.That(result.Success, Is.True); return result.Data;
+            }
+            Assert.That(Tick(0, true, true, false).Count, Is.EqualTo(1));
+            Assert.That(Tick(.01f, false, false, true).Count, Is.Zero);
+            Assert.That(core.Reload("reload").Success, Is.True);
+            Tick(.01f, false, false, false);
+            clock.Advance(2); core.Advance("reload");
+            Assert.That(Tick(0, true, true, false).Count, Is.EqualTo(1), "a trigger released before reload should be ready on the first new press");
+        }
+
         sealed class NoHit : ICombatShotQuery
         { public CombatRayHitDto Cast(Vector3 origin, Vector3 direction) => new CombatRayHitDto(); }
         sealed class NoMove : ICombatLocomotionPort

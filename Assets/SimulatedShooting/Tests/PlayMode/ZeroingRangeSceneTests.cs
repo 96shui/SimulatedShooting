@@ -150,6 +150,24 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [Test]
+        public void Bdd05_FixedTargetBackersAreInvisibleButKeepTheirCollidersAndArtwork()
+        {
+            var root = Find("ZeroingRange.FixedTargets.Root");
+            var backers = root.GetComponentsInChildren<Transform>(true).Where(t => t.name == "TargetBacker").ToArray();
+            Assert.That(backers.Length, Is.EqualTo(5));
+            foreach (var backer in backers)
+            {
+                Assert.That(backer.GetComponent<Renderer>().enabled, Is.False, backer.parent.name);
+                Assert.That(backer.GetComponent<Collider>().enabled, Is.True, backer.parent.name);
+                var surface = backer.parent.GetComponentInChildren<TargetImpactSurface>(true);
+                Assert.That(surface, Is.Not.Null);
+                Assert.That(surface.GetComponent<Collider>().enabled, Is.True);
+                Assert.That(surface.TargetCenter.Find("ChestTarget_ReferenceFace").GetComponent<Renderer>().enabled, Is.True);
+            }
+            // Task012_RaycastHitReturnsStableImpactCoordinates verifies the same scene's hit and marker.
+        }
+
+        [Test]
         public void Task004_DistanceMarkersShowZeroThroughOneHundredMetres()
         {
             // BDD 05 / task004: the 100m firing lane must provide clear distance context.

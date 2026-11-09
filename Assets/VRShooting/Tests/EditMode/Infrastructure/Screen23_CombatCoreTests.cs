@@ -110,7 +110,7 @@ namespace VRShooting.Tests.EditMode
             Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(30)); Assert.That(State.Ammo.ReserveAmmo, Is.EqualTo(60));
             Assert.That(core.Fire(new WeaponFireInputDto { SessionId = Session, AimDirection = Vector3.forward }).Success, Is.False);
             Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(30)); Grip(); Fire();
-            Assert.That(State.Weapon.FireMode, Is.EqualTo(WeaponFireMode.SingleShot));
+            Assert.That(State.Weapon.FireMode, Is.EqualTo(WeaponFireMode.InitialTwoThenAutomatic));
             Assert.That(core.Reload(Session).Success); Assert.That(State.Weapon.CanShoot, Is.False);
             Advance(1.99); Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(29));
             Advance(.01); Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(30)); Assert.That(State.Ammo.ReserveAmmo, Is.EqualTo(30));

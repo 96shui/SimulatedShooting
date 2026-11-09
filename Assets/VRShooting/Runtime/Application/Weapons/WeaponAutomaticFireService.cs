@@ -12,7 +12,7 @@ namespace VRShooting.Application.Weapons
     /// </summary>
     public sealed class WeaponAutomaticFireService : IWeaponAutomaticFireService
     {
-        readonly IWeaponControlService weapons;
+        readonly Func<WeaponFireInputDto, ServiceResult<WeaponShotResultDto>> fireShot;
         readonly IAmmoService ammo;
         readonly IGameEventBus eventBus;
         readonly Dictionary<string, SessionFireState> sessions = new Dictionary<string, SessionFireState>();
@@ -22,9 +22,17 @@ namespace VRShooting.Application.Weapons
             IAmmoService ammo,
             IGameEventBus eventBus = null)
         {
-            this.weapons = weapons ?? throw new ArgumentNullException(nameof(weapons));
+            if (weapons == null) throw new ArgumentNullException(nameof(weapons));
+            fireShot = weapons.Fire;
             this.ammo = ammo ?? throw new ArgumentNullException(nameof(ammo));
             this.eventBus = eventBus;
+        }
+
+        // The combat core supplies an authoritative per-shot callback while sharing the same scheduler.
+        internal WeaponAutomaticFireService(Func<WeaponFireInputDto, ServiceResult<WeaponShotResultDto>> fireShot, IAmmoService ammo)
+        {
+            this.fireShot = fireShot ?? throw new ArgumentNullException(nameof(fireShot));
+            this.ammo = ammo ?? throw new ArgumentNullException(nameof(ammo));
         }
 
         public event Action<WeaponFireSequenceStateDto> FireSequenceChanged;
@@ -310,7 +318,7 @@ namespace VRShooting.Application.Weapons
         {
             var input = CopySnapshot(snapshot, state.SessionId);
             state.ShotsFired++;
-            var result = weapons.Fire(input);
+            var result = fireShot(input);
             if (!result.Success || !result.Data.IsValidShot)
             {
                 state.ShotsFired--;

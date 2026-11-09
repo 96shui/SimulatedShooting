@@ -194,7 +194,7 @@ namespace VRShooting.Unity.UI
                 (session.StreetCleared ? "" : "\n进入建筑仍有风险，需继续清除敌人"));
             var enterText = P3UiText.Prompt(hud, "EnterBuilding");
             if (string.IsNullOrWhiteSpace(enterText)) enterText = "进入建筑";
-            P3UiText.SetText(promptText, enterText);
+            P3UiText.SetText(promptText, FormatInteractionPrompt(enterText));
             EnterBuildingInteractive = P3UiText.PromptEnabled(hud, "EnterBuilding");
             if (enterBuildingButton != null)
             {
@@ -285,7 +285,7 @@ namespace VRShooting.Unity.UI
 
             var prompt = !string.IsNullOrWhiteSpace(openPrompt.Text) ? openPrompt.Text : checkPrompt.Text;
             if (string.IsNullOrWhiteSpace(prompt)) prompt = "靠近房门后点击开门，清除全部敌人即可胜利";
-            P3UiText.SetText(promptText, prompt);
+            P3UiText.SetText(promptText, FormatInteractionPrompt(prompt));
             if (openDoorButton != null) openDoorButton.interactable = OpenDoorInteractive;
             if (checkRoomButton != null) checkRoomButton.interactable = CheckRoomInteractive;
             if (exitButton != null) exitButton.interactable = true;

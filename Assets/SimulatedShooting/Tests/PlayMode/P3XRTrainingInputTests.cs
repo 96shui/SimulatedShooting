@@ -204,26 +204,86 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return null;input.Sample(true);
             Assert.That(input.GrenadePressed,Is.False);
         }
-        [UnityTest] public IEnumerator Screen23_ModeThreeXReloadUsesPressEdgesAndModeFourKeepsStickBinding()
+        // BDD23: both modes use the same isolated X reload / right-stick interaction edge.
+        [UnityTest] public IEnumerator Screen23_BothModesUseXReloadAndRightStickInteraction()
         {
             yield return null;
-            var trench=new P3XRTrainingInput();var urban=new P3XRTrainingInput { ReloadWithLeftX=false };
-            trench.Sample(true);urban.Sample(true);
+            var trench=new P3XRTrainingInput();var urban=new P3XRTrainingInput();
+            void SampleBoth() { trench.Sample(true); urban.Sample(true); }
+            SampleBoth();
             InputSystem.QueueDeltaStateEvent(left.GetChildControl<ButtonControl>("primary2DAxisClick"),1f);
-            yield return null;trench.Sample(true);urban.Sample(true);
-            Assert.That(trench.ReloadPressed,Is.False,"left stick click must not reload mode three");
-            Assert.That(urban.ReloadPressed,Is.True);
+            yield return null;SampleBoth();
+            Assert.That(trench.ReloadPressed||trench.ConfirmPressed||urban.ReloadPressed||urban.ConfirmPressed,Is.False,
+                "Left stick click must not reload or interact in either mode.");
             InputSystem.QueueDeltaStateEvent(left.GetChildControl<ButtonControl>("primaryButton"),1f);
-            yield return null;trench.Sample(true);urban.Sample(true);
-            Assert.That(trench.ReloadPressed,Is.True);Assert.That(trench.ConfirmPressed,Is.False);
-            Assert.That(urban.ReloadPressed,Is.False);Assert.That(urban.ConfirmPressed,Is.True);
-            trench.Sample(true);Assert.That(trench.ReloadPressed,Is.False,"resampling a held X must not repeat");
-            yield return null;trench.Sample(true);Assert.That(trench.ReloadPressed,Is.False);
+            yield return null;SampleBoth();
+            Assert.That(trench.ReloadPressed&&urban.ReloadPressed,Is.True);
+            Assert.That(trench.ConfirmPressed||urban.ConfirmPressed,Is.False,"X must never open a door");
+            InputSystem.QueueDeltaStateEvent(right.GetChildControl<ButtonControl>("primary2DAxisClick"),1f);
+            yield return null;SampleBoth();
+            Assert.That(trench.ConfirmPressed&&urban.ConfirmPressed,Is.True);
+            Assert.That(trench.ReloadPressed||urban.ReloadPressed||trench.GrenadePressed||urban.GrenadePressed,Is.False);
+            SampleBoth();Assert.That(trench.ConfirmPressed||urban.ConfirmPressed||trench.ReloadPressed||urban.ReloadPressed,Is.False,
+                "Held buttons must not repeat on a second sample.");
+            InputSystem.QueueDeltaStateEvent(right.GetChildControl<ButtonControl>("primary2DAxisClick"),0f);
             InputSystem.QueueDeltaStateEvent(left.GetChildControl<ButtonControl>("primaryButton"),0f);
-            yield return null;trench.Sample(true);Assert.That(trench.ReloadPressed,Is.False);
+            yield return null;SampleBoth();
+            InputSystem.QueueDeltaStateEvent(right.GetChildControl<ButtonControl>("primary2DAxisClick"),1f);
             InputSystem.QueueDeltaStateEvent(left.GetChildControl<ButtonControl>("primaryButton"),1f);
-            yield return null;trench.Sample(true);Assert.That(trench.ReloadPressed,Is.True);
+            yield return null;SampleBoth();
+            Assert.That(trench.ConfirmPressed&&urban.ConfirmPressed&&trench.ReloadPressed&&urban.ReloadPressed,Is.True,
+                "Independent simultaneous presses each dispatch exactly once.");
             trench.Reset();trench.Sample(false);Assert.That(trench.ReloadPressed,Is.False);
+        }
+
+        [UnityTest] public IEnumerator Screen23_PicoNamedThumbstickClickIsAcceptedOnRightHand()
+        {
+            // PICO 4 calls the Input System control thumbstickClicked, not primary2DAxisClick.
+            InputSystem.RegisterLayout(@"{""name"":""P3PicoStickTestController"",""extend"":""XRController"",""controls"":[
+                {""name"":""thumbstickClicked"",""layout"":""Button"",""format"":""FLT"",""sizeInBits"":32}]}");
+            InputSystem.RemoveDevice(right);right=null;
+            var pico=(XRController)InputSystem.AddDevice("P3PicoStickTestController");
+            InputSystem.SetDeviceUsage(pico,UnityEngine.InputSystem.CommonUsages.RightHand);
+            try
+            {
+                yield return null;
+                Assert.That(XRController.rightHand,Is.SameAs(pico));
+                var input=new P3XRTrainingInput();input.Sample(true);
+                InputSystem.QueueDeltaStateEvent(pico.GetChildControl<ButtonControl>("thumbstickClicked"),1f);
+                yield return null;input.Sample(true);
+                Assert.That(input.ConfirmPressed,Is.True);
+                input.Sample(true);Assert.That(input.ConfirmPressed,Is.False);
+            }
+            finally { InputSystem.RemoveDevice(pico);InputSystem.RemoveLayout("P3PicoStickTestController"); }
+        }
+
+        [UnityTest] public IEnumerator Screen23_DesktopConfirmRemainsEnterOrSpace()
+        {
+            var keyboard=InputSystem.AddDevice<Keyboard>();keyboard.MakeCurrent();InputSystem.EnableDevice(keyboard);
+            var previousBackground=InputSystem.settings.backgroundBehavior;
+            InputSystem.settings.backgroundBehavior=InputSettings.BackgroundBehavior.IgnoreFocus;
+#if UNITY_EDITOR
+            var previousEditorInput=InputSystem.settings.editorInputBehaviorInPlayMode;
+            InputSystem.settings.editorInputBehaviorInPlayMode=InputSettings.EditorInputBehaviorInPlayMode.AllDeviceInputAlwaysGoesToGameView;
+#endif
+            try
+            {
+                var input=new P3XRTrainingInput();input.Sample(false);
+                InputSystem.QueueStateEvent(keyboard,new UnityEngine.InputSystem.LowLevel.KeyboardState(Key.E));yield return null;keyboard.MakeCurrent();input.Sample(false);
+                Assert.That(input.ConfirmPressed,Is.False,"E retains its existing grip toggle role.");
+                InputSystem.QueueStateEvent(keyboard,new UnityEngine.InputSystem.LowLevel.KeyboardState(Key.Enter));yield return null;keyboard.MakeCurrent();input.Sample(false);
+                Assert.That(keyboard.enterKey.wasPressedThisFrame,Is.True,"Enter must reach the Input System");
+                Assert.That(input.ConfirmPressed,Is.True);
+                InputSystem.QueueStateEvent(keyboard,new UnityEngine.InputSystem.LowLevel.KeyboardState(Key.Space));yield return null;keyboard.MakeCurrent();input.Sample(false);
+                Assert.That(input.ConfirmPressed,Is.True);
+            }
+            finally
+            {
+                InputSystem.RemoveDevice(keyboard);InputSystem.settings.backgroundBehavior=previousBackground;
+#if UNITY_EDITOR
+                InputSystem.settings.editorInputBehaviorInPlayMode=previousEditorInput;
+#endif
+            }
         }
         [UnityTest] public IEnumerator Screen23_VrGripsRetainIndependentPressHoldReleaseEdges()
         {

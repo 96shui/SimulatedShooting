@@ -65,7 +65,7 @@ namespace VRShooting.Tests.PlayMode
             input.Release(XRTrainingInputButton.RightGrip); Step(controller, input, clock);
             Assert.That(core.GetSnapshot(Session).Data.Weapon.HoldState, Is.EqualTo(WeaponHoldState.Dropped));
         }
-        [UnityTest] public IEnumerator ManualInput_PickupTwoHandsSingleShot_ReloadShoulderPostureAndCombat()
+        [UnityTest] public IEnumerator ManualInput_PickupAutomaticFireReloadShoulderPostureAndCombat()
         {
             var clock = new FakeCombatClock(); using var core = Start(clock);
             var input = new ManualXRTrainingInput(); var ray = new RayFake(); var move = new MoveFake();
@@ -75,10 +75,13 @@ namespace VRShooting.Tests.PlayMode
             input.Release(XRTrainingInputButton.Trigger); input.Press(XRTrainingInputButton.RightGrip); Step(controller,input,clock);
             Assert.That(core.GetSnapshot(Session).Data.Weapon.HoldState, Is.EqualTo(WeaponHoldState.RearHandHeld));
             input.Press(XRTrainingInputButton.LeftGrip); input.Press(XRTrainingInputButton.Trigger); Step(controller,input,clock);
-            Step(controller,input,clock, seconds: .5); Assert.That(core.GetSnapshot(Session).Data.Ammo.CurrentMagazine, Is.EqualTo(29));
+            Step(controller,input,clock, seconds: .5); Assert.That(core.GetSnapshot(Session).Data.Ammo.CurrentMagazine, Is.EqualTo(24));
             input.Release(XRTrainingInputButton.Trigger); input.Press(XRTrainingInputButton.Reload); Step(controller,input,clock);
             Assert.That(core.GetSnapshot(Session).Data.Ammo.IsReloading); Step(controller,input,clock, seconds: 2);
             Assert.That(core.GetSnapshot(Session).Data.Ammo.ReserveAmmo, Is.EqualTo(30));
+            input.Release(XRTrainingInputButton.LeftGrip); Step(controller,input,clock);
+            input.Press(XRTrainingInputButton.LeftGrip); Step(controller,input,clock);
+            Assert.That(core.GetSnapshot(Session).Data.Weapon.TwoHandGripActive, Is.True);
             input.Press(XRTrainingInputButton.SwitchShoulder); input.SetAxes(Vector2.up, Vector2.right);
             Step(controller,input,clock,Frame(posture: PlayerPosture.Crouching));
             Assert.That(core.GetSnapshot(Session).Data.Player.Shoulder, Is.EqualTo(ShoulderSide.Left));
@@ -92,7 +95,7 @@ namespace VRShooting.Tests.PlayMode
             ray.Target = "enemy"; input.Press(XRTrainingInputButton.Trigger); Step(controller,input,clock);
             Assert.That(core.GetSnapshot(Session).Data.Visual.Entities.Single(e => e.EntityId == "enemy").CorpseVisible, Is.False);
             input.Release(XRTrainingInputButton.Trigger); Step(controller,input,clock);
-            input.Press(XRTrainingInputButton.Trigger); Step(controller,input,clock);
+            Step(controller,input,clock,seconds:WeaponAutoFireConfigDto.P2Default.ShotIntervalSeconds);
             Assert.That(core.GetSnapshot(Session).Data.Visual.Entities.Single(e => e.EntityId == "enemy").CorpseVisible);
             var health = core.GetSnapshot(Session).Data.Player.Health; Step(controller,input,clock,seconds:5);
             Assert.That(core.GetSnapshot(Session).Data.Player.Health, Is.EqualTo(health));
@@ -115,6 +118,26 @@ namespace VRShooting.Tests.PlayMode
             Assert.That(core.GetSnapshot(Session).Data.Ammo.CurrentMagazine, Is.EqualTo(28));
             yield return null;
         }
+        // BDD23/task004: input substitute must drive two independent hit facts in either production mode.
+        [TestCase(TrainingMode.Trench)] [TestCase(TrainingMode.Urban)]
+        public void QuickTriggerTapResolvesTwoIndependentShots(TrainingMode mode)
+        {
+            var clock = new FakeCombatClock();
+            using var core = new CombatCoreService(clock);
+            Assert.That(core.Start(Session, mode, new[] { new CombatEntityVisualDto
+                { EntityId = "enemy", Role = CombatEntityRole.Enemy, Position = new Vector3(0,0,10), Forward = Vector3.back } }).Success);
+            var input = new ManualXRTrainingInput(); var ray = new RayFake { Target = "enemy" };
+            using var controller = new CombatInputController(Session, mode, core, input, clock, ray, new MoveFake());
+            input.Press(XRTrainingInputButton.RightGrip); input.Press(XRTrainingInputButton.LeftGrip);
+            input.Press(XRTrainingInputButton.Trigger); Step(controller, input, clock, seconds: .001);
+            Assert.That(core.GetSnapshot(Session).Data.Ammo.CurrentMagazine, Is.EqualTo(29));
+            Assert.That(core.GetSnapshot(Session).Data.Visual.Entities.Single(e => e.EntityId == "enemy").CorpseVisible, Is.False);
+            input.Release(XRTrainingInputButton.Trigger); Step(controller, input, clock, seconds: .01);
+            Step(controller, input, clock, seconds: WeaponAutoFireConfigDto.P2Default.ShotIntervalSeconds);
+            Assert.That(core.GetSnapshot(Session).Data.Ammo.CurrentMagazine, Is.EqualTo(28));
+            Assert.That(core.GetSnapshot(Session).Data.Visual.Entities.Single(e => e.EntityId == "enemy").CorpseVisible, Is.True);
+        }
+
         [UnityTest] public IEnumerator PhysicsFirstHit_BlocksWallAndEmbeddedMuzzle()
         {
             var wall = GameObject.CreatePrimitive(PrimitiveType.Cube);

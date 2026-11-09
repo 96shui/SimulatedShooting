@@ -98,6 +98,8 @@ namespace VRShooting.Application
         ServiceResult<Unit> ToggleShoulder(string sessionId);
         ServiceResult<Unit> SetCornerAvailable(string sessionId, bool available);
         ServiceResult<CombatShotDto> Fire(WeaponFireInputDto input);
+        ServiceResult<IReadOnlyList<CombatShotDto>> TickAutomaticFire(WeaponTriggerStateInputDto trigger,
+            float deltaSeconds, WeaponFireInputDto latestShot, bool enabled);
         ServiceResult<Unit> Reload(string sessionId);
         ServiceResult<Unit> Advance(string sessionId);
         event Action<CombatCoreSnapshotDto> Changed;

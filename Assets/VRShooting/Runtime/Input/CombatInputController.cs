@@ -18,7 +18,7 @@ namespace VRShooting.Input
         readonly ICombatShotQuery shots;
         readonly ICombatLocomotionPort locomotion;
         readonly CombatConfigDto config;
-        bool rearHeld, frontHeld, triggerWasHeld, turnLatched, disposed;
+        bool rearHeld, frontHeld, triggerWasHeld, turnLatched, disposed, requireTriggerRelease;
         long lastFrame = -1;
 
         public CombatInputController(string session, TrainingMode mode, ICombatCoreService core, IXRTrainingInput input,
@@ -52,7 +52,14 @@ namespace VRShooting.Input
             bool active = tracking && query.Data.State == SessionState.Running && query.Data.Player.IsAlive;
             if (!active)
             {
+                var released = !input.TriggerHeld && triggerWasHeld;
                 triggerWasHeld = input.TriggerHeld;
+                requireTriggerRelease = true;
+                var suppressed = core.TickAutomaticFire(new WeaponTriggerStateInputDto { SessionId = session,
+                    Held = input.TriggerHeld, Released = released }, deltaSeconds,
+                    new WeaponFireInputDto { SessionId = session, MuzzlePosition = frame.MuzzlePosition,
+                        AimDirection = frame.AimDirection, RawAimDirection = frame.AimDirection }, false);
+                if (!suppressed.Success) return Fail(suppressed.ErrorCode);
                 rearHeld = frontHeld = false; turnLatched = Math.Abs(input.TurnAxis.x) > .2f;
                 var stopped = locomotion.Apply(CombatLocomotionPolicy.Intent(mode, false, query.Data.Player.Posture,
                     Vector2.zero, 0, frame.IsRealVr, deltaSeconds, config));
@@ -73,13 +80,15 @@ namespace VRShooting.Input
             var rearGripHeld = leftShoulder ? input.LeftGripHeld : input.RightGripHeld;
             var rearGripPressed = leftShoulder ? input.LeftGripPressed : input.RightGripPressed;
             var frontGripHeld = leftShoulder ? input.RightGripHeld : input.LeftGripHeld;
-            var pressed = !switched && input.TriggerHeld && !triggerWasHeld;
+            var releasedTrigger = !input.TriggerHeld && triggerWasHeld;
+            if (!input.TriggerHeld) requireTriggerRelease = false;
+            var pressed = !switched && !requireTriggerRelease && input.TriggerHeld && !triggerWasHeld;
             triggerWasHeld = input.TriggerHeld;
             if (!rearGripHeld) rearHeld = false;
             if (!switched && rearGripPressed && frame.RearGripInRange) rearHeld = true;
             if (frame.IsRealVr && frame.PhysicalRearHandSelected.HasValue)
                 rearHeld = rearGripHeld && frame.PhysicalRearHandSelected.Value;
-            var frontLocked = mode == TrainingMode.Trench && query.Data.Ammo.IsReloading;
+            var frontLocked = query.Data.Ammo.IsReloading;
             if (!frontGripHeld || !rearHeld || frontLocked) frontHeld = false;
             if (!switched && !frontLocked && rearHeld && frontGripHeld && frame.FrontGripInRange) frontHeld = true;
             if (frame.IsRealVr && frame.PhysicalFrontHandSelected.HasValue)
@@ -102,7 +111,7 @@ namespace VRShooting.Input
             if (input.ReloadPressed)
             {
                 var reload = core.Reload(session);
-                if (reload.Success && mode == TrainingMode.Trench && core.GetSnapshot(session).Data.Ammo.IsReloading)
+                if (reload.Success && core.GetSnapshot(session).Data.Ammo.IsReloading)
                 {
                     frontHeld = false;
                     result = core.SetGrip(new WeaponGripStateInputDto { SessionId = session,
@@ -111,21 +120,21 @@ namespace VRShooting.Input
                     if (!result.Success) return result;
                 }
             }
-            if (pressed)
-            {
-                var shot = core.Fire(new WeaponFireInputDto { SessionId = session, MuzzlePosition = frame.MuzzlePosition,
+            var fire = core.TickAutomaticFire(new WeaponTriggerStateInputDto { SessionId = session,
+                Value01 = input.RightTriggerValue, Pressed = pressed, Held = input.TriggerHeld, Released = releasedTrigger },
+                deltaSeconds, new WeaponFireInputDto { SessionId = session, MuzzlePosition = frame.MuzzlePosition,
                     AimDirection = frame.AimDirection, RawAimDirection = frame.AimDirection,
-                    AimMode = input.AimHeld ? WeaponAimMode.AimDownSights : WeaponAimMode.HipFire });
-                if (shot.Success)
+                    AimMode = input.AimHeld ? WeaponAimMode.AimDownSights : WeaponAimMode.HipFire }, !switched && !requireTriggerRelease);
+            if (!fire.Success) return Fail(fire.ErrorCode);
+            foreach (var shot in fire.Data)
+            {
+                var hit = shots.Cast(shot.Shot.MuzzlePosition, shot.Shot.AimDirection);
+                if (hit.Hit && !string.IsNullOrEmpty(hit.EntityId))
                 {
-                    var hit = shots.Cast(shot.Data.Shot.MuzzlePosition, shot.Data.Shot.AimDirection);
-                    if (hit.Hit && !string.IsNullOrEmpty(hit.EntityId))
-                    {
-                        result = core.Submit(new CombatInputDto { SessionId = session, EventId = "input.hit-" + shot.Data.ShotId,
-                            Tick = clock.Tick, Kind = CombatInputKind.Hit, EntityId = session + ".player", TargetId = hit.EntityId,
-                            ShotId = shot.Data.ShotId, Position = hit.Point, Flag = true, Value = 1 });
-                        if (!result.Success) return result;
-                    }
+                    result = core.Submit(new CombatInputDto { SessionId = session, EventId = "input.hit-" + shot.ShotId,
+                        Tick = clock.Tick, Kind = CombatInputKind.Hit, EntityId = session + ".player", TargetId = hit.EntityId,
+                        ShotId = shot.ShotId, Position = hit.Point, Flag = true, Value = 1 });
+                    if (!result.Success) return result;
                 }
             }
             return core.Advance(session);
@@ -134,6 +143,8 @@ namespace VRShooting.Input
         static bool Finite(Vector3 v) => Finite(v.x) && Finite(v.y) && Finite(v.z);
         static bool Direction(Vector3 v) => Finite(v) && Finite(v.sqrMagnitude) && v.sqrMagnitude > 1e-8;
         static ServiceResult<Unit> Fail(ErrorCode code) => ServiceResult<Unit>.Fail(code, "Invalid combat input: " + code);
+        // A paused/opening scene can skip Step entirely; it must still require a fresh trigger edge.
+        public void Suspend() { requireTriggerRelease = true; }
         public void Dispose()
         {
             if (disposed) return;

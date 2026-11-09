@@ -12,8 +12,7 @@ namespace SimulatedShooting.Scene
     {
         readonly InputSystemXRTrainingInput desktop=new InputSystemXRTrainingInput();
         bool rear,front,oldRear,oldFront,oldTrigger,trigger,grenadeHeld,oldGrenadeHeld,grenadePressed;
-        bool reloadHeld,oldReloadHeld,reloadPressed;
-        public bool ReloadWithLeftX { get; set; } = true;
+        bool reloadHeld,oldReloadHeld,reloadPressed,confirmHeld,oldConfirmHeld,confirmPressed;
         public bool IsVr {get;private set;}
         ShoulderSide shoulder = ShoulderSide.Right;
         public void SetShoulder(ShoulderSide value)
@@ -25,7 +24,7 @@ namespace SimulatedShooting.Scene
         }
         public void Sample(bool vr)
         {
-            IsVr=vr; oldRear=rear;oldFront=front;oldTrigger=trigger;oldGrenadeHeld=grenadeHeld;oldReloadHeld=reloadHeld;
+            IsVr=vr; oldRear=rear;oldFront=front;oldTrigger=trigger;oldGrenadeHeld=grenadeHeld;oldReloadHeld=reloadHeld;oldConfirmHeld=confirmHeld;
             if(vr)
             {
                 rear=Held(XRController.rightHand,"gripPressed");front=Held(XRController.leftHand,"gripPressed");
@@ -34,23 +33,27 @@ namespace SimulatedShooting.Scene
                 grenadeHeld=Held(XRController.rightHand,"primaryButton")||xrPrimary;
                 grenadePressed=Pressed(XRController.rightHand,"primaryButton")||(grenadeHeld&&!oldGrenadeHeld);
                 var left=UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.LeftHand);
-                var reloadUsage=ReloadWithLeftX ? UnityEngine.XR.CommonUsages.primaryButton : UnityEngine.XR.CommonUsages.primary2DAxisClick;
-                var legacyReload=left.isValid&&left.TryGetFeatureValue(reloadUsage,out bool reload)&&reload;
-                reloadHeld=Held(XRController.leftHand,ReloadWithLeftX?"primaryButton":"primary2DAxisClick")||legacyReload;
+                var legacyReload=left.isValid&&left.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton,out bool reload)&&reload;
+                reloadHeld=Held(XRController.leftHand,"primaryButton")||legacyReload;
                 reloadPressed=reloadHeld&&!oldReloadHeld;
+                var legacyConfirm=right.isValid&&right.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick,out bool click)&&click;
+                // PICO/OpenXR calls this control thumbstickClicked; some layouts expose primary2DAxisClick.
+                confirmHeld=Held(XRController.rightHand,"primary2DAxisClick")||
+                    Held(XRController.rightHand,"thumbstickClicked")||legacyConfirm;
+                confirmPressed=confirmHeld&&!oldConfirmHeld;
             }
             else
             {
                 if(Keyboard.current?.eKey.wasPressedThisFrame==true)rear=!rear;
                 if(Keyboard.current?.gKey.wasPressedThisFrame==true)front=!front;
                 grenadeHeld=false;grenadePressed=Keyboard.current?.hKey.wasPressedThisFrame==true;
-                reloadHeld=reloadPressed=false;
+                reloadHeld=reloadPressed=confirmHeld=confirmPressed=false;
             }
             trigger=desktop.TriggerHeld;
         }
-        public void Reset() { SetShoulder(ShoulderSide.Right); rear=front=oldRear=oldFront=oldTrigger=trigger=grenadeHeld=oldGrenadeHeld=grenadePressed=reloadHeld=oldReloadHeld=reloadPressed=false; }
+        public void Reset() { SetShoulder(ShoulderSide.Right); rear=front=oldRear=oldFront=oldTrigger=trigger=grenadeHeld=oldGrenadeHeld=grenadePressed=reloadHeld=oldReloadHeld=reloadPressed=confirmHeld=oldConfirmHeld=confirmPressed=false; }
         public bool PosturePressed => IsVr ? Pressed(XRController.leftHand,"secondaryButton") : Keyboard.current?.cKey.wasPressedThisFrame==true;
-        public bool ConfirmPressed=>IsVr ? !ReloadWithLeftX&&Pressed(XRController.leftHand,"primaryButton") : desktop.ConfirmPressed;
+        public bool ConfirmPressed=>IsVr ? confirmPressed : desktop.ConfirmPressed;
         public bool BackPressed=>desktop.BackPressed;
         public bool TriggerPressed=>trigger&&!oldTrigger;
         public bool TriggerHeld=>trigger;

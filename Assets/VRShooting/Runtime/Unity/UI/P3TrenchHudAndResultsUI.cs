@@ -94,7 +94,7 @@ namespace VRShooting.Unity.UI
             P3UiText.SetText(ammoText, "弹药：" + P3UiText.Ammo(hud.Ammo) +
                 (hud.Ammo.IsReloading ? " · 换弹中" : "") +
                 "\n备用弹匣 " + hud.Ammo.ReserveMagazines +
-                (hud.Ammo.IsReloading ? " · 装填中" : hud.Mode == TrainingMode.Trench ? " · R / 左手柄X键换弹" : " · R / 左摇杆按压换弹"));
+                (hud.Ammo.IsReloading ? " · 装填中" : " · R / 左手柄X键换弹"));
             P3UiText.SetText(postureText, "姿态：" + P3UiText.Posture(hud.Player.Posture));
             P3UiText.SetText(shoulderText, "射击肩：" + P3UiText.Shoulder(hud.Player.Shoulder));
             P3UiText.SetText(cornerText, "拐角射击：" + (hud.Player.CornerShootingAvailable ? "可用" : "不可用"));
@@ -129,7 +129,13 @@ namespace VRShooting.Unity.UI
                 }
             }
 
-            P3UiText.SetText(promptText, LastPromptText);
+            P3UiText.SetText(promptText, FormatInteractionPrompt(LastPromptText));
+        }
+
+        protected static string FormatInteractionPrompt(string prompt)
+        {
+            return (string.IsNullOrWhiteSpace(prompt) ? string.Empty : prompt + "\n") +
+                "交互：右摇杆按压 / Enter / 空格";
         }
 
         protected static HudDto NormalizeHud(HudDto hud, string sessionId, TrainingMode mode,

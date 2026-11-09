@@ -53,7 +53,7 @@ namespace VRShooting.Tests.EditMode.Infrastructure
             Assert.That((int)WeaponFireMode.InitialTwoThenAutomatic, Is.EqualTo(1));
             var config = CombatConfigDto.Default;
             Assert.That(config.Validate().Success, Is.True);
-            Assert.That(config.FireMode, Is.EqualTo(WeaponFireMode.SingleShot));
+            Assert.That(config.FireMode, Is.EqualTo(WeaponFireMode.InitialTwoThenAutomatic));
             Assert.That(config.InitialAmmo.CurrentMagazine, Is.EqualTo(30));
             Assert.That(config.InitialAmmo.ReserveAmmo, Is.EqualTo(60));
             Assert.That(config.PlayerHealth, Is.EqualTo(5));

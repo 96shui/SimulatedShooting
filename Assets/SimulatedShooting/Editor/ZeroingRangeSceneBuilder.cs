@@ -932,6 +932,7 @@ namespace SimulatedShooting.Editor
 
             var backer = CreateCube("TargetBacker", target, new Vector3(0f, 0f, 0.03f),
                 new Vector3(1.4f, 1.6f, 0.05f), targetMaterial);
+            backer.GetComponent<Renderer>().enabled = false; // Preserve the backstop collider.
             AddTestId(backer, "ZeroingRange.Target.Backer");
             var face = CreateCube("TargetFace_50cm", target, Vector3.zero, new Vector3(0.5f, 0.5f, 0.02f), boardMaterial);
             AddTestId(face, "ZeroingRange.Target.Face");

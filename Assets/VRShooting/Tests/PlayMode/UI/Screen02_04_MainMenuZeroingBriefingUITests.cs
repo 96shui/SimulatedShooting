@@ -247,32 +247,45 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
-        public IEnumerator Screen02_AboutCreators_ShowsLargeCreditsAndReturnsWithoutStartingTraining()
+        public IEnumerator Screen02_CreatorsEntryAndPanelAreAbsentAndNavigationRemainsUsable()
         {
-            // BDD02：查看关于制作人并返回；task008 制作人信息补充。
-            var panel = FindById("Panel_MainMenu_AboutCreators");
-            Assert.That(panel.activeSelf, Is.False);
+            // BDD02：主菜单不再提供制作人入口；task008。
+            string[] removed = { "Button_MainMenu_AboutCreators", "Panel_MainMenu_AboutCreators",
+                "Panel_MainMenu_CreatorsFrame", "Text_MainMenu_AboutCreatorsTitle", "Text_MainMenu_Creators",
+                "Button_MainMenu_CloseAboutCreators" };
+            void AssertRemoved()
+            {
+                foreach (var id in removed)
+                {
+                    Assert.That(FindById(id), Is.Null, id);
+                    Assert.That(root.GetComponentsInChildren<Transform>(true).Any(node => node.name == id), Is.False, id);
+                }
+            }
+            yield return null;
+            AssertRemoved();
+            var buttons = new[] { "Button_MainMenu_OpenZeroing", "Button_MainMenu_OpenMovingTarget",
+                "Button_MainMenu_Trench", "Button_MainMenu_Urban" }.Select(FindButton).ToArray();
+            Canvas.ForceUpdateCanvases();
+            var centers = buttons.Select(button => ((RectTransform)button.transform).position.y).ToArray();
+            Assert.That(centers[0] - centers[1], Is.EqualTo(centers[1] - centers[2]).Within(.1f));
+            Assert.That(centers[1] - centers[2], Is.EqualTo(centers[2] - centers[3]).Within(.1f));
+            var buttonCorners = new Vector3[4]; var frameCorners = new Vector3[4];
+            ((RectTransform)buttons[3].transform).GetWorldCorners(buttonCorners);
+            ((RectTransform)FindById("Panel_MainMenu_Frame").transform).GetWorldCorners(frameCorners);
+            var gap = buttonCorners[0].y - frameCorners[0].y;
+            Assert.That(gap, Is.InRange(0f, (buttonCorners[1].y - buttonCorners[0].y) * .5f),
+                "The panel should end shortly below the last button without an empty slot.");
+            Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
             for (var i = 0; i < 2; i++)
             {
-                FindButton("Button_MainMenu_AboutCreators").onClick.Invoke();
-                yield return null;
-                Assert.That(panel.activeInHierarchy, Is.True);
-                Assert.That(panel.GetComponent<Image>().raycastTarget, Is.True);
-                var text = FindById("Text_MainMenu_Creators").GetComponent<TextMeshProUGUI>();
-                Assert.That(text.text, Is.EqualTo("制作人：李延鹏、李龙乾"));
-                Assert.That(text.fontSize, Is.GreaterThanOrEqualTo(60));
+                FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
+                Assert.That(services.Router.Current, Is.EqualTo(ScreenId.ZeroingBriefing));
+                Assert.That(FindById("Screen_ZeroingBriefing").activeSelf, Is.True);
+                FindButton("Button_ZeroingBriefing_Back").onClick.Invoke();
                 Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
-                Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
-                FindButton("Button_MainMenu_CloseAboutCreators").onClick.Invoke();
-                Assert.That(panel.activeSelf, Is.False);
+                Assert.That(FindById("Screen_MainMenu").activeSelf, Is.True);
+                AssertRemoved();
             }
-            FindButton("Button_MainMenu_AboutCreators").onClick.Invoke();
-            services.Router.HandleUIEvent(UIEventId.MainMenu_OpenZeroing, ScreenId.MainMenu);
-            Assert.That(panel.activeSelf, Is.False);
-            FindButton("Button_ZeroingBriefing_Back").onClick.Invoke();
-            Assert.That(panel.activeInHierarchy, Is.False);
-            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
-            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.ZeroingBriefing));
         }
 
         Button FindButton(string id)

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="19" result="Failed(Child)" total="19" passed="17" failed="2" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-07 13:47:19Z" end-time="2026-11-07 13:47:24Z" duration="5.6232762">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="270" result="Failed" site="Child" start-time="2026-11-07 13:47:19Z" end-time="2026-11-07 13:47:24Z" duration="5.623276" total="19" passed="17" failed="2" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1210" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="180" result="Passed" start-time="2026-11-07 13:47:19Z" end-time="2026-11-07 13:47:24Z" duration="4.863480" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="5564" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1211" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="174" result="Passed" start-time="2026-11-07 13:47:19Z" end-time="2026-11-07 13:47:24Z" duration="4.860975" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1212" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="174" result="Passed" start-time="2026-11-07 13:47:19Z" end-time="2026-11-07 13:47:24Z" duration="4.858877" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1213" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="174" result="Passed" start-time="2026-11-07 13:47:19Z" end-time="2026-11-07 13:47:24Z" duration="4.856819" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1142" name="ZeroingOctober07RegressionTests" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" testcasecount="16" result="Passed" start-time="2026-11-07 13:47:19Z" end-time="2026-11-07 13:47:24Z" duration="4.852622" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="ParameterizedMethod" id="1149" name="Bdd06_CentralTargetPhysicalHitAndCentimetres" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-07 13:47:19Z" end-time="2026-11-07 13:47:21Z" duration="1.805768" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1144" name="Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,0.0f)" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,0.0f)" methodname="Bdd06_CentralTargetPhysicalHitAndCentimetres" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="2071531319" result="Passed" start-time="2026-11-07 13:47:19Z" end-time="2026-11-07 13:47:20Z" duration="0.659794" asserts="0">
+                  <properties />
+                  <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+                </test-case>
+                <test-case id="1145" name="Bdd06_CentralTargetPhysicalHitAndCentimetres(20.0f,0.0f)" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(20.0f,0.0f)" methodname="Bdd06_CentralTargetPhysicalHitAndCentimetres" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="1840646594" result="Passed" start-time="2026-11-07 13:47:20Z" end-time="2026-11-07 13:47:20Z" duration="0.319210" asserts="0">
+                  <properties />
+                  <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+                </test-case>
+                <test-case id="1146" name="Bdd06_CentralTargetPhysicalHitAndCentimetres(-20.0f,0.0f)" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(-20.0f,0.0f)" methodname="Bdd06_CentralTargetPhysicalHitAndCentimetres" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="457167086" result="Passed" start-time="2026-11-07 13:47:20Z" end-time="2026-11-07 13:47:20Z" duration="0.276401" asserts="0">
+                  <properties />
+                  <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+                </test-case>
+                <test-case id="1147" name="Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,20.0f)" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,20.0f)" methodname="Bdd06_CentralTargetPhysicalHitAndCentimetres" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="179918957" result="Passed" start-time="2026-11-07 13:47:20Z" end-time="2026-11-07 13:47:20Z" duration="0.273454" asserts="0">
+                  <properties />
+                  <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+                </test-case>
+                <test-case id="1148" name="Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,-20.0f)" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,-20.0f)" methodname="Bdd06_CentralTargetPhysicalHitAndCentimetres" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="1896320982" result="Passed" start-time="2026-11-07 13:47:20Z" end-time="2026-11-07 13:47:21Z" duration="0.273122" asserts="0">
+                  <properties />
+                  <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+                </test-case>
+              </test-suite>
+              <test-case id="1143" name="Bdd06_ScoredCentralTargetHasNonBlockingHighlight" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_ScoredCentralTargetHasNonBlockingHighlight" methodname="Bdd06_ScoredCentralTargetHasNonBlockingHighlight" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="2073919403" result="Passed" start-time="2026-11-07 13:47:21Z" end-time="2026-11-07 13:47:21Z" duration="0.272390" asserts="0">
+                <properties />
+                <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+              </test-case>
+              <test-case id="1158" name="Bdd30_BackwardAndParallelShotsCountAsMissesWithoutTargetHoles" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_BackwardAndParallelShotsCountAsMissesWithoutTargetHoles" methodname="Bdd30_BackwardAndParallelShotsCountAsMissesWithoutTargetHoles" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="1911969330" result="Passed" start-time="2026-11-07 13:47:21Z" end-time="2026-11-07 13:47:21Z" duration="0.295009" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+              </test-case>
+              <test-case id="1161" name="Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles" methodname="Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="2065128955" result="Passed" start-time="2026-11-07 13:47:21Z" end-time="2026-11-07 13:47:22Z" duration="0.294924" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+First mean=(-1.14, -7.55); correction=(2.00, 7.68); next mean=(0.86, 0.13); service ten-ring=True; visible next-round ten-ring=True
+]]></output>
+              </test-case>
+              <test-case id="1160" name="Bdd30_ManualCorrectionIsAppliedToFutureHolesAndScoreExactlyOnce" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_ManualCorrectionIsAppliedToFutureHolesAndScoreExactlyOnce" methodname="Bdd30_ManualCorrectionIsAppliedToFutureHolesAndScoreExactlyOnce" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="44643714" result="Passed" start-time="2026-11-07 13:47:22Z" end-time="2026-11-07 13:47:22Z" duration="0.280553" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1153" name="Bdd30_OffFaceUsesSameTargetPlaneCentimetres" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_OffFaceUsesSameTargetPlaneCentimetres" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-07 13:47:22Z" end-time="2026-11-07 13:47:23Z" duration="0.801740" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1150" name="Bdd30_OffFaceUsesSameTargetPlaneCentimetres(40.0f,0.0f)" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_OffFaceUsesSameTargetPlaneCentimetres(40.0f,0.0f)" methodname="Bdd30_OffFaceUsesSameTargetPlaneCentimetres" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="757894637" result="Passed" start-time="2026-11-07 13:47:22Z" end-time="2026-11-07 13:47:22Z" duration="0.263410" asserts="0">
+                  <properties />
+                  <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+                </test-case>
+                <test-case id="1151" name="Bdd30_OffFaceUsesSameTargetPlaneCentimetres(0.0f,40.0f)" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_OffFaceUsesSameTargetPlaneCentimetres(0.0f,40.0f)" methodname="Bdd30_OffFaceUsesSameTargetPlaneCentimetres" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="523801644" result="Passed" start-time="2026-11-07 13:47:22Z" end-time="2026-11-07 13:47:22Z" duration="0.270852" asserts="0">
+                  <properties />
+                  <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+                </test-case>
+                <test-case id="1152" name="Bdd30_OffFaceUsesSameTargetPlaneCentimetres(0.0f,-40.0f)" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_OffFaceUsesSameTargetPlaneCentimetres(0.0f,-40.0f)" methodname="Bdd30_OffFaceUsesSameTargetPlaneCentimetres" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="112616321" result="Passed" start-time="2026-11-07 13:47:22Z" end-time="2026-11-07 13:47:23Z" duration="0.266221" asserts="0">
+                  <properties />
+                  <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+                </test-case>
+              </test-suite>
+              <test-case id="1159" name="Bdd30_TriggerVolumesAreIgnoredButSolidObstructionsRemainMisses" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_TriggerVolumesAreIgnoredButSolidObstructionsRemainMisses" methodname="Bdd30_TriggerVolumesAreIgnoredButSolidObstructionsRemainMisses" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="1544324870" result="Passed" start-time="2026-11-07 13:47:23Z" end-time="2026-11-07 13:47:23Z" duration="0.281828" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1157" name="September25_ShotAndTracerUseFrozenActualMuzzlePosition" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_ShotAndTracerUseFrozenActualMuzzlePosition" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-07 13:47:23Z" end-time="2026-11-07 13:47:24Z" duration="0.814961" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1154" name="September25_ShotAndTracerUseFrozenActualMuzzlePosition(0.0f,0.0f,0.0f)" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_ShotAndTracerUseFrozenActualMuzzlePosition(0.0f,0.0f,0.0f)" methodname="September25_ShotAndTracerUseFrozenActualMuzzlePosition" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="1140842574" result="Passed" start-time="2026-11-07 13:47:23Z" end-time="2026-11-07 13:47:23Z" duration="0.264943" asserts="0">
+                  <properties />
+                  <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+                </test-case>
+                <test-case id="1155" name="September25_ShotAndTracerUseFrozenActualMuzzlePosition(8.0f,25.0f,15.0f)" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_ShotAndTracerUseFrozenActualMuzzlePosition(8.0f,25.0f,15.0f)" methodname="September25_ShotAndTracerUseFrozenActualMuzzlePosition" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="1624215318" result="Passed" start-time="2026-11-07 13:47:23Z" end-time="2026-11-07 13:47:23Z" duration="0.268980" asserts="0">
+                  <properties />
+                  <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+                </test-case>
+                <test-case id="1156" name="September25_ShotAndTracerUseFrozenActualMuzzlePosition(-12.0f,-20.0f,-30.0f)" fullname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_ShotAndTracerUseFrozenActualMuzzlePosition(-12.0f,-20.0f,-30.0f)" methodname="September25_ShotAndTracerUseFrozenActualMuzzlePosition" classname="SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests" runstate="Runnable" seed="245780913" result="Passed" start-time="2026-11-07 13:47:23Z" end-time="2026-11-07 13:47:24Z" duration="0.280282" asserts="0">
+                  <properties />
+                  <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1328" name="VRShooting.Runtime.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.PlayModeTests.dll" runstate="Runnable" testcasecount="90" result="Failed" site="Child" start-time="2026-11-07 13:47:24Z" end-time="2026-11-07 13:47:24Z" duration="0.753481" total="3" passed="1" failed="2" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="5564" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1329" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="90" result="Failed" site="Child" start-time="2026-11-07 13:47:24Z" end-time="2026-11-07 13:47:24Z" duration="0.743026" total="3" passed="1" failed="2" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1330" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="90" result="Failed" site="Child" start-time="2026-11-07 13:47:24Z" end-time="2026-11-07 13:47:24Z" duration="0.742127" total="3" passed="1" failed="2" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1331" name="PlayMode" fullname="VRShooting.Tests.PlayMode" runstate="Runnable" testcasecount="90" result="Failed" site="Child" start-time="2026-11-07 13:47:24Z" end-time="2026-11-07 13:47:24Z" duration="0.741570" total="3" passed="1" failed="2" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestSuite" id="1335" name="Flow" fullname="VRShooting.Tests.PlayMode.Flow" runstate="Runnable" testcasecount="5" result="Failed" site="Child" start-time="2026-11-07 13:47:24Z" end-time="2026-11-07 13:47:24Z" duration="0.739034" total="3" passed="1" failed="2" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-suite type="TestFixture" id="1321" name="P1FlowPlayModeGateTests" fullname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" classname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" runstate="Runnable" testcasecount="3" result="Failed" site="Child" start-time="2026-11-07 13:47:24Z" end-time="2026-11-07 13:47:24Z" duration="0.738277" total="3" passed="1" failed="2" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <failure>
+                  <message><![CDATA[One or more child tests had errors]]></message>
+                </failure>
+                <test-case id="1322" name="P1Flow_InputStub_Round1Pass_ShowsExcellentFinalRating" fullname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_InputStub_Round1Pass_ShowsExcellentFinalRating" methodname="P1Flow_InputStub_Round1Pass_ShowsExcellentFinalRating" classname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" runstate="Runnable" seed="311978837" result="Failed" start-time="2026-11-07 13:47:24Z" end-time="2026-11-07 13:47:24Z" duration="0.039609" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  [功能A] settlement should mark round 1 as passed
+  Expected: String containing "第1轮：通过"
+  But was:  "三轮射击记录
+第1轮：3发 #1 (1cm, 1cm)；#2 (1cm, 1cm)；#3 (1cm, 1cm)
+平均(黄) (1cm, 1cm)
+调整预览(蓝) (1cm, 0cm)
+第2轮：未使用
+第3轮：未使用"
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests+<P1Flow_InputStub_Round1Pass_ShowsExcellentFinalRating>d__10.MoveNext () [0x000c5] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\PlayMode\Flow\P1FlowPlayModeGateTests.cs:101
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                  </failure>
+                </test-case>
+                <test-case id="1323" name="P1Flow_InputStub_ThreeRoundsFail_ShowsFailFinalRating" fullname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_InputStub_ThreeRoundsFail_ShowsFailFinalRating" methodname="P1Flow_InputStub_ThreeRoundsFail_ShowsFailFinalRating" classname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" runstate="Runnable" seed="1911991165" result="Failed" start-time="2026-11-07 13:47:24Z" end-time="2026-11-07 13:47:24Z" duration="0.036084" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  [功能A] settlement should show round 3 as failed
+  Expected: String containing "第3轮：未通过"
+  But was:  "三轮射击记录
+第1轮：3发 #1 (-8cm, 12cm)；#2 (-8cm, 12cm)；#3 (-8cm, 12cm)
+平均(黄) (-8cm, 12cm)
+调整预览(蓝) (0cm, 0.2cm)
+第2轮：3发 #1 (-8cm, 12cm)；#2 (-8cm, 12cm)；#3 (-8cm, 12cm)
+平均(黄) (-8cm, 12cm)
+调整预览(蓝) (0cm, 0.2cm)
+第3轮：3发 #1 (-8cm, 12cm)；#2 (-8cm, 12cm)；#3 (-8cm, 12cm)
+平均(黄) (-8cm, 12cm)
+调整预览(蓝) (0cm, 0.2cm)"
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests+<P1Flow_InputStub_ThreeRoundsFail_ShowsFailFinalRating>d__11.MoveNext () [0x001fa] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\PlayMode\Flow\P1FlowPlayModeGateTests.cs:163
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                  </failure>
+                </test-case>
+                <test-case id="1324" name="P1Flow_SceneOwned_MainMenuToRange_Round1PassShowsExcellent" fullname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_SceneOwned_MainMenuToRange_Round1PassShowsExcellent" methodname="P1Flow_SceneOwned_MainMenuToRange_Round1PassShowsExcellent" classname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" runstate="Runnable" seed="515362369" result="Passed" start-time="2026-11-07 13:47:24Z" end-time="2026-11-07 13:47:24Z" duration="0.661287" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+[GameStateManager] 状态改变为: InGame
+]]></output>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -128,12 +128,12 @@ namespace SimulatedShooting.Tests.PlayMode
             Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
             Assert.That(runtime.ReloadPresentation.IsAnimating,Is.True);
             Assert.That(runtime.ReloadPresentation.GetComponent<TrainingRifleGrabInteractable>().FrontHandInteractionLocked,
-                Is.EqualTo(mode==TrainingMode.Trench));
-            Assert.That(app.Mission.Core.GetSnapshot(id).Data.Weapon.TwoHandGripActive,Is.EqualTo(mode!=TrainingMode.Trench));
+                Is.True);
+            Assert.That(app.Mission.Core.GetSnapshot(id).Data.Weapon.TwoHandGripActive,Is.False);
             input.Release(XRTrainingInputButton.Reload);
             yield return new WaitForSecondsRealtime(.12f); // Production presenter refreshes HUD at 10 Hz.
             yield return null;
-            var hudName=mode==TrainingMode.Trench?"Hud_Trench_Ammo":"Hud_UrbanStreet_Ammo";
+            var hudName=mode==TrainingMode.Trench?"Hud_Trench_Ammo":app.Snapshot.Screen==ScreenId.UrbanBuildingHud?"Hud_UrbanBuilding_Ammo":"Hud_UrbanStreet_Ammo";
             var text=ui.transform.Find("Screen_"+app.Snapshot.Screen+"/"+hudName).GetComponent<TMPro.TMP_Text>();
             Assert.That(text.text,Does.Contain("换弹中"));
             Assert.That(text.text,Does.Contain("备用弹匣 2"));
@@ -149,13 +149,16 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return null;
             Assert.That(text.text,Does.Contain("备用弹匣 1"));
             Assert.That(text.text,Does.Not.Contain("换弹中"));
-            Assert.That(text.text,Does.Contain(mode==TrainingMode.Trench?"左手柄X键":"左摇杆按压"));
+            Assert.That(text.text,Does.Contain("左手柄X键"));
+            var promptName=mode==TrainingMode.Trench?"Hud_Trench_Prompt":app.Snapshot.Screen==ScreenId.UrbanBuildingHud?"Hud_UrbanBuilding_Prompt":"Hud_UrbanStreet_Prompt";
+            var prompt=ui.transform.Find("Screen_"+app.Snapshot.Screen+"/"+promptName).GetComponent<TMPro.TMP_Text>();
+            Assert.That(prompt.text,Does.Contain("右摇杆按压"));
+            Assert.That(prompt.text,Does.Not.Contain("左摇杆"));
             Assert.That(runtime.ReloadPresentation.GetComponent<TrainingRifleGrabInteractable>().FrontHandInteractionLocked,Is.False);
             input.Release(XRTrainingInputButton.Trigger);
             var supportGrip = leftShoulder ? XRTrainingInputButton.RightGrip : XRTrainingInputButton.LeftGrip;
-            if(mode==TrainingMode.Trench)input.Release(supportGrip);
+            input.Release(supportGrip);
             Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
-            if(mode==TrainingMode.Trench)
             {
                 input.Press(supportGrip);
                 Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
@@ -169,6 +172,52 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(app.ReturnToMainMenu().Success);
             yield return null;yield return null;
             Assert.That(Object.FindObjectOfType<CombatRifleReloadPresentation>(),Is.Null);
+        }
+
+        // BDD23/20: a real Input System right-stick press reaches the production urban door.
+        [UnityTest]
+        public IEnumerator Bdd23_UrbanRightStickOpensNearbyProductionDoor()
+        {
+            yield return SceneManager.LoadSceneAsync("MainScene");yield return null;
+            app=GameMain.Instance.Services.Combat;ui=GameMain.Instance.GetComponent<P3LiveUIController>().View;
+            Assert.That(app.OpenMode(TrainingMode.Urban).Success,Is.True);
+            var load=app.SelectMapAsync("urban-a",VRShooting.Contracts.RandomSeed.Fixed(20260916));
+            while(!load.IsCompleted)yield return null;
+            Assert.That(load.Result.Success,Is.True,load.Result.Message);
+            runtime=Object.FindObjectOfType<CombatSceneRuntime>();runtime.ManualStepping=true;
+            var room=runtime.GetComponent<CombatSceneBindings>().Points.First(p=>p.Kind==CombatPointKind.Room&&!p.Door.IsOpen);
+            var near=room.Door.Hinge.position+room.Door.Hinge.forward;
+            near.y=room.transform.position.y;
+            Place(near);
+            runtime.FrameOverride=new CombatInputFrameDto {HeadTracked=true,RearHandTracked=true,FrontHandTracked=true,
+                IsRealVr=true,PlayerPosition=near,PlayerForward=Vector3.forward,
+                MuzzlePosition=near+Vector3.up*1.4f,AimDirection=Vector3.up};
+            UnityEngine.InputSystem.InputSystem.RegisterLayout(@"{""name"":""P3DoorTestController"",""extend"":""XRController"",""controls"":[
+                {""name"":""thumbstickClicked"",""layout"":""Button"",""format"":""FLT"",""sizeInBits"":32}]}");
+            var right=(UnityEngine.InputSystem.XR.XRController)UnityEngine.InputSystem.InputSystem.AddDevice("P3DoorTestController");
+            UnityEngine.InputSystem.InputSystem.SetDeviceUsage(right,UnityEngine.InputSystem.CommonUsages.RightHand);
+            try
+            {
+                var controls=new P3XRTrainingInput();runtime.InputOverride=controls;
+                yield return null;controls.Sample(true);runtime.Step(.02f);
+                Assert.That(runtime.LastFrameResult.Success,Is.True,runtime.LastFrameResult.Message);
+                Assert.That(room.Door.IsOpen,Is.False);
+                UnityEngine.InputSystem.InputSystem.QueueDeltaStateEvent(
+                    right.GetChildControl<UnityEngine.InputSystem.Controls.ButtonControl>("thumbstickClicked"),1f);
+                yield return null;controls.Sample(true);runtime.Step(.02f);
+                Assert.That(controls.ConfirmPressed,Is.True);
+                Assert.That(room.Door.IsOpen,Is.True,"Right stick must reach UrbanService.OpenRoomDoor via runtime interaction.");
+                controls.Sample(true);runtime.Step(.02f);
+                Assert.That(controls.ConfirmPressed,Is.False,"Holding the stick must not repeat the command.");
+                yield return new WaitForSecondsRealtime(.12f);
+                var prompt=ui.transform.Find("Screen_UrbanBuildingHud/Hud_UrbanBuilding_Prompt").GetComponent<TMPro.TMP_Text>();
+                Assert.That(prompt.text,Does.Contain("右摇杆按压"));
+            }
+            finally
+            {
+                UnityEngine.InputSystem.InputSystem.RemoveDevice(right);
+                UnityEngine.InputSystem.InputSystem.RemoveLayout("P3DoorTestController");
+            }
         }
 
         [UnityTest]
@@ -413,7 +462,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 Assert.That(target.IsDead, Is.False, "First bullet must leave one health unit");
                 Assert.That(target.DeathAudioFeedbackCount,Is.Zero,"First hit must not play a death scream");
                 input.Release(XRTrainingInputButton.Trigger);Sample(runtime.PlayerRoot.position,origin,(center-origin).normalized);
-                input.Press(XRTrainingInputButton.Trigger);Sample(runtime.PlayerRoot.position,origin,(center-origin).normalized);
+                for (var frame = 0; frame < 5; frame++) Sample(runtime.PlayerRoot.position,origin,(center-origin).normalized);
                 Physics.Raycast(origin,(center-origin).normalized,out var diagnosticHit,10,~(1<<2),QueryTriggerInteraction.Ignore);
                 Assert.That(target.IsDead,Is.True,target.EntityId+" must die from real physics hit; first="+(diagnosticHit.collider!=null?diagnosticHit.collider.name:"none")+"; overlap="+string.Join(",",Physics.OverlapSphere(origin,.01f,~(1<<2),QueryTriggerInteraction.Ignore).Select(c=>c.name))+"; ammo="+app.Mission.Core.GetSnapshot(firstSession).Data.Ammo.CurrentMagazine);
                 Assert.That(target.HitFeedbackCount,Is.EqualTo(2));

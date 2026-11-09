@@ -87,7 +87,6 @@ namespace SimulatedShooting.Scene
         public void Prepare(CombatSceneBindings bindings,TrainingMode selected,bool? vrAvailability=null)
         {
             binding=bindings;mode=selected;
-            hardware.ReloadWithLeftX=mode==TrainingMode.Trench;
             foreach(var fixture in GetComponentsInChildren<CombatSceneFixture>(true))fixture.enabled=false;
             var xrMode=binding.GetComponent<ZeroingRangeXRModeController>();
             xrOrigin=xrMode.XrOrigin;desktopEye=xrMode.NoVrCamera;xrMode.enabled=false;
@@ -227,7 +226,7 @@ namespace SimulatedShooting.Scene
             weapon=rifle.GetComponent<WeaponPrefabBinding>();grab=rifle.GetComponent<TrainingRifleGrabInteractable>();
             VRHandPresentation.EnsureOnRig(xrOrigin, grab);
             reloadPresentation=rifle.AddComponent<CombatRifleReloadPresentation>();
-            reloadPresentation.Configure(weapon,eye,xrOrigin,vr,()=>Clock.Now,mode==TrainingMode.Trench);
+            reloadPresentation.Configure(weapon,eye,xrOrigin,vr,()=>Clock.Now,true);
             core.Changed+=UpdateReloadPresentation;
             reloadPresentation.ApplySnapshot(core.GetSnapshot(session).Data);
             var spawn=player.position;
@@ -307,6 +306,7 @@ namespace SimulatedShooting.Scene
             (InputOverride as IShoulderAwareTrainingInput)?.SetShoulder(snapshot.Data.Player.Shoulder);
             if(snapshot.Data.State!=SessionState.Running||characterActionsLocked)
             {
+                controller?.Suspend();
                 foreach(var actor in actors.Values)if(actor.Agent.enabled&&actor.Agent.isOnNavMesh)actor.Agent.isStopped=true;
                 if(snapshot.Data.State==SessionState.Preparing||characterActionsLocked&&snapshot.Data.State==SessionState.Running)
                 {
