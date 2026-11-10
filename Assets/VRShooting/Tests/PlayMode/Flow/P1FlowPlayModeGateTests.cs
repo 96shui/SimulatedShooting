@@ -99,8 +99,8 @@ namespace VRShooting.Tests.PlayMode.Flow
                 Does.Contain("优秀"),
                 "[功能A] final grade DTO should map round-1 pass to 优秀");
             Assert.That(
-                FindText("Text_ZeroingFinalRating_Rounds").text,
-                Does.Contain("第1轮：通过"),
+                FindText("Text_ZeroingFinalRating_ImpactThumbnails").text,
+                Does.Contain("第1轮：3发 · 通过"),
                 "[功能A] settlement should mark round 1 as passed");
 
             var final = services.Zeroing.GetFinalResult(services.TrainingSessions.Current.SessionId);
@@ -161,9 +161,11 @@ namespace VRShooting.Tests.PlayMode.Flow
                 Does.Contain("不及格"),
                 "[功能A] final grade DTO should map no-pass to 不及格");
             Assert.That(
-                FindText("Text_ZeroingFinalRating_Rounds").text,
-                Does.Contain("第3轮：未通过"),
-                "[功能A] settlement should show round 3 as failed");
+                FindText("Text_ZeroingFinalRating_ImpactThumbnails").text,
+                Does.Contain("第1轮：3发 · 未通过")
+                    .And.Contain("第2轮：3发 · 未通过")
+                    .And.Contain("第3轮：3发 · 未通过"),
+                "[功能A] settlement should show all three rounds as failed");
 
             var final = services.Zeroing.GetFinalResult(services.TrainingSessions.Current.SessionId);
             Assert.IsTrue(final.Success, "[功能A] GetFinalResult failed: " + final.Message);

@@ -60,6 +60,120 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
+        public IEnumerator Bdd06_OpeningHelpHidesAnswerButtonAndPanel()
+        {
+            // BDD06 2026-11-10: help and answer are mutually exclusive.
+            yield return OpenHudAndCompleteRound();
+            var answer = FindButton("Button_ZeroingImpactAnalysis_Answer");
+            var panel = FindById("Panel_ZeroingImpactAnalysis_Answer");
+            Assert.IsTrue(answer.gameObject.activeSelf);
+            Assert.IsFalse(panel.activeSelf);
+
+            FindButton("Button_ZeroingImpactAnalysis_Help").onClick.Invoke();
+
+            Assert.IsTrue(FindText("Text_ZeroingImpactAnalysis_Suggestion").gameObject.activeSelf);
+            Assert.IsFalse(answer.gameObject.activeSelf, "Opening help must hide the answer button.");
+            Assert.IsFalse(panel.activeSelf);
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd06_InfoPanelsAreExclusiveAndKeepTheirFixedPositions()
+        {
+            // BDD06 2026-11-10: three states, without moving either ray target.
+            yield return OpenHudAndCompleteRound();
+            var help = FindButton("Button_ZeroingImpactAnalysis_Help");
+            var answer = FindButton("Button_ZeroingImpactAnalysis_Answer");
+            var answerPanel = FindById("Panel_ZeroingImpactAnalysis_Answer");
+            AssertInfoPanelsCollapsed();
+            AssertInfoPanelLayout();
+            CaptureMutexEvidence("01-collapsed");
+
+            help.onClick.Invoke();
+            AssertHelpVisible(true);
+            Assert.That(help.GetComponentInChildren<TextMeshProUGUI>().text, Is.EqualTo("收起帮助"));
+            Assert.IsFalse(answer.gameObject.activeSelf);
+            Assert.IsFalse(answerPanel.activeSelf);
+            Assert.IsFalse(FindById("Text_ZeroingImpactAnalysis_Coordinates").activeSelf);
+            AssertInfoPanelLayout();
+            CaptureMutexEvidence("02-help-expanded");
+
+            help.onClick.Invoke();
+            AssertInfoPanelsCollapsed();
+            AssertInfoPanelLayout();
+            answer.onClick.Invoke();
+            Assert.IsTrue(answer.gameObject.activeSelf);
+            Assert.IsFalse(help.gameObject.activeSelf);
+            Assert.IsTrue(answerPanel.activeSelf);
+            foreach (var suffix in new[] { "FrontSight", "RearSight", "Suggestion", "PreviewAverage" })
+                Assert.IsFalse(FindById("Text_ZeroingImpactAnalysis_" + suffix).activeSelf, suffix);
+            Assert.IsTrue(FindById("Text_ZeroingImpactAnalysis_Coordinates").activeSelf);
+            AssertInfoPanelLayout();
+            CaptureMutexEvidence("03-answer-expanded");
+
+            answer.onClick.Invoke();
+            AssertInfoPanelsCollapsed();
+            AssertInfoPanelLayout();
+            CaptureMutexEvidence("04-collapsed-restored");
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd06_InfoPanelsResetWhenChangingRoundLeavingAndReentering()
+        {
+            yield return OpenHudAndCompleteRound();
+            FindButton("Button_ZeroingImpactAnalysis_Help").onClick.Invoke();
+            Assert.IsFalse(FindButton("Button_ZeroingImpactAnalysis_Answer").gameObject.activeSelf);
+            ApplyAndNext();
+            yield return null;
+            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.ZeroingHud));
+            AssertInfoPanelsCollapsed();
+
+            Fire(new Vector3(12f, 12f, 100f));
+            Fire(new Vector3(12f, 12f, 100f));
+            Fire(new Vector3(12f, 12f, 100f));
+            yield return null;
+            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.ZeroingImpactAnalysis));
+            AssertInfoPanelsCollapsed();
+            FindButton("Button_ZeroingImpactAnalysis_Answer").onClick.Invoke();
+            Assert.IsFalse(FindButton("Button_ZeroingImpactAnalysis_Help").gameObject.activeSelf);
+            FindButton("Button_ZeroingImpactAnalysis_BackToMainMenu").onClick.Invoke();
+            yield return null;
+            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
+            AssertInfoPanelsCollapsed();
+
+            yield return OpenHudAndCompleteRound();
+            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.ZeroingImpactAnalysis));
+            AssertInfoPanelsCollapsed();
+        }
+
+        void AssertInfoPanelsCollapsed()
+        {
+            AssertHelpVisible(false);
+            Assert.That(FindButton("Button_ZeroingImpactAnalysis_Help").GetComponentInChildren<TextMeshProUGUI>().text, Is.EqualTo("帮助"));
+            Assert.IsTrue(FindButton("Button_ZeroingImpactAnalysis_Answer").gameObject.activeSelf);
+            Assert.IsFalse(FindById("Panel_ZeroingImpactAnalysis_Answer").activeSelf);
+            Assert.IsTrue(FindById("Text_ZeroingImpactAnalysis_Coordinates").activeSelf);
+        }
+
+        void AssertInfoPanelLayout()
+        {
+            var help = FindButton("Button_ZeroingImpactAnalysis_Help").GetComponent<RectTransform>();
+            var answer = FindButton("Button_ZeroingImpactAnalysis_Answer").GetComponent<RectTransform>();
+            var panel = FindById("Panel_ZeroingImpactAnalysis_Answer").GetComponent<RectTransform>();
+            Assert.That(help.offsetMin, Is.EqualTo(new Vector2(28, 285)));
+            Assert.That(help.offsetMax, Is.EqualTo(new Vector2(160, 342)));
+            Assert.That(answer.offsetMin, Is.EqualTo(new Vector2(176, 285)));
+            Assert.That(answer.offsetMax, Is.EqualTo(new Vector2(308, 342)));
+            Assert.That(panel.offsetMin, Is.EqualTo(new Vector2(1450, 300)));
+            Assert.That(panel.offsetMax, Is.EqualTo(new Vector2(1830, 850)));
+        }
+
+        void CaptureMutexEvidence(string name)
+        {
+            if (System.Environment.GetEnvironmentVariable("HELP_ANSWER_MUTEX_CAPTURE") == "1")
+                CaptureHelp(name);
+        }
+
+        [UnityTest]
         public IEnumerator Bdd06_AnswerReflectsActualPendingAndAppliedCorrectionAndResetsOnNextRound()
         {
             yield return OpenHudAndCompleteRound();
@@ -82,17 +196,8 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(initial, Does.Contain("当前固定偏移").And.Contain("觇孔").And.Contain("准心柱").And.Contain("通过"));
             Assert.That(initial, Does.Contain("优秀").And.Contain("良好").And.Contain("及格"));
             Assert.That(initial, Does.Contain("觇孔：向前 4 格").And.Contain("准心柱：顺时针 185°"));
-            help.onClick.Invoke();
-            AssertHelpVisible(true);
-            Assert.IsTrue(panel.activeSelf);
-            Canvas.ForceUpdateCanvases();
-            Assert.IsFalse(RectanglesOverlap(panel.GetComponent<RectTransform>(), FindText("Text_ZeroingImpactAnalysis_Suggestion").rectTransform));
-            CaptureHelp("P1-analysis-answer-and-help");
-            answer.onClick.Invoke();
-            Assert.IsFalse(panel.activeSelf);
-            AssertHelpVisible(true);
-            answer.onClick.Invoke();
-            Assert.IsTrue(panel.activeSelf);
+            Assert.IsFalse(help.gameObject.activeSelf);
+            Assert.IsFalse(FindById("Text_ZeroingImpactAnalysis_Suggestion").activeSelf);
             Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("顺时针 5°"));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain("向前 1 格"));
             FindButton("Button_ZeroingImpactAnalysis_HorizontalPlus").onClick.Invoke();
@@ -112,10 +217,14 @@ namespace VRShooting.Tests.PlayMode.UI
             FindButton("Button_ZeroingImpactAnalysis_NextRound").onClick.Invoke();
             yield return null;
             Assert.IsFalse(panel.activeSelf);
+            Assert.IsTrue(help.gameObject.activeSelf);
+            Assert.IsTrue(answer.gameObject.activeSelf);
             Fire(new Vector3(12f, 12f, 100f)); Fire(new Vector3(12f, 12f, 100f)); Fire(new Vector3(12f, 12f, 100f));
             yield return null;
             Assert.AreEqual(ScreenId.ZeroingImpactAnalysis, services.Router.Current);
             Assert.IsFalse(panel.activeSelf);
+            Assert.IsTrue(help.gameObject.activeSelf);
+            Assert.IsTrue(answer.gameObject.activeSelf);
             answer.onClick.Invoke();
             Assert.That(text.text, Is.Not.EqualTo(initial));
         }
@@ -125,8 +234,11 @@ namespace VRShooting.Tests.PlayMode.UI
         {
             yield return OpenHudAndCompleteRound();
             var sessionId = services.TrainingSessions.Current.SessionId;
+            var help = FindButton("Button_ZeroingImpactAnalysis_Help");
+            help.onClick.Invoke();
+            AssertHelpVisible(true);
+            help.onClick.Invoke();
             FindButton("Button_ZeroingImpactAnalysis_Answer").onClick.Invoke();
-            FindButton("Button_ZeroingImpactAnalysis_Help").onClick.Invoke();
             for (var i = 0; i < 6; i++) FindButton("Button_ZeroingImpactAnalysis_HorizontalMinus").onClick.Invoke();
             for (var i = 0; i < 42; i++) FindButton("Button_ZeroingImpactAnalysis_VerticalPlus").onClick.Invoke();
             var answer = FindText("Text_ZeroingImpactAnalysis_AnswerContent").text;
@@ -140,13 +252,6 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(current.FrontSightDegrees, Is.EqualTo(-20f));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain("向后 1 格"));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("逆时针 20°"));
-        }
-
-        static bool RectanglesOverlap(RectTransform a, RectTransform b)
-        {
-            var ac = new Vector3[4]; var bc = new Vector3[4];
-            a.GetWorldCorners(ac); b.GetWorldCorners(bc);
-            return ac[0].x < bc[2].x && ac[2].x > bc[0].x && ac[0].y < bc[2].y && ac[2].y > bc[0].y;
         }
 
         [UnityTest]
@@ -313,9 +418,10 @@ namespace VRShooting.Tests.PlayMode.UI
                 foreach(var text in zeroingRangeUi.GetComponentsInChildren<TMP_Text>())text.ForceMeshUpdate();
                 camera.Render();RenderTexture.active=target;
                 texture.ReadPixels(new Rect(0,0,1920,1080),0,0);texture.Apply();
-                var evidenceRequested = name == "P1-analysis-answer-and-help" && System.Environment.GetEnvironmentVariable("PICKUP_CAPTURE_ANSWER") == "1";
+                var evidenceRequested = System.Environment.GetEnvironmentVariable("HELP_ANSWER_MUTEX_CAPTURE") == "1"
+                    && (name == "01-collapsed" || name == "02-help-expanded" || name == "03-answer-expanded" || name == "04-collapsed-restored");
                 var folder=System.IO.Path.Combine(UnityEngine.Application.dataPath,
-                    evidenceRequested ? "../docs/codex-reports/evidence/pickup-prompt-2026-11-09" : "../Temp/GoalRepair/images");
+                    evidenceRequested ? "../docs/codex-reports/evidence/help-answer-mutex-2026-11-10" : "../Temp/GoalRepair/images");
                 System.IO.Directory.CreateDirectory(folder);
                 System.IO.File.WriteAllBytes(System.IO.Path.Combine(folder,name+".png"),texture.EncodeToPNG());
             }

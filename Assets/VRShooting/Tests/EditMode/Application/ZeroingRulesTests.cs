@@ -135,10 +135,11 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
-        public void ComputeFrontSightDegrees_UsesCeilingAnd064CmPerDegree()
+        public void ComputeFrontSightDegrees_RoundsSuggestionUpToFiveDegreeSteps()
         {
-            Assert.AreEqual(188f, ZeroingRules.ComputeFrontSightDegrees(12f), 0.01f);
-            Assert.AreEqual(1f, ZeroingRules.ComputeFrontSightDegrees(0.01f), 0.01f);
+            // Recommendation rounds up to a complete 5° step, at 0.064cm per degree.
+            Assert.AreEqual(190f, ZeroingRules.ComputeFrontSightDegrees(12f), 0.01f);
+            Assert.AreEqual(5f, ZeroingRules.ComputeFrontSightDegrees(0.01f), 0.01f);
         }
 
         [Test]

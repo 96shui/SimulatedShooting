@@ -131,7 +131,7 @@ namespace VRShooting.Tests.EditMode.Application
             var before = zeroing.CompleteRound(session.SessionId).Data;
             var after = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Horizontal, 1).Data;
             Assert.That(after.RearSightClicksToAdjust, Is.EqualTo(4));
-            Assert.That(after.FrontSightDegreesToAdjust, Is.EqualTo(188));
+            Assert.That(after.FrontSightDegreesToAdjust, Is.EqualTo(190));
             Assert.That(after.VerticalDirection, Is.EqualTo(VerticalAdjustmentDirection.Clockwise));
             Assert.That(after.ProposedCorrectionCm, Is.Not.EqualTo(before.ProposedCorrectionCm));
             Assert.That(after.AverageOffsetCm, Is.EqualTo(before.AverageOffsetCm));
@@ -178,7 +178,7 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.AreEqual(12f, analysis.Data.AverageOffsetCm.y, 0.01f);
             Assert.AreEqual(VerticalAdjustmentDirection.Clockwise, analysis.Data.VerticalDirection);
             Assert.AreEqual(HorizontalAdjustmentDirection.Forward, analysis.Data.HorizontalDirection);
-            Assert.AreEqual(188f, analysis.Data.FrontSightDegreesToAdjust, 0.01f);
+            Assert.AreEqual(190f, analysis.Data.FrontSightDegreesToAdjust, 0.01f);
             Assert.AreEqual(4, analysis.Data.RearSightClicksToAdjust);
             Assert.IsFalse(analysis.Data.PassedTenRing);
         }
@@ -199,10 +199,8 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.IsTrue(second.Success, second.Message);
             Assert.IsTrue(second.Data.AdjustmentApplied);
             Assert.AreEqual(first.Data.FrontSightDegreesToAdjust, second.Data.FrontSightDegreesToAdjust);
-            // Keep the historical 188° expectation visible as a known failure while
-            // accounting for the new 5° baseline. The BDD06 test above asserts the
-            // actual 185° quantized correction plus baseline (190°).
-            Assert.AreEqual(193f, state.Data.CurrentAdjustment.FrontSightDegrees, 0.01f);
+            // The actual pending correction is 185°; the mechanical baseline is +5°.
+            Assert.AreEqual(190f, state.Data.CurrentAdjustment.FrontSightDegrees, 0.01f);
             Assert.AreEqual(5, state.Data.CurrentAdjustment.RearSightClicks);
         }
 
@@ -215,22 +213,22 @@ namespace VRShooting.Tests.EditMode.Application
             RecordThreeImpacts(session.SessionId, new Vector2(-8f, 12f));
             var initial = zeroing.CompleteRound(session.SessionId).Data;
             Assert.AreEqual(8f, initial.ProposedCorrectionCm.x, 0.001f);
-            Assert.AreEqual(-12f, initial.ProposedCorrectionCm.y, 0.001f);
-            Assert.AreEqual(Vector2.zero, initial.PreviewAverageOffsetCm);
+            Assert.AreEqual(-11.84f, initial.ProposedCorrectionCm.y, 0.001f);
+            Assert.That(Vector2.Distance(new Vector2(0f, .16f), initial.PreviewAverageOffsetCm), Is.LessThan(.001f));
 
             var horizontal = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Horizontal, 1);
             var vertical = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Vertical, -1);
             Assert.IsTrue(horizontal.Success, horizontal.Message);
             Assert.IsTrue(vertical.Success, vertical.Message);
             Assert.AreEqual(new Vector2(-8f, 12f), vertical.Data.AverageOffsetCm);
-            Assert.AreEqual(new Vector2(10f, -12.064f), vertical.Data.ProposedCorrectionCm);
-            Assert.That(Vector2.Distance(new Vector2(2f, -.064f), vertical.Data.PreviewAverageOffsetCm), Is.LessThan(.001f));
+            Assert.That(Vector2.Distance(new Vector2(10f, -12.16f), vertical.Data.ProposedCorrectionCm), Is.LessThan(.001f));
+            Assert.That(Vector2.Distance(new Vector2(2f, -.16f), vertical.Data.PreviewAverageOffsetCm), Is.LessThan(.001f));
 
             var applied = zeroing.ApplyAdjustment(session.SessionId, 1);
             var duplicate = zeroing.ApplyAdjustment(session.SessionId, 1);
             Assert.IsTrue(applied.Success, applied.Message);
             Assert.IsTrue(duplicate.Success, duplicate.Message);
-            Assert.AreEqual(new Vector2(10f, -12.064f), applied.Data.ProposedCorrectionCm);
+            Assert.That(Vector2.Distance(new Vector2(10f, -12.16f), applied.Data.ProposedCorrectionCm), Is.LessThan(.001f));
             Assert.AreEqual(originalOffset + applied.Data.ProposedCorrectionCm,
                 zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm);
             Assert.IsTrue(zeroing.ContinueAfterAnalysis(session.SessionId).Success);
@@ -255,19 +253,20 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.AreEqual(ErrorCode.InvalidState, applied.ErrorCode);
         }
 
-        [TestCase(64f, -1)]
-        [TestCase(-64f, 1)]
-        public void Bdd06_VerticalAdjustmentDoesNotTruncateALargeSuggestedAngle(float biasCm, int direction)
+        [TestCase(24f, -1)]
+        [TestCase(-24f, 1)]
+        public void Bdd06_LargeOnTargetSuggestedAngleRemainsAdjustable(float biasCm, int direction)
         {
             var session = StartZeroingSession();
             RecordThreeImpacts(session.SessionId, new Vector2(0f, biasCm));
             var before = zeroing.CompleteRound(session.SessionId).Data;
-            Assert.That(before.FrontSightDegreesToAdjust, Is.GreaterThan(780f));
+            // ±64cm is outside the 50cm target and no longer contributes to the mean.
+            Assert.That(before.FrontSightDegreesToAdjust, Is.EqualTo(375f).Within(.01f));
             var step = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Vertical, direction);
             Assert.That(step.Success, Is.True);
             Assert.That(step.Data.ProposedCorrectionCm.y,
-                Is.EqualTo(before.ProposedCorrectionCm.y + direction * .064f).Within(.001f),
-                "One degree must remain one degree, even beyond the former 50cm cutoff.");
+                Is.EqualTo(before.ProposedCorrectionCm.y + direction * .32f).Within(.001f),
+                "A large on-target suggestion must still allow a full five-degree step.");
             Assert.That(step.Data.ProposedCorrectionCm.x, Is.EqualTo(before.ProposedCorrectionCm.x));
         }
 
@@ -278,11 +277,12 @@ namespace VRShooting.Tests.EditMode.Application
             var session = StartZeroingSession();
             RecordThreeImpacts(session.SessionId, new Vector2(-8f, 12f));
             var before = zeroing.CompleteRound(session.SessionId).Data;
-            for (var i = 0; i < 1600; i++)
+            // Preserve the original 1600° traversal using 320 five-degree steps.
+            for (var i = 0; i < 320; i++)
                 Assert.That(zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Vertical, direction).Success, Is.True);
             var adjusted = zeroing.CompleteRound(session.SessionId).Data;
             Assert.That(adjusted.ProposedCorrectionCm.y,
-                Is.EqualTo(before.ProposedCorrectionCm.y + direction * 1600f * .064f).Within(.01f));
+                Is.EqualTo(before.ProposedCorrectionCm.y + direction * 320f * .32f).Within(.01f));
             Assert.That(adjusted.ProposedCorrectionCm.x, Is.EqualTo(before.ProposedCorrectionCm.x));
             Assert.That(adjusted.AverageOffsetCm, Is.EqualTo(before.AverageOffsetCm));
             Assert.That(zeroing.ApplyAdjustment(session.SessionId, 1).Success, Is.True);

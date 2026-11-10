@@ -57,6 +57,9 @@ namespace VRShooting.Unity.UI
         const string ZeroingMapId = "zeroing-range-100m";
         const string ZeroingWeaponId = "training-rifle";
 
+        enum ZeroingInfoPanel { None, Help, Answer }
+        ZeroingInfoPanel zeroingInfoPanel;
+
         [SerializeField]
         bool buildOnAwake = true;
 
@@ -680,21 +683,18 @@ namespace VRShooting.Unity.UI
             zeroingAnalysisCoordinatesText.enableAutoSizing = true;
             zeroingAnalysisCoordinatesText.fontSizeMin = 13;
             zeroingAnalysisCoordinatesText.fontSizeMax = 19;
-            help.onClick.AddListener(() =>
-            {
-                var expanded = !zeroingAnalysisSuggestionText.gameObject.activeSelf;
-                SetZeroingHelpExpanded(expanded);
-            });
+            help.onClick.AddListener(() => SetZeroingInfoPanel(
+                zeroingInfoPanel == ZeroingInfoPanel.Help ? ZeroingInfoPanel.None : ZeroingInfoPanel.Help));
             zeroingAnalysisAnswerPanel = AddPanel(parent, "Panel_ZeroingImpactAnalysis_Answer", new Vector2(1450, 300), new Vector2(1830, 850), new Color32(11, 19, 16, 245), new Color32(45, 156, 255, 255));
             zeroingAnalysisAnswerText = AddLabel(zeroingAnalysisAnswerPanel, "Text_ZeroingImpactAnalysis_AnswerContent", "", 22, FontStyles.Bold, TextAlignmentOptions.TopLeft, new Vector2(18, 18), new Vector2(362, 490), new Color32(231, 242, 235, 255));
             zeroingAnalysisAnswerText.enableAutoSizing = true;
             zeroingAnalysisAnswerText.fontSizeMin = 16;
             zeroingAnalysisAnswerText.fontSizeMax = 22;
-            zeroingAnalysisAnswerButton.onClick.AddListener(() => SetZeroingAnswerExpanded(!zeroingAnalysisAnswerPanel.gameObject.activeSelf));
-            SetZeroingAnswerExpanded(false);
+            zeroingAnalysisAnswerButton.onClick.AddListener(() => SetZeroingInfoPanel(
+                zeroingInfoPanel == ZeroingInfoPanel.Answer ? ZeroingInfoPanel.None : ZeroingInfoPanel.Answer));
             var adjustPanel = AddPanel(parent, "Panel_ZeroingImpactAnalysis_ManualAdjust", DrawioMin(205, 390, 390, 82), DrawioMax(205, 390, 390, 82), new Color32(17, 29, 24, 235), new Color32(45, 156, 255, 255));
             zeroingAnalysisPreviewText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_PreviewAverage", "原始均值(黄) → 调整预览(蓝) · 按住连续调节", 22, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(20, 112), new Vector2(915, 145), new Color32(200, 255, 106, 255));
-            SetZeroingHelpExpanded(false);
+            SetZeroingInfoPanel(ZeroingInfoPanel.None);
             AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_HorizontalLabel", "觇孔", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(18, 24), new Vector2(113, 100), new Color32(231, 242, 235, 255));
             AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalMinus", "向后\n2cm", new Vector2(122, 25), new Vector2(196, 96), ZeroingAdjustmentAxis.Horizontal, -1);
             zeroingAnalysisCorrectionXText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_CorrectionX", "", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(202, 25), new Vector2(312, 96), new Color32(143, 217, 255, 255));
@@ -724,19 +724,22 @@ namespace VRShooting.Unity.UI
             zeroingAdjustmentButtons.Add(button);
         }
 
-        void SetZeroingHelpExpanded(bool expanded)
+        void SetZeroingInfoPanel(ZeroingInfoPanel panel)
         {
-            if (zeroingAnalysisCoordinatesText != null) zeroingAnalysisCoordinatesText.gameObject.SetActive(!expanded);
+            zeroingInfoPanel = panel;
+            var showHelp = panel == ZeroingInfoPanel.Help;
+            var showAnswer = panel == ZeroingInfoPanel.Answer;
+            if (zeroingAnalysisCoordinatesText != null) zeroingAnalysisCoordinatesText.gameObject.SetActive(!showHelp);
             foreach (var tip in new[] { zeroingAnalysisFrontSightText, zeroingAnalysisRearSightText,
                 zeroingAnalysisSuggestionText, zeroingAnalysisPreviewText })
-                if (tip != null) tip.gameObject.SetActive(expanded);
+                if (tip != null) tip.gameObject.SetActive(showHelp);
             if (zeroingAnalysisHelpButton != null)
-                SetButtonLabel(zeroingAnalysisHelpButton, expanded ? "收起帮助" : "帮助");
-        }
-
-        void SetZeroingAnswerExpanded(bool expanded)
-        {
-            if (zeroingAnalysisAnswerPanel != null) zeroingAnalysisAnswerPanel.gameObject.SetActive(expanded);
+            {
+                zeroingAnalysisHelpButton.gameObject.SetActive(!showAnswer);
+                SetButtonLabel(zeroingAnalysisHelpButton, showHelp ? "收起帮助" : "帮助");
+            }
+            if (zeroingAnalysisAnswerButton != null) zeroingAnalysisAnswerButton.gameObject.SetActive(!showHelp);
+            if (zeroingAnalysisAnswerPanel != null) zeroingAnalysisAnswerPanel.gameObject.SetActive(showAnswer);
         }
 
         void BuildZeroingFinalRating(RectTransform parent)
@@ -910,8 +913,9 @@ namespace VRShooting.Unity.UI
 
         void ShowScreen(ScreenId screen)
         {
+            if (screen != ActiveScreen)
+                SetZeroingInfoPanel(ZeroingInfoPanel.None);
             ActiveScreen = screen;
-            SetZeroingAnswerExpanded(false);
             if (screen != ScreenId.MainMenu && mainMenuControlsPanel != null)
                 mainMenuControlsPanel.gameObject.SetActive(false);
             if (mainMenuScreen != null)
@@ -951,7 +955,6 @@ namespace VRShooting.Unity.UI
 
             if (screen == ScreenId.ZeroingImpactAnalysis)
             {
-                SetZeroingHelpExpanded(false);
                 RefreshImpactAnalysis();
             }
 

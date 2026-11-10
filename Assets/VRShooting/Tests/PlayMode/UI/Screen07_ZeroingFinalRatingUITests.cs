@@ -65,7 +65,7 @@ namespace VRShooting.Tests.PlayMode.UI
                 "BDD07: a passing round must bypass the adjustment screen.");
             Assert.IsTrue(FindById("Screen_ZeroingFinalRating").activeSelf);
             Assert.That(FindText("Text_ZeroingFinalRating_Grade").text, Does.Contain("优秀"));
-            Assert.That(FindText("Text_ZeroingFinalRating_Rounds").text, Does.Contain("第1轮：通过"));
+            Assert.That(FindText("Text_ZeroingFinalRating_ImpactThumbnails").text, Does.Contain("第1轮：3发 · 通过"));
             Assert.That(FindText("Text_ZeroingFinalRating_Rounds").text, Does.Contain("第2轮：未使用"));
             Assert.That(FindText("Text_ZeroingFinalRating_ImpactThumbnails").text, Does.Contain("第1轮"));
             Assert.That(FindById("Image_ZeroingImpactAnalysis_Target").GetComponent<TacticalTargetPlot>(), Is.Not.Null);
