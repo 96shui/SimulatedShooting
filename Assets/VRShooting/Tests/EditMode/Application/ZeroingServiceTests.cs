@@ -272,24 +272,57 @@ namespace VRShooting.Tests.EditMode.Application
 
         [TestCase(-1)]
         [TestCase(1)]
-        public void Bdd06_VerticalAdjustmentCanContinueForMultipleTurnsAndApplyOnce(int direction)
+        public void Bdd06_VerticalCorrectionSaturatesAfterMultipleTurnsAndAppliesOnce(int direction)
         {
             var session = StartZeroingSession();
-            RecordThreeImpacts(session.SessionId, new Vector2(-8f, 12f));
+            // Start on the opposite side of zero so both directions cross it.
+            RecordThreeImpacts(session.SessionId, new Vector2(-8f, 12f * direction));
             var before = zeroing.CompleteRound(session.SessionId).Data;
+            Assert.That(before.ProposedCorrectionCm.y * direction, Is.LessThan(0f));
+
+            ZeroingRoundAnalysisDto crossedZero = default;
+            ZeroingRoundAnalysisDto saturated = default;
             // Preserve the original 1600° traversal using 320 five-degree steps.
             for (var i = 0; i < 320; i++)
-                Assert.That(zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Vertical, direction).Success, Is.True);
+            {
+                var step = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Vertical, direction);
+                Assert.That(step.Success, Is.True, step.Message);
+                if (i == 39) crossedZero = step.Data;
+                if (i == 239) saturated = step.Data;
+            }
+
             var adjusted = zeroing.CompleteRound(session.SessionId).Data;
-            Assert.That(adjusted.ProposedCorrectionCm.y,
-                Is.EqualTo(before.ProposedCorrectionCm.y + direction * 320f * .32f).Within(.01f));
+            Assert.That(crossedZero.ProposedCorrectionCm.y * direction, Is.GreaterThan(0f));
+            Assert.That(saturated.ProposedCorrectionCm.y, Is.EqualTo(direction * 49.92f).Within(.001f));
+            Assert.That(adjusted.ProposedCorrectionCm.y, Is.EqualTo(direction * 49.92f).Within(.001f),
+                "Further same-direction steps must not increase the saturated correction.");
             Assert.That(adjusted.ProposedCorrectionCm.x, Is.EqualTo(before.ProposedCorrectionCm.x));
             Assert.That(adjusted.AverageOffsetCm, Is.EqualTo(before.AverageOffsetCm));
+            Assert.That(zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm, Is.EqualTo(session.FixedImpactOffsetCm));
             Assert.That(zeroing.ApplyAdjustment(session.SessionId, 1).Success, Is.True);
             var applied = zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm;
+            Assert.That(applied.y - session.FixedImpactOffsetCm.y, Is.EqualTo(direction * 49.92f).Within(.001f));
+            Assert.That(applied.x - session.FixedImpactOffsetCm.x, Is.EqualTo(adjusted.ProposedCorrectionCm.x).Within(.001f));
             Assert.That(zeroing.ApplyAdjustment(session.SessionId, 1).Success, Is.True);
             Assert.That(zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm, Is.EqualTo(applied));
-            Assert.That(applied.y, Is.EqualTo(session.FixedImpactOffsetCm.y + adjusted.ProposedCorrectionCm.y).Within(.01f));
+        }
+
+        [TestCase(-1)]
+        [TestCase(1)]
+        public void Bdd06_VerticalCorrectionExitsSaturationOnFirstReverseStep(int direction)
+        {
+            var session = StartZeroingSession();
+            RecordThreeImpacts(session.SessionId, new Vector2(-8f, 12f * direction));
+            zeroing.CompleteRound(session.SessionId);
+            for (var i = 0; i < 320; i++)
+                Assert.That(zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Vertical, direction).Success, Is.True);
+
+            var saturated = zeroing.CompleteRound(session.SessionId).Data;
+            Assert.That(saturated.ProposedCorrectionCm.y, Is.EqualTo(direction * 49.92f).Within(.001f));
+            var reversed = zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Vertical, -direction);
+            Assert.That(reversed.Success, Is.True, reversed.Message);
+            Assert.That(reversed.Data.ProposedCorrectionCm.y, Is.EqualTo(direction * 49.60f).Within(.001f),
+                "反向一步立即按 0.32cm 退出饱和，不做超出量抵扣");
         }
 
         [Test]

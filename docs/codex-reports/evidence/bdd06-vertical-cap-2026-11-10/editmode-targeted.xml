@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="2" result="Passed" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-10 01:58:06Z" end-time="2026-11-10 01:58:07Z" duration="0.0478183">
+  <test-suite type="TestSuite" id="1460" name="VR" fullname="VR" runstate="Runnable" testcasecount="363" result="Passed" start-time="2026-11-10 01:58:06Z" end-time="2026-11-10 01:58:07Z" duration="0.047818" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1912" name="VRShooting.Runtime.EditModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.EditModeTests.dll" runstate="Runnable" testcasecount="318" result="Passed" start-time="2026-11-10 01:58:07Z" end-time="2026-11-10 01:58:07Z" duration="0.037996" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="51336" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1913" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="318" result="Passed" start-time="2026-11-10 01:58:07Z" end-time="2026-11-10 01:58:07Z" duration="0.036602" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1914" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="318" result="Passed" start-time="2026-11-10 01:58:07Z" end-time="2026-11-10 01:58:07Z" duration="0.035445" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1915" name="EditMode" fullname="VRShooting.Tests.EditMode" runstate="Runnable" testcasecount="318" result="Passed" start-time="2026-11-10 01:58:07Z" end-time="2026-11-10 01:58:07Z" duration="0.034332" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestSuite" id="1919" name="Application" fullname="VRShooting.Tests.EditMode.Application" runstate="Runnable" testcasecount="170" result="Passed" start-time="2026-11-10 01:58:07Z" end-time="2026-11-10 01:58:07Z" duration="0.031548" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="1872" name="ZeroingServiceTests" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" testcasecount="35" result="Passed" start-time="2026-11-10 01:58:07Z" end-time="2026-11-10 01:58:07Z" duration="0.028837" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-suite type="ParameterizedMethod" id="1891" name="Bdd06_VerticalCorrectionSaturatesAfterMultipleTurnsAndAppliesOnce" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalCorrectionSaturatesAfterMultipleTurnsAndAppliesOnce" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-10 01:58:07Z" end-time="2026-11-10 01:58:07Z" duration="0.025783" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                  <properties />
+                  <test-case id="1889" name="Bdd06_VerticalCorrectionSaturatesAfterMultipleTurnsAndAppliesOnce(-1)" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalCorrectionSaturatesAfterMultipleTurnsAndAppliesOnce(-1)" methodname="Bdd06_VerticalCorrectionSaturatesAfterMultipleTurnsAndAppliesOnce" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1649565495" result="Passed" start-time="2026-11-10 01:58:07Z" end-time="2026-11-10 01:58:07Z" duration="0.019097" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1890" name="Bdd06_VerticalCorrectionSaturatesAfterMultipleTurnsAndAppliesOnce(1)" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalCorrectionSaturatesAfterMultipleTurnsAndAppliesOnce(1)" methodname="Bdd06_VerticalCorrectionSaturatesAfterMultipleTurnsAndAppliesOnce" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1768740192" result="Passed" start-time="2026-11-10 01:58:07Z" end-time="2026-11-10 01:58:07Z" duration="0.000528" asserts="0">
+                    <properties />
+                  </test-case>
+                </test-suite>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
