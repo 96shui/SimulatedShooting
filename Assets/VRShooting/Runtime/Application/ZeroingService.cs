@@ -125,7 +125,7 @@ namespace VRShooting.Application
                 return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidInput, "round index mismatch", analysis);
             }
 
-            if(analysis.FinalResultAvailable)
+            if (analysis.FinalResultAvailable && !analysis.AdjustmentApplied)
                 return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState,"final round does not require adjustment",analysis);
 
             if (!analysis.AdjustmentApplied)
@@ -305,7 +305,8 @@ namespace VRShooting.Application
             {
                 SessionId = session.SessionId,
                 CurrentRound = 1,
-                FixedImpactOffsetCm = ZeroingRules.GenerateFixedOffset(session.Seed)
+                FixedImpactOffsetCm = ZeroingRules.GenerateFixedOffset(session.Seed),
+                CurrentAdjustment = new SightAdjustmentDto { RearSightClicks = 1, FrontSightDegrees = 5f }
             };
             sessions[session.SessionId] = record;
             return record;
@@ -377,7 +378,9 @@ namespace VRShooting.Application
                     CurrentRound,
                     CurrentShots,
                     AppliedRounds.Contains(CurrentRound),
-                    PendingCorrectionCm ?? ZeroingRules.QuantizeCorrection(-ZeroingRules.ComputeAverageOffset(CurrentShots)));
+                    PendingCorrectionCm ?? ZeroingRules.QuantizeCorrection(-ZeroingRules.ComputeAverageOffset(CurrentShots)),
+                    FixedImpactOffsetCm,
+                    CurrentAdjustment);
             }
 
             public bool UpsertAnalysis(ZeroingRoundAnalysisDto analysis)

@@ -1,4 +1,4 @@
-<mxfile host="embed.diagrams.net" pages="23">
+<mxfile host="embed.diagrams.net" pages="24">
   <diagram id="p01" name="01 通用视觉风格">
     <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
       <root>
@@ -63,6 +63,9 @@
         <mxCell id="p02-b4" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="城镇攻防" vertex="1">
           <mxGeometry height="42" width="145" x="585" y="304" as="geometry" />
         </mxCell>
+        <mxCell id="p02-controls" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="操作介绍" vertex="1">
+          <mxGeometry height="42" width="145" x="585" y="357" as="geometry" />
+        </mxCell>
         <mxCell id="p02-b6" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;fontStyle=1;" value="设置" vertex="1">
           <mxGeometry height="42" width="145" x="585" y="410" as="geometry" />
         </mxCell>
@@ -71,6 +74,16 @@
         </mxCell>
       </root>
     </mxGraphModel>
+  </diagram>
+  <diagram id="p02-controls-panel" name="02A 操作介绍">
+    <mxGraphModel grid="1" page="1" pageWidth="800" pageHeight="600"><root>
+      <mxCell id="0" /><mxCell id="1" parent="0" />
+      <mxCell id="controls-bg" parent="1" style="rounded=1;fillColor=#0b1310;strokeColor=#2d4238;strokeWidth=2;" value="" vertex="1"><mxGeometry x="40" y="35" width="720" height="530" as="geometry" /></mxCell>
+      <mxCell id="controls-title" parent="1" style="text;fillColor=none;strokeColor=none;fontColor=#e7f2eb;fontSize=24;fontStyle=1;align=center;" value="操作介绍" vertex="1"><mxGeometry x="80" y="55" width="640" height="45" as="geometry" /></mxCell>
+      <mxCell id="controls-left" parent="1" style="text;fillColor=none;strokeColor=none;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;whiteSpace=wrap;html=1;" value="通用 VR 操作&#xa;模式一：射校与分析" vertex="1"><mxGeometry x="85" y="120" width="300" height="350" as="geometry" /></mxCell>
+      <mxCell id="controls-right" parent="1" style="text;fillColor=none;strokeColor=none;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;whiteSpace=wrap;html=1;" value="模式二：据枪与移动目标&#xa;模式三 / 四：战斗操作" vertex="1"><mxGeometry x="415" y="120" width="300" height="350" as="geometry" /></mxCell>
+      <mxCell id="controls-back" parent="1" style="rounded=1;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=16;fontStyle=1;" value="返回" vertex="1"><mxGeometry x="330" y="490" width="140" height="42" as="geometry" /></mxCell>
+    </root></mxGraphModel>
   </diagram>
   <diagram id="p03" name="03 训练模式选择">
     <mxGraphModel dx="1292" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="800" pageHeight="600" math="0" shadow="0">
@@ -215,12 +228,17 @@
 3个弹着点；蓝色为调整后中心" vertex="1">
           <mxGeometry height="210" width="170" x="205" y="160" as="geometry" />
         </mxCell>
-        <mxCell id="p06-data" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=top;spacing=12;whiteSpace=wrap;html=1;" value="垂直偏差：偏上 12cm
-水平偏差：偏左 8cm
-准星柱：逆时针调整 X°
-觇孔：向前调整 X 格
-说明：应用后进入下一轮" vertex="1">
+        <mxCell id="p06-data" parent="1" style="rounded=1;arcSize=6;fillColor=#111d18;strokeColor=#385447;fontColor=#e7f2eb;fontSize=14;align=left;verticalAlign=bottom;spacing=12;whiteSpace=wrap;html=1;" value="弹着坐标 / 帮助展开后显示当前瞄具读数和本轮建议" vertex="1">
           <mxGeometry height="230" width="190" x="405" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="p06-help" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;" value="帮助" vertex="1">
+          <mxGeometry height="32" width="55" x="417" y="195" as="geometry" />
+        </mxCell>
+        <mxCell id="p06-answer-button" parent="1" style="rounded=1;arcSize=8;fillColor=#14251f;strokeColor=#6b8a77;fontColor=#e7f2eb;fontSize=14;" value="答案" vertex="1">
+          <mxGeometry height="32" width="55" x="478" y="195" as="geometry" />
+        </mxCell>
+        <mxCell id="p06-answer-panel" parent="1" style="rounded=1;arcSize=6;dashed=1;fillColor=#0b1310;strokeColor=#2d9cff;fontColor=#e7f2eb;fontSize=12;align=left;verticalAlign=top;spacing=8;whiteSpace=wrap;html=1;" value="答案（默认收起）&#xa;当前固定偏移 X / Y&#xa;待应用觇孔格数 / 准心柱度数&#xa;应用后预计偏移、通过结论&#xa;1/2/3轮：优秀/良好/及格" vertex="1">
+          <mxGeometry height="306" width="158" x="604" y="128" as="geometry" />
         </mxCell>
         <mxCell id="p06-apply" parent="1" style="rounded=1;arcSize=8;fillColor=#c8ff6a;strokeColor=none;fontColor=#07100d;fontSize=15;fontStyle=1;" value="应用调整" vertex="1">
           <mxGeometry height="38" width="110" x="280" y="505" as="geometry" />

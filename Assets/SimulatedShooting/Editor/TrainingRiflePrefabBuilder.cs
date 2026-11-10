@@ -378,15 +378,17 @@ namespace SimulatedShooting.Editor
         {
             var prompt = new GameObject("Prompt_training-rifle_Pickup");
             prompt.transform.SetParent(parent, false);
-            prompt.transform.localPosition = new Vector3(0f, 0.18f, -0.04f);
-            prompt.transform.localRotation = Quaternion.Euler(0f, 180f, 0f);
+            // TextMesh's readable face is opposite transform.forward. Aim that face
+            // toward both the prone head reference and the higher no-VR camera.
+            prompt.transform.localPosition = new Vector3(0f, 0.25f, -0.04f);
+            prompt.transform.localRotation = Quaternion.Euler(-5f, 67f, 0f);
             prompt.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.PickupPrompt";
             var text = prompt.AddComponent<TextMesh>();
             text.text = "GRIP TO PICK UP";
             text.anchor = TextAnchor.MiddleCenter;
             text.alignment = TextAlignment.Center;
             text.fontSize = 48;
-            text.characterSize = 0.012f;
+            text.characterSize = 0.004f;
             text.color = new Color(1f, 0.88f, 0.22f, 1f);
             prompt.SetActive(false);
             return prompt;

@@ -164,6 +164,24 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
+        public IEnumerator Bdd04_BriefingPickupPromptStaysBelowFrameAndAboveStationStatus()
+        {
+            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
+            yield return null;
+            var prompt = (RectTransform)FindById("Training.Shared.PickupPrompt").transform;
+            var station = (RectTransform)FindById("Training.Shared.FiringStationState").transform;
+            var frame = (RectTransform)FindById("Panel_ZeroingBriefing_Frame").transform;
+            var back = (RectTransform)FindButton("Button_ZeroingBriefing_Back").transform;
+            var start = (RectTransform)FindButton("Button_ZeroingBriefing_Start").transform;
+            Assert.That(prompt.offsetMin, Is.EqualTo(new Vector2(480, 46)));
+            Assert.That(prompt.offsetMax, Is.EqualTo(new Vector2(1440, 84)));
+            Assert.That(prompt.offsetMin.y, Is.GreaterThan(station.offsetMax.y));
+            Assert.That(prompt.offsetMax.y, Is.LessThan(frame.offsetMin.y));
+            Assert.That(prompt.offsetMax.y, Is.LessThan(back.offsetMin.y));
+            Assert.That(prompt.offsetMax.y, Is.LessThan(start.offsetMin.y));
+        }
+
+        [UnityTest]
         public IEnumerator Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu()
         {
             services.Router.HandleUIEvent(UIEventId.MainMenu_OpenZeroing, ScreenId.MainMenu);
@@ -190,6 +208,7 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.IsTrue(services.TrainingSessions.HasActiveSession);
             Assert.AreEqual(TrainingMode.Zeroing100m, services.TrainingSessions.Current.Mode);
             Assert.AreEqual(SessionState.Running, services.TrainingSessions.Current.State);
+            Assert.IsFalse(services.TrainingSessions.Current.Seed.IsFixed);
             Assert.AreEqual(ScreenId.ZeroingBriefing, services.Router.Current);
             var presentation = services.Presentation.Get(services.TrainingSessions.Current.SessionId);
             Assert.IsTrue(presentation.Success, presentation.Message);
@@ -247,6 +266,57 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
+        public IEnumerator Bdd02_ControlsPanelOpensAndClosesWithoutLeavingMenu()
+        {
+            var panel = FindById("Panel_MainMenu_Controls");
+            Assert.That(panel, Is.Not.Null);
+            Assert.That(panel.activeSelf, Is.False);
+            FindButton("Button_MainMenu_Controls").onClick.Invoke();
+            yield return null;
+            Assert.That(panel.activeInHierarchy, Is.True);
+            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
+            CaptureControlsPanel();
+            FindButton("Button_MainMenu_Controls_Back").onClick.Invoke();
+            yield return null;
+            Assert.That(panel.activeSelf, Is.False);
+            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
+        }
+
+        void CaptureControlsPanel()
+        {
+            var canvas = root.GetComponent<Canvas>();
+            var mode = canvas.renderMode; var previousCamera = canvas.worldCamera;
+            var cameraRoot = new GameObject("ControlsEvidenceCamera");
+            var camera = cameraRoot.AddComponent<Camera>();
+            camera.enabled = false; camera.clearFlags = CameraClearFlags.SolidColor;
+            camera.backgroundColor = Color.black; camera.cullingMask = 1 << 31;
+            var parts = root.GetComponentsInChildren<Transform>(true);
+            var layers = parts.Select(part => part.gameObject.layer).ToArray();
+            var target = new RenderTexture(1920, 1080, 24);
+            var texture = new Texture2D(1920, 1080, TextureFormat.RGB24, false);
+            var previousActive = RenderTexture.active;
+            try
+            {
+                foreach (var part in parts) part.gameObject.layer = 31;
+                camera.targetTexture = target;
+                canvas.renderMode = RenderMode.ScreenSpaceCamera; canvas.worldCamera = camera; canvas.planeDistance = 1;
+                Canvas.ForceUpdateCanvases();
+                foreach (var label in root.GetComponentsInChildren<TMP_Text>()) label.ForceMeshUpdate();
+                camera.Render(); RenderTexture.active = target;
+                texture.ReadPixels(new Rect(0, 0, 1920, 1080), 0, 0); texture.Apply();
+                var folder = System.IO.Path.Combine(UnityEngine.Application.dataPath, "../Logs/CodexZeroingControls");
+                System.IO.Directory.CreateDirectory(folder);
+                System.IO.File.WriteAllBytes(System.IO.Path.Combine(folder, "controls.png"), texture.EncodeToPNG());
+            }
+            finally
+            {
+                for (var i = 0; i < parts.Length; i++) parts[i].gameObject.layer = layers[i];
+                canvas.renderMode = mode; canvas.worldCamera = previousCamera; RenderTexture.active = previousActive;
+                target.Release(); Object.Destroy(target); Object.Destroy(texture); Object.Destroy(cameraRoot);
+            }
+        }
+
+        [UnityTest]
         public IEnumerator Screen02_CreatorsEntryAndPanelAreAbsentAndNavigationRemainsUsable()
         {
             // BDD02：主菜单不再提供制作人入口；task008。
@@ -272,9 +342,10 @@ namespace VRShooting.Tests.PlayMode.UI
             var buttonCorners = new Vector3[4]; var frameCorners = new Vector3[4];
             ((RectTransform)buttons[3].transform).GetWorldCorners(buttonCorners);
             ((RectTransform)FindById("Panel_MainMenu_Frame").transform).GetWorldCorners(frameCorners);
-            var gap = buttonCorners[0].y - frameCorners[0].y;
-            Assert.That(gap, Is.InRange(0f, (buttonCorners[1].y - buttonCorners[0].y) * .5f),
-                "The panel should end shortly below the last button without an empty slot.");
+            var controlsCorners = new Vector3[4];
+            ((RectTransform)FindButton("Button_MainMenu_Controls").transform).GetWorldCorners(controlsCorners);
+            Assert.That(controlsCorners[1].y, Is.LessThan(buttonCorners[0].y));
+            Assert.That(controlsCorners[0].y, Is.GreaterThanOrEqualTo(frameCorners[0].y));
             Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
             for (var i = 0; i < 2; i++)
             {

@@ -4,6 +4,8 @@
   "references": [
     "VRShooting.Runtime",
     "VRShooting.Contracts",
+    "Unity.TextMeshPro",
+    "Unity.ugui",
     "VRShooting.P3.TestSupport",
     "VRShooting.Gameplay.TestSupport"
   ],

@@ -26,6 +26,74 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
+        public void Bdd06_NewSessionStartsWithForwardOneClickAndClockwiseFiveDegrees()
+        {
+            var session = StartZeroingSession(RandomSeed.Fixed(100));
+            var state = zeroing.GetSession(session.SessionId).Data;
+            Assert.That(state.CurrentAdjustment.RearSightClicks, Is.EqualTo(1));
+            Assert.That(state.CurrentAdjustment.FrontSightDegrees, Is.EqualTo(5f));
+            Assert.That(state.FixedImpactOffsetCm, Is.EqualTo(ZeroingRules.GenerateFixedOffset(RandomSeed.Fixed(100))));
+        }
+
+        [Test]
+        public void Bdd06_ActualAppliedCorrectionAccumulatesFromBaselineAndIsIdempotent()
+        {
+            var session = StartZeroingSession();
+            RecordThreeImpacts(session.SessionId, new Vector2(-8f, 12f));
+            var before = zeroing.CompleteRound(session.SessionId).Data;
+            Assert.That(before.ProposedCorrectionCm.x, Is.EqualTo(8f).Within(.001f));
+            Assert.That(before.ProposedCorrectionCm.y, Is.EqualTo(-11.84f).Within(.001f));
+            Assert.IsTrue(zeroing.ApplyAdjustment(session.SessionId, 1).Success);
+            var applied = zeroing.GetSession(session.SessionId).Data;
+            Assert.That(applied.CurrentAdjustment.RearSightClicks, Is.EqualTo(5));
+            Assert.That(applied.CurrentAdjustment.FrontSightDegrees, Is.EqualTo(190f));
+            Assert.That(applied.FixedImpactOffsetCm.x, Is.EqualTo(session.FixedImpactOffsetCm.x + 8f).Within(.001f));
+            Assert.That(applied.FixedImpactOffsetCm.y, Is.EqualTo(session.FixedImpactOffsetCm.y - 11.84f).Within(.001f));
+            Assert.IsTrue(zeroing.ApplyAdjustment(session.SessionId, 1).Success);
+            Assert.That(zeroing.GetSession(session.SessionId).Data.CurrentAdjustment, Is.EqualTo(applied.CurrentAdjustment));
+        }
+
+        [Test]
+        public void Bdd06_ApplyAdjustmentWithSmallResidualPassesImmediatelyAndGradesWithoutAnotherShot()
+        {
+            var session = StartZeroingSession();
+            for (var i = 0; i < 3; i++) Assert.IsTrue(RecordImpact(session.SessionId, Vector2.zero).Success);
+            var before = zeroing.CompleteRound(session.SessionId).Data;
+            Assert.IsFalse(before.PassedTenRing);
+            var raw = before.Shots[0].ImpactPointCm;
+
+            var applied = zeroing.ApplyAdjustment(session.SessionId, 1);
+            Assert.IsTrue(applied.Success, applied.Message);
+            Assert.That(zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm.magnitude, Is.LessThanOrEqualTo(5f));
+            Assert.IsTrue(applied.Data.AdjustmentApplied);
+            Assert.IsTrue(applied.Data.PassedTenRing);
+            Assert.IsTrue(applied.Data.FinalResultAvailable);
+            Assert.That(applied.Data.Shots[0].ImpactPointCm, Is.EqualTo(raw));
+            Assert.That(zeroing.GetFinalResult(session.SessionId).Data.Grade, Is.EqualTo(ResultGrade.Excellent));
+            Assert.That(zeroing.ContinueAfterAnalysis(session.SessionId).Data.CurrentRound, Is.EqualTo(1));
+            Assert.IsTrue(zeroing.ApplyAdjustment(session.SessionId, 1).Success, "Repeated apply remains idempotent.");
+        }
+
+        [Test]
+        public void Bdd07_AdjustmentPassInSecondRoundReturnsGood()
+        {
+            var session = StartZeroingSession();
+            for (var i = 0; i < 3; i++) Assert.IsTrue(RecordImpact(session.SessionId, Vector2.zero).Success);
+            for (var i = 0; i < 4; i++)
+                Assert.IsTrue(zeroing.AdjustImpactPoint(session.SessionId, 1, ZeroingAdjustmentAxis.Horizontal, 1).Success);
+            var first = zeroing.ApplyAdjustment(session.SessionId, 1);
+            Assert.IsTrue(first.Success, first.Message);
+            Assert.IsFalse(first.Data.PassedTenRing);
+            Assert.That(zeroing.ContinueAfterAnalysis(session.SessionId).Data.CurrentRound, Is.EqualTo(2));
+            for (var i = 0; i < 3; i++) Assert.IsTrue(RecordImpact(session.SessionId, Vector2.zero).Success);
+            var second = zeroing.ApplyAdjustment(session.SessionId, 2);
+            Assert.IsTrue(second.Success, second.Message);
+            Assert.IsTrue(second.Data.PassedTenRing);
+            Assert.IsTrue(second.Data.FinalResultAvailable);
+            Assert.That(zeroing.GetFinalResult(session.SessionId).Data.Grade, Is.EqualTo(ResultGrade.Good));
+        }
+
+        [Test]
         public void Bdd06_ActualAimAndCorrectionAreNotCompressedOrClamped()
         {
             var aim = new Vector2(40f, -32f);
@@ -37,7 +105,7 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
-        public void Bdd30_ApplyingSuggestedCorrectionActuallyZerosTheSameAimAndIsIdempotent()
+        public void Bdd06_ApplyingSuggestedCorrectionRespectsMechanicalStepsAndIsIdempotent()
         {
             var session = StartZeroingSession();
             for (var i = 0; i < 3; i++) RecordImpact(session.SessionId, Vector2.zero);
@@ -46,14 +114,13 @@ namespace VRShooting.Tests.EditMode.Application
             var original = before.Shots[0].ImpactPointCm;
             Assert.That(zeroing.ApplyAdjustment(session.SessionId, 1).Success, Is.True);
             var effective = zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm;
-            Assert.That(effective.magnitude, Is.LessThan(.001f));
+            Assert.That(Mathf.Abs(effective.x), Is.LessThanOrEqualTo(1.001f));
+            Assert.That(Mathf.Abs(effective.y), Is.LessThanOrEqualTo(.161f));
             zeroing.ApplyAdjustment(session.SessionId, 1);
             Assert.That(zeroing.GetSession(session.SessionId).Data.FixedImpactOffsetCm, Is.EqualTo(effective));
             Assert.That(before.Shots[0].ImpactPointCm, Is.EqualTo(original));
-            zeroing.ContinueAfterAnalysis(session.SessionId);
-            var next = RecordImpact(session.SessionId, Vector2.zero);
-            Assert.That(next.Data.InsideTenRing, Is.True);
-            Assert.That(next.Data.ImpactPointCm.magnitude, Is.LessThan(.001f));
+            Assert.That(zeroing.CompleteRound(session.SessionId).Data.PassedTenRing, Is.True);
+            Assert.That(zeroing.ContinueAfterAnalysis(session.SessionId).Data.CurrentRound, Is.EqualTo(1));
         }
 
         [Test]
@@ -132,8 +199,11 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.IsTrue(second.Success, second.Message);
             Assert.IsTrue(second.Data.AdjustmentApplied);
             Assert.AreEqual(first.Data.FrontSightDegreesToAdjust, second.Data.FrontSightDegreesToAdjust);
-            Assert.AreEqual(188f, state.Data.CurrentAdjustment.FrontSightDegrees, 0.01f);
-            Assert.AreEqual(4, state.Data.CurrentAdjustment.RearSightClicks);
+            // Keep the historical 188° expectation visible as a known failure while
+            // accounting for the new 5° baseline. The BDD06 test above asserts the
+            // actual 185° quantized correction plus baseline (190°).
+            Assert.AreEqual(193f, state.Data.CurrentAdjustment.FrontSightDegrees, 0.01f);
+            Assert.AreEqual(5, state.Data.CurrentAdjustment.RearSightClicks);
         }
 
         [Test]

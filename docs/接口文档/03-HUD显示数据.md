@@ -1,5 +1,8 @@
 # 03 HUD 显示数据
 
+## 2026-11-09 模式一瞄具
+射校 HUD 通过 `rearSight`、`frontSight` 文本行展示 `ZeroingSessionDto.CurrentAdjustment` 所代表的方向与累计位置，开局分别为向前1格、顺时针5°；刷新从服务查询，瞄具不改评分规则。
+
 2026-10-09 P3 task019：PlayerStatusDto.MaxHealth 由核心提供本局生命上限，P3默认2。生命显示采用2个独立格与 Health/MaxHealth 文本；View 不从100血推导伤害或死亡。当前生命低于等于一半时显示受伤颜色，新局满血恢复正常颜色。P1/P2默认生命和已有HUD行为保持。
 
 ## 目标

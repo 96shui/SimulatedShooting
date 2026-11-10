@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Failed(Child)" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-09 14:42:14Z" end-time="2026-11-09 14:42:14Z" duration="0.0833006">
+  <test-suite type="TestSuite" id="1453" name="VR" fullname="VR" runstate="Runnable" testcasecount="357" result="Failed" site="Child" start-time="2026-11-09 14:42:14Z" end-time="2026-11-09 14:42:14Z" duration="0.083301" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1898" name="VRShooting.Runtime.EditModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.EditModeTests.dll" runstate="Runnable" testcasecount="312" result="Failed" site="Child" start-time="2026-11-09 14:42:14Z" end-time="2026-11-09 14:42:14Z" duration="0.064170" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="8364" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1899" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="312" result="Failed" site="Child" start-time="2026-11-09 14:42:14Z" end-time="2026-11-09 14:42:14Z" duration="0.061994" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1900" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="312" result="Failed" site="Child" start-time="2026-11-09 14:42:14Z" end-time="2026-11-09 14:42:14Z" duration="0.060135" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1901" name="EditMode" fullname="VRShooting.Tests.EditMode" runstate="Runnable" testcasecount="312" result="Failed" site="Child" start-time="2026-11-09 14:42:14Z" end-time="2026-11-09 14:42:14Z" duration="0.058399" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestSuite" id="1905" name="Application" fullname="VRShooting.Tests.EditMode.Application" runstate="Runnable" testcasecount="164" result="Failed" site="Child" start-time="2026-11-09 14:42:14Z" end-time="2026-11-09 14:42:14Z" duration="0.053939" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-suite type="TestFixture" id="1862" name="ZeroingServiceTests" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" testcasecount="32" result="Failed" site="Child" start-time="2026-11-09 14:42:14Z" end-time="2026-11-09 14:42:14Z" duration="0.049972" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <failure>
+                  <message><![CDATA[One or more child tests had errors]]></message>
+                </failure>
+                <test-case id="1863" name="Bdd06_NewSessionStartsWithForwardOneClickAndClockwiseFiveDegrees" fullname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_NewSessionStartsWithForwardOneClickAndClockwiseFiveDegrees" methodname="Bdd06_NewSessionStartsWithForwardOneClickAndClockwiseFiveDegrees" classname="VRShooting.Tests.EditMode.Application.ZeroingServiceTests" runstate="Runnable" seed="1361554122" result="Failed" start-time="2026-11-09 14:42:14Z" end-time="2026-11-09 14:42:14Z" duration="0.032361" asserts="0">
+                  <properties />
+                  <failure>
+                    <message><![CDATA[  Expected: 1
+  But was:  0
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_NewSessionStartsWithForwardOneClickAndClockwiseFiveDegrees () [0x0002e] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\EditMode\Application\ZeroingServiceTests.cs:33
+]]></stack-trace>
+                  </failure>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

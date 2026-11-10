@@ -46,8 +46,25 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.AreEqual("3/3", FindLine(result.Data, "ammo").Value);
             Assert.AreEqual("待记录 3 发", FindLine(result.Data, "impactRecord").Value);
             Assert.AreEqual("右肩", FindLine(result.Data, "shoulder").Value);
+            Assert.AreEqual("向前 1 格", FindLine(result.Data, "rearSight").Value);
+            Assert.AreEqual("顺时针 5°", FindLine(result.Data, "frontSight").Value);
             Assert.IsTrue(result.Data.CanShoot);
             Assert.That(result.Data.Prompts[0].Text, Does.Contain("稳定据枪"));
+        }
+
+        [Test]
+        public void Bdd05_HudSightReadingsRefreshAfterAppliedAdjustment()
+        {
+            var session = StartZeroingSession();
+            RecordThreeImpacts(session.SessionId, new Vector2(-8f, 12f));
+            HudDto published = default;
+            hud.HudUpdated += snapshot => published = snapshot;
+            Assert.That(zeroing.ApplyAdjustment(session.SessionId, 1).Success, Is.True);
+            var result = hud.GetHud(session.SessionId).Data;
+            Assert.That(FindLine(result, "rearSight").Value, Is.EqualTo("向前 5 格"));
+            Assert.That(FindLine(result, "frontSight").Value, Is.EqualTo("顺时针 190°"));
+            Assert.That(FindLine(published, "rearSight").Value, Is.EqualTo("向前 5 格"));
+            Assert.That(FindLine(published, "frontSight").Value, Is.EqualTo("顺时针 190°"));
         }
 
         [Test]

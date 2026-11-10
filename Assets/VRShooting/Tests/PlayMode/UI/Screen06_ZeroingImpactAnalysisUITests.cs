@@ -60,6 +60,122 @@ namespace VRShooting.Tests.PlayMode.UI
         }
 
         [UnityTest]
+        public IEnumerator Bdd06_AnswerReflectsActualPendingAndAppliedCorrectionAndResetsOnNextRound()
+        {
+            yield return OpenHudAndCompleteRound();
+            var sessionId = services.TrainingSessions.Current.SessionId;
+            var answer = FindButton("Button_ZeroingImpactAnalysis_Answer");
+            Assert.That(answer.GetComponentInChildren<TextMeshProUGUI>().text, Is.EqualTo("答案"));
+            var panel = FindById("Panel_ZeroingImpactAnalysis_Answer");
+            Assert.IsNotNull(panel);
+            Assert.IsFalse(panel.activeSelf);
+            var help = FindButton("Button_ZeroingImpactAnalysis_Help");
+            var helpRect = help.GetComponent<RectTransform>();
+            var answerRect = answer.GetComponent<RectTransform>();
+            Assert.That(answerRect.sizeDelta, Is.EqualTo(helpRect.sizeDelta));
+            Assert.That(answerRect.offsetMin.x, Is.GreaterThan(helpRect.offsetMax.x));
+            answer.onClick.Invoke();
+            Assert.IsTrue(panel.activeSelf);
+            Assert.That(answer.GetComponentInChildren<TextMeshProUGUI>().text, Is.EqualTo("答案"));
+            var text = FindText("Text_ZeroingImpactAnalysis_AnswerContent");
+            var initial = text.text;
+            Assert.That(initial, Does.Contain("当前固定偏移").And.Contain("觇孔").And.Contain("准心柱").And.Contain("通过"));
+            Assert.That(initial, Does.Contain("优秀").And.Contain("良好").And.Contain("及格"));
+            Assert.That(initial, Does.Contain("觇孔：向前 4 格").And.Contain("准心柱：顺时针 185°"));
+            help.onClick.Invoke();
+            AssertHelpVisible(true);
+            Assert.IsTrue(panel.activeSelf);
+            Canvas.ForceUpdateCanvases();
+            Assert.IsFalse(RectanglesOverlap(panel.GetComponent<RectTransform>(), FindText("Text_ZeroingImpactAnalysis_Suggestion").rectTransform));
+            CaptureHelp("P1-analysis-answer-and-help");
+            answer.onClick.Invoke();
+            Assert.IsFalse(panel.activeSelf);
+            AssertHelpVisible(true);
+            answer.onClick.Invoke();
+            Assert.IsTrue(panel.activeSelf);
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("顺时针 5°"));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain("向前 1 格"));
+            FindButton("Button_ZeroingImpactAnalysis_HorizontalPlus").onClick.Invoke();
+            EnsureAdjustmentDoesNotPass();
+            Assert.That(text.text, Is.Not.EqualTo(initial));
+            var pending = services.Zeroing.CompleteRound(sessionId).Data;
+            Assert.That(text.text, Does.Contain(pending.PredictedOffsetMagnitudeCm.ToString("0.0000", System.Globalization.CultureInfo.InvariantCulture)));
+            var prediction = pending.PredictedOffsetMagnitudeCm;
+            FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment").onClick.Invoke();
+            var applied = services.Zeroing.CompleteRound(sessionId).Data;
+            Assert.IsTrue(panel.activeSelf);
+            Assert.That(text.text, Does.Contain("已应用"));
+            Assert.That(applied.PredictedOffsetMagnitudeCm, Is.EqualTo(prediction).Within(.001f));
+            Assert.That(text.text, Does.Contain(prediction.ToString("0.0000", System.Globalization.CultureInfo.InvariantCulture)));
+            Assert.That(text.text, Does.Contain("X " + applied.FixedImpactOffsetCm.x.ToString("+0.0;-0.0;+0.0", System.Globalization.CultureInfo.InvariantCulture)));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Is.Not.EqualTo("觇孔：向前 1 格"));
+            FindButton("Button_ZeroingImpactAnalysis_NextRound").onClick.Invoke();
+            yield return null;
+            Assert.IsFalse(panel.activeSelf);
+            Fire(new Vector3(12f, 12f, 100f)); Fire(new Vector3(12f, 12f, 100f)); Fire(new Vector3(12f, 12f, 100f));
+            yield return null;
+            Assert.AreEqual(ScreenId.ZeroingImpactAnalysis, services.Router.Current);
+            Assert.IsFalse(panel.activeSelf);
+            answer.onClick.Invoke();
+            Assert.That(text.text, Is.Not.EqualTo(initial));
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd06_AnswerAndSightReadoutsFollowReversedActualAdjustment()
+        {
+            yield return OpenHudAndCompleteRound();
+            var sessionId = services.TrainingSessions.Current.SessionId;
+            FindButton("Button_ZeroingImpactAnalysis_Answer").onClick.Invoke();
+            FindButton("Button_ZeroingImpactAnalysis_Help").onClick.Invoke();
+            for (var i = 0; i < 6; i++) FindButton("Button_ZeroingImpactAnalysis_HorizontalMinus").onClick.Invoke();
+            for (var i = 0; i < 42; i++) FindButton("Button_ZeroingImpactAnalysis_VerticalPlus").onClick.Invoke();
+            var answer = FindText("Text_ZeroingImpactAnalysis_AnswerContent").text;
+            Assert.That(answer, Does.Contain("觇孔：向后 2 格").And.Contain("准心柱：逆时针 25°"));
+            var correction = services.Zeroing.CompleteRound(sessionId).Data.ProposedCorrectionCm;
+            Assert.That(correction.x, Is.EqualTo(-4f).Within(.001f));
+            Assert.That(correction.y, Is.EqualTo(1.6f).Within(.001f));
+            FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment").onClick.Invoke();
+            var current = services.Zeroing.GetSession(sessionId).Data.CurrentAdjustment;
+            Assert.That(current.RearSightClicks, Is.EqualTo(-1));
+            Assert.That(current.FrontSightDegrees, Is.EqualTo(-20f));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain("向后 1 格"));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("逆时针 20°"));
+        }
+
+        static bool RectanglesOverlap(RectTransform a, RectTransform b)
+        {
+            var ac = new Vector3[4]; var bc = new Vector3[4];
+            a.GetWorldCorners(ac); b.GetWorldCorners(bc);
+            return ac[0].x < bc[2].x && ac[2].x > bc[0].x && ac[0].y < bc[2].y && ac[2].y > bc[0].y;
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd06_ApplyingNearZeroOffsetImmediatelyEnablesViewGrade()
+        {
+            // Aim at the centre: the initial fixed offset guarantees three shots outside the ten ring.
+            yield return OpenHudAndCompleteRoundAt(new Vector3(0f, 0f, 100f), true);
+            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.ZeroingImpactAnalysis));
+            var sessionId = services.TrainingSessions.Current.SessionId;
+            var before = services.Zeroing.CompleteRound(sessionId).Data;
+            Assert.That(before.PassedTenRing, Is.False);
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_AppliedState").text, Does.Contain("偏移").And.Contain("5"));
+            FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment").onClick.Invoke();
+            yield return null;
+            var after = services.Zeroing.CompleteRound(sessionId).Data;
+            Assert.That(after.PassedTenRing, Is.True);
+            Assert.That(after.FinalResultAvailable, Is.True);
+            Assert.That(after.Shots[0].ImpactPointCm, Is.EqualTo(before.Shots[0].ImpactPointCm));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_AppliedState").text, Does.Contain("通过"));
+            var next = FindButton("Button_ZeroingImpactAnalysis_NextRound");
+            Assert.That(next.interactable, Is.True);
+            Assert.That(next.GetComponentInChildren<TextMeshProUGUI>().text, Is.EqualTo("查看评级"));
+            next.onClick.Invoke();
+            yield return null;
+            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.ZeroingFinalRating));
+            Assert.That(services.Zeroing.GetFinalResult(sessionId).Data.Grade, Is.EqualTo(ResultGrade.Excellent));
+        }
+
+        [UnityTest]
         public IEnumerator Bdd06_AdjustmentControlsShowCurrentMechanicalValuesAndUnits()
         {
             yield return OpenHudAndCompleteRound();
@@ -197,7 +313,9 @@ namespace VRShooting.Tests.PlayMode.UI
                 foreach(var text in zeroingRangeUi.GetComponentsInChildren<TMP_Text>())text.ForceMeshUpdate();
                 camera.Render();RenderTexture.active=target;
                 texture.ReadPixels(new Rect(0,0,1920,1080),0,0);texture.Apply();
-                var folder=System.IO.Path.Combine(UnityEngine.Application.dataPath,"../Temp/GoalRepair/images");
+                var evidenceRequested = name == "P1-analysis-answer-and-help" && System.Environment.GetEnvironmentVariable("PICKUP_CAPTURE_ANSWER") == "1";
+                var folder=System.IO.Path.Combine(UnityEngine.Application.dataPath,
+                    evidenceRequested ? "../docs/codex-reports/evidence/pickup-prompt-2026-11-09" : "../Temp/GoalRepair/images");
                 System.IO.Directory.CreateDirectory(folder);
                 System.IO.File.WriteAllBytes(System.IO.Path.Combine(folder,name+".png"),texture.EncodeToPNG());
             }
@@ -213,6 +331,7 @@ namespace VRShooting.Tests.PlayMode.UI
         public IEnumerator Screen06_ApplyAdjustmentUpdatesStateAndNextRoundReturnsToHud()
         {
             yield return OpenHudAndCompleteRound();
+            EnsureAdjustmentDoesNotPass();
 
             var apply = FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment");
             apply.onClick.Invoke();
@@ -390,22 +509,29 @@ namespace VRShooting.Tests.PlayMode.UI
             }
         }
 
-        IEnumerator OpenHudAndCompleteRoundAt(Vector3 point)
+        IEnumerator OpenHudAndCompleteRoundAt(Vector3 point, bool rawAim = false)
         {
             FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
             yield return null;
             FindButton("Button_ZeroingBriefing_Start").onClick.Invoke();
             yield return null;
 
-            Fire(point);
-            Fire(point);
-            Fire(point);
+            Fire(point, rawAim);
+            Fire(point, rawAim);
+            Fire(point, rawAim);
             yield return null;
         }
 
-        void Fire(Vector3 hitPoint)
+        void Fire(Vector3 hitPoint, bool rawAim = false)
         {
             var sessionId = services.TrainingSessions.Current.SessionId;
+            // Most fixtures specify the desired recorded impact, independent of the runtime seed.
+            if (!rawAim)
+            {
+                var offset = services.Zeroing.GetSession(sessionId).Data.FixedImpactOffsetCm;
+                hitPoint.x -= offset.x;
+                hitPoint.y -= offset.y;
+            }
             Assert.IsTrue(services.WeaponControl.SetGripState(new WeaponGripStateInputDto
             {
                 SessionId = sessionId,
@@ -435,8 +561,22 @@ namespace VRShooting.Tests.PlayMode.UI
 
         void ApplyAndNext()
         {
+            EnsureAdjustmentDoesNotPass();
             FindButton("Button_ZeroingImpactAnalysis_ApplyAdjustment").onClick.Invoke();
             FindButton("Button_ZeroingImpactAnalysis_NextRound").onClick.Invoke();
+        }
+
+        void EnsureAdjustmentDoesNotPass()
+        {
+            var sessionId = services.TrainingSessions.Current.SessionId;
+            for (var i = 0; i < 30; i++)
+            {
+                var offset = services.Zeroing.GetSession(sessionId).Data.FixedImpactOffsetCm;
+                var analysis = services.Zeroing.CompleteRound(sessionId).Data;
+                if ((offset + analysis.ProposedCorrectionCm).magnitude > 5f) return;
+                FindButton("Button_ZeroingImpactAnalysis_HorizontalPlus").onClick.Invoke();
+            }
+            Assert.Fail("Could not arrange a non-passing adjustment for the next-round fixture.");
         }
 
         Button FindButton(string id)

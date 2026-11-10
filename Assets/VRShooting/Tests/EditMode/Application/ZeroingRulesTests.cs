@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using VRShooting.Application;
 using VRShooting.Common;
@@ -9,6 +10,44 @@ namespace VRShooting.Tests.EditMode.Application
     [TestFixture]
     public class ZeroingRulesTests
     {
+        [Test]
+        public void Bdd06_OppositeAdjustmentsCrossZeroWithoutExtraQuantizationStep()
+        {
+            var baseline = new SightAdjustmentDto { RearSightClicks = 1, FrontSightDegrees = 5f };
+            var opposite = ZeroingRules.ApplyCorrection(baseline, new Vector2(-6f, .64f));
+            Assert.That(opposite.RearSightClicks, Is.EqualTo(-2));
+            Assert.That(opposite.FrontSightDegrees, Is.EqualTo(-5f));
+            var same = ZeroingRules.ApplyCorrection(opposite, new Vector2(8f, -.96f));
+            Assert.That(same.RearSightClicks, Is.EqualTo(2));
+            Assert.That(same.FrontSightDegrees, Is.EqualTo(10f));
+
+            var byDirection = ZeroingRules.ApplyAdjustment(baseline, new ZeroingRoundAnalysisDto
+            {
+                HorizontalDirection = HorizontalAdjustmentDirection.Backward, RearSightClicksToAdjust = 3,
+                VerticalDirection = VerticalAdjustmentDirection.CounterClockwise, FrontSightDegreesToAdjust = 10
+            });
+            Assert.That(byDirection.RearSightClicks, Is.EqualTo(-2));
+            Assert.That(byDirection.FrontSightDegrees, Is.EqualTo(-5f));
+        }
+
+        [Test]
+        public void Bdd06_AnswerPredictsFixedResidualOnceFromActualPendingCorrection()
+        {
+            var shots = new[] { new ZeroingShotDto(), new ZeroingShotDto(), new ZeroingShotDto() };
+            var correction = new Vector2(-8f, 11.84f);
+            var before = ZeroingRules.BuildRoundAnalysis("answer", 1, shots, false, correction, new Vector2(10f, -12f));
+            Assert.That(before.FixedImpactOffsetCm, Is.EqualTo(new Vector2(10f, -12f)));
+            Assert.That(before.ProposedAdjustment.RearSightClicks, Is.EqualTo(-4));
+            Assert.That(before.ProposedAdjustment.FrontSightDegrees, Is.EqualTo(-185f));
+            Assert.That(before.PredictedOffsetMagnitudeCm, Is.EqualTo(2.00639f).Within(.001f));
+            Assert.That(before.PredictedOffsetPasses, Is.True);
+
+            var after = ZeroingRules.BuildRoundAnalysis("answer", 1, shots, true, correction, new Vector2(2f, -.16f));
+            Assert.That(after.PredictedOffsetMagnitudeCm, Is.EqualTo(2.00639f).Within(.001f));
+            Assert.That(after.PredictedOffsetPasses, Is.True);
+            var notPassing = ZeroingRules.BuildRoundAnalysis("answer", 1, shots, false, Vector2.zero, new Vector2(3.01f, 4f));
+            Assert.That(notPassing.PredictedOffsetPasses, Is.False);
+        }
         [Test]
         public void Bdd06_OnlyAimOnBoardKeepsImpactWithinBoard()
         {
@@ -37,6 +76,20 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
+        public void Bdd06_RuntimeSeedIsNonFixedAndDifferentOnEachRequest()
+        {
+            var issued = new HashSet<int>();
+            for (var i = 0; i < 1000; i++)
+            {
+                var seed = RandomSeed.CreateRandom();
+                Assert.That(seed.IsFixed, Is.False);
+                Assert.That(issued.Add(seed.Value), Is.True);
+                Assert.That(ZeroingRules.GenerateFixedOffset(seed),
+                    Is.EqualTo(ZeroingRules.GenerateFixedOffset(RandomSeed.Fixed(seed.Value))));
+            }
+        }
+
+        [Test]
         public void GenerateFixedOffset_DifferentSeeds_ProduceDifferentOffsets()
         {
             var first = ZeroingRules.GenerateFixedOffset(RandomSeed.Fixed(100));
@@ -46,13 +99,39 @@ namespace VRShooting.Tests.EditMode.Application
         }
 
         [Test]
-        public void GenerateFixedOffset_IsInsideTargetOutsideTenRing()
+        public void Bdd06_GenerateFixedOffset_UsesIndependentAxesWithInclusiveEndpointsAndAllQuadrants()
         {
-            var offset = ZeroingRules.GenerateFixedOffset(RandomSeed.Fixed(100));
-            var distance = offset.magnitude;
+            var quadrants = new int[4];
+            var xMin = false; var xMax = false; var yMin = false; var yMax = false;
+            for (var seed = 0; seed < 100000; seed++)
+            {
+                var offset = ZeroingRules.GenerateFixedOffset(RandomSeed.Fixed(seed));
+                var x = Mathf.Abs(offset.x); var y = Mathf.Abs(offset.y);
+                Assert.That(x, Is.InRange(5f, 20f));
+                Assert.That(y, Is.InRange(5f, 20f));
+                Assert.That(ZeroingRules.ComputeImpactPoint(Vector2.zero, offset), Is.EqualTo(offset));
+                xMin |= x == 5f; xMax |= x == 20f; yMin |= y == 5f; yMax |= y == 20f;
+                quadrants[(offset.x > 0 ? 1 : 0) + (offset.y > 0 ? 2 : 0)]++;
+            }
+            Assert.That(xMin && xMax && yMin && yMax, Is.True, "Both endpoints must be reachable on both axes.");
+            foreach (var count in quadrants) Assert.That(count, Is.InRange(23000, 27000));
+        }
 
-            Assert.Greater(distance, ZeroingRules.TenRingRadiusCm);
-            Assert.LessOrEqual(distance, ZeroingRules.TargetHalfSizeCm);
+        [TestCase(3f, 4f, true, true)]
+        [TestCase(3.01f, 4f, true, false)]
+        [TestCase(3f, 4f, false, false)]
+        public void Bdd06_AdjustmentPass_UsesAppliedFixedOffsetAndIncludesFiveCentimetres(
+            float x, float y, bool applied, bool expected)
+        {
+            var shots = new[] {
+                new ZeroingShotDto { ImpactPointCm = new Vector2(15, 15) },
+                new ZeroingShotDto { ImpactPointCm = new Vector2(15, 15) },
+                new ZeroingShotDto { ImpactPointCm = new Vector2(15, 15) }
+            };
+            var result = ZeroingRules.BuildRoundAnalysis("test", 1, shots, applied,
+                Vector2.zero, new Vector2(x, y));
+            Assert.That(result.PassedTenRing, Is.EqualTo(expected));
+            Assert.That(result.FinalResultAvailable, Is.EqualTo(expected));
         }
 
         [Test]

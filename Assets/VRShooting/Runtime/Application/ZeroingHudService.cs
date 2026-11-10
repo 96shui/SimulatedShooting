@@ -40,6 +40,7 @@ namespace VRShooting.Application
             eventBus.Subscribe<ZeroingShotRecordedEvent>(OnZeroingShotRecorded);
             eventBus.Subscribe<ZeroingRoundStartedEvent>(OnZeroingRoundStarted);
             eventBus.Subscribe<ZeroingRoundCompletedEvent>(evt => PublishIfCurrent(evt.SessionId));
+            eventBus.Subscribe<ZeroingAdjustmentAppliedEvent>(evt => PublishIfCurrent(evt.SessionId));
         }
 
         public event Action<HudDto> HudUpdated;
@@ -188,8 +189,16 @@ namespace VRShooting.Application
                 Line("stability", "稳定度", Math.Round(Clamp01(stability01) * 100f) + "%", stability01 >= 0.7f ? HudSeverity.Success : HudSeverity.Warning),
                 Line("impactRecord", "弹着记录", FormatImpactRecord(currentRoundShots), HudSeverity.Normal),
                 Line("shoulder", "肩侧", shoulder == ShoulderSide.Left ? "左肩" : "右肩", HudSeverity.Info),
+                Line("rearSight", "觇孔", FormatSight(zeroingSession.CurrentAdjustment.RearSightClicks, "向前", "向后", " 格"), HudSeverity.Info),
+                Line("frontSight", "准心柱", FormatSight(zeroingSession.CurrentAdjustment.FrontSightDegrees, "顺时针", "逆时针", "°"), HudSeverity.Info),
                 Line("shootState", "射击状态", canShoot ? "可射击" : "禁止射击", canShoot ? HudSeverity.Success : HudSeverity.Warning)
             };
+        }
+
+        static string FormatSight(float value, string positive, string negative, string unit)
+        {
+            if (Mathf.Abs(value) < .001f) return "中位 0" + unit;
+            return (value > 0 ? positive : negative) + " " + Mathf.Abs(value).ToString("0", System.Globalization.CultureInfo.InvariantCulture) + unit;
         }
 
         IReadOnlyList<HudPromptDto> BuildPrompts(

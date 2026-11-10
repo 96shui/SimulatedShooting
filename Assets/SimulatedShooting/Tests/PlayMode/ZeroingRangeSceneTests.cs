@@ -12,7 +12,10 @@ using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using VRShooting.Common;
+using VRShooting.Application;
+using VRShooting.Contracts;
 using VRShooting.Input;
+using VRShooting.Unity.UI;
 using VRShooting.Unity.Weapons;
 
 namespace SimulatedShooting.Tests.PlayMode
@@ -53,6 +56,21 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(Find("ZeroingRange.Target.Primary"), Is.Not.Null);
             Assert.That(Find("ZeroingRange.Origin.VR"), Is.Not.Null);
             Assert.That(Find("ZeroingRange.Camera.NoVR").GetComponent<Camera>(), Is.Not.Null);
+        }
+
+        [Test]
+        public void Bdd04_PickupPromptFacesShooterAboveRifleWithoutChangingText()
+        {
+            var weapon = Find("ZeroingRange.Weapon.TrainingRifle").transform;
+            var prompt = Find("ZeroingRange.Weapon.PickupPrompt").transform;
+            var eye = Find("ZeroingRange.Camera.NoVR").transform;
+            Assert.That(prompt.GetComponent<TextMesh>().text, Is.EqualTo("GRIP TO PICK UP"));
+            Assert.That(prompt.localPosition.y, Is.GreaterThan(.20f));
+            Assert.That(prompt.position.y, Is.GreaterThan(weapon.position.y));
+            var proneHead = Find("ZeroingRange.FiringStation.ProneHeadReference").transform;
+            Assert.That(Vector3.Dot(-prompt.forward, (eye.position - prompt.position).normalized), Is.GreaterThan(.7f));
+            Assert.That(Vector3.Dot(-prompt.forward, (proneHead.position - prompt.position).normalized), Is.GreaterThan(.7f));
+            Assert.That(prompt.GetComponent<TextMesh>().characterSize, Is.EqualTo(.004f).Within(.00001f));
         }
 
         [Test]
@@ -249,6 +267,44 @@ namespace SimulatedShooting.Tests.PlayMode
                 Is.EqualTo(impact.WorldPoint.x).Within(0.001f));
             Assert.That(surface.ImpactMarkerRoot.GetChild(0).position.y,
                 Is.EqualTo(impact.WorldPoint.y).Within(0.001f));
+        }
+
+        [Test]
+        public void Bdd06_TwentyCentimetreOffsetsRemainOnTargetAndProduceMarkers()
+        {
+            var surface = Find("ZeroingRange.Target.Face").GetComponent<TargetImpactSurface>();
+            foreach (var x in new[] { -20f, 20f })
+            foreach (var y in new[] { -20f, 20f })
+            {
+                var expected = new Vector2(x, y);
+                var impactCm = ZeroingRules.ComputeImpactPoint(Vector2.zero, expected);
+                Assert.That(impactCm, Is.EqualTo(expected));
+                Assert.That(TacticalTargetPlot.IsOnTarget(impactCm), Is.True);
+                var world = surface.TargetCenter.TransformPoint(new Vector3(x * .01f, y * .01f, 0));
+                Assert.That(surface.TryRecordWorldPoint(world, out var impact), Is.True);
+                Assert.That(Vector2.Distance(impact.OffsetCm, expected), Is.LessThan(.01f));
+            }
+            Assert.That(surface.ImpactMarkerRoot.childCount, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void Bdd06_SceneDefaultsToRandomSeedAndAllowsFixedSeedInjection()
+        {
+            var bootstrap = Object.FindObjectOfType<ZeroingRangeSessionBootstrap>();
+            Assert.That(bootstrap.Services.TrainingSessions.Current.Seed.IsFixed, Is.False);
+            var testObject = new GameObject("FixedSeedBootstrapTest");
+            testObject.SetActive(false);
+            try
+            {
+                var testBootstrap = testObject.AddComponent<ZeroingRangeSessionBootstrap>();
+                var isolated = ApplicationServices.CreateDefault();
+                testBootstrap.ConfigureForTests(isolated, true, RandomSeed.Fixed(123));
+                Assert.That(isolated.TrainingSessions.Current.Seed.IsFixed, Is.True);
+                Assert.That(isolated.TrainingSessions.Current.Seed.Value, Is.EqualTo(123));
+                Assert.That(isolated.Zeroing.GetSession(isolated.TrainingSessions.Current.SessionId).Data.FixedImpactOffsetCm,
+                    Is.EqualTo(ZeroingRules.GenerateFixedOffset(RandomSeed.Fixed(123))));
+            }
+            finally { Object.DestroyImmediate(testObject); }
         }
 
         [Test]

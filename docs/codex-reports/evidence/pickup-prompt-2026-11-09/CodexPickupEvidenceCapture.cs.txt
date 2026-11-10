@@ -1,0 +1,94 @@
+using System.IO;
+using System.Linq;
+using TMPro;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using VRShooting.Application;
+using VRShooting.Common;
+using VRShooting.Unity.UI;
+
+// Temporary batch-mode capture of the actual scene prefab and generated briefing UI.
+public static class CodexPickupEvidenceCapture
+{
+    const string Folder = "docs/codex-reports/evidence/pickup-prompt-2026-11-09";
+    public static void Capture()
+    {
+        Directory.CreateDirectory(Folder);
+        var tag = System.Environment.GetEnvironmentVariable("PICKUP_CAPTURE_TAG") ?? "before";
+        var scene = EditorSceneManager.OpenScene("Assets/Scenes/ZeroingRangeScene.unity", OpenSceneMode.Single);
+        var all = scene.GetRootGameObjects().SelectMany(x => x.GetComponentsInChildren<Transform>(true)).ToArray();
+        var weapon = all.First(x => x.name == "Weapon_training-rifle_Blockout");
+        var prompt = weapon.GetComponentsInChildren<Transform>(true).First(x => x.name == "Prompt_training-rifle_Pickup");
+        prompt.gameObject.SetActive(true);
+        var station = all.First(x => x.name == "ShootingPosition");
+        var cameras = all.Select(x => x.GetComponent<Camera>()).Where(x => x != null).ToArray();
+        var eye = cameras.FirstOrDefault(x => x.name.Contains("NoVR")) ?? cameras.FirstOrDefault(x => x.CompareTag("MainCamera"));
+        var eyePosition = eye != null ? eye.transform.position : station.position;
+        var go = new GameObject("EvidenceCamera", typeof(Camera));
+        var camera = go.GetComponent<Camera>();
+        camera.enabled = false;
+        camera.fieldOfView = 55;
+        camera.nearClipPlane = .03f;
+        camera.farClipPlane = 250;
+        camera.transform.position = eyePosition;
+        camera.transform.LookAt(prompt.position);
+        Debug.Log($"EVIDENCE: eye={eye?.name} pos={eyePosition}, station={station.position}, weapon={weapon.position}, rot={weapon.eulerAngles}, prompt={prompt.position}, local={prompt.localPosition}, localEuler={prompt.localEulerAngles}, textForward={prompt.forward}, playerDot={Vector3.Dot(prompt.forward, (eyePosition-prompt.position).normalized)}");
+        Render(camera, tag + "-world.png");
+        var prone = all.First(x => x.name == "ProneHeadReference");
+        camera.transform.position = prone.position;
+        camera.transform.LookAt(prompt.position);
+        Debug.Log($"EVIDENCE: proneHead={prone.position}, playerDot={Vector3.Dot(prompt.forward, (prone.position-prompt.position).normalized)}");
+        Render(camera, tag + "-world-prone.png");
+
+        var preview = EditorSceneManager.NewPreviewScene();
+        var cg = new GameObject("UICamera", typeof(Camera));
+        SceneManager.MoveGameObjectToScene(cg, preview);
+        var c = cg.GetComponent<Camera>(); c.enabled = false; c.scene = preview; c.orthographic = true; c.orthographicSize = 540;
+        c.clearFlags = CameraClearFlags.SolidColor; c.backgroundColor = Color.black; c.transform.position = new Vector3(960, 540, -1000); c.farClipPlane = 2000;
+        var root = new GameObject("MainMenuUI", typeof(RectTransform)); root.SetActive(false); SceneManager.MoveGameObjectToScene(root, preview);
+        var ui = root.AddComponent<MainMenuUI>();
+        typeof(TrainingUIRoot).GetField("buildOnAwake", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(ui, false);
+        ui.Initialize(ApplicationServices.CreateDefault());
+        var scaler = root.GetComponent<CanvasScaler>(); if (scaler != null) scaler.enabled = false;
+        var canvas = root.GetComponent<Canvas>(); canvas.renderMode = RenderMode.WorldSpace; canvas.worldCamera = c;
+        var adapter = root.GetComponent<TrainingUICanvasAdapter>(); if (adapter != null) adapter.enabled = false;
+        var rect = (RectTransform)root.transform; rect.sizeDelta = new Vector2(1920, 1080); rect.pivot = new Vector2(.5f,.5f); rect.position = new Vector3(960,540,0); rect.localScale=Vector3.one;
+        root.SetActive(true);
+        var view = root.GetComponent<TrainingPresentationView>();
+        view.Apply(new TrainingPresentationDto { LargePanelVisible = true, ActiveScreen = ScreenId.ZeroingBriefing, AwaitingWeaponPickup = true });
+        var main = root.GetComponentsInChildren<Transform>(true).First(x => x.name == "Screen_MainMenu"); main.gameObject.SetActive(false);
+        foreach (var text in root.GetComponentsInChildren<TMP_Text>(true)) text.ForceMeshUpdate();
+        Canvas.ForceUpdateCanvases();
+        var pickup = root.GetComponentsInChildren<TMP_Text>(true).First(x => x.name == "Text_TrainingShared_PickupPrompt");
+        var pr = pickup.rectTransform;
+        Debug.Log($"EVIDENCE: HUD text={pickup.text} offsetMin={pr.offsetMin} offsetMax={pr.offsetMax} rotation={pr.localEulerAngles}");
+        Render(c, tag + "-hud.png");
+        root.SetActive(false);
+        var rangeRoot = new GameObject("ZeroingRangeUI", typeof(RectTransform)); rangeRoot.SetActive(false); SceneManager.MoveGameObjectToScene(rangeRoot, preview);
+        var rangeUi = rangeRoot.AddComponent<ZeroingRangeUI>();
+        typeof(TrainingUIRoot).GetField("buildOnAwake", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(rangeUi, false);
+        rangeUi.Initialize(ApplicationServices.CreateDefault());
+        var rangeScaler = rangeRoot.GetComponent<CanvasScaler>(); if (rangeScaler != null) rangeScaler.enabled = false;
+        var rangeCanvas = rangeRoot.GetComponent<Canvas>(); rangeCanvas.renderMode = RenderMode.WorldSpace; rangeCanvas.worldCamera = c;
+        var rangeAdapter = rangeRoot.GetComponent<TrainingUICanvasAdapter>(); if (rangeAdapter != null) rangeAdapter.enabled = false;
+        var rangeRect = (RectTransform)rangeRoot.transform; rangeRect.sizeDelta = new Vector2(1920,1080); rangeRect.pivot = new Vector2(.5f,.5f); rangeRect.position = new Vector3(960,540,0); rangeRect.localScale = Vector3.one;
+        rangeRoot.SetActive(true);
+        rangeRoot.GetComponent<TrainingPresentationView>().Apply(new TrainingPresentationDto { LargePanelVisible = true, ActiveScreen = ScreenId.ZeroingBriefing, AwaitingWeaponPickup = true });
+        foreach (var text in rangeRoot.GetComponentsInChildren<TMP_Text>(true)) text.ForceMeshUpdate();
+        Canvas.ForceUpdateCanvases();
+        var rangePrompt = rangeRoot.GetComponentsInChildren<TMP_Text>(true).First(x => x.name == "Text_TrainingShared_PickupPrompt");
+        Debug.Log($"EVIDENCE: RANGE HUD text={rangePrompt.text} offsetMin={rangePrompt.rectTransform.offsetMin} offsetMax={rangePrompt.rectTransform.offsetMax} rotation={rangePrompt.rectTransform.localEulerAngles} anchors={rangePrompt.rectTransform.anchorMin}/{rangePrompt.rectTransform.anchorMax} rect={rangePrompt.rectTransform.rect} active={rangePrompt.gameObject.activeInHierarchy} enabled={rangePrompt.enabled} color={rangePrompt.color} vertices={rangePrompt.textInfo.characterCount} culled={rangePrompt.canvasRenderer.cull}");
+        Render(c, tag + "-range-hud.png");
+        EditorSceneManager.ClosePreviewScene(preview);
+    }
+    static void Render(Camera c, string file)
+    {
+        var target = new RenderTexture(1920, 1080, 24); c.targetTexture = target;
+        c.Render(); var old = RenderTexture.active; RenderTexture.active = target;
+        var tex = new Texture2D(1920,1080,TextureFormat.RGB24,false); tex.ReadPixels(new Rect(0,0,1920,1080),0,0); tex.Apply();
+        File.WriteAllBytes(Folder + "/" + file, tex.EncodeToPNG());
+        RenderTexture.active = old; c.targetTexture = null; target.Release(); Object.DestroyImmediate(target); Object.DestroyImmediate(tex);
+    }
+}

@@ -34,6 +34,8 @@ namespace VRShooting.Unity.UI
                 Place("Text_TrainingShared_PickupPrompt", 480, 46, 960, 38);
                 Place("Text_TrainingShared_FiringStationState", 580, 9, 760, 32);
             }
+            if (rects.ContainsKey("Panel_Training_AwaitingWeaponPickup"))
+                Place("Text_TrainingShared_PickupPrompt", 480, 46, 960, 38);
             Place("Panel_MovingTargetSetup_Content", 290, 110, 1340, 850);
             Place("Text_MovingTargetSetup_Title", 420, 815, 1080, 85);
             Place("Text_MovingTargetSetup_Rules", 400, 735, 1120, 55);

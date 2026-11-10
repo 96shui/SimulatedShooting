@@ -35,6 +35,8 @@ namespace VRShooting.Common
 
     public readonly struct SightAdjustmentDto
     {
+        // Signed positions: positive = clockwise / forward, negative = counterclockwise / backward.
+        // Zero is the neutral mechanical position, not the new-session baseline.
         public float FrontSightDegrees { get; init; }
         public int RearSightClicks { get; init; }
     }
@@ -53,6 +55,11 @@ namespace VRShooting.Common
         public Vector2 AverageOffsetCm { get; init; }
         public Vector2 ProposedCorrectionCm { get; init; }
         public Vector2 PreviewAverageOffsetCm { get; init; }
+        public SightAdjustmentDto CurrentAdjustment { get; init; }
+        public Vector2 FixedImpactOffsetCm { get; init; }
+        public SightAdjustmentDto ProposedAdjustment { get; init; }
+        public float PredictedOffsetMagnitudeCm { get; init; }
+        public bool PredictedOffsetPasses { get; init; }
         public VerticalAdjustmentDirection VerticalDirection { get; init; }
         public float FrontSightDegreesToAdjust { get; init; }
         public HorizontalAdjustmentDirection HorizontalDirection { get; init; }

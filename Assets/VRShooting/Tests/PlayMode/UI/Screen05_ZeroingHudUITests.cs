@@ -66,9 +66,47 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(FindText("Text_ZeroingHud_Round").text, Does.Contain("1/3"));
             Assert.That(FindText("Text_ZeroingHud_Distance").text, Does.Contain("100m"));
             Assert.That(FindText("Text_ZeroingHud_Ammo").text, Does.Contain("3/3"));
+            Assert.That(FindText("Text_ZeroingHud_Sights").text, Does.Contain("向前 1 格").And.Contain("顺时针 5°"));
             Assert.IsNotNull(FindById("Hud_Zeroing_Stability"));
             Assert.IsNotNull(FindById("Hud_Zeroing_ImpactRecord"));
             Assert.That(FindText("Text_ZeroingHud_Prompt").text, Does.Contain("稳定据枪"));
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd04_RangePickupPromptAndInstructionsHaveValidSafeLayout()
+        {
+            var view = zeroingRangeUi.GetComponent<TrainingPresentationView>();
+            view.Apply(new TrainingPresentationDto
+            {
+                LargePanelVisible = true,
+                ActiveScreen = ScreenId.ZeroingBriefing,
+                AwaitingWeaponPickup = true
+            });
+            yield return null;
+            Canvas.ForceUpdateCanvases();
+            var prompt = FindRangeRect("Training.Shared.PickupPrompt");
+            var station = FindRangeRect("Training.Shared.FiringStationState");
+            var frame = FindRangeRect("Panel_Training_AwaitingWeaponPickup_Content");
+            var start = FindRangeRect("Button_ZeroingBriefing_Start");
+            var promptText = prompt.GetComponent<TMP_Text>();
+            Assert.That(promptText.text, Is.EqualTo("请用右手近距取枪"));
+            promptText.ForceMeshUpdate();
+            Assert.That(promptText.textInfo.characterCount, Is.GreaterThan(0), "The safe-area rect must actually fit visible glyphs.");
+            Assert.That(prompt.offsetMin, Is.EqualTo(new Vector2(480, 46)));
+            Assert.That(prompt.offsetMax, Is.EqualTo(new Vector2(1440, 84)));
+            Assert.That(prompt.offsetMax.y, Is.LessThan(frame.offsetMin.y));
+            Assert.That(prompt.offsetMax.y, Is.LessThan(start.offsetMin.y));
+            Assert.That(prompt.offsetMax.y, Is.LessThan(station.offsetMin.y));
+            Assert.That(FindRangeRect("Text_Training_AwaitingWeaponPickup_Title").rect.width, Is.GreaterThan(0f));
+            Assert.That(FindRangeRect("Text_Training_AwaitingWeaponPickup_Rules").rect.height, Is.GreaterThan(0f));
+        }
+
+        RectTransform FindRangeRect(string id)
+        {
+            foreach (var item in zeroingRangeUi.GetComponentsInChildren<UITestId>(true))
+                if (item.Id == id) return item.GetComponent<RectTransform>();
+            Assert.Fail("Missing range UI test ID: " + id);
+            return null;
         }
 
         [UnityTest]

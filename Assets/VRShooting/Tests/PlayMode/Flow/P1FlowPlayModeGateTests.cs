@@ -384,6 +384,17 @@ namespace VRShooting.Tests.PlayMode.Flow
 
         IEnumerator ApplyAdjustmentAndAdvance()
         {
+            // This fixture exercises the three-round failure path even with random initial offsets.
+            var session = services.TrainingSessions.Current.SessionId;
+            for (var i = 0; i < 30; i++)
+            {
+                var offset = services.Zeroing.GetSession(session).Data.FixedImpactOffsetCm;
+                var pending = services.Zeroing.CompleteRound(session).Data.ProposedCorrectionCm;
+                if ((offset + pending).magnitude > 5f) break;
+                ClickButton("Button_ZeroingImpactAnalysis_HorizontalPlus");
+            }
+            Assert.That((services.Zeroing.GetSession(session).Data.FixedImpactOffsetCm +
+                services.Zeroing.CompleteRound(session).Data.ProposedCorrectionCm).magnitude, Is.GreaterThan(5f));
             ClickButton("Button_ZeroingImpactAnalysis_ApplyAdjustment");
             yield return null;
             Assert.That(

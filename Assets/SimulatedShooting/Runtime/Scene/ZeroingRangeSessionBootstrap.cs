@@ -13,7 +13,7 @@ namespace SimulatedShooting.Scene
     public sealed class ZeroingRangeSessionBootstrap : MonoBehaviour
     {
         [SerializeField] private bool autoStartSessionOnAwake = true;
-        [SerializeField] private int sessionSeed = 100;
+        RandomSeed? testSeed;
 
         ApplicationServices services;
         bool ownsServices;
@@ -77,7 +77,7 @@ namespace SimulatedShooting.Scene
                 return true;
             }
 
-            var zeroing = resolved.Zeroing.StartSession(RandomSeed.Fixed(sessionSeed), WeaponControlService.TrainingRifleId);
+            var zeroing = resolved.Zeroing.StartSession(testSeed ?? RandomSeed.CreateRandom(), WeaponControlService.TrainingRifleId);
             if (!zeroing.Success)
             {
                 Debug.LogError($"[{nameof(ZeroingRangeSessionBootstrap)}] failed to start zeroing session: {zeroing.Message}", this);
@@ -87,10 +87,11 @@ namespace SimulatedShooting.Scene
             return EnsureWeaponSession(zeroing.Data.SessionId);
         }
 
-        public void ConfigureForTests(ApplicationServices testServices, bool startSession = true)
+        public void ConfigureForTests(ApplicationServices testServices, bool startSession = true, RandomSeed? seed = null)
         {
             services = testServices;
             ownsServices = false;
+            testSeed = seed;
             if (startSession)
             {
                 EnsureZeroingSession();

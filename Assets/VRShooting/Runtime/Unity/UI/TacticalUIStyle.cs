@@ -27,7 +27,8 @@ namespace VRShooting.Unity.UI
                 if (text.name == "Text_TrenchHud_Title") text.fontSize = 28;
                 if (text.name.Contains("TargetCenter") || text.name == "Text_ZeroingHud_Prompt") text.color = new Color32(218, 241, 249, 255);
                 var parentImage = text.transform.parent != null ? text.transform.parent.GetComponent<Image>() : null;
-                if (parentImage != null && parentImage.name.StartsWith("Panel_") && parentImage.rectTransform.rect.height <= 140)
+                if (parentImage != null && parentImage.name != "Panel_Training_AwaitingWeaponPickup" &&
+                    parentImage.name.StartsWith("Panel_") && parentImage.rectTransform.rect.height <= 140)
                 {
                     text.rectTransform.offsetMin = new Vector2(30, 4);
                     text.rectTransform.offsetMax = new Vector2(-30, -4);

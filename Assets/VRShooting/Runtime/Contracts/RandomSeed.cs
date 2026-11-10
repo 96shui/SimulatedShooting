@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+
 namespace VRShooting.Contracts
 {
     /// <summary>
@@ -5,6 +9,9 @@ namespace VRShooting.Contracts
     /// </summary>
     public readonly struct RandomSeed
     {
+        static readonly object RandomLock = new object();
+        static readonly HashSet<int> IssuedSeeds = new HashSet<int>();
+
         public int Value { get; init; }
         public bool IsFixed { get; init; }
 
@@ -16,6 +23,25 @@ namespace VRShooting.Contracts
         public static RandomSeed Unfixed(int value = 0)
         {
             return new RandomSeed { Value = value, IsFixed = false };
+        }
+
+        /// <summary>Generates a non-repeating runtime seed for this process.</summary>
+        public static RandomSeed CreateRandom()
+        {
+            lock (RandomLock)
+            {
+                using (var random = RandomNumberGenerator.Create())
+                {
+                    var bytes = new byte[4];
+                    int value;
+                    do
+                    {
+                        random.GetBytes(bytes);
+                        value = BitConverter.ToInt32(bytes, 0) & int.MaxValue;
+                    } while (!IssuedSeeds.Add(value));
+                    return Unfixed(value);
+                }
+            }
         }
     }
 }

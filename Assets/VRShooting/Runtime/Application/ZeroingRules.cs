@@ -38,13 +38,10 @@ namespace VRShooting.Application
         public static Vector2 GenerateFixedOffset(RandomSeed seed)
         {
             var rng = new System.Random(seed.Value);
-            var angle = rng.NextDouble() * Math.PI * 2d;
-            var minRadius = 6f;
-            var maxRadius = 8f;
-            var radius = minRadius + rng.NextDouble() * (maxRadius - minRadius);
-            return new Vector2(
-                (float)(Math.Cos(angle) * radius),
-                (float)(Math.Sin(angle) * radius));
+            // Hundredths of a centimetre keep both endpoints reachable.
+            var x = rng.Next(500, 2001) / 100f * (rng.Next(2) == 0 ? -1f : 1f);
+            var y = rng.Next(500, 2001) / 100f * (rng.Next(2) == 0 ? -1f : 1f);
+            return new Vector2(x, y);
         }
 
         public static Vector2 ResolveAimPointCm(Vector3 aimDirection, float distanceMeters = DistanceMeters)
@@ -129,15 +126,20 @@ namespace VRShooting.Application
             int roundIndex,
             IReadOnlyList<ZeroingShotDto> shots,
             bool adjustmentApplied,
-            Vector2 proposedCorrectionCm = default)
+            Vector2 proposedCorrectionCm,
+            Vector2 fixedImpactOffsetCm,
+            SightAdjustmentDto currentAdjustment = default)
         {
             var average = ComputeAverageOffset(shots);
+            // Once applied, the fixed offset already includes this round's correction.
+            var predictedOffset = fixedImpactOffsetCm + (adjustmentApplied ? Vector2.zero : proposedCorrectionCm);
 
             var passed = shots.Count == ShotsPerRound;
             for (var i = 0; i < shots.Count; i++)
             {
                 passed &= shots[i].InsideTenRing;
             }
+            passed |= shots.Count == ShotsPerRound && adjustmentApplied && fixedImpactOffsetCm.magnitude <= TenRingRadiusCm;
 
             return new ZeroingRoundAnalysisDto
             {
@@ -147,6 +149,11 @@ namespace VRShooting.Application
                 AverageOffsetCm = average,
                 ProposedCorrectionCm = proposedCorrectionCm,
                 PreviewAverageOffsetCm = average + proposedCorrectionCm,
+                CurrentAdjustment = currentAdjustment,
+                FixedImpactOffsetCm = fixedImpactOffsetCm,
+                ProposedAdjustment = ApplyCorrection(default, proposedCorrectionCm),
+                PredictedOffsetMagnitudeCm = predictedOffset.magnitude,
+                PredictedOffsetPasses = predictedOffset.magnitude <= TenRingRadiusCm,
                 VerticalDirection = ResolveVerticalDirection(average.y),
                 FrontSightDegreesToAdjust = ComputeFrontSightDegrees(average.y),
                 HorizontalDirection = ResolveHorizontalDirection(average.x),
@@ -173,10 +180,12 @@ namespace VRShooting.Application
 
         public static SightAdjustmentDto ApplyCorrection(SightAdjustmentDto current, Vector2 correctionCm)
         {
+            // The correction is already quantized by the service. Round to mechanical steps
+            // rather than ceiling a floating-point approximation such as 11.840001 cm.
             return new SightAdjustmentDto
             {
-                FrontSightDegrees = current.FrontSightDegrees + ComputeFrontSightDegrees(correctionCm.y),
-                RearSightClicks = current.RearSightClicks + ComputeRearSightClicks(correctionCm.x)
+                FrontSightDegrees = current.FrontSightDegrees - Mathf.RoundToInt(correctionCm.y / (CmPerFrontSightDegree * FrontSightStepDegrees)) * FrontSightStepDegrees,
+                RearSightClicks = current.RearSightClicks + Mathf.RoundToInt(correctionCm.x / CmPerRearSightClick)
             };
         }
 
@@ -187,13 +196,15 @@ namespace VRShooting.Application
             var frontSight = current.FrontSightDegrees;
             if (analysis.VerticalDirection != VerticalAdjustmentDirection.None)
             {
-                frontSight += analysis.FrontSightDegreesToAdjust;
+                frontSight += analysis.VerticalDirection == VerticalAdjustmentDirection.Clockwise
+                    ? analysis.FrontSightDegreesToAdjust : -analysis.FrontSightDegreesToAdjust;
             }
 
             var rearSight = current.RearSightClicks;
             if (analysis.HorizontalDirection != HorizontalAdjustmentDirection.None)
             {
-                rearSight += analysis.RearSightClicksToAdjust;
+                rearSight += analysis.HorizontalDirection == HorizontalAdjustmentDirection.Forward
+                    ? analysis.RearSightClicksToAdjust : -analysis.RearSightClicksToAdjust;
             }
 
             return new SightAdjustmentDto
