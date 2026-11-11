@@ -62,10 +62,10 @@ namespace VRShooting.Tests.PlayMode.UI
 
             Assert.AreEqual(ScreenId.ZeroingFinalRating, services.Router.Current);
             Assert.IsFalse(FindById("Screen_ZeroingImpactAnalysis").activeSelf,
-                "BDD07: a passing round must bypass the adjustment screen.");
+                "BDD07: selecting the rating action leaves the analysis screen.");
             Assert.IsTrue(FindById("Screen_ZeroingFinalRating").activeSelf);
             Assert.That(FindText("Text_ZeroingFinalRating_Grade").text, Does.Contain("优秀"));
-            Assert.That(FindText("Text_ZeroingFinalRating_ImpactThumbnails").text, Does.Contain("第1轮：3发 · 通过"));
+            Assert.That(FindText("Text_ZeroingFinalRating_ImpactThumbnails").text, Does.Contain("第1轮：4发 · 通过"));
             Assert.That(FindText("Text_ZeroingFinalRating_Rounds").text, Does.Contain("第2轮：未使用"));
             Assert.That(FindText("Text_ZeroingFinalRating_ImpactThumbnails").text, Does.Contain("第1轮"));
             Assert.That(FindById("Image_ZeroingImpactAnalysis_Target").GetComponent<TacticalTargetPlot>(), Is.Not.Null);
@@ -73,7 +73,7 @@ namespace VRShooting.Tests.PlayMode.UI
             {
                 var plot = FindById("Image_ZeroingFinalRating_Target_Round" + round).GetComponent<TacticalTargetPlot>();
                 Assert.That(plot, Is.Not.Null);
-                Assert.That(plot.ImpactCount, Is.EqualTo(round == 1 ? 3 : 0));
+                Assert.That(plot.ImpactCount, Is.EqualTo(round == 1 ? 4 : 0));
             }
         }
 
@@ -131,6 +131,10 @@ namespace VRShooting.Tests.PlayMode.UI
             RecordZeroingShot();
             RecordZeroingShot();
             RecordZeroingShot();
+            RecordZeroingShot();
+            yield return null;
+            Assert.AreEqual(ScreenId.ZeroingImpactAnalysis, services.Router.Current);
+            FindButton("Button_ZeroingImpactAnalysis_NextRound").onClick.Invoke();
             yield return null;
         }
 

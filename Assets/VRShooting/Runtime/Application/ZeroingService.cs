@@ -79,7 +79,7 @@ namespace VRShooting.Application
 
             if (record.CurrentShots.Count < ZeroingRules.ShotsPerRound)
             {
-                return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState, "round requires 3 shots", ZeroingRoundAnalysisDto.Empty);
+                return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState, "round requires 4 shots", ZeroingRoundAnalysisDto.Empty);
             }
 
             return ServiceResult<ZeroingRoundAnalysisDto>.Ok(CompleteRoundInternal(record, false));
@@ -92,13 +92,14 @@ namespace VRShooting.Application
                 return ServiceResult<ZeroingRoundAnalysisDto>.Fail(failure, "zeroing session not found", ZeroingRoundAnalysisDto.Empty);
             if (record.CurrentShots.Count < ZeroingRules.ShotsPerRound || record.AppliedRounds.Contains(record.CurrentRound))
                 return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState, "round cannot be adjusted", ZeroingRoundAnalysisDto.Empty);
-            if(record.BuildAnalysis().FinalResultAvailable)
-                return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState,"final round does not require adjustment",record.BuildAnalysis());
+            var currentAnalysis = record.BuildAnalysis();
+            if (currentAnalysis.SpreadRejected || currentAnalysis.PassedTenRing)
+                return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState, "round cannot be adjusted", currentAnalysis);
             if (roundIndex != record.CurrentRound || direction != -1 && direction != 1 ||
                 axis != ZeroingAdjustmentAxis.Horizontal && axis != ZeroingAdjustmentAxis.Vertical)
                 return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidInput, "invalid adjustment request", ZeroingRoundAnalysisDto.Empty);
 
-            var correction = record.PendingCorrectionCm ?? ZeroingRules.QuantizeCorrection(-ZeroingRules.ComputeAverageOffset(record.CurrentShots));
+            var correction = record.PendingCorrectionCm ?? Vector2.zero;
             if (axis == ZeroingAdjustmentAxis.Horizontal)
                 correction.x = Mathf.Clamp(correction.x + direction * ZeroingRules.CmPerRearSightClick, -50f, 50f);
             else
@@ -116,7 +117,7 @@ namespace VRShooting.Application
 
             if (record.CurrentShots.Count < ZeroingRules.ShotsPerRound)
             {
-                return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState, "round requires 3 shots", ZeroingRoundAnalysisDto.Empty);
+                return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState, "round requires 4 shots", ZeroingRoundAnalysisDto.Empty);
             }
 
             var analysis = CompleteRoundInternal(record, false);
@@ -125,12 +126,13 @@ namespace VRShooting.Application
                 return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidInput, "round index mismatch", analysis);
             }
 
-            if (analysis.FinalResultAvailable && !analysis.AdjustmentApplied)
-                return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState,"final round does not require adjustment",analysis);
+            if (analysis.SpreadRejected || (analysis.PassedTenRing && !analysis.AdjustmentApplied))
+                return ServiceResult<ZeroingRoundAnalysisDto>.Fail(ErrorCode.InvalidState, "round cannot be adjusted", analysis);
 
             if (!analysis.AdjustmentApplied)
             {
-                record.FixedImpactOffsetCm += analysis.ProposedCorrectionCm;
+                record.AppliedCorrectionCm = analysis.ProposedCorrectionCm;
+                record.FixedImpactOffsetCm += record.AppliedCorrectionCm;
                 record.CurrentAdjustment = ZeroingRules.ApplyCorrection(record.CurrentAdjustment, analysis.ProposedCorrectionCm);
                 record.AppliedRounds.Add(roundIndex);
                 analysis = record.BuildAnalysis();
@@ -149,11 +151,11 @@ namespace VRShooting.Application
             }
 
             if(record.CurrentShots.Count<ZeroingRules.ShotsPerRound)
-                return ServiceResult<ZeroingSessionDto>.Fail(ErrorCode.InvalidState,"round requires 3 shots",record.ToSessionDto(AllowsRecording(record.SessionId)));
+                return ServiceResult<ZeroingSessionDto>.Fail(ErrorCode.InvalidState,"round requires 4 shots",record.ToSessionDto(AllowsRecording(record.SessionId)));
             var analysis = CompleteRoundInternal(record, false);
             if(analysis.FinalResultAvailable)
                 return ServiceResult<ZeroingSessionDto>.Ok(record.ToSessionDto(AllowsRecording(record.SessionId)));
-            if (!analysis.AdjustmentApplied)
+            if (!analysis.AdjustmentApplied && !analysis.SpreadRejected)
             {
                 return ServiceResult<ZeroingSessionDto>.Fail(ErrorCode.InvalidState, "adjustment must be applied first", record.ToSessionDto(AllowsRecording(record.SessionId)));
             }
@@ -166,6 +168,7 @@ namespace VRShooting.Application
             record.CurrentRound++;
             record.CurrentShots.Clear();
             record.PendingCorrectionCm = null;
+            record.AppliedCorrectionCm = Vector2.zero;
             weaponControl.Reload(sessionId);
             var dto = record.ToSessionDto(AllowsRecording(record.SessionId));
             eventBus.Publish(new ZeroingRoundStartedEvent { SessionId = sessionId, Session = dto });
@@ -337,6 +340,7 @@ namespace VRShooting.Application
             public Vector2 FixedImpactOffsetCm { get; set; }
             public SightAdjustmentDto CurrentAdjustment { get; set; }
             public Vector2? PendingCorrectionCm { get; set; }
+            public Vector2 AppliedCorrectionCm { get; set; }
             public List<ZeroingShotDto> CurrentShots { get; } = new List<ZeroingShotDto>();
             public List<ZeroingRoundAnalysisDto> Analyses { get; } = new List<ZeroingRoundAnalysisDto>();
             public HashSet<int> AppliedRounds { get; } = new HashSet<int>();
@@ -378,9 +382,10 @@ namespace VRShooting.Application
                     CurrentRound,
                     CurrentShots,
                     AppliedRounds.Contains(CurrentRound),
-                    PendingCorrectionCm ?? ZeroingRules.QuantizeCorrection(-ZeroingRules.ComputeAverageOffset(CurrentShots)),
+                    PendingCorrectionCm ?? Vector2.zero,
                     FixedImpactOffsetCm,
-                    CurrentAdjustment);
+                    CurrentAdjustment,
+                    AppliedCorrectionCm);
             }
 
             public bool UpsertAnalysis(ZeroingRoundAnalysisDto analysis)

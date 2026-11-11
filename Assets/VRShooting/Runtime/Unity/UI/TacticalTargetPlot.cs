@@ -12,6 +12,7 @@ namespace VRShooting.Unity.UI
         readonly List<Vector2> impacts = new List<Vector2>();
         readonly List<RectTransform> markers = new List<RectTransform>();
         RectTransform averageMarker, previewMarker;
+        int discardedShotIndex = -1;
         Vector2? averagePoint, previewPoint;
         Texture2D sceneFace;
         public override Texture mainTexture => SceneFace!=null?SceneFace:Texture2D.whiteTexture;
@@ -47,8 +48,11 @@ namespace VRShooting.Unity.UI
             var region = HitRegion(outer);
             return region.center + point * (region.width / TargetSideCm);
         }
-        public void SetImpacts(IEnumerable<Vector2> points)
+        public void SetImpacts(IEnumerable<Vector2> points) => SetImpacts(points, -1);
+
+        public void SetImpacts(IEnumerable<Vector2> points, int discardedIndex)
         {
+            discardedShotIndex = discardedIndex;
             impacts.Clear();
             if (points != null) impacts.AddRange(points);
             while (markers.Count < impacts.Count)
@@ -100,6 +104,8 @@ namespace VRShooting.Unity.UI
                 var active = i < impacts.Count && IsOnTarget(impacts[i]);
                 markers[i].gameObject.SetActive(active);
                 if (!active) continue;
+                var markerImage = markers[i].GetComponent<Image>();
+                markerImage.color = i == discardedShotIndex ? new Color(1f, .82f, .2f, 1f) : new Color(1f, .15f, .08f, 1f);
                 markers[i].anchorMin = markers[i].anchorMax = rectTransform.pivot;
                 markers[i].sizeDelta = new Vector2(7, 7);
                 markers[i].anchoredPosition = MapImpactPointCm(rectTransform.rect, impacts[i]);

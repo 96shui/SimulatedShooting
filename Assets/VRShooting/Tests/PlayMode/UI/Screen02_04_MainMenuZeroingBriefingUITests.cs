@@ -259,7 +259,7 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(title.text, Does.Contain("100m"));
             Assert.That(rules.text, Does.Contain("射击距离：100m"));
             Assert.That(rules.text, Does.Contain("射击模式：单发射"));
-            Assert.That(rules.text, Does.Contain("每轮弹数：3发"));
+            Assert.That(rules.text, Does.Contain("每轮弹数：4发"));
             Assert.That(rules.text, Does.Contain("50cm x 50cm"));
             Assert.That(rules.text, Does.Contain("10环直径：10cm"));
             Assert.That(rules.text, Does.Contain("通过条件"));

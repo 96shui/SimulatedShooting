@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Passed" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-11 06:58:06Z" end-time="2026-11-11 06:58:06Z" duration="0.0294253">
+  <test-suite type="TestSuite" id="1461" name="VR" fullname="VR" runstate="Runnable" testcasecount="364" result="Passed" start-time="2026-11-11 06:58:06Z" end-time="2026-11-11 06:58:06Z" duration="0.029425" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1914" name="VRShooting.Runtime.EditModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.EditModeTests.dll" runstate="Runnable" testcasecount="319" result="Passed" start-time="2026-11-11 06:58:06Z" end-time="2026-11-11 06:58:06Z" duration="0.021325" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="66460" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1915" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="319" result="Passed" start-time="2026-11-11 06:58:06Z" end-time="2026-11-11 06:58:06Z" duration="0.020027" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1916" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="319" result="Passed" start-time="2026-11-11 06:58:06Z" end-time="2026-11-11 06:58:06Z" duration="0.019097" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1917" name="EditMode" fullname="VRShooting.Tests.EditMode" runstate="Runnable" testcasecount="319" result="Passed" start-time="2026-11-11 06:58:06Z" end-time="2026-11-11 06:58:06Z" duration="0.018204" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestSuite" id="1921" name="Application" fullname="VRShooting.Tests.EditMode.Application" runstate="Runnable" testcasecount="171" result="Passed" start-time="2026-11-11 06:58:06Z" end-time="2026-11-11 06:58:06Z" duration="0.015928" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="1853" name="ZeroingRulesTests" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" testcasecount="19" result="Passed" start-time="2026-11-11 06:58:06Z" end-time="2026-11-11 06:58:06Z" duration="0.013240" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1854" name="Bdd05_ZeroingRoundRequiresFourShots" fullname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd05_ZeroingRoundRequiresFourShots" methodname="Bdd05_ZeroingRoundRequiresFourShots" classname="VRShooting.Tests.EditMode.Application.ZeroingRulesTests" runstate="Runnable" seed="173752229" result="Passed" start-time="2026-11-11 06:58:06Z" end-time="2026-11-11 06:58:06Z" duration="0.005573" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

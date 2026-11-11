@@ -19,7 +19,7 @@
 | 测试 | BDD |
 |---|---|
 | `Screen09_WeaponAutomaticFireServiceTests` | 09 快速两发、长按连射、10 发耗尽、1 发拒绝、禁射不自动恢复、大步长 Tick、幂等 |
-| `Screen09_TrainingWeaponFireCoordinatorTests` | 09 倒计时不计分、左端停火、结算保留序列；00 P1 长按仍单发且三发一轮 |
+| `Screen09_TrainingWeaponFireCoordinatorTests` | 09 倒计时不计分、左端停火、结算保留序列；00 P1 长按仍单发，现行四发一轮 |
 | `Screen09_AutoFireNoVrPlayModeTests` | 09 无 VR 快速两发与长按 10 发 |
 | `Screen05_XRTrainingInputTests` Task007 | 00/05 Trigger Held/Released 与迟滞 |
 

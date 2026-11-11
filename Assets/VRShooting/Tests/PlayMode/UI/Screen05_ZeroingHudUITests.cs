@@ -65,7 +65,7 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.IsTrue(FindById("Screen_ZeroingHud").activeSelf);
             Assert.That(FindText("Text_ZeroingHud_Round").text, Does.Contain("1/3"));
             Assert.That(FindText("Text_ZeroingHud_Distance").text, Does.Contain("100m"));
-            Assert.That(FindText("Text_ZeroingHud_Ammo").text, Does.Contain("3/3"));
+            Assert.That(FindText("Text_ZeroingHud_Ammo").text, Does.Contain("4/4"));
             Assert.That(FindText("Text_ZeroingHud_Sights").text, Does.Contain("向前 1 格").And.Contain("顺时针 5°"));
             Assert.IsNotNull(FindById("Hud_Zeroing_Stability"));
             Assert.IsNotNull(FindById("Hud_Zeroing_ImpactRecord"));
@@ -117,8 +117,8 @@ namespace VRShooting.Tests.PlayMode.UI
             FireShot(true);
             yield return null;
 
-            Assert.That(FindText("Text_ZeroingHud_Ammo").text, Does.Contain("2/3"));
-            Assert.That(FindText("Text_ZeroingHud_ImpactRecord").text, Does.Contain("已记录 1/3"));
+            Assert.That(FindText("Text_ZeroingHud_Ammo").text, Does.Contain("3/4"));
+            Assert.That(FindText("Text_ZeroingHud_ImpactRecord").text, Does.Contain("已记录 1/4"));
             Assert.That(FindText("Text_ZeroingHud_ImpactRecord").text, Does.Contain("命中"));
         }
 
@@ -142,9 +142,10 @@ namespace VRShooting.Tests.PlayMode.UI
             FireShot(true);
             FireShot(true);
             FireShot(true);
+            FireShot(true);
             yield return null;
 
-            Assert.That(FindText("Text_ZeroingHud_Ammo").text, Does.Contain("0/3"));
+            Assert.That(FindText("Text_ZeroingHud_Ammo").text, Does.Contain("0/4"));
             Assert.That(FindText("Text_ZeroingHud_Prompt").text, Does.Contain("本轮射击已完成"));
         }
 

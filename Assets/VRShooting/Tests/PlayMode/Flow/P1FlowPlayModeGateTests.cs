@@ -87,7 +87,9 @@ namespace VRShooting.Tests.PlayMode.Flow
         {
             yield return SetUpInMemoryFixture();
             yield return OpenZeroingViaInputStubAndStartTraining();
-            yield return FireThreeShotsForImpact(PassImpactCm);
+            yield return FireFourShotsForImpact(PassImpactCm);
+            ClickButton("Button_ZeroingImpactAnalysis_NextRound");
+            yield return null;
 
             AssertLayer(
                 "UI",
@@ -100,7 +102,7 @@ namespace VRShooting.Tests.PlayMode.Flow
                 "[功能A] final grade DTO should map round-1 pass to 优秀");
             Assert.That(
                 FindText("Text_ZeroingFinalRating_ImpactThumbnails").text,
-                Does.Contain("第1轮：3发 · 通过"),
+                Does.Contain("第1轮：4发 · 通过"),
                 "[功能A] settlement should mark round 1 as passed");
 
             var final = services.Zeroing.GetFinalResult(services.TrainingSessions.Current.SessionId);
@@ -119,10 +121,12 @@ namespace VRShooting.Tests.PlayMode.Flow
 
             for (var round = 1; round <= 3; round++)
             {
-                yield return FireThreeShotsForImpact(FailImpactCm);
+                yield return FireFourShotsForImpact(FailImpactCm);
                 if(round==3)
                 {
-                    AssertLayer("UI",ScreenId.ZeroingFinalRating,"Screen_ZeroingFinalRating","Third failed round directly opens final rating");
+                    ClickButton("Button_ZeroingImpactAnalysis_NextRound");
+                    yield return null;
+                    AssertLayer("UI",ScreenId.ZeroingFinalRating,"Screen_ZeroingFinalRating","Third failed round opens final rating");
                     break;
                 }
                 AssertLayer(
@@ -146,7 +150,7 @@ namespace VRShooting.Tests.PlayMode.Flow
                         "[功能A] HUD round text should advance after continue");
                     Assert.That(
                         FindText("Text_ZeroingHud_Ammo").text,
-                        Does.Contain("3/3"),
+                        Does.Contain("4/4"),
                         "[功能B] ammo should reload for the next round");
                 }
             }
@@ -162,9 +166,9 @@ namespace VRShooting.Tests.PlayMode.Flow
                 "[功能A] final grade DTO should map no-pass to 不及格");
             Assert.That(
                 FindText("Text_ZeroingFinalRating_ImpactThumbnails").text,
-                Does.Contain("第1轮：3发 · 未通过")
-                    .And.Contain("第2轮：3发 · 未通过")
-                    .And.Contain("第3轮：3发 · 未通过"),
+                Does.Contain("第1轮：4发 · 未通过")
+                    .And.Contain("第2轮：4发 · 未通过")
+                    .And.Contain("第3轮：4发 · 未通过"),
                 "[功能A] settlement should show all three rounds as failed");
 
             var final = services.Zeroing.GetFinalResult(services.TrainingSessions.Current.SessionId);
@@ -238,7 +242,9 @@ namespace VRShooting.Tests.PlayMode.Flow
                 Is.True,
                 "[UI] range scene should show Screen_ZeroingHud after valid pickup");
 
-            yield return FireThreeShotsForImpact(PassImpactCm);
+            yield return FireFourShotsForImpact(PassImpactCm);
+            ClickButton("Button_ZeroingImpactAnalysis_NextRound");
+            yield return null;
             AssertLayer(
                 "UI",
                 ScreenId.ZeroingFinalRating,
@@ -323,11 +329,11 @@ namespace VRShooting.Tests.PlayMode.Flow
                 "valid pickup should open ZeroingHud");
             Assert.That(
                 FindText("Text_ZeroingHud_Ammo").text,
-                Does.Contain("3/3"),
-                "[功能B] HUD ammo should start at 3/3");
+                Does.Contain("4/4"),
+                "[功能B] HUD ammo should start at 4/4");
         }
 
-        IEnumerator FireThreeShotsForImpact(Vector2 desiredImpactCm)
+        IEnumerator FireFourShotsForImpact(Vector2 desiredImpactCm)
         {
             Assert.IsTrue(
                 services.TrainingSessions.HasActiveSession,

@@ -20,8 +20,8 @@ namespace VRShooting.Tests.EditMode.Application
             var state = service.GetState(SessionId).Data;
 
             Assert.That(state.WeaponId, Is.EqualTo(WeaponControlService.TrainingRifleId));
-            Assert.That(state.CurrentMagazine, Is.EqualTo(3));
-            Assert.That(state.ReserveAmmo, Is.EqualTo(6));
+            Assert.That(state.CurrentMagazine, Is.EqualTo(4));
+            Assert.That(state.ReserveAmmo, Is.EqualTo(8));
             Assert.That(state.CanShoot, Is.False);
             Assert.That(state.HoldState, Is.EqualTo(WeaponHoldState.OnRack));
             Assert.That(state.TwoHandGripActive, Is.False);
@@ -38,17 +38,18 @@ namespace VRShooting.Tests.EditMode.Application
 
             Assert.That(result.Success, Is.True);
             Assert.That(result.Data.IsValidShot, Is.True);
-            Assert.That(result.Data.CurrentMagazine, Is.EqualTo(2));
-            Assert.That(result.Data.ReserveAmmo, Is.EqualTo(6));
+            Assert.That(result.Data.CurrentMagazine, Is.EqualTo(3));
+            Assert.That(result.Data.ReserveAmmo, Is.EqualTo(8));
             Assert.That(result.Data.AimDirection, Is.EqualTo(Vector3.forward));
             Assert.That(result.Data.Hit, Is.True);
-            Assert.That(service.GetState(SessionId).Data.CurrentMagazine, Is.EqualTo(2));
+            Assert.That(service.GetState(SessionId).Data.CurrentMagazine, Is.EqualTo(3));
         }
 
         [Test]
         public void Task005_Fire_WhenMagazineEmpty_DoesNotConsumeAmmoAgain()
         {
             var service = CreateStartedService();
+            service.Fire(CreateFireInput());
             service.Fire(CreateFireInput());
             service.Fire(CreateFireInput());
             service.Fire(CreateFireInput());
@@ -72,8 +73,8 @@ namespace VRShooting.Tests.EditMode.Application
             var reload = service.Reload(SessionId);
 
             Assert.That(reload.Success, Is.True);
-            Assert.That(reload.Data.CurrentMagazine, Is.EqualTo(3));
-            Assert.That(reload.Data.ReserveAmmo, Is.EqualTo(4));
+            Assert.That(reload.Data.CurrentMagazine, Is.EqualTo(4));
+            Assert.That(reload.Data.ReserveAmmo, Is.EqualTo(6));
             Assert.That(reload.Data.CanShoot, Is.True);
         }
 
@@ -86,7 +87,7 @@ namespace VRShooting.Tests.EditMode.Application
 
             Assert.That(result.Success, Is.True);
             Assert.That(result.Data.ShoulderSide, Is.EqualTo(ShoulderSide.Left));
-            Assert.That(result.Data.CurrentMagazine, Is.EqualTo(3));
+            Assert.That(result.Data.CurrentMagazine, Is.EqualTo(4));
         }
 
         [Test]
@@ -126,7 +127,7 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.That(blocked.Success, Is.False);
             Assert.That(blocked.ErrorCode, Is.EqualTo(ErrorCode.InvalidState));
             Assert.That(blocked.Data.HoldState, Is.EqualTo(WeaponHoldState.RearHandHeld));
-            Assert.That(service.GetState(SessionId).Data.CurrentMagazine, Is.EqualTo(3));
+            Assert.That(service.GetState(SessionId).Data.CurrentMagazine, Is.EqualTo(4));
         }
 
         [Test]

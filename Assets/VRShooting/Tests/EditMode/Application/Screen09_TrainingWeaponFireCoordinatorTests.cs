@@ -125,17 +125,17 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.IsTrue(presentation.ConfirmStart(sessionId).Success);
             Assert.IsTrue(weapons.SetGripState(TwoHand(sessionId)).Success);
 
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < 4; i++)
             {
                 coordinator.Tick(sessionId, 0.5f, Press(sessionId), ZeroingSnapshot(sessionId));
                 coordinator.Tick(sessionId, 0.5f, Hold(sessionId), ZeroingSnapshot(sessionId));
                 coordinator.Tick(sessionId, 0f, Release(sessionId), ZeroingSnapshot(sessionId));
             }
 
-            Assert.AreEqual(3, shots.Count);
+            Assert.AreEqual(4, shots.Count);
             var analysis = zeroing.CompleteRound(sessionId);
             Assert.IsTrue(analysis.Success, analysis.Message);
-            Assert.AreEqual(3, analysis.Data.Shots.Count);
+            Assert.AreEqual(4, analysis.Data.Shots.Count);
         }
 
         string StartMovingTargetLive()

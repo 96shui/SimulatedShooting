@@ -52,7 +52,15 @@ namespace VRShooting.Common
         public string SessionId { get; init; }
         public int RoundIndex { get; init; }
         public IReadOnlyList<ZeroingShotDto> Shots { get; init; }
+        // Mean of the three-shot calculation set; zero if no set exists.
         public Vector2 AverageOffsetCm { get; init; }
+        public bool CalculationSetAvailable { get; init; }
+        public bool SpreadRulePassed { get; init; }
+        public bool SpreadRejected { get; init; }
+        // Encoded so that default(ZeroingRoundAnalysisDto) also means no discarded shot.
+        readonly int discardedShotIndexPlusOne;
+        public int DiscardedShotIndex { get => discardedShotIndexPlusOne - 1; init => discardedShotIndexPlusOne = value + 1; }
+        public Vector2 AppliedCorrectionCm { get; init; }
         public Vector2 ProposedCorrectionCm { get; init; }
         public Vector2 PreviewAverageOffsetCm { get; init; }
         public SightAdjustmentDto CurrentAdjustment { get; init; }

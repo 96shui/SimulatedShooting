@@ -45,6 +45,7 @@ namespace SimulatedShooting.Scene
         IDisposable inputSubscription;
         IDisposable shotSubscription;
         IDisposable zeroingShotSubscription;
+        IDisposable zeroingRoundSubscription;
         ZeroingShotDto latestZeroingShot;
         int latestZeroingShotSequence;
         readonly RaycastHit[] shotHits = new RaycastHit[64];
@@ -191,6 +192,8 @@ namespace SimulatedShooting.Scene
             shotSubscription = null;
             zeroingShotSubscription?.Dispose();
             zeroingShotSubscription = null;
+            zeroingRoundSubscription?.Dispose();
+            zeroingRoundSubscription = null;
             dispatcher = null;
             initialized = false;
         }
@@ -340,6 +343,7 @@ namespace SimulatedShooting.Scene
                 inputSubscription = eventBus.Subscribe<XRTrainingInputCommandEvent>(HandleInputCommand);
                 shotSubscription = eventBus.Subscribe<WeaponShotResultEvent>(HandleWeaponShotResult);
                 zeroingShotSubscription = eventBus.Subscribe<ZeroingShotRecordedEvent>(HandleZeroingShotRecorded);
+                zeroingRoundSubscription = eventBus.Subscribe<ZeroingRoundCompletedEvent>(HandleZeroingRoundCompleted);
             }
 
             weaponService = services.WeaponControl;
@@ -927,7 +931,11 @@ namespace SimulatedShooting.Scene
             {
                 var point = latestZeroingShot.ImpactPointCm;
                 visualEnd = targetSurface.TargetCenter.TransformPoint(new Vector3(point.x * .01f, point.y * .01f, 0));
-                var onFace = targetSurface.TryRecordWorldPoint(visualEnd, out _);
+                // The completion event precedes the outer shot-visual callback. Do not
+                // recreate the fourth marker after the completed round was cleared.
+                var onFace = latestZeroingShot.ShotIndex == ZeroingRules.ShotsPerRound
+                    ? targetSurface.TryComputeOffsetCm(visualEnd, out _)
+                    : targetSurface.TryRecordWorldPoint(visualEnd, out _);
                 SpawnTracer(result.MuzzlePosition, visualEnd, onFace, latestRaycast, -targetSurface.TargetCenter.forward);
             }
             else
@@ -956,6 +964,13 @@ namespace SimulatedShooting.Scene
             if (evt.SessionId != boundSessionId) return;
             latestZeroingShot = evt.Shot;
             latestZeroingShotSequence = evt.WeaponShotSequence;
+        }
+
+        void HandleZeroingRoundCompleted(ZeroingRoundCompletedEvent evt)
+        {
+            if (evt.SessionId != boundSessionId || targetSurface == null || movingTargetHitAdapter != null) return;
+            foreach (var surface in targetSurface.GetComponentsInChildren<TargetImpactSurface>(true))
+                surface.ClearImpacts();
         }
 
         bool RaycastShot(Vector3 origin, Vector3 direction, out RaycastHit closest)

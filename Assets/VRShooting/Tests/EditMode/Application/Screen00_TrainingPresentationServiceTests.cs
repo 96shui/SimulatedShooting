@@ -175,7 +175,7 @@ namespace VRShooting.Tests.EditMode.Application
             var sessionId = StartAndConfirm(TrainingMode.Zeroing100m, RandomSeed.Fixed(100));
             PickupRear(sessionId);
 
-            RecordThreeImpacts(sessionId, new Vector2(-8f, 12f));
+            RecordFourImpacts(sessionId, new Vector2(-8f, 12f));
 
             var dto = presentation.Get(sessionId).Data;
             Assert.AreEqual(TrainingPresentationPhase.RoundReview, dto.Phase);
@@ -224,8 +224,10 @@ namespace VRShooting.Tests.EditMode.Application
         {
             var sessionId = StartAndConfirm(TrainingMode.Zeroing100m, RandomSeed.Fixed(100));
             PickupRear(sessionId);
-            RecordThreeImpacts(sessionId, new Vector2(1f, 1f));
-            var next = presentation.Get(sessionId);
+            RecordFourImpacts(sessionId, new Vector2(1f, 1f));
+            var review = presentation.Get(sessionId);
+            Assert.AreEqual(TrainingPresentationPhase.RoundReview, review.Data.Phase);
+            var next = presentation.ContinueNextRound(sessionId);
 
             Assert.IsTrue(next.Success, next.Message);
             Assert.AreEqual(TrainingPresentationPhase.SessionResults, next.Data.Phase);
@@ -242,8 +244,10 @@ namespace VRShooting.Tests.EditMode.Application
             PickupRear(sessionId);
             FailCurrentRoundAndContinue(sessionId);
             FailCurrentRoundAndContinue(sessionId);
-            RecordThreeImpacts(sessionId, new Vector2(-8f, 12f));
-            var next = presentation.Get(sessionId);
+            RecordFourImpacts(sessionId, new Vector2(-8f, 12f));
+            var review = presentation.Get(sessionId);
+            Assert.AreEqual(TrainingPresentationPhase.RoundReview, review.Data.Phase);
+            var next = presentation.ContinueNextRound(sessionId);
 
             Assert.IsTrue(next.Success, next.Message);
             Assert.AreEqual(TrainingPresentationPhase.SessionResults, next.Data.Phase);
@@ -302,7 +306,7 @@ namespace VRShooting.Tests.EditMode.Application
 
             Assert.IsFalse(shot.Success);
             Assert.AreEqual(ErrorCode.InvalidState, shot.ErrorCode);
-            Assert.AreEqual(3, zeroing.GetSession(sessionId).Data.ShotsRemainingInRound);
+            Assert.AreEqual(4, zeroing.GetSession(sessionId).Data.ShotsRemainingInRound);
         }
 
         string StartAndConfirm(TrainingMode mode, RandomSeed? seed = null)
@@ -353,7 +357,7 @@ namespace VRShooting.Tests.EditMode.Application
         {
             var sessionId = StartAndConfirm(TrainingMode.Zeroing100m, RandomSeed.Fixed(100));
             PickupRear(sessionId);
-            RecordThreeImpacts(sessionId, new Vector2(-8f, 12f));
+            RecordFourImpacts(sessionId, new Vector2(-8f, 12f));
             if (!keepHeld)
             {
                 DropWeapon(sessionId);
@@ -366,7 +370,7 @@ namespace VRShooting.Tests.EditMode.Application
 
         void FailCurrentRoundAndContinue(string sessionId)
         {
-            RecordThreeImpacts(sessionId, new Vector2(-8f, 12f));
+            RecordFourImpacts(sessionId, new Vector2(-8f, 12f));
             var round = zeroing.GetSession(sessionId).Data.CurrentRound;
             var applied = zeroing.ApplyAdjustment(sessionId, round);
             Assert.IsTrue(applied.Success, applied.Message);
@@ -378,10 +382,11 @@ namespace VRShooting.Tests.EditMode.Application
             }
         }
 
-        void RecordThreeImpacts(string sessionId, Vector2 impactCm)
+        void RecordFourImpacts(string sessionId, Vector2 impactCm)
         {
             var offset = zeroing.GetSession(sessionId).Data.FixedImpactOffsetCm;
             var aim = impactCm - offset;
+            Assert.IsTrue(RecordImpact(sessionId, aim).Success);
             Assert.IsTrue(RecordImpact(sessionId, aim).Success);
             Assert.IsTrue(RecordImpact(sessionId, aim).Success);
             Assert.IsTrue(RecordImpact(sessionId, aim).Success);

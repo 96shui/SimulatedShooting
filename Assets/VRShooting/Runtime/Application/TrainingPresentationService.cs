@@ -325,8 +325,7 @@ namespace VRShooting.Application
                 return;
             }
 
-            current.Phase = evt.Analysis.FinalResultAvailable
-                ? TrainingPresentationPhase.SessionResults : TrainingPresentationPhase.RoundReview;
+            current.Phase = TrainingPresentationPhase.RoundReview;
             current.P2CountdownPending = false;
             current.PromptReason = null;
             Publish();

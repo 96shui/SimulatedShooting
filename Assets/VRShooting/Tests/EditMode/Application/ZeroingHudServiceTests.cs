@@ -43,8 +43,8 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.AreEqual(HudType.Zeroing, result.Data.HudType);
             Assert.AreEqual("1/3", FindLine(result.Data, "round").Value);
             Assert.AreEqual("100m", FindLine(result.Data, "distance").Value);
-            Assert.AreEqual("3/3", FindLine(result.Data, "ammo").Value);
-            Assert.AreEqual("待记录 3 发", FindLine(result.Data, "impactRecord").Value);
+            Assert.AreEqual("4/4", FindLine(result.Data, "ammo").Value);
+            Assert.AreEqual("待记录 4 发", FindLine(result.Data, "impactRecord").Value);
             Assert.AreEqual("右肩", FindLine(result.Data, "shoulder").Value);
             Assert.AreEqual("向前 1 格", FindLine(result.Data, "rearSight").Value);
             Assert.AreEqual("顺时针 5°", FindLine(result.Data, "frontSight").Value);
@@ -56,15 +56,15 @@ namespace VRShooting.Tests.EditMode.Application
         public void Bdd05_HudSightReadingsRefreshAfterAppliedAdjustment()
         {
             var session = StartZeroingSession();
-            RecordThreeImpacts(session.SessionId, new Vector2(-8f, 12f));
+            RecordFourImpacts(session.SessionId, new Vector2(-8f, 12f));
             HudDto published = default;
             hud.HudUpdated += snapshot => published = snapshot;
             Assert.That(zeroing.ApplyAdjustment(session.SessionId, 1).Success, Is.True);
             var result = hud.GetHud(session.SessionId).Data;
-            Assert.That(FindLine(result, "rearSight").Value, Is.EqualTo("向前 5 格"));
-            Assert.That(FindLine(result, "frontSight").Value, Is.EqualTo("顺时针 190°"));
-            Assert.That(FindLine(published, "rearSight").Value, Is.EqualTo("向前 5 格"));
-            Assert.That(FindLine(published, "frontSight").Value, Is.EqualTo("顺时针 190°"));
+            Assert.That(FindLine(result, "rearSight").Value, Is.EqualTo("向前 1 格"));
+            Assert.That(FindLine(result, "frontSight").Value, Is.EqualTo("顺时针 5°"));
+            Assert.That(FindLine(published, "rearSight").Value, Is.EqualTo("向前 1 格"));
+            Assert.That(FindLine(published, "frontSight").Value, Is.EqualTo("顺时针 5°"));
         }
 
         [Test]
@@ -80,11 +80,11 @@ namespace VRShooting.Tests.EditMode.Application
             var result = hud.GetHud(session.SessionId);
 
             Assert.IsTrue(result.Success, result.Message);
-            Assert.AreEqual("2/3", FindLine(result.Data, "ammo").Value);
-            Assert.That(FindLine(result.Data, "impactRecord").Value, Does.Contain("已记录 1/3"));
+            Assert.AreEqual("3/4", FindLine(result.Data, "ammo").Value);
+            Assert.That(FindLine(result.Data, "impactRecord").Value, Does.Contain("已记录 1/4"));
             Assert.That(FindLine(result.Data, "impactRecord").Value, Does.Contain("#01"));
             Assert.IsFalse(string.IsNullOrEmpty(lastHud.SessionId));
-            Assert.AreEqual("2/3", FindLine(lastHud, "ammo").Value);
+            Assert.AreEqual("3/4", FindLine(lastHud, "ammo").Value);
         }
 
         [Test]
@@ -97,8 +97,8 @@ namespace VRShooting.Tests.EditMode.Application
             var result = hud.GetHud(session.SessionId);
 
             Assert.IsTrue(result.Success, result.Message);
-            Assert.AreEqual("3/3", FindLine(result.Data, "ammo").Value);
-            Assert.That(FindLine(result.Data, "impactRecord").Value, Does.Contain("已记录 1/3"));
+            Assert.AreEqual("4/4", FindLine(result.Data, "ammo").Value);
+            Assert.That(FindLine(result.Data, "impactRecord").Value, Does.Contain("已记录 1/4"));
         }
 
         [Test]
@@ -153,13 +153,13 @@ namespace VRShooting.Tests.EditMode.Application
         public void CompleteRound_ProvidesAnalysisDtoQueryEntry()
         {
             var session = StartZeroingSession();
-            RecordThreeImpacts(session.SessionId, new Vector2(-8f, 12f));
+            RecordFourImpacts(session.SessionId, new Vector2(-8f, 12f));
 
             var analysis = zeroing.CompleteRound(session.SessionId);
 
             Assert.IsTrue(analysis.Success, analysis.Message);
-            Assert.AreEqual(3, analysis.Data.Shots.Count);
-            Assert.AreEqual(VerticalAdjustmentDirection.Clockwise, analysis.Data.VerticalDirection);
+            Assert.AreEqual(4, analysis.Data.Shots.Count);
+            Assert.AreEqual(VerticalAdjustmentDirection.CounterClockwise, analysis.Data.VerticalDirection);
             Assert.AreEqual(HorizontalAdjustmentDirection.Forward, analysis.Data.HorizontalDirection);
         }
 
@@ -180,7 +180,7 @@ namespace VRShooting.Tests.EditMode.Application
         public void RoundComplete_SetsCanShootFalse()
         {
             var session = StartZeroingSession();
-            RecordThreeImpacts(session.SessionId, Vector2.zero);
+            RecordFourImpacts(session.SessionId, Vector2.zero);
 
             var result = hud.GetHud(session.SessionId);
 
@@ -207,15 +207,16 @@ namespace VRShooting.Tests.EditMode.Application
 
         void CompleteRoundWithImpacts(string sessionId, Vector2 impactCm)
         {
-            RecordThreeImpacts(sessionId, impactCm);
+            RecordFourImpacts(sessionId, impactCm);
             var analysis = zeroing.CompleteRound(sessionId);
             Assert.IsTrue(analysis.Success, analysis.Message);
         }
 
-        void RecordThreeImpacts(string sessionId, Vector2 impactCm)
+        void RecordFourImpacts(string sessionId, Vector2 impactCm)
         {
             var offset = zeroing.GetSession(sessionId).Data.FixedImpactOffsetCm;
             var aim = impactCm - offset;
+            Assert.IsTrue(RecordImpact(sessionId, aim).Success);
             Assert.IsTrue(RecordImpact(sessionId, aim).Success);
             Assert.IsTrue(RecordImpact(sessionId, aim).Success);
             Assert.IsTrue(RecordImpact(sessionId, aim).Success);

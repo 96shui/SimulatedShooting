@@ -213,10 +213,29 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [UnityTest]
+        public IEnumerator Bdd05_FourthShotImmediatelyClearsOnlyCurrentTrainingTarget()
+        {
+            for (var i = 0; i < 3; i++)
+            {
+                Assert.That(services.WeaponControl.Fire(AimAndSnapshot(0, 0)).Success, Is.True);
+                yield return null;
+            }
+            Assert.That(target.Impacts.Count, Is.EqualTo(3));
+            var other = Object.FindObjectsOfType<TargetImpactSurface>().FirstOrDefault(x => x != target && x.TargetCenter != null);
+            if (other != null) Assert.That(other.TryRecordWorldPoint(other.TargetCenter.position, out _), Is.True);
+            Assert.That(services.WeaponControl.Fire(AimAndSnapshot(0, 0)).Success, Is.True);
+            Assert.That(target.Impacts.Count, Is.Zero, "Completion must clear previous markers synchronously.");
+            yield return null;
+            Assert.That(target.Impacts.Count, Is.Zero, "The fourth visual callback must not recreate a marker.");
+            if (other != null) Assert.That(other.Impacts.Count, Is.EqualTo(1));
+            Assert.That(services.Zeroing.CompleteRound(controller.SessionId).Data.Shots.Count, Is.EqualTo(4));
+        }
+
+        [UnityTest]
         public IEnumerator Bdd30_ManualCorrectionIsAppliedToFutureHolesAndScoreExactlyOnce()
         {
             var id = controller.SessionId;
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < 4; i++)
             {
                 Assert.That(services.WeaponControl.Fire(AimAndSnapshot(0, 0)).Success, Is.True);
                 yield return null;
@@ -241,7 +260,7 @@ namespace SimulatedShooting.Tests.PlayMode
         public IEnumerator Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles()
         {
             var id = controller.SessionId;
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < 4; i++)
             {
                 Assert.That(services.WeaponControl.Fire(AimAndSnapshot(0, 0)).Success, Is.True);
                 // Unity removes each impact marker's temporary primitive collider at frame end.
@@ -255,7 +274,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(services.Zeroing.ApplyAdjustment(id, 1).Success, Is.True);
             Assert.That(services.Zeroing.GetSession(id).Data.FixedImpactOffsetCm, Is.EqualTo(firstApplied));
             Assert.That(services.Presentation.ContinueNextRound(id).Success, Is.True);
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < 4; i++)
             {
                 var shot = AimAndSnapshot(0, 0);
                 Assert.That(shot.Hit, Is.True, "The central face must remain hittable after adjustment.");

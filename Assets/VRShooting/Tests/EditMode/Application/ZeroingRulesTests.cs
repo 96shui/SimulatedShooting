@@ -10,16 +10,23 @@ namespace VRShooting.Tests.EditMode.Application
     [TestFixture]
     public class ZeroingRulesTests
     {
+        // BDD05: a new mode-one round records exactly four shots.
+        [Test]
+        public void Bdd05_ZeroingRoundRequiresFourShots()
+        {
+            Assert.That(ZeroingRules.ShotsPerRound, Is.EqualTo(4));
+        }
+
         [Test]
         public void Bdd06_OppositeAdjustmentsCrossZeroWithoutExtraQuantizationStep()
         {
             var baseline = new SightAdjustmentDto { RearSightClicks = 1, FrontSightDegrees = 5f };
             var opposite = ZeroingRules.ApplyCorrection(baseline, new Vector2(-6f, .64f));
             Assert.That(opposite.RearSightClicks, Is.EqualTo(-2));
-            Assert.That(opposite.FrontSightDegrees, Is.EqualTo(-5f));
+            Assert.That(opposite.FrontSightDegrees, Is.EqualTo(15f));
             var same = ZeroingRules.ApplyCorrection(opposite, new Vector2(8f, -.96f));
             Assert.That(same.RearSightClicks, Is.EqualTo(2));
-            Assert.That(same.FrontSightDegrees, Is.EqualTo(10f));
+            Assert.That(same.FrontSightDegrees, Is.EqualTo(0f));
 
             var byDirection = ZeroingRules.ApplyAdjustment(baseline, new ZeroingRoundAnalysisDto
             {
@@ -33,12 +40,12 @@ namespace VRShooting.Tests.EditMode.Application
         [Test]
         public void Bdd06_AnswerPredictsFixedResidualOnceFromActualPendingCorrection()
         {
-            var shots = new[] { new ZeroingShotDto(), new ZeroingShotDto(), new ZeroingShotDto() };
+            var shots = new[] { Shot(10, -12), Shot(10, -12), Shot(10, -12), Shot(10, -12) };
             var correction = new Vector2(-8f, 11.84f);
             var before = ZeroingRules.BuildRoundAnalysis("answer", 1, shots, false, correction, new Vector2(10f, -12f));
             Assert.That(before.FixedImpactOffsetCm, Is.EqualTo(new Vector2(10f, -12f)));
             Assert.That(before.ProposedAdjustment.RearSightClicks, Is.EqualTo(-4));
-            Assert.That(before.ProposedAdjustment.FrontSightDegrees, Is.EqualTo(-185f));
+            Assert.That(before.ProposedAdjustment.FrontSightDegrees, Is.EqualTo(185f));
             Assert.That(before.PredictedOffsetMagnitudeCm, Is.EqualTo(2.00639f).Within(.001f));
             Assert.That(before.PredictedOffsetPasses, Is.True);
 
@@ -117,23 +124,6 @@ namespace VRShooting.Tests.EditMode.Application
             foreach (var count in quadrants) Assert.That(count, Is.InRange(23000, 27000));
         }
 
-        [TestCase(3f, 4f, true, true)]
-        [TestCase(3.01f, 4f, true, false)]
-        [TestCase(3f, 4f, false, false)]
-        public void Bdd06_AdjustmentPass_UsesAppliedFixedOffsetAndIncludesFiveCentimetres(
-            float x, float y, bool applied, bool expected)
-        {
-            var shots = new[] {
-                new ZeroingShotDto { ImpactPointCm = new Vector2(15, 15) },
-                new ZeroingShotDto { ImpactPointCm = new Vector2(15, 15) },
-                new ZeroingShotDto { ImpactPointCm = new Vector2(15, 15) }
-            };
-            var result = ZeroingRules.BuildRoundAnalysis("test", 1, shots, applied,
-                Vector2.zero, new Vector2(x, y));
-            Assert.That(result.PassedTenRing, Is.EqualTo(expected));
-            Assert.That(result.FinalResultAvailable, Is.EqualTo(expected));
-        }
-
         [Test]
         public void ComputeFrontSightDegrees_RoundsSuggestionUpToFiveDegreeSteps()
         {
@@ -153,8 +143,8 @@ namespace VRShooting.Tests.EditMode.Application
         [Test]
         public void Bdd30_VerticalSuggestionMatchesTheSignedCompensation()
         {
-            Assert.AreEqual(VerticalAdjustmentDirection.CounterClockwise, ZeroingRules.ResolveVerticalDirection(-3f));
-            Assert.AreEqual(VerticalAdjustmentDirection.Clockwise, ZeroingRules.ResolveVerticalDirection(3f));
+            Assert.AreEqual(VerticalAdjustmentDirection.Clockwise, ZeroingRules.ResolveVerticalDirection(-3f));
+            Assert.AreEqual(VerticalAdjustmentDirection.CounterClockwise, ZeroingRules.ResolveVerticalDirection(3f));
         }
 
         [Test]
@@ -194,6 +184,90 @@ namespace VRShooting.Tests.EditMode.Application
             var aim = ZeroingRules.ResolveAimPointFromRay(origin, new Vector3(.3f, -.2f, 97f), 100f);
             Assert.That(aim.x, Is.EqualTo(50f).Within(.001f));
             Assert.That(aim.y, Is.EqualTo(20f).Within(.001f));
+        }
+
+        static ZeroingShotDto Shot(float x, float y = 0, bool missed = false) =>
+            new ZeroingShotDto { ImpactPointCm = new Vector2(x, y), MissedTargetPlane = missed };
+
+        static ZeroingRoundAnalysisDto Analyze(params ZeroingShotDto[] shots) =>
+            ZeroingRules.BuildRoundAnalysis("bdd06", 1, shots, false, Vector2.zero, Vector2.zero);
+
+        [Test]
+        public void Bdd06_FourHitsDiscardFarthestAndTiesChooseFirst()
+        {
+            var result = Analyze(Shot(0), Shot(1), Shot(2), Shot(20));
+            Assert.That(result.DiscardedShotIndex, Is.EqualTo(3));
+            Assert.That(result.AverageOffsetCm, Is.EqualTo(new Vector2(1, 0)));
+            Assert.That(result.Shots.Count, Is.EqualTo(4));
+            var tied = Analyze(Shot(-4), Shot(4), Shot(0), Shot(0));
+            Assert.That(tied.DiscardedShotIndex, Is.EqualTo(0));
+            Assert.That(tied.AverageOffsetCm.x, Is.EqualTo(4f / 3f).Within(.0001f));
+            Assert.That(default(ZeroingRoundAnalysisDto).DiscardedShotIndex, Is.EqualTo(-1));
+        }
+
+        [Test]
+        public void Bdd06_ThreeValidShotsAreKeptAndMissDoesNotAffectAverage()
+        {
+            var result = Analyze(Shot(1), Shot(2), Shot(3), Shot(0, 0, true));
+            Assert.That(result.DiscardedShotIndex, Is.EqualTo(-1));
+            Assert.That(result.AverageOffsetCm, Is.EqualTo(new Vector2(2, 0)));
+            Assert.That(result.SpreadRulePassed, Is.True);
+            var outside = Analyze(Shot(1), Shot(2), Shot(3), Shot(25.01f));
+            Assert.That(outside.DiscardedShotIndex, Is.EqualTo(-1));
+            Assert.That(outside.AverageOffsetCm, Is.EqualTo(new Vector2(2, 0)));
+        }
+
+        [TestCase(0)] [TestCase(1)] [TestCase(2)]
+        public void Bdd06_FewerThanThreeValidHitsAreSpreadRejected(int valid)
+        {
+            var shots = new ZeroingShotDto[4];
+            for (var i = 0; i < 4; i++) shots[i] = Shot(0, 0, i >= valid);
+            var result = Analyze(shots);
+            Assert.That(result.SpreadRejected, Is.True);
+            Assert.That(result.SpreadRulePassed, Is.False);
+            Assert.That(result.PassedTenRing, Is.False);
+        }
+
+        [TestCase(9.99f, true)] [TestCase(10f, false)]
+        public void Bdd06_MeanDistanceIsStrict(float distance, bool expected)
+        {
+            var result = Analyze(Shot(distance), Shot(-distance / 2f), Shot(-distance / 2f), Shot(0, 0, true));
+            Assert.That(result.SpreadRulePassed, Is.EqualTo(expected));
+        }
+
+        [TestCase(14.99f, true)] [TestCase(15f, false)]
+        public void Bdd06_PairwiseDistanceIsStrict(float distance, bool expected)
+        {
+            var result = Analyze(Shot(-distance / 2f), Shot(distance / 2f), Shot(0), Shot(0, 0, true));
+            Assert.That(result.SpreadRulePassed, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void Bdd06_DirectPassIncludesFiveAndTenButRequiresAllThreeConditions()
+        {
+            Assert.That(Analyze(Shot(0), Shot(5), Shot(10), Shot(0, 0, true)).PassedTenRing, Is.True);
+            Assert.That(Analyze(Shot(0), Shot(4), Shot(10.01f), Shot(0, 0, true)).PassedTenRing, Is.False);
+            Assert.That(Analyze(Shot(4.9f), Shot(5.2f), Shot(5.3f), Shot(0, 0, true)).PassedTenRing, Is.False);
+            Assert.That(Analyze(Shot(5.1f), Shot(-5.1f), Shot(0, 5.1f), Shot(0, 0, true)).PassedTenRing, Is.False);
+        }
+
+        [TestCase(-3.01f, true)] [TestCase(-3f, false)]
+        public void Bdd06_AppliedCorrectionUsesStrictFiveCentimetres(float correction, bool expected)
+        {
+            var shots = new[] { Shot(8), Shot(8), Shot(8), Shot(8) };
+            var value = new Vector2(correction, 0);
+            var result = ZeroingRules.BuildRoundAnalysis("bdd06", 1, shots, true, value, new Vector2(100, 100), default, value);
+            Assert.That(result.PassedTenRing, Is.EqualTo(expected));
+            Assert.That(result.AppliedCorrectionCm, Is.EqualTo(value));
+        }
+
+        [Test]
+        public void Bdd06_VerticalSuggestionsAndCorrectionAgree()
+        {
+            Assert.That(ZeroingRules.ResolveVerticalDirection(1), Is.EqualTo(VerticalAdjustmentDirection.CounterClockwise));
+            Assert.That(ZeroingRules.ResolveVerticalDirection(-1), Is.EqualTo(VerticalAdjustmentDirection.Clockwise));
+            Assert.That(ZeroingRules.ApplyCorrection(default, new Vector2(0, .32f)).FrontSightDegrees, Is.EqualTo(5));
+            Assert.That(ZeroingRules.ApplyCorrection(default, new Vector2(0, -.32f)).FrontSightDegrees, Is.EqualTo(-5));
         }
     }
 }

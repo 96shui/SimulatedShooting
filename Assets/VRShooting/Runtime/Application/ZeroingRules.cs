@@ -12,7 +12,7 @@ namespace VRShooting.Application
     public static class ZeroingRules
     {
         public const int MaxRounds = 3;
-        public const int ShotsPerRound = 3;
+        public const int ShotsPerRound = 4;
         public const float DistanceMeters = 100f;
         public const float TenRingRadiusCm = 5f;
         public const float TargetHalfSizeCm = 25f;
@@ -121,39 +121,87 @@ namespace VRShooting.Application
             return impactPointCm.magnitude <= TenRingRadiusCm;
         }
 
-        public static ZeroingRoundAnalysisDto BuildRoundAnalysis(
-            string sessionId,
-            int roundIndex,
-            IReadOnlyList<ZeroingShotDto> shots,
-            bool adjustmentApplied,
-            Vector2 proposedCorrectionCm,
-            Vector2 fixedImpactOffsetCm,
-            SightAdjustmentDto currentAdjustment = default)
+        // BDD06: preserve source order so a tied farthest shot discards the first.
+        public static ZeroingShotDto[] FormCalculationSet(IReadOnlyList<ZeroingShotDto> shots, out int discardedShotIndex)
         {
-            var average = ComputeAverageOffset(shots);
-            // Once applied, the fixed offset already includes this round's correction.
-            var predictedOffset = fixedImpactOffsetCm + (adjustmentApplied ? Vector2.zero : proposedCorrectionCm);
-
-            var passed = shots.Count == ShotsPerRound;
+            discardedShotIndex = -1;
+            var valid = new List<int>();
             for (var i = 0; i < shots.Count; i++)
             {
-                passed &= shots[i].InsideTenRing;
+                var shot = shots[i];
+                if (!shot.MissedTargetPlane && Mathf.Abs(shot.ImpactPointCm.x) <= TargetHalfSizeCm &&
+                    Mathf.Abs(shot.ImpactPointCm.y) <= TargetHalfSizeCm) valid.Add(i);
             }
-            passed |= shots.Count == ShotsPerRound && adjustmentApplied && fixedImpactOffsetCm.magnitude <= TenRingRadiusCm;
+            if (shots.Count != ShotsPerRound || valid.Count < 3) return Array.Empty<ZeroingShotDto>();
+            if (valid.Count == 4)
+            {
+                var mean = Vector2.zero;
+                foreach (var i in valid) mean += shots[i].ImpactPointCm;
+                mean /= 4f;
+                var maxDistance = -1f;
+                foreach (var i in valid)
+                {
+                    var distance = (shots[i].ImpactPointCm - mean).sqrMagnitude;
+                    if (distance > maxDistance) { maxDistance = distance; discardedShotIndex = i; }
+                }
+                valid.Remove(discardedShotIndex);
+            }
+            var result = new ZeroingShotDto[3];
+            for (var i = 0; i < 3; i++) result[i] = shots[valid[i]];
+            return result;
+        }
 
+        public static bool PassesSpreadRule(IReadOnlyList<ZeroingShotDto> calculationSet, Vector2 average)
+        {
+            if (calculationSet.Count != 3) return false;
+            for (var i = 0; i < 3; i++)
+            {
+                if ((calculationSet[i].ImpactPointCm - average).sqrMagnitude >= 100f) return false;
+                for (var j = i + 1; j < 3; j++)
+                    if ((calculationSet[i].ImpactPointCm - calculationSet[j].ImpactPointCm).sqrMagnitude >= 225f) return false;
+            }
+            return true;
+        }
+
+        public static ZeroingRoundAnalysisDto BuildRoundAnalysis(
+            string sessionId, int roundIndex, IReadOnlyList<ZeroingShotDto> shots,
+            bool adjustmentApplied, Vector2 proposedCorrectionCm, Vector2 fixedImpactOffsetCm,
+            SightAdjustmentDto currentAdjustment = default, Vector2? appliedCorrectionCm = null)
+        {
+            var set = FormCalculationSet(shots, out var discardedIndex);
+            var average = set.Length == 3 ? (set[0].ImpactPointCm + set[1].ImpactPointCm + set[2].ImpactPointCm) / 3f : Vector2.zero;
+            var concentrated = PassesSpreadRule(set, average);
+            var applied = adjustmentApplied ? appliedCorrectionCm ?? proposedCorrectionCm : Vector2.zero;
+            var directPass = concentrated;
+            var hasInnerShot = false;
+            foreach (var shot in set)
+            {
+                var distance = shot.ImpactPointCm.sqrMagnitude;
+                directPass &= distance <= 100f;
+                hasInnerShot |= distance <= 25f;
+            }
+            directPass &= average.sqrMagnitude <= 25f && hasInnerShot;
+            var adjustedPass = concentrated && adjustmentApplied && (average + applied).sqrMagnitude < 25f;
+            var passed = directPass || adjustedPass;
+            var predictedOffset = average + (adjustmentApplied ? applied : proposedCorrectionCm);
             return new ZeroingRoundAnalysisDto
             {
                 SessionId = sessionId ?? string.Empty,
                 RoundIndex = roundIndex,
                 Shots = shots is ZeroingShotDto[] array ? array : CopyShots(shots),
                 AverageOffsetCm = average,
+                CalculationSetAvailable = set.Length == 3,
+                SpreadRulePassed = concentrated,
+                SpreadRejected = shots.Count == ShotsPerRound && !concentrated,
+                DiscardedShotIndex = discardedIndex,
+                AppliedCorrectionCm = applied,
                 ProposedCorrectionCm = proposedCorrectionCm,
                 PreviewAverageOffsetCm = average + proposedCorrectionCm,
                 CurrentAdjustment = currentAdjustment,
                 FixedImpactOffsetCm = fixedImpactOffsetCm,
                 ProposedAdjustment = ApplyCorrection(default, proposedCorrectionCm),
                 PredictedOffsetMagnitudeCm = predictedOffset.magnitude,
-                PredictedOffsetPasses = predictedOffset.magnitude <= TenRingRadiusCm,
+                PredictedOffsetPasses = concentrated && predictedOffset.sqrMagnitude < TenRingRadiusCm * TenRingRadiusCm,
                 VerticalDirection = ResolveVerticalDirection(average.y),
                 FrontSightDegreesToAdjust = ComputeFrontSightDegrees(average.y),
                 HorizontalDirection = ResolveHorizontalDirection(average.x),
@@ -184,7 +232,7 @@ namespace VRShooting.Application
             // rather than ceiling a floating-point approximation such as 11.840001 cm.
             return new SightAdjustmentDto
             {
-                FrontSightDegrees = current.FrontSightDegrees - Mathf.RoundToInt(correctionCm.y / (CmPerFrontSightDegree * FrontSightStepDegrees)) * FrontSightStepDegrees,
+                FrontSightDegrees = current.FrontSightDegrees + Mathf.RoundToInt(correctionCm.y / (CmPerFrontSightDegree * FrontSightStepDegrees)) * FrontSightStepDegrees,
                 RearSightClicks = current.RearSightClicks + Mathf.RoundToInt(correctionCm.x / CmPerRearSightClick)
             };
         }
@@ -256,8 +304,8 @@ namespace VRShooting.Application
             }
 
             return verticalOffsetCm > 0f
-                ? VerticalAdjustmentDirection.Clockwise
-                : VerticalAdjustmentDirection.CounterClockwise;
+                ? VerticalAdjustmentDirection.CounterClockwise
+                : VerticalAdjustmentDirection.Clockwise;
         }
 
         public static HorizontalAdjustmentDirection ResolveHorizontalDirection(float horizontalOffsetCm)

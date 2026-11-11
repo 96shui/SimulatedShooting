@@ -599,7 +599,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Physics.SyncTransforms();
 
             Assert.That(fired, Is.True);
-            Assert.That(controller.CurrentMagazine, Is.EqualTo(2));
+            Assert.That(controller.CurrentMagazine, Is.EqualTo(3));
             Assert.That(controller.LastShotWasValid, Is.True);
             Assert.That(controller.TracerCount, Is.EqualTo(1));
             Assert.That(surface.Impacts.Count, Is.EqualTo(initialImpacts + 1),
@@ -705,7 +705,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(controller.FireOnceForTests(), Is.True);
             controller.ToggleShoulderForTests();
 
-            Assert.That(controller.CurrentMagazine, Is.EqualTo(2));
+            Assert.That(controller.CurrentMagazine, Is.EqualTo(3));
             Assert.That(controller.CurrentShoulder, Is.EqualTo(ShoulderSide.Left));
         }
 
@@ -718,9 +718,10 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(controller.FireOnceForTests(), Is.True);
             Assert.That(controller.FireOnceForTests(), Is.True);
             Assert.That(controller.FireOnceForTests(), Is.True);
+            Assert.That(controller.FireOnceForTests(), Is.True);
             Assert.That(controller.CurrentMagazine, Is.EqualTo(0));
             Assert.That(controller.ReloadOnceForTests(), Is.True);
-            Assert.That(controller.CurrentMagazine, Is.EqualTo(3));
+            Assert.That(controller.CurrentMagazine, Is.EqualTo(4));
         }
 
         [Test]
@@ -736,7 +737,7 @@ namespace SimulatedShooting.Tests.PlayMode
 
             var zeroing = bootstrap.Services.Zeroing.GetSession(bootstrap.ActiveSessionId);
             Assert.That(zeroing.Success, Is.True, zeroing.Message);
-            Assert.That(zeroing.Data.ShotsRemainingInRound, Is.EqualTo(2));
+            Assert.That(zeroing.Data.ShotsRemainingInRound, Is.EqualTo(3));
             Assert.That(zeroing.Data.CurrentRound, Is.EqualTo(1));
         }
 
@@ -962,7 +963,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(controller.InitializeForTests(), Is.True);
             Assert.That(controller.CurrentHoldState, Is.EqualTo(WeaponHoldState.OnRack));
             Assert.That(controller.CanShoot, Is.False);
-            Assert.That(controller.CurrentMagazine, Is.EqualTo(3));
+            Assert.That(controller.CurrentMagazine, Is.EqualTo(4));
         }
 
         [UnityTest]

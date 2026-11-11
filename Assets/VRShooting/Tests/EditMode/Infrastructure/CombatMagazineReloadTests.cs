@@ -97,7 +97,7 @@ namespace VRShooting.Tests.EditMode
             var weapons = new WeaponControlService();
             var p1 = weapons.StartSession("p1", "training-rifle", TrainingMode.Zeroing100m).Data;
             var p2 = weapons.StartSession("p2", "training-rifle", TrainingMode.MovingTarget).Data;
-            Assert.That(p1.CurrentMagazine, Is.EqualTo(3)); Assert.That(p1.ReserveAmmo, Is.EqualTo(6));
+            Assert.That(p1.CurrentMagazine, Is.EqualTo(4)); Assert.That(p1.ReserveAmmo, Is.EqualTo(8));
             Assert.That(p2.CurrentMagazine, Is.EqualTo(10)); Assert.That(p2.ReserveAmmo, Is.Zero);
         }
 

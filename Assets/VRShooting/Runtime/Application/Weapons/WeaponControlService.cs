@@ -96,7 +96,7 @@ namespace VRShooting.Application.Weapons
             }
 
             var weapon = weaponResult.Data;
-            if (mode == TrainingMode.MovingTarget ||
+            if ((mode == TrainingMode.Zeroing100m && resolvedWeaponId == TrainingRifleId) || mode == TrainingMode.MovingTarget ||
                 (resolvedWeaponId == TrainingRifleId && (mode == TrainingMode.Trench || mode == TrainingMode.Urban)))
             {
                 weapon = new WeaponDefinitionDto
@@ -104,8 +104,8 @@ namespace VRShooting.Application.Weapons
                     WeaponId = weapon.WeaponId,
                     DisplayName = weapon.DisplayName,
                     Type = weapon.Type,
-                    MagazineCapacity = mode == TrainingMode.MovingTarget ? MovingTargetRules.TotalAmmo : 30,
-                    MaxReserveAmmo = mode == TrainingMode.MovingTarget ? 0 : 60,
+                    MagazineCapacity = mode == TrainingMode.Zeroing100m ? ZeroingRules.ShotsPerRound : mode == TrainingMode.MovingTarget ? MovingTargetRules.TotalAmmo : 30,
+                    MaxReserveAmmo = mode == TrainingMode.Zeroing100m ? ZeroingRules.ShotsPerRound * (ZeroingRules.MaxRounds - 1) : mode == TrainingMode.MovingTarget ? 0 : 60,
                     Recoil = weapon.Recoil,
                     ApplicableModes = weapon.ApplicableModes
                 };

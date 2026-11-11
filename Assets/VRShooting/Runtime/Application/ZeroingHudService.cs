@@ -274,7 +274,7 @@ namespace VRShooting.Application
         {
             if (shots == null || shots.Count == 0)
             {
-                return "待记录 3 发";
+                return "待记录 " + ZeroingRules.ShotsPerRound + " 发";
             }
 
             var lines = new List<string> { $"已记录 {Math.Min(shots.Count, ZeroingRules.ShotsPerRound)}/{ZeroingRules.ShotsPerRound}" };

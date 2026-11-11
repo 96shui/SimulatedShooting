@@ -111,7 +111,7 @@ public interface IHUDService
 
 | HUD | 必填显示 |
 |---|---|
-| Zeroing | 轮次、距离 100m、弹数、稳定度、弹着记录、CanShoot |
+| Zeroing | 轮次、距离 100m、每轮剩余弹数 x/4、已记录 x/4、稳定度、CanShoot |
 | MovingTarget | 弹药、两发起射/长按连射模式、当前连射状态、命中数、速度、方向、端点禁射提示、可射击状态 |
 | Trench | 小地图、弹药、队友状态、姿态、换肩、拐角射击 |
 | UrbanStreet | 小地图、任务提示、弹药、姿态、换肩、建筑入口提示 |
