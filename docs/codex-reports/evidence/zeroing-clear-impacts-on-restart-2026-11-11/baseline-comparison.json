@@ -1,0 +1,115 @@
+{
+  "editmode": {
+    "counts": {
+      "total": 378,
+      "passed": 366,
+      "failed": 12,
+      "skipped": 0,
+      "inconclusive": 0
+    },
+    "baseline_counts_full_suite": {
+      "total": 378,
+      "passed": 366,
+      "failed": 12,
+      "skipped": 0,
+      "inconclusive": 0
+    },
+    "baseline_failure_names_in_scope": [
+      "SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms",
+      "SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(\"Assets/Scenes/ZeroingRangeScene.unity\",\"ZeroingRange\")",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(False)",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(True)",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds",
+      "VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.QuickSwitchDisposesOnlyStaleLease_AndCannotOverwriteUrban",
+      "VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.ThreeRetriesUseNewSessions_RejectOldFacts_AndSaveOnlyLatest(Urban)"
+    ],
+    "current_failure_names": [
+      "SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms",
+      "SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(\"Assets/Scenes/ZeroingRangeScene.unity\",\"ZeroingRange\")",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(False)",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(True)",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds",
+      "VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.QuickSwitchDisposesOnlyStaleLease_AndCannotOverwriteUrban",
+      "VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.ThreeRetriesUseNewSessions_RejectOldFacts_AndSaveOnlyLatest(Urban)"
+    ],
+    "new_failures": [],
+    "resolved_failures": []
+  },
+  "playmode_targeted": {
+    "counts": {
+      "total": 70,
+      "passed": 66,
+      "failed": 4,
+      "skipped": 0,
+      "inconclusive": 0
+    },
+    "baseline_counts_full_suite": {
+      "total": 292,
+      "passed": 270,
+      "failed": 22,
+      "skipped": 0,
+      "inconclusive": 0
+    },
+    "baseline_failure_names_in_scope": [
+      "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles",
+      "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_OffFaceUsesSameTargetPlaneCentimetres(0.0f,-40.0f)",
+      "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd31_TargetKeepsItsDimensionsInTheOriginalRearRow",
+      "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease"
+    ],
+    "current_failure_names": [
+      "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles",
+      "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_OffFaceUsesSameTargetPlaneCentimetres(0.0f,-40.0f)",
+      "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd31_TargetKeepsItsDimensionsInTheOriginalRearRow",
+      "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease"
+    ],
+    "new_failures": [],
+    "resolved_failures": [],
+    "regressions": [
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd05_ExitAndReenterClearsPhysicalImpactMarkers",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd05_FourthShotImmediatelyClearsOnlyCurrentTrainingTarget",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd07_SessionChangedWhileDisabledClearsPhysicalMarkersOnEnable",
+        "result": "Passed"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd05_RetrainingClearsPreviousSessionImpacts",
+        "result": "Passed"
+      }
+    ]
+  },
+  "red": {
+    "counts": {
+      "total": 2,
+      "passed": 0,
+      "failed": 2,
+      "skipped": 0,
+      "inconclusive": 0
+    },
+    "failures": [
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd05_ExitAndReenterClearsPhysicalImpactMarkers",
+        "message": "  Exit must remove physical markers, not only their records.\n  Expected: 0\n  But was:  2\n"
+      },
+      {
+        "name": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd07_SessionChangedWhileDisabledClearsPhysicalMarkersOnEnable",
+        "message": "  OnEnable must clear the previous session's physical marker.\n  Expected: 0\n  But was:  1\n"
+      }
+    ]
+  }
+}

@@ -10,6 +10,7 @@ using UnityEngine.TestTools;
 using VRShooting.Application;
 using VRShooting.Application.Events;
 using VRShooting.Common;
+using VRShooting.Input;
 using VRShooting.Unity.Bootstrap;
 using VRShooting.Unity.Weapons;
 
@@ -210,6 +211,87 @@ namespace SimulatedShooting.Tests.PlayMode
             }
             finally { Object.Destroy(blocker); }
             yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd05_ExitAndReenterClearsPhysicalImpactMarkers()
+        {
+            // BDD05: partial round exit/re-entry; task012/013/014, interface04.
+            var input = new ManualXRTrainingInput();
+            controller.ConfigureInput(input);
+            controller.enabled = true;
+            input.Press(XRTrainingInputButton.RightGrip);
+            input.Press(XRTrainingInputButton.LeftGrip);
+            yield return null;
+            input.AdvanceFrame();
+            var oldSessionId = controller.SessionId;
+            for (var i = 0; i < 2; i++)
+            {
+                Assert.That(services.WeaponControl.Fire(AimAndSnapshot(0, 0)).Success, Is.True);
+                yield return null;
+            }
+            var firstMarker = target.ImpactMarkerRoot.GetChild(0);
+            yield return null;
+            Assert.That(target.ImpactMarkerRoot.childCount, Is.EqualTo(2), "Same-session updates must retain physical markers.");
+            Assert.That(firstMarker != null, Is.True);
+
+            var child = new GameObject("InactiveChildTarget");
+            child.transform.SetParent(target.transform, false);
+            var childMarkers = new GameObject("ImpactMarkers").transform;
+            childMarkers.SetParent(child.transform, false);
+            var childSurface = child.AddComponent<TargetImpactSurface>();
+            childSurface.Configure(null, target.TargetCenter, childMarkers, null);
+            Assert.That(childSurface.TryRecordWorldPoint(target.TargetCenter.position, out _), Is.True);
+            child.SetActive(false);
+            Assert.That(childMarkers.childCount, Is.EqualTo(1));
+
+            Assert.That(services.Presentation.Exit(oldSessionId).Success, Is.True);
+            Assert.That(controller.SessionId, Is.Empty);
+            yield return null;
+            yield return null; // ClearImpacts uses Destroy; inspect objects after frame-end destruction.
+            Assert.That(target.ImpactMarkerRoot.childCount, Is.Zero, "Exit must remove physical markers, not only their records.");
+            Assert.That(childMarkers.childCount, Is.Zero, "Inactive child target surfaces must also be cleared.");
+
+            Assert.That(services.Presentation.Enter(TrainingMode.Zeroing100m).Success, Is.True);
+            Assert.That(services.Presentation.ConfirmStart("").Success, Is.True);
+            yield return null;
+            yield return null;
+            Assert.That(controller.SessionId, Is.Not.Empty.And.Not.EqualTo(oldSessionId));
+            Assert.That(target.ImpactMarkerRoot.childCount, Is.Zero, "Re-entering the retained range must start with a clean target.");
+            Assert.That(childMarkers.childCount, Is.Zero);
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd07_SessionChangedWhileDisabledClearsPhysicalMarkersOnEnable()
+        {
+            // BDD05/07: re-entry/retry may replace the session while OnDisable prevents Update.
+            var oldSessionId = controller.SessionId;
+            Assert.That(services.WeaponControl.Fire(AimAndSnapshot(0, 0)).Success, Is.True);
+            yield return null;
+            var marker = target.ImpactMarkerRoot.GetChild(0);
+            controller.ConfigureInput(new ManualXRTrainingInput());
+            controller.enabled = true;
+            yield return null;
+            controller.enabled = false;
+            controller.enabled = true;
+            yield return null;
+            Assert.That(target.ImpactMarkerRoot.childCount, Is.EqualTo(1), "Same-session disable/enable must retain the round's marker.");
+            Assert.That(marker != null, Is.True);
+
+            controller.enabled = false;
+            Assert.That(services.Presentation.Exit(oldSessionId).Success, Is.True);
+            Assert.That(controller.SessionId, Is.Empty);
+            Assert.That(services.Presentation.Enter(TrainingMode.Zeroing100m).Success, Is.True);
+            Assert.That(services.Presentation.ConfirmStart("").Success, Is.True);
+            Assert.That(controller.SessionId, Is.Not.Empty.And.Not.EqualTo(oldSessionId));
+            yield return null;
+            Assert.That(target.ImpactMarkerRoot.childCount, Is.EqualTo(1), "Keep the same target instance so scene unloading cannot mask missing cleanup.");
+
+            controller.enabled = true;
+            yield return null;
+            yield return null;
+            Assert.That(target.ImpactMarkerRoot.childCount, Is.Zero, "OnEnable must clear the previous session's physical marker.");
+            Assert.That(marker == null, Is.True, "The old visual GameObject must actually be destroyed.");
         }
 
         [UnityTest]

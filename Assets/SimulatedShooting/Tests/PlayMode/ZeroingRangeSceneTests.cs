@@ -632,6 +632,38 @@ namespace SimulatedShooting.Tests.PlayMode
                 "Surface hits retain their event marker without the old spark effect.");
         }
 
+        [UnityTest]
+        public IEnumerator Bdd05_RetrainingClearsPreviousSessionImpacts()
+        {
+            // BDD05 session re-entry; task012/013/014. Assert actual scene marker objects.
+            var controller = Object.FindObjectOfType<FirstPersonTrainingWeaponController>();
+            Assert.That(controller, Is.Not.Null);
+            var surface = Find("ZeroingRange.Target.Face").GetComponent<TargetImpactSurface>();
+            var bootstrap = Object.FindObjectOfType<ZeroingRangeSessionBootstrap>();
+            var services = bootstrap.Services;
+
+            Assert.That(controller.InitializeForTests(), Is.True);
+            AimHandsAtPrimaryTarget(controller);
+            Assert.That(controller.FireOnceForTests(), Is.True);
+            Physics.SyncTransforms();
+            Assert.That(surface.Impacts, Is.Not.Empty, "the shot has to land before the retrain check is meaningful");
+            Assert.That(surface.ImpactMarkerRoot.childCount, Is.GreaterThan(0));
+
+            var sessionId = services.TrainingSessions.Current.SessionId;
+            Assert.That(services.TrainingSessions.Cancel(sessionId).Success, Is.True);
+            yield return null;
+            yield return null;
+
+            Assert.That(surface.Impacts, Is.Empty, "retraining must not inherit the previous session's impacts");
+            Assert.That(surface.ImpactMarkerRoot.childCount, Is.Zero,
+                "retraining must not leave the previous session's impact markers on the target face");
+
+            Assert.That(bootstrap.EnsureZeroingSession(), Is.True);
+            yield return null;
+            Assert.That(surface.Impacts, Is.Empty);
+            Assert.That(surface.ImpactMarkerRoot.childCount, Is.Zero);
+        }
+
         static void AimHandsAtPrimaryTarget(FirstPersonTrainingWeaponController controller)
         {
             // The hip-fire weapon is beside/below the eye. Aim explicitly instead of assuming

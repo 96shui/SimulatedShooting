@@ -386,6 +386,12 @@ namespace SimulatedShooting.Scene
 
         void ResetSessionState()
         {
+            if (targetSurface != null && movingTargetHitAdapter == null)
+            {
+                foreach (var surface in targetSurface.GetComponentsInChildren<TargetImpactSurface>(true))
+                    surface.ClearImpacts();
+            }
+
             TearDownInputSubscription();
             boundSessionId = string.Empty;
             hasCurrentState = false;
