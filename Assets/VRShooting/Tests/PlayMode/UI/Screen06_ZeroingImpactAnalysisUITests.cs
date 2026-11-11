@@ -294,9 +294,9 @@ namespace VRShooting.Tests.PlayMode.UI
             var id = services.TrainingSessions.Current.SessionId;
             var horizontal = FindButton("Button_ZeroingImpactAnalysis_HorizontalPlus");
             var vertical = FindButton("Button_ZeroingImpactAnalysis_VerticalPlus");
-            Assert.That(horizontal.GetComponentInChildren<TextMeshProUGUI>().text, Does.Contain("2cm"));
+            Assert.That(horizontal.GetComponentInChildren<TextMeshProUGUI>().text, Does.Contain("1格"));
             Assert.That(vertical.GetComponentInChildren<TextMeshProUGUI>().text, Does.Contain("5°"));
-            Assert.That(FindButton("Button_ZeroingImpactAnalysis_HorizontalMinus").GetComponentInChildren<TextMeshProUGUI>().text, Does.Contain("2cm"));
+            Assert.That(FindButton("Button_ZeroingImpactAnalysis_HorizontalMinus").GetComponentInChildren<TextMeshProUGUI>().text, Does.Contain("1格"));
             Assert.That(FindButton("Button_ZeroingImpactAnalysis_VerticalMinus").GetComponentInChildren<TextMeshProUGUI>().text, Does.Contain("5°"));
             var before = services.Zeroing.CompleteRound(id).Data.ProposedCorrectionCm;
             horizontal.onClick.Invoke();
@@ -304,9 +304,9 @@ namespace VRShooting.Tests.PlayMode.UI
             var after = services.Zeroing.CompleteRound(id).Data.ProposedCorrectionCm;
             Assert.That(after.x, Is.EqualTo(before.x + 2f).Within(.001f));
             Assert.That(after.y, Is.EqualTo(before.y - .32f).Within(.001f));
-            var cm = Mathf.Abs(after.x).ToString("0.#", System.Globalization.CultureInfo.InvariantCulture) + "cm";
+            var clicks = Mathf.Abs(after.x / ZeroingRules.CmPerRearSightClick).ToString("0", System.Globalization.CultureInfo.InvariantCulture) + "格";
             var degrees = Mathf.Abs(after.y / ZeroingRules.CmPerFrontSightDegree).ToString("0", System.Globalization.CultureInfo.InvariantCulture) + "°";
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain(cm));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain(clicks));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionY").text, Does.Contain(degrees));
             if (Mathf.Abs(after.x) > .001f)
                 Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain(after.x > 0 ? "向前" : "向后"));
@@ -366,6 +366,7 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(FindText("Text_ZeroingImpactAnalysis_Suggestion").text, Does.Contain("每次调整5度约0.32厘米"));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_FrontSight").text, Does.Contain("顺时针"));
             Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain("觇孔"));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_RearSight").text, Does.Contain("格"));
         }
 
         [UnityTest]
@@ -762,14 +763,14 @@ namespace VRShooting.Tests.PlayMode.UI
             var initial = services.Zeroing.CompleteRound(sessionId).Data;
             var clicks = initial.ProposedCorrectionCm.x / ZeroingRules.CmPerRearSightClick;
             Assert.That(clicks, Is.Zero.Within(.001f));
-            Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain("cm"));
+            Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain("格"));
             for (var i = 0; i < 12; i++)
             {
                 FindButton("Button_ZeroingImpactAnalysis_HorizontalMinus").onClick.Invoke();
                 yield return null;
                 var current = services.Zeroing.CompleteRound(sessionId).Data;
                 Assert.That(current.ProposedCorrectionCm.x, Is.EqualTo(initial.ProposedCorrectionCm.x - (i + 1) * 2f));
-                Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain("cm"));
+                Assert.That(FindText("Text_ZeroingImpactAnalysis_CorrectionX").text, Does.Contain("格"));
                 Assert.That(current.ProposedCorrectionCm.y, Is.EqualTo(initial.ProposedCorrectionCm.y));
             }
         }

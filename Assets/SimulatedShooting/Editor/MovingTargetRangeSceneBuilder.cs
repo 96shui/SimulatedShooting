@@ -484,17 +484,7 @@ namespace SimulatedShooting.Editor
 
         static void CreateRunnerSilhouette(Transform parent, Material material)
         {
-            CreateCapsule("Runner_Torso", parent, new Vector3(0f, 1.25f, 0f), new Vector3(0.24f, 0.42f, 0.11f),
-                material, Quaternion.Euler(0f, 0f, -12f));
-            CreateSphere("Runner_Head", parent, new Vector3(-0.10f, 1.82f, 0f), new Vector3(0.20f, 0.20f, 0.12f), material);
-            CreateCapsule("Runner_ArmForward", parent, new Vector3(-0.30f, 1.32f, 0f), new Vector3(0.10f, 0.34f, 0.08f),
-                material, Quaternion.Euler(0f, 0f, 62f));
-            CreateCapsule("Runner_ArmRear", parent, new Vector3(0.28f, 1.25f, 0f), new Vector3(0.10f, 0.32f, 0.08f),
-                material, Quaternion.Euler(0f, 0f, -58f));
-            CreateCapsule("Runner_LegForward", parent, new Vector3(-0.22f, 0.62f, 0f), new Vector3(0.13f, 0.48f, 0.10f),
-                material, Quaternion.Euler(0f, 0f, -34f));
-            CreateCapsule("Runner_LegRear", parent, new Vector3(0.25f, 0.58f, 0f), new Vector3(0.13f, 0.48f, 0.10f),
-                material, Quaternion.Euler(0f, 0f, 38f));
+            MovingTargetSilhouetteAuthoring.CreateVisual(parent);
         }
 
         static void CreateFixedTargets(Transform root, Material targetMaterial, Material boardMaterial,

@@ -10,6 +10,49 @@ namespace SimulatedShooting.Tests.PlayMode
 {
     public class AmericanSoldierPlayModeTests
     {
+        [UnityTest]
+        public IEnumerator Bdd23_TeammateAndEnemyHoldRiflesWhileStandingAndTurning()
+        {
+            yield return SceneManager.LoadSceneAsync("CombatScene");
+            yield return null;
+            var fixture = Object.FindObjectOfType<CombatSceneFixture>();
+            fixture.Walker.InputEnabled = false;
+            var actors = new[] { fixture.Actors.First(a => a.EntityId.StartsWith("teammate")),
+                fixture.Actors.First(a => !a.EntityId.StartsWith("teammate")) };
+            foreach (var actor in actors)
+            {
+                var driver = actor.SoldierAnimation;
+                Assert.That(driver.Rifle, Is.Not.Null);
+                foreach (var node in actor.GetComponentsInChildren<Transform>(true)) node.gameObject.layer = 31;
+                var cameraObject = new GameObject("SoldierGripEvidenceCamera");
+                var camera = cameraObject.AddComponent<Camera>();
+                camera.enabled = false; camera.cullingMask = 1 << 31; camera.fieldOfView = 24;
+                var light = cameraObject.AddComponent<Light>(); light.type = LightType.Directional; light.intensity = 1.4f; light.cullingMask = 1 << 31;
+                cameraObject.transform.rotation = Quaternion.Euler(45, -30, 0);
+                camera.clearFlags = CameraClearFlags.SolidColor; camera.backgroundColor = new Color(.22f, .25f, .28f);
+                try
+                {
+                    for (int angle = 0; angle < 2; angle++)
+                    {
+                        actor.transform.rotation = Quaternion.Euler(0, angle * 70f, 0);
+                        yield return null; yield return null;
+                        Assert.That(driver.Rifle.IsChildOf(driver.RightHand), Is.True);
+                        Assert.That(Vector3.Distance(driver.LeftHand.position, driver.RightHand.position), Is.InRange(.10f, .65f));
+                        var rightPalm = Vector3.Lerp(driver.RightHand.position, driver.RightHand.Find("R_middle1").position, .55f);
+                        var leftPalm = Vector3.Lerp(driver.LeftHand.position, driver.LeftHand.Find("L_middle1").position, .55f);
+                        Assert.That(Vector3.Distance(rightPalm, driver.Rifle.TransformPoint(new Vector3(.006f, -.075f, -.085f))), Is.LessThan(.02f));
+                        Assert.That(Vector3.Distance(leftPalm, driver.Rifle.TransformPoint(new Vector3(-.035f, -.065f, .10f))), Is.LessThan(.10f));
+                        Assert.That(Vector3.Dot(driver.Rifle.forward, actor.VisualRoot.forward), Is.GreaterThan(.99f));
+                        camera.transform.position = actor.transform.position + actor.transform.rotation * new Vector3(angle == 0 ? 1.4f : -1.4f, 1.55f, 1.8f);
+                        camera.transform.LookAt(actor.transform.position + Vector3.up * 1.30f);
+                        PresentationEvidence.Capture(camera, "grip-" + (driver.Friendly ? "teammate" : "enemy") + "-" + angle,
+                            System.IO.Path.Combine(Application.dataPath, "../Temp/SoldierGrip"));
+                    }
+                }
+                finally { Object.Destroy(cameraObject); }
+            }
+        }
+
         [UnityTest] public IEnumerator Bdd23_Task019_EnemyDiesWithRelaxedArms() => CheckDeath("DetailedCharacterD3");
         [UnityTest] public IEnumerator Bdd23_Task019_TeammateDiesWithRelaxedArms() => CheckDeath("DetailedCharacterD4");
 

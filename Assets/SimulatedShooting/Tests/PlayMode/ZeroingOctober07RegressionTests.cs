@@ -103,7 +103,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(Vector2.Distance(input.TargetPlanePointCm, expected), Is.LessThan(.03f));
             Assert.That(input.HitPoint.x, Is.EqualTo(expected.x).Within(.02f));
             Assert.That(input.HitPoint.y, Is.EqualTo(expected.y).Within(.02f));
-            Assert.That(Physics.Raycast(input.MuzzlePosition, input.AimDirection, out var physical, 150f), Is.True);
+            Assert.That(Physics.Raycast(weapon.AimLinePoint.position, input.AimDirection, out var physical, 150f), Is.True);
             Assert.That(services.WeaponControl.Fire(input).Success, Is.True);
             Assert.That(target.Impacts.Count, Is.EqualTo(onFace ? 1 : 0));
             if (onFace)
@@ -126,6 +126,45 @@ namespace SimulatedShooting.Tests.PlayMode
                 "Tracer, bullet hole and score must share the corrected service coordinate.");
         }
 
+        [Test]
+        public void Bdd06_SightRayScoresWhileTracerStartsAtMuzzle()
+        {
+            AimAndSnapshot(0f, 0f);
+            var original = weapon.MuzzlePoint.localPosition;
+            var blocker = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            try
+            {
+                weapon.MuzzlePoint.position += weapon.AimLinePoint.right * .6f;
+                var muzzle = weapon.MuzzlePoint.position;
+                var sight = weapon.AimLinePoint.position;
+                var aim = weapon.AimLinePoint.forward;
+                var toTarget = (target.TargetCenter.position - muzzle).normalized;
+                blocker.transform.position = muzzle + toTarget * 3f;
+                blocker.transform.localScale = Vector3.one * .15f;
+                Physics.SyncTransforms();
+                var raycast = typeof(FirstPersonTrainingWeaponController).GetMethod("RaycastShot", BindingFlags.Instance | BindingFlags.NonPublic);
+                var sightArgs = new object[] { sight, aim, default(RaycastHit) };
+                Assert.That((bool)raycast.Invoke(controller, sightArgs), Is.True);
+                var sightHit = (RaycastHit)sightArgs[2];
+                Assert.That(sightHit.collider.GetComponentInParent<TargetImpactSurface>(), Is.SameAs(target));
+                var muzzleArgs = new object[] { muzzle, toTarget, default(RaycastHit) };
+                Assert.That((bool)raycast.Invoke(controller, muzzleArgs), Is.True);
+                var muzzleHit = (RaycastHit)muzzleArgs[2];
+                Assert.That(muzzleHit.collider.gameObject, Is.SameAs(blocker));
+                var snapshot = (WeaponFireInputDto)typeof(FirstPersonTrainingWeaponController)
+                    .GetMethod("BuildFireSnapshot", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(controller, null);
+                Assert.That(snapshot.TargetPlaneRayValid, Is.True);
+                Assert.That(snapshot.Hit, Is.True);
+                Assert.That(snapshot.MuzzlePosition, Is.EqualTo(muzzle));
+                Assert.That(Vector3.Angle(snapshot.AimDirection, aim), Is.LessThan(.01f));
+            }
+            finally
+            {
+                weapon.MuzzlePoint.localPosition = original;
+                Object.DestroyImmediate(blocker);
+            }
+        }
+
         [TestCase(40f, 0f)]
         [TestCase(0f, 40f)]
         [TestCase(0f, -40f)]
@@ -140,7 +179,10 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(services.WeaponControl.Fire(input).Success, Is.True);
             Assert.That(Vector2.Distance(recorded.Last().ImpactPointCm, new Vector2(xCm, yCm) + bias), Is.LessThan(.03f));
             Assert.That(recorded.Last().InsideTenRing, Is.False);
-            Assert.That(target.Impacts.Count, Is.Zero, "An off-face impact must not create a hole on the target.");
+            var impact = new Vector2(xCm, yCm) + bias;
+            var landsOnFace = Mathf.Abs(impact.x) <= 25f && Mathf.Abs(impact.y) <= 25f;
+            Assert.That(target.Impacts.Count, Is.EqualTo(landsOnFace ? 1 : 0),
+                "A hole is shown only when the final offset impact is on the face.");
         }
 
         [TestCase(0f, 0f, 0f)]

@@ -45,6 +45,23 @@ namespace VRShooting.Tests.PlayMode.Flow
         }
 
         [UnityTest]
+        public IEnumerator Screen09_NoVrInput_LastRoundIsFiredAndRecorded()
+        {
+            var input = new ManualXRTrainingInput();
+            var services = ApplicationServices.CreateDefault(input);
+            var sessionId = StartLiveMovingTarget(services);
+            services.MovingTargetProgress.Tick(sessionId, 3f);
+            Assert.IsTrue(services.Ammo.ConsumeAmmo(sessionId, 9).Success);
+            services.WeaponFire.Tick(sessionId, 1f,
+                new WeaponTriggerStateInputDto { SessionId = sessionId, Pressed = true, Held = true, Value01 = 1f },
+                Snapshot(sessionId));
+            yield return null;
+            Assert.AreEqual(1, services.MovingTarget.GetSession(sessionId).Data.ShotsFired);
+            Assert.AreEqual(1, services.MovingTarget.GetSession(sessionId).Data.HitCount);
+            Assert.AreEqual(0, services.Ammo.GetAmmo(sessionId).Data.CurrentMagazine);
+        }
+
+        [UnityTest]
         public IEnumerator Screen09_NoVrInput_HeldTriggerConsumesTenRounds()
         {
             var input = new ManualXRTrainingInput();

@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using VRShooting.Common;
 using VRShooting.Unity.Weapons;
+using VRShooting.Unity.UI;
 
 namespace SimulatedShooting.Scene
 {
@@ -29,6 +31,7 @@ namespace SimulatedShooting.Scene
         HashSet<IXRSelectInteractor> previousSelectors;
         Vector3 rightShoulderVisualScale;
         bool visualScaleCaptured;
+        BoxCollider riflePickupVolume;
 
         public ShoulderSide Shoulder { get; private set; } = ShoulderSide.Right;
         public InteractorHandedness RearHandedness => Shoulder == ShoulderSide.Left ? InteractorHandedness.Left : InteractorHandedness.Right;
@@ -62,6 +65,8 @@ namespace SimulatedShooting.Scene
         {
             base.Awake();
             weaponBinding ??= GetComponent<WeaponPrefabBinding>();
+            EnsureRiflePickupVolume();
+            ConfigurePickupPrompt();
             selectMode = InteractableSelectMode.Multiple;
             // Follow tracked poses at Dynamic/BeforeRender frequency. VelocityTracking
             // chases a moving rig at fixed physics frequency and oscillates while walking.
@@ -117,7 +122,43 @@ namespace SimulatedShooting.Scene
         {
             weaponBinding = binding;
             pickupPrompt = prompt;
+            ConfigurePickupPrompt();
             SyncAttachTransforms();
+        }
+
+        void EnsureRiflePickupVolume()
+        {
+            var node = new GameObject("RiflePickupVolume");
+            node.transform.SetParent(transform, false);
+            riflePickupVolume = node.AddComponent<BoxCollider>();
+            riflePickupVolume.isTrigger = true;
+            riflePickupVolume.center = new Vector3(0f, -.03f, .10f);
+            riflePickupVolume.size = new Vector3(.16f, .24f, 1.10f);
+            // XRI normally excludes triggers when it automatically gathers colliders.
+            // Explicit registration keeps the pickup-only volume out of physical collision.
+            colliders.Add(riflePickupVolume);
+        }
+
+        void ConfigurePickupPrompt()
+        {
+            if (pickupPrompt == null) return;
+            var legacy = pickupPrompt.GetComponent<TextMesh>();
+            if (legacy != null) legacy.GetComponent<Renderer>().enabled = false;
+            var label = pickupPrompt.GetComponentInChildren<TextMeshPro>(true);
+            if (label == null)
+            {
+                var node = new GameObject("Text_RiflePickup_Chinese");
+                label = node.AddComponent<TextMeshPro>();
+                if (TacticalUITheme.Current != null && TacticalUITheme.Current.Font != null)
+                    label.font = TacticalUITheme.Current.Font;
+                node.transform.SetParent(pickupPrompt.transform, false);
+                node.transform.localScale = Vector3.one * .1f;
+            }
+            label.text = "两个手柄抓握持枪";
+            label.fontSize = 2.4f;
+            label.alignment = TextAlignmentOptions.Center;
+            label.color = new Color(1f, .88f, .22f, 1f);
+            label.rectTransform.sizeDelta = new Vector2(6f, 1.5f);
         }
 
         public void SetShoulder(ShoulderSide shoulder)
@@ -247,10 +288,10 @@ namespace SimulatedShooting.Scene
         public bool IsHandAllowed(InteractorHandedness handedness, Vector3 handPosition)
         {
             if (handedness == RearHandedness)
-                return !RearHandSelected && IsWithinRadius(handPosition, RearAttach, rearGrabRadius);
+                return !RearHandSelected && IsNearRifle(handPosition, RearAttach, rearGrabRadius);
             if (handedness == FrontHandedness)
                 return !FrontHandInteractionLocked && RearHandSelected && !FrontHandSelected &&
-                    IsWithinRadius(handPosition, FrontAttach, frontGrabRadius);
+                    IsNearRifle(handPosition, FrontAttach, frontGrabRadius);
             return false;
         }
 
@@ -386,6 +427,13 @@ namespace SimulatedShooting.Scene
         static bool IsWithinRadius(Vector3 position, Transform anchor, float radius)
         {
             return anchor != null && Vector3.SqrMagnitude(position - anchor.position) <= radius * radius;
+        }
+
+        bool IsNearRifle(Vector3 position, Transform anchor, float radius)
+        {
+            if (IsWithinRadius(position, anchor, radius)) return true;
+            return riflePickupVolume != null && riflePickupVolume.enabled &&
+                   (riflePickupVolume.ClosestPoint(position) - position).sqrMagnitude <= .06f * .06f;
         }
 
         void SetRackPhysics(bool onRack)

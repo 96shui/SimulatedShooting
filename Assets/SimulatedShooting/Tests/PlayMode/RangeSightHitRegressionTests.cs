@@ -67,7 +67,9 @@ namespace SimulatedShooting.Tests.PlayMode
             }
             for (var i = 0; i < 5; i++)
             {
-                var progress = .05f + i * .18f;
+                // Exercise the centre of the route too: static targets may share
+                // the relocated moving target's depth and obstruct this position.
+                var progress = i == 2 ? .44f : .05f + i * .18f;
                 var first = services.WeaponFire.Tick(session, 0,
                     new WeaponTriggerStateInputDto { SessionId = session, Pressed = true, Held = true }, Aim(progress));
                 Assert.That(first.Success, Is.True, first.Message);

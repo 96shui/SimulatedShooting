@@ -967,6 +967,77 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [UnityTest]
+        public IEnumerator Bdd05_AnyRiflePartCanBeGrabbedWithOriginalHandAnchors()
+        {
+            var mode = ResolveOrCreateXRModeController();
+            mode.SetVrModeForTests(true);
+            var grab = Find("ZeroingRange.Weapon.TrainingRifle").GetComponent<TrainingRifleGrabInteractable>();
+            var binding = grab.GetComponent<WeaponPrefabBinding>();
+            var manager = mode.XrOrigin.GetComponentInChildren<XRInteractionManager>(true);
+            var tracking = new GameObject("BDD05_PickupTrackingSubstitute");
+            XRDirectInteractor Hand(string name, InteractorHandedness side)
+            {
+                var node = new GameObject(name);
+                node.transform.SetParent(tracking.transform);
+                var collider = node.AddComponent<SphereCollider>();
+                collider.radius = .02f;
+                collider.isTrigger = true;
+                var body = node.AddComponent<Rigidbody>();
+                body.isKinematic = true;
+                body.useGravity = false;
+                var hand = node.AddComponent<XRDirectInteractor>();
+                hand.interactionManager = manager;
+                hand.handedness = side;
+                hand.selectInput.inputSourceMode = XRInputButtonReader.InputSourceMode.ManualValue;
+                return hand;
+            }
+            var right = Hand("Right", InteractorHandedness.Right);
+            var left = Hand("Left", InteractorHandedness.Left);
+            yield return null;
+            right.transform.position = binding.MuzzlePoint.position;
+            Assert.That(grab.colliders.Any(c => c.isTrigger &&
+                Vector3.Distance(c.ClosestPoint(right.transform.position), right.transform.position) < .06f), Is.True,
+                "The barrel must be covered by an XRI pickup collider");
+            var prompt = grab.GetComponentInChildren<TMPro.TextMeshPro>(true);
+            Assert.That(prompt, Is.Not.Null);
+            Assert.That(prompt.text, Is.EqualTo("两个手柄抓握持枪"));
+            Assert.That(prompt.font, Is.Not.Null);
+            Assert.That(Vector3.Distance(right.transform.position, grab.RearAttach.position), Is.GreaterThan(grab.RearGrabRadius));
+            Assert.That(grab.IsSelectableBy((IXRSelectInteractor)right), Is.True, "Right hand can select at the barrel");
+            Assert.That(grab.IsSelectableBy((IXRSelectInteractor)left), Is.False, "Support hand cannot pick up first");
+            Assert.That(grab.GetAttachTransform(right), Is.SameAs(binding.RearHandGrip));
+            right.selectInput.manualValue = 1f;
+            manager.SelectEnter((IXRSelectInteractor)right, (IXRSelectInteractable)grab);
+            yield return null;
+            Assert.That(grab.RearHandSelected, Is.True);
+            left.transform.position = binding.MuzzlePoint.position;
+            Assert.That(grab.IsSelectableBy((IXRSelectInteractor)left), Is.True, "Support hand can select at the barrel");
+            Assert.That(grab.GetAttachTransform(left), Is.SameAs(binding.FrontHandGrip));
+            Assert.That(grab.IsHandAllowed(InteractorHandedness.Left, binding.MuzzlePoint.position + Vector3.one * 3f), Is.False);
+            left.selectInput.manualValue = 1f;
+            manager.SelectEnter((IXRSelectInteractor)left, (IXRSelectInteractable)grab);
+            yield return null;
+            Assert.That(grab.HoldState, Is.EqualTo(WeaponHoldState.TwoHandHeld));
+            Object.Destroy(tracking);
+        }
+
+        [Test]
+        public void Bdd05_NewRifleKeepsGripMuzzleAndRemovableMagazineBindings()
+        {
+            var grab = Find("ZeroingRange.Weapon.TrainingRifle").GetComponent<TrainingRifleGrabInteractable>();
+            var binding = grab.GetComponent<WeaponPrefabBinding>();
+            var model = binding.RecoilRoot.Find("Model_QBZ191_New");
+            Assert.That(model, Is.Not.Null, "The active scene must use the new rifle model");
+            Assert.That(model.gameObject.activeInHierarchy, Is.True);
+            Assert.That(binding.MagazineVisual, Is.Not.Null);
+            Assert.That(binding.MagazineVisual.IsChildOf(model), Is.True);
+            Assert.That(binding.MuzzlePoint.localPosition.z, Is.GreaterThan(.4f));
+            Assert.That(binding.AimLinePoint.localPosition.z, Is.LessThan(binding.MuzzlePoint.localPosition.z));
+            Assert.That(grab.GetAttachTransform((IXRInteractor)Find("ZeroingRange.Origin.VR.RightDirectInteractor").GetComponent<XRDirectInteractor>()), Is.SameAs(binding.RearHandGrip));
+            Assert.That(grab.GetAttachTransform((IXRInteractor)Find("ZeroingRange.Origin.VR.LeftDirectInteractor").GetComponent<XRDirectInteractor>()), Is.SameAs(binding.FrontHandGrip));
+        }
+
+        [UnityTest]
         public IEnumerator Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease()
         {
             var mode = ResolveOrCreateXRModeController();
