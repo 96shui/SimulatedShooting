@@ -230,11 +230,11 @@ namespace VRShooting.Application
                      (weaponState.Value.HoldState == WeaponHoldState.OnRack ||
                       weaponState.Value.HoldState == WeaponHoldState.Dropped))
             {
-                text = "靠近后握把，按住右手 Grip 拾取";
+                text = "两个手柄抓握持枪";
             }
             else if (weaponState.HasValue && weaponState.Value.HoldState == WeaponHoldState.RearHandHeld)
             {
-                text = "左手靠近前握把并按住 Grip";
+                text = "两个手柄抓握持枪";
             }
             else if (!canShoot)
             {

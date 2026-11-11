@@ -850,18 +850,12 @@ namespace SimulatedShooting.Scene
                 ? weaponBinding.MuzzlePoint.position
                 : Vector3.zero;
             var direction = ResolveAimDirection();
-            // Converge the real muzzle onto the sighted point. Parallel muzzle/sight
-            // rays retain the model's 5cm bore offset even when the sights are on target.
             var aim = weaponBinding != null ? weaponBinding.AimLinePoint : null;
+            // Hit detection follows the calibrated mechanical sight; the actual muzzle
+            // remains the origin of muzzle flash and tracer presentation.
+            var shotOrigin = aim != null ? aim.position : muzzle;
             var isZeroing = services != null && services.TrainingSessions.HasActiveSession &&
                 services.TrainingSessions.Current.Mode == TrainingMode.Zeroing100m;
-            var planeTransform = isZeroing ? targetSurface?.TargetCenter : movingTargetHitAdapter?.TargetCollider?.transform;
-            if (aim != null && planeTransform != null &&
-                new Plane(planeTransform.forward, planeTransform.position).Raycast(new Ray(aim.position, direction), out var sightDistance))
-            {
-                var sightPoint = aim.position + direction * sightDistance;
-                if ((sightPoint - muzzle).sqrMagnitude > .0001f) direction = (sightPoint - muzzle).normalized;
-            }
             var rawDirection = weaponBinding != null
                 ? weaponBinding.transform.forward.normalized
                 : Vector3.forward;
@@ -872,27 +866,27 @@ namespace SimulatedShooting.Scene
                 movingCollider != null && movingCollider.enabled && movingCollider.gameObject.activeInHierarchy)
             {
                 Physics.SyncTransforms();
-                var toTarget = movingCollider.bounds.center - muzzle;
+                var toTarget = movingCollider.bounds.center - shotOrigin;
                 if (toTarget.sqrMagnitude > .0001f &&
                     Vector3.Angle(direction, toTarget) <= ZeroingRules.MovingTargetAssistAngleDegrees &&
-                    !movingCollider.Raycast(new Ray(muzzle, direction), out _, MaxShotDistance))
+                    !movingCollider.Raycast(new Ray(shotOrigin, direction), out _, MaxShotDistance))
                 {
                     var travel = Vector3.Dot(toTarget, direction);
-                    var passingPoint = muzzle + direction * travel;
+                    var passingPoint = shotOrigin + direction * travel;
                     var edge = movingCollider.ClosestPoint(passingPoint);
                     var gap = Vector3.Distance(passingPoint, edge);
                     if (travel > 0f && gap > .00001f && gap <= ZeroingRules.MovingTargetAssistEdgeMetres)
-                        direction = (Vector3.Lerp(edge, movingCollider.bounds.center, .05f) - muzzle).normalized;
+                        direction = (Vector3.Lerp(edge, movingCollider.bounds.center, .05f) - shotOrigin).normalized;
                 }
             }
-            var physicalHit = RaycastShot(muzzle, direction, out var raycastHit);
+            var physicalHit = RaycastShot(shotOrigin, direction, out var raycastHit);
             latestRaycastHit = physicalHit;
             latestRaycast = raycastHit;
             var targetHit = IsScoringTargetHit(raycastHit, physicalHit);
             var planePoint = Vector2.zero;
             var planeDistance = 0f;
             var planeValid = isZeroing && targetSurface != null &&
-                targetSurface.TryProjectRay(new Ray(muzzle, direction), out planePoint, out planeDistance);
+                targetSurface.TryProjectRay(new Ray(shotOrigin, direction), out planePoint, out planeDistance);
             // An obstacle in front of the target plane blocks the shot; the target's own
             // collider may lie slightly in front of its visual centre plane.
             if (planeValid && physicalHit && !targetHit && raycastHit.distance < planeDistance - .005f)
@@ -913,7 +907,7 @@ namespace SimulatedShooting.Scene
                 HasTargetPlaneSample = isZeroing && targetSurface != null,
                 TargetPlaneRayValid = planeValid,
                 TargetPlanePointCm = planePoint,
-                HitPoint = ResolveHitPointForService(raycastHit, physicalHit, muzzle, direction),
+                HitPoint = ResolveHitPointForService(raycastHit, physicalHit, shotOrigin, direction),
                 HitObjectId = targetHit ? ResolveTestId(raycastHit.collider.transform) : string.Empty
             };
         }

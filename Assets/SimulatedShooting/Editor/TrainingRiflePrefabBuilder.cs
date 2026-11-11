@@ -49,6 +49,8 @@ namespace SimulatedShooting.Editor
 
         static bool NeedsQbzPrefabUpgrade(GameObject prefab)
         {
+            if (prefab.transform.Find("WeaponRoot_training-rifle/RecoilRoot_training-rifle/Model_QBZ191_New") != null)
+                return false;
             var model = prefab.transform.Find("WeaponRoot_training-rifle/RecoilRoot_training-rifle/Model_QBZ191");
             var rearGrip = prefab.transform.Find("WeaponRoot_training-rifle/Grip_training-rifle_RearHand");
             var frontGrip = prefab.transform.Find("WeaponRoot_training-rifle/Grip_training-rifle_FrontHand");
@@ -384,7 +386,7 @@ namespace SimulatedShooting.Editor
             prompt.transform.localRotation = Quaternion.Euler(-5f, 67f, 0f);
             prompt.AddComponent<SceneTestId>().Id = "ZeroingRange.Weapon.PickupPrompt";
             var text = prompt.AddComponent<TextMesh>();
-            text.text = "GRIP TO PICK UP";
+            text.text = "两个手柄抓握持枪";
             text.anchor = TextAnchor.MiddleCenter;
             text.alignment = TextAlignment.Center;
             text.fontSize = 48;

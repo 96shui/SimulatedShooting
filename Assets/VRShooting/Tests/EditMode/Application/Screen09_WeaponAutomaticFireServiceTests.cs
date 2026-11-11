@@ -98,18 +98,21 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.That(weapons.GetAmmo(SessionId).Data.CurrentMagazine, Is.GreaterThanOrEqualTo(0));
         }
 
-        [Test]
-        public void Screen09_NewSequenceWithOneAmmo_RejectsEntireBurst()
+        [TestCase(false)]
+        [TestCase(true)]
+        public void Screen09_NewSequenceWithOneAmmo_FiresOnlyLastRound(bool held)
         {
             StartMovingTargetWeapon();
             weapons.ConsumeAmmo(SessionId, 9);
 
-            autoFire.UpdateTrigger(Press());
+            autoFire.UpdateTrigger(held ? Press() : PressAndRelease());
             var result = autoFire.Tick(SessionId, 0.2f, Snapshot());
+            autoFire.Tick(SessionId, 2f, Snapshot());
 
-            Assert.AreEqual(0, shots.Count);
-            Assert.AreEqual(1, weapons.GetAmmo(SessionId).Data.CurrentMagazine);
-            Assert.AreEqual(WeaponFireSequencePhase.Idle, result.Data.Phase);
+            Assert.AreEqual(1, shots.Count);
+            Assert.AreEqual(0, weapons.GetAmmo(SessionId).Data.CurrentMagazine);
+            Assert.AreEqual(WeaponFireSequencePhase.Stopped, result.Data.Phase);
+            Assert.AreEqual(WeaponFireStopReason.AmmoDepleted, result.Data.StopReason);
         }
 
         [Test]

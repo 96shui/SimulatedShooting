@@ -700,9 +700,9 @@ namespace VRShooting.Unity.UI
             zeroingAnalysisPreviewText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_PreviewAverage", "计算集均值(黄) / 当前补偿(蓝) · 按住连续调节", 22, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(20, 112), new Vector2(915, 145), new Color32(200, 255, 106, 255));
             SetZeroingInfoPanel(ZeroingInfoPanel.None);
             AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_HorizontalLabel", "觇孔", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(18, 24), new Vector2(113, 100), new Color32(231, 242, 235, 255));
-            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalMinus", "向后\n2cm", new Vector2(122, 25), new Vector2(196, 96), ZeroingAdjustmentAxis.Horizontal, -1);
+            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalMinus", "向后\n1格", new Vector2(122, 25), new Vector2(196, 96), ZeroingAdjustmentAxis.Horizontal, -1);
             zeroingAnalysisCorrectionXText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_CorrectionX", "", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(202, 25), new Vector2(312, 96), new Color32(143, 217, 255, 255));
-            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalPlus", "向前\n2cm", new Vector2(318, 25), new Vector2(392, 96), ZeroingAdjustmentAxis.Horizontal, 1);
+            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalPlus", "向前\n1格", new Vector2(318, 25), new Vector2(392, 96), ZeroingAdjustmentAxis.Horizontal, 1);
             AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_VerticalLabel", "准心柱", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(475, 24), new Vector2(570, 100), new Color32(231, 242, 235, 255));
             AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_VerticalMinus", "顺时针\n5°", new Vector2(578, 25), new Vector2(652, 96), ZeroingAdjustmentAxis.Vertical, 1);
             zeroingAnalysisCorrectionYText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_CorrectionY", "", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(658, 25), new Vector2(768, 96), new Color32(143, 217, 255, 255));
@@ -1091,7 +1091,7 @@ namespace VRShooting.Unity.UI
             SetAnalysisText(zeroingAnalysisRearSightText, "觇孔", FormatMechanicalCorrection(analysis.CurrentAdjustment.RearSightClicks, "向前", "向后", " 格", "0"));
             if (zeroingAnalysisAnswerText != null) zeroingAnalysisAnswerText.text = FormatAnswer(analysis);
             if (zeroingAnalysisCorrectionXText != null)
-                zeroingAnalysisCorrectionXText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.x, "向前", "向后", "cm");
+                zeroingAnalysisCorrectionXText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.x / ZeroingRules.CmPerRearSightClick, "向前", "向后", "格", "0");
             if (zeroingAnalysisCorrectionYText != null)
                 zeroingAnalysisCorrectionYText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.y / ZeroingRules.CmPerFrontSightDegree, "顺时针", "逆时针", "°", "0");
             if (zeroingAnalysisPreviewText != null)
@@ -1560,7 +1560,7 @@ namespace VRShooting.Unity.UI
             }
 
             var direction = analysis.HorizontalDirection == HorizontalAdjustmentDirection.Forward ? "向前" : "向后";
-            return direction + " " + (analysis.RearSightClicksToAdjust * ZeroingRules.CmPerRearSightClick).ToString("0.#", CultureInfo.InvariantCulture) + "cm";
+            return direction + " " + analysis.RearSightClicksToAdjust.ToString(CultureInfo.InvariantCulture) + "格";
         }
 
         static string FormatSuggestion(ZeroingRoundAnalysisDto analysis)

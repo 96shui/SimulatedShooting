@@ -309,6 +309,27 @@ namespace SimulatedShooting.Tests.PlayMode
         }
 
         [Test]
+        public void Bdd09_GreenSideProfileUsesExistingTargetAndHitSurface()
+        {
+            var binding = Find("MovingTargetRange.Target.Binding").GetComponent<MovingTargetRouteBinding>();
+            var silhouette = binding.TargetRoot.Find("Visual_MovingTarget_SideProfile");
+            Assert.That(silhouette, Is.Not.Null);
+            Assert.That(silhouette.gameObject.activeInHierarchy, Is.True);
+            var renderer = silhouette.GetComponent<MeshRenderer>();
+            Assert.That(renderer, Is.Not.Null);
+            Assert.That(binding.TargetRenderers, Does.Contain(renderer));
+            Assert.That(silhouette.GetComponent<MeshFilter>().sharedMesh, Is.Not.Null);
+            var green = renderer.sharedMaterial.GetColor("_BaseColor");
+            Assert.That(green.g, Is.GreaterThan(green.r));
+            Assert.That(binding.HitSurface, Is.Not.Null);
+            Assert.That(binding.TargetCenter, Is.Not.Null);
+            binding.ApplyNormalizedProgress(.5f);
+            Assert.That(silhouette.IsChildOf(binding.TargetRoot), Is.True);
+            Assert.That(Vector3.Distance(binding.TargetRoot.position,
+                Vector3.Lerp(binding.RightEndpoint.position, binding.LeftEndpoint.position, .5f)), Is.LessThan(.001f));
+        }
+
+        [Test]
         public void Bdd09_WaitingCountdown_TargetStartsAndRemainsAtRightEndpoint()
         {
             var binding = Find("MovingTargetRange.Target.Binding").GetComponent<MovingTargetRouteBinding>();

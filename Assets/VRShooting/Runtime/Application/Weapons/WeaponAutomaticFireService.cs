@@ -232,7 +232,7 @@ namespace VRShooting.Application.Weapons
         void StartInitialTwo(SessionFireState state)
         {
             var ammoState = ammo.GetAmmo(state.SessionId);
-            if (!ammoState.Success || ammoState.Data.CurrentMagazine < 2)
+            if (!ammoState.Success || ammoState.Data.CurrentMagazine <= 0)
             {
                 return;
             }
@@ -240,7 +240,8 @@ namespace VRShooting.Application.Weapons
             state.SequenceCounter++;
             state.SequenceId = "seq-" + state.SequenceCounter;
             var reservationId = state.SequenceId;
-            var reserved = ammo.ReserveAmmo(state.SessionId, 2, reservationId);
+            var initialShots = Math.Min(2, ammoState.Data.CurrentMagazine);
+            var reserved = ammo.ReserveAmmo(state.SessionId, initialShots, reservationId);
             if (!reserved.Success)
             {
                 state.SequenceId = string.Empty;
@@ -251,7 +252,7 @@ namespace VRShooting.Application.Weapons
             state.ReservationId = reservationId;
             state.Phase = WeaponFireSequencePhase.InitialTwoShots;
             state.ShotsFired = 0;
-            state.RemainingInitialShots = 2;
+            state.RemainingInitialShots = initialShots;
             state.StopReason = null;
             state.ReleasedDuringSequence = false;
             state.NextShotAt = state.Elapsed;
@@ -287,6 +288,13 @@ namespace VRShooting.Application.Weapons
                 }
 
                 state.NextShotAt += state.Config.ShotIntervalSeconds;
+
+                if (state.Phase == WeaponFireSequencePhase.InitialTwoShots &&
+                    state.RemainingInitialShots == 0 && state.ShotsFired == 1)
+                {
+                    StopSequence(state, WeaponFireStopReason.AmmoDepleted);
+                    break;
+                }
 
                 if (state.Phase == WeaponFireSequencePhase.InitialTwoShots && state.ShotsFired >= 2)
                 {
