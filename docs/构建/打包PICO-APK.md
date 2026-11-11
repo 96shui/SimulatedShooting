@@ -4,9 +4,9 @@
 
 ## 当前状态与验证边界
 
-- 本机缺 Android Build Support 和 Android SDK，**目前不能实际构建 APK**；缺失模块导致构建失败是预期结果。
-- 本次验证：同一 Unity 版本及仓库对应版本 XR 包（含 PICO）在隔离临时工程中 batchmode 编译通过；使用与本文相同的 `-buildTarget Android` 启动 batchmode，调用 `BuildPicoApk.Build` 因缺 Android 模块按预期以退出码 1 结束。隔离工程的签名分支测试覆盖默认 debug、拒绝非法模式、release 环境变量配置与设置恢复，测试退出码 0。
-- 上述结果**不代表原项目已编译、真实 keystore 签名成功、APK 已生成或真机验收通过**。原项目编辑器正打开；尚未对原项目并行启动 Unity。
+- 本机已安装 Android Build Support、Android SDK/NDK 和 OpenJDK；2026-11-08、11-10、11-11 均已实际生成 APK。
+- 2026-11-11 实测：仅带 v2 签名的 APK 在 PICO 上报「安装包已损坏」；同一 APK 用同一 debug 证书补成 v1+v2+v3 后可安装。每次新构建仍需核对签名和设备实际表现。
+- 构建及签名校验通过不能代替佩戴头显的运行、交互与性能验收。
 
 ## 前置条件
 
@@ -19,17 +19,17 @@
 
 ## 安装 Android 模块
 
-本次交付不执行安装。用户确认许可、网络和空间后，可在 PowerShell 执行如下 [Unity Hub CLI](https://docs.unity.com/en-us/hub/hub-cli-reference) 命令。`-m android` 指定 Android Build Support，`--childModules` 请求安装子模块；官方列出的子模块包括 `android-sdk-ndk-tools` 和 `android-open-jdk`。
+本机已安装所需模块。其他环境如缺少模块，确认许可、网络和空间后，可在 PowerShell 执行如下 [Unity Hub CLI](https://docs.unity.com/en-us/hub/hub-cli-reference) 命令。`-m android` 指定 Android Build Support，`--childModules` 请求安装子模块；官方列出的子模块包括 `android-sdk-ndk-tools` 和 `android-open-jdk`。
 
 ```powershell
 & 'C:\Program Files\Unity Hub\Unity Hub.exe' -- --headless install-modules --version 2022.3.62f3c1 -m android --childModules
 ```
 
-上述语法来自官方 Hub CLI；本机 Hub 3.3.6 **对中国版 `2022.3.62f3c1` 的解析、无交互许可处理及命令能否完成尚未证实**。先前只读 headless help 未在等待时间内返回，未执行安装。如果找不到版本、长时间无输出、要求许可或安装不完整，请查看 Hub 日志和许可状态，并由用户在 Unity Hub 的 **安装 → 该编辑器的管理 → 添加模块** 中勾选上述三个组件，按提示完成。官方指出追加模块要求编辑器由 Hub 安装，模块可用性取决于版本。不要因此重装编辑器或安装 Android Studio。
+上述语法来自官方 Hub CLI；本机 Hub 3.3.6 **对中国版 `2022.3.62f3c1` 的解析、无交互许可处理及该命令能否完成尚未证实**。如果找不到版本、长时间无输出、要求许可或安装不完整，请查看 Hub 日志和许可状态，并在 Unity Hub 的 **安装 → 该编辑器的管理 → 添加模块** 中勾选上述三个组件，按提示完成。官方指出追加模块要求编辑器由 Hub 安装，模块可用性取决于版本。不要因此重装编辑器或安装 Android Studio。
 
 本版本下载和安装大小尚未测量。[Unity 官方 2021.3.7f1 示例](https://connect-prd-cdn.unity.com/20221020/eb12f246-a0f4-4960-b5ab-c0f2bc0a8af0/Meta%20Quest%20Deployment%20Notes.pdf#page=5)的 Android 三项合计约 **2 GB 下载、6 GB 以上安装空间**，仅供量级参考；还应预留导入与 IL2CPP 构建空间。
 
-安装后进行只读检查；以下 AndroidPlayer 子目录和工具在模块安装前并不存在。目录应全部为 `True`，JDK 应为 11，NDK 为 23.1.7779620，Android 33 平台应存在：
+可按需进行只读检查：目录应全部为 `True`，JDK 应为 11，NDK 为 23.1.7779620，Android 33 平台应存在：
 
 ```powershell
 $androidPlayer = 'C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Data\PlaybackEngines\AndroidPlayer'
@@ -82,19 +82,29 @@ release 必须提供以上全部变量且路径指向已有文件。密码仍以
 'PICO_BUILD_SIGNING', 'PICO_KEYSTORE_PATH', 'PICO_KEYSTORE_PASSWORD', 'PICO_KEY_ALIAS', 'PICO_KEY_ALIAS_PASSWORD' | ForEach-Object { [Environment]::SetEnvironmentVariable($_, $null, 'Process') }
 ```
 
+## 为什么必须带 v1 签名
+
+PICO 安装器实测要求 JAR（v1）签名；只有 v2 的包会报「安装包已损坏」。`BuildPicoApk` 在 Gradle 出包后使用同一把 debug 或 release keystore 自动补签 v1+v2+v3，先验证三种方案再替换原 APK，并将各方案结果、文件大小和 SHA-256 写入构建日志。补签不生成绑定临时文件名的 v4 `.idsig` 边车。工具缺失、补签失败或任一方案未通过时构建失败；已生成的临时 APK 会保留供排查。
+
+可用 Android SDK build-tools 中的 `apksigner.jar` 手工校验，要求 v1、v2、v3 三行均为 `true`：
+
+```text
+java -jar apksigner.jar verify --min-sdk-version 21 --verbose <apk>
+```
+
 ## 批处理构建
 
-**先保存并关闭当前打开的本项目 Unity 编辑器**，确认没有其他 Unity 进程占用同一项目，再在 PowerShell 复制执行这一整行。Unity 同项目锁会阻止第二进程；`Start-Process -Wait` 等待结束并读取真实退出码，避免构建仍在进行时侧载。
+**先保存并关闭当前打开的本项目 Unity 编辑器**，确认没有其他 Unity 进程占用同一项目。确认 `C:\vrproj` 是指向 `E:\新建文件夹 (3)\SimulateShooting` 的目录联接；如果不存在，在 PowerShell 中执行 `New-Item -ItemType Junction -Path 'C:\vrproj' -Target 'E:\新建文件夹 (3)\SimulateShooting'`，如果已存在但指向其他位置则不要覆盖。然后执行下列命令。使用联接避免 Gradle 处理中文项目路径时出现问题，且不要加 `-nographics`；`Start-Process -Wait` 等待结束并读取真实退出码，避免构建仍在进行时侧载。
 
 ```powershell
-$p=$null; New-Item -ItemType Directory -Path 'E:\新建文件夹 (3)\SimulateShooting\Logs' -Force -ErrorAction Stop | Out-Null; $p=Start-Process -FilePath 'C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Unity.exe' -ArgumentList @('-quit','-batchmode','-nographics','-projectPath','"E:\新建文件夹 (3)\SimulateShooting"','-buildTarget','Android','-executeMethod','BuildPicoApk.Build','-logFile','"E:\新建文件夹 (3)\SimulateShooting\Logs\pico-build.log"') -WindowStyle Hidden -Wait -PassThru -ErrorAction Stop; $p.ExitCode
+$p=$null; New-Item -ItemType Directory -Path 'E:\新建文件夹 (3)\SimulateShooting\Logs' -Force -ErrorAction Stop | Out-Null; $p=Start-Process -FilePath 'C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Unity.exe' -ArgumentList @('-quit','-batchmode','-projectPath','"C:\vrproj"','-buildTarget','Android','-executeMethod','BuildPicoApk.Build','-logFile','"E:\新建文件夹 (3)\SimulateShooting\Logs\pico-build.log"') -WindowStyle Hidden -Wait -PassThru -ErrorAction Stop; $p.ExitCode
 ```
 
 必须保留 `-buildTarget Android`。[Unity 2022.3 官方说明](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/EditorUserBuildSettings.SwitchActiveBuildTarget.html)指出 `SwitchActiveBuildTarget` 不能在 batchmode 切换平台，必须在启动命令中预选；脚本发现 batchmode 未预选 Android 时会退出并提示此参数。在 Windows PowerShell 中直接 `& Unity.exe ...` 可能立即返回且 `$LASTEXITCODE` 为空，不应以此判定成功。
 
 脚本使用现有启用场景，首场景必须为 `Assets/Scenes/MainScene.unity`；设置包名 `com.vrtraining.pico4`、IL2CPP、仅 ARM64、minSdk 29、targetSdk 33，关闭 APK expansion，生成单 APK。脚本启用 Android OpenXR loader、PICO Support、PICO Extensions 和 PICO4 控制器 feature，禁用冲突 Android loader/feature 并保存 XR 配置；实际构建会改动项目设置，开始前请保存工作区。
 
-退出码 **0** 且日志确认构建成功后，脚本打印 APK **绝对路径和文件字节数**。输出文件格式为 `E:\新建文件夹 (3)\SimulateShooting\Build\PICO\SimulateShooting-pico-<yyyyMMdd-HHmm>.apk`；同一分钟重复构建可能复用文件名。非零退出码时查看 `E:\新建文件夹 (3)\SimulateShooting\Logs\pico-build.log`，不要把旧文件当作本次产物。
+退出码 **0** 且日志确认构建成功后，脚本打印 APK **绝对路径、文件字节数、SHA-256 和三种签名方案的校验结果**。输出文件格式为 `E:\新建文件夹 (3)\SimulateShooting\Build\PICO\SimulateShooting-pico-<yyyyMMdd-HHmm>.apk`（也可能以 `C:\vrproj` 联接路径显示）；同一分钟重复构建可能复用文件名。非零退出码时查看 `E:\新建文件夹 (3)\SimulateShooting\Logs\pico-build.log`，不要把旧文件当作本次产物。
 
 ## 侧载和启动
 
