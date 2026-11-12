@@ -1,0 +1,1480 @@
+{
+  "editmode": {
+    "baseline": {
+      "id": "2",
+      "testcasecount": "379",
+      "result": "Failed(Child)",
+      "total": "379",
+      "passed": "359",
+      "failed": "20",
+      "inconclusive": "0",
+      "skipped": "0",
+      "asserts": "0",
+      "engine-version": "3.5.0.0",
+      "clr-version": "4.0.30319.42000",
+      "start-time": "2026-11-11 14:42:01Z",
+      "end-time": "2026-11-11 14:42:12Z",
+      "duration": "11.1727815"
+    },
+    "current": {
+      "id": "2",
+      "testcasecount": "384",
+      "result": "Failed(Child)",
+      "total": "384",
+      "passed": "364",
+      "failed": "20",
+      "inconclusive": "0",
+      "skipped": "0",
+      "asserts": "0",
+      "engine-version": "3.5.0.0",
+      "clr-version": "4.0.30319.42000",
+      "start-time": "2026-11-12 03:31:14Z",
+      "end-time": "2026-11-12 03:31:25Z",
+      "duration": "11.142964"
+    },
+    "new_failures": [],
+    "resolved_failures": [],
+    "failures": [
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 13\n  But was:  11\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms () [0x000ee] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\CombatSceneTests.cs:208\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 13\n  But was:  11\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms () [0x000ee] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\CombatSceneTests.cs:230\n"
+        },
+        "reason": "旧测试仍要求街道候选/实体数量13或15；现行城镇只生成建筑敌人，基线同名同原因。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(\"Assets/Scenes/MovingTargetRangeScene.unity\",\"MovingTargetRange\")",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  40.7099991f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground (System.String path, System.String prefix) [0x0005b] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRangeSceneBindingsTests.cs:104\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  40.7099991f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground (System.String path, System.String prefix) [0x0005b] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRangeSceneBindingsTests.cs:104\n"
+        },
+        "reason": "现有远端场景靶排距离38.908m或40.710m，与测试100m要求不一致；未改场景靶位。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(\"Assets/Scenes/ZeroingRangeScene.unity\",\"ZeroingRange\")",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  38.9079971f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground (System.String path, System.String prefix) [0x0005b] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRangeSceneBindingsTests.cs:104\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  38.9079971f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground (System.String path, System.String prefix) [0x0005b] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRangeSceneBindingsTests.cs:104\n"
+        },
+        "reason": "现有远端场景靶排距离38.908m或40.710m，与测试100m要求不一致；未改场景靶位。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(\"Assets/Scenes/MovingTargetRangeScene.unity\")",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.033056885f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.AssertMuzzleAtOpening (VRShooting.Unity.Weapons.WeaponPrefabBinding binding) [0x001cd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:60\nat SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget (System.String path) [0x00050] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:34\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.033056885f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.AssertMuzzleAtOpening (VRShooting.Unity.Weapons.WeaponPrefabBinding binding) [0x001cd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:60\nat SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget (System.String path) [0x00050] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:34\n"
+        },
+        "reason": "既有新步枪网格枪口边缘与枪口锚点位置不同；未改步枪网格或枪口锚点。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(\"Assets/Scenes/ZeroingRangeScene.unity\")",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.0330568887f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.AssertMuzzleAtOpening (VRShooting.Unity.Weapons.WeaponPrefabBinding binding) [0x001cd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:60\nat SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget (System.String path) [0x00050] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:34\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.0330568887f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.AssertMuzzleAtOpening (VRShooting.Unity.Weapons.WeaponPrefabBinding binding) [0x001cd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:60\nat SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget (System.String path) [0x00050] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:34\n"
+        },
+        "reason": "既有新步枪网格枪口边缘与枪口锚点位置不同；未改步枪网格或枪口锚点。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SharedPrefabMuzzleMatchesActualMeshOpening",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.0330568887f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.AssertMuzzleAtOpening (VRShooting.Unity.Weapons.WeaponPrefabBinding binding) [0x001cd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:60\nat SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SharedPrefabMuzzleMatchesActualMeshOpening () [0x0000a] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:21\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.0330568887f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.AssertMuzzleAtOpening (VRShooting.Unity.Weapons.WeaponPrefabBinding binding) [0x001cd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:60\nat SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SharedPrefabMuzzleMatchesActualMeshOpening () [0x0000a] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:21\n"
+        },
+        "reason": "既有新步枪网格枪口边缘与枪口锚点位置不同；未改步枪网格或枪口锚点。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_ImportedMeshHasAnOpenRearApertureAndTheMeasuredFrontPost",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Three millimetres above the aperture must intersect its metal ring\n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_ImportedMeshHasAnOpenRearApertureAndTheMeasuredFrontPost () [0x000b4] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\VrMechanicalSightCalibrationTests.cs:26\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Three millimetres above the aperture must intersect its metal ring\n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_ImportedMeshHasAnOpenRearApertureAndTheMeasuredFrontPost () [0x000b4] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\VrMechanicalSightCalibrationTests.cs:26\n"
+        },
+        "reason": "既有步枪觇孔/准星与AimLine标定不匹配；本轮只去掉换肩反射，不修改网格/瞄具标定。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_PrefabAimLineMatchesVisibleApertureAndFrontPostAtOneHundredMetres",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  The VR player aligns real model sights, not a virtual +Z anchor\n  Expected: less than 0.00999999978f\n  But was:  2.03472328f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_PrefabAimLineMatchesVisibleApertureAndFrontPostAtOneHundredMetres () [0x000cc] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\VrMechanicalSightCalibrationTests.cs:47\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  The VR player aligns real model sights, not a virtual +Z anchor\n  Expected: less than 0.00999999978f\n  But was:  2.03472328f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_PrefabAimLineMatchesVisibleApertureAndFrontPostAtOneHundredMetres () [0x000cc] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\VrMechanicalSightCalibrationTests.cs:47\n"
+        },
+        "reason": "既有步枪觇孔/准星与AimLine标定不匹配；本轮只去掉换肩反射，不修改网格/瞄具标定。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Trench)",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  one remaining round cannot start a P2 sequence\n  Expected: 0\n  But was:  1\n",
+          "stack": "at VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence (VRShooting.Common.TrainingMode mode) [0x0010f] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\CombatMagazineReloadTests.cs:184\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  one remaining round cannot start a P2 sequence\n  Expected: 0\n  But was:  1\n",
+          "stack": "at VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence (VRShooting.Common.TrainingMode mode) [0x0010f] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\CombatMagazineReloadTests.cs:184\n"
+        },
+        "reason": "既有单余弹仍起射与旧两发门槛断言冲突；未改自动连射或弹药规则。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Urban)",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  one remaining round cannot start a P2 sequence\n  Expected: 0\n  But was:  1\n",
+          "stack": "at VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence (VRShooting.Common.TrainingMode mode) [0x0010f] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\CombatMagazineReloadTests.cs:184\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  one remaining round cannot start a P2 sequence\n  Expected: 0\n  But was:  1\n",
+          "stack": "at VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence (VRShooting.Common.TrainingMode mode) [0x0010f] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\CombatMagazineReloadTests.cs:184\n"
+        },
+        "reason": "既有单余弹仍起射与旧两发门槛断言冲突；未改自动连射或弹药规则。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Range (System.String key) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:21\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.Check (System.String room) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:36\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins () [0x0007c] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:108\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Range (System.String key) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:21\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.Check (System.String room) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:95\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins () [0x0007c] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:167\n"
+        },
+        "reason": "旧用例沿街道→建筑→搜索/检查闭环，与现行直接建筑清剿冲突；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(False)",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 1\n  But was:  0\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints (System.Boolean maximum) [0x0003d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:48\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 1\n  But was:  0\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints (System.Boolean maximum) [0x0003d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:107\n"
+        },
+        "reason": "旧服务用例要求街道1–2人，现行建筑清剿街道固定0；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(True)",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 2\n  But was:  0\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints (System.Boolean maximum) [0x0003d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:48\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 2\n  But was:  0\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints (System.Boolean maximum) [0x0003d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:107\n"
+        },
+        "reason": "旧服务用例要求街道1–2人，现行建筑清剿街道固定0；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Range (System.String key) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:21\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.Check (System.String room) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:36\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps () [0x0002f] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:88\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Range (System.String key) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:21\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.Check (System.String room) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:95\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps () [0x0002f] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:147\n"
+        },
+        "reason": "旧用例沿街道→建筑→搜索/检查闭环，与现行直接建筑清剿冲突；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Range (System.String key) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:21\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.Check (System.String room) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:36\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult () [0x00019] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:117\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Range (System.String key) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:21\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.Check (System.String room) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:95\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult () [0x00019] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:176\n"
+        },
+        "reason": "旧用例沿街道→建筑→搜索/检查闭环，与现行直接建筑清剿冲突；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: InvalidState\n  But was:  None\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies () [0x00007] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:64\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: InvalidState\n  But was:  None\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies () [0x00007] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:123\n"
+        },
+        "reason": "旧用例要求街道残敌阻止进入，现行直接建筑清剿允许；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime () [0x00012] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:28\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime () [0x00012] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:87\n"
+        },
+        "reason": "旧用例期待EnterBuilding提示，现行开局建筑HUD；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: in range (1,2)\n  But was:  0\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds () [0x00007] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:39\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: in range (1,2)\n  But was:  0\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds () [0x00007] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:98\n"
+        },
+        "reason": "旧服务用例要求街道1–2人，现行建筑清剿街道固定0；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.QuickSwitchDisposesOnlyStaleLease_AndCannotOverwriteUrban",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: UrbanStreetHud\n  But was:  UrbanBuildingHud\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.QuickSwitchDisposesOnlyStaleLease_AndCannotOverwriteUrban () [0x000e0] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen26_CombatApplicationTests.cs:137\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: UrbanStreetHud\n  But was:  UrbanBuildingHud\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.QuickSwitchDisposesOnlyStaleLease_AndCannotOverwriteUrban () [0x000e0] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen26_CombatApplicationTests.cs:137\n"
+        },
+        "reason": "旧装配断言期待UrbanStreetHud/街道流程，现行UrbanBuildingHud；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.ThreeRetriesUseNewSessions_RejectOldFacts_AndSaveOnlyLatest(Urban)",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.Die () [0x000ad] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen26_CombatApplicationTests.cs:45\nat VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.ThreeRetriesUseNewSessions_RejectOldFacts_AndSaveOnlyLatest (VRShooting.Common.TrainingMode mode) [0x00045] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen26_CombatApplicationTests.cs:164\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.Die () [0x000ad] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen26_CombatApplicationTests.cs:45\nat VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.ThreeRetriesUseNewSessions_RejectOldFacts_AndSaveOnlyLatest (VRShooting.Common.TrainingMode mode) [0x00045] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen26_CombatApplicationTests.cs:164\n"
+        },
+        "reason": "旧装配断言期待UrbanStreetHud/街道流程，现行UrbanBuildingHud；基线同名失败。"
+      }
+    ],
+    "baseline_failure_review": [
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 13\n  But was:  11\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms () [0x000ee] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\CombatSceneTests.cs:208\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 13\n  But was:  11\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms () [0x000ee] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\CombatSceneTests.cs:230\n"
+        },
+        "reason": "旧测试仍要求街道候选/实体数量13或15；现行城镇只生成建筑敌人，基线同名同原因。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(\"Assets/Scenes/MovingTargetRangeScene.unity\",\"MovingTargetRange\")",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  40.7099991f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground (System.String path, System.String prefix) [0x0005b] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRangeSceneBindingsTests.cs:104\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  40.7099991f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground (System.String path, System.String prefix) [0x0005b] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRangeSceneBindingsTests.cs:104\n"
+        },
+        "reason": "现有远端场景靶排距离38.908m或40.710m，与测试100m要求不一致；未改场景靶位。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(\"Assets/Scenes/ZeroingRangeScene.unity\",\"ZeroingRange\")",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  38.9079971f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground (System.String path, System.String prefix) [0x0005b] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRangeSceneBindingsTests.cs:104\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  38.9079971f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground (System.String path, System.String prefix) [0x0005b] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRangeSceneBindingsTests.cs:104\n"
+        },
+        "reason": "现有远端场景靶排距离38.908m或40.710m，与测试100m要求不一致；未改场景靶位。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(\"Assets/Scenes/MovingTargetRangeScene.unity\")",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.033056885f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.AssertMuzzleAtOpening (VRShooting.Unity.Weapons.WeaponPrefabBinding binding) [0x001cd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:60\nat SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget (System.String path) [0x00050] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:34\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.033056885f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.AssertMuzzleAtOpening (VRShooting.Unity.Weapons.WeaponPrefabBinding binding) [0x001cd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:60\nat SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget (System.String path) [0x00050] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:34\n"
+        },
+        "reason": "既有新步枪网格枪口边缘与枪口锚点位置不同；未改步枪网格或枪口锚点。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(\"Assets/Scenes/ZeroingRangeScene.unity\")",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.0330568887f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.AssertMuzzleAtOpening (VRShooting.Unity.Weapons.WeaponPrefabBinding binding) [0x001cd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:60\nat SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget (System.String path) [0x00050] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:34\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.0330568887f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.AssertMuzzleAtOpening (VRShooting.Unity.Weapons.WeaponPrefabBinding binding) [0x001cd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:60\nat SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget (System.String path) [0x00050] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:34\n"
+        },
+        "reason": "既有新步枪网格枪口边缘与枪口锚点位置不同；未改步枪网格或枪口锚点。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SharedPrefabMuzzleMatchesActualMeshOpening",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.0330568887f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.AssertMuzzleAtOpening (VRShooting.Unity.Weapons.WeaponPrefabBinding binding) [0x001cd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:60\nat SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SharedPrefabMuzzleMatchesActualMeshOpening () [0x0000a] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:21\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.0330568887f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.AssertMuzzleAtOpening (VRShooting.Unity.Weapons.WeaponPrefabBinding binding) [0x001cd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:60\nat SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SharedPrefabMuzzleMatchesActualMeshOpening () [0x0000a] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\TrainingRifleMuzzleAlignmentTests.cs:21\n"
+        },
+        "reason": "既有新步枪网格枪口边缘与枪口锚点位置不同；未改步枪网格或枪口锚点。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_ImportedMeshHasAnOpenRearApertureAndTheMeasuredFrontPost",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Three millimetres above the aperture must intersect its metal ring\n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_ImportedMeshHasAnOpenRearApertureAndTheMeasuredFrontPost () [0x000b4] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\VrMechanicalSightCalibrationTests.cs:26\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Three millimetres above the aperture must intersect its metal ring\n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_ImportedMeshHasAnOpenRearApertureAndTheMeasuredFrontPost () [0x000b4] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\VrMechanicalSightCalibrationTests.cs:26\n"
+        },
+        "reason": "既有步枪觇孔/准星与AimLine标定不匹配；本轮只去掉换肩反射，不修改网格/瞄具标定。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_PrefabAimLineMatchesVisibleApertureAndFrontPostAtOneHundredMetres",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  The VR player aligns real model sights, not a virtual +Z anchor\n  Expected: less than 0.00999999978f\n  But was:  2.03472328f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_PrefabAimLineMatchesVisibleApertureAndFrontPostAtOneHundredMetres () [0x000cc] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\VrMechanicalSightCalibrationTests.cs:47\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  The VR player aligns real model sights, not a virtual +Z anchor\n  Expected: less than 0.00999999978f\n  But was:  2.03472328f\n",
+          "stack": "at SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_PrefabAimLineMatchesVisibleApertureAndFrontPostAtOneHundredMetres () [0x000cc] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\EditMode\\VrMechanicalSightCalibrationTests.cs:47\n"
+        },
+        "reason": "既有步枪觇孔/准星与AimLine标定不匹配；本轮只去掉换肩反射，不修改网格/瞄具标定。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Trench)",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  one remaining round cannot start a P2 sequence\n  Expected: 0\n  But was:  1\n",
+          "stack": "at VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence (VRShooting.Common.TrainingMode mode) [0x0010f] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\CombatMagazineReloadTests.cs:184\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  one remaining round cannot start a P2 sequence\n  Expected: 0\n  But was:  1\n",
+          "stack": "at VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence (VRShooting.Common.TrainingMode mode) [0x0010f] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\CombatMagazineReloadTests.cs:184\n"
+        },
+        "reason": "既有单余弹仍起射与旧两发门槛断言冲突；未改自动连射或弹药规则。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Urban)",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  one remaining round cannot start a P2 sequence\n  Expected: 0\n  But was:  1\n",
+          "stack": "at VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence (VRShooting.Common.TrainingMode mode) [0x0010f] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\CombatMagazineReloadTests.cs:184\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  one remaining round cannot start a P2 sequence\n  Expected: 0\n  But was:  1\n",
+          "stack": "at VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence (VRShooting.Common.TrainingMode mode) [0x0010f] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\CombatMagazineReloadTests.cs:184\n"
+        },
+        "reason": "既有单余弹仍起射与旧两发门槛断言冲突；未改自动连射或弹药规则。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Range (System.String key) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:21\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.Check (System.String room) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:36\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins () [0x0007c] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:108\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Range (System.String key) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:21\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.Check (System.String room) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:95\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins () [0x0007c] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:167\n"
+        },
+        "reason": "旧用例沿街道→建筑→搜索/检查闭环，与现行直接建筑清剿冲突；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(False)",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 1\n  But was:  0\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints (System.Boolean maximum) [0x0003d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:48\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 1\n  But was:  0\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints (System.Boolean maximum) [0x0003d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:107\n"
+        },
+        "reason": "旧服务用例要求街道1–2人，现行建筑清剿街道固定0；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(True)",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 2\n  But was:  0\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints (System.Boolean maximum) [0x0003d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:48\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 2\n  But was:  0\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints (System.Boolean maximum) [0x0003d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:107\n"
+        },
+        "reason": "旧服务用例要求街道1–2人，现行建筑清剿街道固定0；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Range (System.String key) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:21\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.Check (System.String room) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:36\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps () [0x0002f] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:88\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Range (System.String key) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:21\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.Check (System.String room) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:95\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps () [0x0002f] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:147\n"
+        },
+        "reason": "旧用例沿街道→建筑→搜索/检查闭环，与现行直接建筑清剿冲突；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Range (System.String key) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:21\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.Check (System.String room) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:36\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult () [0x00019] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:117\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Range (System.String key) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:21\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.Check (System.String room) [0x00000] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:95\nat VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult () [0x00019] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:176\n"
+        },
+        "reason": "旧用例沿街道→建筑→搜索/检查闭环，与现行直接建筑清剿冲突；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: InvalidState\n  But was:  None\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies () [0x00007] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:64\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: InvalidState\n  But was:  None\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies () [0x00007] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:123\n"
+        },
+        "reason": "旧用例要求街道残敌阻止进入，现行直接建筑清剿允许；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime () [0x00012] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:28\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime () [0x00012] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:87\n"
+        },
+        "reason": "旧用例期待EnterBuilding提示，现行开局建筑HUD；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: in range (1,2)\n  But was:  0\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds () [0x00007] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:39\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: in range (1,2)\n  But was:  0\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds () [0x00007] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen25_UrbanTests.cs:98\n"
+        },
+        "reason": "旧服务用例要求街道1–2人，现行建筑清剿街道固定0；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.QuickSwitchDisposesOnlyStaleLease_AndCannotOverwriteUrban",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: UrbanStreetHud\n  But was:  UrbanBuildingHud\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.QuickSwitchDisposesOnlyStaleLease_AndCannotOverwriteUrban () [0x000e0] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen26_CombatApplicationTests.cs:137\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: UrbanStreetHud\n  But was:  UrbanBuildingHud\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.QuickSwitchDisposesOnlyStaleLease_AndCannotOverwriteUrban () [0x000e0] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen26_CombatApplicationTests.cs:137\n"
+        },
+        "reason": "旧装配断言期待UrbanStreetHud/街道流程，现行UrbanBuildingHud；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.ThreeRetriesUseNewSessions_RejectOldFacts_AndSaveOnlyLatest(Urban)",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.Die () [0x000ad] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen26_CombatApplicationTests.cs:45\nat VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.ThreeRetriesUseNewSessions_RejectOldFacts_AndSaveOnlyLatest (VRShooting.Common.TrainingMode mode) [0x00045] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen26_CombatApplicationTests.cs:164\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: True\n  But was:  False\n",
+          "stack": "at VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.Die () [0x000ad] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen26_CombatApplicationTests.cs:45\nat VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.ThreeRetriesUseNewSessions_RejectOldFacts_AndSaveOnlyLatest (VRShooting.Common.TrainingMode mode) [0x00045] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\EditMode\\Infrastructure\\Screen26_CombatApplicationTests.cs:164\n"
+        },
+        "reason": "旧装配断言期待UrbanStreetHud/街道流程，现行UrbanBuildingHud；基线同名失败。"
+      }
+    ],
+    "added_test_names": [
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd27_UrbanHasBoundGrenadeModelAndHeavyExplosionAudio",
+        "result": "Passed"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.VRControllerHandVisualEditModeTests.Bdd29_LeftShoulderMirrorsOnlyHandsAroundAuthoredGripsAndRestoresEveryVertex",
+        "result": "Passed"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.VRControllerHandVisualEditModeTests.Bdd29_LeftShoulderPreservesAuthoredBarrelAimWithYawAndRoll",
+        "result": "Passed"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Trench)",
+        "result": "Passed"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Urban)",
+        "result": "Passed"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Trench,10)",
+        "result": "Passed"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Urban,10)",
+        "result": "Passed"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.Bdd27_UrbanGrenadeUsesSharedTacticAndCancelsOnTrackingLossAndRetry",
+        "result": "Passed"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.Bdd29_UrbanTenHealthFlowsThroughHudDeathResultAndRetry",
+        "result": "Passed"
+      }
+    ],
+    "removed_test_names": [
+      "SimulatedShooting.Tests.EditMode.VRControllerHandVisualEditModeTests.Bdd29_LeftShoulderAimFollowsTheMirroredRenderedBarrelWithYawAndRoll",
+      "SimulatedShooting.Tests.EditMode.VRControllerHandVisualEditModeTests.Bdd29_LeftShoulderMirrorsEveryArmBoneAndRenderedVertexAndSwitchesBackExactly",
+      "VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_TrenchSurvivesFiveExtraBulletsAndUrbanKeepsFive(Trench,10)",
+      "VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_TrenchSurvivesFiveExtraBulletsAndUrbanKeepsFive(Urban,5)"
+    ]
+  },
+  "playmode": {
+    "baseline": {
+      "id": "2",
+      "testcasecount": "301",
+      "result": "Failed(Child)",
+      "total": "301",
+      "passed": "276",
+      "failed": "25",
+      "inconclusive": "0",
+      "skipped": "0",
+      "asserts": "0",
+      "engine-version": "3.5.0.0",
+      "clr-version": "4.0.30319.42000",
+      "start-time": "2026-11-11 14:38:51Z",
+      "end-time": "2026-11-11 14:41:18Z",
+      "duration": "147.5527764"
+    },
+    "current": {
+      "id": "2",
+      "testcasecount": "304",
+      "result": "Failed(Child)",
+      "total": "304",
+      "passed": "281",
+      "failed": "23",
+      "inconclusive": "0",
+      "skipped": "0",
+      "asserts": "0",
+      "engine-version": "3.5.0.0",
+      "clr-version": "4.0.30319.42000",
+      "start-time": "2026-11-12 03:38:28Z",
+      "end-time": "2026-11-12 03:40:49Z",
+      "duration": "140.8845247"
+    },
+    "new_failures": [],
+    "resolved_failures": [
+      "SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.TrenchEnemyAttacksShowShotTracerAudioAndPlayerBlood",
+      "SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.UrbanEnemyAttacksShowShotTracerAudioAndPlayerBlood"
+    ],
+    "failures": [
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd14_NewTrenchAllowsContinuousMovementAndFiring",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  89eb640c408c4d8fbaa6d79c724af14d.enemy-001\n  Expected: in range (2.018377,3.428377)\n  But was:  1.92627943f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests+<Bdd14_NewTrenchAllowsContinuousMovementAndFiring>d__1.MoveNext () [0x00478] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\BunkersTrenchPlayModeTests.cs:95\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  d22a264184954a318ca4f2d87ce1c755.enemy-001\n  Expected: in range (2.018377,3.428377)\n  But was:  1.92627943f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests+<Bdd14_NewTrenchAllowsContinuousMovementAndFiring>d__1.MoveNext () [0x00478] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\BunkersTrenchPlayModeTests.cs:95\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "模式三原资源鞋底/地形高度不匹配；同名基线已失败，本次未修改人物或地形资源。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.NewSceneInspectionWalkerCanLeaveEntry",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  trench-spawn-1 boots\n  Expected: 2.17788005f +/- 0.0799999982f\n  But was:  1.92738593f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests+<NewSceneInspectionWalkerCanLeaveEntry>d__2.MoveNext () [0x00158] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\BunkersTrenchPlayModeTests.cs:143\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  trench-spawn-1 boots\n  Expected: 2.17788005f +/- 0.0799999982f\n  But was:  1.92737138f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests+<NewSceneInspectionWalkerCanLeaveEntry>d__2.MoveNext () [0x00158] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\BunkersTrenchPlayModeTests.cs:143\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "模式三原资源鞋底/地形高度不匹配；同名基线已失败，本次未修改人物或地形资源。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 15\n  But was:  13\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests+<Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup>d__11.MoveNext () [0x0002d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\CombatScenePlayModeTests.cs:253\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 15\n  But was:  13\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests+<Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup>d__11.MoveNext () [0x0002d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\CombatScenePlayModeTests.cs:253\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧测试仍要求街道候选/实体数量13或15；现行城镇只生成建筑敌人，基线同名同原因。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 15\n  But was:  13\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests+<Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors>d__14.MoveNext () [0x000e5] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\CombatScenePlayModeTests.cs:315\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 15\n  But was:  13\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests+<Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors>d__14.MoveNext () [0x000e5] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\CombatScenePlayModeTests.cs:315\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧测试仍要求街道候选/实体数量13或15；现行城镇只生成建筑敌人，基线同名同原因。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: less than 0.0199999996f\n  But was:  0.0931938887f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests+<P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore>d__4.MoveNext () [0x0026a] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\MovingTargetRangeIntegrationTests.cs:178\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: less than 0.0199999996f\n  But was:  0.0931938887f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests+<P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore>d__5.MoveNext () [0x0026a] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\MovingTargetRangeIntegrationTests.cs:200\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "现有新步枪/物理命中点偏差约9.3cm，超出旧2cm断言；未改靶命中规则或锚点。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd31_DayHud_RestoresTheOriginalRearRowAndFortyMetreRoute",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.100000001f\n  But was:  40.7099991f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd31_DayHud_RestoresTheOriginalRearRowAndFortyMetreRoute () [0x0007a] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\MovingTargetRangeSceneTests.cs:165\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.100000001f\n  But was:  40.7099991f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd31_DayHud_RestoresTheOriginalRearRowAndFortyMetreRoute () [0x0007a] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\MovingTargetRangeSceneTests.cs:165\n"
+        },
+        "reason": "现有远端场景靶排距离38.908m或40.710m，与测试100m要求不一致；未改场景靶位。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Missing ZeroingRange start-area copy: ShootingBench\n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy () [0x000e0] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\MovingTargetRangeSceneTests.cs:106\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Missing ZeroingRange start-area copy: ShootingBench\n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy () [0x000e0] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\MovingTargetRangeSceneTests.cs:106\n"
+        },
+        "reason": "远端移动靶场缺ShootingBench前景副本；本次未改该场景。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: UrbanStreetHud\n  But was:  UrbanBuildingHud\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene>d__10.MoveNext () [0x00197] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:84\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: UrbanStreetHud\n  But was:  UrbanBuildingHud\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene>d__10.MoveNext () [0x00197] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:84\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧装配断言期待UrbanStreetHud/街道流程，现行UrbanBuildingHud；基线同名失败。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "System.NullReferenceException : Object reference not set to an instance of an object",
+          "stack": "  at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds>d__5.MoveNext () [0x003ad] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:56 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+        },
+        "current": {
+          "result": "Failed",
+          "message": "System.NullReferenceException : Object reference not set to an instance of an object",
+          "stack": "  at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds>d__5.MoveNext () [0x003ad] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:56 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+        },
+        "reason": "旧用例查找街道页面控件，现行默认建筑HUD导致空引用；基线同名失败。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_DeathThreeRetriesTrackingAndMovement",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Real line-of-sight enemy attacks must reach failure\n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<RunDeathFlow>d__19.MoveNext () [0x0069e] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:360\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Real line-of-sight enemy attacks must reach failure\n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<RunDeathFlow>d__19.MoveNext () [0x0069e] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:360\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧生产死亡夹具的敌人/视线位置不满足当前房门及感知条件；基线同名失败，新生产Urban十枪与转向回归通过。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_ProductionVictoryRetryAndReturn",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Entry prompt should reflect physical range: \n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Complete>d__22.MoveNext () [0x003fa] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:443\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Entry prompt should reflect physical range: \n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Complete>d__22.MoveNext () [0x003fa] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:443\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧生产闭环仍要求街道入口提示/进入建筑；现行直接建筑清剿，基线同名失败。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Real VR sights and sampled gun line must meet within one centimetre\n  Expected: less than 1.0f\n  But was:  77.9776382f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests+<Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound>d__18.MoveNext () [0x00128] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\VrZeroingMechanicalSightTests.cs:117\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Real VR sights and sampled gun line must meet within one centimetre\n  Expected: less than 1.0f\n  But was:  77.9776382f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests+<Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound>d__18.MoveNext () [0x00128] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\VrZeroingMechanicalSightTests.cs:117\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "既有步枪觇孔/准星与AimLine标定不匹配；本轮只去掉换肩反射，不修改网格/瞄具标定。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 2\n  But was:  0\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests+<Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands>d__9.MoveNext () [0x000f3] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\XRSceneHandoffTests.cs:148\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 2\n  But was:  0\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests+<Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands>d__9.MoveNext () [0x000f3] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\XRSceneHandoffTests.cs:148\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "既有训练手模型可见数量为0而非2；新P3换肩手模型测试通过，未修改该交接可见性模块。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: less than 1.01999998f\n  But was:  22.9285927f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests+<Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles>d__20.MoveNext () [0x000ec] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingOctober07RegressionTests.cs:395\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: less than 1.01999998f\n  But was:  22.9285927f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests+<Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles>d__20.MoveNext () [0x000ec] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingOctober07RegressionTests.cs:395\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "既有射校补偿后物理弹着仍偏约22.9cm；本次未修改射校算法或瞄具资产。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd04_PickupPromptFacesShooterAboveRifleWithoutChangingText",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected string length 15 but was 8. Strings differ at index 0.\n  Expected: \"GRIP TO PICK UP\"\n  But was:  \"两个手柄抓握持枪\"\n  -----------^\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd04_PickupPromptFacesShooterAboveRifleWithoutChangingText () [0x00030] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:67\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected string length 15 but was 8. Strings differ at index 0.\n  Expected: \"GRIP TO PICK UP\"\n  But was:  \"两个手柄抓握持枪\"\n  -----------^\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd04_PickupPromptFacesShooterAboveRifleWithoutChangingText () [0x00030] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:67\n"
+        },
+        "reason": "旧断言期待英文GRIP TO PICK UP，现生产中文两个手柄抓握持枪；基线同名失败。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd31_TargetKeepsItsDimensionsInTheOriginalRearRow",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  38.9079971f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd31_TargetKeepsItsDimensionsInTheOriginalRearRow () [0x00054] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:161\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  38.9079971f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd31_TargetKeepsItsDimensionsInTheOriginalRearRow () [0x00054] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:161\n"
+        },
+        "reason": "现有远端场景靶排距离38.908m或40.710m，与测试100m要求不一致；未改场景靶位。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_TrainingRifleUsesLicensedQbz191Visual",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: less than 0.00100000005f\n  But was:  0.0235372111f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_TrainingRifleUsesLicensedQbz191Visual () [0x002e7] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:582\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: less than 0.00100000005f\n  But was:  0.0235372111f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_TrainingRifleUsesLicensedQbz191Visual () [0x002e7] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:582\n"
+        },
+        "reason": "既有新步枪模型尺寸/位置偏差约2.35cm，超出旧1mm断言；未改模型资产。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 0.119999997f +/- 0.00100000005f\n  But was:  0.219999999f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests+<Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease>d__53.MoveNext () [0x0016d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:1093\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 0.119999997f +/- 0.00100000005f\n  But was:  0.219999999f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests+<Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease>d__53.MoveNext () [0x0016d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:1103\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧断言支撑手半径12cm，现行22cm；本次保留既有抓取半径。"
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.BuildingFailureKeepsCountsAndOldSessionInputsAreRejected",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "System.InvalidOperationException : Sequence contains no matching element",
+          "stack": "  at System.Linq.Enumerable.First[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Func`2[T,TResult] predicate) [0x00011] in <ea489521390f48908a7ce45cb17a6848>:0 \n  at VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests+<BuildingFailureKeepsCountsAndOldSessionInputsAreRejected>d__1.MoveNext () [0x00124] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\Infrastructure\\Screen25_UrbanPlayModeTests.cs:54 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+        },
+        "current": {
+          "result": "Failed",
+          "message": "System.InvalidOperationException : Sequence contains no matching element",
+          "stack": "  at System.Linq.Enumerable.First[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Func`2[T,TResult] predicate) [0x00011] in <ea489521390f48908a7ce45cb17a6848>:0 \n  at VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests+<BuildingFailureKeepsCountsAndOldSessionInputsAreRejected>d__1.MoveNext () [0x00124] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\Infrastructure\\Screen25_UrbanPlayModeTests.cs:54 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+        },
+        "reason": "旧街道残敌查询找不到元素，现行街道0敌人；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "System.InvalidOperationException : Nullable object must have a value.",
+          "stack": "  at System.Nullable`1[T].get_Value () [0x00008] in <1071a2cb0cb3433aae80a793c277a048>:0 \n  at VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests+<Run>d__2.MoveNext () [0x008f3] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\Infrastructure\\Screen26_CombatCompositionPlayModeTests.cs:69 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+        },
+        "current": {
+          "result": "Failed",
+          "message": "System.InvalidOperationException : Nullable object must have a value.",
+          "stack": "  at System.Nullable`1[T].get_Value () [0x00008] in <1071a2cb0cb3433aae80a793c277a048>:0 \n  at VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests+<Run>d__2.MoveNext () [0x008f3] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\Infrastructure\\Screen26_CombatCompositionPlayModeTests.cs:69 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+        },
+        "reason": "旧街道阶段/房间流程对现行建筑清剿取到空值；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: String containing \"1-2\"\n  But was:  \"建筑内部敌人：3-6\"\n",
+          "stack": "at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen18_UrbanMapSelection_RendersRangesAndStartsStreet>d__6.MoveNext () [0x000fe] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\UI\\P3UiTask002_005_008_011PlayModeTests.cs:186\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: String containing \"1-2\"\n  But was:  \"建筑内部敌人：3-6\"\n",
+          "stack": "at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen18_UrbanMapSelection_RendersRangesAndStartsStreet>d__6.MoveNext () [0x000fe] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\UI\\P3UiTask002_005_008_011PlayModeTests.cs:186\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧文本断言街道1–2人，现行建筑内部3–6人；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: String containing \"未搜索\"\n  But was:  \"房间1 · 靠近后开门\"\n",
+          "stack": "at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands>d__8.MoveNext () [0x000dd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\UI\\P3UiTask002_005_008_011PlayModeTests.cs:245\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: String containing \"未搜索\"\n  But was:  \"房间1 · 靠近后开门\"\n",
+          "stack": "at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands>d__8.MoveNext () [0x000dd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\UI\\P3UiTask002_005_008_011PlayModeTests.cs:245\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧房间文本未搜索，现行靠近后开门；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce",
+        "classification": "基线同名失败",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: String containing \"街道清除：已清除\"\n  But was:  \"消灭建筑敌人：5 / 5\n剩余弹药：76\n队友状态：\n玩家 · 正常 · 生命 100\n二号队友 · 跟随 · 生命 100\n三号队友 · 跟随 · 生命 100\n用时：02:00\"\n",
+          "stack": "at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce>d__9.MoveNext () [0x001c2] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\UI\\P3UiTask002_005_008_011PlayModeTests.cs:298\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: String containing \"街道清除：已清除\"\n  But was:  \"消灭建筑敌人：5 / 5\n剩余弹药：76\n队友状态：\n玩家 · 正常 · 生命 100\n二号队友 · 跟随 · 生命 100\n三号队友 · 跟随 · 生命 100\n用时：02:00\"\n",
+          "stack": "at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce>d__9.MoveNext () [0x001c2] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\UI\\P3UiTask002_005_008_011PlayModeTests.cs:298\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧结算文本街道清除，现行消灭建筑敌人；基线同名失败。"
+      }
+    ],
+    "baseline_failure_review": [
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd14_NewTrenchAllowsContinuousMovementAndFiring",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  89eb640c408c4d8fbaa6d79c724af14d.enemy-001\n  Expected: in range (2.018377,3.428377)\n  But was:  1.92627943f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests+<Bdd14_NewTrenchAllowsContinuousMovementAndFiring>d__1.MoveNext () [0x00478] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\BunkersTrenchPlayModeTests.cs:95\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  d22a264184954a318ca4f2d87ce1c755.enemy-001\n  Expected: in range (2.018377,3.428377)\n  But was:  1.92627943f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests+<Bdd14_NewTrenchAllowsContinuousMovementAndFiring>d__1.MoveNext () [0x00478] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\BunkersTrenchPlayModeTests.cs:95\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "模式三原资源鞋底/地形高度不匹配；同名基线已失败，本次未修改人物或地形资源。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.NewSceneInspectionWalkerCanLeaveEntry",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  trench-spawn-1 boots\n  Expected: 2.17788005f +/- 0.0799999982f\n  But was:  1.92738593f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests+<NewSceneInspectionWalkerCanLeaveEntry>d__2.MoveNext () [0x00158] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\BunkersTrenchPlayModeTests.cs:143\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  trench-spawn-1 boots\n  Expected: 2.17788005f +/- 0.0799999982f\n  But was:  1.92737138f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests+<NewSceneInspectionWalkerCanLeaveEntry>d__2.MoveNext () [0x00158] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\BunkersTrenchPlayModeTests.cs:143\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "模式三原资源鞋底/地形高度不匹配；同名基线已失败，本次未修改人物或地形资源。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.TrenchEnemyAttacksShowShotTracerAudioAndPlayerBlood",
+        "current_result": "Passed",
+        "baseline": {
+          "result": "Failed",
+          "message": "System.InvalidOperationException : Sequence contains no matching element",
+          "stack": "  at System.Linq.Enumerable.Single[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Func`2[T,TResult] predicate) [0x00070] in <ea489521390f48908a7ce45cb17a6848>:0 \n  at SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests+<Validate>d__4.MoveNext () [0x0072d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\CombatFeedbackIntegrationTests.cs:116 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+        },
+        "current": {
+          "result": "Passed",
+          "message": "",
+          "stack": ""
+        },
+        "reason": "原断言检索已退役Tracer_Enemy_名称；改为检索生产Tracer_Actor_，仍检查真实弹道网格、线宽、枪声、血雾、十次伤害和死亡；本轮通过。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.UrbanEnemyAttacksShowShotTracerAudioAndPlayerBlood",
+        "current_result": "Passed",
+        "baseline": {
+          "result": "Failed",
+          "message": "System.InvalidOperationException : Sequence contains no matching element",
+          "stack": "  at System.Linq.Enumerable.Single[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Func`2[T,TResult] predicate) [0x00070] in <ea489521390f48908a7ce45cb17a6848>:0 \n  at SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests+<Validate>d__4.MoveNext () [0x0072d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\CombatFeedbackIntegrationTests.cs:116 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+        },
+        "current": {
+          "result": "Passed",
+          "message": "",
+          "stack": ""
+        },
+        "reason": "原断言检索已退役Tracer_Enemy_名称；改为检索生产Tracer_Actor_，仍检查真实弹道网格、线宽、枪声、血雾、十次伤害和死亡；本轮通过。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 15\n  But was:  13\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests+<Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup>d__11.MoveNext () [0x0002d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\CombatScenePlayModeTests.cs:253\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 15\n  But was:  13\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests+<Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup>d__11.MoveNext () [0x0002d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\CombatScenePlayModeTests.cs:253\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧测试仍要求街道候选/实体数量13或15；现行城镇只生成建筑敌人，基线同名同原因。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 15\n  But was:  13\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests+<Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors>d__14.MoveNext () [0x000e5] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\CombatScenePlayModeTests.cs:315\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 15\n  But was:  13\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests+<Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors>d__14.MoveNext () [0x000e5] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\CombatScenePlayModeTests.cs:315\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧测试仍要求街道候选/实体数量13或15；现行城镇只生成建筑敌人，基线同名同原因。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: less than 0.0199999996f\n  But was:  0.0931938887f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests+<P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore>d__4.MoveNext () [0x0026a] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\MovingTargetRangeIntegrationTests.cs:178\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: less than 0.0199999996f\n  But was:  0.0931938887f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests+<P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore>d__5.MoveNext () [0x0026a] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\MovingTargetRangeIntegrationTests.cs:200\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "现有新步枪/物理命中点偏差约9.3cm，超出旧2cm断言；未改靶命中规则或锚点。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd31_DayHud_RestoresTheOriginalRearRowAndFortyMetreRoute",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.100000001f\n  But was:  40.7099991f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd31_DayHud_RestoresTheOriginalRearRowAndFortyMetreRoute () [0x0007a] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\MovingTargetRangeSceneTests.cs:165\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.100000001f\n  But was:  40.7099991f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd31_DayHud_RestoresTheOriginalRearRowAndFortyMetreRoute () [0x0007a] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\MovingTargetRangeSceneTests.cs:165\n"
+        },
+        "reason": "现有远端场景靶排距离38.908m或40.710m，与测试100m要求不一致；未改场景靶位。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Missing ZeroingRange start-area copy: ShootingBench\n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy () [0x000e0] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\MovingTargetRangeSceneTests.cs:106\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Missing ZeroingRange start-area copy: ShootingBench\n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy () [0x000e0] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\MovingTargetRangeSceneTests.cs:106\n"
+        },
+        "reason": "远端移动靶场缺ShootingBench前景副本；本次未改该场景。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: UrbanStreetHud\n  But was:  UrbanBuildingHud\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene>d__10.MoveNext () [0x00197] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:84\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: UrbanStreetHud\n  But was:  UrbanBuildingHud\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene>d__10.MoveNext () [0x00197] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:84\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧装配断言期待UrbanStreetHud/街道流程，现行UrbanBuildingHud；基线同名失败。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "System.NullReferenceException : Object reference not set to an instance of an object",
+          "stack": "  at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds>d__5.MoveNext () [0x003ad] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:56 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+        },
+        "current": {
+          "result": "Failed",
+          "message": "System.NullReferenceException : Object reference not set to an instance of an object",
+          "stack": "  at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds>d__5.MoveNext () [0x003ad] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:56 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+        },
+        "reason": "旧用例查找街道页面控件，现行默认建筑HUD导致空引用；基线同名失败。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_DeathThreeRetriesTrackingAndMovement",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Real line-of-sight enemy attacks must reach failure\n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<RunDeathFlow>d__19.MoveNext () [0x0069e] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:360\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Real line-of-sight enemy attacks must reach failure\n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<RunDeathFlow>d__19.MoveNext () [0x0069e] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:360\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧生产死亡夹具的敌人/视线位置不满足当前房门及感知条件；基线同名失败，新生产Urban十枪与转向回归通过。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_ProductionVictoryRetryAndReturn",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Entry prompt should reflect physical range: \n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Complete>d__22.MoveNext () [0x003fa] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:443\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Entry prompt should reflect physical range: \n  Expected: True\n  But was:  False\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Complete>d__22.MoveNext () [0x003fa] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\P3ProductionFlowTests.cs:443\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧生产闭环仍要求街道入口提示/进入建筑；现行直接建筑清剿，基线同名失败。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Real VR sights and sampled gun line must meet within one centimetre\n  Expected: less than 1.0f\n  But was:  77.9776382f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests+<Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound>d__18.MoveNext () [0x00128] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\VrZeroingMechanicalSightTests.cs:117\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Real VR sights and sampled gun line must meet within one centimetre\n  Expected: less than 1.0f\n  But was:  77.9776382f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests+<Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound>d__18.MoveNext () [0x00128] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\VrZeroingMechanicalSightTests.cs:117\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "既有步枪觇孔/准星与AimLine标定不匹配；本轮只去掉换肩反射，不修改网格/瞄具标定。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 2\n  But was:  0\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests+<Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands>d__9.MoveNext () [0x000f3] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\XRSceneHandoffTests.cs:148\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 2\n  But was:  0\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests+<Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands>d__9.MoveNext () [0x000f3] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\XRSceneHandoffTests.cs:148\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "既有训练手模型可见数量为0而非2；新P3换肩手模型测试通过，未修改该交接可见性模块。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: less than 1.01999998f\n  But was:  22.9285927f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests+<Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles>d__20.MoveNext () [0x000ec] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingOctober07RegressionTests.cs:395\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: less than 1.01999998f\n  But was:  22.9285927f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests+<Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles>d__20.MoveNext () [0x000ec] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingOctober07RegressionTests.cs:395\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "既有射校补偿后物理弹着仍偏约22.9cm；本次未修改射校算法或瞄具资产。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd04_PickupPromptFacesShooterAboveRifleWithoutChangingText",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected string length 15 but was 8. Strings differ at index 0.\n  Expected: \"GRIP TO PICK UP\"\n  But was:  \"两个手柄抓握持枪\"\n  -----------^\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd04_PickupPromptFacesShooterAboveRifleWithoutChangingText () [0x00030] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:67\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected string length 15 but was 8. Strings differ at index 0.\n  Expected: \"GRIP TO PICK UP\"\n  But was:  \"两个手柄抓握持枪\"\n  -----------^\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd04_PickupPromptFacesShooterAboveRifleWithoutChangingText () [0x00030] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:67\n"
+        },
+        "reason": "旧断言期待英文GRIP TO PICK UP，现生产中文两个手柄抓握持枪；基线同名失败。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd31_TargetKeepsItsDimensionsInTheOriginalRearRow",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  38.9079971f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd31_TargetKeepsItsDimensionsInTheOriginalRearRow () [0x00054] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:161\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  38.9079971f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd31_TargetKeepsItsDimensionsInTheOriginalRearRow () [0x00054] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:161\n"
+        },
+        "reason": "现有远端场景靶排距离38.908m或40.710m，与测试100m要求不一致；未改场景靶位。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_TrainingRifleUsesLicensedQbz191Visual",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: less than 0.00100000005f\n  But was:  0.0235372111f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_TrainingRifleUsesLicensedQbz191Visual () [0x002e7] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:582\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: less than 0.00100000005f\n  But was:  0.0235372111f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_TrainingRifleUsesLicensedQbz191Visual () [0x002e7] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:582\n"
+        },
+        "reason": "既有新步枪模型尺寸/位置偏差约2.35cm，超出旧1mm断言；未改模型资产。"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: 0.119999997f +/- 0.00100000005f\n  But was:  0.219999999f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests+<Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease>d__53.MoveNext () [0x0016d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:1093\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: 0.119999997f +/- 0.00100000005f\n  But was:  0.219999999f\n",
+          "stack": "at SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests+<Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease>d__53.MoveNext () [0x0016d] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\SimulatedShooting\\Tests\\PlayMode\\ZeroingRangeSceneTests.cs:1103\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧断言支撑手半径12cm，现行22cm；本次保留既有抓取半径。"
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.BuildingFailureKeepsCountsAndOldSessionInputsAreRejected",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "System.InvalidOperationException : Sequence contains no matching element",
+          "stack": "  at System.Linq.Enumerable.First[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Func`2[T,TResult] predicate) [0x00011] in <ea489521390f48908a7ce45cb17a6848>:0 \n  at VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests+<BuildingFailureKeepsCountsAndOldSessionInputsAreRejected>d__1.MoveNext () [0x00124] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\Infrastructure\\Screen25_UrbanPlayModeTests.cs:54 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+        },
+        "current": {
+          "result": "Failed",
+          "message": "System.InvalidOperationException : Sequence contains no matching element",
+          "stack": "  at System.Linq.Enumerable.First[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Func`2[T,TResult] predicate) [0x00011] in <ea489521390f48908a7ce45cb17a6848>:0 \n  at VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests+<BuildingFailureKeepsCountsAndOldSessionInputsAreRejected>d__1.MoveNext () [0x00124] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\Infrastructure\\Screen25_UrbanPlayModeTests.cs:54 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+        },
+        "reason": "旧街道残敌查询找不到元素，现行街道0敌人；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "System.InvalidOperationException : Nullable object must have a value.",
+          "stack": "  at System.Nullable`1[T].get_Value () [0x00008] in <1071a2cb0cb3433aae80a793c277a048>:0 \n  at VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests+<Run>d__2.MoveNext () [0x008f3] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\Infrastructure\\Screen26_CombatCompositionPlayModeTests.cs:69 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+        },
+        "current": {
+          "result": "Failed",
+          "message": "System.InvalidOperationException : Nullable object must have a value.",
+          "stack": "  at System.Nullable`1[T].get_Value () [0x00008] in <1071a2cb0cb3433aae80a793c277a048>:0 \n  at VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests+<Run>d__2.MoveNext () [0x008f3] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\Infrastructure\\Screen26_CombatCompositionPlayModeTests.cs:69 \n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+        },
+        "reason": "旧街道阶段/房间流程对现行建筑清剿取到空值；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: String containing \"1-2\"\n  But was:  \"建筑内部敌人：3-6\"\n",
+          "stack": "at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen18_UrbanMapSelection_RendersRangesAndStartsStreet>d__6.MoveNext () [0x000fe] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\UI\\P3UiTask002_005_008_011PlayModeTests.cs:186\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: String containing \"1-2\"\n  But was:  \"建筑内部敌人：3-6\"\n",
+          "stack": "at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen18_UrbanMapSelection_RendersRangesAndStartsStreet>d__6.MoveNext () [0x000fe] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\UI\\P3UiTask002_005_008_011PlayModeTests.cs:186\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧文本断言街道1–2人，现行建筑内部3–6人；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: String containing \"未搜索\"\n  But was:  \"房间1 · 靠近后开门\"\n",
+          "stack": "at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands>d__8.MoveNext () [0x000dd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\UI\\P3UiTask002_005_008_011PlayModeTests.cs:245\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: String containing \"未搜索\"\n  But was:  \"房间1 · 靠近后开门\"\n",
+          "stack": "at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands>d__8.MoveNext () [0x000dd] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\UI\\P3UiTask002_005_008_011PlayModeTests.cs:245\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧房间文本未搜索，现行靠近后开门；基线同名失败。"
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce",
+        "current_result": "Failed",
+        "baseline": {
+          "result": "Failed",
+          "message": "  Expected: String containing \"街道清除：已清除\"\n  But was:  \"消灭建筑敌人：5 / 5\n剩余弹药：76\n队友状态：\n玩家 · 正常 · 生命 100\n二号队友 · 跟随 · 生命 100\n三号队友 · 跟随 · 生命 100\n用时：02:00\"\n",
+          "stack": "at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce>d__9.MoveNext () [0x001c2] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\UI\\P3UiTask002_005_008_011PlayModeTests.cs:298\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "current": {
+          "result": "Failed",
+          "message": "  Expected: String containing \"街道清除：已清除\"\n  But was:  \"消灭建筑敌人：5 / 5\n剩余弹药：76\n队友状态：\n玩家 · 正常 · 生命 100\n二号队友 · 跟随 · 生命 100\n三号队友 · 跟随 · 生命 100\n用时：02:00\"\n",
+          "stack": "at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce>d__9.MoveNext () [0x001c2] in E:\\新建文件夹 (3)\\SimulateShooting\\Assets\\VRShooting\\Tests\\PlayMode\\UI\\P3UiTask002_005_008_011PlayModeTests.cs:298\nat UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n"
+        },
+        "reason": "旧结算文本街道清除，现行消灭建筑敌人；基线同名失败。"
+      }
+    ],
+    "added_test_names": [
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.Bdd29_ReloadUsesCurrentSupportHandAndUprightRifleAtEveryCriticalPose",
+        "result": "Passed"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd23_UrbanAssignmentEnemyTurnsAimsFiresAndStopsWhenOccluded",
+        "result": "Passed"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd27_UrbanRightAThrowsVisibleGrenadeExplodesAndUsesCooldown",
+        "result": "Passed"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.Bdd29_MovingTargetShoulderCommandKeepsRifleAndSightsUpright",
+        "result": "Passed"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Bdd29_TrenchRealBInputKeepsTheProductionRifleUprightAndSelectsOnlyTheLeftTrigger",
+        "result": "Passed"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Bdd29_UrbanRealBInputKeepsTheProductionRifleUprightAndSelectsOnlyTheLeftTrigger",
+        "result": "Passed"
+      }
+    ],
+    "removed_test_names": [
+      "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.Bdd29_ReloadMagazineArmsAndFingersMirrorAtEveryCriticalPose",
+      "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Bdd29_TrenchRealBInputMirrorsTheProductionRifleAndSelectsOnlyTheLeftTrigger",
+      "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Bdd29_UrbanRealBInputMirrorsTheProductionRifleAndSelectsOnlyTheLeftTrigger"
+    ]
+  }
+}

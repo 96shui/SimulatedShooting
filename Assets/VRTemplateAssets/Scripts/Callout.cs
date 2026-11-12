@@ -33,6 +33,18 @@ namespace Unity.VRTemplate
         Coroutine m_StartCo;
         Coroutine m_EndCo;
 
+        // All training modes suppress this dedicated guidance assembly, including the
+        // curve, link spheres and tooltip backing. Preserve every serialized reference.
+        void Awake() => HideGuidance();
+
+        void OnEnable() => HideGuidance();
+
+        void HideGuidance()
+        {
+            TurnOffStuff();
+            gameObject.SetActive(false);
+        }
+
         void Start()
         {
             if (m_Unparent)
@@ -52,6 +64,7 @@ namespace Unity.VRTemplate
 
         public void GazeHoverStart()
         {
+            if (!isActiveAndEnabled) return;
             m_Gazing = true;
             if (m_StartCo != null)
                 StopCoroutine(m_StartCo);
@@ -62,6 +75,7 @@ namespace Unity.VRTemplate
 
         public void GazeHoverEnd()
         {
+            if (!isActiveAndEnabled) return;
             m_Gazing = false;
             m_EndCo = StartCoroutine(EndDelay());
         }

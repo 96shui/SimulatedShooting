@@ -114,10 +114,11 @@ namespace SimulatedShooting.Scene
             Progress01 = Mathf.Clamp01((float)((now() - snapshot.ReloadStartedAt) / snapshot.ReloadDurationSeconds));
             var p = Progress01;
             var raise = p < .15f ? Ease(p, 0, .15f) : p > .90f ? 1 - Ease(p, .90f, 1) : 1;
-            var lean = Quaternion.Euler(-35f * raise, -12f * raise, -20f * raise);
+            var side = snapshot.Player.Shoulder == ShoulderSide.Left ? -1f : 1f;
+            var lean = Quaternion.Euler(-35f * raise, -12f * raise * side, -20f * raise * side);
             weapon.RecoilRoot.localRotation = lean;
             weapon.RecoilRoot.localPosition = rearPivot + lean * (recoilPosition - rearPivot)
-                + (vr ? Vector3.zero : new Vector3(-.06f, .15f, .12f) * raise);
+                + (vr ? Vector3.zero : new Vector3(-.06f * side, .15f, .12f) * raise);
             if (!vr)
             {
                 var rear = weapon.RecoilRoot.TransformPoint(weapon.RecoilRoot.parent.InverseTransformPoint(weapon.RearHandGrip.position) - recoilPosition);
@@ -137,9 +138,8 @@ namespace SimulatedShooting.Scene
             else if (p < .90f) pivot = Vector3.Lerp(pulled, seated, Ease(p, .82f, .90f));
             else pivot = seated;
             var tilt = p >= .30f && p < .82f ? Mathf.Sin(Ease(p, .30f, .82f) * Mathf.PI) * -18f : 0;
-            // Animate in the source rifle frame. VisualRoot reflects the complete
-            // magazine pose, including its pivot and tilt, in left-shoulder mode.
-            magazine.localRotation = magazineRotation * Quaternion.Euler(0, 0, tilt);
+            // Animate the authored magazine in the upright rifle frame for either support hand.
+            magazine.localRotation = magazineRotation * Quaternion.Euler(0, 0, tilt * side);
             magazine.localPosition = magazine.parent.InverseTransformPoint(pivot)
                 - magazine.localRotation * Vector3.Scale(magazine.localScale, pivotInMesh);
             for (var i = 0; i < magazineRenderers.Length; i++)

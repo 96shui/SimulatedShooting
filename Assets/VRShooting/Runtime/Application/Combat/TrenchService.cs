@@ -288,7 +288,7 @@ namespace VRShooting.Application.Combat
             bool newResult=pendingOutcome.HasValue;
             if(newResult)
             {
-                result=new TrenchResultDto {SessionId=session,Revision=revision,Victory=pendingOutcome.Value,MapName="堑壕地图 A",EnemyKilled=killed.Count,EnemyTotal=estimates.Count,
+                result=new TrenchResultDto {SessionId=session,Revision=revision,Victory=pendingOutcome.Value,MapName="堑壕地图甲",EnemyKilled=killed.Count,EnemyTotal=estimates.Count,
                     SearchProgress01=snapshot.SearchProgress01,RemainingAmmo=combat.Ammo.CurrentMagazine+combat.Ammo.ReserveAmmo,Squad=squadData,ElapsedSeconds=(float)elapsed,ResultMap=map};
                 hasResult=true;pendingOutcome=null;
             }
@@ -302,7 +302,7 @@ namespace VRShooting.Application.Combat
             }
             finally{publishing=false;}
         }
-        TrenchMapDto Map()=>new TrenchMapDto {MapId=definition.MapId,DisplayName="堑壕地图 A",Difficulty=DifficultyLevel.Medium,MinEnemyCount=5,MaxEnemyCount=7,
+        TrenchMapDto Map()=>new TrenchMapDto {MapId=definition.MapId,DisplayName="堑壕地图甲",Difficulty=DifficultyLevel.Medium,MinEnemyCount=5,MaxEnemyCount=7,
             SearchNodes=definition.SearchNodes,EnemyEstimateAreas=EstimateAreas()};
         IReadOnlyList<MapAreaDto> EstimateAreas()=>Array.AsReadOnly(definition.SpawnPoints.GroupBy(p=>p.EstimateAreaId).Select(g=>
         {var p=Project(g.First().EstimatePosition);return new MapAreaDto {AreaId=g.Key,Label="敌情预估",Severity=HudSeverity.Danger,NormalizedRect=new Rect(p.x-.02f,p.y-.02f,.04f,.04f)};}).ToArray());

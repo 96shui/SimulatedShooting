@@ -278673,7 +278673,8 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 8576743073599559382, guid: b85a4a82c0ef7ac4b8d99048ca60648b, type: 3}
   TeammatePrefab: {fileID: 3852635402858298265, guid: cf0b9730fa280d24e84e627e362d62aa, type: 3}
   TrainingRiflePrefab: {fileID: 6878203385005859914, guid: e2d0cab21cf45d3409a8d907f6f17a29, type: 3}
-  GrenadePrefab: {fileID: 0}
+  GrenadePrefab: {fileID: 7370310333588502738, guid: e74e53536bb271140a98f8028f733395, type: 3}
+  GrenadeExplosionClip: {fileID: 8300000, guid: 94112c2b8b0946709de637ef5b6e0571, type: 3}
   RifleShotClip: {fileID: 8300000, guid: e9c360d8d5f0f7e4cbbe111d3682e485, type: 3}
   Points:
   - {fileID: 398957972}

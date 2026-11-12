@@ -57,9 +57,9 @@ namespace SimulatedShooting.Tests.PlayMode
         [UnityTest] public IEnumerator Bdd29_CombatBSelectsLeftTriggerAndRequiresReleaseOnSwitch()
             => VerifyShoulderRoles(new P3XRTrainingInput());
 
-        [UnityTest] public IEnumerator Bdd29_TrenchRealBInputMirrorsTheProductionRifleAndSelectsOnlyTheLeftTrigger()
+        [UnityTest] public IEnumerator Bdd29_TrenchRealBInputKeepsTheProductionRifleUprightAndSelectsOnlyTheLeftTrigger()
             => VerifyCombatShoulder(TrainingMode.Trench);
-        [UnityTest] public IEnumerator Bdd29_UrbanRealBInputMirrorsTheProductionRifleAndSelectsOnlyTheLeftTrigger()
+        [UnityTest] public IEnumerator Bdd29_UrbanRealBInputKeepsTheProductionRifleUprightAndSelectsOnlyTheLeftTrigger()
             => VerifyCombatShoulder(TrainingMode.Urban);
 
         IEnumerator VerifyCombatShoulder(TrainingMode mode)
@@ -95,7 +95,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 Step(); // The release frame after recon is not a gameplay command.
             }
             session = app.Mission.SessionId; // Trench creates its session on Start, not map selection.
-            Assert.That(core.GetSnapshot(session).Data.Player.MaxHealth, Is.EqualTo(mode == TrainingMode.Trench ? 10 : 5));
+            Assert.That(core.GetSnapshot(session).Data.Player.MaxHealth, Is.EqualTo(10));
             var headPose = runtime.PlayerCamera.transform.localToWorldMatrix;
             void Button(XRController device, string control, float value)
                 => InputSystem.QueueDeltaStateEvent(device.GetChildControl<ButtonControl>(control), value);
@@ -109,6 +109,13 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(core.GetSnapshot(session).Data.Player.Shoulder, Is.EqualTo(ShoulderSide.Left));
             Assert.That(runtime.ReloadPresentation.GetComponent<TrainingRifleGrabInteractable>().Shoulder, Is.EqualTo(ShoulderSide.Left));
             Assert.That(runtime.ReloadPresentation.LeftHand.HandSide, Is.EqualTo(VirtualHandSide.Right));
+            var weapon = runtime.ReloadPresentation.GetComponent<VRShooting.Unity.Weapons.WeaponPrefabBinding>();
+            Assert.That(weapon.VisualRoot.localScale, Is.EqualTo(Vector3.one));
+            Assert.That(weapon.AimLinePoint.localToWorldMatrix.determinant, Is.GreaterThan(0));
+            Assert.That(runtime.ReloadPresentation.LeftHand.transform.localToWorldMatrix.determinant, Is.GreaterThan(0));
+            PresentationEvidence.Capture(runtime.PlayerCamera, mode+"-B-left-shoulder-left-rear-right-front",
+                "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12");
+
             yield return null; Step();
             Assert.That(core.GetSnapshot(session).Data.Player.Shoulder, Is.EqualTo(ShoulderSide.Left));
             var magazine = core.GetSnapshot(session).Data.Ammo.CurrentMagazine;
@@ -122,6 +129,9 @@ namespace SimulatedShooting.Tests.PlayMode
             Button(right, "secondaryButton", 1); yield return null; Step();
             Assert.That(core.GetSnapshot(session).Data.Player.Shoulder, Is.EqualTo(ShoulderSide.Right));
             Assert.That(core.GetSnapshot(session).Data.Ammo.CurrentMagazine, Is.EqualTo(magazine - 1), "Switching to an already-held trigger cannot fire.");
+            Assert.That(weapon.VisualRoot.localScale, Is.EqualTo(Vector3.one));
+            PresentationEvidence.Capture(runtime.PlayerCamera, mode+"-B-right-shoulder-right-rear-left-front",
+                "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12");
             Assert.That(runtime.PlayerCamera.transform.localToWorldMatrix, Is.EqualTo(headPose));
             Assert.That(app.ReturnToMainMenu().Success, Is.True);
             yield return null; yield return null;

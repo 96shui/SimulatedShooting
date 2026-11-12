@@ -319,14 +319,19 @@ namespace VRShooting.Application.Combat
             }
             foreach (var enemy in enemies)
             {
-                var canAttack = SeesPlayer(enemy);
-                if (enemy.CanAttack != canAttack || enemy.State == CombatEntityState.Spawned)
+                var seesPlayer = SeesPlayer(enemy);
+                var offset = Vector3.ProjectOnPlane(position - enemy.Position, Vector3.up);
+                var canAttack = seesPlayer && (offset.sqrMagnitude < 1e-8 ||
+                    Vector3.Angle(Vector3.ProjectOnPlane(enemy.Forward, Vector3.up), offset) <= 12f);
+                if (enemy.CanAttack != canAttack)
                 {
                     enemy.CanAttack = canAttack;
-                    if (!enemy.Dead) enemy.State = canAttack ? CombatEntityState.Attacking : CombatEntityState.Idle;
                     enemy.NextAttack = canAttack ? clock.Now + config.EnemyAttackInterval : double.PositiveInfinity;
                     dirty = true;
                 }
+                var nextState = enemy.Dead ? CombatEntityState.Dead :
+                    seesPlayer ? CombatEntityState.Attacking : CombatEntityState.Idle;
+                if (enemy.State != nextState) { enemy.State = nextState; dirty = true; }
             }
             // External impact and automatic attacks share the same per-enemy deadline.
             foreach (var input in pending)

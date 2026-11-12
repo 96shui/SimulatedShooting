@@ -11,6 +11,60 @@ namespace VRShooting.Tests.PlayMode
     // BDD 01/02/04/11/17: build-safe art, non-blocking decoration and legible map selection.
     public sealed class TacticalUIArtTests
     {
+        // BDD20: read DTO display names, retain IDs for commands, and fall back only when absent.
+        [Test]
+        public void Screen20_ChineseFloorAndRoomCopyPreservesDoorCommandIdentifiers()
+        {
+            var go = new GameObject("ChineseCopyCombat", typeof(RectTransform));
+            go.SetActive(false);
+            try
+            {
+                var root = go.AddComponent<P3CombatUIRoot>();
+                root.BuildIfNeeded();
+                var view = root.UrbanBuildingView;
+                var names = new[] { "一层", "二层", "三层" };
+                var floors = Enumerable.Range(1, 3).Select(n => new FloorDto {
+                    FloorId = "floor-" + n, DisplayName = names[n - 1],
+                    Rooms = Enumerable.Range(1, n == 3 ? 1 : 2).Select(r => new RoomDto {
+                        RoomId = "room-" + n + r, DisplayName = names[n - 1] + r + "号"
+                    }).ToArray()
+                }).ToArray();
+                TMP_Text Text(string name) => view.GetComponentsInChildren<TMP_Text>(true).Single(t => t.name == name);
+                string submitted = null;
+                view.OpenRoomDoorRequested += id => submitted = id;
+                for (var n = 0; n < floors.Length; n++)
+                {
+                    var roomId = floors[n].Rooms[0].RoomId;
+                    view.Apply(new UrbanSessionDto { CurrentFloorId = floors[n].FloorId, Floors = floors },
+                        new HudDto { Prompts = new[] { new HudPromptDto {
+                            PromptId = roomId + ".OpenDoor", IsEnabled = true, IsInteractive = true, Text = "开门"
+                        } } });
+                    Assert.That(Text("Hud_UrbanBuilding_Floor").text, Is.EqualTo("当前楼层：" + names[n]));
+                    Assert.That(Text("Hud_UrbanBuilding_Rooms").text,
+                        Is.EqualTo(string.Join("\n", floors[n].Rooms.Select(r => r.DisplayName + " · 靠近后开门"))));
+                    view.OpenDoorButton.onClick.Invoke();
+                    Assert.That(submitted, Is.EqualTo(roomId));
+                }
+                view.Apply(new UrbanSessionDto { CurrentFloorId = "unknown-floor" }, default);
+                Assert.That(Text("Hud_UrbanBuilding_Floor").text, Is.EqualTo("当前楼层：unknown-floor"));
+                view.Apply(default, default);
+                Assert.That(Text("Hud_UrbanBuilding_Floor").text, Is.EqualTo("当前楼层：--"));
+            }
+            finally { Object.DestroyImmediate(go); }
+        }
+
+        // Interface 00: all error codes keep their meaning without leaking English diagnostics.
+        [Test]
+        public void ChineseErrorCopyCoversEveryCodeAndPreservesChineseDetails()
+        {
+            var expected = new[] { "操作失败", "当前状态不允许此操作", "输入无效", "未找到所需内容",
+                "正在处理，请稍候", "操作冷却中", "资源不可用", "保存失败，请重试", "测试故障" };
+            foreach (VRShooting.Contracts.ErrorCode code in System.Enum.GetValues(typeof(VRShooting.Contracts.ErrorCode)))
+                Assert.That(P3UiText.Error(code, "Internal diagnostics: room-11"), Is.EqualTo(expected[(int)code]));
+            Assert.That(P3UiText.Error(VRShooting.Contracts.ErrorCode.NotFound, "房间不存在"),
+                Is.EqualTo("未找到所需内容：房间不存在"));
+        }
+
         [Test]
         public void ThemeShipsWithPaddedChineseFontAndAllMapArtwork()
         {
@@ -54,10 +108,10 @@ namespace VRShooting.Tests.PlayMode
                     new MapMarkerDto {MarkerId="player",Type=MarkerType.Player,NormalizedPosition=new Vector2(.2f,.3f)},
                     new MapMarkerDto {MarkerId="estimate",Type=MarkerType.EnemyEstimate,NormalizedPosition=new Vector2(.7f,.6f)}
                 }};
-                root.TrenchHudView.Apply(new TrenchSessionDto {SessionId="art-test",Player=new PlayerStatusDto {Health=1,MaxHealth=5,IsAlive=true},SearchProgress01=.65f,MiniMap=map},default);
+                root.TrenchHudView.Apply(new TrenchSessionDto {SessionId="art-test",Player=new PlayerStatusDto {Health=1,MaxHealth=10,IsAlive=true},SearchProgress01=.65f,MiniMap=map},default);
                 var health = root.TrenchHudView.GetComponentsInChildren<Image>(true).Where(t=>t.name.StartsWith("Hud_Combat_HealthCell_")).OrderBy(t=>t.name).ToArray();
                 var search = root.TrenchHudView.GetComponentsInChildren<RectTransform>(true).First(t=>t.name=="Hud_Trench_SearchFill");
-                Assert.That(health.Length, Is.EqualTo(5));
+                Assert.That(health.Length, Is.EqualTo(10));
                 Assert.That(health[0].enabled, Is.True);
                 Assert.That(health[1].enabled, Is.False);
                 Assert.That(search.anchorMax.x, Is.EqualTo(.65f).Within(.001f));
@@ -107,15 +161,15 @@ namespace VRShooting.Tests.PlayMode
                 root.BuildIfNeeded();
                 var view = root.TrenchHudView;
                 var health = view.GetComponentsInChildren<TMP_Text>(true).First(t => t.name == "Hud_Trench_Health");
-                view.ApplyHud(new HudDto { Player = new PlayerStatusDto { Health = 1, MaxHealth = 5, IsAlive = true } }, default, default);
+                view.ApplyHud(new HudDto { Player = new PlayerStatusDto { Health = 1, MaxHealth = 10, IsAlive = true } }, default, default);
                 Assert.That(health.color, Is.EqualTo((Color)new Color32(255, 114, 90, 255)));
-                Assert.That(health.text, Does.Contain("1 / 5"));
+                Assert.That(health.text, Does.Contain("1 / 10"));
                 var cells = view.GetComponentsInChildren<Image>(true).Where(i => i.name.StartsWith("Hud_Combat_HealthCell_")).OrderBy(i => i.name).ToArray();
-                Assert.That(cells.Length, Is.EqualTo(5));
+                Assert.That(cells.Length, Is.EqualTo(10));
                 Assert.That(cells[0].enabled, Is.True); Assert.That(cells[1].enabled, Is.False);
                 Assert.That(cells.Skip(1).All(i=>!i.enabled),Is.True);
-                view.ApplyHud(new HudDto { Player = new PlayerStatusDto { Health = 5, MaxHealth = 5, IsAlive = true } }, default, default);
-                Assert.That(health.text, Does.Contain("5 / 5"));
+                view.ApplyHud(new HudDto { Player = new PlayerStatusDto { Health = 10, MaxHealth = 10, IsAlive = true } }, default, default);
+                Assert.That(health.text, Does.Contain("10 / 10"));
                 Assert.That(cells.All(i => i.enabled), Is.True);
                 Assert.That(health.color, Is.EqualTo((Color)new Color32(218, 241, 249, 255)));
                 Assert.That(health.enableAutoSizing, Is.True);

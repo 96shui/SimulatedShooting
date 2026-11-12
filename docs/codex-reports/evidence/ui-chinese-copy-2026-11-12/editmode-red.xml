@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Failed(Child)" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-12 12:50:52Z" end-time="2026-11-12 12:50:53Z" duration="1.0498613">
+  <test-suite type="TestSuite" id="1488" name="VR" fullname="VR" runstate="Runnable" testcasecount="385" result="Failed" site="Child" start-time="2026-11-12 12:50:52Z" end-time="2026-11-12 12:50:53Z" duration="1.049861" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1555" name="SimulatedShooting.EditModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.EditModeTests.dll" runstate="Runnable" testcasecount="47" result="Failed" site="Child" start-time="2026-11-12 12:50:52Z" end-time="2026-11-12 12:50:53Z" duration="1.039636" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="12972" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1556" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="47" result="Failed" site="Child" start-time="2026-11-12 12:50:52Z" end-time="2026-11-12 12:50:53Z" duration="1.039338" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1557" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="47" result="Failed" site="Child" start-time="2026-11-12 12:50:52Z" end-time="2026-11-12 12:50:53Z" duration="1.039175" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1558" name="EditMode" fullname="SimulatedShooting.Tests.EditMode" runstate="Runnable" testcasecount="47" result="Failed" site="Child" start-time="2026-11-12 12:50:52Z" end-time="2026-11-12 12:50:53Z" duration="1.039008" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1497" name="CombatSceneTests" fullname="SimulatedShooting.Tests.EditMode.CombatSceneTests" classname="SimulatedShooting.Tests.EditMode.CombatSceneTests" runstate="Runnable" testcasecount="17" result="Failed" site="Child" start-time="2026-11-12 12:50:52Z" end-time="2026-11-12 12:50:53Z" duration="1.038006" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1498" name="Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers" fullname="SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers" methodname="Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers" classname="SimulatedShooting.Tests.EditMode.CombatSceneTests" runstate="Runnable" seed="562303263" result="Failed" start-time="2026-11-12 12:50:52Z" end-time="2026-11-12 12:50:53Z" duration="1.030848" asserts="0">
+                <properties />
+                <failure>
+                  <message><![CDATA[  Expected is <System.String[3]>, actual is <System.Linq.Enumerable+SelectIListIterator`2[VRShooting.Common.FloorDto,System.String]>
+  Values differ at index [0]
+  Expected string length 2 but was 7. Strings differ at index 0.
+  Expected: "一层"
+  But was:  "floor-1"
+  -----------^
+]]></message>
+                  <stack-trace><![CDATA[at SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers () [0x00098] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\EditMode\CombatSceneTests.cs:21
+]]></stack-trace>
+                </failure>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

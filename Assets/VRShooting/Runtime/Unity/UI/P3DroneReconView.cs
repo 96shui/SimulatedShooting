@@ -45,12 +45,12 @@ namespace VRShooting.Unity.UI
             monitor.SetActive(observing);reticle.SetActive(observing);
             feed.texture=value.FeedAvailable?texture:null;
             phase.text=PhaseLabel(value.Phase);
-            status.text=value.FeedAvailable&&texture!=null?"LIVE · 实时视频":"视频未就绪";
+            status.text=value.FeedAvailable&&texture!=null?"实时视频":"视频未就绪";
             elapsed.text="侦察用时 "+Mathf.Max(0,value.ReconElapsedSeconds).ToString("F1")+" s";
             telemetry.text=value.TelemetryValid
                 ? "高度 "+value.HeightAboveGroundMeters.ToString("F1")+" m   速度 "+value.SpeedMetersPerSecond.ToString("F1")+" m/s"
                 : "高度 --   速度 --";
-            error.text=value.ErrorCode==VRShooting.Contracts.ErrorCode.None?string.Empty:"开场未完成："+value.ErrorCode+"，请返回或重新开始。";
+            error.text=value.ErrorCode==VRShooting.Contracts.ErrorCode.None?string.Empty:"开场未完成："+P3UiText.Error(value.ErrorCode,string.Empty)+"，请返回或重新开始。";
             retry.gameObject.SetActive(value.Phase==DroneReconPhase.Error);
             retry.interactable=!busy;back.interactable=!busy;
             if(filter!=null)

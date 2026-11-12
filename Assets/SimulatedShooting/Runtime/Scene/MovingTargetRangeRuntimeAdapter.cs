@@ -23,6 +23,7 @@ namespace SimulatedShooting.Scene
         IDisposable stateSubscription;
         bool initialized;
         string visualSessionId = string.Empty;
+        string resultsPlacedForSession = string.Empty;
 
         public bool IsInitialized => initialized;
         public TrainingRangeSceneBindings RangeBindings => rangeBindings;
@@ -66,11 +67,13 @@ namespace SimulatedShooting.Scene
 
         void OnDisable()
         {
+            if (services != null) services.Presentation.PresentationChanged -= OnPresentationChanged;
             stateSubscription?.Dispose();
             stateSubscription = null;
             services = null;
             initialized = false;
             visualSessionId = string.Empty;
+            resultsPlacedForSession = string.Empty;
         }
 
         public void ApplyState(MovingTargetSessionDto session)
@@ -125,6 +128,9 @@ namespace SimulatedShooting.Scene
             }
 
             stateSubscription = services.EventBus.Subscribe<MovingTargetStateChangedEvent>(OnStateChanged);
+            services.Presentation.PresentationChanged += OnPresentationChanged;
+            var presentation = services.Presentation.Get(string.Empty);
+            if (presentation.Success) OnPresentationChanged(presentation.Data);
             initialized = true;
 
             if (services.TrainingSessions.HasActiveSession
@@ -138,6 +144,28 @@ namespace SimulatedShooting.Scene
             }
 
             return true;
+        }
+
+        void OnPresentationChanged(TrainingPresentationDto snapshot)
+        {
+            if (snapshot.Mode != TrainingMode.MovingTarget) return;
+            if (snapshot.Phase != TrainingPresentationPhase.SessionResults)
+            {
+                resultsPlacedForSession = string.Empty;
+                return;
+            }
+            if (!snapshot.LargePanelVisible || snapshot.ActiveScreen != ScreenId.MovingTargetResults
+                || resultsPlacedForSession == snapshot.SessionId) return;
+            var camera = FindActiveSceneCamera();
+            if (camera == null || rangeBindings.LargeUiAnchor == null) return;
+            var forward = Vector3.ProjectOnPlane(camera.transform.forward, Vector3.up);
+            if (forward.sqrMagnitude < .0001f)
+                forward = Vector3.ProjectOnPlane(camera.transform.up, Vector3.up);
+            if (forward.sqrMagnitude < .0001f) return;
+            forward.Normalize();
+            rangeBindings.LargeUiAnchor.SetPositionAndRotation(
+                camera.transform.position + forward * 1.1f, Quaternion.LookRotation(forward, Vector3.up));
+            resultsPlacedForSession = snapshot.SessionId;
         }
 
         void ResolveSceneReferences()

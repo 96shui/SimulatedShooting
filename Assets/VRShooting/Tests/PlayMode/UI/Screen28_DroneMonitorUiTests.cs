@@ -62,7 +62,7 @@ namespace VRShooting.Tests.PlayMode.UI
                 Assert.That(view.Feed.gameObject.activeInHierarchy,Is.True);
                 Assert.That(view.Feed.texture,Is.SameAs(texture));
                 var texts=root.GetComponentsInChildren<TMP_Text>(true);
-                Assert.That(texts.Single(t=>t.name=="Text_TrenchDroneRecon_FeedStatus").text,Does.StartWith("LIVE"));
+                Assert.That(texts.Single(t=>t.name=="Text_TrenchDroneRecon_FeedStatus").text,Is.EqualTo("实时视频"));
                 Assert.That(texts.Single(t=>t.name=="Text_TrenchDroneRecon_Telemetry").text,Does.Contain("--"));
                 Assert.That(texts.Single(t=>t.name=="Text_TrenchDroneRecon_Elapsed").text,Does.Contain("12"));
                 Assert.That(view.Feed.material.shader.name,Is.EqualTo("VRShooting/UI/DroneMonitor"));
@@ -72,6 +72,8 @@ namespace VRShooting.Tests.PlayMode.UI
                     ViewMode=DroneReconViewMode.Player,CharacterActionsLocked=true,
                     ErrorCode=VRShooting.Contracts.ErrorCode.ResourceUnavailable},null,false);
                 Assert.That(view.Feed.texture,Is.Null);
+                Assert.That(texts.Single(t=>t.name=="Text_TrenchDroneRecon_Error").text,
+                    Is.EqualTo("开场未完成：资源不可用，请返回或重新开始。"));
                 Assert.That(view.Feed.gameObject.activeInHierarchy,Is.False);
                 Assert.That(root.GetComponentsInChildren<Button>(true).Single(b=>b.name=="Button_TrenchDroneRecon_Retry")
                     .gameObject.activeInHierarchy,Is.True);

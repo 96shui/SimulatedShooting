@@ -21,6 +21,65 @@ namespace VRShooting.Tests.EditMode
         void Range(string key){Assert.That(service.Submit(new CombatInputDto {SessionId=id,Tick=clock.Tick,EventId="range-"+ ++sequence,Kind=CombatInputKind.AreaPresence,EntityId=key,Flag=true}).Success);service.Advance(id);}
         void Enter(){Range("urban-a.entrance");Assert.That(service.EnterBuilding(id,"urban-a.entrance").Success);}
         string[] Rooms=>P3Fixtures.UrbanDefinition.Floors.SelectMany(f=>f.Rooms).Select(r=>r.RoomId).ToArray();
+        // BDD23/27/29, task004/010/015/019: Urban owns the same grenade tactic and ten-point DTO chain.
+        [Test] public void Bdd29_UrbanTenHealthFlowsThroughHudDeathResultAndRetry()
+        {
+            Start();
+            Assert.That(State.Player.Health, Is.EqualTo(10));
+            Assert.That(service.GetHud(id).Data.Player.MaxHealth, Is.EqualTo(10));
+            var enemy = service.GetEnemyAssignments(id).Data[0];
+            if (enemy.RoomId.Length > 0) { Range(enemy.RoomId + ".door"); service.OpenRoomDoor(id, enemy.RoomId); }
+            service.Submit(new CombatInputDto { SessionId=id, Tick=clock.Tick, EventId="ten-sight", Kind=CombatInputKind.Perception,
+                EntityId=enemy.EntityId, TargetId=id+".player", Position=Vector3.forward*5, Direction=Vector3.back, Flag=true });
+            service.Advance(id);
+            for (var hit=1; hit<=10; hit++)
+            {
+                clock.Advance(1); Assert.That(service.Advance(id).Success);
+                Assert.That(State.Player.Health, Is.EqualTo(10-hit));
+                Assert.That(State.Player.IsAlive, Is.EqualTo(hit<10));
+                Assert.That(service.GetHud(id).Data.Player.MaxHealth, Is.EqualTo(10));
+            }
+            Assert.That(service.GetResult(id).Success, Is.True);
+            Assert.That(service.GetResult(id).Data.Victory, Is.False);
+            Start(); Assert.That(State.Player.Health, Is.EqualTo(10));
+            Assert.That(CombatConfigDto.ForMode(TrainingMode.Urban).Validate().Success, Is.True);
+        }
+
+        [Test] public void Bdd27_UrbanGrenadeUsesSharedTacticAndCancelsOnTrackingLossAndRetry()
+        {
+            Start(); var firstId=id;
+            var enemy=service.GetVisualSnapshot(id).Data.Entities.First(e=>e.Role==CombatEntityRole.Enemy);
+            var tactic=service.GrenadeTactics;
+            Assert.That(tactic, Is.TypeOf<SquadGrenadeTacticService>());
+            tactic.Configure(new UrbanGrenadeWorld(enemy.Position));
+            Assert.That(tactic.Current.HasValue, Is.False);
+            tactic.RequestFirstTeammateThrow(); service.Advance(id);
+            Assert.That(tactic.Current.HasValue, Is.True);
+            Assert.That(tactic.Current.Value.ThrowerId, Is.EqualTo(id+".teammate-2"));
+            service.Combat.SetTracking(id,false);
+            Assert.That(tactic.Current.HasValue, Is.False);
+            tactic.RequestFirstTeammateThrow(); clock.Advance(4); service.Advance(id);
+            Assert.That(tactic.Current.HasValue, Is.False);
+            service.Cancel(id); Start(); Assert.That(id, Is.Not.EqualTo(firstId));
+            Assert.That(tactic.Current.HasValue, Is.False);
+            tactic.RequestFirstTeammateThrow(); service.Advance(id);
+            Assert.That(tactic.Current.Value.GrenadeId, Is.EqualTo(id+".grenade-001"));
+            GrenadeExplosionDto blast=default;
+            tactic.GrenadeExploded += value=>blast=value;
+            clock.Advance(4); service.Advance(id);
+            Assert.That(blast.Targets, Does.Contain(enemy.EntityId.Replace(firstId,id)));
+            Assert.That(State.BuildingEnemyKilled, Is.EqualTo(blast.Targets.Count));
+        }
+        sealed class UrbanGrenadeWorld : ICombatGrenadeWorld
+        {
+            readonly Vector3 target;
+            public UrbanGrenadeWorld(Vector3 target) { this.target=target; }
+            public bool TryGetThrowPose(string memberId,out Vector3 feet,out Vector3 release)
+            { feet=target-Vector3.forward*2;release=feet+Vector3.up;return true; }
+            public bool Sweep(Vector3 from,Vector3 to,out Vector3 impact) { impact=to;return false; }
+            public bool IsExposed(Vector3 blast,Vector3 enemyFeet)=>true;
+        }
+
         [Test] public void Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime()
         {
             Start();

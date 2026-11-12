@@ -241,8 +241,8 @@ namespace VRShooting.Unity.UI
             var left = AddPanel(page, "Panel_TrenchMapSelection_Cards", new Vector2(80, 150), new Vector2(980, 930), new Color32(11, 25, 20, 240));
             var right = AddPanel(page, "Panel_TrenchMapSelection_Conditions", new Vector2(1040, 150), new Vector2(1840, 930), new Color32(11, 25, 20, 240));
             var cards = new List<P3MapCardView>();
-            cards.Add(CreateMapCard(left, "TrenchA", "堑壕地图 A", new Vector2(55, 430), new Vector2(810, 680)));
-            cards.Add(CreateUnavailableCard(left, "TrenchB", "堑壕地图 B（后续扩展）", new Vector2(55, 180), new Vector2(810, 385)));
+            cards.Add(CreateMapCard(left, "TrenchA", "堑壕地图甲", new Vector2(55, 430), new Vector2(810, 680)));
+            cards.Add(CreateUnavailableCard(left, "TrenchB", "堑壕地图乙（后续扩展）", new Vector2(55, 180), new Vector2(810, 385)));
             var selected = AddLabel(left, "Text_TrenchMapSelection_Selected", "当前选择：--", 28, new Vector2(55, 90), new Vector2(810, 150), TextAlignmentOptions.Center);
             var title = FindText(page, "Text_TrenchMapSelection_Title");
             var difficulty = AddLabel(right, "Text_TrenchMapSelection_Difficulty", "复杂度：--", 30, new Vector2(55, 585), new Vector2(745, 650), TextAlignmentOptions.Left);
@@ -322,7 +322,7 @@ namespace VRShooting.Unity.UI
             var right = AddPanel(page, "Panel_UrbanMapSelection_Conditions", new Vector2(1040, 150), new Vector2(1840, 930), new Color32(11, 25, 20, 240));
             var cards = new List<P3MapCardView>();
             cards.Add(CreateUrbanMapCard(left, "UrbanA", new Vector2(55, 430), new Vector2(810, 680)));
-            cards.Add(CreateUnavailableCard(left, "UrbanB", "城镇地图 B（后续扩展）", new Vector2(55, 180), new Vector2(810, 385)));
+            cards.Add(CreateUnavailableCard(left, "UrbanB", "城镇地图乙（后续扩展）", new Vector2(55, 180), new Vector2(810, 385)));
             var selected = AddLabel(left, "Text_UrbanMapSelection_Selected", "当前选择：--", 28, new Vector2(55, 90), new Vector2(810, 150), TextAlignmentOptions.Center);
             var enemies = AddLabel(right, "Text_UrbanMapSelection_Enemies", "敌情：--", 28, new Vector2(55, 590), new Vector2(745, 680), TextAlignmentOptions.Left);
             var floors = AddLabel(right, "Text_UrbanMapSelection_Floors", "建筑楼层：--", 28, new Vector2(55, 520), new Vector2(745, 580), TextAlignmentOptions.Left);
@@ -394,7 +394,8 @@ namespace VRShooting.Unity.UI
             var stats = AddLabel(left, "Text_UrbanResults_Stats", string.Empty, 23, new Vector2(65, 90), new Vector2(785, 630), TextAlignmentOptions.TopLeft);
             var error = AddLabel(page, "Text_UrbanResults_Error", string.Empty, 20, new Vector2(100, 100), new Vector2(900, 145), TextAlignmentOptions.Left, new Color32(255, 120, 92, 255));
             var labels = new[] { "Text_UrbanResults_1F", "Text_UrbanResults_2F", "Text_UrbanResults_3F" };
-            for (var index = 0; index < labels.Length; index++) AddLabel(page, labels[index], (index + 1) + "F", 18, new Vector2(1020 + index * 285, 570), new Vector2(1280 + index * 285, 605), TextAlignmentOptions.Center);
+            var floorNames = new[] { "一层", "二层", "三层" };
+            for (var index = 0; index < labels.Length; index++) AddLabel(page, labels[index], floorNames[index], 18, new Vector2(1020 + index * 285, 570), new Vector2(1280 + index * 285, 605), TextAlignmentOptions.Center);
             var back = AddButton(page, "Button_UrbanResults_BackToMainMenu", "返回主菜单", new Vector2(1040, 230), new Vector2(1390, 300), false);
             var retry = AddButton(page, "Button_UrbanResults_Retry", "重新开始", new Vector2(1470, 230), new Vector2(1820, 300), true);
             urbanResultsView = page.gameObject.AddComponent<P3UrbanResultsView>();
@@ -476,7 +477,7 @@ namespace VRShooting.Unity.UI
             var button = card.gameObject.AddComponent<Button>();
             button.targetGraphic = card.Find(card.name + "_Image").GetComponent<Image>();
             TacticalUIStyle.Artwork(card, "Image_UrbanMapSelection_Preview", TacticalUITheme.Current != null ? TacticalUITheme.Current.Urban : null, new Vector2(25, 25), new Vector2(310, max.y - min.y - 25));
-            var nameText = AddLabel(card, "Text_UrbanMapSelection_" + suffix + "_Name", "城镇地图 A", 32, new Vector2(335, 115), new Vector2(max.x - min.x - 35, max.y - min.y - 30), TextAlignmentOptions.Center);
+            var nameText = AddLabel(card, "Text_UrbanMapSelection_" + suffix + "_Name", "城镇地图甲", 32, new Vector2(335, 115), new Vector2(max.x - min.x - 35, max.y - min.y - 30), TextAlignmentOptions.Center);
             var condition = AddLabel(card, "Text_UrbanMapSelection_" + suffix + "_Condition", string.Empty, 22, new Vector2(335, 30), new Vector2(max.x - min.x - 35, 105), TextAlignmentOptions.Center, new Color32(143, 217, 255, 255));
             var view = card.gameObject.AddComponent<P3MapCardView>();
             view.Configure(button, nameText, condition, border);

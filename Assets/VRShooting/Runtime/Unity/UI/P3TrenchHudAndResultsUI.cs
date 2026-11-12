@@ -21,7 +21,7 @@ namespace VRShooting.Unity.UI
         [SerializeField] protected TMP_Text promptText;
         [SerializeField] protected TMP_Text stateText;
         [SerializeField] protected P3MiniMapView miniMap;
-        readonly Image[] healthCells = new Image[5];
+        readonly Image[] healthCells = new Image[10];
 
         public HudDto LastHud { get; private set; }
         public SquadStatusDto LastSquad { get; private set; }
@@ -96,7 +96,8 @@ namespace VRShooting.Unity.UI
                 "\n备用弹匣 " + hud.Ammo.ReserveMagazines +
                 (hud.Ammo.IsReloading ? " · 装填中" : " · R / 左手柄X键换弹"));
             P3UiText.SetText(postureText, "姿态：" + P3UiText.Posture(hud.Player.Posture));
-            P3UiText.SetText(shoulderText, "射击肩：" + P3UiText.Shoulder(hud.Player.Shoulder));
+            P3UiText.SetText(shoulderText, "射击肩：" + P3UiText.Shoulder(hud.Player.Shoulder) +
+                (hud.Player.Shoulder == ShoulderSide.Left ? " · 左后/右前" : " · 右后/左前"));
             P3UiText.SetText(cornerText, "拐角射击：" + (hud.Player.CornerShootingAvailable ? "可用" : "不可用"));
             P3UiText.SetText(squadText, P3UiText.Squad(squad));
             P3UiText.SetText(stateText, string.IsNullOrWhiteSpace(progressText) ? "任务状态：运行中" : progressText);
@@ -135,7 +136,7 @@ namespace VRShooting.Unity.UI
         protected static string FormatInteractionPrompt(string prompt)
         {
             return (string.IsNullOrWhiteSpace(prompt) ? string.Empty : prompt + "\n") +
-                "交互：右摇杆按压 / Enter / 空格";
+                "交互：右摇杆按压/Enter/空格 · 手雷：右A/H";
         }
 
         protected static HudDto NormalizeHud(HudDto hud, string sessionId, TrainingMode mode,

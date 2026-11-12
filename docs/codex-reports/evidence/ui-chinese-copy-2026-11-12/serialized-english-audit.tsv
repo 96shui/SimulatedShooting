@@ -1,0 +1,65 @@
+﻿file	line	copy	reason
+Assets/Scenes/GameScene.unity	730	ray	用户明确排除的 XR 模板及模板控件
+Assets/Scenes/GameScene.unity	1365	gaze	用户明确排除的 XR 模板及模板控件
+Assets/Scenes/GameScene.unity	2082	poke	用户明确排除的 XR 模板及模板控件
+Assets/Scenes/GameScene.unity	9990	There are two core components that are critical to building XR interactions;	用户明确排除的 XR 模板及模板控件
+Assets/Scenes/GameScene.unity	10991	The <b>Complete XR Origin Setup</b> contains everything needed for a fully	用户明确排除的 XR 模板及模板控件
+Assets/Scenes/GameScene.unity	12300	<b>Interactable</b> components define how the user can interact with objects	用户明确排除的 XR 模板及模板控件
+Assets/Scenes/GameScene.unity	13334	This includes head-mounted device tracking, controller presence, interactors,	用户明确排除的 XR 模板及模板控件
+Assets/Scenes/GameScene.unity	13639	"That’s it! 
+We can’t wait to see what XR experiences you build! "	用户明确排除的 XR 模板及模板控件
+Assets/Scenes/GameScene.unity	14400	An <b>interactor</b> component controls how a GameObject interacts with	用户明确排除的 XR 模板及模板控件
+Assets/Scenes/GameScene.unity	17038	Continue	用户明确排除的 XR 模板及模板控件
+Assets/Scenes/GameScene.unity	17538	"Welcome to the VR Template! 
+Let’s learn about some of the features."	用户明确排除的 XR 模板及模板控件
+Assets/Scenes/MainScene.unity	300	Press K to enter the game	用户明确排除的 XR 模板及模板控件
+Assets/Scenes/MovingTargetRangeScene.unity	21517	100 m	用户要求保留的单位/尺寸
+Assets/Scenes/MovingTargetRangeScene.unity	34854	50 m	用户要求保留的单位/尺寸
+Assets/Scenes/MovingTargetRangeScene.unity	37396	左端  -20 m  <	用户要求保留的单位/尺寸
+Assets/Scenes/MovingTargetRangeScene.unity	40644	75 m	用户要求保留的单位/尺寸
+Assets/Scenes/MovingTargetRangeScene.unity	41109	0 m	用户要求保留的单位/尺寸
+Assets/Scenes/MovingTargetRangeScene.unity	57690	>  +20 m  右端	用户要求保留的单位/尺寸
+Assets/Scenes/MovingTargetRangeScene.unity	57788	75 m	用户要求保留的单位/尺寸
+Assets/Scenes/MovingTargetRangeScene.unity	59387	100 m	用户要求保留的单位/尺寸
+Assets/Scenes/MovingTargetRangeScene.unity	65042	25 m	用户要求保留的单位/尺寸
+Assets/Scenes/MovingTargetRangeScene.unity	66031	0 m	用户要求保留的单位/尺寸
+Assets/Scenes/MovingTargetRangeScene.unity	69674	50 m	用户要求保留的单位/尺寸
+Assets/Scenes/MovingTargetRangeScene.unity	70313	25 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene.unity	21256	100 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene.unity	34381	50 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene.unity	37006	左端  -20 m  <	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene.unity	40254	75 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene.unity	40719	0 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene.unity	57563	>  +20 m  右端	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene.unity	57661	75 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene.unity	59343	100 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene.unity	65252	25 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene.unity	66076	0 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene.unity	69720	50 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene.unity	70359	25 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene_Backup_20260816.unity	1683	25 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene_Backup_20260816.unity	2336	25 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene_Backup_20260816.unity	11489	50 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene_Backup_20260816.unity	16795	100 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene_Backup_20260816.unity	19218	0 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene_Backup_20260816.unity	20336	50 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene_Backup_20260816.unity	26842	100 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene_Backup_20260816.unity	27687	0 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene_Backup_20260816.unity	30975	75 m	用户要求保留的单位/尺寸
+Assets/Scenes/ZeroingRangeScene_Backup_20260816.unity	32028	75 m	用户要求保留的单位/尺寸
+Assets/VRShooting/Prefabs/UI/Training_SharedWorldSpaceUI.prefab	69	100m射校 训练结算	用户要求保留的单位/尺寸
+Assets/VRTemplateAssets/Prefabs/Affordance/Affordance Callout.prefab	424	Callout	用户明确排除的 XR 模板及模板控件
+Assets/VRTemplateAssets/Prefabs/TutorialPlayer/Tutorial Player.prefab	314	Default Input Controls	用户明确排除的 XR 模板及模板控件
+Assets/VRTemplateAssets/Prefabs/UI/Dropdown.prefab	185	Option A	用户明确排除的 XR 模板及模板控件
+Assets/VRTemplateAssets/Prefabs/UI/Dropdown.prefab	355	Option A	用户明确排除的 XR 模板及模板控件
+Assets/VRTemplateAssets/Prefabs/UI/Dropdown.prefab	357	Option B	用户明确排除的 XR 模板及模板控件
+Assets/VRTemplateAssets/Prefabs/UI/Dropdown.prefab	359	Option C	用户明确排除的 XR 模板及模板控件
+Assets/VRTemplateAssets/Prefabs/UI/Dropdown.prefab	702	Option A	用户明确排除的 XR 模板及模板控件
+Assets/VRTemplateAssets/Prefabs/UI/List Item Button.prefab	69	Text Button	用户明确排除的 XR 模板及模板控件
+Assets/VRTemplateAssets/Prefabs/UI/List Item Button.prefab	342	Button	用户明确排除的 XR 模板及模板控件
+Assets/VRTemplateAssets/Prefabs/UI/List Item Dropdown.prefab	116	Dropdown	用户明确排除的 XR 模板及模板控件
+Assets/VRTemplateAssets/Prefabs/UI/List Item Slider.prefab	116	Slider	用户明确排除的 XR 模板及模板控件
+Assets/VRTemplateAssets/Prefabs/UI/List Item Slider.prefab	694	Value	用户明确排除的 XR 模板及模板控件
+Assets/VRTemplateAssets/Prefabs/UI/List Item Slider.prefab	906	type	用户明确排除的 XR 模板及模板控件
+Assets/VRTemplateAssets/Prefabs/UI/List Item Toggle.prefab	581	Toggle	用户明确排除的 XR 模板及模板控件
+Assets/VRTemplateAssets/Prefabs/UI/Spatial Panel Scroll.prefab	1557	Spatial Panel	用户明确排除的 XR 模板及模板控件

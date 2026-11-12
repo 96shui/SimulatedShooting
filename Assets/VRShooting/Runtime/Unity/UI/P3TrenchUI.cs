@@ -93,7 +93,7 @@ namespace VRShooting.Unity.UI
 
             for (var index = LastMaps.Count; index < mapCards.Count; index++)
             {
-                mapCards[index]?.ApplyUnavailable("地图 B（后续扩展）");
+                mapCards[index]?.ApplyUnavailable("地图乙（后续扩展）");
             }
 
             if (!found && LastMaps.Count > 0)
@@ -267,7 +267,7 @@ namespace VRShooting.Unity.UI
             LastBriefing = briefing;
             LastError = string.Empty;
             P3UiText.SetText(titleText, "堑壕射击 · 开场任务");
-            P3UiText.SetText(mapText, "地图：" + (string.IsNullOrWhiteSpace(map.DisplayName) ? briefing.MapId : map.DisplayName));
+            P3UiText.SetText(mapText, "地图：" + (string.IsNullOrWhiteSpace(map.DisplayName) ? "堑壕训练场" : map.DisplayName));
             P3UiText.SetText(enemyText, "敌情预估：" + briefing.EnemyEstimateMin + "-" + briefing.EnemyEstimateMax + " 名");
             P3UiText.SetText(squadText, "小队配置\n" + P3UiText.Squad(briefing.PlannedSquad));
             P3UiText.SetText(objectivesText, "任务目标\n进入堑壕\n搜索路线\n消灭敌人\n保持小队队形");

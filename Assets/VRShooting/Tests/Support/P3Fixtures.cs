@@ -26,13 +26,13 @@ namespace VRShooting.P3.TestSupport
         };
         public static TrenchMapDto TrenchMap => new TrenchMapDto
         {
-            MapId = P3ContractIds.TrenchMap, DisplayName = "堑壕地图 A", Difficulty = DifficultyLevel.Medium,
+            MapId = P3ContractIds.TrenchMap, DisplayName = "堑壕地图甲", Difficulty = DifficultyLevel.Medium,
             MinEnemyCount = 3, MaxEnemyCount = 5, SearchNodes = TrenchDefinition.SearchNodes,
             EnemyEstimateAreas = TrenchEstimateAreas()
         };
         public static UrbanMapDto UrbanMap => new UrbanMapDto
         {
-            MapId = P3ContractIds.UrbanMap, DisplayName = "城镇地图 A", BuildingEntranceId = P3ContractIds.UrbanEntrance,
+            MapId = P3ContractIds.UrbanMap, DisplayName = "城镇地图甲", BuildingEntranceId = P3ContractIds.UrbanEntrance,
             StreetEnemyMin = 1, StreetEnemyMax = 2, BuildingEnemyMin = 3, BuildingEnemyMax = 6, Floors = UrbanDefinition.Floors
         };
         public static TrenchSessionDto TrenchSession(string id, long revision, SessionState state = SessionState.Running) => new TrenchSessionDto
@@ -64,7 +64,7 @@ namespace VRShooting.P3.TestSupport
                 {
                     var floorId = "urban-a.floor-" + i;
                     projections.Add(Projection(floorId, floorId + ".map"));
-                    floors.Add(new FloorDto { FloorId = floorId, DisplayName = i + "F", MiniMap = MiniMap(floorId),
+                    floors.Add(new FloorDto { FloorId = floorId, DisplayName = new[] { "一层", "二层", "三层" }[i - 1], MiniMap = MiniMap(floorId),
                         Rooms = new[] { new RoomDto { RoomId = "urban-a.room-" + i.ToString("000"), DisplayName = "房间" + i, MapPosition=new Vector2(.5f,.5f) } } });
                 }
                 return new CombatSceneDefinitionDto

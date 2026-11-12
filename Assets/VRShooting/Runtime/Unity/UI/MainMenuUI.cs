@@ -525,7 +525,7 @@ namespace VRShooting.Unity.UI
             AddTestId(hall.gameObject, hall.name);
             AddPanel(parent, "Panel_MainMenu_Frame", new Vector2(1300, 130), new Vector2(1810, 920), new Color32(11, 19, 16, 220), new Color32(45, 66, 56, 255));
             AddLabel(parent, "Text_MainMenu_Title", "VR 射击训练系统", 58, FontStyles.Normal, TextAlignmentOptions.Left, new Vector2(120, 835), new Vector2(1240, 930), new Color32(231, 242, 235, 255));
-            AddLabel(parent, "Text_MainMenu_Subtitle", "战术训练中心  /  TACTICAL TRAINING", 24, FontStyles.Normal, TextAlignmentOptions.Left, new Vector2(125, 785), new Vector2(1150, 830), new Color32(143, 217, 255, 255));
+            AddLabel(parent, "Text_MainMenu_Subtitle", "战术训练中心", 24, FontStyles.Normal, TextAlignmentOptions.Left, new Vector2(125, 785), new Vector2(1150, 830), new Color32(143, 217, 255, 255));
 
             AddPanel(parent, "Panel_MainMenu_Profile", new Vector2(120, 165), new Vector2(630, 325), new Color32(17, 29, 24, 220), new Color32(56, 84, 71, 255),
                 "本地训练\n循序训练 · 安全操作 · 精准射击");
@@ -546,7 +546,7 @@ namespace VRShooting.Unity.UI
             controlsButton.onClick.AddListener(() => mainMenuControlsPanel.gameObject.SetActive(true));
 
             AddPanel(parent, "Panel_MainMenu_BottomStatus", new Vector2(120, 55), new Vector2(1800, 115), new Color32(17, 29, 24, 210), new Color32(56, 84, 71, 255),
-                "单机训练  /  LOCAL SIMULATION                                     选择科目后查看任务简报");
+                "单机训练                                     选择科目后查看任务简报");
 
             BuildMainMenuControls(parent);
         }
@@ -559,10 +559,10 @@ namespace VRShooting.Unity.UI
             AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Title", "操作介绍", 38, FontStyles.Bold,
                 TextAlignmentOptions.Center, new Vector2(80, 750), new Vector2(1580, 820), textColor);
             var left = AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Left",
-                "通用 VR 操作\n右手 Grip 抓枪 / 主手握持；左手 Grip 副手握持。\n右扳机射击；用 UI 射线选择按钮。\n主菜单及模式三 / 四：左摇杆移动，右摇杆转向。\n模式一 / 二为固定射击点，不可移动。\n\n模式一  ·  100m 精度射校\n每轮 4 发，共 3 轮。\n分析页使用“应用调整”“进入下一轮”或“查看评级”。\n水平 1 格 = 2cm；垂直 5 度 = 0.32cm。\n集中且计算集各点距靶心≤10cm、均值距靶心≤5cm且至少一发距靶心≤5cm，或应用调整后均值距靶心<5cm即可通过。",
+                "通用 VR 操作\n右手侧握键抓枪 / 主手握持；左手侧握键副手握持。\n右扳机射击；用 UI 射线选择按钮。\n主菜单及模式三 / 四：左摇杆移动，右摇杆转向。\n模式一 / 二为固定射击点，不可移动。\n\n模式一  ·  100m 精度射校\n每轮 4 发，共 3 轮。\n分析页使用“应用调整”“进入下一轮”或“查看评级”。\n水平 1 格 = 2cm；垂直 5 度 = 0.32cm。\n集中且计算集各点距靶心≤10cm、均值距靶心≤5cm且至少一发距靶心≤5cm，或应用调整后均值距靶心<5cm即可通过。",
                 24, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(75, 150), new Vector2(800, 720), textColor);
             var right = AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Right",
-                "模式二  ·  移动目标\n双手据枪，抬枪对齐瞄具并跟随目标。\n右扳机快速扣动起射两发，继续按住可逐发连射。\n\n模式三 / 四  ·  堑壕与城镇\n左手柄 X：换弹；左手柄 Y：切换姿态。\n右手柄 B：切换左右肩。\n模式四：右摇杆按压交互 / 开门。\n模式三：右手柄 A 请求队友投掷手雷。\n切换左肩后，左手为主手并使用左扳机射击，右手为副手。",
+                "模式二  ·  移动目标\n双手据枪，抬枪对齐瞄具并跟随目标。\n右扳机快速扣动起射两发，继续按住可逐发连射。\n\n模式三 / 四  ·  堑壕与城镇\n左手柄 X：换弹；左手柄 Y：切换姿态。\n右手柄 B：切换左右肩。\n模式四：右摇杆按压交互 / 开门。\n模式三 / 四：右手柄 A 请求队友投掷手雷。\n切换左肩后，左手为主手并使用左扳机射击，右手为副手。",
                 24, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(860, 150), new Vector2(1585, 720), textColor);
             left.lineSpacing = right.lineSpacing = 6f;
             var back = AddButton(mainMenuControlsPanel, "Button_MainMenu_Controls_Back", "返回", new Vector2(680, 35), new Vector2(980, 105), false);
@@ -575,7 +575,7 @@ namespace VRShooting.Unity.UI
             AddPanel(parent, "Panel_ZeroingBriefing_Frame", new Vector2(110, 60), new Vector2(1390, 820), new Color32(11, 19, 16, 215), new Color32(45, 156, 255, 255));
             var rangeArt = TacticalUIStyle.Artwork(parent, "Placeholder_ZeroingBriefing_Range", TacticalUIStyle.Sprite("icon_framed_reticle_large"), new Vector2(1440, 325), new Vector2(1790, 675));
             AddTestId(rangeArt.gameObject, rangeArt.name);
-            AddLabel(parent, "Text_ZeroingBriefing_Header", "任务简报  MISSION BRIEFING", 26, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(180, 95), new Vector2(780, 145), new Color32(231, 242, 235, 255));
+            AddLabel(parent, "Text_ZeroingBriefing_Header", "任务简报", 26, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(180, 95), new Vector2(780, 145), new Color32(231, 242, 235, 255));
             AddLabel(parent, "Text_ZeroingBriefing_Title", "100m精度射校靶", 54, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(190, 190), new Vector2(760, 280), new Color32(231, 242, 235, 255));
 
             AddPanel(parent, "Panel_ZeroingBriefing_Rules", new Vector2(190, 305), new Vector2(740, 745), new Color32(17, 29, 24, 225), new Color32(56, 84, 71, 255),
@@ -600,18 +600,12 @@ namespace VRShooting.Unity.UI
 
         void BuildTargetDiagram(RectTransform parent)
         {
-            var center = new Vector2(1082f, 505f);
-            var sizes = new[] { 315f, 252f, 189f, 126f, 63f };
-            for (var i = 0; i < sizes.Length; i++)
-            {
-                var ring = CreateRect("Image_ZeroingBriefing_TargetRing_" + i, parent, Vector2.zero, Vector2.zero, center - new Vector2(sizes[i] * 0.5f, sizes[i] * 0.5f), center + new Vector2(sizes[i] * 0.5f, sizes[i] * 0.5f));
-                AddImage(ring.gameObject, i == sizes.Length - 1 ? new Color32(231, 242, 235, 255) : new Color32(0, 0, 0, 0));
-                var outline = ring.gameObject.AddComponent<Outline>();
-                outline.effectColor = new Color32(231, 242, 235, 230);
-                outline.effectDistance = new Vector2(2f, 2f);
-            }
-
-            AddLabel(parent, "Text_ZeroingBriefing_TargetCenter", "10环", 22, FontStyles.Bold, TextAlignmentOptions.Center, center - new Vector2(60, 28), center + new Vector2(60, 28), new Color32(7, 16, 13, 255));
+            // Uses the same calibrated artwork as ChestTarget_ReferenceFace and the results plots.
+            var target = CreateRect("Image_ZeroingBriefing_Target", parent, Vector2.zero, Vector2.zero,
+                new Vector2(925, 375), new Vector2(1240, 690));
+            var plot = target.gameObject.AddComponent<TacticalTargetPlot>();
+            plot.raycastTarget = false;
+            AddTestId(target.gameObject, target.name);
             AddLabel(parent, "Text_ZeroingBriefing_TargetSize", "50cm x 50cm", 20, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(930, 700), new Vector2(1230, 740), new Color32(77, 213, 255, 255));
         }
 
@@ -1083,7 +1077,7 @@ namespace VRShooting.Unity.UI
             if (zeroingAnalysisCoordinatesText != null)
                 zeroingAnalysisCoordinatesText.text = analysis.SpreadRejected
                     ? "弹着点过于分散，本次射击无参考价值，不可用于调整，请进行下一轮。\n" + FormatImpactDots(analysis)
-                    : "红：弹着点（X右，Y上）\n" + FormatImpactDots(analysis) + "\n" + FormatReferencePoints(analysis);
+                    : "红：弹着点（横向向右，纵向向上）\n" + FormatImpactDots(analysis) + "\n" + FormatReferencePoints(analysis);
             if (zeroingAnalysisSuggestionText != null)
                 zeroingAnalysisSuggestionText.text = "本轮建议（估算）：" + FormatSuggestion(analysis) +
                     "\n\n觇孔每次调整1格，1格为2厘米；准心柱每次调整5度约0.32厘米。实际待应用量以控件和答案为准。";

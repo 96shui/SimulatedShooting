@@ -739,6 +739,16 @@ namespace SimulatedShooting.Tests.PlayMode
 
             Assert.That(controller.CurrentMagazine, Is.EqualTo(3));
             Assert.That(controller.CurrentShoulder, Is.EqualTo(ShoulderSide.Left));
+            var binding = Object.FindObjectOfType<WeaponPrefabBinding>(true);
+            var grab = binding.GetComponent<TrainingRifleGrabInteractable>();
+            Assert.That(grab.Shoulder, Is.EqualTo(ShoulderSide.Left));
+            Assert.That(grab.RearHandedness, Is.EqualTo(InteractorHandedness.Left));
+            Assert.That(grab.FrontHandedness, Is.EqualTo(InteractorHandedness.Right));
+            Assert.That(binding.VisualRoot.localScale, Is.EqualTo(Vector3.one));
+            Assert.That(binding.AimLinePoint.localToWorldMatrix.determinant, Is.GreaterThan(0));
+            controller.ToggleShoulderForTests();
+            Assert.That(grab.Shoulder, Is.EqualTo(ShoulderSide.Right));
+
         }
 
         [Test]

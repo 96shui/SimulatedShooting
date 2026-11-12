@@ -188,7 +188,7 @@ namespace SimulatedShooting.Tests.PlayMode
 
     internal static class PresentationEvidence
     {
-        internal static void Capture(Camera camera,string name,string outputDirectory=null)
+        internal static void Capture(Camera camera,string name,string outputDirectory=null,bool includeOverlay=false)
         {
             var output=outputDirectory??System.IO.Path.Combine(Application.dataPath,"../Temp/GoalRepair/images");
             System.IO.Directory.CreateDirectory(output);
@@ -198,15 +198,21 @@ namespace SimulatedShooting.Tests.PlayMode
             outputCamera.CopyFrom(camera);outputCamera.enabled=false;
             outputCamera.transform.SetPositionAndRotation(camera.transform.position,camera.transform.rotation);
             outputCamera.ResetWorldToCameraMatrix();outputCamera.ResetProjectionMatrix();outputCamera.aspect=1280f/960f;
+            var overlays = includeOverlay ? Object.FindObjectsOfType<Canvas>().Where(c => c.isRootCanvas && c.renderMode == RenderMode.ScreenSpaceOverlay).ToArray() : new Canvas[0];
+            var cameras = overlays.Select(c=>c.worldCamera).ToArray();
+            var distances = overlays.Select(c=>c.planeDistance).ToArray();
             var previousActive=RenderTexture.active;
             try
             {
+                foreach (var canvas in overlays) { canvas.renderMode=RenderMode.ScreenSpaceCamera;canvas.worldCamera=outputCamera;canvas.planeDistance=1; }
+                Canvas.ForceUpdateCanvases();
                 outputCamera.stereoTargetEye=StereoTargetEyeMask.None;outputCamera.targetTexture=target;outputCamera.Render();
                 RenderTexture.active=target;texture.ReadPixels(new Rect(0,0,1280,960),0,0);texture.Apply();
                 System.IO.File.WriteAllBytes(System.IO.Path.Combine(output,name+".png"),texture.EncodeToPNG());
             }
             finally
             {
+                for (var i=0;i<overlays.Length;i++) { overlays[i].renderMode=RenderMode.ScreenSpaceOverlay;overlays[i].worldCamera=cameras[i];overlays[i].planeDistance=distances[i]; }
                 RenderTexture.active=previousActive;Object.Destroy(outputCamera.gameObject);
                 target.Release();Object.Destroy(target);Object.Destroy(texture);
             }

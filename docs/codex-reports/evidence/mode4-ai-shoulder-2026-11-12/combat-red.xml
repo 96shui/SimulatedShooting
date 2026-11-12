@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="4" result="Failed(Child)" total="4" passed="1" failed="3" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-12 03:07:31Z" end-time="2026-11-12 03:07:31Z" duration="0.1065657">
+  <test-suite type="TestSuite" id="1484" name="VR" fullname="VR" runstate="Runnable" testcasecount="381" result="Failed" site="Child" start-time="2026-11-12 03:07:31Z" end-time="2026-11-12 03:07:31Z" duration="0.106566" total="4" passed="1" failed="3" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1960" name="VRShooting.Runtime.EditModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.EditModeTests.dll" runstate="Runnable" testcasecount="336" result="Failed" site="Child" start-time="2026-11-12 03:07:31Z" end-time="2026-11-12 03:07:31Z" duration="0.093581" total="4" passed="1" failed="3" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="79884" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1961" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="336" result="Failed" site="Child" start-time="2026-11-12 03:07:31Z" end-time="2026-11-12 03:07:31Z" duration="0.084792" total="4" passed="1" failed="3" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1962" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="336" result="Failed" site="Child" start-time="2026-11-12 03:07:31Z" end-time="2026-11-12 03:07:31Z" duration="0.072461" total="4" passed="1" failed="3" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1963" name="EditMode" fullname="VRShooting.Tests.EditMode" runstate="Runnable" testcasecount="336" result="Failed" site="Child" start-time="2026-11-12 03:07:31Z" end-time="2026-11-12 03:07:31Z" duration="0.057561" total="4" passed="1" failed="3" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1588" name="Screen23_CombatCoreTests" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" testcasecount="25" result="Failed" site="Child" start-time="2026-11-12 03:07:31Z" end-time="2026-11-12 03:07:31Z" duration="0.035470" total="4" passed="1" failed="3" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-suite type="ParameterizedMethod" id="1597" name="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2026-11-12 03:07:31Z" end-time="2026-11-12 03:07:31Z" duration="0.028391" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <failure>
+                  <message><![CDATA[One or more child tests had errors]]></message>
+                </failure>
+                <test-case id="1595" name="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Trench)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Trench)" methodname="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="752394423" result="Failed" start-time="2026-11-12 03:07:31Z" end-time="2026-11-12 03:07:31Z" duration="0.021979" asserts="0">
+                  <properties />
+                  <failure>
+                    <message><![CDATA[  Do not shoot while still turning
+  Expected: 10
+  But was:  8.0f
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost (VRShooting.Common.TrainingMode mode) [0x00107] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\EditMode\Infrastructure\Screen23_CombatCoreTests.cs:117
+]]></stack-trace>
+                  </failure>
+                </test-case>
+                <test-case id="1596" name="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Urban)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Urban)" methodname="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1943857036" result="Failed" start-time="2026-11-12 03:07:31Z" end-time="2026-11-12 03:07:31Z" duration="0.000216" asserts="0">
+                  <properties />
+                  <failure>
+                    <message><![CDATA[  Do not shoot while still turning
+  Expected: 10
+  But was:  3.0f
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost (VRShooting.Common.TrainingMode mode) [0x00107] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\EditMode\Infrastructure\Screen23_CombatCoreTests.cs:117
+]]></stack-trace>
+                  </failure>
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1594" name="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2026-11-12 03:07:31Z" end-time="2026-11-12 03:07:31Z" duration="0.003667" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <failure>
+                  <message><![CDATA[One or more child tests had errors]]></message>
+                </failure>
+                <test-case id="1592" name="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Trench,10)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Trench,10)" methodname="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="126020878" result="Passed" start-time="2026-11-12 03:07:31Z" end-time="2026-11-12 03:07:31Z" duration="0.002939" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1593" name="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Urban,10)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Urban,10)" methodname="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1022053148" result="Failed" start-time="2026-11-12 03:07:31Z" end-time="2026-11-12 03:07:31Z" duration="0.000203" asserts="0">
+                  <properties />
+                  <failure>
+                    <message><![CDATA[  Expected: 9
+  But was:  4.0f
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth (VRShooting.Common.TrainingMode mode, System.Int32 fatalHit) [0x00092] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\EditMode\Infrastructure\Screen23_CombatCoreTests.cs:97
+]]></stack-trace>
+                  </failure>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

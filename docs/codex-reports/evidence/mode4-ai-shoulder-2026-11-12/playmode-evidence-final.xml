@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="2" result="Passed" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-12 03:26:56Z" end-time="2026-11-12 03:26:58Z" duration="2.6461104">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="304" result="Passed" start-time="2026-11-12 03:26:56Z" end-time="2026-11-12 03:26:58Z" duration="2.646110" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1229" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="198" result="Passed" start-time="2026-11-12 03:26:56Z" end-time="2026-11-12 03:26:58Z" duration="2.640523" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="59460" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1230" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="192" result="Passed" start-time="2026-11-12 03:26:56Z" end-time="2026-11-12 03:26:58Z" duration="2.639751" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1231" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="192" result="Passed" start-time="2026-11-12 03:26:56Z" end-time="2026-11-12 03:26:58Z" duration="2.639185" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1232" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="192" result="Passed" start-time="2026-11-12 03:26:56Z" end-time="2026-11-12 03:26:58Z" duration="2.638506" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1065" name="Mode4AlignmentPlayModeTests" fullname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" classname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-12 03:26:56Z" end-time="2026-11-12 03:26:58Z" duration="2.635787" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1066" name="Bdd23_UrbanAssignmentEnemyTurnsAimsFiresAndStopsWhenOccluded" fullname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd23_UrbanAssignmentEnemyTurnsAimsFiresAndStopsWhenOccluded" methodname="Bdd23_UrbanAssignmentEnemyTurnsAimsFiresAndStopsWhenOccluded" classname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" runstate="Runnable" seed="1690224986" result="Passed" start-time="2026-11-12 03:26:56Z" end-time="2026-11-12 03:26:57Z" duration="1.687938" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1067" name="Bdd27_UrbanRightAThrowsVisibleGrenadeExplodesAndUsesCooldown" fullname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd27_UrbanRightAThrowsVisibleGrenadeExplodesAndUsesCooldown" methodname="Bdd27_UrbanRightAThrowsVisibleGrenadeExplodesAndUsesCooldown" classname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" runstate="Runnable" seed="1278619611" result="Passed" start-time="2026-11-12 03:26:57Z" end-time="2026-11-12 03:26:58Z" duration="0.941494" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Mode4Evidence grenade=edf7648d4c8b4eb98984a6329a4df4a5.grenade-001 position=(38.80, 7.33, 65.20) camera=(38.80, 8.78, 68.20) kills=1
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

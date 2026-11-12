@@ -45,6 +45,28 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return null;
         }
 
+        // BDD09/29: P2 keeps its existing shoulder command and uses the shared upright grab.
+        [Test] public void Bdd29_MovingTargetShoulderCommandKeepsRifleAndSightsUpright()
+        {
+            var controller = Object.FindObjectOfType<FirstPersonTrainingWeaponController>(true);
+            var services=GameMain.Instance.Services;
+            controller.ConfigureServices(services,new ManualXRTrainingInput());
+            var started=services.MovingTarget.StartSession(new MovingTargetSettingsDto { SpeedMetersPerSecond=4f },RandomSeed.Fixed(29));
+            Assert.That(services.Presentation.ConfirmStart(started.Data.SessionId).Success, Is.True);
+            Assert.That(controller.InitializeForTests(), Is.True);
+            var binding = Object.FindObjectOfType<VRShooting.Unity.Weapons.WeaponPrefabBinding>(true);
+            var grab = binding.GetComponent<TrainingRifleGrabInteractable>();
+            var scale=binding.VisualRoot.localScale;
+            controller.ToggleShoulderForTests();
+            Assert.That(grab.Shoulder, Is.EqualTo(VRShooting.Common.ShoulderSide.Left));
+            Assert.That(grab.RearHandedness, Is.EqualTo(UnityEngine.XR.Interaction.Toolkit.Interactors.InteractorHandedness.Left));
+            Assert.That(grab.FrontHandedness, Is.EqualTo(UnityEngine.XR.Interaction.Toolkit.Interactors.InteractorHandedness.Right));
+            Assert.That(binding.VisualRoot.localScale, Is.EqualTo(scale));
+            Assert.That(binding.AimLinePoint.localToWorldMatrix.determinant, Is.GreaterThan(0));
+            controller.ToggleShoulderForTests();
+            Assert.That(grab.Shoulder, Is.EqualTo(VRShooting.Common.ShoulderSide.Right));
+        }
+
         [UnityTest]
         public IEnumerator P2_RealTrigger_QuickTapFiresTwo_ForbiddenHoldDoesNotResume()
         {

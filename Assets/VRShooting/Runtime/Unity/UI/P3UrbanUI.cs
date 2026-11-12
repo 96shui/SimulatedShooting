@@ -71,7 +71,7 @@ namespace VRShooting.Unity.UI
             }
 
             for (var index = LastMaps.Count; index < mapCards.Count; index++)
-                mapCards[index]?.ApplyUnavailable("城镇地图 B（后续扩展）");
+                mapCards[index]?.ApplyUnavailable("城镇地图乙（后续扩展）");
 
             if (!found && LastMaps.Count > 0)
             {
@@ -259,10 +259,11 @@ namespace VRShooting.Unity.UI
                 session.Ammo, session.Player, session.MiniMap);
             var map = hud.MiniMap;
             ApplyHud(hud, session.Squad, map, "任务状态：消灭全部敌人");
-            P3UiText.SetText(floorText, "当前楼层：" + (string.IsNullOrWhiteSpace(session.CurrentFloorId) ? "--" : session.CurrentFloorId));
+            var floor = FindFloor(session, session.CurrentFloorId);
+            P3UiText.SetText(floorText, "当前楼层：" + (string.IsNullOrWhiteSpace(session.CurrentFloorId) ? "--"
+                : string.IsNullOrWhiteSpace(floor.DisplayName) ? session.CurrentFloorId : floor.DisplayName));
             P3UiText.SetText(buildingProgressText, "建筑敌人：" + session.BuildingEnemyKilled + " / " + session.BuildingEnemyTotal);
 
-            var floor = FindFloor(session, session.CurrentFloorId);
             var rooms = floor.Rooms ?? Array.Empty<RoomDto>();
             var lines = new List<string>();
             CurrentRoomId = string.Empty;

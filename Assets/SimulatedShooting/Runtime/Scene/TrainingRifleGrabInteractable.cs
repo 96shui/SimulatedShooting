@@ -29,8 +29,6 @@ namespace SimulatedShooting.Scene
         bool isOnRack = true;
         bool transferringHands;
         HashSet<IXRSelectInteractor> previousSelectors;
-        Vector3 rightShoulderVisualScale;
-        bool visualScaleCaptured;
         BoxCollider riflePickupVolume;
 
         public ShoulderSide Shoulder { get; private set; } = ShoulderSide.Right;
@@ -142,6 +140,7 @@ namespace SimulatedShooting.Scene
         void ConfigurePickupPrompt()
         {
             if (pickupPrompt == null) return;
+            SetPromptVisible(false);
             var legacy = pickupPrompt.GetComponent<TextMesh>();
             if (legacy != null) legacy.GetComponent<Renderer>().enabled = false;
             var label = pickupPrompt.GetComponentInChildren<TextMeshPro>(true);
@@ -165,11 +164,6 @@ namespace SimulatedShooting.Scene
         {
             if (Shoulder == shoulder) return;
             weaponBinding ??= GetComponent<WeaponPrefabBinding>();
-            if (!visualScaleCaptured && weaponBinding != null && weaponBinding.VisualRoot != null)
-            {
-                rightShoulderVisualScale = weaponBinding.VisualRoot.localScale;
-                visualScaleCaptured = true;
-            }
             var selected = interactorsSelecting.ToArray();
             previousSelectors = new HashSet<IXRSelectInteractor>(selected);
             transferringHands = true;
@@ -178,12 +172,7 @@ namespace SimulatedShooting.Scene
                 if (interactionManager != null)
                     foreach (var interactor in selected) interactionManager.SelectCancel(interactor, this);
                 Shoulder = shoulder;
-                if (visualScaleCaptured)
-                {
-                    var scale = rightShoulderVisualScale;
-                    if (shoulder == ShoulderSide.Left) scale.x = -scale.x;
-                    weaponBinding.VisualRoot.localScale = scale;
-                }
+                // Hand roles and XRI selection order change; rifle/sights keep their authored frame.
                 VRHandPresentation.ApplyShoulder(this, shoulder);
                 // Re-enter rear first: XRI's primary selection must follow the new trigger hand.
                 var rear = selected.FirstOrDefault(i => i.handedness == RearHandedness);
@@ -420,7 +409,8 @@ namespace SimulatedShooting.Scene
         {
             if (pickupPrompt != null)
             {
-                pickupPrompt.SetActive(visible);
+                // Keep references and every child (including any leader line) but never show this guide.
+                pickupPrompt.SetActive(false);
             }
         }
 

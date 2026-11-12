@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="49" result="Failed(Child)" total="49" passed="47" failed="2" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.1348119">
+  <test-suite type="TestSuite" id="1486" name="VR" fullname="VR" runstate="Runnable" testcasecount="383" result="Failed" site="Child" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.134812" total="49" passed="47" failed="2" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1964" name="VRShooting.Runtime.EditModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.EditModeTests.dll" runstate="Runnable" testcasecount="338" result="Failed" site="Child" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.124006" total="49" passed="47" failed="2" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="59352" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1965" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="338" result="Failed" site="Child" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.122159" total="49" passed="47" failed="2" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1966" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="338" result="Failed" site="Child" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.120458" total="49" passed="47" failed="2" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1967" name="EditMode" fullname="VRShooting.Tests.EditMode" runstate="Runnable" testcasecount="338" result="Failed" site="Child" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.118687" total="49" passed="47" failed="2" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1559" name="CombatMagazineReloadTests" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" testcasecount="18" result="Failed" site="Child" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.050247" total="18" passed="16" failed="2" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-suite type="ParameterizedMethod" id="1584" name="AlreadyReleasedTriggerRearmsWhenReloadCancelsPendingBurst" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.AlreadyReleasedTriggerRearmsWhenReloadCancelsPendingBurst" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.023425" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1582" name="AlreadyReleasedTriggerRearmsWhenReloadCancelsPendingBurst(Trench)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.AlreadyReleasedTriggerRearmsWhenReloadCancelsPendingBurst(Trench)" methodname="AlreadyReleasedTriggerRearmsWhenReloadCancelsPendingBurst" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="507554523" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.020317" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1583" name="AlreadyReleasedTriggerRearmsWhenReloadCancelsPendingBurst(Urban)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.AlreadyReleasedTriggerRearmsWhenReloadCancelsPendingBurst(Urban)" methodname="AlreadyReleasedTriggerRearmsWhenReloadCancelsPendingBurst" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="1390788471" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000105" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1581" name="AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.008481" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <failure>
+                  <message><![CDATA[One or more child tests had errors]]></message>
+                </failure>
+                <test-case id="1579" name="AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Trench)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Trench)" methodname="AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="2072123116" result="Failed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.003661" asserts="0">
+                  <properties />
+                  <failure>
+                    <message><![CDATA[  one remaining round cannot start a P2 sequence
+  Expected: 0
+  But was:  1
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence (VRShooting.Common.TrainingMode mode) [0x0010f] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\EditMode\Infrastructure\CombatMagazineReloadTests.cs:184
+]]></stack-trace>
+                  </failure>
+                </test-case>
+                <test-case id="1580" name="AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Urban)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Urban)" methodname="AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="71377291" result="Failed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000226" asserts="0">
+                  <properties />
+                  <failure>
+                    <message><![CDATA[  one remaining round cannot start a P2 sequence
+  Expected: 0
+  But was:  1
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence (VRShooting.Common.TrainingMode mode) [0x0010f] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\EditMode\Infrastructure\CombatMagazineReloadTests.cs:184
+]]></stack-trace>
+                  </failure>
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1578" name="AutomaticFireUsesP2TimingAndLatestShotForEveryBullet" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireUsesP2TimingAndLatestShotForEveryBullet" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.002448" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1576" name="AutomaticFireUsesP2TimingAndLatestShotForEveryBullet(Trench)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireUsesP2TimingAndLatestShotForEveryBullet(Trench)" methodname="AutomaticFireUsesP2TimingAndLatestShotForEveryBullet" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="1490159160" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.001761" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1577" name="AutomaticFireUsesP2TimingAndLatestShotForEveryBullet(Urban)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireUsesP2TimingAndLatestShotForEveryBullet(Urban)" methodname="AutomaticFireUsesP2TimingAndLatestShotForEveryBullet" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="747303206" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000098" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1570" name="CancellationPreservesOriginalMagazineAndBothSpares" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.CancellationPreservesOriginalMagazineAndBothSpares" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.001975" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1566" name="CancellationPreservesOriginalMagazineAndBothSpares(Paused)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.CancellationPreservesOriginalMagazineAndBothSpares(Paused)" methodname="CancellationPreservesOriginalMagazineAndBothSpares" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="2060580785" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000880" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1567" name="CancellationPreservesOriginalMagazineAndBothSpares(Completed)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.CancellationPreservesOriginalMagazineAndBothSpares(Completed)" methodname="CancellationPreservesOriginalMagazineAndBothSpares" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="466874588" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000093" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1568" name="CancellationPreservesOriginalMagazineAndBothSpares(Failed)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.CancellationPreservesOriginalMagazineAndBothSpares(Failed)" methodname="CancellationPreservesOriginalMagazineAndBothSpares" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="1214851341" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000107" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1569" name="CancellationPreservesOriginalMagazineAndBothSpares(Cancelled)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.CancellationPreservesOriginalMagazineAndBothSpares(Cancelled)" methodname="CancellationPreservesOriginalMagazineAndBothSpares" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="1274518567" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000056" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-case id="1572" name="P1AndP2KeepTheirAmmoRules" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.P1AndP2KeepTheirAmmoRules" methodname="P1AndP2KeepTheirAmmoRules" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="1268411367" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000192" asserts="0">
+                <properties />
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1575" name="ReloadInputLocksSupportGripInBothModes" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.ReloadInputLocksSupportGripInBothModes" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.005162" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1573" name="ReloadInputLocksSupportGripInBothModes(Trench)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.ReloadInputLocksSupportGripInBothModes(Trench)" methodname="ReloadInputLocksSupportGripInBothModes" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="971981759" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.004529" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1574" name="ReloadInputLocksSupportGripInBothModes(Urban)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.ReloadInputLocksSupportGripInBothModes(Urban)" methodname="ReloadInputLocksSupportGripInBothModes" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="242556798" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000123" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1565" name="TacticalReloadSpendsAWholeMagazineOnlyAtCompletion" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.TacticalReloadSpendsAWholeMagazineOnlyAtCompletion" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000815" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1563" name="TacticalReloadSpendsAWholeMagazineOnlyAtCompletion(Trench)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.TacticalReloadSpendsAWholeMagazineOnlyAtCompletion(Trench)" methodname="TacticalReloadSpendsAWholeMagazineOnlyAtCompletion" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="397648838" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000317" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1564" name="TacticalReloadSpendsAWholeMagazineOnlyAtCompletion(Urban)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.TacticalReloadSpendsAWholeMagazineOnlyAtCompletion(Urban)" methodname="TacticalReloadSpendsAWholeMagazineOnlyAtCompletion" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="854837628" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000058" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1562" name="ThreeMagazinesRunOutAfterNinetyShots" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.ThreeMagazinesRunOutAfterNinetyShots" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.002137" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1560" name="ThreeMagazinesRunOutAfterNinetyShots(Trench)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.ThreeMagazinesRunOutAfterNinetyShots(Trench)" methodname="ThreeMagazinesRunOutAfterNinetyShots" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="2137421248" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.001433" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1561" name="ThreeMagazinesRunOutAfterNinetyShots(Urban)" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.ThreeMagazinesRunOutAfterNinetyShots(Urban)" methodname="ThreeMagazinesRunOutAfterNinetyShots" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="2122390697" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000264" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-case id="1571" name="TrackingLossCancelsWithoutDelayedCompletion" fullname="VRShooting.Tests.EditMode.CombatMagazineReloadTests.TrackingLossCancelsWithoutDelayedCompletion" methodname="TrackingLossCancelsWithoutDelayedCompletion" classname="VRShooting.Tests.EditMode.CombatMagazineReloadTests" runstate="Runnable" seed="1202899632" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000218" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1590" name="Screen23_CombatCoreTests" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" testcasecount="25" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.016015" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1600" name="Ammo_DualGrip_SingleShot_AndTimedMagazineReplacement" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Ammo_DualGrip_SingleShot_AndTimedMagazineReplacement" methodname="Ammo_DualGrip_SingleShot_AndTimedMagazineReplacement" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1371631660" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.001594" asserts="0">
+                <properties />
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1599" name="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.002019" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1597" name="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Trench)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Trench)" methodname="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="990651560" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.001606" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1598" name="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Urban)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Urban)" methodname="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="973919969" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000122" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1593" name="Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.001694" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1591" name="Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets(Trench)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets(Trench)" methodname="Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="2130928688" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.001269" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1592" name="Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets(Urban)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets(Urban)" methodname="Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="726997971" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000128" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1596" name="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.001848" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1594" name="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Trench,10)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Trench,10)" methodname="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1726722401" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.001177" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1595" name="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Urban,10)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Urban,10)" methodname="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1406106527" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000215" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-case id="1612" name="DamageEventDuplicate_ConsumesOnlyOneAttackDeadline" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.DamageEventDuplicate_ConsumesOnlyOneAttackDeadline" methodname="DamageEventDuplicate_ConsumesOnlyOneAttackDeadline" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1904996261" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000409" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1611" name="DeathIsClampedAndOnce_SameBatchEnemyKillDoesNotRestorePlayer" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.DeathIsClampedAndOnce_SameBatchEnemyKillDoesNotRestorePlayer" methodname="DeathIsClampedAndOnce_SameBatchEnemyKillDoesNotRestorePlayer" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="918826018" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000596" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1616" name="DisposeDuringFeedback_DoesNotLeaveCallbacksOrThrow" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.DisposeDuringFeedback_DoesNotLeaveCallbacksOrThrow" methodname="DisposeDuringFeedback_DoesNotLeaveCallbacksOrThrow" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="311295989" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000627" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1618" name="DuplicateIdWithDifferentPayload_AndLateBatchAreRejected" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.DuplicateIdWithDifferentPayload_AndLateBatchAreRejected" methodname="DuplicateIdWithDifferentPayload_AndLateBatchAreRejected" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="643395325" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000341" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1601" name="EmptyAmmoAndInvalidGrip_DoNotConsume" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.EmptyAmmoAndInvalidGrip_DoNotConsume" methodname="EmptyAmmoAndInvalidGrip_DoNotConsume" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="395015217" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000443" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1604" name="HitAndShotIds_AreIdempotent_CorpsePersists" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.HitAndShotIds_AreIdempotent_CorpsePersists" methodname="HitAndShotIds_AreIdempotent_CorpsePersists" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="899645262" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000515" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1603" name="LargeTickMatchesSmallTicks_AndDoesNotAttackBeforeDiscovery" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.LargeTickMatchesSmallTicks_AndDoesNotAttackBeforeDiscovery" methodname="LargeTickMatchesSmallTicks_AndDoesNotAttackBeforeDiscovery" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="876014849" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000363" asserts="0">
+                <properties />
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1609" name="LifecycleCancelsReloadAndAttacks" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.LifecycleCancelsReloadAndAttacks" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000769" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1606" name="LifecycleCancelsReloadAndAttacks(Paused)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.LifecycleCancelsReloadAndAttacks(Paused)" methodname="LifecycleCancelsReloadAndAttacks" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="388344048" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000307" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1607" name="LifecycleCancelsReloadAndAttacks(Completed)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.LifecycleCancelsReloadAndAttacks(Completed)" methodname="LifecycleCancelsReloadAndAttacks" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="693282763" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000089" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1608" name="LifecycleCancelsReloadAndAttacks(Cancelled)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.LifecycleCancelsReloadAndAttacks(Cancelled)" methodname="LifecycleCancelsReloadAndAttacks" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1799496531" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000067" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-case id="1613" name="NewSessionInvalidatesOldFactsAndDisposalStopsNotifications" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.NewSessionInvalidatesOldFactsAndDisposalStopsNotifications" methodname="NewSessionInvalidatesOldFactsAndDisposalStopsNotifications" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1076498509" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000207" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1619" name="OldShotCannotPenetrateMultipleEnemies_AndInvalidStartPreservesSession" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.OldShotCannotPenetrateMultipleEnemies_AndInvalidStartPreservesSession" methodname="OldShotCannotPenetrateMultipleEnemies_AndInvalidStartPreservesSession" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="281312768" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000653" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1614" name="PostureShoulderAndCornerAreServiceState" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.PostureShoulderAndCornerAreServiceState" methodname="PostureShoulderAndCornerAreServiceState" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="677220356" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000807" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1615" name="TerminalSnapshotIsImmutable_WhenTrackingChanges" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.TerminalSnapshotIsImmutable_WhenTrackingChanges" methodname="TerminalSnapshotIsImmutable_WhenTrackingChanges" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1524721775" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000206" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1610" name="TrackingLossSuspendsAttacksAndRequiresNewPerception" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.TrackingLossSuspendsAttacksAndRequiresNewPerception" methodname="TrackingLossSuspendsAttacksAndRequiresNewPerception" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="316589923" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000219" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1605" name="UnknownShotAndInvalidInput_DoNotPublishOrChange" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.UnknownShotAndInvalidInput_DoNotPublishOrChange" methodname="UnknownShotAndInvalidInput_DoNotPublishOrChange" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="857521532" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000340" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1617" name="UnrepresentableDamageAndClock_AreRejected" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.UnrepresentableDamageAndClock_AreRejected" methodname="UnrepresentableDamageAndClock_AreRejected" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="751084432" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000216" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1602" name="VisibleRangeAngle_AndOcclusionGateAttacks" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.VisibleRangeAngle_AndOcclusionGateAttacks" methodname="VisibleRangeAngle_AndOcclusionGateAttacks" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1235540060" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000644" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1637" name="Screen25_UrbanTests" fullname="VRShooting.Tests.EditMode.Screen25_UrbanTests" classname="VRShooting.Tests.EditMode.Screen25_UrbanTests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.038271" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1639" name="Bdd27_UrbanGrenadeUsesSharedTacticAndCancelsOnTrackingLossAndRetry" fullname="VRShooting.Tests.EditMode.Screen25_UrbanTests.Bdd27_UrbanGrenadeUsesSharedTacticAndCancelsOnTrackingLossAndRetry" methodname="Bdd27_UrbanGrenadeUsesSharedTacticAndCancelsOnTrackingLossAndRetry" classname="VRShooting.Tests.EditMode.Screen25_UrbanTests" runstate="Runnable" seed="1979821084" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.031142" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1638" name="Bdd29_UrbanTenHealthFlowsThroughHudDeathResultAndRetry" fullname="VRShooting.Tests.EditMode.Screen25_UrbanTests.Bdd29_UrbanTenHealthFlowsThroughHudDeathResultAndRetry" methodname="Bdd29_UrbanTenHealthFlowsThroughHudDeathResultAndRetry" classname="VRShooting.Tests.EditMode.Screen25_UrbanTests" runstate="Runnable" seed="1363393033" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.004624" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1671" name="SquadGrenadeTacticTests" fullname="VRShooting.Tests.EditMode.SquadGrenadeTacticTests" classname="VRShooting.Tests.EditMode.SquadGrenadeTacticTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.003904" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1675" name="ExplosionIsIdempotentAndDoesNotResurrectCorpse" fullname="VRShooting.Tests.EditMode.SquadGrenadeTacticTests.ExplosionIsIdempotentAndDoesNotResurrectCorpse" methodname="ExplosionIsIdempotentAndDoesNotResurrectCorpse" classname="VRShooting.Tests.EditMode.SquadGrenadeTacticTests" runstate="Runnable" seed="1199362370" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.001104" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1674" name="NextPressIsAcceptedThreeSecondsAfterPreviousThrow" fullname="VRShooting.Tests.EditMode.SquadGrenadeTacticTests.NextPressIsAcceptedThreeSecondsAfterPreviousThrow" methodname="NextPressIsAcceptedThreeSecondsAfterPreviousThrow" classname="VRShooting.Tests.EditMode.SquadGrenadeTacticTests" runstate="Runnable" seed="1171422931" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000266" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1673" name="SingleDistantEnemyThrowsTowardMaximumRange" fullname="VRShooting.Tests.EditMode.SquadGrenadeTacticTests.SingleDistantEnemyThrowsTowardMaximumRange" methodname="SingleDistantEnemyThrowsTowardMaximumRange" classname="VRShooting.Tests.EditMode.SquadGrenadeTacticTests" runstate="Runnable" seed="1926782656" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.000528" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1672" name="TwoNearbyEnemiesScheduleThrowAndFuseKillsOnlyBlastTargets" fullname="VRShooting.Tests.EditMode.SquadGrenadeTacticTests.TwoNearbyEnemiesScheduleThrowAndFuseKillsOnlyBlastTargets" methodname="TwoNearbyEnemiesScheduleThrowAndFuseKillsOnlyBlastTargets" classname="VRShooting.Tests.EditMode.SquadGrenadeTacticTests" runstate="Runnable" seed="1863978159" result="Passed" start-time="2026-11-12 03:11:28Z" end-time="2026-11-12 03:11:28Z" duration="0.001172" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

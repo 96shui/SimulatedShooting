@@ -577,7 +577,27 @@ namespace VRShooting.Unity.UI
         }
 
         public static string Error(ErrorCode code, string message)
-            => string.IsNullOrWhiteSpace(message) ? code.ToString() : code + "：" + message;
+        {
+            string label;
+            switch (code)
+            {
+                case ErrorCode.None: label = "操作失败"; break;
+                case ErrorCode.InvalidState: label = "当前状态不允许此操作"; break;
+                case ErrorCode.InvalidInput: label = "输入无效"; break;
+                case ErrorCode.NotFound: label = "未找到所需内容"; break;
+                case ErrorCode.Busy: label = "正在处理，请稍候"; break;
+                case ErrorCode.Cooldown: label = "操作冷却中"; break;
+                case ErrorCode.ResourceUnavailable: label = "资源不可用"; break;
+                case ErrorCode.PersistenceFailed: label = "保存失败，请重试"; break;
+                case ErrorCode.TestOnlyFailure: label = "测试故障"; break;
+                default: label = "操作失败"; break;
+            }
+            // Service diagnostics and identifiers stay available to callers, not in player copy.
+            if (string.IsNullOrWhiteSpace(message)) return label;
+            foreach (var ch in message)
+                if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')) return label;
+            return label == message ? label : label + "：" + message;
+        }
 
         public static void SetText(TMP_Text target, string value)
         {

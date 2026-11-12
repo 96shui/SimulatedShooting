@@ -1,0 +1,494 @@
+{
+  "editmode": {
+    "baselineCounts": {
+      "total": 379,
+      "passed": 359,
+      "failed": 20,
+      "skipped": 0
+    },
+    "currentCounts": {
+      "total": 384,
+      "passed": 364,
+      "failed": 20,
+      "skipped": 0
+    },
+    "baselineSha256": "831e2c58033f81d224d1297acca026ace3d80b61d219f331cd6d53bafebc758d",
+    "newFailures": [],
+    "resolvedFailures": [],
+    "changedFailureMessages": [],
+    "missingTests": [
+      "SimulatedShooting.Tests.EditMode.VRControllerHandVisualEditModeTests.Bdd29_LeftShoulderAimFollowsTheMirroredRenderedBarrelWithYawAndRoll",
+      "SimulatedShooting.Tests.EditMode.VRControllerHandVisualEditModeTests.Bdd29_LeftShoulderMirrorsEveryArmBoneAndRenderedVertexAndSwitchesBackExactly",
+      "VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_TrenchSurvivesFiveExtraBulletsAndUrbanKeepsFive(Trench,10)",
+      "VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_TrenchSurvivesFiveExtraBulletsAndUrbanKeepsFive(Urban,5)"
+    ],
+    "addedTests": {
+      "SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd27_UrbanHasBoundGrenadeModelAndHeavyExplosionAudio": "Passed",
+      "SimulatedShooting.Tests.EditMode.VRControllerHandVisualEditModeTests.Bdd29_LeftShoulderMirrorsOnlyHandsAroundAuthoredGripsAndRestoresEveryVertex": "Passed",
+      "SimulatedShooting.Tests.EditMode.VRControllerHandVisualEditModeTests.Bdd29_LeftShoulderPreservesAuthoredBarrelAimWithYawAndRoll": "Passed",
+      "VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Trench)": "Passed",
+      "VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Urban)": "Passed",
+      "VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Trench,10)": "Passed",
+      "VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Urban,10)": "Passed",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.Bdd27_UrbanGrenadeUsesSharedTacticAndCancelsOnTrackingLossAndRetry": "Passed",
+      "VRShooting.Tests.EditMode.Screen25_UrbanTests.Bdd29_UrbanTenHealthFlowsThroughHudDeathResultAndRetry": "Passed"
+    },
+    "newFailuresSinceInitialWorktreeReport": [],
+    "failureRows": [
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: 13\n  But was:  11\n",
+        "currentMessage": "  Expected: 13\n  But was:  11\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: 13\n  But was:  11\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(\"Assets/Scenes/MovingTargetRangeScene.unity\",\"MovingTargetRange\")",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  40.7099991f\n",
+        "currentMessage": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  40.7099991f\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  40.7099991f\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(\"Assets/Scenes/ZeroingRangeScene.unity\",\"ZeroingRange\")",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  38.9079971f\n",
+        "currentMessage": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  38.9079971f\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  38.9079971f\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(\"Assets/Scenes/MovingTargetRangeScene.unity\")",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.033056885f\n",
+        "currentMessage": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.033056885f\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.033056885f\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(\"Assets/Scenes/ZeroingRangeScene.unity\")",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.0330568887f\n",
+        "currentMessage": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.0330568887f\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.0330568887f\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SharedPrefabMuzzleMatchesActualMeshOpening",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.0330568887f\n",
+        "currentMessage": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.0330568887f\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).\n  Expected: less than 0.000199999995f\n  But was:  0.0330568887f\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_ImportedMeshHasAnOpenRearApertureAndTheMeasuredFrontPost",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Three millimetres above the aperture must intersect its metal ring\n  Expected: True\n  But was:  False\n",
+        "currentMessage": "  Three millimetres above the aperture must intersect its metal ring\n  Expected: True\n  But was:  False\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Three millimetres above the aperture must intersect its metal ring\n  Expected: True\n  But was:  False\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_PrefabAimLineMatchesVisibleApertureAndFrontPostAtOneHundredMetres",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  The VR player aligns real model sights, not a virtual +Z anchor\n  Expected: less than 0.00999999978f\n  But was:  2.03472328f\n",
+        "currentMessage": "  The VR player aligns real model sights, not a virtual +Z anchor\n  Expected: less than 0.00999999978f\n  But was:  2.03472328f\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  The VR player aligns real model sights, not a virtual +Z anchor\n  Expected: less than 0.00999999978f\n  But was:  2.03472328f\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Trench)",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  one remaining round cannot start a P2 sequence\n  Expected: 0\n  But was:  1\n",
+        "currentMessage": "  one remaining round cannot start a P2 sequence\n  Expected: 0\n  But was:  1\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  one remaining round cannot start a P2 sequence\n  Expected: 0\n  But was:  1\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Urban)",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  one remaining round cannot start a P2 sequence\n  Expected: 0\n  But was:  1\n",
+        "currentMessage": "  one remaining round cannot start a P2 sequence\n  Expected: 0\n  But was:  1\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  one remaining round cannot start a P2 sequence\n  Expected: 0\n  But was:  1\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: True\n  But was:  False\n",
+        "currentMessage": "  Expected: True\n  But was:  False\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: True\n  But was:  False\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(False)",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: 1\n  But was:  0\n",
+        "currentMessage": "  Expected: 1\n  But was:  0\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: 1\n  But was:  0\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(True)",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: 2\n  But was:  0\n",
+        "currentMessage": "  Expected: 2\n  But was:  0\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: 2\n  But was:  0\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: True\n  But was:  False\n",
+        "currentMessage": "  Expected: True\n  But was:  False\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: True\n  But was:  False\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: True\n  But was:  False\n",
+        "currentMessage": "  Expected: True\n  But was:  False\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: True\n  But was:  False\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: InvalidState\n  But was:  None\n",
+        "currentMessage": "  Expected: InvalidState\n  But was:  None\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: InvalidState\n  But was:  None\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: True\n  But was:  False\n",
+        "currentMessage": "  Expected: True\n  But was:  False\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: True\n  But was:  False\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: in range (1,2)\n  But was:  0\n",
+        "currentMessage": "  Expected: in range (1,2)\n  But was:  0\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: in range (1,2)\n  But was:  0\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.QuickSwitchDisposesOnlyStaleLease_AndCannotOverwriteUrban",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: UrbanStreetHud\n  But was:  UrbanBuildingHud\n",
+        "currentMessage": "  Expected: UrbanStreetHud\n  But was:  UrbanBuildingHud\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: UrbanStreetHud\n  But was:  UrbanBuildingHud\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.ThreeRetriesUseNewSessions_RejectOldFacts_AndSaveOnlyLatest(Urban)",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: True\n  But was:  False\n",
+        "currentMessage": "  Expected: True\n  But was:  False\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: True\n  But was:  False\n"
+      }
+    ]
+  },
+  "playmode": {
+    "baselineCounts": {
+      "total": 301,
+      "passed": 276,
+      "failed": 25,
+      "skipped": 0
+    },
+    "currentCounts": {
+      "total": 313,
+      "passed": 290,
+      "failed": 23,
+      "skipped": 0
+    },
+    "baselineSha256": "299e1e699e68414fef95c0b59be10b00ac29865e845ef41c9c1df97c7869c88e",
+    "newFailures": [],
+    "resolvedFailures": [
+      "SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.TrenchEnemyAttacksShowShotTracerAudioAndPlayerBlood",
+      "SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.UrbanEnemyAttacksShowShotTracerAudioAndPlayerBlood"
+    ],
+    "changedFailureMessages": [
+      "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd14_NewTrenchAllowsContinuousMovementAndFiring",
+      "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.NewSceneInspectionWalkerCanLeaveEntry"
+    ],
+    "missingTests": [
+      "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.Bdd29_ReloadMagazineArmsAndFingersMirrorAtEveryCriticalPose",
+      "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Bdd29_TrenchRealBInputMirrorsTheProductionRifleAndSelectsOnlyTheLeftTrigger",
+      "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Bdd29_UrbanRealBInputMirrorsTheProductionRifleAndSelectsOnlyTheLeftTrigger"
+    ],
+    "addedTests": {
+      "SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd04_BriefingUsesThePhysicalTargetTexture": "Passed",
+      "SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd05_ModeSelectionReentryClearsAllFacesAndPreservesNewSessionHits": "Passed",
+      "SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd07_ActualRetryButtonClearsEntireTargetRowIncludingInactiveFaces": "Passed",
+      "SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd11_ResultsAppearAtCurrentEyeHeightAndForwardAfterTurning": "Passed",
+      "SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode1HeldRifleHasNoGuidanceAndKeepsHud": "Passed",
+      "SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode2HeldRifleHasNoGuidanceAndKeepsHud": "Passed",
+      "SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode3HeldRifleHasNoGuidanceAndKeepsHud": "Passed",
+      "SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode4HeldRifleHasNoGuidanceAndKeepsHud": "Passed",
+      "SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_StandaloneCalloutCannotShowLinesLabelsOrEndpointDecorations": "Passed",
+      "SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.Bdd29_ReloadUsesCurrentSupportHandAndUprightRifleAtEveryCriticalPose": "Passed",
+      "SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd23_UrbanAssignmentEnemyTurnsAimsFiresAndStopsWhenOccluded": "Passed",
+      "SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd27_UrbanRightAThrowsVisibleGrenadeExplodesAndUsesCooldown": "Passed",
+      "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.Bdd29_MovingTargetShoulderCommandKeepsRifleAndSightsUpright": "Passed",
+      "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Bdd29_TrenchRealBInputKeepsTheProductionRifleUprightAndSelectsOnlyTheLeftTrigger": "Passed",
+      "SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Bdd29_UrbanRealBInputKeepsTheProductionRifleUprightAndSelectsOnlyTheLeftTrigger": "Passed"
+    },
+    "newFailuresSinceInitialWorktreeReport": [],
+    "failureRows": [
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd14_NewTrenchAllowsContinuousMovementAndFiring",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  89eb640c408c4d8fbaa6d79c724af14d.enemy-001\n  Expected: in range (2.018377,3.428377)\n  But was:  1.92627943f\n",
+        "currentMessage": "  ab3559b5a9834b859eae43873f5a68bb.enemy-001\n  Expected: in range (2.018377,3.428377)\n  But was:  1.92627943f\n",
+        "messageUnchanged": false,
+        "priorWorktreeMessage": "  d22a264184954a318ca4f2d87ce1c755.enemy-001\n  Expected: in range (2.018377,3.428377)\n  But was:  1.92627943f\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.NewSceneInspectionWalkerCanLeaveEntry",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  trench-spawn-1 boots\n  Expected: 2.17788005f +/- 0.0799999982f\n  But was:  1.92738593f\n",
+        "currentMessage": "  trench-spawn-1 boots\n  Expected: 2.17788005f +/- 0.0799999982f\n  But was:  1.92736709f\n",
+        "messageUnchanged": false,
+        "priorWorktreeMessage": "  trench-spawn-1 boots\n  Expected: 2.17788005f +/- 0.0799999982f\n  But was:  1.92737138f\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.TrenchEnemyAttacksShowShotTracerAudioAndPlayerBlood",
+        "baselineResult": "Failed",
+        "currentResult": "Passed",
+        "baselineMessage": "System.InvalidOperationException : Sequence contains no matching element",
+        "currentMessage": "",
+        "messageUnchanged": false,
+        "priorWorktreeMessage": ""
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.UrbanEnemyAttacksShowShotTracerAudioAndPlayerBlood",
+        "baselineResult": "Failed",
+        "currentResult": "Passed",
+        "baselineMessage": "System.InvalidOperationException : Sequence contains no matching element",
+        "currentMessage": "",
+        "messageUnchanged": false,
+        "priorWorktreeMessage": ""
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: 15\n  But was:  13\n",
+        "currentMessage": "  Expected: 15\n  But was:  13\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: 15\n  But was:  13\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: 15\n  But was:  13\n",
+        "currentMessage": "  Expected: 15\n  But was:  13\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: 15\n  But was:  13\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: less than 0.0199999996f\n  But was:  0.0931938887f\n",
+        "currentMessage": "  Expected: less than 0.0199999996f\n  But was:  0.0931938887f\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: less than 0.0199999996f\n  But was:  0.0931938887f\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd31_DayHud_RestoresTheOriginalRearRowAndFortyMetreRoute",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: 100.0f +/- 0.100000001f\n  But was:  40.7099991f\n",
+        "currentMessage": "  Expected: 100.0f +/- 0.100000001f\n  But was:  40.7099991f\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: 100.0f +/- 0.100000001f\n  But was:  40.7099991f\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Missing ZeroingRange start-area copy: ShootingBench\n  Expected: True\n  But was:  False\n",
+        "currentMessage": "  Missing ZeroingRange start-area copy: ShootingBench\n  Expected: True\n  But was:  False\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Missing ZeroingRange start-area copy: ShootingBench\n  Expected: True\n  But was:  False\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: UrbanStreetHud\n  But was:  UrbanBuildingHud\n",
+        "currentMessage": "  Expected: UrbanStreetHud\n  But was:  UrbanBuildingHud\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: UrbanStreetHud\n  But was:  UrbanBuildingHud\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "System.NullReferenceException : Object reference not set to an instance of an object",
+        "currentMessage": "System.NullReferenceException : Object reference not set to an instance of an object",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "System.NullReferenceException : Object reference not set to an instance of an object"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_DeathThreeRetriesTrackingAndMovement",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Real line-of-sight enemy attacks must reach failure\n  Expected: True\n  But was:  False\n",
+        "currentMessage": "  Real line-of-sight enemy attacks must reach failure\n  Expected: True\n  But was:  False\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Real line-of-sight enemy attacks must reach failure\n  Expected: True\n  But was:  False\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_ProductionVictoryRetryAndReturn",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Entry prompt should reflect physical range: \n  Expected: True\n  But was:  False\n",
+        "currentMessage": "  Entry prompt should reflect physical range: \n  Expected: True\n  But was:  False\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Entry prompt should reflect physical range: \n  Expected: True\n  But was:  False\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Real VR sights and sampled gun line must meet within one centimetre\n  Expected: less than 1.0f\n  But was:  77.9776382f\n",
+        "currentMessage": "  Real VR sights and sampled gun line must meet within one centimetre\n  Expected: less than 1.0f\n  But was:  77.9776382f\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Real VR sights and sampled gun line must meet within one centimetre\n  Expected: less than 1.0f\n  But was:  77.9776382f\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: 2\n  But was:  0\n",
+        "currentMessage": "  Expected: 2\n  But was:  0\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: 2\n  But was:  0\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: less than 1.01999998f\n  But was:  22.9285927f\n",
+        "currentMessage": "  Expected: less than 1.01999998f\n  But was:  22.9285927f\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: less than 1.01999998f\n  But was:  22.9285927f\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd04_PickupPromptFacesShooterAboveRifleWithoutChangingText",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected string length 15 but was 8. Strings differ at index 0.\n  Expected: \"GRIP TO PICK UP\"\n  But was:  \"两个手柄抓握持枪\"\n  -----------^\n",
+        "currentMessage": "  Expected string length 15 but was 8. Strings differ at index 0.\n  Expected: \"GRIP TO PICK UP\"\n  But was:  \"两个手柄抓握持枪\"\n  -----------^\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected string length 15 but was 8. Strings differ at index 0.\n  Expected: \"GRIP TO PICK UP\"\n  But was:  \"两个手柄抓握持枪\"\n  -----------^\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd31_TargetKeepsItsDimensionsInTheOriginalRearRow",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  38.9079971f\n",
+        "currentMessage": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  38.9079971f\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: 100.0f +/- 0.0199999996f\n  But was:  38.9079971f\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_TrainingRifleUsesLicensedQbz191Visual",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: less than 0.00100000005f\n  But was:  0.0235372111f\n",
+        "currentMessage": "  Expected: less than 0.00100000005f\n  But was:  0.0235372111f\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: less than 0.00100000005f\n  But was:  0.0235372111f\n"
+      },
+      {
+        "fullname": "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: 0.119999997f +/- 0.00100000005f\n  But was:  0.219999999f\n",
+        "currentMessage": "  Expected: 0.119999997f +/- 0.00100000005f\n  But was:  0.219999999f\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: 0.119999997f +/- 0.00100000005f\n  But was:  0.219999999f\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.BuildingFailureKeepsCountsAndOldSessionInputsAreRejected",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "System.InvalidOperationException : Sequence contains no matching element",
+        "currentMessage": "System.InvalidOperationException : Sequence contains no matching element",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "System.InvalidOperationException : Sequence contains no matching element"
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "System.InvalidOperationException : Nullable object must have a value.",
+        "currentMessage": "System.InvalidOperationException : Nullable object must have a value.",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "System.InvalidOperationException : Nullable object must have a value."
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: String containing \"1-2\"\n  But was:  \"建筑内部敌人：3-6\"\n",
+        "currentMessage": "  Expected: String containing \"1-2\"\n  But was:  \"建筑内部敌人：3-6\"\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: String containing \"1-2\"\n  But was:  \"建筑内部敌人：3-6\"\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: String containing \"未搜索\"\n  But was:  \"房间1 · 靠近后开门\"\n",
+        "currentMessage": "  Expected: String containing \"未搜索\"\n  But was:  \"房间1 · 靠近后开门\"\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: String containing \"未搜索\"\n  But was:  \"房间1 · 靠近后开门\"\n"
+      },
+      {
+        "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce",
+        "baselineResult": "Failed",
+        "currentResult": "Failed",
+        "baselineMessage": "  Expected: String containing \"街道清除：已清除\"\n  But was:  \"消灭建筑敌人：5 / 5\n剩余弹药：76\n队友状态：\n玩家 · 正常 · 生命 100\n二号队友 · 跟随 · 生命 100\n三号队友 · 跟随 · 生命 100\n用时：02:00\"\n",
+        "currentMessage": "  Expected: String containing \"街道清除：已清除\"\n  But was:  \"消灭建筑敌人：5 / 5\n剩余弹药：76\n队友状态：\n玩家 · 正常 · 生命 100\n二号队友 · 跟随 · 生命 100\n三号队友 · 跟随 · 生命 100\n用时：02:00\"\n",
+        "messageUnchanged": true,
+        "priorWorktreeMessage": "  Expected: String containing \"街道清除：已清除\"\n  But was:  \"消灭建筑敌人：5 / 5\n剩余弹药：76\n队友状态：\n玩家 · 正常 · 生命 100\n二号队友 · 跟随 · 生命 100\n三号队友 · 跟随 · 生命 100\n用时：02:00\"\n"
+      }
+    ]
+  }
+}

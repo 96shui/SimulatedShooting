@@ -1,0 +1,1008 @@
+--- a/Assets/Scenes/MovingTargetRangeScene.unity
++++ b/Assets/Scenes/MovingTargetRangeScene.unity
+@@ -37393,7 +37393,7 @@
+   m_PrefabInstance: {fileID: 0}
+   m_PrefabAsset: {fileID: 0}
+   m_GameObject: {fileID: 994145063}
+-  m_Text: LEFT  -20 m  <
++  m_Text: 左端  -20 m  <
+   m_OffsetZ: 0
+   m_CharacterSize: 0.035
+   m_LineSpacing: 1
+@@ -57687,7 +57687,7 @@
+   m_PrefabInstance: {fileID: 0}
+   m_PrefabAsset: {fileID: 0}
+   m_GameObject: {fileID: 1612745830}
+-  m_Text: '>  +20 m  RIGHT'
++  m_Text: '>  +20 m  右端'
+   m_OffsetZ: 0
+   m_CharacterSize: 0.035
+   m_LineSpacing: 1
+--- a/Assets/Scenes/ZeroingRangeScene.unity
++++ b/Assets/Scenes/ZeroingRangeScene.unity
+@@ -37003,7 +37003,7 @@
+   m_PrefabInstance: {fileID: 0}
+   m_PrefabAsset: {fileID: 0}
+   m_GameObject: {fileID: 994145063}
+-  m_Text: LEFT  -20 m  <
++  m_Text: 左端  -20 m  <
+   m_OffsetZ: 0
+   m_CharacterSize: 0.035
+   m_LineSpacing: 1
+@@ -57560,7 +57560,7 @@
+   m_PrefabInstance: {fileID: 0}
+   m_PrefabAsset: {fileID: 0}
+   m_GameObject: {fileID: 1612745830}
+-  m_Text: '>  +20 m  RIGHT'
++  m_Text: '>  +20 m  右端'
+   m_OffsetZ: 0
+   m_CharacterSize: 0.035
+   m_LineSpacing: 1
+--- a/Assets/SimulatedShooting/Editor/ProneRangeSceneMigration.cs
++++ b/Assets/SimulatedShooting/Editor/ProneRangeSceneMigration.cs
+@@ -460,8 +460,8 @@
+                            bindingObject.AddComponent<MovingTargetFakeTimeline>();
+             timeline.Configure(driver);
+ 
+-            EnsureText(binding.LeftEndpoint, "RouteLabel_Left", "LEFT  -20 m  <", new Vector3(0f, 2.65f, 0.48f));
+-            EnsureText(binding.RightEndpoint, "RouteLabel_Right", ">  +20 m  RIGHT", new Vector3(0f, 2.65f, 0.48f));
++            EnsureText(binding.LeftEndpoint, "RouteLabel_Left", "左端  -20 m  <", new Vector3(0f, 2.65f, 0.48f));
++            EnsureText(binding.RightEndpoint, "RouteLabel_Right", ">  +20 m  右端", new Vector3(0f, 2.65f, 0.48f));
+ 
+             GameObjectUtility.RemoveMonoBehavioursWithMissingScript(binding.ImpactFeedbackRoot.gameObject);
+             var feedback = binding.ImpactFeedbackRoot.GetComponent<MovingTargetImpactFeedback>() ??
+--- a/Assets/SimulatedShooting/Runtime/Scene/CombatSceneDefinitionBuilder.cs
++++ b/Assets/SimulatedShooting/Runtime/Scene/CombatSceneDefinitionBuilder.cs
+@@ -17,9 +17,9 @@
+                 .Select(m => new MapProjectionDto { FloorId = m.Id == map ? "" : "floor-" + m.Id[6],
+                     ResourceKey = m.Id, WorldBoundsXZ = Rect.MinMaxRect(m.Min.x,m.Min.y,m.Max.x,m.Max.y) }).ToArray();
+             var floors = trench ? Array.Empty<FloorDto>() : points.Where(p => p.Kind == CombatPointKind.Floor).OrderBy(p => p.FloorId)
+-                .Select(f => new FloorDto { FloorId = f.FloorId, DisplayName = f.FloorId,
++                .Select(f => new FloorDto { FloorId = f.FloorId, DisplayName = FloorDisplayName(f.FloorId),
+                     Rooms = points.Where(r => r.Kind == CombatPointKind.Room && r.FloorId == f.FloorId)
+-                        .Select(r => new RoomDto { RoomId = r.RoomId, DisplayName = r.RoomId, EntryWorldPosition = r.transform.position,
++                        .Select((r, index) => new RoomDto { RoomId = r.RoomId, DisplayName = RoomDisplayName(f.FloorId, r.RoomId, index), EntryWorldPosition = r.transform.position,
+                             MapPosition = binding.Maps.First(m => m.Id == "urban-" + f.FloorId.Last() + "f").WorldToMap(r.transform.position) }).ToArray() }).ToArray();
+             return new CombatSceneDefinitionDto { MapId = map, SceneId = trench ? P3ContractIds.TrenchScene : P3ContractIds.UrbanScene,
+                 Mode = mode, Projections = projections, Floors = floors,
+@@ -34,5 +34,27 @@
+                     EstimatePosition=p.EstimateAnchor!=null?p.EstimateAnchor.position:throw new InvalidOperationException("Missing estimate anchor: "+p.Id),
+                     Navigable=NavMesh.SamplePosition(p.transform.position,out var hit,.75f,NavMesh.AllAreas) && Mathf.Abs(hit.position.y-p.transform.position.y)<.75f }).ToArray() };
+         }
++
++        static string FloorDisplayName(string floorId)
++        {
++            switch (floorId)
++            {
++                case "floor-1": return "一层";
++                case "floor-2": return "二层";
++                case "floor-3": return "三层";
++                default: return floorId;
++            }
++        }
++
++        static string RoomDisplayName(string floorId, string roomId, int index)
++        {
++            var floorName = FloorDisplayName(floorId);
++            if (floorName == floorId) return "房间" + (index + 1);
++            var prefix = "room-" + floorId.Substring("floor-".Length);
++            if (floorName != floorId && roomId != null && roomId.StartsWith(prefix, StringComparison.Ordinal)
++                && int.TryParse(roomId.Substring(prefix.Length), out var number) && number > 0)
++                return floorName + number + "号";
++            return "房间" + (index + 1);
++        }
+     }
+ }
+--- a/Assets/SimulatedShooting/Runtime/Scene/FirstPersonTrainingWeaponController.cs
++++ b/Assets/SimulatedShooting/Runtime/Scene/FirstPersonTrainingWeaponController.cs
+@@ -1241,15 +1241,15 @@
+ 
+             const int width = 420;
+             GUI.Box(new Rect(12, 12, width, 124), string.Empty);
+-            GUI.Label(new Rect(24, 22, width - 20, 22), "TASK005 FIRST PERSON WEAPON");
++            GUI.Label(new Rect(24, 22, width - 20, 22), "第一人称武器调试");
+             GUI.Label(new Rect(24, 44, width - 20, 22),
+-                $"MAG {currentState.CurrentMagazine}/3  RES {currentState.ReserveAmmo}  READY {currentState.CanShoot}");
++                $"弹匣 {currentState.CurrentMagazine}/3  备用 {currentState.ReserveAmmo}  {(currentState.CanShoot ? "可射击" : "不可射击")}");
+             GUI.Label(new Rect(24, 66, width - 20, 22),
+-                $"MODE {currentState.AimMode}  SHOULDER {currentState.ShoulderSide}  STABILITY {currentState.Stability01:0.00}");
++                $"{(currentState.AimMode == WeaponAimMode.AimDownSights ? "瞄准" : "腰射")}  {(currentState.ShoulderSide == ShoulderSide.Left ? "左肩" : "右肩")}  稳定度 {currentState.Stability01:0.00}");
+             GUI.Label(new Rect(24, 88, width - 20, 22),
+-                "Mouse/Arrows look, WASD front hand, RMB/Shift ADS, LMB/F fire, R reload, Q shoulder");
++                "鼠标/方向键观察，WASD副手，RMB/Shift瞄准，LMB/F射击，R换弹，Q换肩");
+             GUI.Label(new Rect(24, 110, width - 20, 22),
+-                lastShot.IsValidShot ? $"LAST SHOT {(lastShot.Hit ? "HIT" : "MISS")} {lastShot.HitObjectId}" : "LAST SHOT none");
++                lastShot.IsValidShot ? $"最近一发：{(lastShot.Hit ? "命中" : "未命中")}" : "最近一发：暂无");
+         }
+     }
+ }
+--- a/Assets/SimulatedShooting/Tests/EditMode/CombatSceneTests.cs
++++ b/Assets/SimulatedShooting/Tests/EditMode/CombatSceneTests.cs
+@@ -8,6 +8,38 @@
+ {
+     public class CombatSceneTests
+     {
++        // BDD20「楼层和房间使用中文显示名」：只改变显示名，保留场景契约 ID。
++        [Test]
++        public void Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers()
++        {
++            EditorSceneManager.OpenScene("Assets/Scenes/CombatScene.unity", OpenSceneMode.Single);
++            var binding = Object.FindObjectOfType<CombatSceneBindings>();
++            var definition = CombatSceneDefinitionBuilder.Build(binding, VRShooting.Common.TrainingMode.Urban);
++            var floorIds = new[] { "floor-1", "floor-2", "floor-3" };
++            var floorNames = new[] { "一层", "二层", "三层" };
++            Assert.That(definition.Floors.Select(f => f.FloorId), Is.EqualTo(floorIds));
++            Assert.That(definition.Floors.Select(f => f.DisplayName), Is.EqualTo(floorNames));
++            Assert.That(definition.Floors.SelectMany(f => f.Rooms).Select(r => r.RoomId),
++                Is.EqualTo(new[] { "room-11", "room-12", "room-21", "room-22", "room-31" }));
++            Assert.That(definition.Floors.SelectMany(f => f.Rooms).Select(r => r.DisplayName),
++                Is.EqualTo(new[] { "一层1号", "一层2号", "二层1号", "二层2号", "三层1号" }));
++            var map = VRShooting.Application.Combat.CombatMapCatalog.Urban;
++            Assert.That(map.MapId, Is.EqualTo("urban-a"));
++            Assert.That(map.Floors.Select(f => f.FloorId), Is.EqualTo(floorIds));
++            Assert.That(map.Floors.Select(f => f.DisplayName), Is.EqualTo(floorNames));
++
++            var room = binding.Points.First(p => p.Kind == CombatPointKind.Room);
++            var original = room.RoomId;
++            try
++            {
++                room.RoomId = "custom-room";
++                var fallback = CombatSceneDefinitionBuilder.Build(binding, VRShooting.Common.TrainingMode.Urban)
++                    .Floors.SelectMany(f => f.Rooms).Single(r => r.RoomId == "custom-room");
++                Assert.That(fallback.DisplayName, Is.EqualTo("房间1"));
++            }
++            finally { room.RoomId = original; }
++        }
++
+         // BDD27: actual Urban scene references, not a test-only resource fallback.
+         [Test] public void Bdd27_UrbanHasBoundGrenadeModelAndHeavyExplosionAudio()
+         {
+--- a/Assets/VRShooting/Editor/TacticalUIGallery.cs
++++ b/Assets/VRShooting/Editor/TacticalUIGallery.cs
+@@ -362,6 +362,7 @@
+ 
+         static void FillCombatPreview(P3CombatUIRoot combat, Texture dronePreview)
+         {
++            var urbanFloors = LoadUrbanPreviewFloors();
+             SquadStatusDto Squad(float playerHealth) => new SquadStatusDto { Members = new[] {
+                 new SquadMemberDto { MemberId="preview.player", Role=SquadMemberRole.Player, Health=playerHealth },
+                 new SquadMemberDto { MemberId="preview.two", Role=SquadMemberRole.TeammateTwo, Health=5, State=SquadMemberState.Following },
+@@ -391,8 +392,25 @@
+             combat.TrenchHudView.Apply(new TrenchSessionDto {SessionId="preview",MapId="trench-a",State=SessionState.Running,EnemyKilled=2,EnemyTotal=5,SearchProgress01=.48f,Player=trenchPlayer,Ammo=ammo,Squad=trenchSquad,MiniMap=trenchMap},default);
+             combat.TrenchResultsView.Apply(new TrenchResultDto {SessionId="preview",MapName="堑壕训练场",Victory=true,EnemyKilled=5,EnemyTotal=5,SearchProgress01=1,RemainingAmmo=57,ElapsedSeconds=246,Squad=trenchSquad,ResultMap=trenchMap});
+             combat.UrbanStreetView.Apply(new UrbanSessionDto {SessionId="preview",MapId="urban-a",Phase=UrbanPhase.Street,State=SessionState.Running,Player=urbanPlayer,Ammo=ammo,Squad=urbanSquad,MiniMap=Map("urban-a"),StreetEnemyTotal=0},default);
+-            combat.UrbanBuildingView.Apply(new UrbanSessionDto {SessionId="preview",MapId="urban-a",Phase=UrbanPhase.Building,CurrentFloorId="urban-a.floor-1",State=SessionState.Running,Player=urbanPlayer,Ammo=ammo,Squad=urbanSquad,MiniMap=Map("urban-1f"),RoomsTotal=3,RoomsSearched=1},default);
++            combat.UrbanBuildingView.Apply(new UrbanSessionDto {SessionId="preview",MapId="urban-a",Phase=UrbanPhase.Building,CurrentFloorId=urbanFloors[0].FloorId,Floors=urbanFloors,State=SessionState.Running,Player=urbanPlayer,Ammo=ammo,Squad=urbanSquad,MiniMap=Map("urban-1f"),RoomsTotal=3,RoomsSearched=1},default);
+             combat.UrbanResultsView.Apply(new UrbanResultDto {SessionId="preview",Victory=true,StreetCleared=true,RoomsSearched=3,RoomsTotal=3,BuildingSearchProgress01=1,EnemyKilled=6,EnemyTotal=6,RemainingAmmo=82,Squad=urbanSquad,FloorMaps=new[]{Map("urban-1f"),Map("urban-2f"),Map("urban-3f")}});
++        }
++
++        static FloorDto[] LoadUrbanPreviewFloors()
++        {
++            var scene = SceneManager.GetSceneByPath(UnityCombatSceneLoader.ScenePath);
++            var openedHere = !scene.IsValid() || !scene.isLoaded;
++            if (openedHere) scene = EditorSceneManager.OpenScene(UnityCombatSceneLoader.ScenePath, OpenSceneMode.Additive);
++            try
++            {
++                var binding = scene.GetRootGameObjects()
++                    .SelectMany(root => root.GetComponentsInChildren<CombatSceneBindings>(true)).First();
++                return CombatSceneDefinitionBuilder.Build(binding, TrainingMode.Urban).Floors.ToArray();
++            }
++            finally
++            {
++                if (openedHere) EditorSceneManager.CloseScene(scene, true);
++            }
+         }
+     }
+ }
+--- a/Assets/VRShooting/Runtime/Application/Combat/CombatMapCatalog.cs
++++ b/Assets/VRShooting/Runtime/Application/Combat/CombatMapCatalog.cs
+@@ -10,6 +10,6 @@
+         public static UrbanMapDto Urban => new UrbanMapDto { MapId=P3ContractIds.UrbanMap,
+             DisplayName="城镇训练场", StreetEnemyMin=0, StreetEnemyMax=0, BuildingEnemyMin=3, BuildingEnemyMax=6,
+             BuildingEntranceId=P3ContractIds.UrbanEntrance,
+-            Floors=new[]{new FloorDto{FloorId="floor-1",DisplayName="1F"},new FloorDto{FloorId="floor-2",DisplayName="2F"},new FloorDto{FloorId="floor-3",DisplayName="3F"}} };
++            Floors=new[]{new FloorDto{FloorId="floor-1",DisplayName="一层"},new FloorDto{FloorId="floor-2",DisplayName="二层"},new FloorDto{FloorId="floor-3",DisplayName="三层"}} };
+     }
+ }
+--- a/Assets/VRShooting/Runtime/Application/Combat/TrenchService.cs
++++ b/Assets/VRShooting/Runtime/Application/Combat/TrenchService.cs
+@@ -288,7 +288,7 @@
+             bool newResult=pendingOutcome.HasValue;
+             if(newResult)
+             {
+-                result=new TrenchResultDto {SessionId=session,Revision=revision,Victory=pendingOutcome.Value,MapName="堑壕地图 A",EnemyKilled=killed.Count,EnemyTotal=estimates.Count,
++                result=new TrenchResultDto {SessionId=session,Revision=revision,Victory=pendingOutcome.Value,MapName="堑壕地图甲",EnemyKilled=killed.Count,EnemyTotal=estimates.Count,
+                     SearchProgress01=snapshot.SearchProgress01,RemainingAmmo=combat.Ammo.CurrentMagazine+combat.Ammo.ReserveAmmo,Squad=squadData,ElapsedSeconds=(float)elapsed,ResultMap=map};
+                 hasResult=true;pendingOutcome=null;
+             }
+@@ -302,7 +302,7 @@
+             }
+             finally{publishing=false;}
+         }
+-        TrenchMapDto Map()=>new TrenchMapDto {MapId=definition.MapId,DisplayName="堑壕地图 A",Difficulty=DifficultyLevel.Medium,MinEnemyCount=5,MaxEnemyCount=7,
++        TrenchMapDto Map()=>new TrenchMapDto {MapId=definition.MapId,DisplayName="堑壕地图甲",Difficulty=DifficultyLevel.Medium,MinEnemyCount=5,MaxEnemyCount=7,
+             SearchNodes=definition.SearchNodes,EnemyEstimateAreas=EstimateAreas()};
+         IReadOnlyList<MapAreaDto> EstimateAreas()=>Array.AsReadOnly(definition.SpawnPoints.GroupBy(p=>p.EstimateAreaId).Select(g=>
+         {var p=Project(g.First().EstimatePosition);return new MapAreaDto {AreaId=g.Key,Label="敌情预估",Severity=HudSeverity.Danger,NormalizedRect=new Rect(p.x-.02f,p.y-.02f,.04f,.04f)};}).ToArray());
+--- a/Assets/VRShooting/Runtime/Application/Combat/UrbanService.cs
++++ b/Assets/VRShooting/Runtime/Application/Combat/UrbanService.cs
+@@ -294,7 +294,7 @@
+         }
+         MapMarkerDto Marker(string id,MarkerType type,Vector3 p,string floorId,string label)
+         {var b=definition.Projections.First(f=>f.FloorId==floorId).WorldBoundsXZ;return new MapMarkerDto {MarkerId=id,Type=type,Label=label,NormalizedPosition=new Vector2(Mathf.Clamp01((p.x-b.x)/b.width),Mathf.Clamp01((p.z-b.y)/b.height))};}
+-        UrbanMapDto Map()=>new UrbanMapDto {MapId=definition.MapId,DisplayName="城镇地图 A",BuildingEntranceId=definition.EntranceId,
++        UrbanMapDto Map()=>new UrbanMapDto {MapId=definition.MapId,DisplayName="城镇地图甲",BuildingEntranceId=definition.EntranceId,
+             StreetEnemyMin=0,StreetEnemyMax=0,BuildingEnemyMin=3,BuildingEnemyMax=6,Floors=definition.Floors};
+         bool KnownArea(string id)=>id==definition.EntranceId||definition.Floors.Any(f=>f.FloorId==id)||rooms.Keys.Any(r=>r+".door"==id||r+".check"==id);
+         static HudTextLineDto Line(string key,string label,string value)=>new HudTextLineDto {Key=key,Label=label,Value=value};
+--- a/Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs
++++ b/Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs
+@@ -518,7 +518,7 @@
+             yield return new WeaponDefinitionDto
+             {
+                 WeaponId = TrainingRifleId,
+-                DisplayName = "P1/P2 training rifle",
++                DisplayName = "训练步枪",
+                 Type = WeaponType.AssaultRifle,
+                 MagazineCapacity = 3,
+                 MaxReserveAmmo = 6,
+@@ -528,7 +528,7 @@
+             yield return new WeaponDefinitionDto
+             {
+                 WeaponId = "w_191",
+-                DisplayName = "19-1 automatic rifle",
++                DisplayName = "19-1式自动步枪",
+                 Type = WeaponType.AssaultRifle,
+                 MagazineCapacity = 30,
+                 MaxReserveAmmo = 120,
+@@ -538,7 +538,7 @@
+             yield return new WeaponDefinitionDto
+             {
+                 WeaponId = "w_951",
+-                DisplayName = "95-1 automatic rifle",
++                DisplayName = "95-1式自动步枪",
+                 Type = WeaponType.AssaultRifle,
+                 MagazineCapacity = 30,
+                 MaxReserveAmmo = 120,
+@@ -548,7 +548,7 @@
+             yield return new WeaponDefinitionDto
+             {
+                 WeaponId = "w_qbs09",
+-                DisplayName = "QBS-09 shotgun",
++                DisplayName = "09式霰弹枪",
+                 Type = WeaponType.Shotgun,
+                 MagazineCapacity = 8,
+                 MaxReserveAmmo = 40,
+@@ -558,7 +558,7 @@
+             yield return new WeaponDefinitionDto
+             {
+                 WeaponId = "w_qjb201",
+-                DisplayName = "QJB-201 light machine gun",
++                DisplayName = "201式轻机枪",
+                 Type = WeaponType.LightMachineGun,
+                 MagazineCapacity = 75,
+                 MaxReserveAmmo = 150,
+--- a/Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs
++++ b/Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs
+@@ -525,7 +525,7 @@
+             AddTestId(hall.gameObject, hall.name);
+             AddPanel(parent, "Panel_MainMenu_Frame", new Vector2(1300, 130), new Vector2(1810, 920), new Color32(11, 19, 16, 220), new Color32(45, 66, 56, 255));
+             AddLabel(parent, "Text_MainMenu_Title", "VR 射击训练系统", 58, FontStyles.Normal, TextAlignmentOptions.Left, new Vector2(120, 835), new Vector2(1240, 930), new Color32(231, 242, 235, 255));
+-            AddLabel(parent, "Text_MainMenu_Subtitle", "战术训练中心  /  TACTICAL TRAINING", 24, FontStyles.Normal, TextAlignmentOptions.Left, new Vector2(125, 785), new Vector2(1150, 830), new Color32(143, 217, 255, 255));
++            AddLabel(parent, "Text_MainMenu_Subtitle", "战术训练中心", 24, FontStyles.Normal, TextAlignmentOptions.Left, new Vector2(125, 785), new Vector2(1150, 830), new Color32(143, 217, 255, 255));
+ 
+             AddPanel(parent, "Panel_MainMenu_Profile", new Vector2(120, 165), new Vector2(630, 325), new Color32(17, 29, 24, 220), new Color32(56, 84, 71, 255),
+                 "本地训练\n循序训练 · 安全操作 · 精准射击");
+@@ -546,7 +546,7 @@
+             controlsButton.onClick.AddListener(() => mainMenuControlsPanel.gameObject.SetActive(true));
+ 
+             AddPanel(parent, "Panel_MainMenu_BottomStatus", new Vector2(120, 55), new Vector2(1800, 115), new Color32(17, 29, 24, 210), new Color32(56, 84, 71, 255),
+-                "单机训练  /  LOCAL SIMULATION                                     选择科目后查看任务简报");
++                "单机训练                                     选择科目后查看任务简报");
+ 
+             BuildMainMenuControls(parent);
+         }
+@@ -559,7 +559,7 @@
+             AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Title", "操作介绍", 38, FontStyles.Bold,
+                 TextAlignmentOptions.Center, new Vector2(80, 750), new Vector2(1580, 820), textColor);
+             var left = AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Left",
+-                "通用 VR 操作\n右手 Grip 抓枪 / 主手握持；左手 Grip 副手握持。\n右扳机射击；用 UI 射线选择按钮。\n主菜单及模式三 / 四：左摇杆移动，右摇杆转向。\n模式一 / 二为固定射击点，不可移动。\n\n模式一  ·  100m 精度射校\n每轮 4 发，共 3 轮。\n分析页使用“应用调整”“进入下一轮”或“查看评级”。\n水平 1 格 = 2cm；垂直 5 度 = 0.32cm。\n集中且计算集各点距靶心≤10cm、均值距靶心≤5cm且至少一发距靶心≤5cm，或应用调整后均值距靶心<5cm即可通过。",
++                "通用 VR 操作\n右手侧握键抓枪 / 主手握持；左手侧握键副手握持。\n右扳机射击；用 UI 射线选择按钮。\n主菜单及模式三 / 四：左摇杆移动，右摇杆转向。\n模式一 / 二为固定射击点，不可移动。\n\n模式一  ·  100m 精度射校\n每轮 4 发，共 3 轮。\n分析页使用“应用调整”“进入下一轮”或“查看评级”。\n水平 1 格 = 2cm；垂直 5 度 = 0.32cm。\n集中且计算集各点距靶心≤10cm、均值距靶心≤5cm且至少一发距靶心≤5cm，或应用调整后均值距靶心<5cm即可通过。",
+                 24, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(75, 150), new Vector2(800, 720), textColor);
+             var right = AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Right",
+                 "模式二  ·  移动目标\n双手据枪，抬枪对齐瞄具并跟随目标。\n右扳机快速扣动起射两发，继续按住可逐发连射。\n\n模式三 / 四  ·  堑壕与城镇\n左手柄 X：换弹；左手柄 Y：切换姿态。\n右手柄 B：切换左右肩。\n模式四：右摇杆按压交互 / 开门。\n模式三 / 四：右手柄 A 请求队友投掷手雷。\n切换左肩后，左手为主手并使用左扳机射击，右手为副手。",
+@@ -575,7 +575,7 @@
+             AddPanel(parent, "Panel_ZeroingBriefing_Frame", new Vector2(110, 60), new Vector2(1390, 820), new Color32(11, 19, 16, 215), new Color32(45, 156, 255, 255));
+             var rangeArt = TacticalUIStyle.Artwork(parent, "Placeholder_ZeroingBriefing_Range", TacticalUIStyle.Sprite("icon_framed_reticle_large"), new Vector2(1440, 325), new Vector2(1790, 675));
+             AddTestId(rangeArt.gameObject, rangeArt.name);
+-            AddLabel(parent, "Text_ZeroingBriefing_Header", "任务简报  MISSION BRIEFING", 26, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(180, 95), new Vector2(780, 145), new Color32(231, 242, 235, 255));
++            AddLabel(parent, "Text_ZeroingBriefing_Header", "任务简报", 26, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(180, 95), new Vector2(780, 145), new Color32(231, 242, 235, 255));
+             AddLabel(parent, "Text_ZeroingBriefing_Title", "100m精度射校靶", 54, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(190, 190), new Vector2(760, 280), new Color32(231, 242, 235, 255));
+ 
+             AddPanel(parent, "Panel_ZeroingBriefing_Rules", new Vector2(190, 305), new Vector2(740, 745), new Color32(17, 29, 24, 225), new Color32(56, 84, 71, 255),
+@@ -1077,7 +1077,7 @@
+             if (zeroingAnalysisCoordinatesText != null)
+                 zeroingAnalysisCoordinatesText.text = analysis.SpreadRejected
+                     ? "弹着点过于分散，本次射击无参考价值，不可用于调整，请进行下一轮。\n" + FormatImpactDots(analysis)
+-                    : "红：弹着点（X右，Y上）\n" + FormatImpactDots(analysis) + "\n" + FormatReferencePoints(analysis);
++                    : "红：弹着点（横向向右，纵向向上）\n" + FormatImpactDots(analysis) + "\n" + FormatReferencePoints(analysis);
+             if (zeroingAnalysisSuggestionText != null)
+                 zeroingAnalysisSuggestionText.text = "本轮建议（估算）：" + FormatSuggestion(analysis) +
+                     "\n\n觇孔每次调整1格，1格为2厘米；准心柱每次调整5度约0.32厘米。实际待应用量以控件和答案为准。";
+--- a/Assets/VRShooting/Runtime/Unity/UI/MovingTargetUIPresenter.cs
++++ b/Assets/VRShooting/Runtime/Unity/UI/MovingTargetUIPresenter.cs
+@@ -113,7 +113,7 @@
+             var speeds = port.GetAvailableSpeeds();
+             if (!speeds.Success || speeds.Data == null || speeds.Data.Count == 0)
+             {
+-                SetError(speeds.Message ?? "没有可用速度");
++                SetError(P3UiText.Error(speeds.ErrorCode, speeds.Message ?? "没有可用速度"));
+                 return;
+             }
+ 
+@@ -124,7 +124,7 @@
+             var current = port.GetPresentation();
+             if (!current.Success)
+             {
+-                SetError(current.Message);
++                SetError(P3UiText.Error(current.ErrorCode, current.Message));
+                 return;
+             }
+ 
+@@ -201,7 +201,7 @@
+             commandInFlight = false;
+             if (!result.Success)
+             {
+-                SetError(result.Message);
++                SetError(P3UiText.Error(result.ErrorCode, result.Message));
+                 if (hasPresentation)
+                 {
+                     view.RenderPresentation(presentation, false);
+--- a/Assets/VRShooting/Runtime/Unity/UI/P3CombatUIRoot.cs
++++ b/Assets/VRShooting/Runtime/Unity/UI/P3CombatUIRoot.cs
+@@ -241,8 +241,8 @@
+             var left = AddPanel(page, "Panel_TrenchMapSelection_Cards", new Vector2(80, 150), new Vector2(980, 930), new Color32(11, 25, 20, 240));
+             var right = AddPanel(page, "Panel_TrenchMapSelection_Conditions", new Vector2(1040, 150), new Vector2(1840, 930), new Color32(11, 25, 20, 240));
+             var cards = new List<P3MapCardView>();
+-            cards.Add(CreateMapCard(left, "TrenchA", "堑壕地图 A", new Vector2(55, 430), new Vector2(810, 680)));
+-            cards.Add(CreateUnavailableCard(left, "TrenchB", "堑壕地图 B（后续扩展）", new Vector2(55, 180), new Vector2(810, 385)));
++            cards.Add(CreateMapCard(left, "TrenchA", "堑壕地图甲", new Vector2(55, 430), new Vector2(810, 680)));
++            cards.Add(CreateUnavailableCard(left, "TrenchB", "堑壕地图乙（后续扩展）", new Vector2(55, 180), new Vector2(810, 385)));
+             var selected = AddLabel(left, "Text_TrenchMapSelection_Selected", "当前选择：--", 28, new Vector2(55, 90), new Vector2(810, 150), TextAlignmentOptions.Center);
+             var title = FindText(page, "Text_TrenchMapSelection_Title");
+             var difficulty = AddLabel(right, "Text_TrenchMapSelection_Difficulty", "复杂度：--", 30, new Vector2(55, 585), new Vector2(745, 650), TextAlignmentOptions.Left);
+@@ -322,7 +322,7 @@
+             var right = AddPanel(page, "Panel_UrbanMapSelection_Conditions", new Vector2(1040, 150), new Vector2(1840, 930), new Color32(11, 25, 20, 240));
+             var cards = new List<P3MapCardView>();
+             cards.Add(CreateUrbanMapCard(left, "UrbanA", new Vector2(55, 430), new Vector2(810, 680)));
+-            cards.Add(CreateUnavailableCard(left, "UrbanB", "城镇地图 B（后续扩展）", new Vector2(55, 180), new Vector2(810, 385)));
++            cards.Add(CreateUnavailableCard(left, "UrbanB", "城镇地图乙（后续扩展）", new Vector2(55, 180), new Vector2(810, 385)));
+             var selected = AddLabel(left, "Text_UrbanMapSelection_Selected", "当前选择：--", 28, new Vector2(55, 90), new Vector2(810, 150), TextAlignmentOptions.Center);
+             var enemies = AddLabel(right, "Text_UrbanMapSelection_Enemies", "敌情：--", 28, new Vector2(55, 590), new Vector2(745, 680), TextAlignmentOptions.Left);
+             var floors = AddLabel(right, "Text_UrbanMapSelection_Floors", "建筑楼层：--", 28, new Vector2(55, 520), new Vector2(745, 580), TextAlignmentOptions.Left);
+@@ -394,7 +394,8 @@
+             var stats = AddLabel(left, "Text_UrbanResults_Stats", string.Empty, 23, new Vector2(65, 90), new Vector2(785, 630), TextAlignmentOptions.TopLeft);
+             var error = AddLabel(page, "Text_UrbanResults_Error", string.Empty, 20, new Vector2(100, 100), new Vector2(900, 145), TextAlignmentOptions.Left, new Color32(255, 120, 92, 255));
+             var labels = new[] { "Text_UrbanResults_1F", "Text_UrbanResults_2F", "Text_UrbanResults_3F" };
+-            for (var index = 0; index < labels.Length; index++) AddLabel(page, labels[index], (index + 1) + "F", 18, new Vector2(1020 + index * 285, 570), new Vector2(1280 + index * 285, 605), TextAlignmentOptions.Center);
++            var floorNames = new[] { "一层", "二层", "三层" };
++            for (var index = 0; index < labels.Length; index++) AddLabel(page, labels[index], floorNames[index], 18, new Vector2(1020 + index * 285, 570), new Vector2(1280 + index * 285, 605), TextAlignmentOptions.Center);
+             var back = AddButton(page, "Button_UrbanResults_BackToMainMenu", "返回主菜单", new Vector2(1040, 230), new Vector2(1390, 300), false);
+             var retry = AddButton(page, "Button_UrbanResults_Retry", "重新开始", new Vector2(1470, 230), new Vector2(1820, 300), true);
+             urbanResultsView = page.gameObject.AddComponent<P3UrbanResultsView>();
+@@ -476,7 +477,7 @@
+             var button = card.gameObject.AddComponent<Button>();
+             button.targetGraphic = card.Find(card.name + "_Image").GetComponent<Image>();
+             TacticalUIStyle.Artwork(card, "Image_UrbanMapSelection_Preview", TacticalUITheme.Current != null ? TacticalUITheme.Current.Urban : null, new Vector2(25, 25), new Vector2(310, max.y - min.y - 25));
+-            var nameText = AddLabel(card, "Text_UrbanMapSelection_" + suffix + "_Name", "城镇地图 A", 32, new Vector2(335, 115), new Vector2(max.x - min.x - 35, max.y - min.y - 30), TextAlignmentOptions.Center);
++            var nameText = AddLabel(card, "Text_UrbanMapSelection_" + suffix + "_Name", "城镇地图甲", 32, new Vector2(335, 115), new Vector2(max.x - min.x - 35, max.y - min.y - 30), TextAlignmentOptions.Center);
+             var condition = AddLabel(card, "Text_UrbanMapSelection_" + suffix + "_Condition", string.Empty, 22, new Vector2(335, 30), new Vector2(max.x - min.x - 35, 105), TextAlignmentOptions.Center, new Color32(143, 217, 255, 255));
+             var view = card.gameObject.AddComponent<P3MapCardView>();
+             view.Configure(button, nameText, condition, border);
+--- a/Assets/VRShooting/Runtime/Unity/UI/P3DroneReconView.cs
++++ b/Assets/VRShooting/Runtime/Unity/UI/P3DroneReconView.cs
+@@ -45,12 +45,12 @@
+             monitor.SetActive(observing);reticle.SetActive(observing);
+             feed.texture=value.FeedAvailable?texture:null;
+             phase.text=PhaseLabel(value.Phase);
+-            status.text=value.FeedAvailable&&texture!=null?"LIVE · 实时视频":"视频未就绪";
++            status.text=value.FeedAvailable&&texture!=null?"实时视频":"视频未就绪";
+             elapsed.text="侦察用时 "+Mathf.Max(0,value.ReconElapsedSeconds).ToString("F1")+" s";
+             telemetry.text=value.TelemetryValid
+                 ? "高度 "+value.HeightAboveGroundMeters.ToString("F1")+" m   速度 "+value.SpeedMetersPerSecond.ToString("F1")+" m/s"
+                 : "高度 --   速度 --";
+-            error.text=value.ErrorCode==VRShooting.Contracts.ErrorCode.None?string.Empty:"开场未完成："+value.ErrorCode+"，请返回或重新开始。";
++            error.text=value.ErrorCode==VRShooting.Contracts.ErrorCode.None?string.Empty:"开场未完成："+P3UiText.Error(value.ErrorCode,string.Empty)+"，请返回或重新开始。";
+             retry.gameObject.SetActive(value.Phase==DroneReconPhase.Error);
+             retry.interactable=!busy;back.interactable=!busy;
+             if(filter!=null)
+--- a/Assets/VRShooting/Runtime/Unity/UI/P3TrenchUI.cs
++++ b/Assets/VRShooting/Runtime/Unity/UI/P3TrenchUI.cs
+@@ -93,7 +93,7 @@
+ 
+             for (var index = LastMaps.Count; index < mapCards.Count; index++)
+             {
+-                mapCards[index]?.ApplyUnavailable("地图 B（后续扩展）");
++                mapCards[index]?.ApplyUnavailable("地图乙（后续扩展）");
+             }
+ 
+             if (!found && LastMaps.Count > 0)
+@@ -267,7 +267,7 @@
+             LastBriefing = briefing;
+             LastError = string.Empty;
+             P3UiText.SetText(titleText, "堑壕射击 · 开场任务");
+-            P3UiText.SetText(mapText, "地图：" + (string.IsNullOrWhiteSpace(map.DisplayName) ? briefing.MapId : map.DisplayName));
++            P3UiText.SetText(mapText, "地图：" + (string.IsNullOrWhiteSpace(map.DisplayName) ? "堑壕训练场" : map.DisplayName));
+             P3UiText.SetText(enemyText, "敌情预估：" + briefing.EnemyEstimateMin + "-" + briefing.EnemyEstimateMax + " 名");
+             P3UiText.SetText(squadText, "小队配置\n" + P3UiText.Squad(briefing.PlannedSquad));
+             P3UiText.SetText(objectivesText, "任务目标\n进入堑壕\n搜索路线\n消灭敌人\n保持小队队形");
+--- a/Assets/VRShooting/Runtime/Unity/UI/P3UiCommon.cs
++++ b/Assets/VRShooting/Runtime/Unity/UI/P3UiCommon.cs
+@@ -577,7 +577,27 @@
+         }
+ 
+         public static string Error(ErrorCode code, string message)
+-            => string.IsNullOrWhiteSpace(message) ? code.ToString() : code + "：" + message;
++        {
++            string label;
++            switch (code)
++            {
++                case ErrorCode.None: label = "操作失败"; break;
++                case ErrorCode.InvalidState: label = "当前状态不允许此操作"; break;
++                case ErrorCode.InvalidInput: label = "输入无效"; break;
++                case ErrorCode.NotFound: label = "未找到所需内容"; break;
++                case ErrorCode.Busy: label = "正在处理，请稍候"; break;
++                case ErrorCode.Cooldown: label = "操作冷却中"; break;
++                case ErrorCode.ResourceUnavailable: label = "资源不可用"; break;
++                case ErrorCode.PersistenceFailed: label = "保存失败，请重试"; break;
++                case ErrorCode.TestOnlyFailure: label = "测试故障"; break;
++                default: label = "操作失败"; break;
++            }
++            // Service diagnostics and identifiers stay available to callers, not in player copy.
++            if (string.IsNullOrWhiteSpace(message)) return label;
++            foreach (var ch in message)
++                if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')) return label;
++            return label == message ? label : label + "：" + message;
++        }
+ 
+         public static void SetText(TMP_Text target, string value)
+         {
+--- a/Assets/VRShooting/Runtime/Unity/UI/P3UrbanUI.cs
++++ b/Assets/VRShooting/Runtime/Unity/UI/P3UrbanUI.cs
+@@ -71,7 +71,7 @@
+             }
+ 
+             for (var index = LastMaps.Count; index < mapCards.Count; index++)
+-                mapCards[index]?.ApplyUnavailable("城镇地图 B（后续扩展）");
++                mapCards[index]?.ApplyUnavailable("城镇地图乙（后续扩展）");
+ 
+             if (!found && LastMaps.Count > 0)
+             {
+@@ -259,10 +259,11 @@
+                 session.Ammo, session.Player, session.MiniMap);
+             var map = hud.MiniMap;
+             ApplyHud(hud, session.Squad, map, "任务状态：消灭全部敌人");
+-            P3UiText.SetText(floorText, "当前楼层：" + (string.IsNullOrWhiteSpace(session.CurrentFloorId) ? "--" : session.CurrentFloorId));
++            var floor = FindFloor(session, session.CurrentFloorId);
++            P3UiText.SetText(floorText, "当前楼层：" + (string.IsNullOrWhiteSpace(session.CurrentFloorId) ? "--"
++                : string.IsNullOrWhiteSpace(floor.DisplayName) ? session.CurrentFloorId : floor.DisplayName));
+             P3UiText.SetText(buildingProgressText, "建筑敌人：" + session.BuildingEnemyKilled + " / " + session.BuildingEnemyTotal);
+ 
+-            var floor = FindFloor(session, session.CurrentFloorId);
+             var rooms = floor.Rooms ?? Array.Empty<RoomDto>();
+             var lines = new List<string>();
+             CurrentRoomId = string.Empty;
+--- a/Assets/VRShooting/Runtime/Unity/UI/TrainingPresentationView.cs
++++ b/Assets/VRShooting/Runtime/Unity/UI/TrainingPresentationView.cs
+@@ -125,7 +125,8 @@
+             {
+                 firingStationState.text = string.IsNullOrEmpty(snapshot.FiringStationId)
+                     ? "射击位：等待绑定"
+-                    : "射击位：" + snapshot.FiringStationId;
++                    : snapshot.Mode == TrainingMode.Zeroing100m ? "射击位：100m射校"
++                    : snapshot.Mode == TrainingMode.MovingTarget ? "射击位：移动靶" : "射击位：已就位";
+             }
+ 
+             if (nextRoundButton != null)
+--- a/Assets/VRShooting/Tests/EditMode/Application/WeaponControlServiceTests.cs
++++ b/Assets/VRShooting/Tests/EditMode/Application/WeaponControlServiceTests.cs
+@@ -27,6 +27,7 @@
+             Assert.That(state.TwoHandGripActive, Is.False);
+             Assert.That(state.ShoulderSide, Is.EqualTo(ShoulderSide.Right));
+             Assert.That(state.AimMode, Is.EqualTo(WeaponAimMode.HipFire));
++            Assert.That(service.GetWeapon(state.WeaponId).Data.DisplayName, Is.EqualTo("训练步枪"));
+         }
+ 
+         [Test]
+--- a/Assets/VRShooting/Tests/PlayMode/TacticalUIArtTests.cs
++++ b/Assets/VRShooting/Tests/PlayMode/TacticalUIArtTests.cs
+@@ -11,6 +11,60 @@
+     // BDD 01/02/04/11/17: build-safe art, non-blocking decoration and legible map selection.
+     public sealed class TacticalUIArtTests
+     {
++        // BDD20: read DTO display names, retain IDs for commands, and fall back only when absent.
++        [Test]
++        public void Screen20_ChineseFloorAndRoomCopyPreservesDoorCommandIdentifiers()
++        {
++            var go = new GameObject("ChineseCopyCombat", typeof(RectTransform));
++            go.SetActive(false);
++            try
++            {
++                var root = go.AddComponent<P3CombatUIRoot>();
++                root.BuildIfNeeded();
++                var view = root.UrbanBuildingView;
++                var names = new[] { "一层", "二层", "三层" };
++                var floors = Enumerable.Range(1, 3).Select(n => new FloorDto {
++                    FloorId = "floor-" + n, DisplayName = names[n - 1],
++                    Rooms = Enumerable.Range(1, n == 3 ? 1 : 2).Select(r => new RoomDto {
++                        RoomId = "room-" + n + r, DisplayName = names[n - 1] + r + "号"
++                    }).ToArray()
++                }).ToArray();
++                TMP_Text Text(string name) => view.GetComponentsInChildren<TMP_Text>(true).Single(t => t.name == name);
++                string submitted = null;
++                view.OpenRoomDoorRequested += id => submitted = id;
++                for (var n = 0; n < floors.Length; n++)
++                {
++                    var roomId = floors[n].Rooms[0].RoomId;
++                    view.Apply(new UrbanSessionDto { CurrentFloorId = floors[n].FloorId, Floors = floors },
++                        new HudDto { Prompts = new[] { new HudPromptDto {
++                            PromptId = roomId + ".OpenDoor", IsEnabled = true, IsInteractive = true, Text = "开门"
++                        } } });
++                    Assert.That(Text("Hud_UrbanBuilding_Floor").text, Is.EqualTo("当前楼层：" + names[n]));
++                    Assert.That(Text("Hud_UrbanBuilding_Rooms").text,
++                        Is.EqualTo(string.Join("\n", floors[n].Rooms.Select(r => r.DisplayName + " · 靠近后开门"))));
++                    view.OpenDoorButton.onClick.Invoke();
++                    Assert.That(submitted, Is.EqualTo(roomId));
++                }
++                view.Apply(new UrbanSessionDto { CurrentFloorId = "unknown-floor" }, default);
++                Assert.That(Text("Hud_UrbanBuilding_Floor").text, Is.EqualTo("当前楼层：unknown-floor"));
++                view.Apply(default, default);
++                Assert.That(Text("Hud_UrbanBuilding_Floor").text, Is.EqualTo("当前楼层：--"));
++            }
++            finally { Object.DestroyImmediate(go); }
++        }
++
++        // Interface 00: all error codes keep their meaning without leaking English diagnostics.
++        [Test]
++        public void ChineseErrorCopyCoversEveryCodeAndPreservesChineseDetails()
++        {
++            var expected = new[] { "操作失败", "当前状态不允许此操作", "输入无效", "未找到所需内容",
++                "正在处理，请稍候", "操作冷却中", "资源不可用", "保存失败，请重试", "测试故障" };
++            foreach (VRShooting.Contracts.ErrorCode code in System.Enum.GetValues(typeof(VRShooting.Contracts.ErrorCode)))
++                Assert.That(P3UiText.Error(code, "Internal diagnostics: room-11"), Is.EqualTo(expected[(int)code]));
++            Assert.That(P3UiText.Error(VRShooting.Contracts.ErrorCode.NotFound, "房间不存在"),
++                Is.EqualTo("未找到所需内容：房间不存在"));
++        }
++
+         [Test]
+         public void ThemeShipsWithPaddedChineseFontAndAllMapArtwork()
+         {
+--- a/Assets/VRShooting/Tests/PlayMode/UI/P3UiTask002_005_008_011PlayModeTests.cs
++++ b/Assets/VRShooting/Tests/PlayMode/UI/P3UiTask002_005_008_011PlayModeTests.cs
+@@ -50,7 +50,7 @@
+                 yield return null;
+ 
+                 Assert.That(view.SelectedMapId, Is.EqualTo(P3ContractIds.TrenchMap));
+-                Assert.That(Text(view, "selected").text, Does.Contain("堑壕地图 A"));
++                Assert.That(Text(view, "selected").text, Does.Contain("堑壕地图甲"));
+                 Assert.That(Text(view, "difficulty").text, Does.Contain("中"));
+                 Assert.That(Text(view, "enemy").text, Does.Contain("3-5"));
+                 Assert.That(Text(view, "conditions").text, Does.Contain("搜索完整堑壕"));
+@@ -149,14 +149,14 @@
+ 
+                 var result = new TrenchResultDto
+                 {
+-                    SessionId = "trench-result", Revision = 3, Victory = false, MapName = "堑壕地图 A",
++                    SessionId = "trench-result", Revision = 3, Victory = false, MapName = "堑壕地图甲",
+                     EnemyKilled = 1, EnemyTotal = 3, SearchProgress01 = 0.5f, RemainingAmmo = 92,
+                     Squad = P3Fixtures.Squad("trench-result"), ElapsedSeconds = 75f,
+                     ResultMap = P3Fixtures.MiniMap(P3ContractIds.TrenchMap)
+                 };
+                 Assert.That(service.SetResult(result), Is.True);
+                 Assert.That(Text(view, "outcome").text, Does.Contain("失败"));
+-                Assert.That(Text(view, "summary").text, Does.Contain("堑壕地图 A"));
++                Assert.That(Text(view, "summary").text, Does.Contain("堑壕地图甲"));
+                 Assert.That(Text(view, "stats").text, Does.Contain("1 / 3"));
+                 Assert.That(Text(view, "stats").text, Does.Contain("50%"));
+                 Assert.That(Text(view, "stats").text, Does.Contain("剩余弹药：92"));
+@@ -182,7 +182,7 @@
+                 yield return null;
+ 
+                 Assert.That(view.SelectedMapId, Is.EqualTo(P3ContractIds.UrbanMap));
+-                Assert.That(Text(view, "selected").text, Does.Contain("城镇地图 A"));
++                Assert.That(Text(view, "selected").text, Does.Contain("城镇地图甲"));
+                 Assert.That(Text(view, "enemy").text, Does.Contain("1-2"));
+                 Assert.That(Text(view, "enemy").text, Does.Contain("3-6"));
+                 Assert.That(Text(view, "conditions").text, Does.Contain("全部敌人即可完成"));
+@@ -336,7 +336,7 @@
+         P3TrenchMapSelectionView CreateTrenchMapView()
+         {
+             var root = Track(new GameObject("TrenchMapView", typeof(RectTransform)));
+-            var card = CreateCard(root.transform, P3ContractIds.TrenchMap, "堑壕地图 A");
++            var card = CreateCard(root.transform, P3ContractIds.TrenchMap, "堑壕地图甲");
+             var selected = Label(root.transform, "selected");
+             var difficulty = Label(root.transform, "difficulty");
+             var enemy = Label(root.transform, "enemy");
+@@ -385,7 +385,7 @@
+         P3UrbanMapSelectionView CreateUrbanMapView()
+         {
+             var root = Track(new GameObject("UrbanMapView", typeof(RectTransform)));
+-            var card = CreateCard(root.transform, P3ContractIds.UrbanMap, "城镇地图 A");
++            var card = CreateCard(root.transform, P3ContractIds.UrbanMap, "城镇地图甲");
+             var view = root.AddComponent<P3UrbanMapSelectionView>();
+             view.Configure(Label(root.transform, "title"), Label(root.transform, "selected"), Label(root.transform, "enemy"),
+                 Label(root.transform, "floors"), Label(root.transform, "conditions"), Label(root.transform, "error"),
+--- a/Assets/VRShooting/Tests/PlayMode/UI/Screen00_TrainingPresentationPresenterPlayModeTests.cs
++++ b/Assets/VRShooting/Tests/PlayMode/UI/Screen00_TrainingPresentationPresenterPlayModeTests.cs
+@@ -121,7 +121,8 @@
+             yield return null;
+             AssertVisible(large: true, minimal: false, briefing);
+             Assert.That(pickupPrompt.text, Does.Contain("取枪"));
+-            Assert.That(firingStationState.text, Does.Contain("ZeroingRange.FiringStation.Root"));
++            Assert.That(firingStationState.text, Is.EqualTo("射击位：100m射校"));
++            Assert.That(view.LastSnapshot.FiringStationId, Is.EqualTo("ZeroingRange.FiringStation.Root"));
+ 
+             service.Publish(Snapshot(TrainingPresentationPhase.LiveFire, ScreenId.ZeroingHud, false, true));
+             yield return null;
+--- a/Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs
++++ b/Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs
+@@ -263,11 +263,15 @@
+             Assert.That(rules.text, Does.Contain("50cm x 50cm"));
+             Assert.That(rules.text, Does.Contain("10环直径：10cm"));
+             Assert.That(rules.text, Does.Contain("通过条件"));
++            Assert.That(FindById("Text_ZeroingBriefing_Header").GetComponent<TMP_Text>().text, Is.EqualTo("任务简报"));
+         }
+ 
+         [UnityTest]
+         public IEnumerator Bdd02_ControlsPanelOpensAndClosesWithoutLeavingMenu()
+         {
++            Assert.That(FindById("Text_MainMenu_Subtitle").GetComponent<TMP_Text>().text, Is.EqualTo("战术训练中心"));
++            Assert.That(FindById("Text_MainMenu_BottomStatus").GetComponent<TMP_Text>().text,
++                Is.EqualTo("单机训练" + new string(' ', 37) + "选择科目后查看任务简报"));
+             var panel = FindById("Panel_MainMenu_Controls");
+             Assert.That(panel, Is.Not.Null);
+             Assert.That(panel.activeSelf, Is.False);
+@@ -275,6 +279,9 @@
+             yield return null;
+             Assert.That(panel.activeInHierarchy, Is.True);
+             Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
++            var copy = string.Join("\n", panel.GetComponentsInChildren<TMP_Text>(true).Select(t => t.text));
++            Assert.That(copy, Does.Contain("右手侧握键抓枪 / 主手握持；左手侧握键副手握持。"));
++            Assert.That(copy, Does.Not.Contain("Grip"));
+             CaptureControlsPanel();
+             FindButton("Button_MainMenu_Controls_Back").onClick.Invoke();
+             yield return null;
+--- a/Assets/VRShooting/Tests/PlayMode/UI/Screen28_DroneMonitorUiTests.cs
++++ b/Assets/VRShooting/Tests/PlayMode/UI/Screen28_DroneMonitorUiTests.cs
+@@ -62,7 +62,7 @@
+                 Assert.That(view.Feed.gameObject.activeInHierarchy,Is.True);
+                 Assert.That(view.Feed.texture,Is.SameAs(texture));
+                 var texts=root.GetComponentsInChildren<TMP_Text>(true);
+-                Assert.That(texts.Single(t=>t.name=="Text_TrenchDroneRecon_FeedStatus").text,Does.StartWith("LIVE"));
++                Assert.That(texts.Single(t=>t.name=="Text_TrenchDroneRecon_FeedStatus").text,Is.EqualTo("实时视频"));
+                 Assert.That(texts.Single(t=>t.name=="Text_TrenchDroneRecon_Telemetry").text,Does.Contain("--"));
+                 Assert.That(texts.Single(t=>t.name=="Text_TrenchDroneRecon_Elapsed").text,Does.Contain("12"));
+                 Assert.That(view.Feed.material.shader.name,Is.EqualTo("VRShooting/UI/DroneMonitor"));
+@@ -72,6 +72,8 @@
+                     ViewMode=DroneReconViewMode.Player,CharacterActionsLocked=true,
+                     ErrorCode=VRShooting.Contracts.ErrorCode.ResourceUnavailable},null,false);
+                 Assert.That(view.Feed.texture,Is.Null);
++                Assert.That(texts.Single(t=>t.name=="Text_TrenchDroneRecon_Error").text,
++                    Is.EqualTo("开场未完成：资源不可用，请返回或重新开始。"));
+                 Assert.That(view.Feed.gameObject.activeInHierarchy,Is.False);
+                 Assert.That(root.GetComponentsInChildren<Button>(true).Single(b=>b.name=="Button_TrenchDroneRecon_Retry")
+                     .gameObject.activeInHierarchy,Is.True);
+--- a/Assets/VRShooting/Tests/Support/P3Fixtures.cs
++++ b/Assets/VRShooting/Tests/Support/P3Fixtures.cs
+@@ -26,13 +26,13 @@
+         };
+         public static TrenchMapDto TrenchMap => new TrenchMapDto
+         {
+-            MapId = P3ContractIds.TrenchMap, DisplayName = "堑壕地图 A", Difficulty = DifficultyLevel.Medium,
++            MapId = P3ContractIds.TrenchMap, DisplayName = "堑壕地图甲", Difficulty = DifficultyLevel.Medium,
+             MinEnemyCount = 3, MaxEnemyCount = 5, SearchNodes = TrenchDefinition.SearchNodes,
+             EnemyEstimateAreas = TrenchEstimateAreas()
+         };
+         public static UrbanMapDto UrbanMap => new UrbanMapDto
+         {
+-            MapId = P3ContractIds.UrbanMap, DisplayName = "城镇地图 A", BuildingEntranceId = P3ContractIds.UrbanEntrance,
++            MapId = P3ContractIds.UrbanMap, DisplayName = "城镇地图甲", BuildingEntranceId = P3ContractIds.UrbanEntrance,
+             StreetEnemyMin = 1, StreetEnemyMax = 2, BuildingEnemyMin = 3, BuildingEnemyMax = 6, Floors = UrbanDefinition.Floors
+         };
+         public static TrenchSessionDto TrenchSession(string id, long revision, SessionState state = SessionState.Running) => new TrenchSessionDto
+@@ -64,7 +64,7 @@
+                 {
+                     var floorId = "urban-a.floor-" + i;
+                     projections.Add(Projection(floorId, floorId + ".map"));
+-                    floors.Add(new FloorDto { FloorId = floorId, DisplayName = i + "F", MiniMap = MiniMap(floorId),
++                    floors.Add(new FloorDto { FloorId = floorId, DisplayName = new[] { "一层", "二层", "三层" }[i - 1], MiniMap = MiniMap(floorId),
+                         Rooms = new[] { new RoomDto { RoomId = "urban-a.room-" + i.ToString("000"), DisplayName = "房间" + i, MapPosition=new Vector2(.5f,.5f) } } });
+                 }
+                 return new CombatSceneDefinitionDto
+--- a/docs/BDD/screens/00-P1P2卧姿固定射击交互.feature.md
++++ b/docs/BDD/screens/00-P1P2卧姿固定射击交互.feature.md
+@@ -115,3 +115,7 @@
+ ## 2026-10-20 左右背景标语板
+ 
+ 模式一/二中央“铁拳胜利”两侧增加白底红字标语：左“争头功 争任务 争第一”，右“老实 朴实 扎实”；两板左上角均为红色五角星和“八一”。同场景使用共享材质/贴图，采用有深度遮挡的世界空间网格，不增加交互或玩法逻辑，不改变射击位与路线。对象使用 `Slogan_Side_Left/Right`，稳定ID为场景前缀加 `.Visual.Slogan.Side.Left/Right`。手工验收：分别打开两场景，从射击位观察左右文字、标志和遮挡；检查无遮挡靶标、无镜像、无闪烁，头显可读性待实机确认。本次不新增或运行自动化测试，后续获授权后补入场景 PlayMode 覆盖。
++
++## 2026-11-12 显示文字
++
++射击位状态显示“射击位：100m射校”或“射击位：移动靶”，不显示 FiringStationId；内部绑定键保持不变。靶场端点牌的 LEFT/RIGHT 改为“左端/右端”，其坐标、距离、单位和箭头保持不变。
+--- a/docs/BDD/screens/02-游戏主界面.feature.md
++++ b/docs/BDD/screens/02-游戏主界面.feature.md
+@@ -124,3 +124,16 @@
+ 
+ - 主菜单按钮应绑定到 UI 路由，不直接创建训练逻辑。
+ - 若线框图仍含“武器库”“设置”入口，实现时隐藏或移除，不绑定路由。
++
++## 2026-11-12 玩家可见文案中文化
++
++```gherkin
++  场景: 主菜单与操作介绍使用中文文案
++    当主菜单显示
++    那么副标题应为“战术训练中心”
++    而且底部显示“单机训练”及“选择科目后查看任务简报”，保留原有空格排版
++    当玩家打开操作介绍
++    那么正文包含“右手侧握键抓枪 / 主手握持；左手侧握键副手握持。”
++    而且不显示英文副标题或 Grip
++    而且按键字母、VR、UI、单位及原有布局保持不变
++```
+--- a/docs/BDD/screens/04-100m任务说明.feature.md
++++ b/docs/BDD/screens/04-100m任务说明.feature.md
+@@ -89,3 +89,7 @@
+ - P1 PlayMode Test 必须覆盖无 VR 输入替身启动训练，并断言 Session 与 HUD 初始状态。
+ - 开始按钮只准备 Session；大型任务说明 UI 在有效拾枪后隐藏，不能由场景脚本直接销毁。
+ 
++
++## 2026-11-12 文案补充
++
++任务简报标题仅显示“任务简报”，删除英文副标题；100m、50cm x 50cm、10cm 等单位原样保留。页面结构、布局和训练规则不变。
+--- a/docs/BDD/screens/12-堑壕地图选择.feature.md
++++ b/docs/BDD/screens/12-堑壕地图选择.feature.md
+@@ -16,9 +16,9 @@
+     假如玩家选择了堑壕射击
+     那么系统应显示“堑壕射击 地图选择”
+ 
+-  场景: 默认选中堑壕地图 A
++  场景: 默认选中堑壕地图甲
+     当地图选择界面加载完成
+-    那么“堑壕地图 A”应处于选中状态
++    那么“堑壕地图甲”应处于选中状态
+     而且界面应显示复杂度为中
+     而且界面应显示敌人数量范围为 3-5
+ 
+@@ -31,8 +31,8 @@
+ 
+     例子:
+       | 地图 |
+-      | 堑壕地图 A |
+-      | 堑壕地图 B |
++      | 堑壕地图甲 |
++      | 堑壕地图乙 |
+ 
+   场景: 显示任务条件
+     当玩家查看右侧任务条件
+@@ -42,7 +42,7 @@
+     而且说明红色标记代表敌人预估区域
+ 
+   场景: 选择地图进入开场简报
+-    假如玩家已选择堑壕地图 A
++    假如玩家已选择堑壕地图甲
+     当玩家点击“选择地图”
+     那么系统应保存当前堑壕地图选择
+     而且应进入堑壕开场简报
+@@ -50,7 +50,7 @@
+ 
+   场景: 模式 03 使用新战壕场景
+     假如玩家从主菜单选择“03 堑壕射击”
+-    当玩家确认堑壕地图 A
++    当玩家确认堑壕地图甲
+     那么系统应加载由 Bunkers Trenches Pack 原始 DemoScene02 地形和布景构成的独立堑壕玩法场景
+     而且“04 城镇攻防”仍使用原有城镇场景
+ 
+--- a/docs/BDD/screens/18-城镇地图选择.feature.md
++++ b/docs/BDD/screens/18-城镇地图选择.feature.md
+@@ -16,9 +16,9 @@
+     假如玩家选择了城镇攻防
+     那么系统应显示“城镇攻防 地图选择”
+ 
+-  场景: 默认选中城镇地图 A
++  场景: 默认选中城镇地图甲
+     当地图选择界面加载完成
+-    那么“城镇地图 A”应处于选中状态
++    那么“城镇地图甲”应处于选中状态
+     而且显示街道敌人 1-2
+     而且显示建筑敌人 3-6
+ 
+@@ -31,8 +31,8 @@
+ 
+     例子:
+       | 地图 |
+-      | 城镇地图 A |
+-      | 城镇地图 B |
++      | 城镇地图甲 |
++      | 城镇地图乙 |
+ 
+   场景: 显示城镇任务信息
+     当玩家查看任务信息面板
+@@ -42,7 +42,7 @@
+     而且显示失败条件为玩家死亡
+ 
+   场景: 选择地图进入城镇任务
+-    假如玩家已选择城镇地图 A
++    假如玩家已选择城镇地图甲
+     当玩家点击“选择地图”
+     那么系统应保存当前城镇地图选择
+     而且创建或准备城镇攻防 Session
+--- a/docs/BDD/screens/20-建筑搜索HUD.feature.md
++++ b/docs/BDD/screens/20-建筑搜索HUD.feature.md
+@@ -79,3 +79,18 @@
+ 
+ 
+ P3 v1：空房也须开门并检查；重复成功命令不增加进度；ObserveRoom返回InvalidState。见 [契约BDD](22-P3战斗契约与独立替身.feature.md)。
++
++## 2026-11-12 楼层和房间使用中文显示名
++
++```gherkin
++  场景: 楼层和房间使用中文显示名
++    假如场景定义及地图目录保留原有 FloorId、RoomId、PointId 和地图 Id
++    当建筑 HUD 显示 floor-1、floor-2 或 floor-3
++    那么当前楼层应从 FloorDto.DisplayName 读取“一层”“二层”或“三层”
++    而且 room-11、room-12、room-21、room-22、room-31 分别显示“一层1号”“一层2号”“二层1号”“二层2号”“三层1号”
++    而且房间显示名由场景定义层提供，开门命令仍提交原有 RoomId
++    而且楼层显示名缺失时回退原 Id，无当前楼层时显示“--”
++    而且无法按规则映射的房间显示“房间”加该层列表序号
++```
++
++地图卡/结果页的楼层文案同样使用“一层/二层/三层”；所有布局和交互逻辑不变。
+--- a/docs/BDD/screens/21-城镇任务结算.feature.md
++++ b/docs/BDD/screens/21-城镇任务结算.feature.md
+@@ -42,7 +42,7 @@
+ 
+   场景: 显示三层楼平面缩略图
+     当结算界面加载完成
+-    那么右侧应显示 1F、2F、3F 平面缩略图
++    那么右侧应显示 一层、二层、三层 平面缩略图
+     而且已搜索房间应以青蓝色标记
+     而且敌人位置应以红色叉号标记
+ 
+--- a/docs/BDD/screens/28-模式三无人机开场侦察.feature.md
++++ b/docs/BDD/screens/28-模式三无人机开场侦察.feature.md
+@@ -172,3 +172,7 @@
+ 2026-10-05 扇叶声音：起飞启动连续空间循环声，巡航/返航/降落过程中保持。暂停或追踪丢失暂停声音，恢复后续播；落地、取消、错误和退出停止。4米内完整音量，至50米线性衰减，玩家视角能辨认无人机接近/远离。监控相机不增加AudioListener。
+ 
+ 2026-10-05声音素材替换：使用CC0 DJI Mavic Mini 2真实悬停录音，裁取稳定段为单声道循环，保留原始转速与自然桨叶拍频，去除低频环境轰鸣并突出扇叶频段，替代正弦合成音；起飞/暂停/返航/降落生命周期保持。
++
++## 2026-11-12 监控文案中文化
++
++视频就绪时状态文字为“实时视频”，不显示 LIVE。异常原因显示中文错误提示（例如“开场未完成：资源不可用，请返回或重新开始。”）；错误码、重试和开场门禁保持不变。遥测单位 m、m/s、s 保持原样。
+--- a/docs/任务规格/阶段一-P1-100m射校原型闭环/UI/task008-ui-mainmenu-zeroing-briefing.md
++++ b/docs/任务规格/阶段一-P1-100m射校原型闭环/UI/task008-ui-mainmenu-zeroing-briefing.md
+@@ -103,3 +103,7 @@
+ - PlayMode 测试通过。
+ 
+ 2026-10-03 继续排查：确认 XRI 3.1.2 在远距离投射关闭时会重置 UI 模型，补充恢复 enableFarCasting 和射线父层级激活；左手 NearFar Prefab 关闭物体选择阻断 UI（右手继承该 Prefab）。补充既有输入替身恢复断言，未运行测试、未验证 VR 实机。
++
++## 2026-11-12 文案中文化
++
++按 BDD02/04 与接口01删除主菜单和简报英文副标题，Grip 显示为侧握键；保留键位、单位、布局和交互。更新现有 PlayMode 文案断言并提供真实画廊截图。
+--- a/docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/UI/task011-urban-building-hud-and-results.md
++++ b/docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/UI/task011-urban-building-hud-and-results.md
+@@ -55,7 +55,7 @@
+ 
+ ### 4. 边界与幂等
+ 
+-结算展示 StreetCleared、建筑搜索完成度、房间数、总击杀数、剩余弹药、队友与 1F/2F/3F 缩略图及死亡标记。
++结算展示 StreetCleared、建筑搜索完成度、房间数、总击杀数、剩余弹药、队友与 一层/二层/三层 缩略图及死亡标记。
+ 
+ ### 5. 事件与生命周期
+ 
+@@ -105,3 +105,7 @@
+ 
+ - 无 VR：交付可复现的输入/DTO/场景 Fixture 操作步骤，不能要求人工改 Hierarchy 才能正常启动。
+ - VR：与本任务有关的移动、自然机瞄、UI 可读性、交互可达性或队友遮挡，写明设备、步骤、预期和结果；未涉及设备体验的纯规则任务注明不适用并给出联调入口。
++
++## 2026-11-12 文案中文化
++
++按 BDD20 与接口09，楼层和房间读取定义层中文 DisplayName；保留内部 ID 及开门参数，测试覆盖三层五房及回退。地图显示名使用甲/乙，不改 ID、布局或规则。
+--- a/docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/UI/task018-mode3-drone-monitor-ui.md
++++ b/docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/UI/task018-mode3-drone-monitor-ui.md
+@@ -11,7 +11,7 @@
+ - 更新简报开始按钮：提交应用开始命令后先进入无人机开场，防重复提交；到正式 `Running` 后才显示可操作的 `Screen_TrenchHud`。
+ - 交付 `Screen_TrenchDroneRecon` View/Presenter 和 Prefab：真实摄像头视频区、中心观察框/十字标、边角刻度、无人机/视频状态、任务阶段、侦察用时及返回操作。
+ - 视觉参考现代战场无人机监控画面的观察框、低饱和灰绿/黑白色调、轻微噪点/扫描线/暗角；滤镜强度可配置，必须保留敌人与堑壕细节，不用强闪烁干扰观察。
+-- “LIVE”表示当前实时画面；本任务不要求录制视频文件，不能以“REC”虚构正在落盘。视频来自当前地图的场景 Camera，不能用静态占位图或外部战争视频替代。
++- “实时视频”表示当前实时画面；本任务不要求录制视频文件，不能以“REC”虚构正在落盘。视频来自当前地图的场景 Camera，不能用静态占位图或外部战争视频替代。
+ - 高度/速度等遥测若显示，只能读取接口20的实测 DTO；无有效数据时隐藏或显示“--”。侦察用时与战斗用时分别显示；不写死敌人数、命中数、GPS 或敌人锁定框。
+ - 状态文本覆盖“起飞/侦察/返航/降落/恢复视角”；起飞时保留玩家看到无人机的场景视野，仅侦察阶段显示监控并隐藏大型简报面板和战斗 HUD。按 2026-10-04 用户反馈，单次巡航结束即关闭监控，返航与降落使用玩家视角，避免呈现第二次巡航；正式行动仍须等待服务解除开场锁。
+ - 返回/取消走应用服务；显示资源错误并允许返回或重试。没有跳过开场入口，不允许 View 调用正式开战、角色开火或解除行为锁。
+@@ -33,9 +33,9 @@
+ 
+ ## 工程候选进展（未验收）
+ 
+-共享 P3CombatUIRoot Prefab 的运行时构建已加入 Screen_TrenchDroneRecon；P3LiveUIController 转发当前开场 DTO 和 IDroneReconVideoSource 的当前租约视频。P3DroneReconView 交付视频 RawImage、观察十字/边刻度、LIVE、阶段/用时/实测遥测、返回和异常重试；起飞/恢复/错误不显示视频面板，保留玩家视野。16:9 画面自适应，独立 DroneMonitor 材质提供可调低饱和灰绿、细微噪点/扫描线/暗角，不作用于主相机。所有监控对象设 UI Layer，捕获相机排除该 Layer 防画面递归。
++共享 P3CombatUIRoot Prefab 的运行时构建已加入 Screen_TrenchDroneRecon；P3LiveUIController 转发当前开场 DTO 和 IDroneReconVideoSource 的当前租约视频。P3DroneReconView 交付视频 RawImage、观察十字/边刻度、实时视频、阶段/用时/实测遥测、返回和异常重试；起飞/恢复/错误不显示视频面板，保留玩家视野。16:9 画面自适应，独立 DroneMonitor 材质提供可调低饱和灰绿、细微噪点/扫描线/暗角，不作用于主相机。所有监控对象设 UI Layer，捕获相机排除该 Layer 防画面递归。
+ 
+-Screen28_DroneMonitorUiTests 候选覆盖阶段显隐、真实纹理绑定、缺遥测 --、LIVE 与异常重试；未运行。Unity 自带 Roslyn 静态编译运行时、测试替身、EditMode 与 PlayMode 测试程序集通过。尚未确认 Shader 实际渲染、截图、真实无 VR 流程及 VR 舒适度，不标记完成。
++Screen28_DroneMonitorUiTests 候选覆盖阶段显隐、真实纹理绑定、缺遥测 --、实时视频 与异常重试；未运行。Unity 自带 Roslyn 静态编译运行时、测试替身、EditMode 与 PlayMode 测试程序集通过。尚未确认 Shader 实际渲染、截图、真实无 VR 流程及 VR 舒适度，不标记完成。
+ 
+ 监控重绑定清理：Configure 先解绑旧按钮监听、解除旧视频纹理/材质引用并销毁旧滤镜，避免重建时一次点击产生多次命令及材质泄漏；销毁复用同一清理路径。新增 ReconfiguringMonitorReleasesOldMaterialAndKeepsOneCommandListener 候选测试，覆盖连续重绑定、旧材质释放、一次命令及销毁后的按钮失效。相关程序集静态编译通过，测试未运行。
+ 
+@@ -52,3 +52,7 @@
+ 按最新用户反馈取消44点逐段绕行。无人机改为少量主干/支路概览点，用连续直达空中路径掠过，默认巡航及返航速度2.5m/s，不随路线长度改变速度。当前采用“侦察最多20秒，真实返航时间另外计算”：在DroneRecon阶段到20秒或简短路线完成即转入DroneReturn，不瞬移停放。返航/降落切回玩家视角，可看到DJI无人机飞回；实际返航、降落和玩家视角恢复确认后才能正式行动。玩家眼高、敌人掩体位置保持。
+ 
+ 受地图尺度与2.5m/s约束，20秒掠过为概览，不保证每个分段都逐点近距经过。固定镜头保持连续平移；简短路线替代旧逐区域路线。MaximumOpeningSeconds当前作为侦察阶段上限，0仍可禁用。未运行测试，未提交。
++
++## 2026-11-12 文案中文化
++
++按 BDD28 与接口20，监控就绪状态显示“实时视频”，异常原因显示中文；保持视频、重试、门禁和单位不变。同步原有 LIVE 断言，提供真实渲染截图。
+--- a/docs/接口文档/00-UI与玩法服务层交互总约束.md
++++ b/docs/接口文档/00-UI与玩法服务层交互总约束.md
+@@ -102,3 +102,7 @@
+ - UI 可以请求「开始训练」，但不能直接创建敌人、弹药、队友。
+ - UI 可以显示「可射击/禁止射击」，但不能决定射击是否有效。
+ - UI 可以显示「胜利/失败」，但不能计算胜负。
++
++## 2026-11-12 玩家可见错误文案
++
++UI 显示中文错误原因，不直接拼接英文 ErrorCode 或英文服务诊断消息；已有中文消息可保留。错误码和 ServiceResult.Message 的内部诊断含义不变，业务命令、状态和错误分支不变。通用按键标识、VR/UI 和计量单位保留。
+--- a/docs/接口文档/01-页面导航与UI事件.md
++++ b/docs/接口文档/01-页面导航与UI事件.md
+@@ -157,3 +157,7 @@
+ P3 新端口、配置、错误/幂等、会话修订、场景ID与Fixture遵循 [14-P3战斗契约与独立测试基础](14-P3战斗契约与独立测试基础.md)。共用类型保持唯一，生产实现不引用替身。
+ 
+ Urban_ExitBuilding返回街道；OpenRoomDoor/MarkRoomSearched更新当前HUD。两模式Retry取消旧局后回准备，返回主菜单先保存最近摘要；Busy/失败不切页。Trench_ViewMap为简报地图叠层。
++
++## 2026-11-12 中文显示文案
++
++主菜单副标题为“战术训练中心”，底部删除英文副标题并保留“单机训练”和“选择科目后查看任务简报”之间原有空格排版；任务简报标题为“任务简报”。操作介绍使用“右手侧握键抓枪 / 主手握持；左手侧握键副手握持。”，按键、VR/UI、单位保持原样。仅修改显示文字，不改变布局和事件。
+--- a/docs/接口文档/06-武器与弹药服务.md
++++ b/docs/接口文档/06-武器与弹药服务.md
+@@ -449,3 +449,7 @@
+ ## P3 v1 补充
+ 
+ P3 新端口、配置、错误/幂等、会话修订、场景ID与Fixture遵循 [14-P3战斗契约与独立测试基础](14-P3战斗契约与独立测试基础.md)。共用类型保持唯一，生产实现不引用替身。
++
++## 2026-11-12 武器显示名
++
++仅更新默认 WeaponDefinitionDto.DisplayName：训练步枪、19-1式自动步枪、95-1式自动步枪、09式霰弹枪、201式轻机枪。WeaponId、类型、弹药、模式、后坐力等所有数据保持不变。
+--- a/docs/接口文档/09-城镇任务服务.md
++++ b/docs/接口文档/09-城镇任务服务.md
+@@ -167,3 +167,7 @@
+ ## P3 v1 补充
+ 
+ P3 新端口、配置、错误/幂等、会话修订、场景ID与Fixture遵循 [14-P3战斗契约与独立测试基础](14-P3战斗契约与独立测试基础.md)。共用类型保持唯一，生产实现不引用替身。
++
++## 2026-11-12 显示名约定
++
++CombatSceneDefinitionBuilder 与 CombatMapCatalog 提供中文 DisplayName：floor-1/2/3 对应一层/二层/三层；room-11/12/21/22/31 对应一层1号/一层2号/二层1号/二层2号/三层1号。无法按规则映射的房间回退“房间”加该层列表序号。HUD 先按 CurrentFloorId 查找 FloorDto，再显示 DisplayName；缺失显示名时回退 Id，无当前层时显示 --。全部 ID、DTO 结构、命令参数和玩法规则保持不变。地图甲/乙为显示名称，不更改地图 ID。
+--- a/docs/接口文档/13-P1P2卧姿射击与界面显隐契约.md
++++ b/docs/接口文档/13-P1P2卧姿射击与界面显隐契约.md
+@@ -204,3 +204,7 @@
+ - 场景：使用场景绑定校验器和假的标准化目标进度验证锚点/视觉，不启动真实 Session 或 UI。
+ - 玩法：使用假的输入、武器事件、时钟和命中快照验证状态，不加载 Scene/Canvas。
+ - 集成：由审核测试与优化负责人加载真实实现，验证 P1/P2 完整顺序、事件只触发一次和场景卸载无残留。
++
++## 2026-11-12 射击位显示文字
++
++FiringStationId 继续作为内部绑定键；玩家可见状态显示“射击位：100m射校”或“射击位：移动靶”，缺少绑定时仍显示“射击位：等待绑定”。不把内部 ID 显示给玩家，不改变绑定和状态规则。
+--- a/docs/接口文档/20-模式三无人机开场侦察.md
++++ b/docs/接口文档/20-模式三无人机开场侦察.md
+@@ -99,7 +99,7 @@
+ 
+ 桌面观察输出切换到无人机 Camera 的实时视频；VR 使用稳定观察屏展示同一视频，保留 HMD 原生跟踪，不将无人机动画施加到 HMD/Interactor。恢复原玩家观察方式后才开战。主输出与音频 Listener 管理保持唯一，视频捕获相机独立输出 RenderTexture。
+ 
+-监控页面为新增 `ScreenId.TrenchDroneRecon`，沿用已有 `TrenchBriefingStart` 或等效开始事件；返回复用应用 Back/取消命令。无人机 UI 不新增跳过/开火按钮。LIVE、观察框、阶段、侦察用时及滤镜为必需；高度/速度为有数据才显示的遥测。视频滤镜不作用于玩家相机或全局环境；敌人标记仍来自既有敌情预估 DTO，不因滤镜自动暴露所有精确敌人坐标。不要求保存视频文件。
++监控页面为新增 `ScreenId.TrenchDroneRecon`，沿用已有 `TrenchBriefingStart` 或等效开始事件；返回复用应用 Back/取消命令。无人机 UI 不新增跳过/开火按钮。“实时视频”、观察框、阶段、侦察用时及滤镜为必需；高度/速度为有数据才显示的遥测。视频滤镜不作用于玩家相机或全局环境；敌人标记仍来自既有敌情预估 DTO，不因滤镜自动暴露所有精确敌人坐标。不要求保存视频文件。
+ 
+ 稳定对象/ID 见 task017/018；接口11同名约束适用。p14 保留简报地图布局，p28 定义监控观察布局。
+ 
+@@ -167,3 +167,7 @@
+ 2026-10-05 声音绑定：场景适配器在Drone上创建单声道合成扇叶AudioClip与空间AudioSource。volume=0.65，Linear衰减4至50米，Doppler=0，loop=true，playOnAwake=false。起飞Play、暂停Pause、恢复UnPause、落地/失败/复位Stop，退出销毁音源与生成的Clip。不改变服务状态机及航线速度。
+ 
+ 2026-10-05：音源改用Resources/Combat/Audio/DroneRotor_Mavic_Recorded的导入AudioClip；Prepare缺失录音返回ResourceUnavailable，不再用正弦音兜底。StopAndReset只移除AudioSource并释放引用，不销毁共享导入Clip。实际声音来源与处理详见Art/Drones/Audio/ATTRIBUTION.md。
++
++## 2026-11-12 监控文字
++
++FeedAvailable 且纹理有效时显示“实时视频”；错误提示使用中文错误原因，不直接显示 ErrorCode 的英文枚举值。错误码、视频绑定、按钮逻辑和遥测单位不变。

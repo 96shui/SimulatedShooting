@@ -263,11 +263,15 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(rules.text, Does.Contain("50cm x 50cm"));
             Assert.That(rules.text, Does.Contain("10环直径：10cm"));
             Assert.That(rules.text, Does.Contain("通过条件"));
+            Assert.That(FindById("Text_ZeroingBriefing_Header").GetComponent<TMP_Text>().text, Is.EqualTo("任务简报"));
         }
 
         [UnityTest]
         public IEnumerator Bdd02_ControlsPanelOpensAndClosesWithoutLeavingMenu()
         {
+            Assert.That(FindById("Text_MainMenu_Subtitle").GetComponent<TMP_Text>().text, Is.EqualTo("战术训练中心"));
+            Assert.That(FindById("Text_MainMenu_BottomStatus").GetComponent<TMP_Text>().text,
+                Is.EqualTo("单机训练" + new string(' ', 37) + "选择科目后查看任务简报"));
             var panel = FindById("Panel_MainMenu_Controls");
             Assert.That(panel, Is.Not.Null);
             Assert.That(panel.activeSelf, Is.False);
@@ -275,6 +279,9 @@ namespace VRShooting.Tests.PlayMode.UI
             yield return null;
             Assert.That(panel.activeInHierarchy, Is.True);
             Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
+            var copy = string.Join("\n", panel.GetComponentsInChildren<TMP_Text>(true).Select(t => t.text));
+            Assert.That(copy, Does.Contain("右手侧握键抓枪 / 主手握持；左手侧握键副手握持。"));
+            Assert.That(copy, Does.Not.Contain("Grip"));
             CaptureControlsPanel();
             FindButton("Button_MainMenu_Controls_Back").onClick.Invoke();
             yield return null;

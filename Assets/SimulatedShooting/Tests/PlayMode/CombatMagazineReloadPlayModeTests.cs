@@ -104,7 +104,7 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return null;
         }
 
-        [UnityTest] public IEnumerator Bdd29_ReloadMagazineArmsAndFingersMirrorAtEveryCriticalPose()
+        [UnityTest] public IEnumerator Bdd29_ReloadUsesCurrentSupportHandAndUprightRifleAtEveryCriticalPose()
         {
             Fire(); core.Reload("reload-play");
             var grab = rifle.GetComponent<TrainingRifleGrabInteractable>();
@@ -123,12 +123,13 @@ namespace SimulatedShooting.Tests.PlayMode
                 var leftGeometry = ReloadGeometry();
                 Assert.That(presentation.LeftHand.HandSide, Is.EqualTo(VirtualHandSide.Right));
                 Assert.That(leftGeometry.Length, Is.EqualTo(rightGeometry.Length));
-                for (var i = 0; i < rightGeometry.Length; i++)
-                {
-                    var expected = rightGeometry[i]; expected.x = -expected.x;
-                    Assert.That(Vector3.Distance(leftGeometry[i], expected), Is.LessThan(.0001f),
-                        "Reload pose " + presentation.Progress01 + ", rendered vertex " + i);
-                }
+                var binding = rifle.GetComponent<WeaponPrefabBinding>();
+                Assert.That(binding.VisualRoot.localScale, Is.EqualTo(Vector3.one));
+                Assert.That(Vector3.Dot(binding.MuzzlePoint.forward, rifle.transform.forward), Is.GreaterThan(.5f));
+                Assert.That(presentation.LeftHand.HandSide, Is.EqualTo(VirtualHandSide.Right));
+                Assert.That(presentation.LeftHand.transform.localToWorldMatrix.determinant, Is.GreaterThan(0));
+                Assert.That(presentation.LeftHand.HasPresentationGrip, Is.True);
+                Assert.That(presentation.LeftHand.PresentationCurl01, Is.GreaterThan(0));
                 Assert.That(core.ToggleShoulder("reload-play").Success, Is.True);
                 grab.SetShoulder(ShoulderSide.Right);
                 rifle.transform.position = rightPosition; presentation.Sample();
@@ -341,6 +342,7 @@ namespace SimulatedShooting.Tests.PlayMode
             manager.SelectEnter((IXRSelectInteractor)left, (IXRSelectInteractable)grab);
             var leftPose = left.transform.localToWorldMatrix; var rightPose = right.transform.localToWorldMatrix;
             grab.SetShoulder(ShoulderSide.Left);
+            Assert.That(rifle.GetComponent<WeaponPrefabBinding>().VisualRoot.localScale.x, Is.GreaterThan(0), "B must never reflect the rifle or sights");
             Assert.That(grab.RearHandSelected && grab.FrontHandSelected, Is.True);
             Assert.That(grab.interactorsSelecting[0], Is.SameAs(left));
             Assert.That(grab.GetAttachTransform((IXRInteractor)left), Is.SameAs(grab.RearAttach));

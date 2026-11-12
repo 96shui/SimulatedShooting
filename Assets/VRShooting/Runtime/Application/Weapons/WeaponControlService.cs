@@ -518,7 +518,7 @@ namespace VRShooting.Application.Weapons
             yield return new WeaponDefinitionDto
             {
                 WeaponId = TrainingRifleId,
-                DisplayName = "P1/P2 training rifle",
+                DisplayName = "训练步枪",
                 Type = WeaponType.AssaultRifle,
                 MagazineCapacity = 3,
                 MaxReserveAmmo = 6,
@@ -528,7 +528,7 @@ namespace VRShooting.Application.Weapons
             yield return new WeaponDefinitionDto
             {
                 WeaponId = "w_191",
-                DisplayName = "19-1 automatic rifle",
+                DisplayName = "19-1式自动步枪",
                 Type = WeaponType.AssaultRifle,
                 MagazineCapacity = 30,
                 MaxReserveAmmo = 120,
@@ -538,7 +538,7 @@ namespace VRShooting.Application.Weapons
             yield return new WeaponDefinitionDto
             {
                 WeaponId = "w_951",
-                DisplayName = "95-1 automatic rifle",
+                DisplayName = "95-1式自动步枪",
                 Type = WeaponType.AssaultRifle,
                 MagazineCapacity = 30,
                 MaxReserveAmmo = 120,
@@ -548,7 +548,7 @@ namespace VRShooting.Application.Weapons
             yield return new WeaponDefinitionDto
             {
                 WeaponId = "w_qbs09",
-                DisplayName = "QBS-09 shotgun",
+                DisplayName = "09式霰弹枪",
                 Type = WeaponType.Shotgun,
                 MagazineCapacity = 8,
                 MaxReserveAmmo = 40,
@@ -558,7 +558,7 @@ namespace VRShooting.Application.Weapons
             yield return new WeaponDefinitionDto
             {
                 WeaponId = "w_qjb201",
-                DisplayName = "QJB-201 light machine gun",
+                DisplayName = "201式轻机枪",
                 Type = WeaponType.LightMachineGun,
                 MagazineCapacity = 75,
                 MaxReserveAmmo = 150,

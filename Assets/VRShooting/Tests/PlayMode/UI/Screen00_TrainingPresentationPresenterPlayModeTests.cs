@@ -121,7 +121,8 @@ namespace VRShooting.Tests.PlayMode.UI
             yield return null;
             AssertVisible(large: true, minimal: false, briefing);
             Assert.That(pickupPrompt.text, Does.Contain("取枪"));
-            Assert.That(firingStationState.text, Does.Contain("ZeroingRange.FiringStation.Root"));
+            Assert.That(firingStationState.text, Is.EqualTo("射击位：100m射校"));
+            Assert.That(view.LastSnapshot.FiringStationId, Is.EqualTo("ZeroingRange.FiringStation.Root"));
 
             service.Publish(Snapshot(TrainingPresentationPhase.LiveFire, ScreenId.ZeroingHud, false, true));
             yield return null;

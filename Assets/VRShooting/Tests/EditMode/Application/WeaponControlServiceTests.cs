@@ -27,6 +27,7 @@ namespace VRShooting.Tests.EditMode.Application
             Assert.That(state.TwoHandGripActive, Is.False);
             Assert.That(state.ShoulderSide, Is.EqualTo(ShoulderSide.Right));
             Assert.That(state.AimMode, Is.EqualTo(WeaponAimMode.HipFire));
+            Assert.That(service.GetWeapon(state.WeaponId).Data.DisplayName, Is.EqualTo("训练步枪"));
         }
 
         [Test]

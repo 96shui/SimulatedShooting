@@ -37,6 +37,7 @@ namespace SimulatedShooting.Scene
         public CombatActorView TeammatePrefab;
         public GameObject TrainingRiflePrefab;
         public GameObject GrenadePrefab;
+        public AudioClip GrenadeExplosionClip;
         public AudioClip RifleShotClip;
         public CombatScenePoint[] Points = Array.Empty<CombatScenePoint>();
         public CombatDoorView[] Doors = Array.Empty<CombatDoorView>();

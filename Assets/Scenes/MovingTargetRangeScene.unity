@@ -37393,7 +37393,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 994145063}
-  m_Text: LEFT  -20 m  <
+  m_Text: 左端  -20 m  <
   m_OffsetZ: 0
   m_CharacterSize: 0.035
   m_LineSpacing: 1
@@ -57687,7 +57687,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1612745830}
-  m_Text: '>  +20 m  RIGHT'
+  m_Text: '>  +20 m  右端'
   m_OffsetZ: 0
   m_CharacterSize: 0.035
   m_LineSpacing: 1

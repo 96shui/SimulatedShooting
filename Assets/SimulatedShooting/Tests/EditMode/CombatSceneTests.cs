@@ -8,6 +8,60 @@ namespace SimulatedShooting.Tests.EditMode
 {
     public class CombatSceneTests
     {
+        // BDD20「楼层和房间使用中文显示名」：只改变显示名，保留场景契约 ID。
+        [Test]
+        public void Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers()
+        {
+            EditorSceneManager.OpenScene("Assets/Scenes/CombatScene.unity", OpenSceneMode.Single);
+            var binding = Object.FindObjectOfType<CombatSceneBindings>();
+            var definition = CombatSceneDefinitionBuilder.Build(binding, VRShooting.Common.TrainingMode.Urban);
+            var floorIds = new[] { "floor-1", "floor-2", "floor-3" };
+            var floorNames = new[] { "一层", "二层", "三层" };
+            Assert.That(definition.Floors.Select(f => f.FloorId), Is.EqualTo(floorIds));
+            Assert.That(definition.Floors.Select(f => f.DisplayName), Is.EqualTo(floorNames));
+            Assert.That(definition.Floors.SelectMany(f => f.Rooms).Select(r => r.RoomId),
+                Is.EqualTo(new[] { "room-11", "room-12", "room-21", "room-22", "room-31" }));
+            Assert.That(definition.Floors.SelectMany(f => f.Rooms).Select(r => r.DisplayName),
+                Is.EqualTo(new[] { "一层1号", "一层2号", "二层1号", "二层2号", "三层1号" }));
+            var map = VRShooting.Application.Combat.CombatMapCatalog.Urban;
+            Assert.That(map.MapId, Is.EqualTo("urban-a"));
+            Assert.That(map.Floors.Select(f => f.FloorId), Is.EqualTo(floorIds));
+            Assert.That(map.Floors.Select(f => f.DisplayName), Is.EqualTo(floorNames));
+
+            var room = binding.Points.First(p => p.Kind == CombatPointKind.Room);
+            var original = room.RoomId;
+            try
+            {
+                room.RoomId = "custom-room";
+                var fallback = CombatSceneDefinitionBuilder.Build(binding, VRShooting.Common.TrainingMode.Urban)
+                    .Floors.SelectMany(f => f.Rooms).Single(r => r.RoomId == "custom-room");
+                Assert.That(fallback.DisplayName, Is.EqualTo("房间1"));
+            }
+            finally { room.RoomId = original; }
+        }
+
+        // BDD27: actual Urban scene references, not a test-only resource fallback.
+        [Test] public void Bdd27_UrbanHasBoundGrenadeModelAndHeavyExplosionAudio()
+        {
+            var setup=EditorSceneManager.GetSceneManagerSetup();
+            try
+            {
+                EditorSceneManager.OpenScene("Assets/Scenes/CombatScene.unity",OpenSceneMode.Single);
+                var binding=Object.FindObjectOfType<CombatSceneBindings>();
+                Assert.That(binding.GrenadePrefab, Is.Not.Null);
+                Assert.That(binding.GrenadePrefab.GetComponentsInChildren<Renderer>(true), Is.Not.Empty);
+                Assert.That(binding.GrenadePrefab.GetComponentsInChildren<CombatGrenadeProjectile>(true), Is.Empty,
+                    "Only runtime owns projectile motion; prefab is the visible model");
+                Assert.That(binding.GrenadeExplosionClip, Is.SameAs(Resources.Load<AudioClip>(CombatExplosionVfx.BlastAudioResourcePath)));
+                Assert.That(binding.GrenadeExplosionClip.length, Is.GreaterThan(1));
+            }
+            finally
+            {
+                if (setup.Any(scene=>scene.isLoaded && scene.isActive)) EditorSceneManager.RestoreSceneManagerSetup(setup);
+                else EditorSceneManager.NewScene(NewSceneSetup.EmptyScene,NewSceneMode.Single);
+            }
+        }
+
         [Test]
         public void Bdd19_ParkedScootersStayOutsideSearchableBuildings()
         {

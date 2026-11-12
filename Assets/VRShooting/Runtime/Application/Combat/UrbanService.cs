@@ -18,6 +18,7 @@ namespace VRShooting.Application.Combat
         readonly Func<string> nextSessionId;
         readonly CombatCoreService core;
         readonly SquadFormationService squad;
+        readonly SquadGrenadeTacticService grenades;
 
         readonly Dictionary<string,RoomState> rooms=new Dictionary<string,RoomState>(StringComparer.Ordinal);
         readonly Dictionary<string,SceneSpawnPointDto> enemies=new Dictionary<string,SceneSpawnPointDto>(StringComparer.Ordinal);
@@ -37,6 +38,7 @@ namespace VRShooting.Application.Combat
         CombatVisualSnapshotDto visual;
         public ICombatCoreService Combat=>core;
         public ISquadCommandService SquadCommands=>squad;
+        public ICombatGrenadeTacticService GrenadeTactics=>grenades;
 
         public event Action<UrbanSessionDto> SessionChanged;
         public event Action<UrbanResultDto> ResultReady;
@@ -49,10 +51,11 @@ namespace VRShooting.Application.Combat
             CombatConfigDto? config=null,Func<string> sessionIdFactory=null)
         {
             this.definition=definition;this.clock=clock??throw new ArgumentNullException(nameof(clock));
-            this.random=random??throw new ArgumentNullException(nameof(random));this.config=config??CombatConfigDto.Default;
+            this.random=random??throw new ArgumentNullException(nameof(random));this.config=config??CombatConfigDto.ForMode(TrainingMode.Urban);
             nextSessionId=sessionIdFactory??(()=>Guid.NewGuid().ToString("N"));
             core=new CombatCoreService(clock,this.config);squad=new SquadFormationService(clock,navigation,this.config);
 
+            grenades=new SquadGrenadeTacticService(clock,core,squad,this.config);
             core.Changed+=OnCore;squad.Changed+=OnSquad;
         }
         public ServiceResult<IReadOnlyList<UrbanMapDto>> GetMaps()
@@ -88,7 +91,7 @@ namespace VRShooting.Application.Combat
                 cancelled=hasResult=false;pendingOutcome=null;killed.Clear();inRange.Clear();received.Clear();pending.Clear();rooms.Clear();enemies.Clear();
                 foreach(var pair in chosen)enemies.Add(pair.Key,pair.Value);
                 foreach(var f in definition.Floors)foreach(var r in f.Rooms)rooms.Add(r.RoomId,new RoomState {Definition=r,FloorId=f.FloorId});
-                squad.Start(id,Vector3.zero,Vector3.forward);dirty=true;
+                squad.Start(id,Vector3.zero,Vector3.forward);grenades.Start(id);dirty=true;
 
             }
             finally{starting=false;}
@@ -177,7 +180,10 @@ namespace VRShooting.Application.Combat
                     }
                     else if(Active)squad.Submit(input);
                 }
-                pending.Clear();ReconcileKills();UpdateSquad();Evaluate();
+                pending.Clear();
+                var grenadeResult=grenades.Advance();if(!grenadeResult.Success)return grenadeResult;
+                combat=core.GetSnapshot(id).Data;
+                ReconcileKills();UpdateSquad();Evaluate();
             }
             finally{batch=false;}
             Publish();return Ok();
@@ -288,7 +294,7 @@ namespace VRShooting.Application.Combat
         }
         MapMarkerDto Marker(string id,MarkerType type,Vector3 p,string floorId,string label)
         {var b=definition.Projections.First(f=>f.FloorId==floorId).WorldBoundsXZ;return new MapMarkerDto {MarkerId=id,Type=type,Label=label,NormalizedPosition=new Vector2(Mathf.Clamp01((p.x-b.x)/b.width),Mathf.Clamp01((p.z-b.y)/b.height))};}
-        UrbanMapDto Map()=>new UrbanMapDto {MapId=definition.MapId,DisplayName="城镇地图 A",BuildingEntranceId=definition.EntranceId,
+        UrbanMapDto Map()=>new UrbanMapDto {MapId=definition.MapId,DisplayName="城镇地图甲",BuildingEntranceId=definition.EntranceId,
             StreetEnemyMin=0,StreetEnemyMax=0,BuildingEnemyMin=3,BuildingEnemyMax=6,Floors=definition.Floors};
         bool KnownArea(string id)=>id==definition.EntranceId||definition.Floors.Any(f=>f.FloorId==id)||rooms.Keys.Any(r=>r+".door"==id||r+".check"==id);
         static HudTextLineDto Line(string key,string label,string value)=>new HudTextLineDto {Key=key,Label=label,Value=value};
@@ -307,7 +313,7 @@ namespace VRShooting.Application.Combat
 
         static ServiceResult<Unit> Ok()=>ServiceResult<Unit>.Ok(Unit.Value);
         static ServiceResult<T> Fail<T>(ErrorCode code)=>ServiceResult<T>.Fail(code,"Urban request rejected: "+code);
-        public void Dispose(){if(disposed)return;disposed=true;core.Changed-=OnCore;squad.Changed-=OnSquad;core.Dispose();squad.Dispose();pending.Clear();received.Clear();SessionChanged=null;ResultReady=null;HudUpdated=null;PlayerChanged=null;SquadChanged=null;VisualChanged=null;}
+        public void Dispose(){if(disposed)return;disposed=true;core.Changed-=OnCore;squad.Changed-=OnSquad;grenades.Dispose();core.Dispose();squad.Dispose();pending.Clear();received.Clear();SessionChanged=null;ResultReady=null;HudUpdated=null;PlayerChanged=null;SquadChanged=null;VisualChanged=null;}
         sealed class RoomState{public RoomDto Definition;public string FloorId;public bool Open;public RoomSearchState State;}
     }
 }

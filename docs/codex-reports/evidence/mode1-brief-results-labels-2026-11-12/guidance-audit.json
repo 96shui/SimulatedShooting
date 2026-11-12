@@ -1,0 +1,22 @@
+{
+  "calloutScript": "Assets/VRTemplateAssets/Scripts/Callout.cs",
+  "calloutAffectedAssets": [
+    "Assets\\Scenes\\BunkersOriginalMode3CombatScene.unity",
+    "Assets\\Scenes\\BunkersTrenchCombatScene.unity",
+    "Assets\\Scenes\\CombatScene.unity",
+    "Assets\\Scenes\\GameScene.unity",
+    "Assets\\Scenes\\MovingTargetRangeScene.unity",
+    "Assets\\Scenes\\ZeroingRangeScene.unity",
+    "Assets\\Scenes\\ZeroingRangeScene_Backup_20260816.unity",
+    "Assets\\VRTemplateAssets\\Prefabs\\Affordance\\Affordance Callout.prefab",
+    "Assets\\VRTemplateAssets\\Prefabs\\Setup\\Affordance Callouts Left.prefab",
+    "Assets\\VRTemplateAssets\\Prefabs\\Setup\\Affordance Callouts Right.prefab",
+    "Assets\\VRTemplateAssets\\Prefabs\\Setup\\Complete XR Origin Set Up Variant.prefab"
+  ],
+  "assetsWithLineRenderer": [
+    "Assets\\VRTemplateAssets\\Prefabs\\Affordance\\Affordance Callout.prefab",
+    "Assets\\Samples\\XR Interaction Toolkit\\3.1.2\\Starter Assets\\Prefabs\\Interactors\\Left_NearFarInteractor.prefab",
+    "Assets\\Samples\\XR Interaction Toolkit\\3.1.2\\Starter Assets\\Prefabs\\Interactors\\Ray Interactor.prefab",
+    "Assets\\Samples\\XR Interaction Toolkit\\3.1.2\\Starter Assets\\Prefabs\\Interactors\\Teleport Interactor.prefab"
+  ]
+}

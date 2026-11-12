@@ -1,0 +1,14 @@
+{
+  "tracked_files": 6107,
+  "reviewed_text_files": 1596,
+  "text_file_categories": {
+    "reference/test/tool": 867,
+    "serialized": 515,
+    "runtime": 214
+  },
+  "serialized_english_entries": 62,
+  "runtime_sentence_or_mixed_literals": 267,
+  "excluded": "Assets/Samples, XR 模板；历史文档/截图不作为玩家文案修改",
+  "excluded_sample_text_files": 79,
+  "reviewed_non_sample_text_files": 1517
+}

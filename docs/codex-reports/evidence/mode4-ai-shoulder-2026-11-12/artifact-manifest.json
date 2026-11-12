@@ -1,0 +1,117 @@
+{
+  "head": "6642b40d3f13793bc4c52ba8fe44dc4fd9b654da",
+  "runtime_and_test_sources": {
+    "Assets/Scenes/CombatScene.unity": "08d0ac3187acc19dd2cce7915dc9d073c347b847a7fd44b285c9ee5109b1d910",
+    "Assets/SimulatedShooting/Editor/GrenadePrefabBuilder.cs": "a3339e41d198abf2804ea75dfc79c01d9b99174ee5aea48a8567b8900668a70e",
+    "Assets/SimulatedShooting/Runtime/Scene/CombatExplosionVfx.cs": "6f34b9d74825c2f25d73fa29e91bd3c3af91089e5a1f28c21574aaba3914e3c9",
+    "Assets/SimulatedShooting/Runtime/Scene/CombatRifleReloadPresentation.cs": "17933597f7ccb8637bb70d531943703596975056f14a90bf3fb754748661dfe1",
+    "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs": "27e17426be64b58610625aae1c548678456f9a573d2b17a31566b1cc27cda98d",
+    "Assets/SimulatedShooting/Runtime/Scene/CombatSceneRuntime.cs": "652d868b17d64755c8aed4fa066a9371c34ba2d7097ada1dfd648c11b387b886",
+    "Assets/SimulatedShooting/Runtime/Scene/FirstPersonTrainingWeaponController.cs": "f0a8a0a5f6b1a536831ef258d56fd8068d11a586ea5b573ac2dad096366a1979",
+    "Assets/SimulatedShooting/Runtime/Scene/TrainingRifleGrabInteractable.cs": "665f14c06e6488b74419e89ce2fa072563c5ee94ac1457a4556d7f8e0b304880",
+    "Assets/SimulatedShooting/Runtime/Scene/VRControllerHandVisual.cs": "274184b3b621f5ad727b327132f9a3f471bc803b109cb08e6cbda62cae0922d4",
+    "Assets/SimulatedShooting/Tests/EditMode/CombatSceneTests.cs": "b650ce2686883b91070cce0a98a9e761b75dac2258d439c8d15ba425bc3f31b2",
+    "Assets/SimulatedShooting/Tests/EditMode/VRControllerHandVisualEditModeTests.cs": "cb5893c55014c6cc18b032a46e3a62b78b6b6d7d05d88f060888911931f61423",
+    "Assets/SimulatedShooting/Tests/PlayMode/AmericanSoldierPlayModeTests.cs": "d7f1e47d3ef2eb476a62f973a5f1113e5454818575a291341ff66ac076562c9e",
+    "Assets/SimulatedShooting/Tests/PlayMode/CombatFeedbackIntegrationTests.cs": "929790a952b4f77b125498ff50dac71406999d80ef16fd3730ae98dc1d62e972",
+    "Assets/SimulatedShooting/Tests/PlayMode/CombatMagazineReloadPlayModeTests.cs": "03c2453fcbc39e2556a2eb7a7407c69c75cf3e09cf8bd7137f66887b5ad99c17",
+    "Assets/SimulatedShooting/Tests/PlayMode/MovingTargetRangeIntegrationTests.cs": "e9babde80ec8e5d7b4f494b001e3efa08e2df5df4c998cc36f4826272519c70b",
+    "Assets/SimulatedShooting/Tests/PlayMode/P3XRTrainingInputTests.cs": "898d85421f8480309d29fa778063202222549243ffcc8114fe6414b98c580207",
+    "Assets/SimulatedShooting/Tests/PlayMode/ZeroingRangeSceneTests.cs": "c97a5f392b32a08d690bf3cd643ba826141012f4bf75c738ab2dbf7d51a5e07c",
+    "Assets/VRShooting/Editor/TacticalUIGallery.cs": "c8f1f4753311801ab243b00c824a8a256be5b7a56d08cdb806e8822e3a6247f6",
+    "Assets/VRShooting/Runtime/Application/Combat/CombatCoreService.cs": "9424936dc5566a4e5fc05711627b3634f608148a01645eaf74c0245ebfdebebb",
+    "Assets/VRShooting/Runtime/Application/Combat/CombatMission.cs": "8e4c19e1a4236dc413f0702069db05dd3c5f51bfa065bb575281e7124691d424",
+    "Assets/VRShooting/Runtime/Application/Combat/UrbanService.cs": "6a75214224de12c60a9419ab5c57695c73ab0f50b3caf26b672fe776486e54d8",
+    "Assets/VRShooting/Runtime/Contracts/P3/CombatConfigDto.cs": "516ffe7b63ae817f23bccf7cbf5953c67abc6e78e4d5f7a3b55cb704364363eb",
+    "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs": "401e19b5bc90393a70c27a6c94d57fb4ffb3dfe69ec684b8cd86ebc6ba63f950",
+    "Assets/VRShooting/Runtime/Unity/UI/P3TrenchHudAndResultsUI.cs": "5791b7414905b8cf7408cada6041cfbd7b6067d0df9f9483a9136e443a6c1cfc",
+    "Assets/VRShooting/Tests/EditMode/Infrastructure/Screen23_CombatCoreTests.cs": "eb5d1be2f5d24d06c6e809f917595763f0286430df7dddc2f6155f0d57c61cf5",
+    "Assets/VRShooting/Tests/EditMode/Infrastructure/Screen25_UrbanTests.cs": "8ee24e347f2141667c5416442af3627e74f941c5f30b88aa3928dd6519e56ccb",
+    "Assets/VRShooting/Tests/PlayMode/Infrastructure/Screen23_CombatInputPlayModeTests.cs": "f61955f53eb1101ab438c3d4eb2bd8cdd6d1954dbc98c42740bbf07a1f8f40ea",
+    "Assets/VRShooting/Tests/PlayMode/TacticalUIArtTests.cs": "bff4d712514ee01c438b495f4d2a131184e429bf474804d09149e244cfe1d9fc",
+    "Assets/Resources/Combat/Grenade_M67.prefab": "f678e7d8cbcaa6f7bb5328ce3632c64c2ff86afb37e65292149d467093e5efbb",
+    "Assets/Resources/Combat/Grenade_M67.prefab.meta": "42c12ca8b7f8d9df7ec6b614a26b69ddf9f291b627e2dcaff9f41bc168ff26cc",
+    "Assets/SimulatedShooting/Tests/PlayMode/Mode4AlignmentPlayModeTests.cs": "b8b9a27283791d6dd8f1a0d069928406318a1ae6e28d6950050cbb0dd053ec2a",
+    "Assets/SimulatedShooting/Tests/PlayMode/Mode4AlignmentPlayModeTests.cs.meta": "5a15049396161445c4529a617be33b4671e0c182dc1fb2f102abab9bfa7c5872"
+  },
+  "screenshots": {
+    "Trench-B-left-shoulder-left-rear-right-front.png": {
+      "sha256": "ebc2c81a321d259a578d2e4610ce880a739a2c3c4bf9840087c5cfea48973c9f",
+      "dimensions": [
+        1280,
+        960
+      ]
+    },
+    "Trench-B-right-shoulder-right-rear-left-front.png": {
+      "sha256": "42da16a986cad297df8bd48063b81f8e475a078edf37d7625d02840ae03f5da4",
+      "dimensions": [
+        1280,
+        960
+      ]
+    },
+    "Urban-B-left-shoulder-left-rear-right-front.png": {
+      "sha256": "273440c84e960ae298635542681936c952b9e8cd5d7493772f2a4cbe8ac9780e",
+      "dimensions": [
+        1280,
+        960
+      ]
+    },
+    "Urban-B-right-shoulder-right-rear-left-front.png": {
+      "sha256": "2b0c2366e35a33b96a7f7e7de2da5373c9c71e6663efa1e40dc16b16252463b1",
+      "dimensions": [
+        1280,
+        960
+      ]
+    },
+    "urban-enemy-aim-and-fire.png": {
+      "sha256": "346e88796217506e01ab819170d8615abbed31613bab523722cf3b7bd322862a",
+      "dimensions": [
+        1280,
+        960
+      ]
+    },
+    "urban-health-10.png": {
+      "sha256": "fe663218a2906262958afc30183be76143e786ac5eebe688760462b9c2a61bb2",
+      "dimensions": [
+        1280,
+        960
+      ]
+    },
+    "urban-health-after-hit-9.png": {
+      "sha256": "15b37173fd1bb0112127ab77815e6f5adc2996829f363452dcbd4a7cb5ace90a",
+      "dimensions": [
+        1280,
+        960
+      ]
+    },
+    "urban-teammate-grenade-explosion.png": {
+      "sha256": "c9d147807ccc8059d3ffde6588d82e0ff1633b3f8533f54bbd49d0b7e8c4bd5b",
+      "dimensions": [
+        1280,
+        960
+      ]
+    }
+  },
+  "xml": {
+    "combat-red.xml": "7d22fbb919205a5cd5eed65a786cec8831c2a75d6324270a14aa384c4a557647",
+    "editmode-full-before-contract-test-update.xml": "83988466e4c74f4a42127989ecc9cbeab63b1ecdb9b36d6e369aae59c9fc89d0",
+    "editmode-full.xml": "4b7d3eff9fef0b5b3be09eb93dc46259fdaa89cf79f202a0400ef886399da413",
+    "editmode-post-merge.xml": "831e2c58033f81d224d1297acca026ace3d80b61d219f331cd6d53bafebc758d",
+    "editmode-targeted-complete.xml": "eb9a4cbb6f0b27f0b33728eb1ab001bbcf9123fc18a387df5cab7a0b920e2c55",
+    "editmode-targeted-final.xml": "8e2b27ce7566272413965f3ee4aba227be614b2adc7c893753eae90394c27116",
+    "editmode-targeted-green.xml": "182f6a56694db9a7a05266ec259b693af10c3e7f5baf63dbdf83ab5842c60387",
+    "editmode-targeted.xml": "ce8dffa82fc5a6708f036b37cf6ba5dbf643b9c0c570e0cafa06238b0b7ff90c",
+    "playmode-evidence-final.xml": "974f931bd21dc93f86b86e557a1fb251a16e66500c6933fe9097a6276ed61980",
+    "playmode-full-before-health-test-update.xml": "3a2daca65e05bdc3346148587cf2e379a43b0c6ca4f47bf09924c8108898d1e7",
+    "playmode-full.xml": "bb9b97a97e9f56914b97b52910b870a5fee00f514c34fd4633b9d2668fd8fa6a",
+    "playmode-post-merge.xml": "299e1e699e68414fef95c0b59be10b00ac29865e845ef41c9c1df97c7869c88e",
+    "playmode-targeted-complete.xml": "90d50a883b208f7577d8746c389edafd4ca0253de4a8476b86a7b7a8b4962db6",
+    "playmode-targeted-final-all.xml": "1a7d569620520ba3325bcb2bcb878567cb091906f5f1563247de3aa164a9fb06",
+    "playmode-targeted-final.xml": "851ba89cea72054967b98525e089fa066855776dd3da828a6cfb69a694b867d7",
+    "playmode-targeted-green.xml": "62ae0e5dd72b7612cd78eb4250c0707007e5b552f7570abdacfd04be1779803e",
+    "playmode-targeted-initial.xml": "345e6bb9266097a86da4ed3e3137eacd6773b3a3d2a099fe500e4a3dc1778c81",
+    "playmode-targeted-second.xml": "94e339bbd417ba689f1ce43d0dc0a5a2bc0f9a864c07166889bc14e9d9548675",
+    "playmode-targeted.xml": "05a89d916ded6c7b06fe02d5d7ec2a9e301a32c05ae206b2282bda369427172a",
+    "shoulder-red.xml": "79736be58f248e38719e4d8b6c8bbbab9e627587dc32f952c2d33268ca259291"
+  }
+}

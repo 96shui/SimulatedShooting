@@ -1,0 +1,24 @@
+{
+  "restored": [
+    "Assets/Resources/UI/Tactical/TrainingChinese.asset",
+    "Assets/XR/Settings/Open XR Package Settings.asset",
+    "Evidence/P3-production-M67-in-flight.png",
+    "docs/codex-reports/evidence/main-menu-hand-occlusion-20261023/main-menu-after-tracked.png",
+    "docs/codex-reports/evidence/main-menu-hand-occlusion-20261023/main-menu-after-untracked.png",
+    "docs/codex-reports/evidence/range-restore-urban-20261023/urban-building-corner.png",
+    "docs/codex-reports/evidence/range-restore-urban-20261023/urban-desktop-pickup.png",
+    "docs/codex-reports/evidence/range-restore-urban-20261023/urban-vr-pickup.png",
+    "docs/codex-reports/evidence/vr-mechanical-sight-20261023/vr-substitute-mechanical-sight.png"
+  ],
+  "removed_generated_init_files": [],
+  "historical_init_files_preserved": [
+    "Assets/InitTestScene639252044744999923.unity",
+    "Assets/InitTestScene639252044744999923.unity.meta",
+    "Assets/InitTestScene639253514584773890.unity",
+    "Assets/InitTestScene639253514584773890.unity.meta",
+    "Assets/InitTestScene639271113773156361.unity",
+    "Assets/InitTestScene639271113773156361.unity.meta",
+    "Assets/InitTestScene639271128085681542.unity",
+    "Assets/InitTestScene639271128085681542.unity.meta"
+  ]
+}

@@ -1,0 +1,903 @@
+﻿platform,fullname,baseline,current,baseline_message,current_message
+editmode,SimulatedShooting.Tests.EditMode.AmericanSoldierTests.Bdd23_Task014_D3EnemyAndD4TeammateHaveDistinctSkinnedModels,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.AmericanSoldierTests.Bdd23_Task019_EnemyDeathCryIsBoundAndReadyForSpatialPlayback,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.BunkersTrenchSceneTests.Bdd12_14_15_OriginalDemoTerrainHasWalkableSpawnsAndOwnMap,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.BunkersTrenchSceneTests.Bdd12_ModeThreeAndUrbanUseDifferentPhysicalScenes,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms,Failed,Failed,"  Expected: 13
+  But was:  11
+","  Expected: 13
+  But was:  11
+"
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd15_19_20_EnemyPrefabAndIndoorDeploymentUseTacticalModel,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd15_19_TaiwanStreetAndTrenchArtRetainReadableSignsAndRoutes,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd15_19_WartimeDetailsPreserveRoutesAndRemoveWorldSigns,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_20_ValidatorReportsDuplicateIdsAndMissingAnchor,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_ExteriorCollisionCoversDistrictWithoutIntersectingBuildings,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_IndoorDummiesUsePhotographicPeopleAndFacadesHaveSurfaceMaps,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_ParkedScootersStayOutsideSearchableBuildings,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_PerimeterBuildingsFormStreetWithoutBlockingSearchPoints,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_RoundEarthBackdropIsReplacedWithRealTaipeiBuildings,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_StreetScootersUseImportedModelAndTaiwanFont,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_TaiwanStreetUsesDistinctShopSignsAndVerticalBladeSigns,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_TrenchTownTransitionHasNoCoplanarWalkableSurfaces,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_TrenchUsesImportedSandbagsAndDetailedTimber,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd19_VisibleUrbanWalkwaysDoNotShareCoplanarTopSurfaces,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers,Absent,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd27_UrbanHasBoundGrenadeModelAndHeavyExplosionAudio,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.P3ProductionSceneDefinitionTests.Bdd14_18_RuntimeLoaderRejectsEditModeWithoutChangingScenes,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.P3ProductionSceneDefinitionTests.Screen24_25_RealSceneProvidesValidProductionDefinition(Trench),Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.P3ProductionSceneDefinitionTests.Screen24_25_RealSceneProvidesValidProductionDefinition(Urban),Passed,Passed,,
+editmode,"SimulatedShooting.Tests.EditMode.RangeIronFistAuthoringTests.SavedWallCharactersUseTheFourCompleteCorrectAtlasSlices(""MovingTargetRange"")",Passed,Passed,,
+editmode,"SimulatedShooting.Tests.EditMode.RangeIronFistAuthoringTests.SavedWallCharactersUseTheFourCompleteCorrectAtlasSlices(""ZeroingRange"")",Passed,Passed,,
+editmode,"SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd00_AuthoredRangeEnablesAutomaticHeadsetDetection(""Assets/Scenes/MovingTargetRangeScene.unity"")",Passed,Passed,,
+editmode,"SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd00_AuthoredRangeEnablesAutomaticHeadsetDetection(""Assets/Scenes/ZeroingRangeScene.unity"")",Passed,Passed,,
+editmode,"SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(""Assets/Scenes/MovingTargetRangeScene.unity"",""MovingTargetRange"")",Failed,Failed,"  Expected: 100.0f +/- 0.0199999996f
+  But was:  40.7099991f
+","  Expected: 100.0f +/- 0.0199999996f
+  But was:  40.7099991f
+"
+editmode,"SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(""Assets/Scenes/ZeroingRangeScene.unity"",""ZeroingRange"")",Failed,Failed,"  Expected: 100.0f +/- 0.0199999996f
+  But was:  38.9079971f
+","  Expected: 100.0f +/- 0.0199999996f
+  But was:  38.9079971f
+"
+editmode,"SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Task003_006_MigratedScenesHaveNoMissingScripts(""Assets/Scenes/MovingTargetRangeScene.unity"")",Passed,Passed,,
+editmode,"SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Task003_006_MigratedScenesHaveNoMissingScripts(""Assets/Scenes/ZeroingRangeScene.unity"")",Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Task003_CompleteUniqueBindingsValidate,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Task003_MissingOrDuplicateBindingsReturnLocatableErrors,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Task006_RenamedSceneKeepsOriginalGuidAndBuildPath,Passed,Passed,,
+editmode,"SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(""Assets/Scenes/MovingTargetRangeScene.unity"")",Failed,Failed,"  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.033056885f
+","  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.033056885f
+"
+editmode,"SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(""Assets/Scenes/ZeroingRangeScene.unity"")",Failed,Failed,"  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.0330568887f
+","  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.0330568887f
+"
+editmode,SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SharedPrefabMuzzleMatchesActualMeshOpening,Failed,Failed,"  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.0330568887f
+","  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.0330568887f
+"
+editmode,SimulatedShooting.Tests.EditMode.TrainingSceneEnvironmentRefreshTests.SceneSwitch_RestoresMovingRangeEnvironmentWithoutDirtyingScene,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.UrbanCornerEncounterTests.Bdd31_BuildingCandidatesAreConcealedNavigableCorners,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.VRControllerHandVisualEditModeTests.Bdd29_LeftHandCanPickUpTheRearGripInLeftShoulderMode,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.VRControllerHandVisualEditModeTests.Bdd29_LeftShoulderMirrorsOnlyHandsAroundAuthoredGripsAndRestoresEveryVertex,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.VRControllerHandVisualEditModeTests.Bdd29_LeftShoulderPreservesAuthoredBarrelAimWithYawAndRoll,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.VRControllerHandVisualEditModeTests.Task013_GripPoseCanBePreviewedAndRestoredWithoutPlayModeOrXRInput,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.VRControllerHandVisualEditModeTests.Task013_StaticPreviewStaysVisibleWhenXRControllerHierarchyIsDisabled,Passed,Passed,,
+editmode,SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_ImportedMeshHasAnOpenRearApertureAndTheMeasuredFrontPost,Failed,Failed,"  Three millimetres above the aperture must intersect its metal ring
+  Expected: True
+  But was:  False
+","  Three millimetres above the aperture must intersect its metal ring
+  Expected: True
+  But was:  False
+"
+editmode,SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_PrefabAimLineMatchesVisibleApertureAndFrontPostAtOneHundredMetres,Failed,Failed,"  The VR player aligns real model sights, not a virtual +Z anchor
+  Expected: less than 0.00999999978f
+  But was:  2.03472328f
+","  The VR player aligns real model sights, not a virtual +Z anchor
+  Expected: less than 0.00999999978f
+  But was:  2.03472328f
+"
+editmode,VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_ControlsOpenCloseAndDescribeActualVrOperations,Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(""Button_MainMenu_OpenMovingTarget"",535.0f,620.0f)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(""Button_MainMenu_OpenZeroing"",665.0f,750.0f)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(""Button_MainMenu_Trench"",405.0f,490.0f)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(""Button_MainMenu_Urban"",275.0f,360.0f)",Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetHudServiceTests.Screen09_GetHud_AfterStartShowsCountdownAndTenAmmo,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetHudServiceTests.Screen09_GetHud_DuringRightToLeftShowsCanShootAndDirection,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetHudServiceTests.Screen09_GetHud_HitUpdatesHitCountWithoutReadingUiText,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetHudServiceTests.Screen09_GetHud_LeftHoldShowsForbiddenPrompt,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetProgressCoordinatorTests.Retry_ReleasesCompletedSessionResourcesAfterResultsWereReadable,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetProgressCoordinatorTests.Tick_AfterWeaponPickup_AdvancesCountdownWithoutWeaponFireTick,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetProgressCoordinatorTests.Tick_BeforeWeaponPickup_DoesNotConsumeCountdown,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetRulesTests.Screen08_AvailableSpeeds_AreThreeFourAndFive,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetRulesTests.Screen09_Advance_CountdownBoundaryLeavesTargetStationaryThenStartsRightToLeft,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetRulesTests.Screen09_Advance_LargeStepConsumesCountdownHoldAndBothLegs,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetRulesTests.Screen09_Advance_RightToLeftReachesLeftThenHoldsThenReturns,Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.MovingTargetRulesTests.Screen11_ComputeGrade_UsesHitCountThresholds(0,Fail)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.MovingTargetRulesTests.Screen11_ComputeGrade_UsesHitCountThresholds(2,Fail)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.MovingTargetRulesTests.Screen11_ComputeGrade_UsesHitCountThresholds(3,Pass)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.MovingTargetRulesTests.Screen11_ComputeGrade_UsesHitCountThresholds(4,Good)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.MovingTargetRulesTests.Screen11_ComputeGrade_UsesHitCountThresholds(5,Excellent)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.MovingTargetRulesTests.Screen11_ComputeGrade_UsesHitCountThresholds(8,Excellent)",Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetRulesTests.Screen11_HitRate_IsZeroWhenNoShots,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.FakeSequences_ExposeUiAndSceneKeyframes,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen08_GetAvailableSpeeds_ReturnsConfiguredValues,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen08_StartSession_AcceptsAllowedSpeeds(3.0f),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen08_StartSession_AcceptsAllowedSpeeds(4.0f),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen08_StartSession_AcceptsAllowedSpeeds(5.0f),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen08_StartSession_DuplicateStartReturnsInvalidState,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen08_StartSession_RejectsIllegalSpeed(0.0f),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen08_StartSession_RejectsIllegalSpeed(2.0f),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen08_StartSession_RejectsIllegalSpeed(3.5f),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen08_StartSession_RejectsIllegalSpeed(6.0f),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen09_CompleteFireSequence_MarksContinuousBurstAndStopReason,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen09_NegativeDeltaTime_IsInvalidInput,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen09_PauseAndCancel_HaveDeterministicTickBehaviour,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen09_RecordShot_IgnoresCountdownHoldAndCompleted,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen09_RecordShot_ScoresMovingHitsAndIsIdempotentForDuplicateShotId,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen09_StartSession_LiveFireSpeedChangeReturnsInvalidState,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen09_Tick_CompletesFortyMetreOutAndBackAtFourMetersPerSecond,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen09_Tick_LargeStepReachesResultsAndEndsTrainingSession,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen09_Tick_NotifiesPresentationCountdownAndResults,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen09_Tick_PublishesCountdownElapsedOnce,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen09_Tick_ZeroSecondTransitionStartsMovementWithoutProgress,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen11_CompleteSession_BeforeRouteFinishedIsInvalidState,Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen11_CompleteSession_MapsHitsToGradeAndKeepsShotTrace(0,Fail)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen11_CompleteSession_MapsHitsToGradeAndKeepsShotTrace(3,Pass)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen11_CompleteSession_MapsHitsToGradeAndKeepsShotTrace(4,Good)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen11_CompleteSession_MapsHitsToGradeAndKeepsShotTrace(5,Excellent)",Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.MovingTargetServiceTests.Screen11_Retry_ClearsOldStateAndReplaysWithFixedSeed,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_ConfirmStart_CreatesSessionAndWaitsForPickup(MovingTarget),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_ConfirmStart_CreatesSessionAndWaitsForPickup(Zeroing100m),Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_EnterRange_AwaitsStartWithLargeUiAndNoShooting(MovingTarget,MovingTargetSettings,""MovingTargetRange.FiringStation.Root"")",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_EnterRange_AwaitsStartWithLargeUiAndNoShooting(Zeroing100m,ZeroingBriefing,""ZeroingRange.FiringStation.Root"")",Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_IllegalCommands_ReturnStableErrorAndKeepState,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_MovingTargetValidPickup_EntersCountdownInsteadOfLiveFire,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_NextRound_AfterDrop_HidesLargeUiAndWaitsForRegrip,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_NextRound_WhileHeld_HidesLargeUiAndAllowsShooting,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_OldSessionPickup_DoesNotPolluteNewSession,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_P2Complete_ShowsResultsAndRetryReturnsToSettings,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_PassedFirstRound_DirectlyShowsFinalRatingWithoutAdjustment,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_PickupBeforeStart_KeepsLargeUiAndReturnsInvalidState,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_RecordShotBeforePickup_IsRejected,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_ThreeFailedRounds_DirectlyShowsFinalRatingWithoutLastAdjustment,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_WrongWeaponOrSession_DoesNotStartLiveFire,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_ZeroingThirdShot_ShowsRoundReviewAndDisablesShooting,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen00_TrainingPresentationServiceTests.Screen00_ZeroingValidPickup_HidesLargeUiAndAllowsShootingOnce,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen02_GameEventBusTests.Screen02_EventBus_PublishSubscribeAndUnsubscribe_Works,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen02_GameEventBusTests.Screen04_SessionStartedEvent_IsPublishedWhenSessionStarts,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen02_UIRouterTests.Screen02_MainMenuOpenMovingTarget_GoesToMovingTargetSettings,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen02_UIRouterTests.Screen02_MainMenuOpenZeroing_GoesToZeroingBriefing,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen02_UIRouterTests.Screen02_RouterBackWithoutHistory_ReturnsInvalidState,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen02_UIRouterTests.Screen02_RouterBack_ReturnsPreviousScreen,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen02_UIRouterTests.Screen02_RouterOpenSameScreen_IsIdempotent,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen02_UIRouterTests.Screen02_RouterOpen_PublishesScreenChangedEvent,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen02_UIRouterTests.Screen04_ZeroingStart_GoesToZeroingHudWithSession,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen04_TrainingSessionServiceTests.Screen04_CreateAndStartZeroingSession_EntersRunningState,Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.Screen04_TrainingSessionServiceTests.Screen04_CreateP1P2Session_LocksProneFixedAndDisablesArtificialLocomotion(MovingTarget,""MovingTargetRange.FiringStation.Root"")",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.Screen04_TrainingSessionServiceTests.Screen04_CreateP1P2Session_LocksProneFixedAndDisablesArtificialLocomotion(Zeroing100m,""ZeroingRange.FiringStation.Root"")",Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen04_TrainingSessionServiceTests.Screen04_CreateWhileActiveSessionExists_ReturnsInvalidState,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen04_TrainingSessionServiceTests.Screen04_EndSession_PublishesSessionEndedEvent,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen04_TrainingSessionServiceTests.Screen04_PauseAndResume_PreservesSessionId,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen04_TrainingSessionServiceTests.Screen04_StartSameSessionTwice_DoesNotCreateDuplicateSession,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_TrainingWeaponFireCoordinatorTests.Screen00_Coordinator_P1HeldTriggerStaysSingleShotAndCompletesRound,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_TrainingWeaponFireCoordinatorTests.Screen09_Coordinator_CompletesTrainingAndKeepsFireSequences,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_TrainingWeaponFireCoordinatorTests.Screen09_Coordinator_IgnoresTriggerDuringCountdownThenFiresTwoOnQuickTap,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_TrainingWeaponFireCoordinatorTests.Screen09_Coordinator_StopsOnLeftHoldAndDoesNotResumeWhileHeld,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_WeaponAutomaticFireServiceTests.Screen00_P1HeldTrigger_FiresOnlyOneShotPerPress,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_WeaponAutomaticFireServiceTests.Screen09_CancelForForbidden_DoesNotResumeWhileHeld,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_WeaponAutomaticFireServiceTests.Screen09_HeldPastSecondShot_ContinuesThenStopsOnRelease,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_WeaponAutomaticFireServiceTests.Screen09_HeldUntilEmpty_FiresExactlyTenAndNeverGoesNegative,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_WeaponAutomaticFireServiceTests.Screen09_InvalidConfig_IsRejected,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_WeaponAutomaticFireServiceTests.Screen09_LargeTick_CatchesUpWithoutExceedingAmmo,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_WeaponAutomaticFireServiceTests.Screen09_NewSequenceWithOneAmmo_FiresOnlyLastRound(False),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_WeaponAutomaticFireServiceTests.Screen09_NewSequenceWithOneAmmo_FiresOnlyLastRound(True),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_WeaponAutomaticFireServiceTests.Screen09_QuickPressRelease_FiresExactlyTwoShotsWithOneSequence,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_WeaponAutomaticFireServiceTests.Screen09_RepeatedZeroTick_IsIdempotent,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.Screen09_WeaponAutomaticFireServiceTests.Task007_ReserveAmmo_IsAtomicAndReleasedOnCancel,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task005_Fire_ConsumesAmmoAndReturnsGunLineResult,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task005_Fire_WhenMagazineEmpty_DoesNotConsumeAmmoAgain,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task005_Reload_TransfersReserveAmmoToMagazine,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task005_SetAimMode_TracksAdsState,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task005_SetGripState_TracksTwoHandStability,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task005_StartSession_ProvidesTrainingRifleState,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task005_ToggleShoulder_ChangesShoulderWithoutChangingAmmo,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task013_Fire_RequiresTrackedTwoHandHold,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task013_Fire_SnapshotsGripStabilityAndDeterministicRecoil,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task013_SetGripState_RejectsImpossibleHandTrackingCombination,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingHudServiceTests.Bdd05_HudSightReadingsRefreshAfterAppliedAdjustment,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingHudServiceTests.CompleteRound_ProvidesAnalysisDtoQueryEntry,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingHudServiceTests.GetFinalResult_GradeComesFromZeroingService_NotHudText,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingHudServiceTests.GetHud_AtSessionStart_ShowsInitialZeroingFields,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingHudServiceTests.HudUpdatedEvent_PublishedWhenAmmoChanges,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingHudServiceTests.ReloadStarted_RefreshesPrompt,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingHudServiceTests.RoundComplete_SetsCanShootFalse,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingHudServiceTests.ToggleShoulder_RefreshesShoulderField,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingHudServiceTests.WeaponFire_RefreshesAmmoAndImpactRecord,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingHudServiceTests.ZeroingShotRecorded_RefreshesImpactRecordWithoutWeaponAmmo,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd05_ZeroingRoundRequiresFourShots,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_AnswerPredictsFixedResidualOnceFromActualPendingCorrection,Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_AppliedCorrectionUsesStrictFiveCentimetres(-3.01f,True)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_AppliedCorrectionUsesStrictFiveCentimetres(-3.0f,False)",Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_AverageUsesOnlyHitsOnTheTarget,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_DirectPassIncludesFiveAndTenButRequiresAllThreeConditions,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_FewerThanThreeValidHitsAreSpreadRejected(0),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_FewerThanThreeValidHitsAreSpreadRejected(1),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_FewerThanThreeValidHitsAreSpreadRejected(2),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_FourHitsDiscardFarthestAndTiesChooseFirst,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_GenerateFixedOffset_UsesIndependentAxesWithInclusiveEndpointsAndAllQuadrants,Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_MeanDistanceIsStrict(10.0f,False)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_MeanDistanceIsStrict(9.99f,True)",Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_OnlyAimOnBoardKeepsImpactWithinBoard,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_OppositeAdjustmentsCrossZeroWithoutExtraQuantizationStep,Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_PairwiseDistanceIsStrict(14.99f,True)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_PairwiseDistanceIsStrict(15.0f,False)",Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_RuntimeSeedIsNonFixedAndDifferentOnEachRequest,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_ThreeValidShotsAreKeptAndMissDoesNotAffectAverage,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd06_VerticalSuggestionsAndCorrectionAgree,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd30_RayProjectionSubtractsTheMuzzleOrigin,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.Bdd30_VerticalSuggestionMatchesTheSignedCompensation,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeFinalGrade_MapsPassedRoundToGrade,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeFrontSightDegrees_RoundsSuggestionUpToFiveDegreeSteps,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ComputeRearSightClicks_UsesCeilingAndTwoCmPerClick,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.GenerateFixedOffset_DifferentSeeds_ProduceDifferentOffsets,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.GenerateFixedOffset_FixedSeed_IsReproducible,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ResolveAimPointFromWeaponShot_UsesTargetOffsetConvention,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingRulesTests.ResolveHorizontalDirection_BiasRight_UsesBackward,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.AdjustImpactPoint_RejectsIncompleteOrAppliedRoundAndInvalidDirection,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ApplyAdjustment_IsIdempotentForSameRound,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_ActualAimAndCorrectionAreNotCompressedOrClamped,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_ActualAppliedCorrectionAccumulatesFromBaselineAndIsIdempotent,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_ApplyAdjustmentWithSmallResidualPassesImmediatelyAndGradesWithoutAnotherShot,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_ApplyingSuggestedCorrectionRespectsMechanicalStepsAndIsIdempotent,Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_LargeOnTargetSuggestedAngleRemainsAdjustable(-24.0f,1)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_LargeOnTargetSuggestedAngleRemainsAdjustable(24.0f,-1)",Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_NewSessionStartsWithForwardOneClickAndClockwiseFiveDegrees,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_PendingCorrectionStartsAtZeroAndClockwiseMovesUp,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_SpreadRoundRejectsBothCommandsAndAdvances(0),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_SpreadRoundRejectsBothCommandsAndAdvances(1),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_SpreadRoundRejectsBothCommandsAndAdvances(2),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalCorrectionExitsSaturationOnFirstReverseStep(-1),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalCorrectionExitsSaturationOnFirstReverseStep(1),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalCorrectionSaturatesAfterMultipleTurnsAndAppliesOnce(-1),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd06_VerticalCorrectionSaturatesAfterMultipleTurnsAndAppliesOnce(1),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd07_AdjustmentPassInSecondRoundReturnsGood,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd30_HelpRecommendationStaysBasedOnRoundImpactsWhilePendingCorrectionChanges,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd30_ManualPreviewCommitsSignedCorrectionWithoutChangingHistory,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.Bdd30_UnprojectableMissConsumesARoundSlotAndNeverBecomesATenRing,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.CompleteRound_BeforeThreeShots_ReturnsInvalidState,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.CompleteRound_CalculatesOffsetDirectionsAndAdjustmentAmounts,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ContinueAfterAnalysis_StartsNextRound_ResetsShotsToFour,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.ContinueAfterAnalysis_WithoutApply_ReturnsInvalidState,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_AllRoundsFail_ReturnsFail,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound1_ReturnsExcellent,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound2_ReturnsGood,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetFinalResult_PassRound3_ReturnsPass,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.GetSession_NotFound_ReturnsNotFound,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_AcceptsUpToFourShotsPerRound,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_AllInsideTenRing_PassedTenRingTrue,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.RecordShot_FifthShot_ReturnsInvalidState,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.StartSession_FixedSeed_ProducesReproducibleOffset,Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(0,Fail)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(1,Excellent)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(2,Good)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Application.ZeroingServiceTests.TerminalRound_ProvidesGradeWithoutApplyingLastAdjustment(3,Pass)",Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Application.ZeroingServiceTests.WeaponShotResultEvent_RecordsShotUsingTargetOffsetConvention,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.AlreadyReleasedTriggerRearmsWhenReloadCancelsPendingBurst(Trench),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.AlreadyReleasedTriggerRearmsWhenReloadCancelsPendingBurst(Urban),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Trench),Failed,Failed,"  one remaining round cannot start a P2 sequence
+  Expected: 0
+  But was:  1
+","  one remaining round cannot start a P2 sequence
+  Expected: 0
+  But was:  1
+"
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Urban),Failed,Failed,"  one remaining round cannot start a P2 sequence
+  Expected: 0
+  But was:  1
+","  one remaining round cannot start a P2 sequence
+  Expected: 0
+  But was:  1
+"
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireUsesP2TimingAndLatestShotForEveryBullet(Trench),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireUsesP2TimingAndLatestShotForEveryBullet(Urban),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.CancellationPreservesOriginalMagazineAndBothSpares(Cancelled),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.CancellationPreservesOriginalMagazineAndBothSpares(Completed),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.CancellationPreservesOriginalMagazineAndBothSpares(Failed),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.CancellationPreservesOriginalMagazineAndBothSpares(Paused),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.P1AndP2KeepTheirAmmoRules,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.ReloadInputLocksSupportGripInBothModes(Trench),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.ReloadInputLocksSupportGripInBothModes(Urban),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.TacticalReloadSpendsAWholeMagazineOnlyAtCompletion(Trench),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.TacticalReloadSpendsAWholeMagazineOnlyAtCompletion(Urban),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.ThreeMagazinesRunOutAfterNinetyShots(Trench),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.ThreeMagazinesRunOutAfterNinetyShots(Urban),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.TrackingLossCancelsWithoutDelayedCompletion,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatSummaryFileStoreTests.InvalidSummaryDoesNotOverwritePreviousResult,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatSummaryFileStoreTests.LockedDestinationPreservesOldFileAndRemovesTemporaryFile,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatSummaryFileStoreTests.RoundTripReplacesOnlySameModeAndSurvivesNewInstance,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.CombatSummaryFileStoreTests.UnwritablePathAndCorruptionReportPersistenceFailed,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.DroneReconServiceTests.AllRoutePhasesAndPlayerRestorePrecedeUnlock,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.DroneReconServiceTests.CancelledSessionCannotRestartAndInvalidSequenceDoesNotConsumeSessionId,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.DroneReconServiceTests.DuplicateCompletionIsIdempotentAndConflictingPayloadKeepsCombatLocked,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.DroneReconServiceTests.SuspensionDoesNotConsumeTakeoffTimeOrTimeout,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.DroneReconServiceTests.TakeoffRequiresThreeSecondsFeedAndCurrentCompletion,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.DroneReconServiceTests.TwentySecondSurveyStartsVisibleReturnAndKeepsCombatLocked,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Infrastructure_DtoDefaultValueTests.Infrastructure_AmmoDto_Default_DoesNotUseNullStringsOrInvalidFlags,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Infrastructure_DtoDefaultValueTests.Infrastructure_EnumDefaults_AreSafeForUiBinding,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Infrastructure_DtoDefaultValueTests.Infrastructure_RandomSeed_Default_IsUnfixedZero,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Infrastructure_DtoDefaultValueTests.Infrastructure_RandomSeed_Fixed_PreservesValue,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Infrastructure_ErrorCodeTests.Infrastructure_ErrorCode_ErrorBranches_AreDistinctFromNone,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Infrastructure_ErrorCodeTests.Infrastructure_ErrorCode_FailResult_UsesRequestedCode,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Infrastructure_ErrorCodeTests.Infrastructure_ErrorCode_None_IsZero,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Infrastructure_ServiceResultTests.Infrastructure_ServiceResult_Fail_DefaultMessageIsEmptyString,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Infrastructure_ServiceResultTests.Infrastructure_ServiceResult_Fail_ReturnsFailureWithErrorCode,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Infrastructure_ServiceResultTests.Infrastructure_ServiceResult_Ok_ReturnsSuccessWithData,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen12_14_17_TrenchFakeHasExplicitFramesAndErrorBranches,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen12_EmptyCatalogCannotStartAndEstimateIdsMatchSceneData,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen14_15_SquadAndPlayerFixturesHaveVersionedEventsAndNoCommands,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen17_21_SummaryFailureDoesNotOverwriteAndCanRetry,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen18_21_UrbanFakeExposesRoomsResultsAndLaterRejection,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_ClockRandomAndWorldInputsAreReplayable,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_DefaultDtosAreEmptyAndCollectionsAreDefensiveCopies,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_ExistingEnumValuesAndP3DefaultsAreCompatible,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_InjectedCommandErrorsDoNotPublishOrMutate(Busy),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_InjectedCommandErrorsDoNotPublishOrMutate(InvalidInput),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_InjectedCommandErrorsDoNotPublishOrMutate(InvalidState),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_InjectedCommandErrorsDoNotPublishOrMutate(NotFound),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_InjectedCommandErrorsDoNotPublishOrMutate(ResourceUnavailable),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_InvalidConfigurationReturnsInvalidInput(-1.0f),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_InvalidConfigurationReturnsInvalidInput(0.0f),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_InvalidConfigurationReturnsInvalidInput(float.NaN),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_InvalidConfigurationReturnsInvalidInput(float.PositiveInfinity),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_MapsRejectMissingDuplicateAndInvalidSpawnConfiguration,Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_RejectsInvalidMovementAttackAndPerformanceBudgets(""CpuBudgetMilliseconds"",20.0f)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_RejectsInvalidMovementAttackAndPerformanceBudgets(""EnemyAttackInterval"",0.0f)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_RejectsInvalidMovementAttackAndPerformanceBudgets(""EnemyRange"",float.NaN)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_RejectsInvalidMovementAttackAndPerformanceBudgets(""SnapTurnDegrees"",181.0f)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_RejectsInvalidMovementAttackAndPerformanceBudgets(""StandingSpeed"",-1.0f)",Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.Screen22_P3ContractTests.Screen22_SharedContractAssemblyHasNoUiXrOrRuntimeDependency,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.TrenchPreparationTests.OnlyCompletedOpeningStartsTheSameActorsAndStartIsIdempotent,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Infrastructure.TrenchPreparationTests.PreparingRejectsCombatAndCannotBeResumedThroughCoreState,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Input.Screen05_XRTrainingInputTests.Screen05_NoVrInputSubstitute_AdvanceFrame_DoesNotRepeatOneShotCommands,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Input.Screen05_XRTrainingInputTests.Screen05_NoVrInputSubstitute_AdvanceFrame_PreventsDispatcherDuplicateTrigger,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Input.Screen05_XRTrainingInputTests.Screen05_NoVrInputSubstitute_AimButtonPublishesAimCommands,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Input.Screen05_XRTrainingInputTests.Screen05_NoVrInputSubstitute_SetAndClearButtonStates_Works,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Input.Screen05_XRTrainingInputTests.Screen05_NoVrInputSubstitute_TriggerReloadAndShoulderSwitch_PublishAbstractCommandsOnly,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Input.Screen05_XRTrainingInputTests.Task007_NoVrInputSubstitute_TriggerHeldAndReleasedAreObservable,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Input.Screen05_XRTrainingInputTests.Task013_NoVrInputSubstitute_GripEdgesAreObservable,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Input.Screen05_XRTrainingInputTests.Task013_NoVrInputSubstitute_TriggerUsesHysteresis,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Ammo_DualGrip_SingleShot_AndTimedMagazineReplacement,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Trench),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Urban),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets(Trench),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets(Urban),Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Trench,10)",Passed,Passed,,
+editmode,"VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Urban,10)",Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.DamageEventDuplicate_ConsumesOnlyOneAttackDeadline,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.DeathIsClampedAndOnce_SameBatchEnemyKillDoesNotRestorePlayer,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.DisposeDuringFeedback_DoesNotLeaveCallbacksOrThrow,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.DuplicateIdWithDifferentPayload_AndLateBatchAreRejected,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.EmptyAmmoAndInvalidGrip_DoNotConsume,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.HitAndShotIds_AreIdempotent_CorpsePersists,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.LargeTickMatchesSmallTicks_AndDoesNotAttackBeforeDiscovery,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.LifecycleCancelsReloadAndAttacks(Cancelled),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.LifecycleCancelsReloadAndAttacks(Completed),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.LifecycleCancelsReloadAndAttacks(Paused),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.NewSessionInvalidatesOldFactsAndDisposalStopsNotifications,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.OldShotCannotPenetrateMultipleEnemies_AndInvalidStartPreservesSession,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.PostureShoulderAndCornerAreServiceState,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.TerminalSnapshotIsImmutable_WhenTrackingChanges,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.TrackingLossSuspendsAttacksAndRequiresNewPerception,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.UnknownShotAndInvalidInput_DoNotPublishOrChange,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.UnrepresentableDamageAndClock_AreRejected,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen23_CombatCoreTests.VisibleRangeAngle_AndOcclusionGateAttacks,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.CancelRetryAndPauseKeepOldResultsAndClockIsolated,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.CrossDomainEventIdCollisionAndUnknownNavigationAreRejected,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.EnemyCountBoundariesCanBeInjected(5),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.EnemyCountBoundariesCanBeInjected(7),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.FailedNavigationCallbackCanDisposeWithoutContinuingToMove,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.FixedSeedAndSortedCandidatesProduceSamePositionsAcrossRetries,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.FormationFollowsPolyline_OnlyAcknowledgementMovesTeammates,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.HudDoesNotLeakOffsetsAndEventsShareCurrentSnapshots,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.MapWeaponAndSceneErrorsDoNotCreateSession,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.NavigationFailureWaitsOneSecond_AndPauseRejectsLateArrival,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.PreviewDoesNotCreateActorsOrConsumeRandom,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.SameBatchDeathWinsAndRetainsFinalSearchAndKill,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.SearchOnlyAndKillOnlyDoNotWin_ThenCombinedWinsOnce,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.SpawnedEnemiesFaceTheTrenchEntrance,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen24_TrenchTests.ValidationAndIdempotenceCannotFakeKillsOrSearch,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.Bdd27_UrbanGrenadeUsesSharedTacticAndCancelsOnTrackingLossAndRetry,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.Bdd29_UrbanTenHealthFlowsThroughHudDeathResultAndRetry,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.Bdd31_AllKillsWithoutRoomChecksCompletesOnceWithActualSearchCount,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins,Failed,Failed,"  Expected: True
+  But was:  False
+","  Expected: True
+  But was:  False
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.DoorAndCheckAreSeparate_AliveRoomEnemyBlocksCheck,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.EmptyRoomStillNeedsDoorAndCheckArea,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.MapAndConfigurationAndUnknownIdsFailWithoutSideEffects,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(False),Failed,Failed,"  Expected: 1
+  But was:  0
+","  Expected: 1
+  But was:  0
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(True),Failed,Failed,"  Expected: 2
+  But was:  0
+","  Expected: 2
+  But was:  0
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps,Failed,Failed,"  Expected: True
+  But was:  False
+","  Expected: True
+  But was:  False
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult,Failed,Failed,"  Expected: True
+  But was:  False
+","  Expected: True
+  But was:  False
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies,Failed,Failed,"  Expected: InvalidState
+  But was:  None
+","  Expected: InvalidState
+  But was:  None
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime,Failed,Failed,"  Expected: True
+  But was:  False
+","  Expected: True
+  But was:  False
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds,Failed,Failed,"  Expected: in range (1,2)
+  But was:  0
+","  Expected: in range (1,2)
+  But was:  0
+"
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.BriefingDoesNotCreateActors_DuplicateStartIsBusy,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.CancelOrDisposeDuringLoadCleansLateScene(False),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.CancelOrDisposeDuringLoadCleansLateScene(True),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.CombatStartEventOccursOnceAfterUnlockAndReadyPauseCannotStartCombat,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.DefaultRootNeverRegistersFakeScenes,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.LoadFailureLeavesRecoverableMap_AndBusyRejectsAnotherSelection,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.PersistenceFailureKeepsStoppedResultAndAllowsRetry,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.PresenterUnsubscribes_AndCallbacksCannotReenterLifecycle,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.QuickSwitchDisposesOnlyStaleLease_AndCannotOverwriteUrban,Failed,Failed,"  Expected: UrbanStreetHud
+  But was:  UrbanBuildingHud
+","  Expected: UrbanStreetHud
+  But was:  UrbanBuildingHud
+"
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.SaveCallbackCannotStartOrDiscardAnotherSession,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.SceneActivationAndCleanupCannotReenterModeSwitch,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.ThreeRetriesUseNewSessions_RejectOldFacts_AndSaveOnlyLatest(Trench),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.ThreeRetriesUseNewSessions_RejectOldFacts_AndSaveOnlyLatest(Urban),Failed,Failed,"  Expected: True
+  But was:  False
+","  Expected: True
+  But was:  False
+"
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.TrackingLossDuringSceneUnlockRetriesCommitWithoutStartingHudEarly,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.WrongSceneOrActivationFailureNeverLeavesRunningSession,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.SquadGrenadeTacticTests.ExplosionIsIdempotentAndDoesNotResurrectCorpse,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.SquadGrenadeTacticTests.NextPressIsAcceptedThreeSecondsAfterPreviousThrow,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.SquadGrenadeTacticTests.SingleDistantEnemyThrowsTowardMaximumRange,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.SquadGrenadeTacticTests.TwoNearbyEnemiesScheduleThrowAndFuseKillsOnlyBlastTargets,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.UI.BustTargetMappingTests.CentreAxesAndTenRingUseSamePhysicalScale(100.0f),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.UI.BustTargetMappingTests.CentreAxesAndTenRingUseSamePhysicalScale(255.0f),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.UI.BustTargetMappingTests.CentreAxesAndTenRingUseSamePhysicalScale(500.0f),Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.UI.BustTargetMappingTests.FinalThumbnailMarkersUseCalibratedPositionAndIndependentImages,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.UI.BustTargetMappingTests.NonSquareDisplayKeepsSquareRegionAndDoesNotClampRawCoordinates,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.UI.BustTargetMappingTests.PhysicalBoundsIncludeAllFourEdgesButNeverClampMissesOntoTheBoard,Passed,Passed,,
+editmode,VRShooting.Tests.EditMode.UI.BustTargetMappingTests.PlotUsesSharedReferenceTexture,Passed,Passed,,
+playmode,CombatGrenadeVisibilityTests.Bdd27_ImportedModelNormalizesBeforeFirstRenderedFrame,Passed,Passed,,
+playmode,CombatGrenadeVisibilityTests.ServiceDrivenGrenadeDoesNotExpireFromPresentationTime,Passed,Passed,,
+playmode,CombatSpawnPlacementTests.EmbeddedAnchorResolvesAboveFloorAndOutsideWall,Passed,Passed,,
+playmode,CombatStandingEyeCalibrationTests.InitialHeadHeightIsCalibratedAndSubsequentPhysicalMovementIsPreserved,Passed,Passed,,
+playmode,DroneReconRoutePlannerTests.BriefFlyoverFollowsAuthoredOrderWithoutTouringGroundBranches,Passed,Passed,,
+playmode,DroneReconRoutePlannerTests.SurveyIncludesAllBranchesAndFinishesAtAnObservation,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.AmericanSoldierPlayModeTests.Bdd23_EnemyShotHasSoundAndCorpseHidesAfterFiveSeconds,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.AmericanSoldierPlayModeTests.Bdd23_Task014_ShotDeathResetAndNavigationDriveSkinnedSoldiers,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.AmericanSoldierPlayModeTests.Bdd23_Task019_EnemyDiesWithRelaxedArms,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.AmericanSoldierPlayModeTests.Bdd23_Task019_TeammateDiesWithRelaxedArms,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.AmericanSoldierPlayModeTests.Bdd23_TeammateAndEnemyHoldRiflesWhileStandingAndTurning,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd04_BriefingUsesThePhysicalTargetTexture,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd05_ModeSelectionReentryClearsAllFacesAndPreservesNewSessionHits,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd07_ActualRetryButtonClearsEntireTargetRowIncludingInactiveFaces,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd11_ResultsAppearAtCurrentEyeHeightAndForwardAfterTurning,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode1HeldRifleHasNoGuidanceAndKeepsHud,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode2HeldRifleHasNoGuidanceAndKeepsHud,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode3HeldRifleHasNoGuidanceAndKeepsHud,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode4HeldRifleHasNoGuidanceAndKeepsHud,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_StandaloneCalloutCannotShowLinesLabelsOrEndpointDecorations,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd12_14_15_ModeThreeLoadsOriginalDemoAndUsesNewPlan,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd14_NewTrenchAllowsContinuousMovementAndFiring,Failed,Failed,"  ab3559b5a9834b859eae43873f5a68bb.enemy-001
+  Expected: in range (2.018377,3.428377)
+  But was:  1.92627943f
+","  42b199298cb8442d854308d95c880061.enemy-001
+  Expected: in range (2.018377,3.428377)
+  But was:  1.92627943f
+"
+playmode,SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.NewSceneInspectionWalkerCanLeaveEntry,Failed,Failed,"  trench-spawn-1 boots
+  Expected: 2.17788005f +/- 0.0799999982f
+  But was:  1.92736709f
+","  trench-spawn-1 boots
+  Expected: 2.17788005f +/- 0.0799999982f
+  But was:  1.9273957f
+"
+playmode,SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.Bdd23_CombatCameraCreatesOrReenablesAudioListener,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.Bdd23_TurnIsSmoothHorizontalAndStopsWhenActionsLock,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.TrenchEnemyAttacksShowShotTracerAudioAndPlayerBlood,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.UrbanEnemyAttacksShowShotTracerAudioAndPlayerBlood,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.Bdd29_RealXriSelectionsTransferRearFirstAndLockOnlyTheNewSupportHand,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.Bdd29_ReloadUsesCurrentSupportHandAndUprightRifleAtEveryCriticalPose,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.Bdd29_SwitchingShoulderDuringVrReloadRestoresTheNewSupportController,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.CancelRestoresVisibleMagazineAndKeepsBothSpares,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.HandPullsMagazineBelowViewThenSeatsBeforeAmmoCompletes,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.ModeThreeCompletionAndDisableRestoreLeftControllerControl,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.ModeThreeFrontGripLockCancelsLeftSelectionAndKeepsRightHandHoldingRifle,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.MovingAndRotatingEyeKeepsOffscreenMagazineBelowView,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.VrAnimationPreservesControllersGripAnchorsAndHmd,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd14_19_20_StreetAllFloorsRoomsAndReturnAreReachable,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd14_19_StartupAndResetKeepDroneAndPlayerStable,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd14_19_XrAndNoVrHaveExclusiveCameraAndPreserveHeadPose,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup,Failed,Failed,"  Expected: 15
+  But was:  13
+","  Expected: 15
+  But was:  13
+"
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_19_SpawnTrenchWallsBlockWalkingOut,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_20_NavigationFailureAndArrivalReportFacts,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors,Failed,Failed,"  Expected: 15
+  But was:  13
+","  Expected: 15
+  But was:  13
+"
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd17_21_MaximumActorsCorpsesPerformanceSample,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_20_CharacterColliderWalksThroughEveryRoomAndPermanentPassage,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_20_ConfirmationRequiresRangeAndUnoccludedRay,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_AllHousesHaveDummiesAndPhysicalEntrances,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_ArtRenderProfileRestoresQualityWhenDisabled,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_DistrictGroundGridAndElevatedGuardsPreventFalls,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_ExteriorGroundAndWallsPreventLeavingTheTown,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd19_InspectionCanJumpDirectlyToDistrictAndBuildingViews,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd20_DoorOnlyChangesOnOutputAndDuplicateEventsAreIdempotent,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.EnemyDeathAudioTests.DeathCryPlaysOncePerDeathStopsOnReviveAndKeepsIndependentVoices,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.GrenadeExplosionAudioPlayModeTests.DisablingExplosionStopsItsSoundImmediately,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.GrenadeExplosionAudioPlayModeTests.ImportedHeavyBlastPlaysBeyondVisualLifetimeAndFinishes,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.GrenadePlayModeTests.ModeThreeGrenadeResourceContainsRenderableModel,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.Mode3DroneReconSceneTests.PreparingSceneCompletesFullFlightAndRestoresPlayerViewBeforeCombat,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd23_UrbanAssignmentEnemyTurnsAimsFiresAndStopsWhenOccluded,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd27_UrbanRightAThrowsVisibleGrenadeExplodesAndUsesCooldown,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.Bdd29_MovingTargetShoulderCommandKeepsRifleAndSightsUpright,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore,Failed,Failed,"  Expected: less than 0.0199999996f
+  But was:  0.0931938887f
+","  Expected: less than 0.0199999996f
+  But was:  0.0931938887f
+"
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RealComposition_RunsPickupCountdownVisualResultAndRetry,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RealTrigger_QuickTapFiresTwo_ForbiddenHoldDoesNotResume,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_RetryRequiresFreshPickup_AndReenabledControllerReceivesInput,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_DayHud_TestRaysHitStableSurfaceAtCentreAndBothEndpoints,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_GreenSideProfileUsesExistingTargetAndHitSurface,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_NoVrMode_UsesFloorOriginAndOnePlayerView,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_RoutePhases_OnlyExplicitAuthoritativeProgressMovesTarget,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_SideProfileTarget_HasUnifiedHitSurfaceAndFeedbackHooks,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_VrMode_KeepsExactlyOneCameraAndAudioListener,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_WaitingCountdown_RealFrameTimeCannotMoveTarget,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd09_WaitingCountdown_TargetStartsAndRemainsAtRightEndpoint,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd31_DayHud_RestoresTheOriginalRearRowAndFortyMetreRoute,Failed,Failed,"  Expected: 100.0f +/- 0.100000001f
+  But was:  40.7099991f
+","  Expected: 100.0f +/- 0.100000001f
+  But was:  40.7099991f
+"
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_006_SceneContainsStableProneRangeBindingsAndRouteIds,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_006_TrainingRifleCarriesTheCompleteP1InteractionAndFeedbackSetup,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_ArtificialMoveTeleportAndTurnDoNotMovePlayerRoot,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_NoVrPreviewCameraRetainsTheTunedRangeComposition,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_ProneBindingsAreCompleteUniqueAndIndependent,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy,Failed,Failed,"  Missing ZeroingRange start-area copy: ShootingBench
+  Expected: True
+  But was:  False
+","  Missing ZeroingRange start-area copy: ShootingBench
+  Expected: True
+  But was:  False
+"
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_TrackedHeadReferenceCanChangeWithoutMovingPlayerRoot,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_FakeTimelineCoversSpeedsHoldsReverseFinishAndRetry,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_ImpactFeedbackConsumesEachConfirmedShotIdOnlyOnce,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_SceneContainsOnlyFixedDayLighting,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_TargetAndEnvironmentLayersAndMasksAreSeparated,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task006_VisualDriverAcceptsAuthoritativeStateWithoutInferringRules,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_CopiesP1DistanceMarkersFromTwentyFiveToOneHundredMetres,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_DataWinsCharactersAlignWithNumberCharacter,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_HasCentredDataWinsSloganBelowWinBattles,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_HasFiveSpacedP1FixedTargetsAroundCentre,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_HasThreeDimensionalRangeAndWallSlogans,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task018_ReferenceRange_UsesThreeDimensionalRangeAndSparseGroundDetail,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Trench_ProductionMagazineReload,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_UrbanRightStickOpensNearbyProductionDoor,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Urban_ProductionMagazineReload,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd27_DesktopThrowSpawnsVisibleM67UntilExplosion,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd29_Trench_LeftShoulderProductionMagazineReload,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd29_Urban_LeftShoulderProductionMagazineReload,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene,Failed,Failed,"  Expected: UrbanStreetHud
+  But was:  UrbanBuildingHud
+","  Expected: UrbanStreetHud
+  But was:  UrbanBuildingHud
+"
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds,Failed,Failed,System.NullReferenceException : Object reference not set to an instance of an object,System.NullReferenceException : Object reference not set to an instance of an object
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen17_Trench_DeathThreeRetriesTrackingAndMovement,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen17_Trench_ProductionVictoryRetryAndReturn,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_DeathThreeRetriesTrackingAndMovement,Failed,Failed,"  Real line-of-sight enemy attacks must reach failure
+  Expected: True
+  But was:  False
+","  Real line-of-sight enemy attacks must reach failure
+  Expected: True
+  But was:  False
+"
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_ProductionVictoryRetryAndReturn,Failed,Failed,"  Entry prompt should reflect physical range: 
+  Expected: True
+  But was:  False
+","  Entry prompt should reflect physical range: 
+  Expected: True
+  But was:  False
+"
+playmode,SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Bdd29_CombatBSelectsLeftTriggerAndRequiresReleaseOnSwitch,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Bdd29_TrenchRealBInputKeepsTheProductionRifleUprightAndSelectsOnlyTheLeftTrigger,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Bdd29_UrbanRealBInputKeepsTheProductionRifleUprightAndSelectsOnlyTheLeftTrigger,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.RangeRollback_RightBDoesNotSwitchTheDefaultRangeAdapter,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_BothModesUseXReloadAndRightStickInteraction,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_DesktopConfirmRemainsEnterOrSpace,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_GrenadeCommandRemainsAvailableWhileBothGripsAreHeld,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_PicoNamedThumbstickClickIsAcceptedOnRightHand,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_VrGripsRetainIndependentPressHoldReleaseEdges,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_VrSticksAndFaceButtonsReachP3Commands,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.RangeIronFistVictoryPlayModeTests.ModeOneFourCharactersAreReadableFromFiringEye,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.RangeIronFistVictoryPlayModeTests.ModeTwoFourCharactersAreReadableFromFiringEye,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.RangeSightHitRegressionTests.Bdd30_P2SightedShotsHitAcrossTheRouteUsingEachCurrentSnapshot,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.RangeSightHitRegressionTests.Bdd31_P2SecondShotRecoversWithoutManuallyResettingRecoil,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.RecordedBloodMistTests.DisabledEnemyColliderKeepsBloodOnEnemyAndNotAtMuzzle,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.RecordedBloodMistTests.RecordedHitBindsAtlasWithoutCollisionAndExpires,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.UrbanPickupRegressionTests.Bdd31_DesktopRifleStaysVisibleAndReachableBeforePickup,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.UrbanPickupRegressionTests.Bdd31_VrRifleStaysVisibleAndReachableAfterHeadCalibration,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.VRHandPresentationTests.Bdd23_Task019_HideHardwareModelsKeepHandsAndUiRaysIncludingLateModels,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_HeadMotionDoesNotChangeGunLineAndSupportReleaseBlocksFire,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound,Failed,Failed,"  Real VR sights and sampled gun line must meet within one centimetre
+  Expected: less than 1.0f
+  But was:  77.9776382f
+","  Real VR sights and sampled gun line must meet within one centimetre
+  Expected: less than 1.0f
+  But was:  77.9776382f
+"
+playmode,SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd23_Task019_TrenchReconThenTrackedHandsGrabStableRifle,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuHandsHideUntilTrackedAndRecoverWithoutDisablingUi,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands,Failed,Failed,"  Expected: 2
+  But was:  0
+","  Expected: 2
+  But was:  0
+"
+playmode,SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen00_MovingRangeHeadAndBothHandsReceiveDevicePoses,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen00_RangeAutomaticallyChoosesRunningDisplay,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen02_MainMenuEyeHeightVisibleRaysAndTrackedTriggerRecover,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen02_MainMenuUsesLeftMoveAndRightSnapTurnOnly,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen02_MenuRecoversEmptyAndRemovedDeviceFilters,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen14_18_TrackedTriggerClicksMapsAndBriefingAcrossRigHandoff,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen18_21_VrActionsAndTrackedPosesSurviveUrbanLoadAndReturn,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd05_ExitAndReenterClearsPhysicalImpactMarkers,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd05_FourthShotImmediatelyClearsOnlyCurrentTrainingTarget,Passed,Passed,,
+playmode,"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(-20.0f,0.0f)",Passed,Passed,,
+playmode,"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,-20.0f)",Passed,Passed,,
+playmode,"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,0.0f)",Passed,Passed,,
+playmode,"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(0.0f,20.0f)",Passed,Passed,,
+playmode,"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_CentralTargetPhysicalHitAndCentimetres(20.0f,0.0f)",Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_ScoredCentralTargetHasNonBlockingHighlight,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd06_SightRayScoresWhileTracerStartsAtMuzzle,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd07_SessionChangedWhileDisabledClearsPhysicalMarkersOnEnable,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_BackwardAndParallelShotsCountAsMissesWithoutTargetHoles,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles,Failed,Failed,"  Expected: less than 1.01999998f
+  But was:  22.9285927f
+","  Expected: less than 1.01999998f
+  But was:  22.9285927f
+"
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_ManualCorrectionIsAppliedToFutureHolesAndScoreExactlyOnce,Passed,Passed,,
+playmode,"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_OffFaceUsesSameTargetPlaneCentimetres(0.0f,-40.0f)",Passed,Passed,,
+playmode,"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_OffFaceUsesSameTargetPlaneCentimetres(0.0f,40.0f)",Passed,Passed,,
+playmode,"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_OffFaceUsesSameTargetPlaneCentimetres(40.0f,0.0f)",Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_TriggerVolumesAreIgnoredButSolidObstructionsRemainMisses,Passed,Passed,,
+playmode,"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_ShotAndTracerUseFrozenActualMuzzlePosition(-12.0f,-20.0f,-30.0f)",Passed,Passed,,
+playmode,"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_ShotAndTracerUseFrozenActualMuzzlePosition(0.0f,0.0f,0.0f)",Passed,Passed,,
+playmode,"SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.September25_ShotAndTracerUseFrozenActualMuzzlePosition(8.0f,25.0f,15.0f)",Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd04_PickupPromptFacesShooterAboveRifleWithoutChangingText,Failed,Failed,"  Expected string length 15 but was 8. Strings differ at index 0.
+  Expected: ""GRIP TO PICK UP""
+  But was:  ""两个手柄抓握持枪""
+  -----------^
+","  Expected string length 15 but was 8. Strings differ at index 0.
+  Expected: ""GRIP TO PICK UP""
+  But was:  ""两个手柄抓握持枪""
+  -----------^
+"
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd05_AnyRiflePartCanBeGrabbedWithOriginalHandAnchors,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd05_FixedTargetBackersAreInvisibleButKeepTheirCollidersAndArtwork,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd05_NewRifleKeepsGripMuzzleAndRemovableMagazineBindings,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd05_RetrainingClearsPreviousSessionImpacts,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd06_SceneDefaultsToRandomSeedAndAllowsFixedSeedInjection,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd06_TwentyCentimetreOffsetsRemainOnTargetAndProduceMarkers,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd29_RifleFingersFollowTheApprovedContactDirections,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd29_VirtualHandGripPreservesTheApprovedRightShoulderRotations,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd31_TargetKeepsItsDimensionsInTheOriginalRearRow,Failed,Failed,"  Expected: 100.0f +/- 0.0199999996f
+  But was:  38.9079971f
+","  Expected: 100.0f +/- 0.0199999996f
+  But was:  38.9079971f
+"
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task003_FixedProneSceneHasNoFootstepComponent,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task003_FixedRangeKeepsTheUiRayAvailableAfterTeleportInput,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task003_ZeroingRangeDisablesArtificialLocomotionWithoutLockingHeadReference,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task003_ZeroingRangeUsesTheSharedProneFiringStationContract,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_DistanceMarkersShowZeroThroughOneHundredMetres,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_FirstPersonCompositionFramesTargetThroughRangeLane,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_PlayerStartsForwardOnPadWithRifleWithinReach,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_SceneContainsStableTrainingAnchorsForVrAndNoVr,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_TargetCanBeHitFromShootingPosition,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_TrainingRifleStartsWithinComfortableRightHandReach,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task004_XrOriginUsesFloorTrackingWithoutArtificialEyeHeight,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_006_FireUpdatesSharedZeroingSession,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_AdsViewAlignsToGunLineAndFrontHandChangesAimDirection,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_FeedbackUsesLicensedAudioAndProjectileVisualAssets,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_FirstPersonTrainingWeaponHasRequiredVisibleBindings,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_InvalidShotProducesNoAudioTracerOrImpactFeedback,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_NoVrFirstPersonWeaponFiresVisibleTracerAndTargetImpact,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_ReloadRestoresMagazineAfterSpendingAmmo,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_ShoulderSwitchUpdatesNoVrWeaponState,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_TrainingRifleUsesLicensedQbz191Visual,Failed,Failed,"  Expected: less than 0.00100000005f
+  But was:  0.0235372111f
+","  Expected: less than 0.00100000005f
+  But was:  0.0235372111f
+"
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_ValidShotPlaysOneFeedbackStackAndArrivesAtRecordedImpact,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task012_ImpactCoordinatesUseCentimetresAndMatchVisualMarker,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task012_ImpactOutsideFiftyCentimetreFaceIsRejected,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task012_RaycastHitReturnsStableImpactCoordinates,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease,Failed,Failed,"  Expected: 0.119999997f +/- 0.00100000005f
+  But was:  0.219999999f
+","  Expected: 0.119999997f +/- 0.00100000005f
+  But was:  0.219999999f
+"
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_GripPalmsSitOnThePistolGripAndBelowTheHandguard,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_NoVrModeStartsOnRackAndCannotShootBeforeGrip,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_RiflePrefabHasDirectGrabPhysicsAndStableRecoilHierarchy,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_RuntimeModeKeepsExactlyOneCameraAndAudioListener,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_ShotProducesLocalRecoilAndTwoHandHapticsThenSettles,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_VirtualHandGripPoseDeformsTheSkinnedMesh,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_VirtualHandsUseRiggedMeshesAndGripOnlyTheVisualLayer,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_DistantHillRemainsClearFromTheFiringPosition,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_ForestedHillSitsBehindTargetAndUsesTreeBillboards,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_GrassGroundUsesTiledPbrSurface,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_LegacyPrimitiveTreeCrownsAreAbsent,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_NoVrCameraHasClearTargetSightlineAndVrSafeSettings,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_P2BasedRangeKeepsWideHillAndTargetBayGeometry,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_P2MovingTargetObjectsAreInactiveInP1,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_SandPatchesBreakUpGrassWithoutReplacingTheGreenRange,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_SceneStaysWithinPrototypeRenderingBudget,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_VisualPolishKeepsTargetAndShootingBayRecognisable,Passed,Passed,,
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task016_WeaponCrateAppearsInLowerLeftWithoutBlockingTarget,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_InputStub_Round1Pass_ShowsExcellentFinalRating,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_InputStub_ThreeRoundsFail_ShowsFailFinalRating,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_SceneOwned_MainMenuToRange_Round1PassShowsExcellent,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Flow.Screen09_AutoFireNoVrPlayModeTests.Screen09_NoVrInput_HeldTriggerConsumesTenRounds,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Flow.Screen09_AutoFireNoVrPlayModeTests.Screen09_NoVrInput_LastRoundIsFiredAndRecorded,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Flow.Screen09_AutoFireNoVrPlayModeTests.Screen09_NoVrInput_QuickTapFiresTwoShots,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Infrastructure.Infrastructure_UITestIdTests.Infrastructure_UITestId_DefaultId_IsEmptyStringNotNull,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Infrastructure.Screen22_P3FixturePlayModeTests.Screen22_BlankSceneConsumesUiAndSceneFixturesThenUnsubscribes,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests.Screen02_MainMenuConfirmWithNoVrInputSubstitute_Opens100mZeroingEntry,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests.Screen05_NoVrInputSubstitute_AimInput_IsPublishedForWeaponControl,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests.Screen05_NoVrInputSubstitute_TriggerReloadAndShoulderSwitch_ArePublishedForServiceLayer,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.Bdd29_LeftShoulderUsesLeftRearGripAndRightSupportAndNeverFiresOnSwitch(Trench),Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.Bdd29_LeftShoulderUsesLeftRearGripAndRightSupportAndNeverFiresOnSwitch(Urban),Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.Locomotion_P1P2StayFixed_AndVrDoesNotMoveEyeHeight,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.ManualInput_PickupAutomaticFireReloadShoulderPostureAndCombat,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.PhysicsFirstHit_BlocksWallAndEmbeddedMuzzle,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.QuickTriggerTapResolvesTwoIndependentShots(Trench),Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.QuickTriggerTapResolvesTwoIndependentShots(Urban),Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.TrackingAndPause_BlockHeldTrigger_AndStopMovement,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Screen24_TrenchPlayModeTests.FakeNavigation_AcknowledgesActualSquadPositions_AndStopsAtCancel,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Screen24_TrenchPlayModeTests.FakeScene_BriefingCombatVictoryRetryFailure_UpdatesHudAndUnsubscribes,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.BuildingFailureKeepsCountsAndOldSessionInputsAreRejected,Failed,Failed,System.InvalidOperationException : Sequence contains no matching element,System.InvalidOperationException : Sequence contains no matching element
+playmode,VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.SceneFactsDriveStreetBuildingDoorsVictoryAndRetry,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.TrenchButtonsDriveVictoryRetryFailureAndPersistenceRecovery,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry,Failed,Failed,System.InvalidOperationException : Nullable object must have a value.,System.InvalidOperationException : Nullable object must have a value.
+playmode,VRShooting.Tests.PlayMode.TacticalUIArtTests.ChineseErrorCopyCoversEveryCodeAndPreservesChineseDetails,Absent,Passed,,
+playmode,VRShooting.Tests.PlayMode.TacticalUIArtTests.Screen07_TargetPlotCopiesImpactsAndHasCanvasRenderer,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.TacticalUIArtTests.Screen15_HealthWarningResetsAndSquadBackingLeavesAimClear,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.TacticalUIArtTests.Screen15_TrenchBarsAndMapSymbolsUseOnlyDtoValues,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.TacticalUIArtTests.Screen20_ChineseFloorAndRoomCopyPreservesDoorCommandIdentifiers,Absent,Passed,,
+playmode,VRShooting.Tests.PlayMode.TacticalUIArtTests.SelectedButtonKeepsItsPaletteAcrossPointerStates,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.TacticalUIArtTests.StylingKeepsTextNonInteractiveAndUsesSharedFont,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.TacticalUIArtTests.ThemeShipsWithPaddedChineseFontAndAllMapArtwork,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.P3UiRoot_BuildsAllPagesAndFrozenTestIds,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet,Failed,Failed,"  Expected: String containing ""1-2""
+  But was:  ""建筑内部敌人：3-6""
+","  Expected: String containing ""1-2""
+  But was:  ""建筑内部敌人：3-6""
+"
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands,Failed,Failed,"  Expected: String containing ""未搜索""
+  But was:  ""房间1 · 靠近后开门""
+","  Expected: String containing ""未搜索""
+  But was:  ""房间1 · 靠近后开门""
+"
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce,Failed,Failed,"  Expected: String containing ""街道清除：已清除""
+  But was:  ""消灭建筑敌人：5 / 5
+剩余弹药：76
+队友状态：
+玩家 · 正常 · 生命 100
+二号队友 · 跟随 · 生命 100
+三号队友 · 跟随 · 生命 100
+用时：02:00""
+","  Expected: String containing ""街道清除：已清除""
+  But was:  ""消灭建筑敌人：5 / 5
+剩余弹药：76
+队友状态：
+玩家 · 正常 · 生命 100
+二号队友 · 跟随 · 生命 100
+三号队友 · 跟随 · 生命 100
+用时：02:00""
+"
+playmode,VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_AllSharedNodesHaveStableTestIdsAndHudKeepsCenterAimReserveClear,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_AnchorBinderReportsMissingAnchorAndSupportsDefaultFakeAnchors,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_DisableEnableAndDestroyKeepOneSubscriptionAndSelfHealFromQuery,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_FakeSnapshotsAtomicallyDriveLargePanelMinimalHudAndCurrentScreen,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_NextRoundClickSendsOneCommandAndWaitsForReturnedSnapshotToHide,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen00_TrainingPresentationPresenterPlayModeTests.Screen00_RepeatedAndOutOfOrderEventsDoNotReapplyOrFlashOlderPanel,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd02_ControlsPanelOpensAndClosesWithoutLeavingMenu,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd04_BriefingPickupPromptStaysBelowFrameAndAboveStationStatus,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_CreatorsEntryAndPanelAreAbsentAndNavigationRemainsUsable,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_InputInfrastructure_SupportsDesktopAndXrPointers,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_MainMenuOpenZeroingButton_RoutesToZeroingBriefing,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingStartButton_IsIdempotentForRepeatedClicks,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_05_ClickZeroingWaitsForPickupThenShowsSceneOwnedHud,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_MainScene_SwitchesBetweenDesktopAndVrUiModes,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_MainScene_TeleportRayCannotDisableModeSelectionUiRay,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_MainScene_VrUsesFloorTrackingAndReadableStabilizedMenu,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Bdd04_RangePickupPromptAndInstructionsHaveValidSafeLayout,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_FireRefreshesAmmoAndImpactRecord,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_LoadsInitialDtoValues,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_ToggleShoulderRefreshesPrompt,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_ZeroAmmoShowsBlockedPrompt,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd04_BriefingShowsFourShotsAndBothPassPaths,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_AboveSuggestsCounterclockwiseAndClockwiseMovesBlueUp,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_AdjustmentControlsShowCurrentMechanicalValuesAndUnits,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_AnswerAndSightReadoutsFollowReversedActualAdjustment,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_AnswerReflectsActualPendingAndAppliedCorrectionAndResetsOnNextRound,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_ApplyingNearZeroOffsetImmediatelyEnablesViewGrade,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_FourImpactsShowIdenticalMarkersAndAverage,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_HorizontalFractionalMean_UsesWholeClicks,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_InfoPanelsAreExclusiveAndKeepTheirFixedPositions,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_InfoPanelsResetWhenChangingRoundLeavingAndReentering,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_LargeSuggestedFrontSightAngleRemainsAdjustableInUi,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_OffTargetShotStillAppearsInTheFourShotPlot,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_OpeningHelpHidesAnswerButtonAndPanel,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_SpreadDisablesAllAdjustmentsAndHidesAnswer,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_ThirdSpreadAllowsRatingWithoutAdjustment,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_VerticalLongHoldRepeatsFiveDegreesAndReleaseDoesNotAddClick,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd30_HelpShowsRoundAdviceNotTheEditedOrAppliedAmount,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ApplyAdjustmentUpdatesStateAndNextRoundReturnsToHud,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_BackToMainMenuButtonReturnsToMainMenu,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_FiveDegreesMoveBlueMarkerVerticallyWithoutChangingHorizontal,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_HelpOwnsAllTipsAndResetsOnNextRound,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ManualAxisButtonsPreviewAndCommitCorrection,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThirdRoundPrimaryActionOpensFinalRating,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests.Screen07_BackToModeSelectionReturnsToMainMenuFallback,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests.Screen07_FirstRoundPassShowsExcellentFinalRating,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests.Screen07_RetryReturnsToZeroingBriefing,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Destroy_UnsubscribesAndDisposesFakePort,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen00_SceneAnchorsBindLargePanelAndMinimalHudAsIndependentWorldCanvases,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen08_MissingSpeedConfigurationCannotStartAndShowsServiceError,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen08_StartSuccessWaitsForPickupAndLiveDtoAtomicallyShowsMinimalHud,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen08_ThreeSpeedsDefaultToFourAndForwardOnlySelectedSpeed,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen09_HudConsumesCountdownPerShotContinuousAndForbiddenSnapshotsInOrder,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_BackToModeSelectionSendsOnlyOneExitCommand,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_CompletionShowsVariableSequencesAndRetrySendsOneCommand,Passed,Passed,,
+playmode,"VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Excellent,""优秀"",8,""100%"")",Passed,Passed,,
+playmode,"VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Fail,""不及格"",0,""0%"")",Passed,Passed,,
+playmode,"VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Good,""良好"",4,""50%"")",Passed,Passed,,
+playmode,"VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_GradeAndEmptySequenceFormattingIsDtoDriven(Pass,""及格"",3,""37.5%"")",Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen28_DroneMonitorUiTests.MonitorUsesOnlyCurrentLiveTextureAndHidesDuringTakeoff,Passed,Passed,,
+playmode,VRShooting.Tests.PlayMode.UI.Screen28_DroneMonitorUiTests.ReconfiguringMonitorReleasesOldMaterialAndKeepsOneCommandListener,Passed,Passed,,

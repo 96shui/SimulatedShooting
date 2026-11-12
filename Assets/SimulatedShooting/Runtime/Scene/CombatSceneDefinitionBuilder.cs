@@ -17,9 +17,9 @@ namespace SimulatedShooting.Scene
                 .Select(m => new MapProjectionDto { FloorId = m.Id == map ? "" : "floor-" + m.Id[6],
                     ResourceKey = m.Id, WorldBoundsXZ = Rect.MinMaxRect(m.Min.x,m.Min.y,m.Max.x,m.Max.y) }).ToArray();
             var floors = trench ? Array.Empty<FloorDto>() : points.Where(p => p.Kind == CombatPointKind.Floor).OrderBy(p => p.FloorId)
-                .Select(f => new FloorDto { FloorId = f.FloorId, DisplayName = f.FloorId,
+                .Select(f => new FloorDto { FloorId = f.FloorId, DisplayName = FloorDisplayName(f.FloorId),
                     Rooms = points.Where(r => r.Kind == CombatPointKind.Room && r.FloorId == f.FloorId)
-                        .Select(r => new RoomDto { RoomId = r.RoomId, DisplayName = r.RoomId, EntryWorldPosition = r.transform.position,
+                        .Select((r, index) => new RoomDto { RoomId = r.RoomId, DisplayName = RoomDisplayName(f.FloorId, r.RoomId, index), EntryWorldPosition = r.transform.position,
                             MapPosition = binding.Maps.First(m => m.Id == "urban-" + f.FloorId.Last() + "f").WorldToMap(r.transform.position) }).ToArray() }).ToArray();
             return new CombatSceneDefinitionDto { MapId = map, SceneId = trench ? P3ContractIds.TrenchScene : P3ContractIds.UrbanScene,
                 Mode = mode, Projections = projections, Floors = floors,
@@ -33,6 +33,28 @@ namespace SimulatedShooting.Scene
                     FloorId=p.FloorId, RoomId=p.RoomId, WorldPosition=p.transform.position,
                     EstimatePosition=p.EstimateAnchor!=null?p.EstimateAnchor.position:throw new InvalidOperationException("Missing estimate anchor: "+p.Id),
                     Navigable=NavMesh.SamplePosition(p.transform.position,out var hit,.75f,NavMesh.AllAreas) && Mathf.Abs(hit.position.y-p.transform.position.y)<.75f }).ToArray() };
+        }
+
+        static string FloorDisplayName(string floorId)
+        {
+            switch (floorId)
+            {
+                case "floor-1": return "一层";
+                case "floor-2": return "二层";
+                case "floor-3": return "三层";
+                default: return floorId;
+            }
+        }
+
+        static string RoomDisplayName(string floorId, string roomId, int index)
+        {
+            var floorName = FloorDisplayName(floorId);
+            if (floorName == floorId) return "房间" + (index + 1);
+            var prefix = "room-" + floorId.Substring("floor-".Length);
+            if (floorName != floorId && roomId != null && roomId.StartsWith(prefix, StringComparison.Ordinal)
+                && int.TryParse(roomId.Substring(prefix.Length), out var number) && number > 0)
+                return floorName + number + "号";
+            return "房间" + (index + 1);
         }
     }
 }

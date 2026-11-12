@@ -10,6 +10,6 @@ namespace VRShooting.Application.Combat
         public static UrbanMapDto Urban => new UrbanMapDto { MapId=P3ContractIds.UrbanMap,
             DisplayName="城镇训练场", StreetEnemyMin=0, StreetEnemyMax=0, BuildingEnemyMin=3, BuildingEnemyMax=6,
             BuildingEntranceId=P3ContractIds.UrbanEntrance,
-            Floors=new[]{new FloorDto{FloorId="floor-1",DisplayName="1F"},new FloorDto{FloorId="floor-2",DisplayName="2F"},new FloorDto{FloorId="floor-3",DisplayName="3F"}} };
+            Floors=new[]{new FloorDto{FloorId="floor-1",DisplayName="一层"},new FloorDto{FloorId="floor-2",DisplayName="二层"},new FloorDto{FloorId="floor-3",DisplayName="三层"}} };
     }
 }

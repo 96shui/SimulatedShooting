@@ -460,8 +460,8 @@ namespace SimulatedShooting.Editor
                            bindingObject.AddComponent<MovingTargetFakeTimeline>();
             timeline.Configure(driver);
 
-            EnsureText(binding.LeftEndpoint, "RouteLabel_Left", "LEFT  -20 m  <", new Vector3(0f, 2.65f, 0.48f));
-            EnsureText(binding.RightEndpoint, "RouteLabel_Right", ">  +20 m  RIGHT", new Vector3(0f, 2.65f, 0.48f));
+            EnsureText(binding.LeftEndpoint, "RouteLabel_Left", "左端  -20 m  <", new Vector3(0f, 2.65f, 0.48f));
+            EnsureText(binding.RightEndpoint, "RouteLabel_Right", ">  +20 m  右端", new Vector3(0f, 2.65f, 0.48f));
 
             GameObjectUtility.RemoveMonoBehavioursWithMissingScript(binding.ImpactFeedbackRoot.gameObject);
             var feedback = binding.ImpactFeedbackRoot.GetComponent<MovingTargetImpactFeedback>() ??

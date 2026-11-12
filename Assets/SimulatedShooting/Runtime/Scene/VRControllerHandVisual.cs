@@ -347,11 +347,14 @@ namespace SimulatedShooting.Scene
                 return;
             }
 
-            var world = anchor.localToWorldMatrix * Matrix4x4.TRS(
-                gripPositionOffset, Quaternion.Euler(gripRotationOffset), openLocalScale);
-            // Reflect the mesh/bindposes and rig locally instead of leaving a negative
-            // world scale on a SkinnedMeshRenderer (Unity's baked skinning distorts it).
-            if (mirrored) world *= Matrix4x4.Scale(new Vector3(-1, 1, 1));
+            var offset = Matrix4x4.TRS(gripPositionOffset, Quaternion.Euler(gripRotationOffset), openLocalScale);
+            // Only reflect hand offsets/skin. The rifle and its grip anchors stay right-handed.
+            if (mirrored)
+            {
+                var reflection = Matrix4x4.Scale(new Vector3(-1, 1, 1));
+                offset = reflection * offset * reflection;
+            }
+            var world = anchor.localToWorldMatrix * offset;
             var local = transform.parent != null ? transform.parent.worldToLocalMatrix * world : world;
             var x = (Vector3)local.GetColumn(0);
             var y = (Vector3)local.GetColumn(1);

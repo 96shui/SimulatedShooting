@@ -125,7 +125,8 @@ namespace VRShooting.Unity.UI
             {
                 firingStationState.text = string.IsNullOrEmpty(snapshot.FiringStationId)
                     ? "射击位：等待绑定"
-                    : "射击位：" + snapshot.FiringStationId;
+                    : snapshot.Mode == TrainingMode.Zeroing100m ? "射击位：100m射校"
+                    : snapshot.Mode == TrainingMode.MovingTarget ? "射击位：移动靶" : "射击位：已就位";
             }
 
             if (nextRoundButton != null)

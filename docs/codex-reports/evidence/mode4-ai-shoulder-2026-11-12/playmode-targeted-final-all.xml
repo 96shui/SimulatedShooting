@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="46" result="Passed" total="46" passed="46" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-12 03:36:29Z" end-time="2026-11-12 03:36:50Z" duration="21.1290248">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="304" result="Passed" start-time="2026-11-12 03:36:29Z" end-time="2026-11-12 03:36:50Z" duration="21.129025" total="46" passed="46" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1229" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="198" result="Passed" start-time="2026-11-12 03:36:29Z" end-time="2026-11-12 03:36:50Z" duration="21.041853" total="32" passed="32" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="82756" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1230" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="192" result="Passed" start-time="2026-11-12 03:36:29Z" end-time="2026-11-12 03:36:50Z" duration="21.040366" total="32" passed="32" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1231" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="192" result="Passed" start-time="2026-11-12 03:36:29Z" end-time="2026-11-12 03:36:50Z" duration="21.039826" total="32" passed="32" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1232" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="192" result="Passed" start-time="2026-11-12 03:36:29Z" end-time="2026-11-12 03:36:50Z" duration="21.039051" total="32" passed="32" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1021" name="CombatFeedbackIntegrationTests" fullname="SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests" classname="SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-12 03:36:29Z" end-time="2026-11-12 03:36:32Z" duration="3.274637" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1022" name="Bdd23_CombatCameraCreatesOrReenablesAudioListener" fullname="SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.Bdd23_CombatCameraCreatesOrReenablesAudioListener" methodname="Bdd23_CombatCameraCreatesOrReenablesAudioListener" classname="SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests" runstate="Runnable" seed="337207337" result="Passed" start-time="2026-11-12 03:36:29Z" end-time="2026-11-12 03:36:29Z" duration="0.007744" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1023" name="Bdd23_TurnIsSmoothHorizontalAndStopsWhenActionsLock" fullname="SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.Bdd23_TurnIsSmoothHorizontalAndStopsWhenActionsLock" methodname="Bdd23_TurnIsSmoothHorizontalAndStopsWhenActionsLock" classname="SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests" runstate="Runnable" seed="941441544" result="Passed" start-time="2026-11-12 03:36:29Z" end-time="2026-11-12 03:36:29Z" duration="0.004897" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1024" name="TrenchEnemyAttacksShowShotTracerAudioAndPlayerBlood" fullname="SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.TrenchEnemyAttacksShowShotTracerAudioAndPlayerBlood" methodname="TrenchEnemyAttacksShowShotTracerAudioAndPlayerBlood" classname="SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests" runstate="Runnable" seed="1748413448" result="Passed" start-time="2026-11-12 03:36:29Z" end-time="2026-11-12 03:36:31Z" duration="2.074390" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1025" name="UrbanEnemyAttacksShowShotTracerAudioAndPlayerBlood" fullname="SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.UrbanEnemyAttacksShowShotTracerAudioAndPlayerBlood" methodname="UrbanEnemyAttacksShowShotTracerAudioAndPlayerBlood" classname="SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests" runstate="Runnable" seed="636379626" result="Passed" start-time="2026-11-12 03:36:31Z" end-time="2026-11-12 03:36:32Z" duration="1.180839" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1026" name="CombatMagazineReloadPlayModeTests" fullname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests" classname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-11-12 03:36:32Z" end-time="2026-11-12 03:36:37Z" duration="4.517259" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1035" name="Bdd29_RealXriSelectionsTransferRearFirstAndLockOnlyTheNewSupportHand" fullname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.Bdd29_RealXriSelectionsTransferRearFirstAndLockOnlyTheNewSupportHand" methodname="Bdd29_RealXriSelectionsTransferRearFirstAndLockOnlyTheNewSupportHand" classname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests" runstate="Runnable" seed="207816592" result="Passed" start-time="2026-11-12 03:36:32Z" end-time="2026-11-12 03:36:33Z" duration="0.411385" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[There are multiple active and enabled XR Interaction Manager components in the loaded scenes. This is supported, but may not be intended since interactors and interactables are not able to interact with those registered to a different manager. You can use the <b>Window</b> > <b>Analysis</b> > <b>XR Interaction Debugger</b> window to verify the interactors and interactables registered with each. The default manager that interactors and interactables automatically register with when None is: <b>CombatScene</b>/XRInteractionManager
+Cannot throw a kinematic Rigidbody since updating the velocity and angular velocity of a kinematic Rigidbody is not supported. Disable Throw On Detach or Is Kinematic to fix this issue.
+]]></output>
+              </test-case>
+              <test-case id="1029" name="Bdd29_ReloadUsesCurrentSupportHandAndUprightRifleAtEveryCriticalPose" fullname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.Bdd29_ReloadUsesCurrentSupportHandAndUprightRifleAtEveryCriticalPose" methodname="Bdd29_ReloadUsesCurrentSupportHandAndUprightRifleAtEveryCriticalPose" classname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests" runstate="Runnable" seed="1433473555" result="Passed" start-time="2026-11-12 03:36:33Z" end-time="2026-11-12 03:36:34Z" duration="0.756204" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1030" name="Bdd29_SwitchingShoulderDuringVrReloadRestoresTheNewSupportController" fullname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.Bdd29_SwitchingShoulderDuringVrReloadRestoresTheNewSupportController" methodname="Bdd29_SwitchingShoulderDuringVrReloadRestoresTheNewSupportController" classname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests" runstate="Runnable" seed="1775634462" result="Passed" start-time="2026-11-12 03:36:34Z" end-time="2026-11-12 03:36:34Z" duration="0.458033" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1028" name="CancelRestoresVisibleMagazineAndKeepsBothSpares" fullname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.CancelRestoresVisibleMagazineAndKeepsBothSpares" methodname="CancelRestoresVisibleMagazineAndKeepsBothSpares" classname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests" runstate="Runnable" seed="1003778121" result="Passed" start-time="2026-11-12 03:36:34Z" end-time="2026-11-12 03:36:34Z" duration="0.451422" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1027" name="HandPullsMagazineBelowViewThenSeatsBeforeAmmoCompletes" fullname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.HandPullsMagazineBelowViewThenSeatsBeforeAmmoCompletes" methodname="HandPullsMagazineBelowViewThenSeatsBeforeAmmoCompletes" classname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests" runstate="Runnable" seed="1595210341" result="Passed" start-time="2026-11-12 03:36:34Z" end-time="2026-11-12 03:36:35Z" duration="0.619041" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1033" name="ModeThreeCompletionAndDisableRestoreLeftControllerControl" fullname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.ModeThreeCompletionAndDisableRestoreLeftControllerControl" methodname="ModeThreeCompletionAndDisableRestoreLeftControllerControl" classname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests" runstate="Runnable" seed="1948183823" result="Passed" start-time="2026-11-12 03:36:35Z" end-time="2026-11-12 03:36:36Z" duration="0.453410" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1034" name="ModeThreeFrontGripLockCancelsLeftSelectionAndKeepsRightHandHoldingRifle" fullname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.ModeThreeFrontGripLockCancelsLeftSelectionAndKeepsRightHandHoldingRifle" methodname="ModeThreeFrontGripLockCancelsLeftSelectionAndKeepsRightHandHoldingRifle" classname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests" runstate="Runnable" seed="1719316081" result="Passed" start-time="2026-11-12 03:36:36Z" end-time="2026-11-12 03:36:36Z" duration="0.459574" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[There are multiple active and enabled XR Interaction Manager components in the loaded scenes. This is supported, but may not be intended since interactors and interactables are not able to interact with those registered to a different manager. You can use the <b>Window</b> > <b>Analysis</b> > <b>XR Interaction Debugger</b> window to verify the interactors and interactables registered with each. The default manager that interactors and interactables automatically register with when None is: <b>CombatScene</b>/XRInteractionManager
+Cannot throw a kinematic Rigidbody since updating the velocity and angular velocity of a kinematic Rigidbody is not supported. Disable Throw On Detach or Is Kinematic to fix this issue.
+]]></output>
+              </test-case>
+              <test-case id="1031" name="MovingAndRotatingEyeKeepsOffscreenMagazineBelowView" fullname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.MovingAndRotatingEyeKeepsOffscreenMagazineBelowView" methodname="MovingAndRotatingEyeKeepsOffscreenMagazineBelowView" classname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests" runstate="Runnable" seed="494631379" result="Passed" start-time="2026-11-12 03:36:36Z" end-time="2026-11-12 03:36:36Z" duration="0.453627" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1032" name="VrAnimationPreservesControllersGripAnchorsAndHmd" fullname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.VrAnimationPreservesControllersGripAnchorsAndHmd" methodname="VrAnimationPreservesControllersGripAnchorsAndHmd" classname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests" runstate="Runnable" seed="1522895191" result="Passed" start-time="2026-11-12 03:36:36Z" end-time="2026-11-12 03:36:37Z" duration="0.452566" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1065" name="Mode4AlignmentPlayModeTests" fullname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" classname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-12 03:36:37Z" end-time="2026-11-12 03:36:39Z" duration="2.533732" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1066" name="Bdd23_UrbanAssignmentEnemyTurnsAimsFiresAndStopsWhenOccluded" fullname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd23_UrbanAssignmentEnemyTurnsAimsFiresAndStopsWhenOccluded" methodname="Bdd23_UrbanAssignmentEnemyTurnsAimsFiresAndStopsWhenOccluded" classname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" runstate="Runnable" seed="1251166924" result="Passed" start-time="2026-11-12 03:36:37Z" end-time="2026-11-12 03:36:38Z" duration="1.453302" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1067" name="Bdd27_UrbanRightAThrowsVisibleGrenadeExplodesAndUsesCooldown" fullname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd27_UrbanRightAThrowsVisibleGrenadeExplodesAndUsesCooldown" methodname="Bdd27_UrbanRightAThrowsVisibleGrenadeExplodesAndUsesCooldown" classname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" runstate="Runnable" seed="58952811" result="Passed" start-time="2026-11-12 03:36:38Z" end-time="2026-11-12 03:36:39Z" duration="1.079739" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Mode4Evidence grenade=35bcecc91e8146aaac6f720e64b9946f.grenade-001 position=(38.80, 7.33, 65.20) camera=(38.80, 8.78, 68.20) kills=1
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1068" name="MovingTargetRangeIntegrationTests" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-12 03:36:39Z" end-time="2026-11-12 03:36:40Z" duration="0.386766" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1069" name="Bdd29_MovingTargetShoulderCommandKeepsRifleAndSightsUpright" fullname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.Bdd29_MovingTargetShoulderCommandKeepsRifleAndSightsUpright" methodname="Bdd29_MovingTargetShoulderCommandKeepsRifleAndSightsUpright" classname="SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests" runstate="Runnable" seed="146732230" result="Passed" start-time="2026-11-12 03:36:39Z" end-time="2026-11-12 03:36:40Z" duration="0.384523" asserts="0">
+                <properties />
+                <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1102" name="P3ProductionFlowTests" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-11-12 03:36:40Z" end-time="2026-11-12 03:36:47Z" duration="6.842572" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1109" name="Bdd23_Trench_ProductionMagazineReload" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Trench_ProductionMagazineReload" methodname="Bdd23_Trench_ProductionMagazineReload" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="113566812" result="Passed" start-time="2026-11-12 03:36:40Z" end-time="2026-11-12 03:36:42Z" duration="1.907268" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1110" name="Bdd23_Urban_ProductionMagazineReload" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Urban_ProductionMagazineReload" methodname="Bdd23_Urban_ProductionMagazineReload" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="1161014338" result="Passed" start-time="2026-11-12 03:36:42Z" end-time="2026-11-12 03:36:43Z" duration="1.040104" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1114" name="Bdd27_DesktopThrowSpawnsVisibleM67UntilExplosion" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd27_DesktopThrowSpawnsVisibleM67UntilExplosion" methodname="Bdd27_DesktopThrowSpawnsVisibleM67UntilExplosion" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="2139971117" result="Passed" start-time="2026-11-12 03:36:43Z" end-time="2026-11-12 03:36:44Z" duration="1.377054" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1111" name="Bdd29_Trench_LeftShoulderProductionMagazineReload" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd29_Trench_LeftShoulderProductionMagazineReload" methodname="Bdd29_Trench_LeftShoulderProductionMagazineReload" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="1468436943" result="Passed" start-time="2026-11-12 03:36:44Z" end-time="2026-11-12 03:36:46Z" duration="1.471775" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1112" name="Bdd29_Urban_LeftShoulderProductionMagazineReload" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd29_Urban_LeftShoulderProductionMagazineReload" methodname="Bdd29_Urban_LeftShoulderProductionMagazineReload" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="37172240" result="Passed" start-time="2026-11-12 03:36:46Z" end-time="2026-11-12 03:36:47Z" duration="1.041399" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1115" name="P3XRTrainingInputTests" fullname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests" classname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-11-12 03:36:47Z" end-time="2026-11-12 03:36:50Z" duration="3.076957" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1117" name="Bdd29_CombatBSelectsLeftTriggerAndRequiresReleaseOnSwitch" fullname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Bdd29_CombatBSelectsLeftTriggerAndRequiresReleaseOnSwitch" methodname="Bdd29_CombatBSelectsLeftTriggerAndRequiresReleaseOnSwitch" classname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests" runstate="Runnable" seed="1146194529" result="Passed" start-time="2026-11-12 03:36:47Z" end-time="2026-11-12 03:36:47Z" duration="0.008763" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1118" name="Bdd29_TrenchRealBInputKeepsTheProductionRifleUprightAndSelectsOnlyTheLeftTrigger" fullname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Bdd29_TrenchRealBInputKeepsTheProductionRifleUprightAndSelectsOnlyTheLeftTrigger" methodname="Bdd29_TrenchRealBInputKeepsTheProductionRifleUprightAndSelectsOnlyTheLeftTrigger" classname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests" runstate="Runnable" seed="534219366" result="Passed" start-time="2026-11-12 03:36:47Z" end-time="2026-11-12 03:36:48Z" duration="1.805248" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1119" name="Bdd29_UrbanRealBInputKeepsTheProductionRifleUprightAndSelectsOnlyTheLeftTrigger" fullname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Bdd29_UrbanRealBInputKeepsTheProductionRifleUprightAndSelectsOnlyTheLeftTrigger" methodname="Bdd29_UrbanRealBInputKeepsTheProductionRifleUprightAndSelectsOnlyTheLeftTrigger" classname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests" runstate="Runnable" seed="318063011" result="Passed" start-time="2026-11-12 03:36:48Z" end-time="2026-11-12 03:36:50Z" duration="1.231078" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1116" name="RangeRollback_RightBDoesNotSwitchTheDefaultRangeAdapter" fullname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.RangeRollback_RightBDoesNotSwitchTheDefaultRangeAdapter" methodname="RangeRollback_RightBDoesNotSwitchTheDefaultRangeAdapter" classname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests" runstate="Runnable" seed="443176416" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.003137" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1122" name="Screen23_BothModesUseXReloadAndRightStickInteraction" fullname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_BothModesUseXReloadAndRightStickInteraction" methodname="Screen23_BothModesUseXReloadAndRightStickInteraction" classname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests" runstate="Runnable" seed="1303329531" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.004026" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1124" name="Screen23_DesktopConfirmRemainsEnterOrSpace" fullname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_DesktopConfirmRemainsEnterOrSpace" methodname="Screen23_DesktopConfirmRemainsEnterOrSpace" classname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests" runstate="Runnable" seed="314248467" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.008084" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1121" name="Screen23_GrenadeCommandRemainsAvailableWhileBothGripsAreHeld" fullname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_GrenadeCommandRemainsAvailableWhileBothGripsAreHeld" methodname="Screen23_GrenadeCommandRemainsAvailableWhileBothGripsAreHeld" classname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests" runstate="Runnable" seed="1749168630" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.003088" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1123" name="Screen23_PicoNamedThumbstickClickIsAcceptedOnRightHand" fullname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_PicoNamedThumbstickClickIsAcceptedOnRightHand" methodname="Screen23_PicoNamedThumbstickClickIsAcceptedOnRightHand" classname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests" runstate="Runnable" seed="490666428" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.003916" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1125" name="Screen23_VrGripsRetainIndependentPressHoldReleaseEdges" fullname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_VrGripsRetainIndependentPressHoldReleaseEdges" methodname="Screen23_VrGripsRetainIndependentPressHoldReleaseEdges" classname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests" runstate="Runnable" seed="354358255" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.002940" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1120" name="Screen23_VrSticksAndFaceButtonsReachP3Commands" fullname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests.Screen23_VrSticksAndFaceButtonsReachP3Commands" methodname="Screen23_VrSticksAndFaceButtonsReachP3Commands" classname="SimulatedShooting.Tests.PlayMode.P3XRTrainingInputTests" runstate="Runnable" seed="1689888962" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.004020" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1175" name="ZeroingRangeSceneTests" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" testcasecount="53" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.393137" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1212" name="Task005_ShoulderSwitchUpdatesNoVrWeaponState" fullname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_ShoulderSwitchUpdatesNoVrWeaponState" methodname="Task005_ShoulderSwitchUpdatesNoVrWeaponState" classname="SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests" runstate="Runnable" seed="1252773848" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.374481" asserts="0">
+                <properties />
+                <output><![CDATA[[GameStateManager] 状态初始化为: InGame
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1363" name="VRShooting.Runtime.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.PlayModeTests.dll" runstate="Runnable" testcasecount="106" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.079522" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="82756" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1364" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="106" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.064035" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1365" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="106" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.060212" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1366" name="PlayMode" fullname="VRShooting.Tests.PlayMode" runstate="Runnable" testcasecount="106" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.056634" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1235" name="Screen23_CombatInputPlayModeTests" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.017054" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="ParameterizedMethod" id="1238" name="Bdd29_LeftShoulderUsesLeftRearGripAndRightSupportAndNeverFiresOnSwitch" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.Bdd29_LeftShoulderUsesLeftRearGripAndRightSupportAndNeverFiresOnSwitch" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.002721" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1236" name="Bdd29_LeftShoulderUsesLeftRearGripAndRightSupportAndNeverFiresOnSwitch(Trench)" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.Bdd29_LeftShoulderUsesLeftRearGripAndRightSupportAndNeverFiresOnSwitch(Trench)" methodname="Bdd29_LeftShoulderUsesLeftRearGripAndRightSupportAndNeverFiresOnSwitch" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" seed="990747324" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.001361" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1237" name="Bdd29_LeftShoulderUsesLeftRearGripAndRightSupportAndNeverFiresOnSwitch(Urban)" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.Bdd29_LeftShoulderUsesLeftRearGripAndRightSupportAndNeverFiresOnSwitch(Urban)" methodname="Bdd29_LeftShoulderUsesLeftRearGripAndRightSupportAndNeverFiresOnSwitch" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" seed="935040147" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.000172" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-case id="1245" name="Locomotion_P1P2StayFixed_AndVrDoesNotMoveEyeHeight" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.Locomotion_P1P2StayFixed_AndVrDoesNotMoveEyeHeight" methodname="Locomotion_P1P2StayFixed_AndVrDoesNotMoveEyeHeight" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" seed="520147119" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.002270" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1239" name="ManualInput_PickupAutomaticFireReloadShoulderPostureAndCombat" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.ManualInput_PickupAutomaticFireReloadShoulderPostureAndCombat" methodname="ManualInput_PickupAutomaticFireReloadShoulderPostureAndCombat" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" seed="500975963" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.003036" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1244" name="PhysicsFirstHit_BlocksWallAndEmbeddedMuzzle" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.PhysicsFirstHit_BlocksWallAndEmbeddedMuzzle" methodname="PhysicsFirstHit_BlocksWallAndEmbeddedMuzzle" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" seed="1572819390" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.002199" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1243" name="QuickTriggerTapResolvesTwoIndependentShots" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.QuickTriggerTapResolvesTwoIndependentShots" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.001518" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1241" name="QuickTriggerTapResolvesTwoIndependentShots(Trench)" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.QuickTriggerTapResolvesTwoIndependentShots(Trench)" methodname="QuickTriggerTapResolvesTwoIndependentShots" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" seed="1023978397" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.000617" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1242" name="QuickTriggerTapResolvesTwoIndependentShots(Urban)" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.QuickTriggerTapResolvesTwoIndependentShots(Urban)" methodname="QuickTriggerTapResolvesTwoIndependentShots" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" seed="366489770" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.000090" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-case id="1240" name="TrackingAndPause_BlockHeldTrigger_AndStopMovement" fullname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests.TrackingAndPause_BlockHeldTrigger_AndStopMovement" methodname="TrackingAndPause_BlockHeldTrigger_AndStopMovement" classname="VRShooting.Tests.PlayMode.Screen23_CombatInputPlayModeTests" runstate="Runnable" seed="476608828" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.003018" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1255" name="TacticalUIArtTests" fullname="VRShooting.Tests.PlayMode.TacticalUIArtTests" classname="VRShooting.Tests.PlayMode.TacticalUIArtTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.026984" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1261" name="Screen07_TargetPlotCopiesImpactsAndHasCanvasRenderer" fullname="VRShooting.Tests.PlayMode.TacticalUIArtTests.Screen07_TargetPlotCopiesImpactsAndHasCanvasRenderer" methodname="Screen07_TargetPlotCopiesImpactsAndHasCanvasRenderer" classname="VRShooting.Tests.PlayMode.TacticalUIArtTests" runstate="Runnable" seed="310167766" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.000644" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1260" name="Screen15_HealthWarningResetsAndSquadBackingLeavesAimClear" fullname="VRShooting.Tests.PlayMode.TacticalUIArtTests.Screen15_HealthWarningResetsAndSquadBackingLeavesAimClear" methodname="Screen15_HealthWarningResetsAndSquadBackingLeavesAimClear" classname="VRShooting.Tests.PlayMode.TacticalUIArtTests" runstate="Runnable" seed="64319727" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.011763" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1258" name="Screen15_TrenchBarsAndMapSymbolsUseOnlyDtoValues" fullname="VRShooting.Tests.PlayMode.TacticalUIArtTests.Screen15_TrenchBarsAndMapSymbolsUseOnlyDtoValues" methodname="Screen15_TrenchBarsAndMapSymbolsUseOnlyDtoValues" classname="VRShooting.Tests.PlayMode.TacticalUIArtTests" runstate="Runnable" seed="1902202645" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.011362" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1259" name="SelectedButtonKeepsItsPaletteAcrossPointerStates" fullname="VRShooting.Tests.PlayMode.TacticalUIArtTests.SelectedButtonKeepsItsPaletteAcrossPointerStates" methodname="SelectedButtonKeepsItsPaletteAcrossPointerStates" classname="VRShooting.Tests.PlayMode.TacticalUIArtTests" runstate="Runnable" seed="1980346670" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.000408" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1257" name="StylingKeepsTextNonInteractiveAndUsesSharedFont" fullname="VRShooting.Tests.PlayMode.TacticalUIArtTests.StylingKeepsTextNonInteractiveAndUsesSharedFont" methodname="StylingKeepsTextNonInteractiveAndUsesSharedFont" classname="VRShooting.Tests.PlayMode.TacticalUIArtTests" runstate="Runnable" seed="440238628" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.000297" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1256" name="ThemeShipsWithPaddedChineseFontAndAllMapArtwork" fullname="VRShooting.Tests.PlayMode.TacticalUIArtTests.ThemeShipsWithPaddedChineseFontAndAllMapArtwork" methodname="ThemeShipsWithPaddedChineseFontAndAllMapArtwork" classname="VRShooting.Tests.PlayMode.TacticalUIArtTests" runstate="Runnable" seed="6335247" result="Passed" start-time="2026-11-12 03:36:50Z" end-time="2026-11-12 03:36:50Z" duration="0.000997" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

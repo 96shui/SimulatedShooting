@@ -218,6 +218,8 @@ namespace SimulatedShooting.Scene
             if(binding.TrainingRiflePrefab==null)return ServiceResult<Unit>.Fail(ErrorCode.ResourceUnavailable,"Training rifle binding missing");
             if(grenadeTactics!=null&&binding.GrenadePrefab==null&&Resources.Load<GameObject>("Combat/Grenade_M67")==null&&Resources.Load<GameObject>("Combat/m67_low")==null)
                 return ServiceResult<Unit>.Fail(ErrorCode.ResourceUnavailable,"M67 grenade model missing");
+            if(grenadeTactics!=null&&binding.GrenadeExplosionClip==null&&Resources.Load<AudioClip>(CombatExplosionVfx.BlastAudioResourcePath)==null)
+                return ServiceResult<Unit>.Fail(ErrorCode.ResourceUnavailable,"Grenade explosion audio missing");
             core=combat;world=facts;state=visual;grenades=grenadeTactics;tick=advance;session=id;ResetPlayer();
             characterActionsLocked=core.GetSnapshot(id).Data.State==SessionState.Preparing;
             foreach(var door in binding.Doors)door.ResetView();
@@ -380,10 +382,11 @@ namespace SimulatedShooting.Scene
         ServiceResult<Unit> AdvanceGrenadeCommand(IXRTrainingInput input)
         {
             if(grenades==null)return ServiceResult<Unit>.Ok(Unit.Value);
-            if(mode==TrainingMode.Trench&&input is P3XRTrainingInput p3&&p3.GrenadePressed)
+            if(input is P3XRTrainingInput p3&&p3.GrenadePressed)
                 grenades.RequestFirstTeammateThrow();
-            // The tactic service still enforces Running, tracking, thrower state and cooldown.
-            return grenades.Advance();
+            // The owning mission advances after CombatCoreService drains this frame's facts.
+            // Resolving a fuse here would reject the explosion as Busy before controller.Step.
+            return ServiceResult<Unit>.Ok(Unit.Value);
         }
         CombatInputFrameDto Frame(CombatCoreSnapshotDto snapshot,IXRTrainingInput input)
         {
@@ -690,7 +693,7 @@ namespace SimulatedShooting.Scene
             }
             var blast = new GameObject("VFX_GrenadeExplosion_" + explosion.GrenadeId);
             blast.transform.SetParent(transform); blast.transform.position = explosion.Position;
-            blast.AddComponent<CombatExplosionVfx>();
+            blast.AddComponent<CombatExplosionVfx>().ConfigureAudio(binding.GrenadeExplosionClip);
         }
         void OnGrenadeCancelled()
         {

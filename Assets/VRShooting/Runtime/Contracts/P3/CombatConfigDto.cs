@@ -71,7 +71,7 @@ namespace VRShooting.Common
         };
 
         public static CombatConfigDto ForMode(TrainingMode mode)
-            => mode == TrainingMode.Trench ? Default.WithPlayerHealth(10f) : Default;
+            => mode == TrainingMode.Trench || mode == TrainingMode.Urban ? Default.WithPlayerHealth(10f) : Default;
 
         public ServiceResult<Unit> Validate()
         {

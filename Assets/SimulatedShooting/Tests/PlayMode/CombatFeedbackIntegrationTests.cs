@@ -95,14 +95,15 @@ namespace SimulatedShooting.Tests.PlayMode
                     PlayerPosition = position, PlayerForward = -enemy.transform.forward,
                     MuzzlePosition = position + Vector3.up * 1.2f, AimDirection = -enemy.transform.forward };
                 runtime.Step(.01f);
-                var maxHealth = mode == TrainingMode.Trench ? 10 : 5;
+                var maxHealth = 10;
                 Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(maxHealth));
                 var angle=Vector3.Angle(enemy.transform.forward,Vector3.ProjectOnPlane(position-enemy.transform.position,Vector3.up));
                 runtime.Step(.05f);
                 Assert.That(Vector3.Angle(enemy.transform.forward,Vector3.ProjectOnPlane(position-enemy.transform.position,Vector3.up)),Is.LessThan(angle));
                 Assert.That(enemy.ShotVisualFeedbackCount,Is.Zero,"Enemy turns during its existing discovery interval");
                 runtime.Step(.1f);
-                runtime.Step(.86f);
+                runtime.Step(.99f);
+                runtime.Step(.01f);
                 Assert.That(Vector3.Angle(enemy.transform.forward,Vector3.ProjectOnPlane(position-enemy.transform.position,Vector3.up)),Is.LessThan(1f));
                 Assert.That(core.GetSnapshot(session).Data.Player.Health, Is.EqualTo(maxHealth - 1), "Production line of sight must reach the service");
                 Assert.That(enemy.ShotVisualFeedbackCount, Is.EqualTo(1));
@@ -113,7 +114,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 Assert.That(enemy.Audio.rolloffMode,Is.EqualTo(AudioRolloffMode.Linear));
                 Assert.That(enemy.Audio.minDistance,Is.GreaterThanOrEqualTo(8));
                 Assert.That(enemy.Audio.maxDistance,Is.GreaterThan(30));
-                var tracer = runtime.GetComponentsInChildren<BallisticTracerVisual>().Single(t => t.name.StartsWith("Tracer_Enemy_"));
+                var tracer = runtime.GetComponentsInChildren<BallisticTracerVisual>().Single(t => t.name.StartsWith("Tracer_Actor_"));
                 Assert.That(tracer.HasProjectileVisual, Is.True);
                 Assert.That(tracer.GetComponent<LineRenderer>().endWidth, Is.GreaterThan(.005f));
                 Assert.That(runtime.PlayerDamageFeedbackCount, Is.EqualTo(1));

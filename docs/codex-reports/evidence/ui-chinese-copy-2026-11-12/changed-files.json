@@ -1,0 +1,217 @@
+[
+  {
+    "file": "Assets/Scenes/MovingTargetRangeScene.unity",
+    "before_sha256": "557a2761a43aa93a85ec4c0e2e53b7063925d31e0a4fe62041ab3c7138721b78",
+    "after_sha256": "10d5c9b3ba98ee71e33b06c6c4853cd6f8bfb4dc4ec6fb757df00313d2a4462d"
+  },
+  {
+    "file": "Assets/Scenes/ZeroingRangeScene.unity",
+    "before_sha256": "2095c4bf5dbdd0dd1a8e2fbb1aad132eaeb8832be9d0db8268e163b47e4beef3",
+    "after_sha256": "68f99343a0988c6415793e480db1634a64b9b64f85d7f6c9e05fa6e15c877b29"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Editor/ProneRangeSceneMigration.cs",
+    "before_sha256": "2765828d548cdb94229c0d71b8fa8295fc025772862d4cd8eb6b054a18ab5003",
+    "after_sha256": "2faaa5b5f31240c0dd11b65d6b6b10da62768219041c201421705e9b33c856d4"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneDefinitionBuilder.cs",
+    "before_sha256": "10237e2f3b5700a4befdcbf4b6a16164b69b014310e2ddc242ce95e1fdeeea93",
+    "after_sha256": "36c3f76c51aba549e706a4beee1bfd56e82199c34bdb4cdae06f914cb1b7ce13"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/FirstPersonTrainingWeaponController.cs",
+    "before_sha256": "b26304f9a40e4d462cf1903d0bc6f978a18b8bfd83d5f7322d850d40fd81cf59",
+    "after_sha256": "1bbdf7ed9d1a3845abca33bc76d6cd7895dc07e8e38f99d648689bae16f08d4a"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Tests/EditMode/CombatSceneTests.cs",
+    "before_sha256": "b650ce2686883b91070cce0a98a9e761b75dac2258d439c8d15ba425bc3f31b2",
+    "after_sha256": "e6cbe2364f574942b85845fb5993fde4b5a842d2cce2747d8ecedd0b410caf9f"
+  },
+  {
+    "file": "Assets/VRShooting/Editor/TacticalUIGallery.cs",
+    "before_sha256": "c8f1f4753311801ab243b00c824a8a256be5b7a56d08cdb806e8822e3a6247f6",
+    "after_sha256": "7d618516cb6141188407c121aa998f5f9df3886f52cd0c82c60681b35e475f83"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/CombatMapCatalog.cs",
+    "before_sha256": "bd4622b0bc574377565f155062368d97d608d299bfb660828c73fadddf343145",
+    "after_sha256": "839adc7a9d24f9767b4fa6096c3da285d18830f6f8e26eb72bc1e6901e8895d3"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/TrenchService.cs",
+    "before_sha256": "a974d9da137e5b993dd969cfae35d7feedc4ff2fa812da85459c098c3e30af1d",
+    "after_sha256": "4ef7d41de1560cf938e55a95afd93e5eca530528fdc9fe1aad3ae6176a730f78"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/UrbanService.cs",
+    "before_sha256": "6a75214224de12c60a9419ab5c57695c73ab0f50b3caf26b672fe776486e54d8",
+    "after_sha256": "faad45d207a4b33fb222f59b9a68d2844a3000b48ec214ddf40e41058c4669c2"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "before_sha256": "18d78eca1fdbac3298f881e88ef76d2629bd6511048d6224dfe77d9848bea34c",
+    "after_sha256": "9f2f8de9cbc29c6bd21977113ea7114fc609fc6cfba678278913927d6e9f7075"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "before_sha256": "dcc4cfc7d453c79f59e1df5ffe172972a4f381b97e47197c72faad914cfff8c0",
+    "after_sha256": "4d04cf813fea5676841502024eebf60f1bf10913984f2e09bb06af132a64f8c6"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MovingTargetUIPresenter.cs",
+    "before_sha256": "4b0dc32feeb313b52a369bfdc25127c9c4a7ad7d08869e70273e4b7a05ceee93",
+    "after_sha256": "a59ba59a2af7a0fbdee938e2b8b46c7b243ad9a4ad8fdda493c5455c44850eed"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/P3CombatUIRoot.cs",
+    "before_sha256": "911ce849fd33158d68550c278b0a36acd371c9a809eb2a1713163c8b13d3b443",
+    "after_sha256": "8bfe64de1ebaec3ba41ad5612a0f293d8f2a5a9a9e66ef9c4d0fbb83bb90f381"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/P3DroneReconView.cs",
+    "before_sha256": "3e8e4ddfa0f94a3a0cb7d7ca003ca72f012baf9c7552d4c02743fb72cab14fac",
+    "after_sha256": "a92fa0d5d7dec5030861700e2ecfe5a52a519e8362838c43fdb4e1033228209d"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/P3TrenchUI.cs",
+    "before_sha256": "357b6d90c6af71cf4add50489698b5a2210fcf7c3c3b91cde9dd465076748815",
+    "after_sha256": "f3a334b71593647782d51d14e87fb0e14c3193961a500c9ee91faabfd775053f"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/P3UiCommon.cs",
+    "before_sha256": "58f611baeb5c5905894bb2461b28f86d0d9fd8d068240c0d5c2cc51c6f87649c",
+    "after_sha256": "ccb0098631c8178321d47e82d6a2f3acb5b18de38bb8f2db25947619a4e43526"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/P3UrbanUI.cs",
+    "before_sha256": "ffbe8365fdc185a1bad74841fedc3c0626b3a6cd892a0f36289b95f8c5ae7306",
+    "after_sha256": "3704f5bdfb8b720afae31ef28c7e861fcae7a322e004386d04080ddaf2fd4f5e"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/TrainingPresentationView.cs",
+    "before_sha256": "0dd37e934566bafdd5b38e3e34c9aceaed0e7eaf33181c53239cef6b40226410",
+    "after_sha256": "fba6a334545e4f666a389510df03aa44c64be43f28547a0e67972c471d273edc"
+  },
+  {
+    "file": "Assets/VRShooting/Tests/EditMode/Application/WeaponControlServiceTests.cs",
+    "before_sha256": "4b03a41e7bef1c5865eb34fbca84d6079243cfdbf7d51a07b4b19103a847a5e0",
+    "after_sha256": "c009a6d2732d68d09c17e4ae70f0b5665aa8c397272f02e6e0cebbfe30600d43"
+  },
+  {
+    "file": "Assets/VRShooting/Tests/PlayMode/TacticalUIArtTests.cs",
+    "before_sha256": "bff4d712514ee01c438b495f4d2a131184e429bf474804d09149e244cfe1d9fc",
+    "after_sha256": "52bde981f4c489575ce8e3189eb2343321b2f35c6764856d543a43ccb5421014"
+  },
+  {
+    "file": "Assets/VRShooting/Tests/PlayMode/UI/P3UiTask002_005_008_011PlayModeTests.cs",
+    "before_sha256": "6a1866b8718db3a08f782264d9606afe5fa3a831de62fcee6897c531130983da",
+    "after_sha256": "b565af165f54825b2775bdf6acf7e484d36e315942579ab160ee3b38e9c99014"
+  },
+  {
+    "file": "Assets/VRShooting/Tests/PlayMode/UI/Screen00_TrainingPresentationPresenterPlayModeTests.cs",
+    "before_sha256": "a9c4bd5a75f21be70aa203f53c311524bafb9db5383a4ae8d6f963a0cc5c86a8",
+    "after_sha256": "8a2d91039f0de92ee693e3c1d3e55ca59576ab530e924278a4cf59b2c2273413"
+  },
+  {
+    "file": "Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs",
+    "before_sha256": "bfc180eb6fd0e16607407fe0a395b7940713d41b6c00f8945f9c012653e185c3",
+    "after_sha256": "12369447275921cb62fd0d053486849b07e8778a366272f84540e88817a1f822"
+  },
+  {
+    "file": "Assets/VRShooting/Tests/PlayMode/UI/Screen28_DroneMonitorUiTests.cs",
+    "before_sha256": "7d3e0d00fbb4d501e941800b5d421a839229a5bf111241e349b447b81f687850",
+    "after_sha256": "8e372da7378dd67cbb775d44f936c8c50de45f8d667fe63d7c68aaa5eae20653"
+  },
+  {
+    "file": "Assets/VRShooting/Tests/Support/P3Fixtures.cs",
+    "before_sha256": "ce015ae8828822a752253c60623669972ca3243eeb7620d9745a7452f19a5443",
+    "after_sha256": "0f6a7f63c7aa1180e10df8f224c0d35252facae01c0db57f6b0d5d7cad222269"
+  },
+  {
+    "file": "docs/BDD/screens/00-P1P2卧姿固定射击交互.feature.md",
+    "before_sha256": "8725cf7272e5e6103e3875199822f57905d9db537963dc9b408ae557d156bb8e",
+    "after_sha256": "3bc31656095cc5a88d2ca3ed735c85b1d174a502404b16fd037c758ad3d5e27a"
+  },
+  {
+    "file": "docs/BDD/screens/02-游戏主界面.feature.md",
+    "before_sha256": "789bacc7ea2fe0d3a753d5f427d03332d1036e1012f65d403f81b2ffcd705c89",
+    "after_sha256": "17cefa662e3ba13e0ce75d4f60aabbef5bd7858e935f625baa0eadd6ff0b6e05"
+  },
+  {
+    "file": "docs/BDD/screens/04-100m任务说明.feature.md",
+    "before_sha256": "13edee35990766d6f67cad047235ebfdcb534d5f641ba4c7a29827a2577d4a3a",
+    "after_sha256": "5e361aeac1241308dfefaabdc25b4e89541c28d34d56f77175013b68620efe6d"
+  },
+  {
+    "file": "docs/BDD/screens/12-堑壕地图选择.feature.md",
+    "before_sha256": "2fc725181d1e9ee0d584f32781953fce6db53ebf10908823a0eac7cd50c95f07",
+    "after_sha256": "2f767b5c6e8bddc92b9267b4b5a74ceb6d475105cea056ddd1f96a8b3602240c"
+  },
+  {
+    "file": "docs/BDD/screens/18-城镇地图选择.feature.md",
+    "before_sha256": "7537f56c600fb77effdd0a7c675438b9af0aba5d89ca0845eddba62b142533b7",
+    "after_sha256": "5bd4e8ffd9866cfc38d22114f62f394fb501411ee6c6625f0d71d08a72609524"
+  },
+  {
+    "file": "docs/BDD/screens/20-建筑搜索HUD.feature.md",
+    "before_sha256": "85fad12c38b3a3ed5028fcac0b71f3aa487dc4c335f7be48c29eb22443f87367",
+    "after_sha256": "3f549e5f1c9ca65b768744ea5fb7ac52ff8195ad2e22edb4568c0cbf746660a9"
+  },
+  {
+    "file": "docs/BDD/screens/21-城镇任务结算.feature.md",
+    "before_sha256": "01255e48e62a071ea0b29d9624de0f2b438dd230368240ab2cbf5f71a284bee6",
+    "after_sha256": "fa9c927ecf9871c90cfcf90626aee8b91279967fef1690d3b3a30b53960a2d0d"
+  },
+  {
+    "file": "docs/BDD/screens/28-模式三无人机开场侦察.feature.md",
+    "before_sha256": "23c5b67842c92303f4092a6bcfbcbbbe3f6d71e08b278ca5eef02b6e0a9a6125",
+    "after_sha256": "27c5cbec21dcd79c0071a0910b483f21a0e6bdbb2677cd864fe17ee2e8d9e98d"
+  },
+  {
+    "file": "docs/任务规格/阶段一-P1-100m射校原型闭环/UI/task008-ui-mainmenu-zeroing-briefing.md",
+    "before_sha256": "3744ce878b06ce93180c52a09709d2b8e8e69cd5cacbe3339cd5786199d767ff",
+    "after_sha256": "7d1386452ad6fd6a12b6b4c21ba4adacaba4775a95fc4437a378d6785d6f372a"
+  },
+  {
+    "file": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/UI/task011-urban-building-hud-and-results.md",
+    "before_sha256": "b2bea13cef74636d9c5be2bddcb53fadc02b4a433c6edfa759464fba85b22068",
+    "after_sha256": "61c9fdc3f7b4f8ff4642f0a89c38b07903e18db4eba57b378feca31d42e8549e"
+  },
+  {
+    "file": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/UI/task018-mode3-drone-monitor-ui.md",
+    "before_sha256": "6ce79e0846f50f395e343d545163782c9f2418aa4abfcf94911845851e29303f",
+    "after_sha256": "251ea5662a1e6cd10051f3258a27cb144cf67cf3ce94e69b55bbb2462b8e448f"
+  },
+  {
+    "file": "docs/接口文档/00-UI与玩法服务层交互总约束.md",
+    "before_sha256": "3f55a66f8d34ffd7c8769fcfb78dde8741b97e98ea697057fe74bc93832da64c",
+    "after_sha256": "1938367b016b71964576bdf14deffffca10ddadc8b36fae4a21df6e2e6539b88"
+  },
+  {
+    "file": "docs/接口文档/01-页面导航与UI事件.md",
+    "before_sha256": "2ca7a77c7b6686550b897c02f652a1e2051b728b2dd89197e8d7efb1495c20ea",
+    "after_sha256": "d42b267d464bbb661e180619dbb6ec161f6e2d2d7591f6373578379e841ff560"
+  },
+  {
+    "file": "docs/接口文档/06-武器与弹药服务.md",
+    "before_sha256": "18715f04ae296babc2cf04c13391cc73fb21237e2e1346f31f7485a51be639b4",
+    "after_sha256": "22e643512c96ac4eac49c96116c7361ca2540581770e9c95b17a476cd2f67d53"
+  },
+  {
+    "file": "docs/接口文档/09-城镇任务服务.md",
+    "before_sha256": "6da2f44f21e10da876d7aaabc0e783fb21241658d5abb1e0336580c71887df99",
+    "after_sha256": "42c5c2432b8e5e76690a79b4603858ff1064e7f66d14735d9f3470fc9b62e74a"
+  },
+  {
+    "file": "docs/接口文档/13-P1P2卧姿射击与界面显隐契约.md",
+    "before_sha256": "4d94bbe8413c24cdcdf3e2e8b0980639f2eb0860f6ec7ed26cbcb528a6f71b40",
+    "after_sha256": "a2dae57e9b7c981c275bee6cfe02f07179c0af8c5722a609282f6bcdb9132838"
+  },
+  {
+    "file": "docs/接口文档/20-模式三无人机开场侦察.md",
+    "before_sha256": "8ee66d17886431979296564ff6f6e0fba7cae091cbbe083ef0ee94ff893114af",
+    "after_sha256": "329b8d3fb9e4e6c19fd5f0245f042501fac98f38272d11c2baaa6a0439fa1a28"
+  }
+]

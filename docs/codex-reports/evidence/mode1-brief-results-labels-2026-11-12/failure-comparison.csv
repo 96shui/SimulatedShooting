@@ -1,0 +1,349 @@
+﻿platform,fullname,baselineResult,currentResult,baselineMessage,currentMessage,messageUnchanged,priorWorktreeMessage
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms,Failed,Failed,"  Expected: 13
+  But was:  11
+","  Expected: 13
+  But was:  11
+",True,"  Expected: 13
+  But was:  11
+"
+editmode,"SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(""Assets/Scenes/MovingTargetRangeScene.unity"",""MovingTargetRange"")",Failed,Failed,"  Expected: 100.0f +/- 0.0199999996f
+  But was:  40.7099991f
+","  Expected: 100.0f +/- 0.0199999996f
+  But was:  40.7099991f
+",True,"  Expected: 100.0f +/- 0.0199999996f
+  But was:  40.7099991f
+"
+editmode,"SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(""Assets/Scenes/ZeroingRangeScene.unity"",""ZeroingRange"")",Failed,Failed,"  Expected: 100.0f +/- 0.0199999996f
+  But was:  38.9079971f
+","  Expected: 100.0f +/- 0.0199999996f
+  But was:  38.9079971f
+",True,"  Expected: 100.0f +/- 0.0199999996f
+  But was:  38.9079971f
+"
+editmode,"SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(""Assets/Scenes/MovingTargetRangeScene.unity"")",Failed,Failed,"  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.033056885f
+","  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.033056885f
+",True,"  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.033056885f
+"
+editmode,"SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(""Assets/Scenes/ZeroingRangeScene.unity"")",Failed,Failed,"  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.0330568887f
+","  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.0330568887f
+",True,"  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.0330568887f
+"
+editmode,SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SharedPrefabMuzzleMatchesActualMeshOpening,Failed,Failed,"  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.0330568887f
+","  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.0330568887f
+",True,"  Muzzle (-0.004500, -0.041000, 0.455000) must sit at the mesh rim centre plus 1mm clearance (-0.004701, -0.007982, 0.456597).
+  Expected: less than 0.000199999995f
+  But was:  0.0330568887f
+"
+editmode,SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_ImportedMeshHasAnOpenRearApertureAndTheMeasuredFrontPost,Failed,Failed,"  Three millimetres above the aperture must intersect its metal ring
+  Expected: True
+  But was:  False
+","  Three millimetres above the aperture must intersect its metal ring
+  Expected: True
+  But was:  False
+",True,"  Three millimetres above the aperture must intersect its metal ring
+  Expected: True
+  But was:  False
+"
+editmode,SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_PrefabAimLineMatchesVisibleApertureAndFrontPostAtOneHundredMetres,Failed,Failed,"  The VR player aligns real model sights, not a virtual +Z anchor
+  Expected: less than 0.00999999978f
+  But was:  2.03472328f
+","  The VR player aligns real model sights, not a virtual +Z anchor
+  Expected: less than 0.00999999978f
+  But was:  2.03472328f
+",True,"  The VR player aligns real model sights, not a virtual +Z anchor
+  Expected: less than 0.00999999978f
+  But was:  2.03472328f
+"
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Trench),Failed,Failed,"  one remaining round cannot start a P2 sequence
+  Expected: 0
+  But was:  1
+","  one remaining round cannot start a P2 sequence
+  Expected: 0
+  But was:  1
+",True,"  one remaining round cannot start a P2 sequence
+  Expected: 0
+  But was:  1
+"
+editmode,VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Urban),Failed,Failed,"  one remaining round cannot start a P2 sequence
+  Expected: 0
+  But was:  1
+","  one remaining round cannot start a P2 sequence
+  Expected: 0
+  But was:  1
+",True,"  one remaining round cannot start a P2 sequence
+  Expected: 0
+  But was:  1
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins,Failed,Failed,"  Expected: True
+  But was:  False
+","  Expected: True
+  But was:  False
+",True,"  Expected: True
+  But was:  False
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(False),Failed,Failed,"  Expected: 1
+  But was:  0
+","  Expected: 1
+  But was:  0
+",True,"  Expected: 1
+  But was:  0
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(True),Failed,Failed,"  Expected: 2
+  But was:  0
+","  Expected: 2
+  But was:  0
+",True,"  Expected: 2
+  But was:  0
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps,Failed,Failed,"  Expected: True
+  But was:  False
+","  Expected: True
+  But was:  False
+",True,"  Expected: True
+  But was:  False
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult,Failed,Failed,"  Expected: True
+  But was:  False
+","  Expected: True
+  But was:  False
+",True,"  Expected: True
+  But was:  False
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies,Failed,Failed,"  Expected: InvalidState
+  But was:  None
+","  Expected: InvalidState
+  But was:  None
+",True,"  Expected: InvalidState
+  But was:  None
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime,Failed,Failed,"  Expected: True
+  But was:  False
+","  Expected: True
+  But was:  False
+",True,"  Expected: True
+  But was:  False
+"
+editmode,VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds,Failed,Failed,"  Expected: in range (1,2)
+  But was:  0
+","  Expected: in range (1,2)
+  But was:  0
+",True,"  Expected: in range (1,2)
+  But was:  0
+"
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.QuickSwitchDisposesOnlyStaleLease_AndCannotOverwriteUrban,Failed,Failed,"  Expected: UrbanStreetHud
+  But was:  UrbanBuildingHud
+","  Expected: UrbanStreetHud
+  But was:  UrbanBuildingHud
+",True,"  Expected: UrbanStreetHud
+  But was:  UrbanBuildingHud
+"
+editmode,VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.ThreeRetriesUseNewSessions_RejectOldFacts_AndSaveOnlyLatest(Urban),Failed,Failed,"  Expected: True
+  But was:  False
+","  Expected: True
+  But was:  False
+",True,"  Expected: True
+  But was:  False
+"
+playmode,SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd14_NewTrenchAllowsContinuousMovementAndFiring,Failed,Failed,"  89eb640c408c4d8fbaa6d79c724af14d.enemy-001
+  Expected: in range (2.018377,3.428377)
+  But was:  1.92627943f
+","  ab3559b5a9834b859eae43873f5a68bb.enemy-001
+  Expected: in range (2.018377,3.428377)
+  But was:  1.92627943f
+",False,"  d22a264184954a318ca4f2d87ce1c755.enemy-001
+  Expected: in range (2.018377,3.428377)
+  But was:  1.92627943f
+"
+playmode,SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.NewSceneInspectionWalkerCanLeaveEntry,Failed,Failed,"  trench-spawn-1 boots
+  Expected: 2.17788005f +/- 0.0799999982f
+  But was:  1.92738593f
+","  trench-spawn-1 boots
+  Expected: 2.17788005f +/- 0.0799999982f
+  But was:  1.92736709f
+",False,"  trench-spawn-1 boots
+  Expected: 2.17788005f +/- 0.0799999982f
+  But was:  1.92737138f
+"
+playmode,SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.TrenchEnemyAttacksShowShotTracerAudioAndPlayerBlood,Failed,Passed,System.InvalidOperationException : Sequence contains no matching element,,False,
+playmode,SimulatedShooting.Tests.PlayMode.CombatFeedbackIntegrationTests.UrbanEnemyAttacksShowShotTracerAudioAndPlayerBlood,Failed,Passed,System.InvalidOperationException : Sequence contains no matching element,,False,
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup,Failed,Failed,"  Expected: 15
+  But was:  13
+","  Expected: 15
+  But was:  13
+",True,"  Expected: 15
+  But was:  13
+"
+playmode,SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors,Failed,Failed,"  Expected: 15
+  But was:  13
+","  Expected: 15
+  But was:  13
+",True,"  Expected: 15
+  But was:  13
+"
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore,Failed,Failed,"  Expected: less than 0.0199999996f
+  But was:  0.0931938887f
+","  Expected: less than 0.0199999996f
+  But was:  0.0931938887f
+",True,"  Expected: less than 0.0199999996f
+  But was:  0.0931938887f
+"
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd31_DayHud_RestoresTheOriginalRearRowAndFortyMetreRoute,Failed,Failed,"  Expected: 100.0f +/- 0.100000001f
+  But was:  40.7099991f
+","  Expected: 100.0f +/- 0.100000001f
+  But was:  40.7099991f
+",True,"  Expected: 100.0f +/- 0.100000001f
+  But was:  40.7099991f
+"
+playmode,SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy,Failed,Failed,"  Missing ZeroingRange start-area copy: ShootingBench
+  Expected: True
+  But was:  False
+","  Missing ZeroingRange start-area copy: ShootingBench
+  Expected: True
+  But was:  False
+",True,"  Missing ZeroingRange start-area copy: ShootingBench
+  Expected: True
+  But was:  False
+"
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene,Failed,Failed,"  Expected: UrbanStreetHud
+  But was:  UrbanBuildingHud
+","  Expected: UrbanStreetHud
+  But was:  UrbanBuildingHud
+",True,"  Expected: UrbanStreetHud
+  But was:  UrbanBuildingHud
+"
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds,Failed,Failed,System.NullReferenceException : Object reference not set to an instance of an object,System.NullReferenceException : Object reference not set to an instance of an object,True,System.NullReferenceException : Object reference not set to an instance of an object
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_DeathThreeRetriesTrackingAndMovement,Failed,Failed,"  Real line-of-sight enemy attacks must reach failure
+  Expected: True
+  But was:  False
+","  Real line-of-sight enemy attacks must reach failure
+  Expected: True
+  But was:  False
+",True,"  Real line-of-sight enemy attacks must reach failure
+  Expected: True
+  But was:  False
+"
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_ProductionVictoryRetryAndReturn,Failed,Failed,"  Entry prompt should reflect physical range: 
+  Expected: True
+  But was:  False
+","  Entry prompt should reflect physical range: 
+  Expected: True
+  But was:  False
+",True,"  Entry prompt should reflect physical range: 
+  Expected: True
+  But was:  False
+"
+playmode,SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound,Failed,Failed,"  Real VR sights and sampled gun line must meet within one centimetre
+  Expected: less than 1.0f
+  But was:  77.9776382f
+","  Real VR sights and sampled gun line must meet within one centimetre
+  Expected: less than 1.0f
+  But was:  77.9776382f
+",True,"  Real VR sights and sampled gun line must meet within one centimetre
+  Expected: less than 1.0f
+  But was:  77.9776382f
+"
+playmode,SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands,Failed,Failed,"  Expected: 2
+  But was:  0
+","  Expected: 2
+  But was:  0
+",True,"  Expected: 2
+  But was:  0
+"
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles,Failed,Failed,"  Expected: less than 1.01999998f
+  But was:  22.9285927f
+","  Expected: less than 1.01999998f
+  But was:  22.9285927f
+",True,"  Expected: less than 1.01999998f
+  But was:  22.9285927f
+"
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd04_PickupPromptFacesShooterAboveRifleWithoutChangingText,Failed,Failed,"  Expected string length 15 but was 8. Strings differ at index 0.
+  Expected: ""GRIP TO PICK UP""
+  But was:  ""两个手柄抓握持枪""
+  -----------^
+","  Expected string length 15 but was 8. Strings differ at index 0.
+  Expected: ""GRIP TO PICK UP""
+  But was:  ""两个手柄抓握持枪""
+  -----------^
+",True,"  Expected string length 15 but was 8. Strings differ at index 0.
+  Expected: ""GRIP TO PICK UP""
+  But was:  ""两个手柄抓握持枪""
+  -----------^
+"
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd31_TargetKeepsItsDimensionsInTheOriginalRearRow,Failed,Failed,"  Expected: 100.0f +/- 0.0199999996f
+  But was:  38.9079971f
+","  Expected: 100.0f +/- 0.0199999996f
+  But was:  38.9079971f
+",True,"  Expected: 100.0f +/- 0.0199999996f
+  But was:  38.9079971f
+"
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_TrainingRifleUsesLicensedQbz191Visual,Failed,Failed,"  Expected: less than 0.00100000005f
+  But was:  0.0235372111f
+","  Expected: less than 0.00100000005f
+  But was:  0.0235372111f
+",True,"  Expected: less than 0.00100000005f
+  But was:  0.0235372111f
+"
+playmode,SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease,Failed,Failed,"  Expected: 0.119999997f +/- 0.00100000005f
+  But was:  0.219999999f
+","  Expected: 0.119999997f +/- 0.00100000005f
+  But was:  0.219999999f
+",True,"  Expected: 0.119999997f +/- 0.00100000005f
+  But was:  0.219999999f
+"
+playmode,VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.BuildingFailureKeepsCountsAndOldSessionInputsAreRejected,Failed,Failed,System.InvalidOperationException : Sequence contains no matching element,System.InvalidOperationException : Sequence contains no matching element,True,System.InvalidOperationException : Sequence contains no matching element
+playmode,VRShooting.Tests.PlayMode.Screen26_CombatCompositionPlayModeTests.UrbanButtonsPreserveStreetSessionThroughRoomsAndRetry,Failed,Failed,System.InvalidOperationException : Nullable object must have a value.,System.InvalidOperationException : Nullable object must have a value.,True,System.InvalidOperationException : Nullable object must have a value.
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet,Failed,Failed,"  Expected: String containing ""1-2""
+  But was:  ""建筑内部敌人：3-6""
+","  Expected: String containing ""1-2""
+  But was:  ""建筑内部敌人：3-6""
+",True,"  Expected: String containing ""1-2""
+  But was:  ""建筑内部敌人：3-6""
+"
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands,Failed,Failed,"  Expected: String containing ""未搜索""
+  But was:  ""房间1 · 靠近后开门""
+","  Expected: String containing ""未搜索""
+  But was:  ""房间1 · 靠近后开门""
+",True,"  Expected: String containing ""未搜索""
+  But was:  ""房间1 · 靠近后开门""
+"
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce,Failed,Failed,"  Expected: String containing ""街道清除：已清除""
+  But was:  ""消灭建筑敌人：5 / 5
+剩余弹药：76
+队友状态：
+玩家 · 正常 · 生命 100
+二号队友 · 跟随 · 生命 100
+三号队友 · 跟随 · 生命 100
+用时：02:00""
+","  Expected: String containing ""街道清除：已清除""
+  But was:  ""消灭建筑敌人：5 / 5
+剩余弹药：76
+队友状态：
+玩家 · 正常 · 生命 100
+二号队友 · 跟随 · 生命 100
+三号队友 · 跟随 · 生命 100
+用时：02:00""
+",True,"  Expected: String containing ""街道清除：已清除""
+  But was:  ""消灭建筑敌人：5 / 5
+剩余弹药：76
+队友状态：
+玩家 · 正常 · 生命 100
+二号队友 · 跟随 · 生命 100
+三号队友 · 跟随 · 生命 100
+用时：02:00""
+"

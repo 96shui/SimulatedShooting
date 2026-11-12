@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="2" result="Failed(Child)" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-12 03:54:28Z" end-time="2026-11-12 03:54:30Z" duration="1.9687247">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="312" result="Failed" site="Child" start-time="2026-11-12 03:54:28Z" end-time="2026-11-12 03:54:30Z" duration="1.968725" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1238" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="206" result="Failed" site="Child" start-time="2026-11-12 03:54:28Z" end-time="2026-11-12 03:54:30Z" duration="1.963562" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="17492" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1239" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="200" result="Failed" site="Child" start-time="2026-11-12 03:54:28Z" end-time="2026-11-12 03:54:30Z" duration="1.963023" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1240" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="200" result="Failed" site="Child" start-time="2026-11-12 03:54:28Z" end-time="2026-11-12 03:54:30Z" duration="1.962784" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1241" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="200" result="Failed" site="Child" start-time="2026-11-12 03:54:28Z" end-time="2026-11-12 03:54:30Z" duration="1.962318" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1017" name="BriefResultsGuidanceRegressionTests" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" testcasecount="8" result="Failed" site="Child" start-time="2026-11-12 03:54:28Z" end-time="2026-11-12 03:54:30Z" duration="1.958570" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1020" name="Bdd05_ModeSelectionReentryClearsAllFacesAndPreservesNewSessionHits" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd05_ModeSelectionReentryClearsAllFacesAndPreservesNewSessionHits" methodname="Bdd05_ModeSelectionReentryClearsAllFacesAndPreservesNewSessionHits" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="277903208" result="Failed" label="Error" start-time="2026-11-12 03:54:28Z" end-time="2026-11-12 03:54:29Z" duration="1.141224" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[System.InvalidOperationException : Sequence contains no matching element]]></message>
+                  <stack-trace><![CDATA[  at System.Linq.Enumerable.First[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Func`2[T,TResult] predicate) [0x00011] in <ea489521390f48908a7ce45cb17a6848>:0 
+  at SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Ui (System.String id) [0x0000d] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\BriefResultsGuidanceRegressionTests.cs:39 
+  at SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Click (System.String id) [0x00000] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\BriefResultsGuidanceRegressionTests.cs:40 
+  at SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests+<Bdd05_ModeSelectionReentryClearsAllFacesAndPreservesNewSessionHits>d__10.MoveNext () [0x0006f] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\BriefResultsGuidanceRegressionTests.cs:128 
+  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46 ]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1019" name="Bdd07_ActualRetryButtonClearsEntireTargetRowIncludingInactiveFaces" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd07_ActualRetryButtonClearsEntireTargetRowIncludingInactiveFaces" methodname="Bdd07_ActualRetryButtonClearsEntireTargetRowIncludingInactiveFaces" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="1080335084" result="Failed" start-time="2026-11-12 03:54:29Z" end-time="2026-11-12 03:54:30Z" duration="0.809848" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  No old red marker may be visible in the retry frame.
+  Expected: False
+  But was:  True
+]]></message>
+                  <stack-trace><![CDATA[at SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests+<Bdd07_ActualRetryButtonClearsEntireTargetRowIncludingInactiveFaces>d__9.MoveNext () [0x001e0] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\BriefResultsGuidanceRegressionTests.cs:116
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

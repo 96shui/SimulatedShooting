@@ -77,14 +77,14 @@ namespace VRShooting.Tests.EditMode
                 }
             }
             Assert.That(hitCount, Is.EqualTo(2));
-            Assert.That(core.Start("fresh-two-hit", mode, new[] { Spawn() }).Data.Player.Health, Is.EqualTo(mode == TrainingMode.Trench ? 10 : 5));
-            Assert.That(core.GetSnapshot("fresh-two-hit").Data.Player.MaxHealth, Is.EqualTo(mode == TrainingMode.Trench ? 10 : 5));
+            Assert.That(core.Start("fresh-two-hit", mode, new[] { Spawn() }).Data.Player.Health, Is.EqualTo(10));
+            Assert.That(core.GetSnapshot("fresh-two-hit").Data.Player.MaxHealth, Is.EqualTo(10));
             Assert.That(core.GetSnapshot("fresh-two-hit").Data.Visual.Entities.Any(e => e.CorpseVisible), Is.False);
         }
 
         [TestCase(TrainingMode.Trench, 10)]
-        [TestCase(TrainingMode.Urban, 5)]
-        public void Bdd29_TrenchSurvivesFiveExtraBulletsAndUrbanKeepsFive(TrainingMode mode, int fatalHit)
+        [TestCase(TrainingMode.Urban, 10)]
+        public void Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(TrainingMode mode, int fatalHit)
         {
             core.Dispose();core=new CombatCoreService(clock);
             core.Start(Session,mode,new[]{Spawn()});
@@ -105,6 +105,27 @@ namespace VRShooting.Tests.EditMode
             Advance(10);Assert.That(kinds.Count,Is.EqualTo(fatalHit * 2 + 1));
             Assert.That(core.Start("fresh-hit-budget",mode,new[]{Spawn()}).Data.Player.Health,Is.EqualTo(fatalHit));
         }
+        // BDD23: acquisition may turn, but a shot deadline only begins after horizontal alignment.
+        [TestCase(TrainingMode.Trench)] [TestCase(TrainingMode.Urban)]
+        public void Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(TrainingMode mode)
+        {
+            core.Dispose(); core = new CombatCoreService(clock);
+            core.Start(Session, mode, new[] { Spawn() });
+            var oblique = Quaternion.Euler(0, 40, 0) * Vector3.back;
+            core.Submit(Sight(forward: oblique)); core.Advance(Session);
+            Assert.That(State.Visual.Entities.Single(e => e.EntityId == Enemy).State, Is.EqualTo(CombatEntityState.Attacking));
+            Advance(2); Assert.That(State.Player.Health, Is.EqualTo(10), "Do not shoot while still turning");
+            See(); Advance(.99); Assert.That(State.Player.Health, Is.EqualTo(10));
+            Advance(.01); Assert.That(State.Player.Health, Is.EqualTo(9));
+            core.Submit(Sight(false)); core.Advance(Session); Advance(3);
+            Assert.That(State.Player.Health, Is.EqualTo(9));
+            Assert.That(State.Visual.Entities.Single(e => e.EntityId == Enemy).State, Is.EqualTo(CombatEntityState.Idle));
+            See(); Advance(.99); Assert.That(State.Player.Health, Is.EqualTo(9));
+            Advance(.01); Assert.That(State.Player.Health, Is.EqualTo(8));
+            core.Submit(Sight(position: new Vector3(0,0,31))); core.Advance(Session); Advance(2);
+            Assert.That(State.Player.Health, Is.EqualTo(8));
+        }
+
         [Test] public void Ammo_DualGrip_SingleShot_AndTimedMagazineReplacement()
         {
             Assert.That(State.Ammo.CurrentMagazine, Is.EqualTo(30)); Assert.That(State.Ammo.ReserveAmmo, Is.EqualTo(60));

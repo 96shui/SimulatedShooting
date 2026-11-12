@@ -1,5 +1,9 @@
 # task017 模式一结算与弹着分析半身胸靶统一
 
+## 2026-11-12 同资源接入简报
+
+本次现有界面修正同时覆盖 `Screen_ZeroingBriefing`：以共享 `TacticalTargetPlot` 替换五圈示意，沿用原靶图区与尺寸文案。追溯BDD04/07、接口04/13；PlayMode比较简报贴图与真实靶面材质引用，保留原比例和环数，无独立重绘。
+
 2026-10-04 用户反馈修订：UI 必须显示场景实际胸靶的一致外观，不再手绘近似轮廓。使用 Editor 从 ZeroingRangeScene 的真实 TargetImpactSurface 对应靶对象正交导出50cm命中面，保留原 Mesh/Material；分析与所有轮次缩略图共用导出纹理，厘米坐标及弹着层不变。
 
 ## 任务信息

@@ -113,7 +113,7 @@ namespace VRShooting.Unity.UI
             var speeds = port.GetAvailableSpeeds();
             if (!speeds.Success || speeds.Data == null || speeds.Data.Count == 0)
             {
-                SetError(speeds.Message ?? "没有可用速度");
+                SetError(P3UiText.Error(speeds.ErrorCode, speeds.Message ?? "没有可用速度"));
                 return;
             }
 
@@ -124,7 +124,7 @@ namespace VRShooting.Unity.UI
             var current = port.GetPresentation();
             if (!current.Success)
             {
-                SetError(current.Message);
+                SetError(P3UiText.Error(current.ErrorCode, current.Message));
                 return;
             }
 
@@ -201,7 +201,7 @@ namespace VRShooting.Unity.UI
             commandInFlight = false;
             if (!result.Success)
             {
-                SetError(result.Message);
+                SetError(P3UiText.Error(result.ErrorCode, result.Message));
                 if (hasPresentation)
                 {
                     view.RenderPresentation(presentation, false);

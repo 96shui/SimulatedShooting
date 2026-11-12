@@ -111,6 +111,8 @@ namespace SimulatedShooting.Scene
             for (var index = impactMarkerRoot.childCount - 1; index >= 0; index--)
             {
                 var marker = impactMarkerRoot.GetChild(index).gameObject;
+                // Destroy is deferred in Play Mode; retry must hide old red dots in this frame.
+                marker.SetActive(false);
                 if (Application.isPlaying)
                     Destroy(marker);
                 else

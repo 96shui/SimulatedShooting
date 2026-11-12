@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="8" result="Failed(Child)" total="8" passed="0" failed="8" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-12 03:52:09Z" end-time="2026-11-12 03:52:16Z" duration="7.1751422">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="312" result="Failed" site="Child" start-time="2026-11-12 03:52:09Z" end-time="2026-11-12 03:52:16Z" duration="7.175142" total="8" passed="0" failed="8" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1238" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="206" result="Failed" site="Child" start-time="2026-11-12 03:52:09Z" end-time="2026-11-12 03:52:16Z" duration="7.170067" total="8" passed="0" failed="8" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="57068" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1239" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="200" result="Failed" site="Child" start-time="2026-11-12 03:52:09Z" end-time="2026-11-12 03:52:16Z" duration="7.169524" total="8" passed="0" failed="8" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1240" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="200" result="Failed" site="Child" start-time="2026-11-12 03:52:09Z" end-time="2026-11-12 03:52:16Z" duration="7.169211" total="8" passed="0" failed="8" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1241" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="200" result="Failed" site="Child" start-time="2026-11-12 03:52:09Z" end-time="2026-11-12 03:52:16Z" duration="7.168715" total="8" passed="0" failed="8" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1017" name="BriefResultsGuidanceRegressionTests" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" testcasecount="8" result="Failed" site="Child" start-time="2026-11-12 03:52:09Z" end-time="2026-11-12 03:52:16Z" duration="7.165950" total="8" passed="0" failed="8" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1018" name="Bdd04_BriefingUsesThePhysicalTargetTexture" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd04_BriefingUsesThePhysicalTargetTexture" methodname="Bdd04_BriefingUsesThePhysicalTargetTexture" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="1497521640" result="Failed" label="Error" start-time="2026-11-12 03:52:09Z" end-time="2026-11-12 03:52:09Z" duration="0.533444" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[System.InvalidOperationException : Sequence contains no elements]]></message>
+                  <stack-trace><![CDATA[  at System.Linq.Enumerable.Single[TSource] (System.Collections.Generic.IEnumerable`1[T] source) [0x0002d] in <ea489521390f48908a7ce45cb17a6848>:0 
+  at SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests+<Bdd04_BriefingUsesThePhysicalTargetTexture>d__5.MoveNext () [0x00047] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\BriefResultsGuidanceRegressionTests.cs:46 
+  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46 ]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1020" name="Bdd05_ModeSelectionReentryClearsAllFacesAndPreservesNewSessionHits" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd05_ModeSelectionReentryClearsAllFacesAndPreservesNewSessionHits" methodname="Bdd05_ModeSelectionReentryClearsAllFacesAndPreservesNewSessionHits" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="1495332706" result="Failed" start-time="2026-11-12 03:52:09Z" end-time="2026-11-12 03:52:10Z" duration="0.868240" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Exercise the entire real target row, not only the bound scoring face.
+  Expected: greater than 1
+  But was:  0
+]]></message>
+                  <stack-trace><![CDATA[at SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.LeaveResiduals () [0x00011] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\BriefResultsGuidanceRegressionTests.cs:76
+at SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests+<Bdd05_ModeSelectionReentryClearsAllFacesAndPreservesNewSessionHits>d__10.MoveNext () [0x00064] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\BriefResultsGuidanceRegressionTests.cs:128
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1019" name="Bdd07_ActualRetryButtonClearsEntireTargetRowIncludingInactiveFaces" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd07_ActualRetryButtonClearsEntireTargetRowIncludingInactiveFaces" methodname="Bdd07_ActualRetryButtonClearsEntireTargetRowIncludingInactiveFaces" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="2039667857" result="Failed" start-time="2026-11-12 03:52:10Z" end-time="2026-11-12 03:52:11Z" duration="0.748019" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests+<Bdd07_ActualRetryButtonClearsEntireTargetRowIncludingInactiveFaces>d__9.MoveNext () [0x0007b] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\BriefResultsGuidanceRegressionTests.cs:104
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1021" name="Bdd11_ResultsAppearAtCurrentEyeHeightAndForwardAfterTurning" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd11_ResultsAppearAtCurrentEyeHeightAndForwardAfterTurning" methodname="Bdd11_ResultsAppearAtCurrentEyeHeightAndForwardAfterTurning" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="1003144472" result="Failed" start-time="2026-11-12 03:52:11Z" end-time="2026-11-12 03:52:12Z" duration="0.773873" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: in range (1,1.2)
+  But was:  -0.423152655f
+]]></message>
+                  <stack-trace><![CDATA[at SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests+<Bdd11_ResultsAppearAtCurrentEyeHeightAndForwardAfterTurning>d__11.MoveNext () [0x0023c] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\BriefResultsGuidanceRegressionTests.cs:169
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1022" name="Bdd29_Mode1HeldRifleHasNoGuidanceAndKeepsHud" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode1HeldRifleHasNoGuidanceAndKeepsHud" methodname="Bdd29_Mode1HeldRifleHasNoGuidanceAndKeepsHud" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="2116020552" result="Failed" start-time="2026-11-12 03:52:12Z" end-time="2026-11-12 03:52:13Z" duration="0.779978" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: False
+  But was:  True
+]]></message>
+                  <stack-trace><![CDATA[at SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests+<Guidance>d__18.MoveNext () [0x0004b] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\BriefResultsGuidanceRegressionTests.cs:241
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1023" name="Bdd29_Mode2HeldRifleHasNoGuidanceAndKeepsHud" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode2HeldRifleHasNoGuidanceAndKeepsHud" methodname="Bdd29_Mode2HeldRifleHasNoGuidanceAndKeepsHud" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="1026570102" result="Failed" start-time="2026-11-12 03:52:13Z" end-time="2026-11-12 03:52:13Z" duration="0.769425" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: False
+  But was:  True
+]]></message>
+                  <stack-trace><![CDATA[at SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests+<Guidance>d__18.MoveNext () [0x0004b] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\BriefResultsGuidanceRegressionTests.cs:241
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1024" name="Bdd29_Mode3HeldRifleHasNoGuidanceAndKeepsHud" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode3HeldRifleHasNoGuidanceAndKeepsHud" methodname="Bdd29_Mode3HeldRifleHasNoGuidanceAndKeepsHud" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="440533783" result="Failed" start-time="2026-11-12 03:52:13Z" end-time="2026-11-12 03:52:15Z" duration="1.913361" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: False
+  But was:  True
+]]></message>
+                  <stack-trace><![CDATA[at SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests+<Guidance>d__18.MoveNext () [0x0004b] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\BriefResultsGuidanceRegressionTests.cs:241
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1025" name="Bdd29_Mode4HeldRifleHasNoGuidanceAndKeepsHud" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode4HeldRifleHasNoGuidanceAndKeepsHud" methodname="Bdd29_Mode4HeldRifleHasNoGuidanceAndKeepsHud" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="1348356681" result="Failed" start-time="2026-11-12 03:52:15Z" end-time="2026-11-12 03:52:16Z" duration="0.772672" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: False
+  But was:  True
+]]></message>
+                  <stack-trace><![CDATA[at SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests+<Guidance>d__18.MoveNext () [0x0004b] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\BriefResultsGuidanceRegressionTests.cs:241
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

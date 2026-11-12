@@ -1,0 +1,134 @@
+[
+  {
+    "file": "gallery/Screen_MainMenu.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "f2f1806f92dd5d7c197a5d35aadccfc36e7c8714b6ba5aaf0c48b61871ec770b"
+  },
+  {
+    "file": "gallery/Screen_MainMenu_ControlsOpen.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "f82975dd887a9bd1434c3907ea8a510ccdb8e25a5cf64dd8cb0f895e60a8f184"
+  },
+  {
+    "file": "gallery/Screen_MovingTargetHud.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "6ef2fb58499795e697827d49141a9413852e0b22689ab0ae919fae262221644c"
+  },
+  {
+    "file": "gallery/Screen_MovingTargetResults.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "b614f42c138524535e5c45a8bb2de1aebf973f4865d40af397bf925d0b978259"
+  },
+  {
+    "file": "gallery/Screen_MovingTargetResults_HelpOpen.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "5f23b9a27a6659ce9ad4e5ea617596d5948c5a2900e542da8edf53bb631058be"
+  },
+  {
+    "file": "gallery/Screen_MovingTargetSetup.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "0dcb9795c829ec8cbc81307e4a2e96da4e5e0800e143629d7cea4a8c9afbf18c"
+  },
+  {
+    "file": "gallery/Screen_TrenchBriefing.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "fa6a6f7758eaf6af78b6382db1cc14d70cf7f39f05caefbb232be8ed9e639899"
+  },
+  {
+    "file": "gallery/Screen_TrenchDroneRecon.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "c3c39cf84b4ac840b45891da78a741d6809010a55be35d8d169a1c83446c69af"
+  },
+  {
+    "file": "gallery/Screen_TrenchHud.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "75dbac44decc8274c2725d96ee610af7332493035a96494a333dd6921c0322ad"
+  },
+  {
+    "file": "gallery/Screen_TrenchMapSelection.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "a9390f87b9f4765811ffe2d3ee20f28ec42ce2c9637d08385eef947feea185ca"
+  },
+  {
+    "file": "gallery/Screen_TrenchResults.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "7f9c208df43bc3a699c5d6386d594571fb51ac7903b8751783eb112b0ecc5805"
+  },
+  {
+    "file": "gallery/Screen_UrbanBuildingHud.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "65283b7042dbcfff00407e972a312365ed606aeef87f135fe575b68e0105d28b"
+  },
+  {
+    "file": "gallery/Screen_UrbanMapSelection.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "7b620294ab2830d5d9c96c773f38a04d6db6fa121a3835020360ea6783e2fe81"
+  },
+  {
+    "file": "gallery/Screen_UrbanResults.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "d3b70d1cf83fc8846f8935d9c873d0abf158ac3ffe9e000271040e6b3140b0e0"
+  },
+  {
+    "file": "gallery/Screen_UrbanStreetHud.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "322a010928afdbfbbfa403d58122081ffb7d821e98e46cdbcdda094522effa89"
+  },
+  {
+    "file": "gallery/Screen_ZeroingAwaitingWeaponPickup.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "a07dcfd087ff2b7bdade04ad553d0f52381bea7852b3a6e06054928d7a739b44"
+  },
+  {
+    "file": "gallery/Screen_ZeroingBriefing.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "ec02569454e3a1757160208f2556e8029fbc945f572870d8565175999726594f"
+  },
+  {
+    "file": "gallery/Screen_ZeroingFinalRating.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "503e80b5a5c746785a0411b95091b2cf923eb71c2c992b937748eea819bf010f"
+  },
+  {
+    "file": "gallery/Screen_ZeroingHud.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "d5747e84db79c3a60ad26a6272274383c4140af7c2ede08aabe19d4584e21038"
+  },
+  {
+    "file": "gallery/Screen_ZeroingImpactAnalysis.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "bf96a4fa3ee94a58986c6035047c57f97b77c2a913fb6a889b2be9bb4ffb3138"
+  },
+  {
+    "file": "gallery/Screen_ZeroingImpactAnalysis_AnswerOpen.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "445f1fa03c3330dd449e6a8f527dc5a0566d120105de8a5ce85d262d61ca6118"
+  },
+  {
+    "file": "gallery/Screen_ZeroingImpactAnalysis_HelpOpen.png",
+    "width": 1920,
+    "height": 1080,
+    "sha256": "15a85324bc10504528ee781ebb32acf1943d57684e79d37934129182b8d36726"
+  }
+]

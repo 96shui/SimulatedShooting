@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="11" result="Passed" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-12 12:56:55Z" end-time="2026-11-12 12:56:56Z" duration="0.8812504">
+  <test-suite type="TestSuite" id="1488" name="VR" fullname="VR" runstate="Runnable" testcasecount="385" result="Passed" start-time="2026-11-12 12:56:55Z" end-time="2026-11-12 12:56:56Z" duration="0.881250" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1555" name="SimulatedShooting.EditModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.EditModeTests.dll" runstate="Runnable" testcasecount="47" result="Passed" start-time="2026-11-12 12:56:55Z" end-time="2026-11-12 12:56:56Z" duration="0.801023" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="65664" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1556" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="47" result="Passed" start-time="2026-11-12 12:56:55Z" end-time="2026-11-12 12:56:56Z" duration="0.800718" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1557" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="47" result="Passed" start-time="2026-11-12 12:56:55Z" end-time="2026-11-12 12:56:56Z" duration="0.800562" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1558" name="EditMode" fullname="SimulatedShooting.Tests.EditMode" runstate="Runnable" testcasecount="47" result="Passed" start-time="2026-11-12 12:56:55Z" end-time="2026-11-12 12:56:56Z" duration="0.800400" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1497" name="CombatSceneTests" fullname="SimulatedShooting.Tests.EditMode.CombatSceneTests" classname="SimulatedShooting.Tests.EditMode.CombatSceneTests" runstate="Runnable" testcasecount="17" result="Passed" start-time="2026-11-12 12:56:55Z" end-time="2026-11-12 12:56:56Z" duration="0.798934" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1498" name="Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers" fullname="SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers" methodname="Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers" classname="SimulatedShooting.Tests.EditMode.CombatSceneTests" runstate="Runnable" seed="1796360029" result="Passed" start-time="2026-11-12 12:56:55Z" end-time="2026-11-12 12:56:56Z" duration="0.790937" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1968" name="VRShooting.Runtime.EditModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.EditModeTests.dll" runstate="Runnable" testcasecount="338" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.067237" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="65664" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1969" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="338" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.023527" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1970" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="338" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.021236" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1971" name="EditMode" fullname="VRShooting.Tests.EditMode" runstate="Runnable" testcasecount="338" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.018790" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestSuite" id="1975" name="Application" fullname="VRShooting.Tests.EditMode.Application" runstate="Runnable" testcasecount="186" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.015026" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="1867" name="WeaponControlServiceTests" fullname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests" classname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.012662" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1869" name="Task005_Fire_ConsumesAmmoAndReturnsGunLineResult" fullname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task005_Fire_ConsumesAmmoAndReturnsGunLineResult" methodname="Task005_Fire_ConsumesAmmoAndReturnsGunLineResult" classname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests" runstate="Runnable" seed="1582805974" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.006830" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1870" name="Task005_Fire_WhenMagazineEmpty_DoesNotConsumeAmmoAgain" fullname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task005_Fire_WhenMagazineEmpty_DoesNotConsumeAmmoAgain" methodname="Task005_Fire_WhenMagazineEmpty_DoesNotConsumeAmmoAgain" classname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests" runstate="Runnable" seed="1418891631" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.000462" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1871" name="Task005_Reload_TransfersReserveAmmoToMagazine" fullname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task005_Reload_TransfersReserveAmmoToMagazine" methodname="Task005_Reload_TransfersReserveAmmoToMagazine" classname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests" runstate="Runnable" seed="1095309953" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.000952" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1873" name="Task005_SetAimMode_TracksAdsState" fullname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task005_SetAimMode_TracksAdsState" methodname="Task005_SetAimMode_TracksAdsState" classname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests" runstate="Runnable" seed="1504434247" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.000422" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1874" name="Task005_SetGripState_TracksTwoHandStability" fullname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task005_SetGripState_TracksTwoHandStability" methodname="Task005_SetGripState_TracksTwoHandStability" classname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests" runstate="Runnable" seed="1712218604" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.000641" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1868" name="Task005_StartSession_ProvidesTrainingRifleState" fullname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task005_StartSession_ProvidesTrainingRifleState" methodname="Task005_StartSession_ProvidesTrainingRifleState" classname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests" runstate="Runnable" seed="558632212" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.000350" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1872" name="Task005_ToggleShoulder_ChangesShoulderWithoutChangingAmmo" fullname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task005_ToggleShoulder_ChangesShoulderWithoutChangingAmmo" methodname="Task005_ToggleShoulder_ChangesShoulderWithoutChangingAmmo" classname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests" runstate="Runnable" seed="173856811" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.000357" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1875" name="Task013_Fire_RequiresTrackedTwoHandHold" fullname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task013_Fire_RequiresTrackedTwoHandHold" methodname="Task013_Fire_RequiresTrackedTwoHandHold" classname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests" runstate="Runnable" seed="426024450" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.000202" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1876" name="Task013_Fire_SnapshotsGripStabilityAndDeterministicRecoil" fullname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task013_Fire_SnapshotsGripStabilityAndDeterministicRecoil" methodname="Task013_Fire_SnapshotsGripStabilityAndDeterministicRecoil" classname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests" runstate="Runnable" seed="1865949557" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.000866" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1877" name="Task013_SetGripState_RejectsImpossibleHandTrackingCombination" fullname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests.Task013_SetGripState_RejectsImpossibleHandTrackingCombination" methodname="Task013_SetGripState_RejectsImpossibleHandTrackingCombination" classname="VRShooting.Tests.EditMode.Application.WeaponControlServiceTests" runstate="Runnable" seed="1811365315" result="Passed" start-time="2026-11-12 12:56:56Z" end-time="2026-11-12 12:56:56Z" duration="0.000270" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -16,7 +16,7 @@ namespace SimulatedShooting.Tests.EditMode
         private GameObject root;
 
         [Test]
-        public void Bdd29_LeftShoulderMirrorsEveryArmBoneAndRenderedVertexAndSwitchesBackExactly()
+        public void Bdd29_LeftShoulderMirrorsOnlyHandsAroundAuthoredGripsAndRestoresEveryVertex()
         {
             root = new GameObject("MirroredArmsTest");
             root.transform.SetPositionAndRotation(new Vector3(2, 1, 3), Quaternion.Euler(5, 40, 9));
@@ -40,8 +40,8 @@ namespace SimulatedShooting.Tests.EditMode
             Assert.That(Quaternion.Angle(right.transform.rotation, binding.RearHandGrip.rotation * Quaternion.Euler(-30, -15, -90)), Is.LessThan(.01f));
             Assert.That(Vector3.Distance(left.transform.position, binding.FrontHandGrip.TransformPoint(new Vector3(-.0478f, -.0516f, -.0082f))), Is.LessThan(.00001f));
             Assert.That(Quaternion.Angle(left.transform.rotation, binding.FrontHandGrip.rotation * Quaternion.Euler(-20, 65, 180)), Is.LessThan(.01f));
-            var leftOriginal = CaptureGeometry(left, weapon.transform);
-            var rightOriginal = CaptureGeometry(right, weapon.transform);
+            var leftOriginal = CaptureGeometry(left, binding.FrontHandGrip);
+            var rightOriginal = CaptureGeometry(right, binding.RearHandGrip);
             var leftPose = leftController.localToWorldMatrix;
             var rightPose = rightController.localToWorldMatrix;
             Assert.That(leftOriginal.Length, Is.GreaterThan(1000), "Validate the real skinned forearm/hand, not an empty pose proxy.");
@@ -51,14 +51,14 @@ namespace SimulatedShooting.Tests.EditMode
             Assert.That(left.HandSide, Is.EqualTo(VirtualHandSide.Right));
             Assert.That(right.transform.parent, Is.SameAs(leftController));
             Assert.That(left.transform.parent, Is.SameAs(rightController));
-            AssertMirrored(rightOriginal, CaptureGeometry(right, weapon.transform), true);
-            AssertMirrored(leftOriginal, CaptureGeometry(left, weapon.transform), true);
+            AssertMirrored(rightOriginal, CaptureGeometry(right, binding.RearHandGrip), true);
+            AssertMirrored(leftOriginal, CaptureGeometry(left, binding.FrontHandGrip), true);
             Assert.That(leftController.localToWorldMatrix, Is.EqualTo(leftPose));
             Assert.That(rightController.localToWorldMatrix, Is.EqualTo(rightPose));
             grab.SetShoulder(ShoulderSide.Right);
             left.RefreshGripPosePreview(); right.RefreshGripPosePreview();
-            AssertMirrored(rightOriginal, CaptureGeometry(right, weapon.transform), false);
-            AssertMirrored(leftOriginal, CaptureGeometry(left, weapon.transform), false);
+            AssertMirrored(rightOriginal, CaptureGeometry(right, binding.RearHandGrip), false);
+            AssertMirrored(leftOriginal, CaptureGeometry(left, binding.FrontHandGrip), false);
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace SimulatedShooting.Tests.EditMode
         }
 
         [Test]
-        public void Bdd29_LeftShoulderAimFollowsTheMirroredRenderedBarrelWithYawAndRoll()
+        public void Bdd29_LeftShoulderPreservesAuthoredBarrelAimWithYawAndRoll()
         {
             root = Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>(
                 "Assets/SimulatedShooting/Prefabs/Weapons/Weapon_training-rifle_Blockout.prefab"));
@@ -87,9 +87,10 @@ namespace SimulatedShooting.Tests.EditMode
             var original = root.transform.InverseTransformDirection(controller.CurrentAimDirection);
             Assert.That(Mathf.Abs(original.x), Is.GreaterThan(.1f), "Exercise nonzero yaw, not a trivial straight-ahead ray.");
             root.GetComponent<TrainingRifleGrabInteractable>().SetShoulder(ShoulderSide.Left);
-            var expected = new Vector3(-original.x, original.y, original.z);
+            var expected = original;
+            Assert.That(binding.VisualRoot.localScale, Is.EqualTo(Vector3.one));
             var actual = root.transform.InverseTransformDirection(controller.CurrentAimDirection);
-            Assert.That(Vector3.Distance(actual, expected), Is.LessThan(.00001f), "Physical shot direction must reflect with the rendered barrel, including recoil yaw.");
+            Assert.That(Vector3.Distance(actual, expected), Is.LessThan(.00001f), "Shoulder changes must preserve the authored gun line and recoil yaw.");
         }
 
         static Vector3[] CaptureGeometry(VRControllerHandVisual hand, Transform frame)

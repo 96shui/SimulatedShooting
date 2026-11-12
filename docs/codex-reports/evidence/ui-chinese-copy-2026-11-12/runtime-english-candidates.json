@@ -1,0 +1,1604 @@
+[
+  {
+    "file": "Assets/VRShooting/Runtime/Application/GameStateManager.cs",
+    "line": 42,
+    "literal": "[{nameof(GameStateManager)}] 状态初始化为: {CurrentState}",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/GameStateManager.cs",
+    "line": 65,
+    "literal": "[{nameof(GameStateManager)}] 状态改变为: {newState}",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetHudService.cs",
+    "line": 53,
+    "literal": "session not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetHudService.cs",
+    "line": 58,
+    "literal": "hud only supports moving target mode",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetProgressCoordinator.cs",
+    "line": 33,
+    "literal": "an active moving target session is required",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetService.cs",
+    "line": 35,
+    "literal": "speed must be 3, 4 or 5 m/s",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetService.cs",
+    "line": 46,
+    "literal": "active session is not a moving target session",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetService.cs",
+    "line": 55,
+    "literal": "moving target session already started",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetService.cs",
+    "line": 56,
+    "literal": "cannot change speed or restart during an active moving target session",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetService.cs",
+    "line": 118,
+    "literal": "deltaTime must be a finite non-negative value",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetService.cs",
+    "line": 131,
+    "literal": "session has been cancelled",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetService.cs",
+    "line": 185,
+    "literal": "sequenceId and shotIndexInSequence are required",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetService.cs",
+    "line": 198,
+    "literal": "shot is not valid",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetService.cs",
+    "line": 206,
+    "literal": "shots are not scored during countdown, endpoint hold or results",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetService.cs",
+    "line": 214,
+    "literal": "fire sequence already stopped",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetService.cs",
+    "line": 258,
+    "literal": "fire sequence not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetService.cs",
+    "line": 290,
+    "literal": "route is not complete",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetService.cs",
+    "line": 315,
+    "literal": "moving target session not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/MovingTargetService.cs",
+    "line": 320,
+    "literal": "sessionId is required",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 40,
+    "literal": "presentation only supports P1/P2 modes",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 66,
+    "literal": "presentation not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 73,
+    "literal": "presentation not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 83,
+    "literal": "enter a P1/P2 range before confirming start",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 95,
+    "literal": "start is only valid while awaiting confirmation",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 103,
+    "literal": "session not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 162,
+    "literal": "next round is only valid for 100m zeroing",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 167,
+    "literal": "next round is only valid during round review",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 201,
+    "literal": "countdown is not pending",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 219,
+    "literal": "training is not in a completable phase",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 237,
+    "literal": "retry is only valid from session results",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 256,
+    "literal": "presentation not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 263,
+    "literal": "presentation not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 300,
+    "literal": "locomotion policy not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 338,
+    "literal": "presentation not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 348,
+    "literal": "confirm start before picking up the weapon",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 354,
+    "literal": "weapon pickup session does not match",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 362,
+    "literal": "weapon pickup does not match the training rifle",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 369,
+    "literal": "rear-hand pickup is required",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 399,
+    "literal": "weapon pickup is not valid in the current phase",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 407,
+    "literal": "presentation not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 413,
+    "literal": "session not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingPresentationService.cs",
+    "line": 419,
+    "literal": "session not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingSessionService.cs",
+    "line": 30,
+    "literal": "mode is required",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingSessionService.cs",
+    "line": 37,
+    "literal": "active session already exists",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingSessionService.cs",
+    "line": 89,
+    "literal": "cannot start from state {session.State}",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingSessionService.cs",
+    "line": 117,
+    "literal": "cannot pause from state {session.State}",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingSessionService.cs",
+    "line": 144,
+    "literal": "cannot resume from state {session.State}",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingSessionService.cs",
+    "line": 165,
+    "literal": "session already ended",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingSessionService.cs",
+    "line": 209,
+    "literal": "sessionId is required",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingSessionService.cs",
+    "line": 215,
+    "literal": "session not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/TrainingWeaponFireCoordinator.cs",
+    "line": 51,
+    "literal": "session id is required",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/UIRouter.cs",
+    "line": 30,
+    "literal": "router is transitioning",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/UIRouter.cs",
+    "line": 69,
+    "literal": "router is transitioning",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/UIRouter.cs",
+    "line": 74,
+    "literal": "no previous screen",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/UIRouter.cs",
+    "line": 136,
+    "literal": "apply adjustment is only valid on impact analysis",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/UIRouter.cs",
+    "line": 163,
+    "literal": "unsupported ui event: {eventId} from {sourceScreen}",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingHudService.cs",
+    "line": 58,
+    "literal": "session not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingHudService.cs",
+    "line": 63,
+    "literal": "hud only supports zeroing mode",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingHudService.cs",
+    "line": 280,
+    "literal": "已记录 {Math.Min(shots.Count, ZeroingRules.ShotsPerRound)}/{ZeroingRules.ShotsPerRound}",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 57,
+    "literal": "zeroing session not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 67,
+    "literal": "zeroing session not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 77,
+    "literal": "zeroing session not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 82,
+    "literal": "round requires 4 shots",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 92,
+    "literal": "zeroing session not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 94,
+    "literal": "round cannot be adjusted",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 97,
+    "literal": "round cannot be adjusted",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 100,
+    "literal": "invalid adjustment request",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 115,
+    "literal": "zeroing session not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 120,
+    "literal": "round requires 4 shots",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 126,
+    "literal": "round index mismatch",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 130,
+    "literal": "round cannot be adjusted",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 150,
+    "literal": "zeroing session not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 154,
+    "literal": "round requires 4 shots",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 160,
+    "literal": "adjustment must be applied first",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 182,
+    "literal": "zeroing session not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 267,
+    "literal": "shooting is not allowed in the current presentation phase",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/ZeroingService.cs",
+    "line": 272,
+    "literal": "round is already complete",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Input/CombatInputController.cs",
+    "line": 27,
+    "literal": "Session required",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Input/CombatInputController.cs",
+    "line": 28,
+    "literal": "P3 mode required",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Input/CombatInputController.cs",
+    "line": 36,
+    "literal": "Invalid combat configuration",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Input/CombatInputController.cs",
+    "line": 145,
+    "literal": "Invalid combat input: ",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Input/ManualXRTrainingInput.cs",
+    "line": 111,
+    "literal": "unsupported input button",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/Bootstrap/GameMain.cs",
+    "line": 29,
+    "literal": "XR Interaction Manager",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/Combat/CombatCharacterLocomotion.cs",
+    "line": 18,
+    "literal": "Character controller unavailable",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/Combat/CombatPhysicsShotQuery.cs",
+    "line": 16,
+    "literal": "Include environment layers and a finite positive range",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/Scene/GameStartTrigger.cs",
+    "line": 23,
+    "literal": "[{nameof(GameStartTrigger)}] 未找到名为 {CanvasChildName} 的子物体。",
+    "reason": "开发日志，非玩家界面"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 364,
+    "literal": "100m精度射校靶",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 527,
+    "literal": "VR 射击训练系统",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 534,
+    "literal": "01   100m 精度射校靶",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 562,
+    "literal": "通用 VR 操作\n右手侧握键抓枪 / 主手握持；左手侧握键副手握持。\n右扳机射击；用 UI 射线选择按钮。\n主菜单及模式三 / 四：左摇杆移动，右摇杆转向。\n模式一 / 二为固定射击点，不可移动。\n\n模式一  ·  100m 精度射校\n每轮 4 发，共 3 轮。\n分析页使用“应用调整”“进入下一轮”或“查看评级”。\n水平 1 格 = 2cm；垂直 5 度 = 0.32cm。\n集中且计算集各点距靶心≤10cm、均值距靶心≤5cm且至少一发距靶心≤5cm，或应用调整后均值距靶心<5cm即可通过。",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 565,
+    "literal": "模式二  ·  移动目标\n双手据枪，抬枪对齐瞄具并跟随目标。\n右扳机快速扣动起射两发，继续按住可逐发连射。\n\n模式三 / 四  ·  堑壕与城镇\n左手柄 X：换弹；左手柄 Y：切换姿态。\n右手柄 B：切换左右肩。\n模式四：右摇杆按压交互 / 开门。\n模式三 / 四：右手柄 A 请求队友投掷手雷。\n切换左肩后，左手为主手并使用左扳机射击，右手为副手。",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 579,
+    "literal": "100m精度射校靶",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 582,
+    "literal": "射击距离：100m\n射击模式：单发射\n每轮弹数：4发\n训练轮次：共3轮\n目标规格：50cm x 50cm 胸靶\n10环直径：10cm\n集中：各点距均值<10cm，两两间距<15cm\n通过条件：集中且各点距靶心≤10cm、均值距靶心≤5cm、至少一发距靶心≤5cm；或集中且调整后均值距靶心<5cm",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 609,
+    "literal": "50cm x 50cm",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 658,
+    "literal": "50cm x 50cm 胸靶",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 672,
+    "literal": "弹着点偏左时觇孔向前调整，弹着点偏右时觇孔向后调整，100m射击距离时觇孔调整一格为两厘米。\n\n弹着点偏上时逆时针调整准心柱，弹着点偏下时顺时针调整准心柱，100m射击距离时准心柱调整一圈约为23厘米，每次调整5度约0.32厘米。",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 747,
+    "literal": "100m射校 训练结算",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 1097,
+    "literal": "应用后均值距靶心小于5cm可通过",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 1504,
+    "literal": "居中 0cm",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 1514,
+    "literal": "居中 0cm",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 1535,
+    "literal": "小于5cm，应用后通过",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 1535,
+    "literal": "不小于5cm，尚未通过",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 1772,
+    "literal": "Assets/VRShooting/Art/Fonts/MSYH SDF.asset",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 1806,
+    "literal": "Microsoft YaHei UI",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 1807,
+    "literal": "Microsoft YaHei",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 1809,
+    "literal": "Noto Sans CJK SC",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 1810,
+    "literal": "Arial Unicode MS",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "line": 1828,
+    "literal": "MSYH Runtime SDF",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuXRModeController.cs",
+    "line": 330,
+    "literal": "XR Origin",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuXRModeController.cs",
+    "line": 348,
+    "literal": "XR Origin",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MainMenuXRModeController.cs",
+    "line": 375,
+    "literal": "XR Origin",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MovingTargetRangeUI.cs",
+    "line": 188,
+    "literal": "射击距离100m  ·  卧姿固定射击  ·  两发起射 / 长按连射  ·  左端禁射",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MovingTargetRangeUI.cs",
+    "line": 205,
+    "literal": "当前选择：4 m/s",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/MovingTargetUIPresenter.cs",
+    "line": 320,
+    "literal": "评级：{0}\n总射击：{1}    命中：{2}    命中率：{3:0.#}%\n速度：{4:0.#} m/s    用时：{5:0.0} 秒",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/P3CombatUIRoot.cs",
+    "line": 224,
+    "literal": "P3CombatUIRoot requires a Canvas",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/P3DroneReconView.cs",
+    "line": 51,
+    "literal": " m   速度 ",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/P3TrenchHudAndResultsUI.cs",
+    "line": 97,
+    "literal": " · R / 左手柄X键换弹",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/P3TrenchHudAndResultsUI.cs",
+    "line": 139,
+    "literal": "交互：右摇杆按压/Enter/空格 · 手雷：右A/H",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/P3TrenchUI.cs",
+    "line": 556,
+    "literal": "无法打开堑壕 HUD",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/TrainingPresentationView.cs",
+    "line": 128,
+    "literal": "射击位：100m射校",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/TrainingUIAnchorBinding.cs",
+    "line": 95,
+    "literal": "UI root references are incomplete.",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/TrainingUIAnchorBinding.cs",
+    "line": 100,
+    "literal": "LargePanel and MinimalHud anchors must be independent.",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/TrainingUIAnchorBinding.cs",
+    "line": 118,
+    "literal": " anchor has the wrong slot.",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Unity/UI/TrainingUICanvasAdapter.cs",
+    "line": 293,
+    "literal": "XR Origin",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatConfigDto.cs",
+    "line": 81,
+    "literal": "bullet damage must reduce representable enemy health",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatConfigDto.cs",
+    "line": 83,
+    "literal": "damage must reduce representable health",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatConfigDto.cs",
+    "line": 108,
+    "literal": "posture speeds",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatConfigDto.cs",
+    "line": 109,
+    "literal": "posture heights",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatConfigDto.cs",
+    "line": 111,
+    "literal": "frame budgets",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatConfigDto.cs",
+    "line": 152,
+    "literal": "Invalid combat configuration: ",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 38,
+    "literal": "Player spawn",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 45,
+    "literal": "Projection bounds/key/floor",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 52,
+    "literal": "Trench search nodes/floors",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 58,
+    "literal": "Entrance/three floors",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 59,
+    "literal": "Entrance position",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 68,
+    "literal": "Room entry position",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 72,
+    "literal": "Room map position",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 77,
+    "literal": "Total rooms must be 3-5",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 81,
+    "literal": "Spawn ID/estimate",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 86,
+    "literal": "Spawn group/mode",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 89,
+    "literal": "Spawn FloorId",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 90,
+    "literal": "Spawn RoomId",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 92,
+    "literal": "Outdoor spawn floor/room",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 93,
+    "literal": "Spawn position",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 96,
+    "literal": "Invalid spawn candidate: ",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 100,
+    "literal": "Insufficient spawn candidates for maximum configured encounter",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Contracts/P3/CombatSceneDefinitionDto.cs",
+    "line": 119,
+    "literal": "Invalid scene configuration: ",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/CombatApplicationCoordinator.cs",
+    "line": 228,
+    "literal": "Combat application: ",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/CombatApplicationCoordinator.cs",
+    "line": 236,
+    "literal": "P3 production scene loader is not registered",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/CombatCoreService.cs",
+    "line": 53,
+    "literal": "Invalid combat configuration",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/CombatCoreService.cs",
+    "line": 235,
+    "literal": "Invalid grenade explosion",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/CombatCoreService.cs",
+    "line": 236,
+    "literal": "Resolve grenade at an Advance boundary",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/CombatCoreService.cs",
+    "line": 507,
+    "literal": "Combat request rejected: ",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/CombatMission.cs",
+    "line": 43,
+    "literal": "Only P3 modes can be composed",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/CombatMission.cs",
+    "line": 69,
+    "literal": "Trench drone scene port is missing",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/CombatSummaryFileStore.cs",
+    "line": 40,
+    "literal": "Unable to save latest combat result",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/CombatSummaryFileStore.cs",
+    "line": 54,
+    "literal": "Invalid combat summary format",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/CombatSummaryFileStore.cs",
+    "line": 61,
+    "literal": "Unable to read latest combat result",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/SquadFormationService.cs",
+    "line": 32,
+    "literal": "Invalid configuration",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/SquadFormationService.cs",
+    "line": 194,
+    "literal": "Squad request rejected: ",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/SquadGrenadeTacticService.cs",
+    "line": 35,
+    "literal": "Invalid configuration",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/SquadGrenadeTacticService.cs",
+    "line": 118,
+    "literal": "Grenade tactic rejected: ",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/TrenchService.cs",
+    "line": 355,
+    "literal": "Trench request rejected: ",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Combat/UrbanService.cs",
+    "line": 315,
+    "literal": "Urban request rejected: ",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponAutomaticFireService.cs",
+    "line": 49,
+    "literal": "session id is required",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponAutomaticFireService.cs",
+    "line": 57,
+    "literal": "shot interval must be a finite positive value",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponAutomaticFireService.cs",
+    "line": 65,
+    "literal": "P2 initial shot count must be 2",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponAutomaticFireService.cs",
+    "line": 136,
+    "literal": "deltaTime must be a finite non-negative value",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponAutomaticFireService.cs",
+    "line": 423,
+    "literal": "weapon auto-fire session is not initialized",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 37,
+    "literal": "weapon not found",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 70,
+    "literal": "weapon is not applicable to mode",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 83,
+    "literal": "session id is required",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 95,
+    "literal": "weapon is not applicable to mode",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 174,
+    "literal": "invalid muzzle or aim direction",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 181,
+    "literal": "weapon cannot shoot",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 189,
+    "literal": "not enough ammo",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 345,
+    "literal": "amount must be positive",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 350,
+    "literal": "not enough ammo",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 371,
+    "literal": "reservation id and a positive amount are required",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 390,
+    "literal": "not enough ammo to reserve initial shots",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 413,
+    "literal": "reservation id and a positive amount are required",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 418,
+    "literal": "reservation cannot consume that amount",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 462,
+    "literal": "reload already started",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 472,
+    "literal": "no reserve ammo",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 575,
+    "literal": "weapon session is not initialized",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 716,
+    "literal": "an unheld weapon cannot report tracked grip hands",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 724,
+    "literal": "rear-hand hold requires only the rear hand",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 732,
+    "literal": "two-hand hold requires both tracked hands",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+    "line": 738,
+    "literal": "unsupported weapon hold state",
+    "reason": "内部契约校验/服务诊断；玩家错误提示已在 UI 显示边界改为中文，键和数据不改"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/BallisticTracerVisual.cs",
+    "line": 232,
+    "literal": "Universal Render Pipeline/Unlit",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/ChestTargetArtwork.cs",
+    "line": 18,
+    "literal": "Universal Render Pipeline/Unlit",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/ChestTargetArtwork.cs",
+    "line": 62,
+    "literal": "Universal Render Pipeline/Unlit",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatExplosionVfx.cs",
+    "line": 43,
+    "literal": "Particles/Standard Unlit",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatExplosionVfx.cs",
+    "line": 43,
+    "literal": "Universal Render Pipeline/Particles/Unlit",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatExplosionVfx.cs",
+    "line": 54,
+    "literal": "Missing heavy grenade explosion audio: ",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatRifleReloadPresentation.cs",
+    "line": 42,
+    "literal": "Missing removable magazine on combat rifle",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 77,
+    "literal": "Missing point",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 78,
+    "literal": "Empty Id: ",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 79,
+    "literal": "Duplicate Id: ",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 80,
+    "literal": "Missing volume: ",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 81,
+    "literal": "Missing door: ",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 82,
+    "literal": "Missing region: ",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 84,
+    "literal": "Missing map: ",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 88,
+    "literal": "Outside map: ",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 91,
+    "literal": "Expected two teammate spawns",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 95,
+    "literal": "Missing door",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 96,
+    "literal": "Door hinge: ",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 97,
+    "literal": "Door obstacle: ",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 101,
+    "literal": "Missing map",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 102,
+    "literal": "Invalid map: ",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneBindings.cs",
+    "line": 103,
+    "literal": "Duplicate map Id: ",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneDefinitionBuilder.cs",
+    "line": 34,
+    "literal": "Missing estimate anchor: ",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneRuntime.cs",
+    "line": 218,
+    "literal": "Training rifle binding missing",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneRuntime.cs",
+    "line": 220,
+    "literal": "M67 grenade model missing",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneRuntime.cs",
+    "line": 222,
+    "literal": "Grenade explosion audio missing",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneRuntime.cs",
+    "line": 646,
+    "literal": "Grenade model resource is missing.",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneRuntime.cs",
+    "line": 655,
+    "literal": "Grenade prefab has no usable mesh bounds: ",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneRuntime.cs",
+    "line": 657,
+    "literal": "Grenade prefab has no renderers: ",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/CombatSceneRuntime.cs",
+    "line": 662,
+    "literal": "Universal Render Pipeline/Lit",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/FirstPersonTrainingWeaponController.cs",
+    "line": 367,
+    "literal": "Failed to start weapon session: {start.Message}",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/FirstPersonTrainingWeaponController.cs",
+    "line": 1229,
+    "literal": "Universal Render Pipeline/Unlit",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/FirstPersonTrainingWeaponController.cs",
+    "line": 1246,
+    "literal": "弹匣 {currentState.CurrentMagazine}/3  备用 {currentState.ReserveAmmo}  {(currentState.CanShoot ? ",
+    "reason": "字符串插值中的 C# 字段/表达式，字段名不作为文字输出"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/FirstPersonTrainingWeaponController.cs",
+    "line": 1248,
+    "literal": ")}  稳定度 {currentState.Stability01:0.00}",
+    "reason": "字符串插值中的 C# 字段/表达式，字段名不作为文字输出"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/FirstPersonTrainingWeaponController.cs",
+    "line": 1250,
+    "literal": "鼠标/方向键观察，WASD副手，RMB/Shift瞄准，LMB/F射击，R换弹，Q换肩",
+    "reason": "用户要求保留的键位、VR/UI 缩写、单位或字符串格式/插值代码；逐项人工复核"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/FirstPersonTrainingWeaponController.cs",
+    "line": 1252,
+    "literal": "最近一发：{(lastShot.Hit ? ",
+    "reason": "字符串插值中的 C# 字段/表达式，字段名不作为文字输出"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/FixedProneLocomotionGuard.cs",
+    "line": 32,
+    "literal": "Enforce Fixed Prone Locomotion Policy",
+    "reason": "仅 Unity Inspector/编辑器菜单可见，非玩家界面"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 76,
+    "literal": "Missing drone, geometry or current session",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 78,
+    "literal": "Drone route/feed binding does not match this scene",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 80,
+    "literal": "Invalid drone flight/video configuration",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 82,
+    "literal": "Invalid authored recon waypoint",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 89,
+    "literal": "No navigable launch point near the squad",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 100,
+    "literal": "Full trench survey route is empty",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 113,
+    "literal": "Drone RenderTexture allocation failed",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 115,
+    "literal": "Recorded DJI rotor audio is missing",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 138,
+    "literal": "Empty flight step",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 147,
+    "literal": "Invalid flight clock delta",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 148,
+    "literal": "Live drone feed became unavailable",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 161,
+    "literal": "Drone route blocked by scene geometry",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 172,
+    "literal": "Drone route left the configured map bounds",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 173,
+    "literal": "Drone route blocked by scene geometry",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 197,
+    "literal": "Scene runtime missing",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/Mode3DroneReconScene.cs",
+    "line": 208,
+    "literal": "Player camera missing",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/MovingTargetFakeTimeline.cs",
+    "line": 44,
+    "literal": "Preview Next Fake Timeline Frame",
+    "reason": "仅 Unity Inspector/编辑器菜单可见，非玩家界面"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/MuzzleBlastVfx.cs",
+    "line": 94,
+    "literal": "Particles/Standard Unlit",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/PicoStandaloneRenderPolicy.cs",
+    "line": 69,
+    "literal": "[PICO Render] eye=",
+    "reason": "开发日志，非玩家界面"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/RealisticProjectileVisual.cs",
+    "line": 82,
+    "literal": "Universal Render Pipeline/Lit",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/TrainingRangeSceneBindings.cs",
+    "line": 75,
+    "literal": "{names[index]} is missing",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/TrainingRangeSceneBindings.cs",
+    "line": 79,
+    "literal": "{names[index]} has a duplicate Transform binding ({anchor.name})",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/TrainingRangeSceneBindings.cs",
+    "line": 89,
+    "literal": "Validate Training Range Bindings",
+    "reason": "仅 Unity Inspector/编辑器菜单可见，非玩家界面"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/UnityCombatSceneLoader.cs",
+    "line": 32,
+    "literal": "Combat scenes require Play Mode.",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/UnityCombatSceneLoader.cs",
+    "line": 62,
+    "literal": "P3 scene load: ",
+    "reason": "内部异常/配置校验诊断，非玩家文案；原始诊断保留"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/VRControllerHandVisual.cs",
+    "line": 571,
+    "literal": "掌骨 Metacarpal",
+    "reason": "仅 Unity Inspector/编辑器菜单可见，非玩家界面"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/VRControllerHandVisual.cs",
+    "line": 573,
+    "literal": "近端 Proximal",
+    "reason": "仅 Unity Inspector/编辑器菜单可见，非玩家界面"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/VRControllerHandVisual.cs",
+    "line": 575,
+    "literal": "中段 Intermediate",
+    "reason": "仅 Unity Inspector/编辑器菜单可见，非玩家界面"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/VRControllerHandVisual.cs",
+    "line": 577,
+    "literal": "远端 Distal",
+    "reason": "仅 Unity Inspector/编辑器菜单可见，非玩家界面"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/VRControllerHandVisual.cs",
+    "line": 617,
+    "literal": "拇指 Thumb",
+    "reason": "仅 Unity Inspector/编辑器菜单可见，非玩家界面"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/VRControllerHandVisual.cs",
+    "line": 619,
+    "literal": "食指 Index",
+    "reason": "仅 Unity Inspector/编辑器菜单可见，非玩家界面"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/VRControllerHandVisual.cs",
+    "line": 621,
+    "literal": "中指 Middle",
+    "reason": "仅 Unity Inspector/编辑器菜单可见，非玩家界面"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/VRControllerHandVisual.cs",
+    "line": 623,
+    "literal": "无名指 Ring",
+    "reason": "仅 Unity Inspector/编辑器菜单可见，非玩家界面"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/VRControllerHandVisual.cs",
+    "line": 625,
+    "literal": "小指 Little",
+    "reason": "仅 Unity Inspector/编辑器菜单可见，非玩家界面"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/VRHandPresentation.cs",
+    "line": 36,
+    "literal": "Left Controller",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/VRHandPresentation.cs",
+    "line": 36,
+    "literal": "Right Controller",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/WeaponFeedbackController.cs",
+    "line": 193,
+    "literal": "ActionVFX Blood Mist material is missing.",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/WeaponFeedbackController.cs",
+    "line": 397,
+    "literal": "Universal Render Pipeline/Unlit",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/WeaponFeedbackController.cs",
+    "line": 398,
+    "literal": "Universal Render Pipeline/Lit",
+    "reason": "资源路径/Shader、字体或场景绑定名称，非玩家文字"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeSessionBootstrap.cs",
+    "line": 83,
+    "literal": "[{nameof(ZeroingRangeSessionBootstrap)}] failed to start zeroing session: {zeroing.Message}",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  },
+  {
+    "file": "Assets/SimulatedShooting/Runtime/Scene/ZeroingRangeSessionBootstrap.cs",
+    "line": 110,
+    "literal": "[{nameof(ZeroingRangeSessionBootstrap)}] failed to start weapon session: {weapon.Message}",
+    "reason": "异常/日志/配置诊断，不直接显示给玩家"
+  }
+]

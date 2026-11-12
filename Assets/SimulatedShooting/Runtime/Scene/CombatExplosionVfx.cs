@@ -6,7 +6,7 @@ namespace SimulatedShooting.Scene
     public sealed class CombatExplosionVfx : MonoBehaviour
     {
         const string AtlasResourcePath = "Combat/VFX/GrenadeBlast/Explosion01-nofire_5x5";
-        const string BlastAudioResourcePath = "Combat/Audio/GrenadeExplosion_Heavy";
+        public const string BlastAudioResourcePath = "Combat/Audio/GrenadeExplosion_Heavy";
         const float FireballSeconds = 0.78f;
         static Sprite[] fireballFrames;
         public float Lifetime = 1.2f;
@@ -53,6 +53,12 @@ namespace SimulatedShooting.Scene
             if (sound.clip != null) sound.Play();
             else Debug.LogError("Missing heavy grenade explosion audio: " + BlastAudioResourcePath, this);
             particles.Play();
+        }
+
+        public void ConfigureAudio(AudioClip clip)
+        {
+            if (clip == null || sound == null || sound.clip == clip) return;
+            sound.clip = clip; sound.Play();
         }
 
         void Update()

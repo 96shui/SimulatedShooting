@@ -50,7 +50,7 @@ namespace VRShooting.Tests.PlayMode.UI
                 yield return null;
 
                 Assert.That(view.SelectedMapId, Is.EqualTo(P3ContractIds.TrenchMap));
-                Assert.That(Text(view, "selected").text, Does.Contain("堑壕地图 A"));
+                Assert.That(Text(view, "selected").text, Does.Contain("堑壕地图甲"));
                 Assert.That(Text(view, "difficulty").text, Does.Contain("中"));
                 Assert.That(Text(view, "enemy").text, Does.Contain("3-5"));
                 Assert.That(Text(view, "conditions").text, Does.Contain("搜索完整堑壕"));
@@ -149,14 +149,14 @@ namespace VRShooting.Tests.PlayMode.UI
 
                 var result = new TrenchResultDto
                 {
-                    SessionId = "trench-result", Revision = 3, Victory = false, MapName = "堑壕地图 A",
+                    SessionId = "trench-result", Revision = 3, Victory = false, MapName = "堑壕地图甲",
                     EnemyKilled = 1, EnemyTotal = 3, SearchProgress01 = 0.5f, RemainingAmmo = 92,
                     Squad = P3Fixtures.Squad("trench-result"), ElapsedSeconds = 75f,
                     ResultMap = P3Fixtures.MiniMap(P3ContractIds.TrenchMap)
                 };
                 Assert.That(service.SetResult(result), Is.True);
                 Assert.That(Text(view, "outcome").text, Does.Contain("失败"));
-                Assert.That(Text(view, "summary").text, Does.Contain("堑壕地图 A"));
+                Assert.That(Text(view, "summary").text, Does.Contain("堑壕地图甲"));
                 Assert.That(Text(view, "stats").text, Does.Contain("1 / 3"));
                 Assert.That(Text(view, "stats").text, Does.Contain("50%"));
                 Assert.That(Text(view, "stats").text, Does.Contain("剩余弹药：92"));
@@ -182,7 +182,7 @@ namespace VRShooting.Tests.PlayMode.UI
                 yield return null;
 
                 Assert.That(view.SelectedMapId, Is.EqualTo(P3ContractIds.UrbanMap));
-                Assert.That(Text(view, "selected").text, Does.Contain("城镇地图 A"));
+                Assert.That(Text(view, "selected").text, Does.Contain("城镇地图甲"));
                 Assert.That(Text(view, "enemy").text, Does.Contain("1-2"));
                 Assert.That(Text(view, "enemy").text, Does.Contain("3-6"));
                 Assert.That(Text(view, "conditions").text, Does.Contain("全部敌人即可完成"));
@@ -336,7 +336,7 @@ namespace VRShooting.Tests.PlayMode.UI
         P3TrenchMapSelectionView CreateTrenchMapView()
         {
             var root = Track(new GameObject("TrenchMapView", typeof(RectTransform)));
-            var card = CreateCard(root.transform, P3ContractIds.TrenchMap, "堑壕地图 A");
+            var card = CreateCard(root.transform, P3ContractIds.TrenchMap, "堑壕地图甲");
             var selected = Label(root.transform, "selected");
             var difficulty = Label(root.transform, "difficulty");
             var enemy = Label(root.transform, "enemy");
@@ -385,7 +385,7 @@ namespace VRShooting.Tests.PlayMode.UI
         P3UrbanMapSelectionView CreateUrbanMapView()
         {
             var root = Track(new GameObject("UrbanMapView", typeof(RectTransform)));
-            var card = CreateCard(root.transform, P3ContractIds.UrbanMap, "城镇地图 A");
+            var card = CreateCard(root.transform, P3ContractIds.UrbanMap, "城镇地图甲");
             var view = root.AddComponent<P3UrbanMapSelectionView>();
             view.Configure(Label(root.transform, "title"), Label(root.transform, "selected"), Label(root.transform, "enemy"),
                 Label(root.transform, "floors"), Label(root.transform, "conditions"), Label(root.transform, "error"),

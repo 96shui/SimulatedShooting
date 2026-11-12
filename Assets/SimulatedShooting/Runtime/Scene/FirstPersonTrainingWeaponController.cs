@@ -46,6 +46,7 @@ namespace SimulatedShooting.Scene
         IDisposable shotSubscription;
         IDisposable zeroingShotSubscription;
         IDisposable zeroingRoundSubscription;
+        ITrainingPresentationService observedPresentation;
         ZeroingShotDto latestZeroingShot;
         int latestZeroingShotSequence;
         readonly RaycastHit[] shotHits = new RaycastHit[64];
@@ -211,6 +212,9 @@ namespace SimulatedShooting.Scene
 
         private void OnDisable()
         {
+            if (observedPresentation != null)
+                observedPresentation.PresentationChanged -= HandleSessionPresentation;
+            observedPresentation = null;
             if (services != null && !string.IsNullOrEmpty(boundSessionId))
             {
                 services.AutomaticFire.Cancel(boundSessionId, WeaponFireStopReason.WeaponBecameInvalid);
@@ -321,7 +325,9 @@ namespace SimulatedShooting.Scene
                 return;
             }
 
-            if (!EnsureSharedServices())
+            var servicesReady = EnsureSharedServices();
+            ObservePresentation();
+            if (!servicesReady)
             {
                 return;
             }
@@ -386,11 +392,7 @@ namespace SimulatedShooting.Scene
 
         void ResetSessionState()
         {
-            if (targetSurface != null && movingTargetHitAdapter == null)
-            {
-                foreach (var surface in targetSurface.GetComponentsInChildren<TargetImpactSurface>(true))
-                    surface.ClearImpacts();
-            }
+            ClearZeroingRangeImpacts();
 
             TearDownInputSubscription();
             boundSessionId = string.Empty;
@@ -412,6 +414,33 @@ namespace SimulatedShooting.Scene
                 viewCamera.fieldOfView = hipFieldOfView;
             }
             grabInteractable?.ResetToRack();
+        }
+
+        void ObservePresentation()
+        {
+            var presentation = services?.Presentation;
+            if (observedPresentation == presentation) return;
+            if (observedPresentation != null)
+                observedPresentation.PresentationChanged -= HandleSessionPresentation;
+            observedPresentation = presentation;
+            if (observedPresentation != null)
+                observedPresentation.PresentationChanged += HandleSessionPresentation;
+        }
+
+        void HandleSessionPresentation(TrainingPresentationDto snapshot)
+        {
+            if (snapshot.Mode == TrainingMode.Zeroing100m && !string.IsNullOrEmpty(boundSessionId)
+                && snapshot.SessionId != boundSessionId)
+                ClearZeroingRangeImpacts();
+        }
+
+        void ClearZeroingRangeImpacts()
+        {
+            if (targetSurface == null || movingTargetHitAdapter != null) return;
+            // The five fixed faces are siblings, not children of the scored face.
+            // Restrict cleanup to this range hierarchy; independent targets remain untouched.
+            foreach (var surface in targetSurface.transform.root.GetComponentsInChildren<TargetImpactSurface>(true))
+                surface.ClearImpacts();
         }
 
         void RestoreRecoilPose()
@@ -1161,6 +1190,8 @@ namespace SimulatedShooting.Scene
             {
                 currentState = result.Data;
                 hasCurrentState = true;
+                grabInteractable?.SetShoulder(currentState.ShoulderSide);
+                (input as IShoulderAwareTrainingInput)?.SetShoulder(currentState.ShoulderSide);
             }
         }
 
@@ -1210,15 +1241,15 @@ namespace SimulatedShooting.Scene
 
             const int width = 420;
             GUI.Box(new Rect(12, 12, width, 124), string.Empty);
-            GUI.Label(new Rect(24, 22, width - 20, 22), "TASK005 FIRST PERSON WEAPON");
+            GUI.Label(new Rect(24, 22, width - 20, 22), "第一人称武器调试");
             GUI.Label(new Rect(24, 44, width - 20, 22),
-                $"MAG {currentState.CurrentMagazine}/3  RES {currentState.ReserveAmmo}  READY {currentState.CanShoot}");
+                $"弹匣 {currentState.CurrentMagazine}/3  备用 {currentState.ReserveAmmo}  {(currentState.CanShoot ? "可射击" : "不可射击")}");
             GUI.Label(new Rect(24, 66, width - 20, 22),
-                $"MODE {currentState.AimMode}  SHOULDER {currentState.ShoulderSide}  STABILITY {currentState.Stability01:0.00}");
+                $"{(currentState.AimMode == WeaponAimMode.AimDownSights ? "瞄准" : "腰射")}  {(currentState.ShoulderSide == ShoulderSide.Left ? "左肩" : "右肩")}  稳定度 {currentState.Stability01:0.00}");
             GUI.Label(new Rect(24, 88, width - 20, 22),
-                "Mouse/Arrows look, WASD front hand, RMB/Shift ADS, LMB/F fire, R reload, Q shoulder");
+                "鼠标/方向键观察，WASD副手，RMB/Shift瞄准，LMB/F射击，R换弹，Q换肩");
             GUI.Label(new Rect(24, 110, width - 20, 22),
-                lastShot.IsValidShot ? $"LAST SHOT {(lastShot.Hit ? "HIT" : "MISS")} {lastShot.HitObjectId}" : "LAST SHOT none");
+                lastShot.IsValidShot ? $"最近一发：{(lastShot.Hit ? "命中" : "未命中")}" : "最近一发：暂无");
         }
     }
 }

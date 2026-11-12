@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Failed(Child)" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-12 03:05:39Z" end-time="2026-11-12 03:05:41Z" duration="1.874972">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="301" result="Failed" site="Child" start-time="2026-11-12 03:05:39Z" end-time="2026-11-12 03:05:41Z" duration="1.874972" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1225" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="195" result="Failed" site="Child" start-time="2026-11-12 03:05:39Z" end-time="2026-11-12 03:05:41Z" duration="1.869690" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="57480" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1226" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="189" result="Failed" site="Child" start-time="2026-11-12 03:05:39Z" end-time="2026-11-12 03:05:41Z" duration="1.869017" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1227" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="189" result="Failed" site="Child" start-time="2026-11-12 03:05:39Z" end-time="2026-11-12 03:05:41Z" duration="1.868595" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1228" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="189" result="Failed" site="Child" start-time="2026-11-12 03:05:39Z" end-time="2026-11-12 03:05:41Z" duration="1.868173" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1026" name="CombatMagazineReloadPlayModeTests" fullname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests" classname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests" runstate="Runnable" testcasecount="9" result="Failed" site="Child" start-time="2026-11-12 03:05:39Z" end-time="2026-11-12 03:05:41Z" duration="1.864041" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1035" name="Bdd29_RealXriSelectionsTransferRearFirstAndLockOnlyTheNewSupportHand" fullname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests.Bdd29_RealXriSelectionsTransferRearFirstAndLockOnlyTheNewSupportHand" methodname="Bdd29_RealXriSelectionsTransferRearFirstAndLockOnlyTheNewSupportHand" classname="SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests" runstate="Runnable" seed="1456960421" result="Failed" start-time="2026-11-12 03:05:39Z" end-time="2026-11-12 03:05:41Z" duration="1.857344" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  B must never reflect the rifle or sights
+  Expected: greater than 0
+  But was:  -1.0f
+]]></message>
+                  <stack-trace><![CDATA[at SimulatedShooting.Tests.PlayMode.CombatMagazineReloadPlayModeTests+<Bdd29_RealXriSelectionsTransferRearFirstAndLockOnlyTheNewSupportHand>d__18.MoveNext () [0x000f2] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\CombatMagazineReloadPlayModeTests.cs:344
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[There are multiple active and enabled XR Interaction Manager components in the loaded scenes. This is supported, but may not be intended since interactors and interactables are not able to interact with those registered to a different manager. You can use the <b>Window</b> > <b>Analysis</b> > <b>XR Interaction Debugger</b> window to verify the interactors and interactables registered with each. The default manager that interactors and interactables automatically register with when None is: <b>CombatScene</b>/XRInteractionManager
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

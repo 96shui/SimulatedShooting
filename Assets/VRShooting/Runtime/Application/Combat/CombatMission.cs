@@ -37,7 +37,7 @@ namespace VRShooting.Application.Combat
             else if (Definition.Mode == TrainingMode.Urban)
             {
                 Urban = new UrbanService(Definition, scene.Clock, scene.Random, scene.Navigation);
-                Core = Urban.Combat; World = Urban; State = Urban; Hud = Urban; Squad = Urban.SquadCommands; Grenades = null;
+                Core = Urban.Combat; World = Urban; State = Urban; Hud = Urban; Squad = Urban.SquadCommands; Grenades = Urban.GrenadeTactics;
                 Urban.SessionChanged += OnUrban; Urban.ResultReady += OnUrbanResult;
             }
             else throw new ArgumentException("Only P3 modes can be composed", nameof(scene));
