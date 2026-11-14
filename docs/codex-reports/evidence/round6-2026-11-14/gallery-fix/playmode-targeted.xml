@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="13" result="Failed(Child)" total="13" passed="10" failed="3" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-14 10:04:53Z" end-time="2026-11-14 10:04:59Z" duration="6.0120177">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="322" result="Failed" site="Child" start-time="2026-11-14 10:04:53Z" end-time="2026-11-14 10:04:59Z" duration="6.012018" total="13" passed="10" failed="3" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1247" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="214" result="Passed" start-time="2026-11-14 10:04:53Z" end-time="2026-11-14 10:04:59Z" duration="5.943687" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="52896" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1248" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="208" result="Passed" start-time="2026-11-14 10:04:53Z" end-time="2026-11-14 10:04:59Z" duration="5.941488" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1249" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="208" result="Passed" start-time="2026-11-14 10:04:53Z" end-time="2026-11-14 10:04:59Z" duration="5.939793" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1250" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="208" result="Passed" start-time="2026-11-14 10:04:53Z" end-time="2026-11-14 10:04:59Z" duration="5.938163" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1075" name="Mode4AlignmentPlayModeTests" fullname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" classname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-14 10:04:53Z" end-time="2026-11-14 10:04:56Z" duration="2.240759" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1078" name="Bdd35_NoEnemyThrowUsesCurrentPlayerHeadingAndRealProjectile" fullname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd35_NoEnemyThrowUsesCurrentPlayerHeadingAndRealProjectile" methodname="Bdd35_NoEnemyThrowUsesCurrentPlayerHeadingAndRealProjectile" classname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" runstate="Runnable" seed="1918142562" result="Passed" start-time="2026-11-14 10:04:53Z" end-time="2026-11-14 10:04:56Z" duration="2.233525" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Round6 empty-enemy grenade player=(24.00, 0.00, 52.00) forward=(1.00, 0.00, 0.00) origin=(23.62, 1.48, 51.82) target=(42.00, 0.08, 52.00) projectile=(42.00, 0.08, 52.00)
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1115" name="P3ProductionFlowTests" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-11-14 10:04:56Z" end-time="2026-11-14 10:04:59Z" duration="3.674795" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1122" name="Bdd23_Trench_ProductionMagazineReload" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Trench_ProductionMagazineReload" methodname="Bdd23_Trench_ProductionMagazineReload" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="1456810568" result="Passed" start-time="2026-11-14 10:04:56Z" end-time="2026-11-14 10:04:58Z" duration="2.311995" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1123" name="Bdd23_Urban_ProductionMagazineReload" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Urban_ProductionMagazineReload" methodname="Bdd23_Urban_ProductionMagazineReload" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="224780037" result="Passed" start-time="2026-11-14 10:04:58Z" end-time="2026-11-14 10:04:59Z" duration="1.360381" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1145" name="Round6PresentationTests" fullname="SimulatedShooting.Tests.PlayMode.Round6PresentationTests" classname="SimulatedShooting.Tests.PlayMode.Round6PresentationTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.015441" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1146" name="Bdd35_AllThreeHudLabelsAreAvailableWithRealFalseCapabilityAndFourSpares" fullname="SimulatedShooting.Tests.PlayMode.Round6PresentationTests.Bdd35_AllThreeHudLabelsAreAvailableWithRealFalseCapabilityAndFourSpares" methodname="Bdd35_AllThreeHudLabelsAreAvailableWithRealFalseCapabilityAndFourSpares" classname="SimulatedShooting.Tests.PlayMode.Round6PresentationTests" runstate="Runnable" seed="362948272" result="Passed" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.014189" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1383" name="VRShooting.Runtime.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.PlayModeTests.dll" runstate="Runnable" testcasecount="108" result="Failed" site="Child" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.062458" total="9" passed="6" failed="3" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="52896" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1384" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="108" result="Failed" site="Child" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.061978" total="9" passed="6" failed="3" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1385" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="108" result="Failed" site="Child" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.061563" total="9" passed="6" failed="3" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1386" name="PlayMode" fullname="VRShooting.Tests.PlayMode" runstate="Runnable" testcasecount="108" result="Failed" site="Child" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.061162" total="9" passed="6" failed="3" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestSuite" id="1387" name="UI" fullname="VRShooting.Tests.PlayMode.UI" runstate="Runnable" testcasecount="75" result="Failed" site="Child" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.058984" total="9" passed="6" failed="3" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-suite type="TestFixture" id="1282" name="P3UiTask002_005_008_011PlayModeTests" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" testcasecount="9" result="Failed" site="Child" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.056215" total="9" passed="6" failed="3" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <failure>
+                  <message><![CDATA[One or more child tests had errors]]></message>
+                </failure>
+                <test-case id="1291" name="P3UiRoot_BuildsAllPagesAndFrozenTestIds" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.P3UiRoot_BuildsAllPagesAndFrozenTestIds" methodname="P3UiRoot_BuildsAllPagesAndFrozenTestIds" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="1740622244" result="Passed" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.014648" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1283" name="Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing" methodname="Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="220035711" result="Passed" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.006425" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1284" name="Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand" methodname="Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="1612884204" result="Passed" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.004627" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1285" name="Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents" methodname="Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="494869336" result="Passed" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.004324" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1286" name="Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent" methodname="Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="1981768910" result="Passed" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.004123" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1287" name="Screen18_UrbanMapSelection_RendersRangesAndStartsStreet" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet" methodname="Screen18_UrbanMapSelection_RendersRangesAndStartsStreet" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="192329728" result="Failed" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.006392" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  Expected: String containing "1-2"
+  But was:  "建筑内部敌人：3-6"
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen18_UrbanMapSelection_RendersRangesAndStartsStreet>d__6.MoveNext () [0x000fe] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\PlayMode\UI\P3UiTask002_005_008_011PlayModeTests.cs:186
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                  </failure>
+                </test-case>
+                <test-case id="1288" name="Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible" methodname="Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="2084114080" result="Passed" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.004902" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1289" name="Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands" methodname="Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="1228711249" result="Failed" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.004888" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  Expected: String containing "未搜索"
+  But was:  "房间1 · 靠近后开门"
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands>d__8.MoveNext () [0x000dd] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\PlayMode\UI\P3UiTask002_005_008_011PlayModeTests.cs:245
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                  </failure>
+                </test-case>
+                <test-case id="1290" name="Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce" fullname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce" methodname="Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce" classname="VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests" runstate="Runnable" seed="742246141" result="Failed" start-time="2026-11-14 10:04:59Z" end-time="2026-11-14 10:04:59Z" duration="0.004509" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  Expected: String containing "街道清除：已清除"
+  But was:  "消灭建筑敌人：5 / 5
+剩余弹药：76
+队友状态：
+玩家 · 正常 · 生命 100
+二号队友 · 跟随 · 生命 100
+三号队友 · 跟随 · 生命 100
+用时：02:00"
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests+<Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce>d__9.MoveNext () [0x001c2] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\PlayMode\UI\P3UiTask002_005_008_011PlayModeTests.cs:298
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                  </failure>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

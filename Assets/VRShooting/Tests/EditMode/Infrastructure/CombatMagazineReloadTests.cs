@@ -11,7 +11,7 @@ using VRShooting.Application;
 
 namespace VRShooting.Tests.EditMode
 {
-    // task020 / BDD23: 三个弹匣与动作结束装填、提前换弹与无效请求、取消换弹与新局复位.
+    // BDD35/task020: 五个弹匣（保留旧测试fullname以逐条对比基线）与动作结束装填、提前换弹与无效请求、取消换弹与新局复位.
     public sealed class CombatMagazineReloadTests
     {
         [TestCase(TrainingMode.Trench)] [TestCase(TrainingMode.Urban)]
@@ -20,12 +20,12 @@ namespace VRShooting.Tests.EditMode
             var clock = new FakeCombatClock();
             using (var core = Start(clock, mode))
             {
-                for (int magazine = 0; magazine < 3; magazine++)
+                for (int magazine = 0; magazine < 5; magazine++)
                 {
-                    Assert.That(core.GetSnapshot("reload").Data.Ammo.ReserveMagazines, Is.EqualTo(2 - magazine));
+                    Assert.That(core.GetSnapshot("reload").Data.Ammo.ReserveMagazines, Is.EqualTo(4 - magazine));
                     for (int shot = 0; shot < 30; shot++) Assert.That(Fire(core).Success);
                     Assert.That(Fire(core).Success, Is.False);
-                    if (magazine == 2) break;
+                    if (magazine == 4) break;
                     Assert.That(core.Reload("reload").Success);
                     var started = core.GetSnapshot("reload").Data;
                     Assert.That(started.ReloadStartedAt, Is.EqualTo(clock.Now));
@@ -51,12 +51,12 @@ namespace VRShooting.Tests.EditMode
                 Assert.That(core.Reload("reload").Success); // Full: no animation and no consumption.
                 Assert.That(core.GetSnapshot("reload").Data.Ammo.IsReloading, Is.False);
                 Fire(core); Assert.That(core.Reload("reload").Success);
-                Assert.That(core.GetSnapshot("reload").Data.Ammo.ReserveAmmo, Is.EqualTo(60));
+                Assert.That(core.GetSnapshot("reload").Data.Ammo.ReserveAmmo, Is.EqualTo(120));
                 clock.Advance(2); core.Advance("reload");
-                Assert.That(core.GetSnapshot("reload").Data.Ammo.ReserveAmmo, Is.EqualTo(30));
+                Assert.That(core.GetSnapshot("reload").Data.Ammo.ReserveAmmo, Is.EqualTo(90));
                 Assert.That(core.GetSnapshot("reload").Data.Ammo.CurrentMagazine, Is.EqualTo(30));
                 core.Advance("reload");
-                Assert.That(core.GetSnapshot("reload").Data.Ammo.ReserveAmmo, Is.EqualTo(30));
+                Assert.That(core.GetSnapshot("reload").Data.Ammo.ReserveAmmo, Is.EqualTo(90));
             }
         }
 
@@ -70,11 +70,11 @@ namespace VRShooting.Tests.EditMode
                 Fire(core); core.Reload("reload"); core.SetState("reload", state);
                 clock.Advance(100); core.Advance("reload");
                 var ammo = core.GetSnapshot("reload").Data.Ammo;
-                Assert.That(ammo.CurrentMagazine, Is.EqualTo(29)); Assert.That(ammo.ReserveAmmo, Is.EqualTo(60));
+                Assert.That(ammo.CurrentMagazine, Is.EqualTo(29)); Assert.That(ammo.ReserveAmmo, Is.EqualTo(120));
                 Assert.That(ammo.IsReloading, Is.False);
                 core.Start("new-round", TrainingMode.Trench, Array.Empty<CombatEntityVisualDto>());
                 Assert.That(core.GetSnapshot("new-round").Data.Ammo.CurrentMagazine, Is.EqualTo(30));
-                Assert.That(core.GetSnapshot("new-round").Data.Ammo.ReserveMagazines, Is.EqualTo(2));
+                Assert.That(core.GetSnapshot("new-round").Data.Ammo.ReserveMagazines, Is.EqualTo(4));
                 Assert.That(core.Reload("reload").ErrorCode, Is.EqualTo(ErrorCode.NotFound));
             }
         }
@@ -87,7 +87,7 @@ namespace VRShooting.Tests.EditMode
                 Fire(core); core.Reload("reload"); core.SetTracking("reload", false);
                 clock.Advance(20); core.SetTracking("reload", true); core.Advance("reload");
                 Assert.That(core.GetSnapshot("reload").Data.Ammo.CurrentMagazine, Is.EqualTo(29));
-                Assert.That(core.GetSnapshot("reload").Data.Ammo.ReserveMagazines, Is.EqualTo(2));
+                Assert.That(core.GetSnapshot("reload").Data.Ammo.ReserveMagazines, Is.EqualTo(4));
                 Assert.That(core.GetSnapshot("reload").Data.Ammo.IsReloading, Is.False);
             }
         }

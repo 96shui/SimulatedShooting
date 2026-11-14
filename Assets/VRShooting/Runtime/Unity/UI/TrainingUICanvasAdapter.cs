@@ -43,6 +43,7 @@ namespace VRShooting.Unity.UI
         bool lastVrMode;
         bool placementPending;
         float placementStabilizationRemaining;
+        bool eyeLevelPlacement;
 
         public bool IsVrMode => initialized && lastVrMode;
 
@@ -106,6 +107,14 @@ namespace VRShooting.Unity.UI
             {
                 PlaceCanvasInFrontOf(activeVrCamera);
             }
+        }
+
+        // Large P3 map pages use the same current horizontal view as training results,
+        // with their centre exactly at eye height even for a seated/prone viewer.
+        public void SetEyeLevelPlacement(bool enabled)
+        {
+            eyeLevelPlacement = enabled;
+            if (lastVrMode && activeVrCamera != null) PlaceCanvasInFrontOf(activeVrCamera);
         }
 
         public void ConfigureVrLayout(float distance,float worldScale,float minimumBottomWorldHeight)
@@ -274,6 +283,12 @@ namespace VRShooting.Unity.UI
             }
 
             forward.Normalize();
+            if (eyeLevelPlacement)
+            {
+                transform.SetPositionAndRotation(vrCamera.transform.position + forward * 1.3f,
+                    Quaternion.LookRotation(forward, Vector3.up));
+                return;
+            }
             var position = vrCamera.transform.position + forward * vrDistance + Vector3.up * vrVerticalOffset;
             var rectTransform = transform as RectTransform;
             var halfWorldHeight = rectTransform != null

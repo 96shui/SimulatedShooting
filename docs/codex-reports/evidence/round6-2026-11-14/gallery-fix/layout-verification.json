@@ -1,0 +1,273 @@
+{
+  "total": 32,
+  "passed": 32,
+  "failed": 0,
+  "checks": [
+    {
+      "check": "Screen_TrenchHud resolution",
+      "passed": true
+    },
+    {
+      "check": "Screen_TrenchHud left panel in viewport",
+      "passed": true,
+      "rect": {
+        "x": 49.99998092651367,
+        "y": 475.0,
+        "width": 510.0000915527344,
+        "height": 210.0
+      }
+    },
+    {
+      "check": "Screen_TrenchHud prompt line 1 in viewport",
+      "passed": true,
+      "glyphs": {
+        "x": 678.8060913085938,
+        "y": 774.4411010742188,
+        "width": 560.3098754882812,
+        "height": 28.75653076171875
+      }
+    },
+    {
+      "check": "Screen_TrenchHud prompt and task state do not overlap",
+      "passed": true,
+      "gap_px": 28.955810546875
+    },
+    {
+      "check": "Screen_TrenchHud old/new left frame cyan pixels identical",
+      "passed": true,
+      "changed_pixels": 0,
+      "pixels": 7353
+    },
+    {
+      "check": "Screen_TrenchHud old/new prompt glyph pixels identical",
+      "passed": true,
+      "changed_pixels": 0,
+      "pixels": 3920
+    },
+    {
+      "check": "Screen_UrbanStreetHud resolution",
+      "passed": true
+    },
+    {
+      "check": "Screen_UrbanStreetHud left panel in viewport",
+      "passed": true,
+      "rect": {
+        "x": 49.99998092651367,
+        "y": 475.0,
+        "width": 510.0000915527344,
+        "height": 240.0
+      }
+    },
+    {
+      "check": "Screen_UrbanStreetHud prompt line 1 in viewport",
+      "passed": true,
+      "glyphs": {
+        "x": 903.5990600585938,
+        "y": 756.1276245117188,
+        "width": 112.7747802734375,
+        "height": 28.4830322265625
+      }
+    },
+    {
+      "check": "Screen_UrbanStreetHud prompt line 2 in viewport",
+      "passed": true,
+      "glyphs": {
+        "x": 678.8060913085938,
+        "y": 792.9186401367188,
+        "width": 560.3098754882812,
+        "height": 28.7564697265625
+      }
+    },
+    {
+      "check": "Screen_UrbanStreetHud prompt lines do not overlap",
+      "passed": true,
+      "gap_px": 8.3079833984375
+    },
+    {
+      "check": "Screen_UrbanStreetHud prompt and task state do not overlap",
+      "passed": true,
+      "gap_px": 10.47833251953125
+    },
+    {
+      "check": "Screen_UrbanStreetHud task state clear of Button_UrbanStreetHud_EnterBuilding",
+      "passed": true,
+      "gap_px": 25.0,
+      "active": true
+    },
+    {
+      "check": "Screen_UrbanStreetHud old/new left frame cyan pixels identical",
+      "passed": true,
+      "changed_pixels": 0,
+      "pixels": 5846
+    },
+    {
+      "check": "Screen_UrbanStreetHud old/new prompt glyph pixels identical",
+      "passed": true,
+      "changed_pixels": 0,
+      "pixels": 4872
+    },
+    {
+      "check": "Screen_UrbanBuildingHud resolution",
+      "passed": true
+    },
+    {
+      "check": "Screen_UrbanBuildingHud left panel in viewport",
+      "passed": true,
+      "rect": {
+        "x": 49.99998092651367,
+        "y": 475.0,
+        "width": 510.0000915527344,
+        "height": 330.0
+      }
+    },
+    {
+      "check": "Screen_UrbanBuildingHud prompt line 1 in viewport",
+      "passed": true,
+      "glyphs": {
+        "x": 679.9271240234375,
+        "y": 755.9909057617188,
+        "width": 558.7786865234375,
+        "height": 28.9478759765625
+      }
+    },
+    {
+      "check": "Screen_UrbanBuildingHud prompt line 2 in viewport",
+      "passed": true,
+      "glyphs": {
+        "x": 678.8060913085938,
+        "y": 792.9186401367188,
+        "width": 560.3098754882812,
+        "height": 28.7564697265625
+      }
+    },
+    {
+      "check": "Screen_UrbanBuildingHud prompt lines do not overlap",
+      "passed": true,
+      "gap_px": 7.9798583984375
+    },
+    {
+      "check": "Screen_UrbanBuildingHud prompt and task state do not overlap",
+      "passed": true,
+      "gap_px": 10.47833251953125
+    },
+    {
+      "check": "Screen_UrbanBuildingHud task state clear of Button_UrbanBuildingHud_OpenDoor",
+      "passed": true,
+      "gap_px": 25.0,
+      "active": true
+    },
+    {
+      "check": "Screen_UrbanBuildingHud task state clear of Button_UrbanBuildingHud_CheckRoom",
+      "passed": true,
+      "gap_px": 25.0,
+      "active": false
+    },
+    {
+      "check": "Screen_UrbanBuildingHud door and check rectangles separate",
+      "passed": true,
+      "gap_px": 20.00006103515625
+    },
+    {
+      "check": "Screen_UrbanBuildingHud old/new left frame cyan pixels identical",
+      "passed": true,
+      "changed_pixels": 0,
+      "pixels": 6536
+    },
+    {
+      "check": "Screen_UrbanBuildingHud old/new prompt glyph pixels identical",
+      "passed": true,
+      "changed_pixels": 0,
+      "pixels": 8497
+    },
+    {
+      "check": " Hud_UrbanBuilding_Floor complete",
+      "passed": true,
+      "text": "当前楼层：一层",
+      "glyphs": [
+        {
+          "x": 80.66407775878906,
+          "y": 516.330078125,
+          "width": 167.53904724121094,
+          "height": 24.625
+        }
+      ]
+    },
+    {
+      "check": " Hud_UrbanBuilding_Rooms complete",
+      "passed": true,
+      "text": "一层1号 · 靠近后开门\n一层2号 · 靠近后开门",
+      "glyphs": [
+        {
+          "x": 79.7812271118164,
+          "y": 569.12548828125,
+          "width": 196.76565551757812,
+          "height": 21.505859375
+        },
+        {
+          "x": 79.7812271118164,
+          "y": 596.841796875,
+          "width": 196.76565551757812,
+          "height": 21.505859375
+        }
+      ]
+    },
+    {
+      "check": "_Floor2 Hud_UrbanBuilding_Floor complete",
+      "passed": true,
+      "text": "当前楼层：二层",
+      "glyphs": [
+        {
+          "x": 80.66407775878906,
+          "y": 516.330078125,
+          "width": 167.53904724121094,
+          "height": 24.625
+        }
+      ]
+    },
+    {
+      "check": "_Floor2 Hud_UrbanBuilding_Rooms complete",
+      "passed": true,
+      "text": "二层1号 · 靠近后开门\n二层2号 · 靠近后开门",
+      "glyphs": [
+        {
+          "x": 80.068359375,
+          "y": 569.12548828125,
+          "width": 196.478515625,
+          "height": 21.505859375
+        },
+        {
+          "x": 80.068359375,
+          "y": 596.841796875,
+          "width": 196.478515625,
+          "height": 21.505859375
+        }
+      ]
+    },
+    {
+      "check": "_Floor3 Hud_UrbanBuilding_Floor complete",
+      "passed": true,
+      "text": "当前楼层：三层",
+      "glyphs": [
+        {
+          "x": 80.66407775878906,
+          "y": 516.330078125,
+          "width": 167.53904724121094,
+          "height": 24.625
+        }
+      ]
+    },
+    {
+      "check": "_Floor3 Hud_UrbanBuilding_Rooms complete",
+      "passed": true,
+      "text": "三层1号 · 靠近后开门",
+      "glyphs": [
+        {
+          "x": 80.068359375,
+          "y": 569.12548828125,
+          "width": 196.478515625,
+          "height": 21.505859375
+        }
+      ]
+    }
+  ]
+}

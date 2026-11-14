@@ -64,9 +64,10 @@ namespace VRShooting.Unity.UI
         void Render(CombatApplicationSnapshotDto state)
         {
             if(view==null)return;
+            var reopening = !view.gameObject.activeSelf && state.Mode.HasValue;
             view.gameObject.SetActive(state.Mode.HasValue);
             if(!state.Mode.HasValue)return;
-            if(lastScreen!=state.Screen)
+            if(lastScreen!=state.Screen || reopening)
             {
                 view.Show(state.Screen); lastScreen=state.Screen;
                 nextRefresh=0;

@@ -1,0 +1,40 @@
+{
+  "tracked_files_checked": 6214,
+  "tracked_changes_since_audit_start": [],
+  "preexisting_round6_artifacts_checked": 20,
+  "preexisting_round6_artifact_hash_mismatches": [],
+  "all_preexisting_tracked_assets_and_evidence_match_starting_hashes": true,
+  "preserved_tracked_test_scenes": [
+    "Assets/InitTestScene639252044744999923.unity",
+    "Assets/InitTestScene639252044744999923.unity.meta",
+    "Assets/InitTestScene639253514584773890.unity",
+    "Assets/InitTestScene639253514584773890.unity.meta",
+    "Assets/InitTestScene639271113773156361.unity",
+    "Assets/InitTestScene639271113773156361.unity.meta",
+    "Assets/InitTestScene639271128085681542.unity",
+    "Assets/InitTestScene639271128085681542.unity.meta"
+  ],
+  "removed_new_untracked_test_scenes": [],
+  "temporary_sources_removed": [
+    "Assets/VRShooting/Editor/HudLayoutEvidence.cs",
+    "Assets/VRShooting/Editor/HudLayoutEvidence.cs.meta",
+    "Assets/SimulatedShooting/Tests/PlayMode/HudCaptureProbe.cs",
+    "Assets/SimulatedShooting/Tests/PlayMode/HudCaptureProbe.cs.meta"
+  ],
+  "restored_starting_bytes": [
+    "Assets/VRShooting/Editor/TacticalUIGallery.cs",
+    "Assets/SimulatedShooting/Tests/PlayMode/AmericanSoldierPlayModeTests.cs",
+    "Assets/SimulatedShooting/Tests/PlayMode/Mode4AlignmentPlayModeTests.cs",
+    "Assets/Resources/UI/Tactical/TrainingChinese.asset",
+    "Assets/XR/Settings/Open XR Package Settings.asset",
+    "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Prefabs/Interactors/Teleport Interactor.prefab",
+    "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Prefabs/XR Origin (XR Rig).prefab",
+    "Assets/VRTemplateAssets/Prefabs/Setup/Complete XR Origin Set Up Variant.prefab"
+  ],
+  "intentional_deliverables": [
+    "docs/codex-reports/round6-hud-layout-check-2026-11-14.md",
+    "docs/codex-reports/round6-2026-11-14.md",
+    "docs/codex-reports/evidence/round6-2026-11-14/gallery-fix/"
+  ],
+  "git_commit_push_branch_stash_executed": false
+}

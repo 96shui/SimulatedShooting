@@ -30,6 +30,7 @@ namespace SimulatedShooting.Scene
         bool transferringHands;
         HashSet<IXRSelectInteractor> previousSelectors;
         BoxCollider riflePickupVolume;
+        Transform leftRearTrackingAttach, leftFrontTrackingAttach;
 
         public ShoulderSide Shoulder { get; private set; } = ShoulderSide.Right;
         public InteractorHandedness RearHandedness => Shoulder == ShoulderSide.Left ? InteractorHandedness.Left : InteractorHandedness.Right;
@@ -72,7 +73,9 @@ namespace SimulatedShooting.Scene
             smoothPosition = false;
             smoothRotation = false;
             attachEaseInTime = 0f;
-            throwOnDetach = true;
+            throwOnDetach = false;
+            throwVelocityScale = 0f;
+            throwAngularVelocityScale = 0f;
             useDynamicAttach = false;
             // A held grip must still select when the hand enters range a frame later.
             foreach (var interactor in FindObjectsOfType<XRBaseInputInteractor>(true))
@@ -261,6 +264,11 @@ namespace SimulatedShooting.Scene
 
         public override Transform GetAttachTransform(IXRInteractor interactor)
         {
+            if (Shoulder == ShoulderSide.Left && interactor != null)
+            {
+                if (interactor.handedness == RearHandedness && leftRearTrackingAttach != null) return leftRearTrackingAttach;
+                if (interactor.handedness == FrontHandedness && leftFrontTrackingAttach != null) return leftFrontTrackingAttach;
+            }
             if (interactor != null && interactor.handedness == FrontHandedness && FrontAttach != null)
             {
                 return FrontAttach;
@@ -272,6 +280,21 @@ namespace SimulatedShooting.Scene
             }
 
             return base.GetAttachTransform(interactor);
+        }
+
+        // Shift both tracking anchors equally to the right of the authored grips. XRI
+        // then holds the whole rifle 16cm left of the controller, without rotating its
+        // sights/barrel or moving the physical hand models off the authored mesh grips.
+        internal void ApplyShoulderTrackingOffset(ShoulderSide side)
+        {
+            if (side != ShoulderSide.Left || RearAttach == null || FrontAttach == null) return;
+            UpdateTrackingAttach(ref leftRearTrackingAttach, RearAttach, "LeftShoulderRearTrackingAttach");
+            UpdateTrackingAttach(ref leftFrontTrackingAttach, FrontAttach, "LeftShoulderFrontTrackingAttach");
+        }
+        void UpdateTrackingAttach(ref Transform tracking, Transform grip, string name)
+        {
+            if (tracking == null) { tracking = new GameObject(name).transform; tracking.SetParent(transform, false); }
+            tracking.SetPositionAndRotation(grip.position + transform.right * .16f, grip.rotation);
         }
 
         public bool IsHandAllowed(InteractorHandedness handedness, Vector3 handPosition)
@@ -358,6 +381,8 @@ namespace SimulatedShooting.Scene
             body.isKinematic = false;
             body.useGravity = true;
             body.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+            body.velocity = Vector3.zero;
+            body.angularVelocity = Vector3.zero;
         }
 
         void SyncAttachTransforms()

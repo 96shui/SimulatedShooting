@@ -1,0 +1,63 @@
+{
+  "total": 9,
+  "passed": 9,
+  "failed": 0,
+  "checks": [
+    {
+      "check": "trench gallery/converted coordinates unchanged",
+      "passed": true,
+      "max_delta_px": 0.01959228515625
+    },
+    {
+      "check": "trench source FOV retained",
+      "passed": true,
+      "field_of_view": 60.0
+    },
+    {
+      "check": "trench target resolution correct",
+      "passed": true
+    },
+    {
+      "check": "urban gallery/converted coordinates unchanged",
+      "passed": true,
+      "max_delta_px": 0.001739501953125
+    },
+    {
+      "check": "urban source FOV retained",
+      "passed": true,
+      "field_of_view": 60.0
+    },
+    {
+      "check": "urban target resolution correct",
+      "passed": true
+    },
+    {
+      "check": "trench terrain hides existing panel artwork only in scene capture",
+      "passed": true,
+      "cyan_pixels_hidden": 1640,
+      "cyan_pixels_without_terrain": 5637
+    },
+    {
+      "check": "trench original screenshot reproduced byte for byte",
+      "passed": true
+    },
+    {
+      "check": "urban long yellow stripes exist without any HUD",
+      "passed": true,
+      "scene_only_yellow_stripe_rows": [
+        804,
+        805,
+        806,
+        807,
+        808,
+        809,
+        818,
+        819,
+        820,
+        821,
+        822,
+        823
+      ]
+    }
+  ]
+}

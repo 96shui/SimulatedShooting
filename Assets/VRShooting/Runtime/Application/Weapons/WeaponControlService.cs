@@ -105,7 +105,7 @@ namespace VRShooting.Application.Weapons
                     DisplayName = weapon.DisplayName,
                     Type = weapon.Type,
                     MagazineCapacity = mode == TrainingMode.Zeroing100m ? ZeroingRules.ShotsPerRound : mode == TrainingMode.MovingTarget ? MovingTargetRules.TotalAmmo : 30,
-                    MaxReserveAmmo = mode == TrainingMode.Zeroing100m ? ZeroingRules.ShotsPerRound * (ZeroingRules.MaxRounds - 1) : mode == TrainingMode.MovingTarget ? 0 : 60,
+                    MaxReserveAmmo = mode == TrainingMode.Zeroing100m ? ZeroingRules.ShotsPerRound * (ZeroingRules.MaxRounds - 1) : mode == TrainingMode.MovingTarget ? 0 : 120,
                     Recoil = weapon.Recoil,
                     ApplicableModes = weapon.ApplicableModes
                 };

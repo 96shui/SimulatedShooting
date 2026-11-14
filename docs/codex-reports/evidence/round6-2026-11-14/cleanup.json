@@ -1,0 +1,38 @@
+{
+  "restored_tracked_paths": [
+    "Assets/Resources/UI/Tactical/TrainingChinese.asset",
+    "Assets/XR/Settings/Open XR Package Settings.asset",
+    "Evidence/P3-production-M67-in-flight.png",
+    "docs/codex-reports/evidence/main-menu-hand-occlusion-20261023/main-menu-after-tracked.png",
+    "docs/codex-reports/evidence/main-menu-hand-occlusion-20261023/main-menu-after-untracked.png",
+    "docs/codex-reports/evidence/mode1-brief-results-labels-2026-11-12/03-Trench-held-rifle-no-labels.png",
+    "docs/codex-reports/evidence/mode1-brief-results-labels-2026-11-12/03-Urban-held-rifle-no-labels.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/Trench-B-right-shoulder-right-rear-left-front.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/Urban-B-left-shoulder-left-rear-right-front.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/Urban-B-right-shoulder-right-rear-left-front.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/urban-enemy-aim-and-fire.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/urban-health-10.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/urban-health-after-hit-9.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/urban-teammate-grenade-explosion.png",
+    "docs/codex-reports/evidence/range-restore-urban-20261023/urban-building-corner.png",
+    "docs/codex-reports/evidence/range-restore-urban-20261023/urban-desktop-pickup.png",
+    "docs/codex-reports/evidence/range-restore-urban-20261023/urban-vr-pickup.png",
+    "docs/codex-reports/evidence/vr-mechanical-sight-20261023/vr-substitute-mechanical-sight.png",
+    "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Prefabs/Interactors/Teleport Interactor.prefab",
+    "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Prefabs/XR Origin (XR Rig).prefab",
+    "Assets/VRTemplateAssets/Prefabs/Setup/Complete XR Origin Set Up Variant.prefab"
+  ],
+  "removed_only_new_untracked_test_scenes": [],
+  "preserved_original_tracked_test_scenes": [
+    "Assets/InitTestScene639252044744999923.unity",
+    "Assets/InitTestScene639252044744999923.unity.meta",
+    "Assets/InitTestScene639253514584773890.unity",
+    "Assets/InitTestScene639253514584773890.unity.meta",
+    "Assets/InitTestScene639271113773156361.unity",
+    "Assets/InitTestScene639271113773156361.unity.meta",
+    "Assets/InitTestScene639271128085681542.unity",
+    "Assets/InitTestScene639271128085681542.unity.meta"
+  ],
+  "pre_existing_user_change_preserved_byte_for_byte": "docs/codex-reports/pico-apk-2026-11-12.md",
+  "head": "91ab8c950f965246c535c7b39fb625d789488e34"
+}

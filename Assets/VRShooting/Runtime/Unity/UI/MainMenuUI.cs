@@ -562,7 +562,7 @@ namespace VRShooting.Unity.UI
                 "通用 VR 操作\n右手侧握键抓枪 / 主手握持；左手侧握键副手握持。\n右扳机射击；用 UI 射线选择按钮。\n主菜单及模式三 / 四：左摇杆移动，右摇杆转向。\n模式一 / 二为固定射击点，不可移动。\n\n模式一  ·  100m 精度射校\n每轮 4 发，共 3 轮。\n分析页使用“应用调整”“进入下一轮”或“查看评级”。\n水平 1 格 = 2cm；垂直 5 度 = 0.32cm。\n集中且计算集各点距靶心≤10cm、均值距靶心≤5cm且至少一发距靶心≤5cm，或应用调整后均值距靶心<5cm即可通过。",
                 24, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(75, 150), new Vector2(800, 720), textColor);
             var right = AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Right",
-                "模式二  ·  移动目标\n双手据枪，抬枪对齐瞄具并跟随目标。\n右扳机快速扣动起射两发，继续按住可逐发连射。\n\n模式三 / 四  ·  堑壕与城镇\n左手柄 X：换弹；左手柄 Y：切换姿态。\n右手柄 B：切换左右肩。\n模式四：右摇杆按压交互 / 开门。\n模式三 / 四：右手柄 A 请求队友投掷手雷。\n切换左肩后，左手为主手并使用左扳机射击，右手为副手。",
+                "模式二  ·  移动目标\n双手据枪，采用“跟随射击”或“等待射击”的方式对目标进行射击。\n右扳机快速扣动起射两发，继续按住可逐发连射。\n\n模式三 / 四  ·  堑壕与城镇\n左手柄 X：换弹；左手柄 Y：切换姿态。\n右手柄 B：切换左右肩。\n模式四：右摇杆按压交互 / 开门。\n模式三 / 四：右手柄 A 请求队友投掷手雷。\n切换左肩后，左手为主手并使用左扳机射击，右手为副手。",
                 24, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(860, 150), new Vector2(1585, 720), textColor);
             left.lineSpacing = right.lineSpacing = 6f;
             var back = AddButton(mainMenuControlsPanel, "Button_MainMenu_Controls_Back", "返回", new Vector2(680, 35), new Vector2(980, 105), false);

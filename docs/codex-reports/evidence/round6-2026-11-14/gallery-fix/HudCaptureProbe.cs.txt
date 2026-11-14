@@ -1,0 +1,106 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace SimulatedShooting.Tests.PlayMode
+{
+    // Temporary audit probe. Source is retained with the evidence, then removed from Assets.
+    public static class HudCaptureProbe
+    {
+        public static void GrenadeOverview(Camera source, Vector3 player, Vector3 planned, Vector3 landed, Vector3[] trace)
+        {
+            var root=new GameObject("AuditOnly_GrenadeDirectionMarkers");
+            var eye=new GameObject("AuditOnly_OverviewCamera").AddComponent<Camera>();
+            var materials=new List<Material>();
+            try
+            {
+                eye.CopyFrom(source);eye.enabled=false;
+                var centre=(player+planned)*.5f;
+                eye.transform.position=centre+new Vector3(0,22,-20);
+                eye.transform.LookAt(centre+Vector3.up);
+                eye.fieldOfView=55;eye.cullingMask&=~(1<<5);
+                Material Mat(Color color)
+                {
+                    var m=new Material(Shader.Find("Universal Render Pipeline/Unlit"));m.SetColor("_BaseColor",color);materials.Add(m);return m;
+                }
+                var cyan=Mat(Color.cyan);var yellow=Mat(Color.yellow);var magenta=Mat(Color.magenta);
+                void Line(string name,Vector3[] points,Material m,float width)
+                {
+                    var go=new GameObject(name);go.transform.SetParent(root.transform);
+                    var line=go.AddComponent<LineRenderer>();line.sharedMaterial=m;line.positionCount=points.Length;line.SetPositions(points);line.startWidth=line.endWidth=width;
+                }
+                void Label(string name,string value,Vector3 position,Color color)
+                {
+                    var go=new GameObject(name);go.transform.SetParent(root.transform);go.transform.SetPositionAndRotation(position,eye.transform.rotation);
+                    var text=go.AddComponent<TextMeshPro>();text.text=value;text.fontSize=5;text.color=color;text.alignment=TextAlignmentOptions.Center;
+                    text.rectTransform.sizeDelta=new Vector2(9,2);text.enableWordWrapping=false;
+                }
+                var p=player+Vector3.up*.3f;var head=p+Vector3.right*4;
+                Line("PlayerHeading",new[]{p,head,head-Vector3.right+Vector3.forward*.7f,head,head-Vector3.right-Vector3.forward*.7f},cyan,.15f);
+                Line("ActualFlightSamples",trace,magenta,.10f);
+                var ring=Enumerable.Range(0,49).Select(i=>landed+Vector3.up*.2f+new Vector3(Mathf.Cos(i*Mathf.PI/24),0,Mathf.Sin(i*Mathf.PI/24))*.8f).ToArray();
+                Line("ActualLanding",ring,yellow,.15f);
+                Line("PlannedTarget",new[]{planned+Vector3.left*.5f,planned+Vector3.right*.5f,planned,planned+Vector3.back*.5f,planned+Vector3.forward*.5f},cyan,.12f);
+                Label("PlayerLabel","PLAYER (24,0,52)\nHEADING +X",player+new Vector3(1,2,-2),Color.cyan);
+                Label("LandingLabel","ACTUAL LANDING\n"+landed.ToString("F2"),landed+new Vector3(0,2,1),Color.yellow);
+                Label("TraceLabel","MAGENTA = SAMPLED FLIGHT",centre+new Vector3(0,7,0),Color.magenta);
+                PresentationEvidence.Capture(eye,"grenade-player-heading-and-landing",null,false,1920,1080);
+                File.WriteAllText("docs/codex-reports/evidence/round6-2026-11-14/gallery-fix/replay/grenade-direction.txt",
+                    "Player="+player+" Forward="+Vector3.right+" PlannedTarget="+planned+" ActualLanding="+landed+" Samples="+trace.Length+"\nMarkers are temporary evidence annotations; flight samples and landing come from the production tactic and physics sweep.");
+            }
+            finally {UnityEngine.Object.Destroy(root);UnityEngine.Object.Destroy(eye.gameObject);foreach(var m in materials)UnityEngine.Object.Destroy(m);}
+        }
+        [Serializable] public class Box { public float x, y, width, height; }
+        [Serializable] public class Item
+        {
+            public string name, text; public bool active, overflow;
+            public Box rect; public Box[] lines; public float fontSize;
+        }
+        [Serializable] public class Frame
+        {
+            public string screen; public int width, height; public bool orthographic;
+            public float fieldOfView, orthographicSize, scaleFactor;
+            public string renderMode; public Item[] items;
+        }
+        static bool overlayCoordinates;
+        static Box Bounds(IEnumerable<Vector3> points, Camera camera, int width, int height)
+        {
+            var p = points.Select(v => overlayCoordinates ? new Vector3(v.x/width,v.y/height,1) : camera.WorldToViewportPoint(v)).ToArray();
+            float l=p.Min(v=>v.x)*width, r=p.Max(v=>v.x)*width;
+            float t=(1-p.Max(v=>v.y))*height, b=(1-p.Min(v=>v.y))*height;
+            return new Box {x=l,y=t,width=r-l,height=b-t};
+        }
+        public static void Dump(RectTransform page, string name, string folder, Camera camera, int width=1920, int height=1080)
+        {
+            overlayCoordinates=page.GetComponentInParent<Canvas>().renderMode==RenderMode.ScreenSpaceOverlay;
+            var items = new List<Item>();
+            foreach (var rect in page.GetComponentsInChildren<RectTransform>(true))
+            {
+                var corners=new Vector3[4]; rect.GetWorldCorners(corners);
+                var item=new Item {name=rect.name,active=rect.gameObject.activeInHierarchy,rect=Bounds(corners,camera,width,height)};
+                var text=rect.GetComponent<TMP_Text>();
+                if(text!=null)
+                {
+                    text.ForceMeshUpdate(true);item.text=text.text;item.fontSize=text.fontSize;item.overflow=text.isTextOverflowing;
+                    var lines=new List<Box>();
+                    for(int line=0;rect.gameObject.activeInHierarchy && text.textInfo != null && text.textInfo.characterInfo != null && line<text.textInfo.lineCount;line++)
+                    {
+                        var chars=text.textInfo.characterInfo.Take(text.textInfo.characterCount).Where(c=>c.isVisible&&c.lineNumber==line).ToArray();
+                        if(chars.Length>0) lines.Add(Bounds(chars.SelectMany(c=>new[]{rect.TransformPoint(c.bottomLeft),rect.TransformPoint(c.topRight)}),camera,width,height));
+                    }
+                    item.lines=lines.ToArray();
+                }
+                items.Add(item);
+            }
+            var canvas=page.GetComponentInParent<Canvas>();
+            var data=new Frame {screen=name,width=width,height=height,orthographic=camera.orthographic,
+                fieldOfView=camera.fieldOfView,orthographicSize=camera.orthographicSize,scaleFactor=canvas.scaleFactor,
+                renderMode=canvas.renderMode.ToString(),items=items.ToArray()};
+            File.WriteAllText(Path.Combine(folder,name+".layout.json"),JsonUtility.ToJson(data,true));
+        }
+    }
+}

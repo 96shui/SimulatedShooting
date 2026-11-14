@@ -38,6 +38,7 @@ namespace VRShooting.Application
     public interface ICombatGrenadeSquadPort
     {
         IReadOnlyList<SquadMemberDto> GetMembers(string sessionId);
+        UnityEngine.Vector3 GetForward(string sessionId, string memberId);
         ServiceResult<Unit> SetGrenadeState(string sessionId, string memberId, bool throwing);
     }
 }

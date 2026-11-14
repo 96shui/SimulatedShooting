@@ -73,6 +73,98 @@ namespace SimulatedShooting.Tests.PlayMode
             return runtime.Actors[target.EntityId];
         }
 
+        // BDD35: exercise the real room transition, scene visibility and shared core, without a headset.
+        [UnityTest] public IEnumerator Bdd35_RoomOneToRoomTwoEnemyDiscoversTurnsAndFires()
+        {
+            var rooms = mission.Definition.Floors[0].Rooms.ToArray();
+            Assert.That(rooms.Length, Is.GreaterThanOrEqualTo(2));
+            foreach (var room in rooms.Take(2))
+            {
+                Assert.That(mission.World.Submit(new CombatInputDto { SessionId=id, EventId="round6-open-"+room.RoomId,
+                    Tick=runtime.Clock.Tick, Kind=CombatInputKind.AreaPresence, EntityId=room.RoomId+".door", Flag=true }).Success);
+                Assert.That(mission.Advance().Success);
+                Assert.That(mission.Urban.OpenRoomDoor(id,room.RoomId).Success);
+                Frame(room.EntryWorldPosition.Value + (room.RoomId==rooms[1].RoomId ? Vector3.forward*7f : Vector3.zero));
+                Step(.02f);
+            }
+            var target = mission.Urban.GetEnemyAssignments(id).Data.First(a=>a.RoomId==rooms[1].RoomId);
+            var enemy = runtime.Actors[target.EntityId];
+            var sight = runtime.PlayerRoot.position+Vector3.up*1.2f-enemy.PerceptionOrigin.position;
+            Assert.That(Physics.Raycast(enemy.PerceptionOrigin.position,sight.normalized,out var blocker,sight.magnitude-.25f,
+                ~(1<<2),QueryTriggerInteraction.Ignore),Is.False,"Unexpected blocker: "+(blocker.collider!=null?blocker.collider.name:"none"));
+            Assert.That(Object.FindObjectOfType<CombatSceneBindings>().Doors.Single(d=>d.RoomId==rooms[1].RoomId).IsOpen,Is.True);
+            Debug.Log("Round6 room2 player="+runtime.PlayerRoot.position+" enemy="+enemy.transform.position+" forward="+enemy.transform.forward+
+                " angle="+Vector3.Angle(enemy.transform.forward,runtime.PlayerRoot.position-enemy.transform.position));
+            Assert.That(mission.Core.GetSnapshot(id).Data.Visual.Entities.Single(e=>e.EntityId==target.EntityId).State,
+                Is.EqualTo(CombatEntityState.Attacking), "Entered open 1F room 2 but the enemy never discovers the player");
+            for (var i=0;i<200&&enemy.ShotVisualFeedbackCount==0;i++) Step(.02f);
+            Assert.That(enemy.ShotVisualFeedbackCount, Is.GreaterThan(0));
+            Assert.That(Vector3.Angle(enemy.transform.forward,Vector3.ProjectOnPlane(runtime.PlayerRoot.position-enemy.transform.position,Vector3.up)),Is.LessThanOrEqualTo(12f));
+            yield return null;
+        }
+
+        [UnityTest] public IEnumerator Bdd35_AllSpawnedRoomFloorsKeepPerceptionAcrossStreetAndBuilding()
+        {
+            foreach(var target in mission.Urban.GetEnemyAssignments(id).Data.Where(a=>a.RoomId.Length>0))
+            {
+                Assert.That(mission.World.Submit(new CombatInputDto{SessionId=id,EventId="r6-floor-door-"+target.EntityId,Tick=runtime.Clock.Tick,
+                    Kind=CombatInputKind.AreaPresence,EntityId=target.RoomId+".door",Flag=true}).Success);
+                mission.Advance();Assert.That(mission.Urban.OpenRoomDoor(id,target.RoomId).Success);
+                var enemy=runtime.Actors[target.EntityId];var found=false;var position=Vector3.zero;
+                for(var angle=0;angle<360;angle+=30)
+                {
+                    var candidate=enemy.transform.position+Quaternion.Euler(0,angle,0)*Vector3.forward*1.2f;
+                    candidate.y=enemy.GroundedFeetPosition.y+.02f;
+                    var sight=candidate+Vector3.up*1.2f-enemy.PerceptionOrigin.position;
+                    if(Vector3.Angle(enemy.transform.forward,candidate-enemy.transform.position)<80 ||
+                        Physics.CheckCapsule(candidate+Vector3.up*.4f,candidate+Vector3.up*1.4f,.15f,~(1<<2),QueryTriggerInteraction.Ignore) ||
+                        Physics.Raycast(enemy.PerceptionOrigin.position,sight.normalized,sight.magnitude-.25f,~(1<<2),QueryTriggerInteraction.Ignore))continue;
+                    position=candidate;found=true;break;
+                }
+                Assert.That(found,Is.True,"No valid side-entry fixture: "+target.SpawnPointId);
+                Frame(position);Step(.02f);
+                Assert.That(mission.Core.GetSnapshot(id).Data.Visual.Entities.Single(e=>e.EntityId==target.EntityId).State,Is.EqualTo(CombatEntityState.Attacking),target.RoomId+" / "+target.FloorId);
+                Debug.Log("Round6 perception verified "+target.SpawnPointId+" room="+target.RoomId+" floor="+target.FloorId);
+                var entry=mission.Definition.EntranceId;
+                mission.World.Submit(new CombatInputDto{SessionId=id,EventId="r6-entry-"+target.EntityId,Tick=runtime.Clock.Tick,
+                    Kind=CombatInputKind.AreaPresence,EntityId=entry,Flag=true});mission.Advance();
+                Assert.That(mission.Urban.ExitBuilding(id,entry).Success);
+                Assert.That(mission.Urban.EnterBuilding(id,entry).Success);
+            }
+            yield return null;
+        }
+
+        [UnityTest] public IEnumerator Bdd35_NoEnemyThrowUsesCurrentPlayerHeadingAndRealProjectile()
+        {
+            // An empty core fixture keeps the no-enemy command testable without a mission
+            // auto-completing; pose/world collision, imported model and projectile are production.
+            var player=new Vector3(24,0,52);Frame(player);Step(.02f);
+            var thrower=runtime.Actors[id+".teammate-2"];thrower.Agent.enabled=false;
+            thrower.transform.SetPositionAndRotation(player-Vector3.right,Quaternion.LookRotation(Vector3.right));
+            using var emptyCore=new CombatCoreService(runtime.Clock);
+            emptyCore.Start(id,TrainingMode.Urban,System.Array.Empty<CombatEntityVisualDto>());
+            emptyCore.Submit(new CombatInputDto{SessionId=id,EventId="r6-empty-player",Tick=runtime.Clock.Tick,Kind=CombatInputKind.PlayerPose,
+                EntityId=id+".player",Position=player,Direction=Vector3.right});emptyCore.Advance(id);
+            using var squad=new SquadFormationService(runtime.Clock,runtime);squad.Start(id,player,Vector3.right);
+            using var tactic=new SquadGrenadeTacticService(runtime.Clock,emptyCore,squad);tactic.Configure(runtime);tactic.Start(id);
+            tactic.RequestFirstTeammateThrow();Assert.That(tactic.Advance().Success);Assert.That(tactic.Current.HasValue,Is.True);
+            var plan=tactic.Current.Value;
+            Assert.That(Vector3.Distance(plan.Target,player+Vector3.right*18+Vector3.up*.08f),Is.LessThan(.0001f));
+            var projectile=new GameObject("Round6ActualGrenadeProjectile");
+            try
+            {
+                var model=Object.Instantiate(Resources.Load<GameObject>("Combat/Grenade_M67"),projectile.transform);
+                Assert.That(CombatGrenadeProjectile.NormalizeModel(model,.22f),Is.True);
+                projectile.AddComponent<CombatGrenadeProjectile>().Launch(plan,null,()=>tactic.ProjectilePosition);
+                for(var i=0;i<45;i++){runtime.Clock.Step(.02f);Assert.That(tactic.Advance().Success);yield return null;}
+                var eye=runtime.PlayerCamera.transform;
+                eye.SetPositionAndRotation(projectile.transform.position+new Vector3(-1.2f,.5f,-1.8f),Quaternion.LookRotation(new Vector3(1.2f,-.5f,1.8f)));
+                PresentationEvidence.Capture(runtime.PlayerCamera,"grenade-no-enemy-player-forward",Evidence.Replace("mode4-ai-shoulder-2026-11-12","round6-2026-11-14"),false,1920,1080);
+                Debug.Log("Round6 empty-enemy grenade player="+player+" forward="+Vector3.right+" origin="+plan.Origin+" target="+plan.Target+" projectile="+projectile.transform.position);
+            }
+            finally{Object.Destroy(projectile);}
+        }
+
         [UnityTest] public IEnumerator Bdd23_UrbanAssignmentEnemyTurnsAimsFiresAndStopsWhenOccluded()
         {
             var enemy = OpenEnemyRoom();

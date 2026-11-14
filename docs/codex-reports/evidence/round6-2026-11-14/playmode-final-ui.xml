@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="5" result="Passed" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-14 09:48:51Z" end-time="2026-11-14 09:48:56Z" duration="4.7205116">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="322" result="Passed" start-time="2026-11-14 09:48:51Z" end-time="2026-11-14 09:48:56Z" duration="4.720512" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1247" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="214" result="Passed" start-time="2026-11-14 09:48:51Z" end-time="2026-11-14 09:48:55Z" duration="4.566366" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="30476" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1248" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="208" result="Passed" start-time="2026-11-14 09:48:51Z" end-time="2026-11-14 09:48:55Z" duration="4.565295" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1249" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="208" result="Passed" start-time="2026-11-14 09:48:51Z" end-time="2026-11-14 09:48:55Z" duration="4.564414" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1250" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="208" result="Passed" start-time="2026-11-14 09:48:51Z" end-time="2026-11-14 09:48:55Z" duration="4.563471" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1145" name="Round6PresentationTests" fullname="SimulatedShooting.Tests.PlayMode.Round6PresentationTests" classname="SimulatedShooting.Tests.PlayMode.Round6PresentationTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-14 09:48:51Z" end-time="2026-11-14 09:48:55Z" duration="4.559280" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1146" name="Bdd35_AllThreeHudLabelsAreAvailableWithRealFalseCapabilityAndFourSpares" fullname="SimulatedShooting.Tests.PlayMode.Round6PresentationTests.Bdd35_AllThreeHudLabelsAreAvailableWithRealFalseCapabilityAndFourSpares" methodname="Bdd35_AllThreeHudLabelsAreAvailableWithRealFalseCapabilityAndFourSpares" classname="SimulatedShooting.Tests.PlayMode.Round6PresentationTests" runstate="Runnable" seed="679116216" result="Passed" start-time="2026-11-14 09:48:51Z" end-time="2026-11-14 09:48:51Z" duration="0.145431" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1149" name="Bdd35_LeftShoulderShiftsWholeRifleLeftAndRestoresRightTracking" fullname="SimulatedShooting.Tests.PlayMode.Round6PresentationTests.Bdd35_LeftShoulderShiftsWholeRifleLeftAndRestoresRightTracking" methodname="Bdd35_LeftShoulderShiftsWholeRifleLeftAndRestoresRightTracking" classname="SimulatedShooting.Tests.PlayMode.Round6PresentationTests" runstate="Runnable" seed="820396685" result="Passed" start-time="2026-11-14 09:48:51Z" end-time="2026-11-14 09:48:53Z" duration="1.507761" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[There are multiple active and enabled XR Interaction Manager components in the loaded scenes. This is supported, but may not be intended since interactors and interactables are not able to interact with those registered to a different manager. You can use the <b>Window</b> > <b>Analysis</b> > <b>XR Interaction Debugger</b> window to verify the interactors and interactables registered with each. The default manager that interactors and interactables automatically register with when None is: <b>CombatScene</b>/XRInteractionManager
+Direct Interactor does not have required Collider set as a trigger.
+]]></output>
+              </test-case>
+              <test-case id="1147" name="Bdd35_MapPagesReopenAtCurrentHorizontalEyeLevel" fullname="SimulatedShooting.Tests.PlayMode.Round6PresentationTests.Bdd35_MapPagesReopenAtCurrentHorizontalEyeLevel" methodname="Bdd35_MapPagesReopenAtCurrentHorizontalEyeLevel" classname="SimulatedShooting.Tests.PlayMode.Round6PresentationTests" runstate="Runnable" seed="197010008" result="Passed" start-time="2026-11-14 09:48:53Z" end-time="2026-11-14 09:48:53Z" duration="0.339607" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+              </test-case>
+              <test-case id="1148" name="Bdd35_SharedRifleDropsWithoutInheritedVelocityAndCanReturnToRack" fullname="SimulatedShooting.Tests.PlayMode.Round6PresentationTests.Bdd35_SharedRifleDropsWithoutInheritedVelocityAndCanReturnToRack" methodname="Bdd35_SharedRifleDropsWithoutInheritedVelocityAndCanReturnToRack" classname="SimulatedShooting.Tests.PlayMode.Round6PresentationTests" runstate="Runnable" seed="522957506" result="Passed" start-time="2026-11-14 09:48:53Z" end-time="2026-11-14 09:48:55Z" duration="2.558787" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[There are multiple active and enabled XR Interaction Manager components in the loaded scenes. This is supported, but may not be intended since interactors and interactables are not able to interact with those registered to a different manager. You can use the <b>Window</b> > <b>Analysis</b> > <b>XR Interaction Debugger</b> window to verify the interactors and interactables registered with each. The default manager that interactors and interactables automatically register with when None is: <b>CombatScene</b>/XRInteractionManager
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1383" name="VRShooting.Runtime.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.PlayModeTests.dll" runstate="Runnable" testcasecount="108" result="Passed" start-time="2026-11-14 09:48:55Z" end-time="2026-11-14 09:48:56Z" duration="0.148286" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="30476" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1384" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="108" result="Passed" start-time="2026-11-14 09:48:56Z" end-time="2026-11-14 09:48:56Z" duration="0.146231" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1385" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="108" result="Passed" start-time="2026-11-14 09:48:56Z" end-time="2026-11-14 09:48:56Z" duration="0.144582" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1386" name="PlayMode" fullname="VRShooting.Tests.PlayMode" runstate="Runnable" testcasecount="108" result="Passed" start-time="2026-11-14 09:48:56Z" end-time="2026-11-14 09:48:56Z" duration="0.142931" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestSuite" id="1387" name="UI" fullname="VRShooting.Tests.PlayMode.UI" runstate="Runnable" testcasecount="75" result="Passed" start-time="2026-11-14 09:48:56Z" end-time="2026-11-14 09:48:56Z" duration="0.141001" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="1299" name="Screen02_04_MainMenuZeroingBriefingUITests" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-11-14 09:48:56Z" end-time="2026-11-14 09:48:56Z" duration="0.139191" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1308" name="Bdd02_ControlsPanelOpensAndClosesWithoutLeavingMenu" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd02_ControlsPanelOpensAndClosesWithoutLeavingMenu" methodname="Bdd02_ControlsPanelOpensAndClosesWithoutLeavingMenu" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="296932184" result="Passed" start-time="2026-11-14 09:48:56Z" end-time="2026-11-14 09:48:56Z" duration="0.137415" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

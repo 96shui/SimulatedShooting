@@ -1,0 +1,966 @@
+{
+    "screen": "urban-hud-30-120-converted-Screen_UrbanBuildingHud",
+    "width": 1920,
+    "height": 1080,
+    "orthographic": false,
+    "fieldOfView": 60.0,
+    "orthographicSize": 5.0,
+    "scaleFactor": 1.0,
+    "renderMode": "ScreenSpaceCamera",
+    "items": [
+        {
+            "name": "Screen_UrbanBuildingHud",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 0.0,
+                "y": -0.00012874603271484375,
+                "width": 1919.9981689453125,
+                "height": 1080.0001220703125
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Panel_UrbanBuildingHud_Frame",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 29.9981689453125,
+                "y": 30.000015258789064,
+                "width": 1860.0018310546875,
+                "height": 1020.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Panel_UrbanBuildingHud_Frame_Image",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 29.9981689453125,
+                "y": 30.000015258789064,
+                "width": 1860.0018310546875,
+                "height": 1020.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Text_UrbanBuildingHud_Title",
+            "text": "城镇攻防 · 建筑清敌",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 79.998779296875,
+                "y": 45.000022888183597,
+                "width": 1760.0006103515625,
+                "height": 69.99979400634766
+            },
+            "lines": [
+                {
+                    "x": 769.3121337890625,
+                    "y": 59.9453125,
+                    "width": 381.4984130859375,
+                    "height": 44.497718811035159
+                }
+            ],
+            "fontSize": 43.0
+        },
+        {
+            "name": "Panel_UrbanBuildingHud_Right",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1359.99755859375,
+                "y": 90.00016784667969,
+                "width": 510.0018310546875,
+                "height": 359.99993896484377
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Panel_UrbanBuildingHud_Right_Image",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1359.99755859375,
+                "y": 90.00016784667969,
+                "width": 510.0018310546875,
+                "height": 359.99993896484377
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_MiniMap",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 49.998779296875,
+                "y": 90.00016784667969,
+                "width": 510.0018310546875,
+                "height": 364.9998779296875
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_MiniMap_Image",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 49.998779296875,
+                "y": 90.00016784667969,
+                "width": 510.0018310546875,
+                "height": 364.9998779296875
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_MiniMap_Background",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 77.999267578125,
+                "y": 125.00003814697266,
+                "width": 453.9990234375,
+                "height": 271.99993896484377
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Areas",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 77.999267578125,
+                "y": 125.00003814697266,
+                "width": 453.9990234375,
+                "height": 271.99993896484377
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Markers",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 77.999267578125,
+                "y": 125.00003814697266,
+                "width": 453.9990234375,
+                "height": 271.99993896484377
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "MiniMap.Marker.building-spawn-1.estimate",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 472.276611328125,
+                "y": 343.10162353515627,
+                "width": 21.998291015625,
+                "height": 21.999969482421876
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Symbol",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 472.276611328125,
+                "y": 343.10162353515627,
+                "width": 21.998291015625,
+                "height": 21.999969482421876
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Cross",
+            "text": "X",
+            "active": true,
+            "overflow": true,
+            "rect": {
+                "x": 472.276611328125,
+                "y": 343.10162353515627,
+                "width": 21.998291015625,
+                "height": 21.999969482421876
+            },
+            "lines": [
+                {
+                    "x": 475.7720947265625,
+                    "y": 345.53466796875,
+                    "width": 14.96337890625,
+                    "height": 18.0145263671875
+                }
+            ],
+            "fontSize": 22.0
+        },
+        {
+            "name": "MiniMap.Marker.building-spawn-2.estimate",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 306.881103515625,
+                "y": 156.89828491210938,
+                "width": 22.0001220703125,
+                "height": 22.000244140625
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Symbol",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 306.881103515625,
+                "y": 156.89828491210938,
+                "width": 22.0001220703125,
+                "height": 22.000244140625
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Cross",
+            "text": "X",
+            "active": true,
+            "overflow": true,
+            "rect": {
+                "x": 306.881103515625,
+                "y": 156.89828491210938,
+                "width": 22.0001220703125,
+                "height": 22.000244140625
+            },
+            "lines": [
+                {
+                    "x": 310.37841796875,
+                    "y": 159.3315887451172,
+                    "width": 14.96337890625,
+                    "height": 18.0146484375
+                }
+            ],
+            "fontSize": 22.0
+        },
+        {
+            "name": "MiniMap.Marker.room-11",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 317.89306640625,
+                "y": 327.7142639160156,
+                "width": 22.0001220703125,
+                "height": 22.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Symbol",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 317.89306640625,
+                "y": 327.7142639160156,
+                "width": 22.0001220703125,
+                "height": 22.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "MiniMap.Marker.room-12",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 317.89306640625,
+                "y": 211.14285278320313,
+                "width": 22.0001220703125,
+                "height": 22.000244140625
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Symbol",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 317.89306640625,
+                "y": 211.14285278320313,
+                "width": 22.0001220703125,
+                "height": 22.000244140625
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "MiniMap.Marker.93d3b7692b044b218e1956a2cc71c52d.player",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 305.947265625,
+                "y": 386.00006103515627,
+                "width": 22.0001220703125,
+                "height": 21.999969482421876
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Symbol",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 305.947265625,
+                "y": 386.00006103515627,
+                "width": 22.0001220703125,
+                "height": 21.999969482421876
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "MiniMap.Marker.93d3b7692b044b218e1956a2cc71c52d.teammate-2",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 305.947265625,
+                "y": 386.00006103515627,
+                "width": 22.0001220703125,
+                "height": 21.999969482421876
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Symbol",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 305.947265625,
+                "y": 386.00006103515627,
+                "width": 22.0001220703125,
+                "height": 21.999969482421876
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "MiniMap.Marker.93d3b7692b044b218e1956a2cc71c52d.teammate-3",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 305.947265625,
+                "y": 386.00006103515627,
+                "width": 22.0001220703125,
+                "height": 21.999969482421876
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Symbol",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 305.947265625,
+                "y": 386.00006103515627,
+                "width": 22.0001220703125,
+                "height": 21.999969482421876
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_MiniMap_Label",
+            "text": "▲我方  ○队友  ◇预估  ×击杀",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 77.999267578125,
+                "y": 403.00006103515627,
+                "width": 453.9990234375,
+                "height": 31.99993896484375
+            },
+            "lines": [
+                {
+                    "x": 80.203857421875,
+                    "y": 410.6577453613281,
+                    "width": 226.5106201171875,
+                    "height": 18.50390625
+                }
+            ],
+            "fontSize": 18.0
+        },
+        {
+            "name": "Panel_UrbanBuildingHud_Rooms",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 49.998779296875,
+                "y": 475.0,
+                "width": 510.0018310546875,
+                "height": 330.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Panel_UrbanBuildingHud_Rooms_Image",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 49.998779296875,
+                "y": 475.0,
+                "width": 510.0018310546875,
+                "height": 330.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_Floor",
+            "text": "当前楼层：一层",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 79.998779296875,
+                "y": 505.0,
+                "width": 450.0,
+                "height": 45.00006103515625
+            },
+            "lines": [
+                {
+                    "x": 80.6634521484375,
+                    "y": 516.3300170898438,
+                    "width": 167.537841796875,
+                    "height": 24.625
+                }
+            ],
+            "fontSize": 24.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_Rooms",
+            "text": "一层1号 · 靠近后开门\n一层2号 · 靠近后开门",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 79.998779296875,
+                "y": 565.0000610351563,
+                "width": 450.0,
+                "height": 199.9998779296875
+            },
+            "lines": [
+                {
+                    "x": 79.7808837890625,
+                    "y": 569.1255493164063,
+                    "width": 196.76513671875,
+                    "height": 21.505859375
+                },
+                {
+                    "x": 79.7808837890625,
+                    "y": 596.8417358398438,
+                    "width": 196.76513671875,
+                    "height": 21.50592041015625
+                }
+            ],
+            "fontSize": 21.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_SearchProgress",
+            "text": "建筑敌人：0 / 4",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 79.998779296875,
+                "y": 814.9999389648438,
+                "width": 450.0,
+                "height": 50.000244140625
+            },
+            "lines": [
+                {
+                    "x": 79.72412109375,
+                    "y": 828.9003295898438,
+                    "width": 173.0548095703125,
+                    "height": 24.74237060546875
+                }
+            ],
+            "fontSize": 24.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_Health",
+            "text": "生命：10 / 10",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1399.998779296875,
+                "y": 115.00007629394531,
+                "width": 430.001220703125,
+                "height": 49.99980163574219
+            },
+            "lines": [
+                {
+                    "x": 1399.6527099609375,
+                    "y": 127.9754867553711,
+                    "width": 165.4119873046875,
+                    "height": 26.651588439941408
+                }
+            ],
+            "fontSize": 26.0
+        },
+        {
+            "name": "Hud_Combat_HealthTrack",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1399.998779296875,
+                "y": 168.00006103515626,
+                "width": 430.001220703125,
+                "height": 5.99993896484375
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_1",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1399.998779296875,
+                "y": 168.00006103515626,
+                "width": 40.9991455078125,
+                "height": 5.99993896484375
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_2",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1445.0006103515625,
+                "y": 168.00006103515626,
+                "width": 40.9991455078125,
+                "height": 5.99993896484375
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_3",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1488.0010986328125,
+                "y": 168.00006103515626,
+                "width": 40.9991455078125,
+                "height": 5.99993896484375
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_4",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1530.999755859375,
+                "y": 168.00006103515626,
+                "width": 40.9991455078125,
+                "height": 5.99993896484375
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_5",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1574.000244140625,
+                "y": 168.00006103515626,
+                "width": 40.9991455078125,
+                "height": 5.99993896484375
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_6",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1617.000732421875,
+                "y": 168.00006103515626,
+                "width": 40.9991455078125,
+                "height": 5.99993896484375
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_7",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1659.9993896484375,
+                "y": 168.00006103515626,
+                "width": 40.9991455078125,
+                "height": 5.99993896484375
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_8",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1702.9998779296875,
+                "y": 168.00006103515626,
+                "width": 40.9991455078125,
+                "height": 5.99993896484375
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_9",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1746.0003662109375,
+                "y": 168.00006103515626,
+                "width": 40.9991455078125,
+                "height": 5.99993896484375
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_10",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1789.0008544921875,
+                "y": 168.00006103515626,
+                "width": 40.9991455078125,
+                "height": 5.99993896484375
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_Ammo",
+            "text": "弹药：30 / 120\n备用弹匣 4 · R / 左手柄X键换弹",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1399.998779296875,
+                "y": 180.00009155273438,
+                "width": 430.001220703125,
+                "height": 79.99981689453125
+            },
+            "lines": [
+                {
+                    "x": 1399.9530029296875,
+                    "y": 188.57289123535157,
+                    "width": 194.2327880859375,
+                    "height": 28.483139038085939
+                },
+                {
+                    "x": 1399.3524169921875,
+                    "y": 225.25457763671876,
+                    "width": 393.9312744140625,
+                    "height": 29.057327270507814
+                }
+            ],
+            "fontSize": 28.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_Posture",
+            "text": "姿态：起立",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1399.998779296875,
+                "y": 270.0001220703125,
+                "width": 430.001220703125,
+                "height": 44.999847412109378
+            },
+            "lines": [
+                {
+                    "x": 1400.07568359375,
+                    "y": 281.189453125,
+                    "width": 119.8919677734375,
+                    "height": 24.695404052734376
+                }
+            ],
+            "fontSize": 24.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_Shoulder",
+            "text": "射击肩：右肩 · 右后/左前",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1399.998779296875,
+                "y": 325.00006103515627,
+                "width": 430.001220703125,
+                "height": 45.00006103515625
+            },
+            "lines": [
+                {
+                    "x": 1399.5611572265625,
+                    "y": 336.330078125,
+                    "width": 270.791015625,
+                    "height": 24.531158447265626
+                }
+            ],
+            "fontSize": 24.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_Corner",
+            "text": "拐角射击：可用",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1399.998779296875,
+                "y": 379.9998474121094,
+                "width": 430.001220703125,
+                "height": 45.000091552734378
+            },
+            "lines": [
+                {
+                    "x": 1399.749755859375,
+                    "y": 391.23626708984377,
+                    "width": 167.0928955078125,
+                    "height": 24.836029052734376
+                }
+            ],
+            "fontSize": 24.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_Squad",
+            "text": "玩家 · 正常 · 生命 10\n二号队友 · 跟随 · 生命 10\n三号队友 · 跟随 · 生命 10",
+            "active": true,
+            "overflow": true,
+            "rect": {
+                "x": 599.9981689453125,
+                "y": 975.0,
+                "width": 660.0,
+                "height": 75.0001220703125
+            },
+            "lines": [
+                {
+                    "x": 829.22607421875,
+                    "y": 973.0743408203125,
+                    "width": 200.8795166015625,
+                    "height": 22.76629638671875
+                },
+                {
+                    "x": 807.5921630859375,
+                    "y": 1002.3253173828125,
+                    "width": 244.5135498046875,
+                    "height": 22.551513671875
+                },
+                {
+                    "x": 807.5921630859375,
+                    "y": 1031.3614501953125,
+                    "width": 244.5135498046875,
+                    "height": 22.5513916015625
+                }
+            ],
+            "fontSize": 22.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_Prompt",
+            "text": "靠近房门后点击开门，清除全部敌人即可胜利\n交互：右摇杆按压/Enter/空格 · 手雷：右A/H",
+            "active": true,
+            "overflow": true,
+            "rect": {
+                "x": 649.998779296875,
+                "y": 754.9999389648438,
+                "width": 620.0006103515625,
+                "height": 65.0001220703125
+            },
+            "lines": [
+                {
+                    "x": 679.9273681640625,
+                    "y": 755.9909057617188,
+                    "width": 558.7774658203125,
+                    "height": 28.94793701171875
+                },
+                {
+                    "x": 678.9239501953125,
+                    "y": 792.9185180664063,
+                    "width": 560.072021484375,
+                    "height": 28.75653076171875
+                }
+            ],
+            "fontSize": 28.0
+        },
+        {
+            "name": "Hud_UrbanBuilding_TaskState",
+            "text": "任务状态：消灭全部敌人",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 649.998779296875,
+                "y": 825.0000610351563,
+                "width": 620.0006103515625,
+                "height": 35.0
+            },
+            "lines": [
+                {
+                    "x": 838.685302734375,
+                    "y": 832.153564453125,
+                    "width": 242.58544921875,
+                    "height": 22.85205078125
+                }
+            ],
+            "fontSize": 22.0
+        },
+        {
+            "name": "Button_UrbanBuildingHud_OpenDoor",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 699.9993896484375,
+                "y": 885.0,
+                "width": 290.0006103515625,
+                "height": 74.99993896484375
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Button_UrbanBuildingHud_OpenDoor_Label",
+            "text": "开门",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 699.9993896484375,
+                "y": 885.0,
+                "width": 290.0006103515625,
+                "height": 74.99993896484375
+            },
+            "lines": [
+                {
+                    "x": 821.8487548828125,
+                    "y": 911.8404541015625,
+                    "width": 44.77294921875,
+                    "height": 23.553955078125
+                }
+            ],
+            "fontSize": 23.0
+        },
+        {
+            "name": "Button_UrbanBuildingHud_CheckRoom",
+            "text": "",
+            "active": false,
+            "overflow": false,
+            "rect": {
+                "x": 1010.0006103515625,
+                "y": 885.0,
+                "width": 289.998779296875,
+                "height": 74.99993896484375
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Button_UrbanBuildingHud_CheckRoom_Label",
+            "text": "检查房间",
+            "active": false,
+            "overflow": false,
+            "rect": {
+                "x": 1010.0006103515625,
+                "y": 885.0,
+                "width": 289.998779296875,
+                "height": 74.99993896484375
+            },
+            "lines": [],
+            "fontSize": 23.0
+        },
+        {
+            "name": "Button_UrbanBuildingHud_ExitBuilding",
+            "text": "",
+            "active": false,
+            "overflow": false,
+            "rect": {
+                "x": 1349.9981689453125,
+                "y": 885.0,
+                "width": 290.0006103515625,
+                "height": 74.99993896484375
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Button_UrbanBuildingHud_ExitBuilding_Label",
+            "text": "返回街道",
+            "active": false,
+            "overflow": false,
+            "rect": {
+                "x": 1349.9981689453125,
+                "y": 885.0,
+                "width": 290.0006103515625,
+                "height": 74.99993896484375
+            },
+            "lines": [],
+            "fontSize": 23.0
+        }
+    ]
+}

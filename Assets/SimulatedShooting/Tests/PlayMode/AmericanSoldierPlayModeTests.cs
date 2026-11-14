@@ -188,16 +188,16 @@ namespace SimulatedShooting.Tests.PlayMode
 
     internal static class PresentationEvidence
     {
-        internal static void Capture(Camera camera,string name,string outputDirectory=null,bool includeOverlay=false)
+        internal static void Capture(Camera camera,string name,string outputDirectory=null,bool includeOverlay=false,int width=1280,int height=960)
         {
             var output=outputDirectory??System.IO.Path.Combine(Application.dataPath,"../Temp/GoalRepair/images");
             System.IO.Directory.CreateDirectory(output);
-            var target=new RenderTexture(1280,960,24);
-            var texture=new Texture2D(1280,960,TextureFormat.RGB24,false);
+            var target=new RenderTexture(width,height,24);
+            var texture=new Texture2D(width,height,TextureFormat.RGB24,false);
             var outputCamera=new GameObject("PresentationEvidenceCamera").AddComponent<Camera>();
             outputCamera.CopyFrom(camera);outputCamera.enabled=false;
             outputCamera.transform.SetPositionAndRotation(camera.transform.position,camera.transform.rotation);
-            outputCamera.ResetWorldToCameraMatrix();outputCamera.ResetProjectionMatrix();outputCamera.aspect=1280f/960f;
+            outputCamera.ResetWorldToCameraMatrix();outputCamera.ResetProjectionMatrix();outputCamera.aspect=(float)width/height;
             var overlays = includeOverlay ? Object.FindObjectsOfType<Canvas>().Where(c => c.isRootCanvas && c.renderMode == RenderMode.ScreenSpaceOverlay).ToArray() : new Canvas[0];
             var cameras = overlays.Select(c=>c.worldCamera).ToArray();
             var distances = overlays.Select(c=>c.planeDistance).ToArray();
@@ -207,7 +207,7 @@ namespace SimulatedShooting.Tests.PlayMode
                 foreach (var canvas in overlays) { canvas.renderMode=RenderMode.ScreenSpaceCamera;canvas.worldCamera=outputCamera;canvas.planeDistance=1; }
                 Canvas.ForceUpdateCanvases();
                 outputCamera.stereoTargetEye=StereoTargetEyeMask.None;outputCamera.targetTexture=target;outputCamera.Render();
-                RenderTexture.active=target;texture.ReadPixels(new Rect(0,0,1280,960),0,0);texture.Apply();
+                RenderTexture.active=target;texture.ReadPixels(new Rect(0,0,width,height),0,0);texture.Apply();
                 System.IO.File.WriteAllBytes(System.IO.Path.Combine(output,name+".png"),texture.EncodeToPNG());
             }
             finally

@@ -1,0 +1,1 @@
+screen=640x480 sourceFov=60 sourceAspect=1.333333 outputFov=60 outputAspect=1.777778

@@ -280,6 +280,8 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(panel.activeInHierarchy, Is.True);
             Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
             var copy = string.Join("\n", panel.GetComponentsInChildren<TMP_Text>(true).Select(t => t.text));
+            // BDD35: exact mode-two copy, including the unchanged next line.
+            Assert.That(copy, Does.Contain("双手据枪，采用“跟随射击”或“等待射击”的方式对目标进行射击。\n右扳机快速扣动起射两发，继续按住可逐发连射。"));
             Assert.That(copy, Does.Contain("右手侧握键抓枪 / 主手握持；左手侧握键副手握持。"));
             Assert.That(copy, Does.Not.Contain("Grip"));
             CaptureControlsPanel();

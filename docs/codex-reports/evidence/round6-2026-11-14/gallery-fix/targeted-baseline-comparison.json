@@ -1,0 +1,166 @@
+{
+  "summary": {
+    "editmode": {
+      "baseline": {
+        "total": "389",
+        "passed": "369",
+        "failed": "20",
+        "skipped": "0"
+      },
+      "targeted": {
+        "total": "1",
+        "passed": "1",
+        "failed": "0",
+        "skipped": "0"
+      },
+      "unrecognized_cases": [],
+      "status_changes": [],
+      "new_failures": []
+    },
+    "playmode": {
+      "baseline": {
+        "total": "322",
+        "passed": "299",
+        "failed": "23",
+        "skipped": "0"
+      },
+      "targeted": {
+        "total": "13",
+        "passed": "10",
+        "failed": "3",
+        "skipped": "0"
+      },
+      "unrecognized_cases": [],
+      "status_changes": [],
+      "new_failures": []
+    }
+  },
+  "cases": [
+    {
+      "platform": "editmode",
+      "fullname": "SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers",
+      "baseline": "Passed",
+      "current": "Passed",
+      "failure_message_identical": true,
+      "baseline_message": "",
+      "current_message": ""
+    },
+    {
+      "platform": "playmode",
+      "fullname": "SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd35_NoEnemyThrowUsesCurrentPlayerHeadingAndRealProjectile",
+      "baseline": "Passed",
+      "current": "Passed",
+      "failure_message_identical": true,
+      "baseline_message": "",
+      "current_message": ""
+    },
+    {
+      "platform": "playmode",
+      "fullname": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Trench_ProductionMagazineReload",
+      "baseline": "Passed",
+      "current": "Passed",
+      "failure_message_identical": true,
+      "baseline_message": "",
+      "current_message": ""
+    },
+    {
+      "platform": "playmode",
+      "fullname": "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Urban_ProductionMagazineReload",
+      "baseline": "Passed",
+      "current": "Passed",
+      "failure_message_identical": true,
+      "baseline_message": "",
+      "current_message": ""
+    },
+    {
+      "platform": "playmode",
+      "fullname": "SimulatedShooting.Tests.PlayMode.Round6PresentationTests.Bdd35_AllThreeHudLabelsAreAvailableWithRealFalseCapabilityAndFourSpares",
+      "baseline": "Passed",
+      "current": "Passed",
+      "failure_message_identical": true,
+      "baseline_message": "",
+      "current_message": ""
+    },
+    {
+      "platform": "playmode",
+      "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.P3UiRoot_BuildsAllPagesAndFrozenTestIds",
+      "baseline": "Passed",
+      "current": "Passed",
+      "failure_message_identical": true,
+      "baseline_message": "",
+      "current_message": ""
+    },
+    {
+      "platform": "playmode",
+      "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing",
+      "baseline": "Passed",
+      "current": "Passed",
+      "failure_message_identical": true,
+      "baseline_message": "",
+      "current_message": ""
+    },
+    {
+      "platform": "playmode",
+      "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand",
+      "baseline": "Passed",
+      "current": "Passed",
+      "failure_message_identical": true,
+      "baseline_message": "",
+      "current_message": ""
+    },
+    {
+      "platform": "playmode",
+      "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents",
+      "baseline": "Passed",
+      "current": "Passed",
+      "failure_message_identical": true,
+      "baseline_message": "",
+      "current_message": ""
+    },
+    {
+      "platform": "playmode",
+      "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent",
+      "baseline": "Passed",
+      "current": "Passed",
+      "failure_message_identical": true,
+      "baseline_message": "",
+      "current_message": ""
+    },
+    {
+      "platform": "playmode",
+      "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet",
+      "baseline": "Failed",
+      "current": "Failed",
+      "failure_message_identical": true,
+      "baseline_message": "  Expected: String containing \"1-2\"\n  But was:  \"建筑内部敌人：3-6\"\n",
+      "current_message": "  Expected: String containing \"1-2\"\n  But was:  \"建筑内部敌人：3-6\"\n"
+    },
+    {
+      "platform": "playmode",
+      "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible",
+      "baseline": "Passed",
+      "current": "Passed",
+      "failure_message_identical": true,
+      "baseline_message": "",
+      "current_message": ""
+    },
+    {
+      "platform": "playmode",
+      "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands",
+      "baseline": "Failed",
+      "current": "Failed",
+      "failure_message_identical": true,
+      "baseline_message": "  Expected: String containing \"未搜索\"\n  But was:  \"房间1 · 靠近后开门\"\n",
+      "current_message": "  Expected: String containing \"未搜索\"\n  But was:  \"房间1 · 靠近后开门\"\n"
+    },
+    {
+      "platform": "playmode",
+      "fullname": "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce",
+      "baseline": "Failed",
+      "current": "Failed",
+      "failure_message_identical": true,
+      "baseline_message": "  Expected: String containing \"街道清除：已清除\"\n  But was:  \"消灭建筑敌人：5 / 5\n剩余弹药：76\n队友状态：\n玩家 · 正常 · 生命 100\n二号队友 · 跟随 · 生命 100\n三号队友 · 跟随 · 生命 100\n用时：02:00\"\n",
+      "current_message": "  Expected: String containing \"街道清除：已清除\"\n  But was:  \"消灭建筑敌人：5 / 5\n剩余弹药：76\n队友状态：\n玩家 · 正常 · 生命 100\n二号队友 · 跟随 · 生命 100\n三号队友 · 跟随 · 生命 100\n用时：02:00\"\n"
+    }
+  ]
+}

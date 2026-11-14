@@ -118,7 +118,10 @@ namespace SimulatedShooting.Tests.PlayMode
             }
             var id=app.Mission.SessionId;
             var ammo=app.Mission.Core.GetSnapshot(id).Data.Ammo;
-            Assert.That(ammo.ReserveMagazines,Is.EqualTo(2));
+            Assert.That(ammo.ReserveMagazines,Is.EqualTo(4));
+            yield return new WaitForSecondsRealtime(.12f);
+            if(!leftShoulder)PresentationEvidence.Capture(runtime.PlayerCamera,mode==TrainingMode.Trench?"trench-hud-30-120":"urban-hud-30-120",
+                "docs/codex-reports/evidence/round6-2026-11-14",true,1920,1080);
             Assert.That(runtime.ReloadPresentation.Magazine,Is.Not.Null);
             input.Press(XRTrainingInputButton.RightGrip);input.Press(XRTrainingInputButton.LeftGrip);
             Sample(runtime.PlayerRoot.position,runtime.PlayerCamera.transform.position,Vector3.up);
@@ -136,18 +139,18 @@ namespace SimulatedShooting.Tests.PlayMode
             var hudName=mode==TrainingMode.Trench?"Hud_Trench_Ammo":app.Snapshot.Screen==ScreenId.UrbanBuildingHud?"Hud_UrbanBuilding_Ammo":"Hud_UrbanStreet_Ammo";
             var text=ui.transform.Find("Screen_"+app.Snapshot.Screen+"/"+hudName).GetComponent<TMPro.TMP_Text>();
             Assert.That(text.text,Does.Contain("换弹中"));
-            Assert.That(text.text,Does.Contain("备用弹匣 2"));
+            Assert.That(text.text,Does.Contain("备用弹匣 4"));
             input.Press(XRTrainingInputButton.Trigger);
             runtime.Step(1f);input.AdvanceFrame();runtime.ReloadPresentation.Sample();
             Assert.That(app.Mission.Core.GetSnapshot(id).Data.Ammo.CurrentMagazine,Is.EqualTo(29),"Firing is blocked during animation");
             Assert.That(runtime.PlayerCamera.WorldToViewportPoint(runtime.ReloadPresentation.ReloadHandAnchor.position).y,Is.LessThan(0));
             runtime.Step(1f);input.AdvanceFrame();
             ammo=app.Mission.Core.GetSnapshot(id).Data.Ammo;
-            Assert.That(ammo.CurrentMagazine,Is.EqualTo(30));Assert.That(ammo.ReserveMagazines,Is.EqualTo(1));
+            Assert.That(ammo.CurrentMagazine,Is.EqualTo(30));Assert.That(ammo.ReserveMagazines,Is.EqualTo(3));
             Assert.That(runtime.ReloadPresentation.IsAnimating,Is.False);
             yield return new WaitForSecondsRealtime(.12f);
             yield return null;
-            Assert.That(text.text,Does.Contain("备用弹匣 1"));
+            Assert.That(text.text,Does.Contain("备用弹匣 3"));
             Assert.That(text.text,Does.Not.Contain("换弹中"));
             Assert.That(text.text,Does.Contain("左手柄X键"));
             var promptName=mode==TrainingMode.Trench?"Hud_Trench_Prompt":app.Snapshot.Screen==ScreenId.UrbanBuildingHud?"Hud_UrbanBuilding_Prompt":"Hud_UrbanStreet_Prompt";

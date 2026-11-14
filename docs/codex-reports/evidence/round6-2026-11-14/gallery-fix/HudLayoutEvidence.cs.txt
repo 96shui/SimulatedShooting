@@ -1,0 +1,61 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace VRShooting.Editor
+{
+    // Temporary audit probe. Source is retained with the evidence, then removed from Assets.
+    public static class HudLayoutEvidence
+    {
+        [Serializable] public class Box { public float x, y, width, height; }
+        [Serializable] public class Item
+        {
+            public string name, text; public bool active, overflow;
+            public Box rect; public Box[] lines; public float fontSize;
+        }
+        [Serializable] public class Frame
+        {
+            public string screen; public int width, height; public bool orthographic;
+            public float fieldOfView, orthographicSize, scaleFactor;
+            public string renderMode; public Item[] items;
+        }
+        static Box Bounds(IEnumerable<Vector3> points, Camera camera, int width, int height)
+        {
+            var p = points.Select(v => camera.WorldToViewportPoint(v)).ToArray();
+            float l=p.Min(v=>v.x)*width, r=p.Max(v=>v.x)*width;
+            float t=(1-p.Max(v=>v.y))*height, b=(1-p.Min(v=>v.y))*height;
+            return new Box {x=l,y=t,width=r-l,height=b-t};
+        }
+        public static void Dump(RectTransform page, string name, string folder, Camera camera, int width=1920, int height=1080)
+        {
+            var items = new List<Item>();
+            foreach (var rect in page.GetComponentsInChildren<RectTransform>(true))
+            {
+                var corners=new Vector3[4]; rect.GetWorldCorners(corners);
+                var item=new Item {name=rect.name,active=rect.gameObject.activeInHierarchy,rect=Bounds(corners,camera,width,height)};
+                var text=rect.GetComponent<TMP_Text>();
+                if(text!=null)
+                {
+                    text.ForceMeshUpdate(true);item.text=text.text;item.fontSize=text.fontSize;item.overflow=text.isTextOverflowing;
+                    var lines=new List<Box>();
+                    for(int line=0;rect.gameObject.activeInHierarchy && text.textInfo != null && text.textInfo.characterInfo != null && line<text.textInfo.lineCount;line++)
+                    {
+                        var chars=text.textInfo.characterInfo.Take(text.textInfo.characterCount).Where(c=>c.isVisible&&c.lineNumber==line).ToArray();
+                        if(chars.Length>0) lines.Add(Bounds(chars.SelectMany(c=>new[]{rect.TransformPoint(c.bottomLeft),rect.TransformPoint(c.topRight)}),camera,width,height));
+                    }
+                    item.lines=lines.ToArray();
+                }
+                items.Add(item);
+            }
+            var canvas=page.GetComponentInParent<Canvas>();
+            var data=new Frame {screen=name,width=width,height=height,orthographic=camera.orthographic,
+                fieldOfView=camera.fieldOfView,orthographicSize=camera.orthographicSize,scaleFactor=canvas.scaleFactor,
+                renderMode=canvas.renderMode.ToString(),items=items.ToArray()};
+            File.WriteAllText(Path.Combine(folder,name+".layout.json"),JsonUtility.ToJson(data,true));
+        }
+    }
+}

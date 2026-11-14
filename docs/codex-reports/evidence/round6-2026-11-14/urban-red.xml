@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Passed" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-14 09:15:31Z" end-time="2026-11-14 09:15:34Z" duration="3.5751188">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="316" result="Passed" start-time="2026-11-14 09:15:31Z" end-time="2026-11-14 09:15:34Z" duration="3.575119" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1240" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="208" result="Passed" start-time="2026-11-14 09:15:31Z" end-time="2026-11-14 09:15:34Z" duration="3.569669" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="57124" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1241" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="202" result="Passed" start-time="2026-11-14 09:15:31Z" end-time="2026-11-14 09:15:34Z" duration="3.568935" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1242" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="202" result="Passed" start-time="2026-11-14 09:15:31Z" end-time="2026-11-14 09:15:34Z" duration="3.568450" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1243" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="202" result="Passed" start-time="2026-11-14 09:15:31Z" end-time="2026-11-14 09:15:34Z" duration="3.567787" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1075" name="Mode4AlignmentPlayModeTests" fullname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" classname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-14 09:15:31Z" end-time="2026-11-14 09:15:34Z" duration="3.565556" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1076" name="Bdd35_RoomOneToRoomTwoEnemyDiscoversTurnsAndFires" fullname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd35_RoomOneToRoomTwoEnemyDiscoversTurnsAndFires" methodname="Bdd35_RoomOneToRoomTwoEnemyDiscoversTurnsAndFires" classname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" runstate="Runnable" seed="725317914" result="Passed" start-time="2026-11-14 09:15:31Z" end-time="2026-11-14 09:15:34Z" duration="3.557936" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Round6 room2 player=(25.00, 0.00, 80.00) enemy=(23.20, 0.05, 86.80) forward=(-0.18, 0.00, -0.98) angle=25.26702
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

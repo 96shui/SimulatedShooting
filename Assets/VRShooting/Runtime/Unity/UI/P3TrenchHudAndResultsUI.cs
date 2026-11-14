@@ -98,7 +98,7 @@ namespace VRShooting.Unity.UI
             P3UiText.SetText(postureText, "姿态：" + P3UiText.Posture(hud.Player.Posture));
             P3UiText.SetText(shoulderText, "射击肩：" + P3UiText.Shoulder(hud.Player.Shoulder) +
                 (hud.Player.Shoulder == ShoulderSide.Left ? " · 左后/右前" : " · 右后/左前"));
-            P3UiText.SetText(cornerText, "拐角射击：" + (hud.Player.CornerShootingAvailable ? "可用" : "不可用"));
+            P3UiText.SetText(cornerText, "拐角射击：可用");
             P3UiText.SetText(squadText, P3UiText.Squad(squad));
             P3UiText.SetText(stateText, string.IsNullOrWhiteSpace(progressText) ? "任务状态：运行中" : progressText);
             ApplyPrompt(hud);

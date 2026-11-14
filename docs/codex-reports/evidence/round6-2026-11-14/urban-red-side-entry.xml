@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Failed(Child)" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-14 09:16:42Z" end-time="2026-11-14 09:16:43Z" duration="1.5885519">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="316" result="Failed" site="Child" start-time="2026-11-14 09:16:42Z" end-time="2026-11-14 09:16:43Z" duration="1.588552" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1240" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="208" result="Failed" site="Child" start-time="2026-11-14 09:16:42Z" end-time="2026-11-14 09:16:43Z" duration="1.582936" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="57176" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1241" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="202" result="Failed" site="Child" start-time="2026-11-14 09:16:42Z" end-time="2026-11-14 09:16:43Z" duration="1.582224" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1242" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="202" result="Failed" site="Child" start-time="2026-11-14 09:16:42Z" end-time="2026-11-14 09:16:43Z" duration="1.581680" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1243" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="202" result="Failed" site="Child" start-time="2026-11-14 09:16:42Z" end-time="2026-11-14 09:16:43Z" duration="1.581056" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1075" name="Mode4AlignmentPlayModeTests" fullname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" classname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" runstate="Runnable" testcasecount="3" result="Failed" site="Child" start-time="2026-11-14 09:16:42Z" end-time="2026-11-14 09:16:43Z" duration="1.578574" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1076" name="Bdd35_RoomOneToRoomTwoEnemyDiscoversTurnsAndFires" fullname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd35_RoomOneToRoomTwoEnemyDiscoversTurnsAndFires" methodname="Bdd35_RoomOneToRoomTwoEnemyDiscoversTurnsAndFires" classname="SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests" runstate="Runnable" seed="1599164902" result="Failed" start-time="2026-11-14 09:16:42Z" end-time="2026-11-14 09:16:43Z" duration="1.571941" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Entered open 1F room 2 but the enemy never discovers the player
+  Expected: Attacking
+  But was:  Idle
+]]></message>
+                  <stack-trace><![CDATA[at SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests+<Bdd35_RoomOneToRoomTwoEnemyDiscoversTurnsAndFires>d__13.MoveNext () [0x002ed] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\Mode4AlignmentPlayModeTests.cs:94
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Round6 room2 player=(25.00, 0.00, 87.00) enemy=(23.20, 0.05, 86.80) forward=(-0.18, 0.00, -0.98) angle=106.771
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

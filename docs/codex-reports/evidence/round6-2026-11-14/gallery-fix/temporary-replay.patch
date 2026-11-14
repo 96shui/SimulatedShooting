@@ -1,0 +1,64 @@
+--- Assets/SimulatedShooting/Tests/PlayMode/AmericanSoldierPlayModeTests.cs
++++ Assets/SimulatedShooting/Tests/PlayMode/AmericanSoldierPlayModeTests.cs
+@@ -190,6 +190,8 @@
+     {
+         internal static void Capture(Camera camera,string name,string outputDirectory=null,bool includeOverlay=false,int width=1280,int height=960)
+         {
++            var auditing=System.Environment.GetEnvironmentVariable("HUD_LAYOUT_AUDIT")=="1";
++            if(auditing) outputDirectory="docs/codex-reports/evidence/round6-2026-11-14/gallery-fix/replay";
+             var output=outputDirectory??System.IO.Path.Combine(Application.dataPath,"../Temp/GoalRepair/images");
+             System.IO.Directory.CreateDirectory(output);
+             var target=new RenderTexture(width,height,24);
+@@ -204,11 +206,34 @@
+             var previousActive=RenderTexture.active;
+             try
+             {
++                if(auditing)
++                {
++                    var metadata=new System.Collections.Generic.List<string>();
++                    metadata.Add("screen="+Screen.width+"x"+Screen.height+" sourceFov="+camera.fieldOfView+" sourceAspect="+camera.aspect+" outputFov="+outputCamera.fieldOfView+" outputAspect="+outputCamera.aspect);
++                    foreach(var c in overlays)
++                    {
++                        var scaler=c.GetComponent<UnityEngine.UI.CanvasScaler>();
++                        metadata.Add(c.name+" mode="+c.renderMode+" scaleFactor="+c.scaleFactor+" rect="+((RectTransform)c.transform).rect+" scaler="+(scaler!=null?scaler.uiScaleMode+" reference="+scaler.referenceResolution+" match="+scaler.screenMatchMode:"none"));
++                        foreach(var page in c.GetComponentsInChildren<RectTransform>().Where(r=>r.name.StartsWith("Screen_"))) HudCaptureProbe.Dump(page,name+"-before-"+page.name,output,outputCamera,Screen.width,Screen.height);
++                    }
++                    System.IO.File.WriteAllLines(System.IO.Path.Combine(output,name+"-camera.txt"),metadata);
++                }
+                 foreach (var canvas in overlays) { canvas.renderMode=RenderMode.ScreenSpaceCamera;canvas.worldCamera=outputCamera;canvas.planeDistance=1; }
+                 Canvas.ForceUpdateCanvases();
+                 outputCamera.stereoTargetEye=StereoTargetEyeMask.None;outputCamera.targetTexture=target;outputCamera.Render();
+                 RenderTexture.active=target;texture.ReadPixels(new Rect(0,0,width,height),0,0);texture.Apply();
+                 System.IO.File.WriteAllBytes(System.IO.Path.Combine(output,name+".png"),texture.EncodeToPNG());
++                if(auditing&&overlays.Length>0)
++                {
++                    foreach(var c in overlays) foreach(var page in c.GetComponentsInChildren<RectTransform>().Where(r=>r.name.StartsWith("Screen_"))) HudCaptureProbe.Dump(page,name+"-converted-"+page.name,output,outputCamera,width,height);
++                    int mask=outputCamera.cullingMask;
++                    outputCamera.clearFlags=CameraClearFlags.SolidColor; outputCamera.backgroundColor=new Color32(7,15,25,255);
++                    outputCamera.cullingMask=1<<5; outputCamera.Render(); RenderTexture.active=target;texture.ReadPixels(new Rect(0,0,width,height),0,0);texture.Apply();
++                    System.IO.File.WriteAllBytes(System.IO.Path.Combine(output,name+"-ui-only.png"),texture.EncodeToPNG());
++                    outputCamera.cullingMask=mask&~(1<<5); outputCamera.Render();texture.ReadPixels(new Rect(0,0,width,height),0,0);texture.Apply();
++                    System.IO.File.WriteAllBytes(System.IO.Path.Combine(output,name+"-scene-only.png"),texture.EncodeToPNG());
++                }
++
+             }
+             finally
+             {
+--- Assets/SimulatedShooting/Tests/PlayMode/Mode4AlignmentPlayModeTests.cs
++++ Assets/SimulatedShooting/Tests/PlayMode/Mode4AlignmentPlayModeTests.cs
+@@ -160,6 +160,15 @@
+                 var eye=runtime.PlayerCamera.transform;
+                 eye.SetPositionAndRotation(projectile.transform.position+new Vector3(-1.2f,.5f,-1.8f),Quaternion.LookRotation(new Vector3(1.2f,-.5f,1.8f)));
+                 PresentationEvidence.Capture(runtime.PlayerCamera,"grenade-no-enemy-player-forward",Evidence.Replace("mode4-ai-shoulder-2026-11-12","round6-2026-11-14"),false,1920,1080);
++                if(System.Environment.GetEnvironmentVariable("HUD_LAYOUT_AUDIT")=="1")
++                {
++                    var trace=new System.Collections.Generic.List<Vector3>{plan.Origin,tactic.ProjectilePosition};
++                    while(runtime.Clock.Now<plan.ThrowTime+plan.WindupSeconds+plan.FlightSeconds+.1)
++                    {
++                        runtime.Clock.Step(.02f);Assert.That(tactic.Advance().Success);trace.Add(tactic.ProjectilePosition);yield return null;
++                    }
++                    HudCaptureProbe.GrenadeOverview(runtime.PlayerCamera,player,plan.Target,tactic.ProjectilePosition,trace.ToArray());
++                }
+                 Debug.Log("Round6 empty-enemy grenade player="+player+" forward="+Vector3.right+" origin="+plan.Origin+" target="+plan.Target+" projectile="+projectile.transform.position);
+             }
+             finally{Object.Destroy(projectile);}

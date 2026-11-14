@@ -1,0 +1,2 @@
+screen=640x480 sourceFov=60 sourceAspect=1.333333 outputFov=60 outputAspect=1.777778
+P3CombatUIRoot mode=ScreenSpaceOverlay scaleFactor=0.3333333 rect=(x:-960.00, y:-720.00, width:1920.00, height:1440.00) scaler=ScaleWithScreenSize reference=(1920.00, 1080.00) match=Expand

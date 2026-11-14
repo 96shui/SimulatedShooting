@@ -1,0 +1,39 @@
+﻿platform,fullname,baseline,current,failure_message_identical,baseline_message,current_message
+editmode,SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers,Passed,Passed,True,,
+playmode,SimulatedShooting.Tests.PlayMode.Mode4AlignmentPlayModeTests.Bdd35_NoEnemyThrowUsesCurrentPlayerHeadingAndRealProjectile,Passed,Passed,True,,
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Trench_ProductionMagazineReload,Passed,Passed,True,,
+playmode,SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Urban_ProductionMagazineReload,Passed,Passed,True,,
+playmode,SimulatedShooting.Tests.PlayMode.Round6PresentationTests.Bdd35_AllThreeHudLabelsAreAvailableWithRealFalseCapabilityAndFourSpares,Passed,Passed,True,,
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.P3UiRoot_BuildsAllPagesAndFrozenTestIds,Passed,Passed,True,,
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen12_TrenchMapSelection_DefaultDtoAndSelectOnlyRoutesBriefing,Passed,Passed,True,,
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen14_TrenchBriefing_PlaysPreviewAndStartsOnlyOnCommand,Passed,Passed,True,,
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen15_TrenchHud_RefreshesDtoAndRejectsOldSessionEvents,Passed,Passed,True,,
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen17_TrenchResults_RendersPartialDtoAndRetryIsIdempotent,Passed,Passed,True,,
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet,Failed,Failed,True,"  Expected: String containing ""1-2""
+  But was:  ""建筑内部敌人：3-6""
+","  Expected: String containing ""1-2""
+  But was:  ""建筑内部敌人：3-6""
+"
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen19_UrbanStreetHud_UsesPromptDtoAndKeepsRiskVisible,Passed,Passed,True,,
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands,Failed,Failed,True,"  Expected: String containing ""未搜索""
+  But was:  ""房间1 · 靠近后开门""
+","  Expected: String containing ""未搜索""
+  But was:  ""房间1 · 靠近后开门""
+"
+playmode,VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce,Failed,Failed,True,"  Expected: String containing ""街道清除：已清除""
+  But was:  ""消灭建筑敌人：5 / 5
+剩余弹药：76
+队友状态：
+玩家 · 正常 · 生命 100
+二号队友 · 跟随 · 生命 100
+三号队友 · 跟随 · 生命 100
+用时：02:00""
+","  Expected: String containing ""街道清除：已清除""
+  But was:  ""消灭建筑敌人：5 / 5
+剩余弹药：76
+队友状态：
+玩家 · 正常 · 生命 100
+二号队友 · 跟随 · 生命 100
+三号队友 · 跟随 · 生命 100
+用时：02:00""
+"

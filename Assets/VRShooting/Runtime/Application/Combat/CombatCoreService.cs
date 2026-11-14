@@ -32,6 +32,7 @@ namespace VRShooting.Application.Combat
         string session = "";
         string playerId = "";
         SessionState state;
+        TrainingMode mode;
         float health;
         PlayerPosture posture;
         bool corner, tracked, disposed, dirty, publishing;
@@ -75,7 +76,7 @@ namespace VRShooting.Application.Combat
             if (!hasExplicitConfig) config = CombatConfigDto.ForMode(mode);
             automaticFire.ReleaseSession(session);
             weapons.ReleaseSession(session);
-            session = sessionId; playerId = session + ".player"; sessionIds.Add(session);
+            session = sessionId; this.mode = mode; playerId = session + ".player"; sessionIds.Add(session);
             weapons.StartSession(session, WeaponControlService.TrainingRifleId, mode);
             automaticFire.StartSession(session, config.FireMode, WeaponAutoFireConfigDto.P2Default);
             enemies.Clear(); enemyById.Clear(); received.Clear(); pending.Clear(); issuedShots.Clear(); spentShots.Clear(); feedback.Clear();resolvedGrenades.Clear();
@@ -431,7 +432,9 @@ namespace VRShooting.Application.Combat
         {
             var offset = position - enemy.Position;
             return !enemy.Dead && enemy.Visible && offset.magnitude <= config.EnemyRange &&
-                (offset.sqrMagnitude < 1e-8 || Vector3.Angle(enemy.Forward, offset) <= config.EnemyHalfViewAngle);
+                // Urban can discover a player entering behind a stationary defender.
+                // Real door/geometry visibility still gates discovery; facing still gates firing.
+                (mode == TrainingMode.Urban || offset.sqrMagnitude < 1e-8 || Vector3.Angle(enemy.Forward, offset) <= config.EnemyHalfViewAngle);
         }
         bool Due(Enemy enemy) => enemy.NextAttack <= clock.Now + 1e-8;
         void Suspend() { automaticFire.Cancel(session, WeaponFireStopReason.WeaponBecameInvalid); pending.Clear(); StopTimers(); }

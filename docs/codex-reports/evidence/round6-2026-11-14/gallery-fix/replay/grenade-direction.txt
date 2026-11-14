@@ -1,0 +1,2 @@
+Player=(24.00, 0.00, 52.00) Forward=(1.00, 0.00, 0.00) PlannedTarget=(42.00, 0.08, 52.00) ActualLanding=(42.00, 0.08, 52.00) Samples=41
+Markers are temporary evidence annotations; flight samples and landing come from the production tactic and physics sweep.

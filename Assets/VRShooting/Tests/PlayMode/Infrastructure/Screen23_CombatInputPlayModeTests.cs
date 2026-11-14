@@ -78,7 +78,7 @@ namespace VRShooting.Tests.PlayMode
             Step(controller,input,clock, seconds: .5); Assert.That(core.GetSnapshot(Session).Data.Ammo.CurrentMagazine, Is.EqualTo(24));
             input.Release(XRTrainingInputButton.Trigger); input.Press(XRTrainingInputButton.Reload); Step(controller,input,clock);
             Assert.That(core.GetSnapshot(Session).Data.Ammo.IsReloading); Step(controller,input,clock, seconds: 2);
-            Assert.That(core.GetSnapshot(Session).Data.Ammo.ReserveAmmo, Is.EqualTo(30));
+            Assert.That(core.GetSnapshot(Session).Data.Ammo.ReserveAmmo, Is.EqualTo(90));
             input.Release(XRTrainingInputButton.LeftGrip); Step(controller,input,clock);
             input.Press(XRTrainingInputButton.LeftGrip); Step(controller,input,clock);
             Assert.That(core.GetSnapshot(Session).Data.Weapon.TwoHandGripActive, Is.True);

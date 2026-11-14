@@ -84,18 +84,30 @@ namespace VRShooting.Application.Combat
             requested=false;
             if(clock.Now+1e-8<nextAllowed)return Ok();
             var enemies=snapshot.Data.Visual.Entities.Where(e=>e.Role==CombatEntityRole.Enemy&&e.State!=CombatEntityState.Dead).OrderBy(e=>e.EntityId,StringComparer.Ordinal).ToArray();
-            if(enemies.Length==0)return Ok();
             foreach(var member in squad.GetMembers(session).Where(m=>m.Role==SquadMemberRole.TeammateTwo&&m.State!=SquadMemberState.Down))
             {
                 if(!world.TryGetThrowPose(member.MemberId,out var feet,out var origin))continue;
-                var nearest=enemies.OrderBy(e=>Vector3.Distance(e.Position,feet)).ThenBy(e=>e.EntityId,StringComparer.Ordinal).First();
-                var offset=nearest.Position-feet;
-                var horizontal=new Vector3(offset.x,0,offset.z);
-                if(horizontal.sqrMagnitude<.0001f)horizontal=new Vector3(origin.x-feet.x,0,origin.z-feet.z);
-                if(horizontal.sqrMagnitude<.0001f)horizontal=Vector3.forward;
-                var distance=Mathf.Min(horizontal.magnitude,config.GrenadeDetectionRange);
-                var target=horizontal.normalized*distance+feet+Vector3.up*.08f;
-                if(offset.magnitude<=config.GrenadeDetectionRange)target=nearest.Position+Vector3.up*.08f;
+                Vector3 target;
+                if(enemies.Length>0)
+                {
+                    var nearest=enemies.OrderBy(e=>Vector3.Distance(e.Position,feet)).ThenBy(e=>e.EntityId,StringComparer.Ordinal).First();
+                    var offset=nearest.Position-feet;
+                    var horizontal=new Vector3(offset.x,0,offset.z);
+                    if(horizontal.sqrMagnitude<.0001f)horizontal=new Vector3(origin.x-feet.x,0,origin.z-feet.z);
+                    if(horizontal.sqrMagnitude<.0001f)horizontal=Vector3.forward;
+                    var distance=Mathf.Min(horizontal.magnitude,config.GrenadeDetectionRange);
+                    target=horizontal.normalized*distance+feet+Vector3.up*.08f;
+                    if(offset.magnitude<=config.GrenadeDetectionRange)target=nearest.Position+Vector3.up*.08f;
+                }
+                else
+                {
+                    var player=snapshot.Data.Visual.Entities.FirstOrDefault(e=>e.Role==CombatEntityRole.Player);
+                    var direction=Vector3.ProjectOnPlane(player.Forward,Vector3.up);
+                    if(direction.sqrMagnitude<.0001f)direction=Vector3.ProjectOnPlane(squad.GetForward(session,member.MemberId),Vector3.up);
+                    if(direction.sqrMagnitude<.0001f)direction=Vector3.forward;
+                    var start=string.IsNullOrEmpty(player.EntityId)?feet:player.Position;
+                    target=start+direction.normalized*config.GrenadeDetectionRange+Vector3.up*.08f;
+                }
                 float flight=Mathf.Max(.15f,Vector3.Distance(origin,target)/config.GrenadeThrowSpeed);
                 var plan=new GrenadeThrowPlanDto{SessionId=session,ThrowerId=member.MemberId,GrenadeId=session+".grenade-"+(sequence+1).ToString("000"),
                     Origin=origin,Target=target,ThrowTime=clock.Now,WindupSeconds=.65f,FlightSeconds=flight,

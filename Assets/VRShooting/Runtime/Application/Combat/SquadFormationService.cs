@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using VRShooting.Common;
 using VRShooting.Contracts;
@@ -159,6 +160,8 @@ namespace VRShooting.Application.Combat
         public ServiceResult<CombatVisualSnapshotDto> GetVisualSnapshot(string id)=>Matches(id)?ServiceResult<CombatVisualSnapshotDto>.Ok(visual):ServiceResult<CombatVisualSnapshotDto>.Fail(ErrorCode.NotFound);
         public ServiceResult<IReadOnlyList<SquadCommandType>> GetAvailableCommands(string id)=>Matches(id)?ServiceResult<IReadOnlyList<SquadCommandType>>.Ok(Array.Empty<SquadCommandType>()):ServiceResult<IReadOnlyList<SquadCommandType>>.Fail(ErrorCode.NotFound);
         public IReadOnlyList<SquadMemberDto> GetMembers(string id)=>Matches(id)?snapshot.Members:Array.Empty<SquadMemberDto>();
+        public Vector3 GetForward(string id,string memberId)=>Matches(id)
+            ? visual.Entities.FirstOrDefault(e=>e.EntityId==memberId).Forward : Vector3.zero;
         public ServiceResult<Unit> SetGrenadeState(string id,string memberId,bool throwing)
         {
             if(!Matches(id))return Fail(ErrorCode.NotFound); if(publishing)return Fail(ErrorCode.Busy);

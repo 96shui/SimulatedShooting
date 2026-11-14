@@ -1,0 +1,499 @@
+{
+  "head": "91ab8c950f965246c535c7b39fb625d789488e34",
+  "pre_existing_user_change": "docs/codex-reports/pico-apk-2026-11-12.md",
+  "changed_sources": [
+    {
+      "path": "Assets/SimulatedShooting/Prefabs/Weapons/Weapon_training-rifle_Blockout.prefab",
+      "sha256": "c7f35dde618c1745351a0b1e71f85b1e91a197d7da6d3ffc29278f03dabfcbfc",
+      "bytes": 37911
+    },
+    {
+      "path": "Assets/SimulatedShooting/Runtime/Scene/TrainingRifleGrabInteractable.cs",
+      "sha256": "4caa8296b55597344755e783cd36d52522c6da6615c27c93323eb7d59d220b9f",
+      "bytes": 19374
+    },
+    {
+      "path": "Assets/SimulatedShooting/Runtime/Scene/VRHandPresentation.cs",
+      "sha256": "6bacb317b028d31777c3ab8a3920ac056635d63a984d6f487d1d377e349800bd",
+      "bytes": 7531
+    },
+    {
+      "path": "Assets/SimulatedShooting/Tests/PlayMode/AmericanSoldierPlayModeTests.cs",
+      "sha256": "5e95a4677ff77aabdfd808f47a8355249fd1c36b699ba26430685db3452dcb71",
+      "bytes": 14240
+    },
+    {
+      "path": "Assets/SimulatedShooting/Tests/PlayMode/CombatMagazineReloadPlayModeTests.cs",
+      "sha256": "853b29a070af0a25413b6dea9c220ec1618aeaaf789bd50323ae373f2df48cb0",
+      "bytes": 26729
+    },
+    {
+      "path": "Assets/SimulatedShooting/Tests/PlayMode/Mode4AlignmentPlayModeTests.cs",
+      "sha256": "072ddd87ccbb46d286b7c93da5019054d97ab0445505c1ee9e4720529a67cc9a",
+      "bytes": 19412
+    },
+    {
+      "path": "Assets/SimulatedShooting/Tests/PlayMode/P3ProductionFlowTests.cs",
+      "sha256": "3bbc630e448b07eb9aaa43b98f2b5b9da082cf9d4d2d7606d23029eb8f4f60e6",
+      "bytes": 41409
+    },
+    {
+      "path": "Assets/SimulatedShooting/Tests/PlayMode/Round6PresentationTests.cs",
+      "sha256": "688d6f8cbcdc71763aefefe6988e7c93b295a5785a2d9a2c2808b98ed97625cd",
+      "bytes": 11275
+    },
+    {
+      "path": "Assets/SimulatedShooting/Tests/PlayMode/Round6PresentationTests.cs.meta",
+      "sha256": "d02460e925739fcd1c504c876cb226e7f6c6a127f1e42ea210556837ebba0e8c",
+      "bytes": 243
+    },
+    {
+      "path": "Assets/VRShooting/Runtime/Application/Combat/CombatCoreService.cs",
+      "sha256": "e34293d7335d05642160ec9982d7450fb750d51db96a26e47edd1b2a9d178b84",
+      "bytes": 33680
+    },
+    {
+      "path": "Assets/VRShooting/Runtime/Application/Combat/SquadFormationService.cs",
+      "sha256": "72479b36a147804762484abeaa438658c6ab478753398161c93956e33a58f795",
+      "bytes": 13577
+    },
+    {
+      "path": "Assets/VRShooting/Runtime/Application/Combat/SquadGrenadeTacticService.cs",
+      "sha256": "0f8c825fb99db94d8693f682ca97576479170dbbc896614171dff4c73717aceb",
+      "bytes": 8441
+    },
+    {
+      "path": "Assets/VRShooting/Runtime/Application/Weapons/WeaponControlService.cs",
+      "sha256": "59b1cc2fb6f370542ce6f2f6c4e4c7fa0fad7e357a2fab061e517c6ec45018c2",
+      "bytes": 33021
+    },
+    {
+      "path": "Assets/VRShooting/Runtime/Contracts/P3/CombatConfigDto.cs",
+      "sha256": "970dc0e764ab942f29bcf0930ab88b9ffaa3a5830806c77f3b1da6bb7d58683f",
+      "bytes": 8941
+    },
+    {
+      "path": "Assets/VRShooting/Runtime/Contracts/P3/CombatPorts.cs",
+      "sha256": "5944f1e5e687153be17faf6f5325810ebcdb95be3fd958a20b061d46567c154d",
+      "bytes": 2025
+    },
+    {
+      "path": "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+      "sha256": "cdd22e29d4fa470638103df35f6294adb348430bf8ea272cdd8eee12d786a2bc",
+      "bytes": 96788
+    },
+    {
+      "path": "Assets/VRShooting/Runtime/Unity/UI/P3CombatUIRoot.cs",
+      "sha256": "f297b293e6a00719cd30276cf6cf5f1a7510e73141a16c09210e3daafacdf3c8",
+      "bytes": 45024
+    },
+    {
+      "path": "Assets/VRShooting/Runtime/Unity/UI/P3LiveUIController.cs",
+      "sha256": "23e8e157d0d936892a43e7fb88567802cebbfbfe4a0538df8a03c7957d568c8b",
+      "bytes": 7424
+    },
+    {
+      "path": "Assets/VRShooting/Runtime/Unity/UI/P3TrenchHudAndResultsUI.cs",
+      "sha256": "9168fd303b85e4e50313bb8fc2badeaac0b9d461b1e3d9863eabfd4bc6dc8f87",
+      "bytes": 22894
+    },
+    {
+      "path": "Assets/VRShooting/Runtime/Unity/UI/TrainingUICanvasAdapter.cs",
+      "sha256": "33c4ed9f48e8a586f4b5a95fd0b7b4dda4b899cbc620422b232ee3d264f189aa",
+      "bytes": 10878
+    },
+    {
+      "path": "Assets/VRShooting/Tests/EditMode/Infrastructure/CombatMagazineReloadTests.cs",
+      "sha256": "2b87032fac12cbbb4f7117e9534fa0cfdf78b2c944b4aa104f8ad2d1786369f7",
+      "bytes": 14288
+    },
+    {
+      "path": "Assets/VRShooting/Tests/EditMode/Infrastructure/Round6CombatTests.cs",
+      "sha256": "b8698ab2c5545b74fdf59c33f77404d69c44416cc96113c94da5a2bab87791d5",
+      "bytes": 2948
+    },
+    {
+      "path": "Assets/VRShooting/Tests/EditMode/Infrastructure/Round6CombatTests.cs.meta",
+      "sha256": "9775774ea2ce557fddce6f9e3b0f59eaeddcf3ba14db05929488ff54187bee00",
+      "bytes": 243
+    },
+    {
+      "path": "Assets/VRShooting/Tests/EditMode/Infrastructure/Screen22_P3ContractTests.cs",
+      "sha256": "9e2c72348b61c2d078841672bc840e8fd29cff27c5406d04dceec674dc127e9e",
+      "bytes": 15569
+    },
+    {
+      "path": "Assets/VRShooting/Tests/EditMode/Infrastructure/Screen23_CombatCoreTests.cs",
+      "sha256": "710cd239e2cae1f61daadb9030ea5694dc90924bc661355fa2aaf6d0731c94c2",
+      "bytes": 20190
+    },
+    {
+      "path": "Assets/VRShooting/Tests/EditMode/Infrastructure/Screen24_TrenchTests.cs",
+      "sha256": "b6dea305f236923074588eb37e17c916708e2751fef0f1be7fffdc295136e5d1",
+      "bytes": 15834
+    },
+    {
+      "path": "Assets/VRShooting/Tests/PlayMode/Infrastructure/Screen22_P3FixturePlayModeTests.cs",
+      "sha256": "27445e484224cad5d4eb4ed89ec561dc563b867cbdce9ea5fc9e4f1e96aba3d7",
+      "bytes": 4106
+    },
+    {
+      "path": "Assets/VRShooting/Tests/PlayMode/Infrastructure/Screen23_CombatInputPlayModeTests.cs",
+      "sha256": "e21ee6c3edc158ed323bf41f9e22418438aef26df74bec57578b999d360cdc7c",
+      "bytes": 14985
+    },
+    {
+      "path": "Assets/VRShooting/Tests/PlayMode/Infrastructure/Screen24_TrenchPlayModeTests.cs",
+      "sha256": "b33665c7f70838138cb87f6a65f667654dcc9a004756de4d584195330a53c854",
+      "bytes": 6726
+    },
+    {
+      "path": "Assets/VRShooting/Tests/PlayMode/UI/P3UiTask002_005_008_011PlayModeTests.cs",
+      "sha256": "ffc79cc8a56fe67b4b348d3172d2c69355eee24085c3c87cddbe525f1b25ebe2",
+      "bytes": 28720
+    },
+    {
+      "path": "Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs",
+      "sha256": "1265a73e091f671bb00fa6f8aacbf97cfc44c7f7600e4cb90557598208c89374",
+      "bytes": 20502
+    },
+    {
+      "path": "docs/BDD/README.md",
+      "sha256": "28efee23133b98713ef42b350bcd5c0a8aa3012c545f1a281a91cc297941489d",
+      "bytes": 10103
+    },
+    {
+      "path": "docs/BDD/screens/15-堑壕第一人称HUD.feature.md",
+      "sha256": "3e20fa3fec47e5370b027c9b6f440e33fa34672cd629a89c624f534bccb92eef",
+      "bytes": 3734
+    },
+    {
+      "path": "docs/BDD/screens/19-城镇街道HUD.feature.md",
+      "sha256": "2bebeb41f837cf7123d81e40962fdb3c4c6f9b7b175e92e24b461f2a0b8305b4",
+      "bytes": 6368
+    },
+    {
+      "path": "docs/BDD/screens/22-P3战斗契约与独立替身.feature.md",
+      "sha256": "58058add7b85837dc69ce60dfe23cba16f08dc5a3a95fad983b5ce3c81214406",
+      "bytes": 3947
+    },
+    {
+      "path": "docs/BDD/screens/23-P3共用战斗核心.feature.md",
+      "sha256": "0a29762f2ed484c1a9b8f8e079cf49c531c0b4a78f5bad7a9fa3a80c98537243",
+      "bytes": 18322
+    },
+    {
+      "path": "docs/BDD/screens/35-第六轮战斗体验修订.feature.md",
+      "sha256": "4b8831ef5bc512eb250f83f92d701c5df07e31d62da3f8c8ffdecc5e540d4459",
+      "bytes": 2777
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "cf4f2f6e59a21147ffb4fec2fdf33940ae4ff6b794d7c8c65067a1c88e7f7fec",
+      "bytes": 4366
+    },
+    {
+      "path": "docs/codex-reports/round6-2026-11-14.md",
+      "sha256": "46e2394d2eb6d678847df9fe19b867432d39f400abb7a3c7b431e50c09ce3021",
+      "bytes": 25266
+    },
+    {
+      "path": "docs/任务规格/README.md",
+      "sha256": "9022760cec12dab37182cfcf05ac589a3197c58e555059ddbb616b3d1bb2903d",
+      "bytes": 7544
+    },
+    {
+      "path": "docs/任务规格/阶段一-P1-100m射校原型闭环/UI/task008-ui-mainmenu-zeroing-briefing.md",
+      "sha256": "b47f2a94691110c08775e50d5c44794a3d17ace230302e8a1cc1d6c85477a0d6",
+      "bytes": 6803
+    },
+    {
+      "path": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/README.md",
+      "sha256": "fd56c06c603b8004858819f4492f788e73f94a7e4b0cb5188c5f9f8ead72dbf1",
+      "bytes": 8989
+    },
+    {
+      "path": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/UI/task002-trench-map-and-briefing-ui.md",
+      "sha256": "5a7e3cc705a47eaed01ab300db3849851728e2b30ba24c98cd1185f865349452",
+      "bytes": 6957
+    },
+    {
+      "path": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/UI/task005-trench-hud-minimap-and-results.md",
+      "sha256": "cae5e6e8ccd4e3bbca0f76c5e1bf2143aeb28be759123ccd40b0cdd3ca7ae7b3",
+      "bytes": 7025
+    },
+    {
+      "path": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/UI/task008-urban-map-and-street-hud.md",
+      "sha256": "fc8f2371d7b77f8f6aa9cf13628bc6951749eb5f24f77380114bd082d87ecf8d",
+      "bytes": 6707
+    },
+    {
+      "path": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/UI/task011-urban-building-hud-and-results.md",
+      "sha256": "5d774eb6e175f3c90f09dd57e924d5413135d03e15bba10af3507bb1dedc8e49",
+      "bytes": 7113
+    },
+    {
+      "path": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/任务进度.md",
+      "sha256": "abadb7b02759ec741c9b25f384eb693682d02fbaba4c70d10096f5b521c2b522",
+      "bytes": 8476
+    },
+    {
+      "path": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/契约冻结清单.md",
+      "sha256": "e473fec4fa152c3c15423bc181242a6a47c8d612387445db30df4d88a1f93745",
+      "bytes": 8104
+    },
+    {
+      "path": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/玩法功能/task004-combat-input-weapon-damage-and-enemy.md",
+      "sha256": "68a31be2096528ee83bb57e6e47a9efa632340c24185d069224274d1eb53a23f",
+      "bytes": 11412
+    },
+    {
+      "path": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/玩法功能/task010-urban-phases-room-search-and-results.md",
+      "sha256": "32cb2865eaa5b286a8d9a70813485f075e33d7c4bec38e10523de5ee88bc7840",
+      "bytes": 10160
+    },
+    {
+      "path": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/玩法功能/task015-mode3-squad-grenade.md",
+      "sha256": "17d4902270b5e39b9574f9ee909b27c6d0fcc7545c604d33bab15495f2a9e42c",
+      "bytes": 4447
+    },
+    {
+      "path": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/玩法功能/task019-combat-feedback-health-and-vr-hands.md",
+      "sha256": "e87699db733a22a48b1da80d58cb751609b3d1a669f610c568b6431281601f55",
+      "bytes": 5021
+    },
+    {
+      "path": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/玩法功能/task020-combat-magazine-reload.md",
+      "sha256": "eb6e9c7148d1263d270cb91fcb00875228c3c3a121a1306ed875b3bffd5700bc",
+      "bytes": 5280
+    },
+    {
+      "path": "docs/任务规格/阶段三-P3-小型堑壕与城镇战斗原型/玩法功能/任务清单.md",
+      "sha256": "4f1c70bd3030e8efe3511f75ec6e66456fd57f3ea6054c6b7d2e266b3944ee0c",
+      "bytes": 3416
+    },
+    {
+      "path": "docs/接口文档/02-训练Session数据模型.md",
+      "sha256": "cc060adee2ac1a4b0ed40b510bb96e26ba5d6d8738f3f84c8bc2c361f5a74f68",
+      "bytes": 4642
+    },
+    {
+      "path": "docs/接口文档/06-武器与弹药服务.md",
+      "sha256": "87ceaaa4fcce6e09f000840524b43cfbb0a42bc36859c77e314bd9dc16533a1c",
+      "bytes": 26705
+    },
+    {
+      "path": "docs/接口文档/14-P3战斗契约与独立测试基础.md",
+      "sha256": "0830be5b2f78551f1f7454f3fde32b90f269c989ee737cf40174c3d2c86829fc",
+      "bytes": 11993
+    },
+    {
+      "path": "docs/接口文档/15-P3共用战斗核心.md",
+      "sha256": "dd96b69cb1fe8e7a41a7de2002bb8a97afa00c765d4fb794b82411bb19cfa7ca",
+      "bytes": 16191
+    },
+    {
+      "path": "docs/接口文档/27-第六轮战斗体验修订.md",
+      "sha256": "a51bf4648eb549341b0da96861f872bf1d26494742c5ac986c5a46af00520c8d",
+      "bytes": 2037
+    },
+    {
+      "path": "docs/接口文档/README.md",
+      "sha256": "296749a1a9a53d799a15a6d0a4887e3c16b6da1413b07f613c0b802a3e772303",
+      "bytes": 6510
+    },
+    {
+      "path": "docs/需求/阶段化整体需求说明书.md",
+      "sha256": "09955f537f794e61cd4aaa6ed7299f406fee9bfa65a1f951dbb4c32517903ac5",
+      "bytes": 15486
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/baseline-comparison.json",
+      "sha256": "b7aa9e9a280a449c0266ad267f06fc65df3835a9fdc3b9dc9f3da1b12cd9a04c",
+      "bytes": 301975
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/baseline-editmode.xml",
+      "sha256": "212d2d435b83278764564f599c917500ac22da3a495f5ab23060257ecc03b1d2",
+      "bytes": 295004,
+      "tests": {
+        "total": "385",
+        "passed": "365",
+        "failed": "20",
+        "skipped": "0",
+        "start-time": "2026-11-12 12:58:38Z",
+        "end-time": "2026-11-12 12:58:52Z"
+      }
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/baseline-playmode.xml",
+      "sha256": "e6efdf34c1ac07eeb2e862379b4e72b92de3a1c62e55ad9d8fa383a4ba235f8f",
+      "bytes": 281069,
+      "tests": {
+        "total": "315",
+        "passed": "292",
+        "failed": "23",
+        "skipped": "0",
+        "start-time": "2026-11-12 12:59:33Z",
+        "end-time": "2026-11-12 13:02:13Z"
+      }
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/cleanup.json",
+      "sha256": "9bc71823ecad75c9c33658ce828cafa383576f9db13c92e339e6f16a6c661203",
+      "bytes": 2705
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/compare-tests.py",
+      "sha256": "e8c69dc7e4fca8376ddce5a2adeeb5e8f2c55e3fbbb95882d867ee3d8af03ffe",
+      "bytes": 2092
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/editmode-full.xml",
+      "sha256": "b92c3dd32d0c33b786c4e3806fb02571c80359c50aaade7905f61bdbad57d213",
+      "bytes": 298654,
+      "tests": {
+        "total": "389",
+        "passed": "369",
+        "failed": "20",
+        "skipped": "0",
+        "start-time": "2026-11-14 09:36:25Z",
+        "end-time": "2026-11-14 09:36:37Z"
+      }
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/fullname-comparison.csv",
+      "sha256": "f1c0982a09651290a97f39d10add79c5561190e7a7292890b0b95d44de25bb89",
+      "bytes": 145380
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/grenade-no-enemy-player-forward.png",
+      "sha256": "b79f043d965c6b5c9b4209949d2ff0f97a009346c5ea7708e47241109faa3648",
+      "bytes": 1933735,
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/left-shoulder-forward.png",
+      "sha256": "88fc3e8ea388f8f33833485480b4b183b5e88b49404f890f96fe0c463db31634",
+      "bytes": 2093321,
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/playmode-final-ui.xml",
+      "sha256": "63e35ef97df15f19d7e4823723ada396f8880a3c109b69ecccb8cf832cd6b512",
+      "bytes": 10138,
+      "tests": {
+        "total": "5",
+        "passed": "5",
+        "failed": "0",
+        "skipped": "0",
+        "start-time": "2026-11-14 09:48:51Z",
+        "end-time": "2026-11-14 09:48:56Z"
+      }
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/playmode-full.xml",
+      "sha256": "6c66453773a582cae5b9f3bc8f2319ffd40f04b3efa70d6630dd270aafddd127",
+      "bytes": 288096,
+      "tests": {
+        "total": "322",
+        "passed": "299",
+        "failed": "23",
+        "skipped": "0",
+        "start-time": "2026-11-14 09:43:55Z",
+        "end-time": "2026-11-14 09:46:45Z"
+      }
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/playmode-targeted.xml",
+      "sha256": "9c03db8d7d48de1b116fc58928691c44365504592bcfcbc7d8189e16101614c7",
+      "bytes": 23474,
+      "tests": {
+        "total": "19",
+        "passed": "19",
+        "failed": "0",
+        "skipped": "0",
+        "start-time": "2026-11-14 09:37:22Z",
+        "end-time": "2026-11-14 09:37:37Z"
+      }
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/Screen_MainMenu_ControlsOpen.png",
+      "sha256": "3e2614cfc1c4e06f172f152377f08cada5b0d9ca0511f6b629165d4559bf4f53",
+      "bytes": 1945257,
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/trench-hud-30-120.png",
+      "sha256": "70b750c43b3b1de63967dff4f4617935772537db818c5d6e939576fdfedf7677",
+      "bytes": 2268991,
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/trench-map-front.png",
+      "sha256": "3e28f4e57f0f6696878e382b771de915ea7675310fe007329600f8801d8a080e",
+      "bytes": 1864076,
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/urban-hud-30-120.png",
+      "sha256": "554f04268dbeea5e6b7e0fb7689a1073e63f59a7b67cb6e74f9a197c1f70af14",
+      "bytes": 1947252,
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/urban-map-front.png",
+      "sha256": "a08115fdd7e9d07fe3ac9c9353247cdee28fe98021682c05ab56f0852f6b975c",
+      "bytes": 1870058,
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/urban-red-probed.xml",
+      "sha256": "59ad152b8717fde56bdcaf5b8e24d693f1c44cecfaab0e4e6e7908b64ccaa980",
+      "bytes": 5301,
+      "tests": {
+        "total": "1",
+        "passed": "0",
+        "failed": "1",
+        "skipped": "0",
+        "start-time": "2026-11-14 09:25:26Z",
+        "end-time": "2026-11-14 09:25:28Z"
+      }
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/urban-red-side-entry.xml",
+      "sha256": "fb711129a0c71ca4b399edc7d59b1e733e28417230c8eb95a9ff42fa2bda3b7a",
+      "bytes": 5301,
+      "tests": {
+        "total": "1",
+        "passed": "0",
+        "failed": "1",
+        "skipped": "0",
+        "start-time": "2026-11-14 09:16:42Z",
+        "end-time": "2026-11-14 09:16:43Z"
+      }
+    },
+    {
+      "path": "docs/codex-reports/evidence/round6-2026-11-14/urban-red.xml",
+      "sha256": "bfd3ba8a0cb9ef33e2cfe3519a185d519ea061902b48de3691efcb929bfd6e5f",
+      "bytes": 3762,
+      "tests": {
+        "total": "1",
+        "passed": "1",
+        "failed": "0",
+        "skipped": "0",
+        "start-time": "2026-11-14 09:15:31Z",
+        "end-time": "2026-11-14 09:15:34Z"
+      }
+    }
+  ]
+}

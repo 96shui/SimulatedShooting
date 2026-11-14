@@ -52,6 +52,7 @@ namespace SimulatedShooting.Scene
 
         public static void ApplyShoulder(TrainingRifleGrabInteractable weapon, ShoulderSide side)
         {
+            weapon.ApplyShoulderTrackingOffset(side);
             var hands = FindObjectsOfType<VRControllerHandVisual>(true).Where(h => h.Weapon == weapon).ToArray();
             // Capture all home parents before moving either source hand to the other controller.
             var homes = hands.ToDictionary(h => h, h => h.HomeControllerParent);

@@ -1,0 +1,814 @@
+{
+    "screen": "Screen_TrenchHud",
+    "width": 1920,
+    "height": 1080,
+    "orthographic": true,
+    "fieldOfView": 60.0,
+    "orthographicSize": 540.0,
+    "scaleFactor": 1.0,
+    "renderMode": "WorldSpace",
+    "items": [
+        {
+            "name": "Screen_TrenchHud",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 0.0,
+                "y": 0.0,
+                "width": 1920.0,
+                "height": 1080.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Panel_TrenchHud_Frame",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 30.0,
+                "y": 30.000015258789064,
+                "width": 1860.0001220703125,
+                "height": 1020.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Panel_TrenchHud_Frame_Image",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 30.0,
+                "y": 30.000015258789064,
+                "width": 1860.0001220703125,
+                "height": 1020.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Text_TrenchHud_Title",
+            "text": "堑壕作战",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 610.0,
+                "y": 45.99999237060547,
+                "width": 700.0,
+                "height": 44.00005340576172
+            },
+            "lines": [
+                {
+                    "x": 903.8724975585938,
+                    "y": 54.99573516845703,
+                    "width": 112.80206298828125,
+                    "height": 28.483192443847658
+                }
+            ],
+            "fontSize": 28.0
+        },
+        {
+            "name": "Hud_Trench_MiniMap",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 49.99998092651367,
+                "y": 90.00004577636719,
+                "width": 510.0000915527344,
+                "height": 364.99993896484377
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Trench_MiniMap_Image",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 49.99998092651367,
+                "y": 90.00004577636719,
+                "width": 510.0000915527344,
+                "height": 364.99993896484377
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Trench_MiniMap_Background",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 78.00001525878906,
+                "y": 125.00003814697266,
+                "width": 454.0,
+                "height": 272.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Areas",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 78.00001525878906,
+                "y": 125.00003814697266,
+                "width": 454.0,
+                "height": 272.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Markers",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 78.00001525878906,
+                "y": 125.00003814697266,
+                "width": 454.0,
+                "height": 272.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "MiniMap.Marker.player",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 162.33999633789063,
+                "y": 320.7200012207031,
+                "width": 21.99993896484375,
+                "height": 22.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Symbol",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 162.33999633789063,
+                "y": 320.7200012207031,
+                "width": 21.99993896484375,
+                "height": 22.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "MiniMap.Marker.teammate",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 162.33999633789063,
+                "y": 347.91998291015627,
+                "width": 21.99993896484375,
+                "height": 22.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Symbol",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 162.33999633789063,
+                "y": 347.91998291015627,
+                "width": 21.99993896484375,
+                "height": 22.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "MiniMap.Marker.estimate",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 321.239990234375,
+                "y": 217.36000061035157,
+                "width": 22.000030517578126,
+                "height": 21.999984741210939
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Symbol",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 321.239990234375,
+                "y": 217.36000061035157,
+                "width": 22.000030517578126,
+                "height": 21.999984741210939
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Cross",
+            "text": "X",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 321.239990234375,
+                "y": 217.36000061035157,
+                "width": 22.000030517578126,
+                "height": 21.999984741210939
+            },
+            "lines": [
+                {
+                    "x": 324.73663330078127,
+                    "y": 219.79310607910157,
+                    "width": 14.963897705078125,
+                    "height": 18.014663696289064
+                }
+            ],
+            "fontSize": 22.0
+        },
+        {
+            "name": "MiniMap.Marker.killed",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 234.97999572753907,
+                "y": 269.0400695800781,
+                "width": 22.000015258789064,
+                "height": 22.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Symbol",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 234.97999572753907,
+                "y": 269.0400695800781,
+                "width": 22.000015258789064,
+                "height": 22.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Cross",
+            "text": "X",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 234.97999572753907,
+                "y": 269.0400695800781,
+                "width": 22.000015258789064,
+                "height": 22.0
+            },
+            "lines": [
+                {
+                    "x": 238.47662353515626,
+                    "y": 271.4731750488281,
+                    "width": 14.963897705078125,
+                    "height": 18.0146484375
+                }
+            ],
+            "fontSize": 22.0
+        },
+        {
+            "name": "Hud_Trench_MiniMap_Label",
+            "text": "▲我方  ○队友  ◇预估  ×击杀",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 78.00001525878906,
+                "y": 403.0,
+                "width": 454.0,
+                "height": 32.0
+            },
+            "lines": [
+                {
+                    "x": 80.20310974121094,
+                    "y": 410.6577453613281,
+                    "width": 226.51170349121095,
+                    "height": 18.50390625
+                }
+            ],
+            "fontSize": 18.0
+        },
+        {
+            "name": "Panel_TrenchHud_Left",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 49.99998092651367,
+                "y": 475.0,
+                "width": 510.0000915527344,
+                "height": 210.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Panel_TrenchHud_Left_Image",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 49.99998092651367,
+                "y": 475.0,
+                "width": 510.0000915527344,
+                "height": 210.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Trench_EnemyProgress",
+            "text": "敌情：2 / 5",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 79.99998474121094,
+                "y": 515.0000610351563,
+                "width": 450.00006103515627,
+                "height": 49.99993896484375
+            },
+            "lines": [
+                {
+                    "x": 79.88605499267578,
+                    "y": 528.4135131835938,
+                    "width": 128.77606201171876,
+                    "height": 25.7974853515625
+                }
+            ],
+            "fontSize": 25.0
+        },
+        {
+            "name": "Hud_Trench_SearchProgress",
+            "text": "搜索进度：48%",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 79.99998474121094,
+                "y": 580.0,
+                "width": 450.00006103515627,
+                "height": 50.0
+            },
+            "lines": [
+                {
+                    "x": 79.69076538085938,
+                    "y": 593.2426147460938,
+                    "width": 176.5218505859375,
+                    "height": 25.7730712890625
+                }
+            ],
+            "fontSize": 25.0
+        },
+        {
+            "name": "Hud_Trench_SearchTrack",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 79.99998474121094,
+                "y": 637.0,
+                "width": 450.00006103515627,
+                "height": 8.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Trench_SearchFill",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 79.99998474121094,
+                "y": 637.0,
+                "width": 216.00001525878907,
+                "height": 8.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Panel_TrenchHud_Right",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1360.0001220703125,
+                "y": 90.00004577636719,
+                "width": 510.0,
+                "height": 404.99993896484377
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Panel_TrenchHud_Right_Image",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1360.0001220703125,
+                "y": 90.00004577636719,
+                "width": 510.0,
+                "height": 404.99993896484377
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Trench_Health",
+            "text": "生命：8 / 10",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1400.0,
+                "y": 115.00001525878906,
+                "width": 430.0001220703125,
+                "height": 50.0
+            },
+            "lines": [
+                {
+                    "x": 1399.6531982421875,
+                    "y": 127.9754867553711,
+                    "width": 150.1600341796875,
+                    "height": 26.651588439941408
+                }
+            ],
+            "fontSize": 26.0
+        },
+        {
+            "name": "Hud_Combat_HealthTrack",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1400.0,
+                "y": 167.99998474121095,
+                "width": 430.0001220703125,
+                "height": 6.0000152587890629
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_1",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1400.0,
+                "y": 167.99998474121095,
+                "width": 41.0001220703125,
+                "height": 6.0000152587890629
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_2",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1445.0,
+                "y": 167.99998474121095,
+                "width": 41.0001220703125,
+                "height": 6.0000152587890629
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_3",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1488.0001220703125,
+                "y": 167.99998474121095,
+                "width": 41.0,
+                "height": 6.0000152587890629
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_4",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1531.0001220703125,
+                "y": 167.99998474121095,
+                "width": 40.9998779296875,
+                "height": 6.0000152587890629
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_5",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1574.0001220703125,
+                "y": 167.99998474121095,
+                "width": 41.0,
+                "height": 6.0000152587890629
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_6",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1617.0,
+                "y": 167.99998474121095,
+                "width": 41.0001220703125,
+                "height": 6.0000152587890629
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_7",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1660.0001220703125,
+                "y": 167.99998474121095,
+                "width": 41.0,
+                "height": 6.0000152587890629
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_8",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1703.0001220703125,
+                "y": 167.99998474121095,
+                "width": 40.9998779296875,
+                "height": 6.0000152587890629
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_9",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1746.0001220703125,
+                "y": 167.99998474121095,
+                "width": 41.0,
+                "height": 6.0000152587890629
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Combat_HealthCell_10",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1789.0,
+                "y": 167.99998474121095,
+                "width": 41.0001220703125,
+                "height": 6.0000152587890629
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Trench_Ammo",
+            "text": "弹药：30 / 120\n备用弹匣 4 · R / 左手柄X键换弹",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1400.0,
+                "y": 180.00001525878907,
+                "width": 430.0001220703125,
+                "height": 80.00001525878906
+            },
+            "lines": [
+                {
+                    "x": 1399.954345703125,
+                    "y": 188.57289123535157,
+                    "width": 194.2320556640625,
+                    "height": 28.483139038085939
+                },
+                {
+                    "x": 1399.3529052734375,
+                    "y": 225.2545166015625,
+                    "width": 393.932373046875,
+                    "height": 29.057327270507814
+                }
+            ],
+            "fontSize": 28.0
+        },
+        {
+            "name": "Hud_Trench_Posture",
+            "text": "姿态：起立",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1400.0,
+                "y": 270.0,
+                "width": 430.0001220703125,
+                "height": 45.000030517578128
+            },
+            "lines": [
+                {
+                    "x": 1400.0782470703125,
+                    "y": 281.189453125,
+                    "width": 119.8905029296875,
+                    "height": 24.695343017578126
+                }
+            ],
+            "fontSize": 24.0
+        },
+        {
+            "name": "Hud_Trench_Shoulder",
+            "text": "射击肩：左肩 · 左后/右前",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1400.0,
+                "y": 324.9999694824219,
+                "width": 430.0001220703125,
+                "height": 45.000030517578128
+            },
+            "lines": [
+                {
+                    "x": 1399.5625,
+                    "y": 336.330078125,
+                    "width": 270.7890625,
+                    "height": 24.531280517578126
+                }
+            ],
+            "fontSize": 24.0
+        },
+        {
+            "name": "Hud_Trench_Corner",
+            "text": "拐角射击：可用",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 1400.0,
+                "y": 380.0000305175781,
+                "width": 430.0001220703125,
+                "height": 44.999969482421878
+            },
+            "lines": [
+                {
+                    "x": 1399.7501220703125,
+                    "y": 391.236328125,
+                    "width": 167.0936279296875,
+                    "height": 24.835968017578126
+                }
+            ],
+            "fontSize": 24.0
+        },
+        {
+            "name": "Panel_TrenchHud_Squad",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 610.0,
+                "y": 890.0,
+                "width": 700.0,
+                "height": 165.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Panel_TrenchHud_Squad_Image",
+            "text": "",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 610.0,
+                "y": 890.0,
+                "width": 700.0,
+                "height": 165.0
+            },
+            "lines": [],
+            "fontSize": 0.0
+        },
+        {
+            "name": "Hud_Trench_Squad",
+            "text": "玩家 · 正常 · 生命 8\n二号队友 · 跟随 · 生命 5\n三号队友 · 跟随 · 生命 5",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 650.0000610351563,
+                "y": 900.0,
+                "width": 620.0000610351563,
+                "height": 145.0
+            },
+            "lines": [
+                {
+                    "x": 865.6800537109375,
+                    "y": 933.0744018554688,
+                    "width": 187.8665771484375,
+                    "height": 22.76629638671875
+                },
+                {
+                    "x": 844.0452880859375,
+                    "y": 962.3253784179688,
+                    "width": 230.971435546875,
+                    "height": 22.5513916015625
+                },
+                {
+                    "x": 844.0452880859375,
+                    "y": 991.3614501953125,
+                    "width": 230.971435546875,
+                    "height": 22.55145263671875
+                }
+            ],
+            "fontSize": 22.0
+        },
+        {
+            "name": "Hud_Trench_Prompt",
+            "text": "交互：右摇杆按压/Enter/空格 · 手雷：右A/H",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 650.0000610351563,
+                "y": 755.0,
+                "width": 620.0000610351563,
+                "height": 65.0
+            },
+            "lines": [
+                {
+                    "x": 678.8060913085938,
+                    "y": 774.4411010742188,
+                    "width": 560.3098754882813,
+                    "height": 28.75653076171875
+                }
+            ],
+            "fontSize": 28.0
+        },
+        {
+            "name": "Hud_Trench_State",
+            "text": "任务状态：运行中",
+            "active": true,
+            "overflow": false,
+            "rect": {
+                "x": 650.0000610351563,
+                "y": 825.0,
+                "width": 620.0000610351563,
+                "height": 35.0
+            },
+            "lines": [
+                {
+                    "x": 871.6849975585938,
+                    "y": 832.1534423828125,
+                    "width": 175.16925048828126,
+                    "height": 22.766357421875
+                }
+            ],
+            "fontSize": 22.0
+        }
+    ]
+}

@@ -74,7 +74,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(presentation.Magazine.GetComponent<MeshRenderer>().enabled, Is.False);
             Capture("02-below-view");
             Assert.That(core.GetSnapshot("reload-play").Data.Ammo.CurrentMagazine, Is.EqualTo(29));
-            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.ReserveAmmo, Is.EqualTo(60));
+            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.ReserveAmmo, Is.EqualTo(120));
             Step(.70f);
             Assert.That(presentation.Magazine.GetComponent<MeshRenderer>().enabled, Is.True);
             Capture("03-insert");
@@ -82,7 +82,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(core.GetSnapshot("reload-play").Data.Ammo.IsReloading, Is.True);
             Step(.02f);
             Assert.That(core.GetSnapshot("reload-play").Data.Ammo.CurrentMagazine, Is.EqualTo(30));
-            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.ReserveMagazines, Is.EqualTo(1));
+            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.ReserveMagazines, Is.EqualTo(3));
             Assert.That(presentation.IsAnimating, Is.False);
             Assert.That(presentation.Magazine.localPosition, Is.EqualTo(seatedPosition));
             Assert.That(eye.transform.position, Is.EqualTo(new Vector3(0, 1.65f, 0)));
@@ -97,7 +97,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(presentation.IsAnimating, Is.False);
             Assert.That(presentation.Magazine.localPosition, Is.EqualTo(seatedPosition));
             Assert.That(presentation.Magazine.GetComponent<MeshRenderer>().enabled, Is.True);
-            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.ReserveMagazines, Is.EqualTo(2));
+            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.ReserveMagazines, Is.EqualTo(4));
             Assert.That(core.GetSnapshot("reload-play").Data.Ammo.CurrentMagazine, Is.EqualTo(29));
             Step(5f);
             Assert.That(core.GetSnapshot("reload-play").Data.Ammo.CurrentMagazine, Is.EqualTo(29));
@@ -257,7 +257,7 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(handObject.transform.parent, Is.EqualTo(controller));
             Assert.That(handObject.transform.localPosition, Is.EqualTo(handLocalPosition));
             Assert.That(Quaternion.Angle(handObject.transform.localRotation, handLocalRotation), Is.LessThan(.01f));
-            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.ReserveMagazines, Is.EqualTo(2));
+            Assert.That(core.GetSnapshot("reload-play").Data.Ammo.ReserveMagazines, Is.EqualTo(4));
             yield return null;
         }
 
@@ -345,8 +345,8 @@ namespace SimulatedShooting.Tests.PlayMode
             Assert.That(rifle.GetComponent<WeaponPrefabBinding>().VisualRoot.localScale.x, Is.GreaterThan(0), "B must never reflect the rifle or sights");
             Assert.That(grab.RearHandSelected && grab.FrontHandSelected, Is.True);
             Assert.That(grab.interactorsSelecting[0], Is.SameAs(left));
-            Assert.That(grab.GetAttachTransform((IXRInteractor)left), Is.SameAs(grab.RearAttach));
-            Assert.That(grab.GetAttachTransform((IXRInteractor)right), Is.SameAs(grab.FrontAttach));
+            Assert.That(Vector3.Distance(grab.GetAttachTransform((IXRInteractor)left).position,grab.RearAttach.position+grab.transform.right*.16f), Is.LessThan(.00001f));
+            Assert.That(Vector3.Distance(grab.GetAttachTransform((IXRInteractor)right).position,grab.FrontAttach.position+grab.transform.right*.16f), Is.LessThan(.00001f));
             Assert.That(left.transform.localToWorldMatrix, Is.EqualTo(leftPose));
             Assert.That(right.transform.localToWorldMatrix, Is.EqualTo(rightPose));
             grab.SetFrontHandInteractionLocked(true);

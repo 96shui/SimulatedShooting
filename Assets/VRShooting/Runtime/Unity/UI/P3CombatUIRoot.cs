@@ -193,6 +193,8 @@ namespace VRShooting.Unity.UI
             SetAllPagesActive(false);
             pages[screen].SetActive(true);
             VisibleScreen = screen;
+            GetComponent<TrainingUICanvasAdapter>()?.SetEyeLevelPlacement(
+                screen == ScreenId.TrenchMapSelection || screen == ScreenId.UrbanMapSelection);
             return true;
         }
 
@@ -290,7 +292,7 @@ namespace VRShooting.Unity.UI
             var ammo = AddLabel(page, "Hud_Trench_Ammo", "弹药：--", 28, new Vector2(1400, 820), new Vector2(1830, 900), TextAlignmentOptions.Left);
             var posture = AddLabel(page, "Hud_Trench_Posture", "姿态：--", 24, new Vector2(1400, 765), new Vector2(1830, 810), TextAlignmentOptions.Left);
             var shoulder = AddLabel(page, "Hud_Trench_Shoulder", "射击肩：--", 24, new Vector2(1400, 710), new Vector2(1830, 755), TextAlignmentOptions.Left);
-            var corner = AddLabel(page, "Hud_Trench_Corner", "拐角射击：--", 24, new Vector2(1400, 655), new Vector2(1830, 700), TextAlignmentOptions.Left);
+            var corner = AddLabel(page, "Hud_Trench_Corner", "拐角射击：可用", 24, new Vector2(1400, 655), new Vector2(1830, 700), TextAlignmentOptions.Left);
             AddPanel(page, "Panel_TrenchHud_Squad", new Vector2(610, 25), new Vector2(1310, 190), new Color32(11, 25, 20, 225));
             var squad = AddLabel(page, "Hud_Trench_Squad", "小队：--", 22, new Vector2(600, 55), new Vector2(1260, 220), TextAlignmentOptions.Center);
             var prompt = AddLabel(page, "Hud_Trench_Prompt", string.Empty, 28, new Vector2(650, 260), new Vector2(1270, 325), TextAlignmentOptions.Center, new Color32(247, 185, 85, 255));
@@ -346,7 +348,7 @@ namespace VRShooting.Unity.UI
             var ammo = AddLabel(page, "Hud_UrbanStreet_Ammo", "弹药：--", 28, new Vector2(1400, 820), new Vector2(1830, 900), TextAlignmentOptions.Left);
             var posture = AddLabel(page, "Hud_UrbanStreet_Posture", "姿态：--", 24, new Vector2(1400, 765), new Vector2(1830, 810), TextAlignmentOptions.Left);
             var shoulder = AddLabel(page, "Hud_UrbanStreet_Shoulder", "射击肩：--", 24, new Vector2(1400, 710), new Vector2(1830, 755), TextAlignmentOptions.Left);
-            var corner = AddLabel(page, "Hud_UrbanStreet_Corner", "拐角射击：--", 24, new Vector2(1400, 655), new Vector2(1830, 700), TextAlignmentOptions.Left);
+            var corner = AddLabel(page, "Hud_UrbanStreet_Corner", "拐角射击：可用", 24, new Vector2(1400, 655), new Vector2(1830, 700), TextAlignmentOptions.Left);
             var squad = AddLabel(page, "Hud_UrbanStreet_Squad", "小队：--", 22, new Vector2(600, 30), new Vector2(1260, 105), TextAlignmentOptions.Center);
             var prompt = AddLabel(page, "Hud_UrbanStreet_Prompt", string.Empty, 28, new Vector2(650, 260), new Vector2(1270, 325), TextAlignmentOptions.Center, new Color32(247, 185, 85, 255));
             var state = AddLabel(page, "Hud_UrbanStreet_TaskState", "任务状态：--", 22, new Vector2(650, 220), new Vector2(1270, 255), TextAlignmentOptions.Center);
@@ -369,7 +371,7 @@ namespace VRShooting.Unity.UI
             var ammo = AddLabel(page, "Hud_UrbanBuilding_Ammo", "弹药：--", 28, new Vector2(1400, 820), new Vector2(1830, 900), TextAlignmentOptions.Left);
             var posture = AddLabel(page, "Hud_UrbanBuilding_Posture", "姿态：--", 24, new Vector2(1400, 765), new Vector2(1830, 810), TextAlignmentOptions.Left);
             var shoulder = AddLabel(page, "Hud_UrbanBuilding_Shoulder", "射击肩：--", 24, new Vector2(1400, 710), new Vector2(1830, 755), TextAlignmentOptions.Left);
-            var corner = AddLabel(page, "Hud_UrbanBuilding_Corner", "拐角射击：--", 24, new Vector2(1400, 655), new Vector2(1830, 700), TextAlignmentOptions.Left);
+            var corner = AddLabel(page, "Hud_UrbanBuilding_Corner", "拐角射击：可用", 24, new Vector2(1400, 655), new Vector2(1830, 700), TextAlignmentOptions.Left);
             var squad = AddLabel(page, "Hud_UrbanBuilding_Squad", "小队：--", 22, new Vector2(600, 30), new Vector2(1260, 105), TextAlignmentOptions.Center);
             var prompt = AddLabel(page, "Hud_UrbanBuilding_Prompt", string.Empty, 28, new Vector2(650, 260), new Vector2(1270, 325), TextAlignmentOptions.Center, new Color32(247, 185, 85, 255));
             var state = AddLabel(page, "Hud_UrbanBuilding_TaskState", "任务状态：--", 22, new Vector2(650, 220), new Vector2(1270, 255), TextAlignmentOptions.Center);

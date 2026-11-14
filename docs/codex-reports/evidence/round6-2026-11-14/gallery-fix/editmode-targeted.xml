@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Passed" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-14 10:07:30Z" end-time="2026-11-14 10:07:30Z" duration="0.7595491">
+  <test-suite type="TestSuite" id="1495" name="VR" fullname="VR" runstate="Runnable" testcasecount="389" result="Passed" start-time="2026-11-14 10:07:30Z" end-time="2026-11-14 10:07:30Z" duration="0.759549" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1562" name="SimulatedShooting.EditModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.EditModeTests.dll" runstate="Runnable" testcasecount="47" result="Passed" start-time="2026-11-14 10:07:30Z" end-time="2026-11-14 10:07:30Z" duration="0.750733" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="54736" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1563" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="47" result="Passed" start-time="2026-11-14 10:07:30Z" end-time="2026-11-14 10:07:30Z" duration="0.750452" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1564" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="47" result="Passed" start-time="2026-11-14 10:07:30Z" end-time="2026-11-14 10:07:30Z" duration="0.750299" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1565" name="EditMode" fullname="SimulatedShooting.Tests.EditMode" runstate="Runnable" testcasecount="47" result="Passed" start-time="2026-11-14 10:07:30Z" end-time="2026-11-14 10:07:30Z" duration="0.750144" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1504" name="CombatSceneTests" fullname="SimulatedShooting.Tests.EditMode.CombatSceneTests" classname="SimulatedShooting.Tests.EditMode.CombatSceneTests" runstate="Runnable" testcasecount="17" result="Passed" start-time="2026-11-14 10:07:30Z" end-time="2026-11-14 10:07:30Z" duration="0.749154" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1505" name="Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers" fullname="SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers" methodname="Bdd20_ChineseDisplayNamesPreserveSceneAndMapIdentifiers" classname="SimulatedShooting.Tests.EditMode.CombatSceneTests" runstate="Runnable" seed="1510465984" result="Passed" start-time="2026-11-14 10:07:30Z" end-time="2026-11-14 10:07:30Z" duration="0.742123" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
