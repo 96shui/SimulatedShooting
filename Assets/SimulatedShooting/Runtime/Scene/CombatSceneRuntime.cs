@@ -73,6 +73,10 @@ namespace SimulatedShooting.Scene
         public IXRTrainingInput InputOverride{get;set;}
         public CombatInputFrameDto? FrameOverride{get;set;}
         public bool ManualStepping{get;set;}
+        [SerializeField] bool enemyVisionDiagnostics;
+        public bool EnemyVisionDiagnostics { get => enemyVisionDiagnostics; set => enemyVisionDiagnostics = value; }
+        readonly List<(string id, CombatEnemySight sight, bool restored, ErrorCode error)> visionDiagnostics
+            = new List<(string, CombatEnemySight, bool, ErrorCode)>();
         public Transform PlayerRoot=>player;
         public Camera PlayerCamera=>eye;
         public IReadOnlyDictionary<string,CombatActorView> Actors=>actors;
@@ -291,7 +295,7 @@ namespace SimulatedShooting.Scene
             if(!locked&&core.GetSnapshot(id).Data.State!=SessionState.Running)return ServiceResult<Unit>.Fail(ErrorCode.InvalidState);
             if(characterActionsLocked&&!locked){awaitingInputRelease=true;hardware.ClearOpeningToggles();}
             characterActionsLocked=locked;
-            foreach(var actor in actors.Values)actor.SetActionsLocked(locked);
+            foreach(var actor in actors.Values)if(actor!=null)actor.SetActionsLocked(locked);
             if(grab!=null)grab.enabled=vr&&!locked&&!awaitingInputRelease;
             presence.Clear();navigation.Clear();navigationResults.Clear();
             return ServiceResult<Unit>.Ok(Unit.Value);
@@ -309,7 +313,7 @@ namespace SimulatedShooting.Scene
             if(snapshot.Data.State!=SessionState.Running||characterActionsLocked)
             {
                 controller?.Suspend();
-                foreach(var actor in actors.Values)if(actor.Agent.enabled&&actor.Agent.isOnNavMesh)actor.Agent.isStopped=true;
+                foreach(var actor in actors.Values)if(actor!=null&&actor.Agent!=null&&actor.Agent.enabled&&actor.Agent.isOnNavMesh)actor.Agent.isStopped=true;
                 if(snapshot.Data.State==SessionState.Preparing||characterActionsLocked&&snapshot.Data.State==SessionState.Running)
                 {
                     hardware.Sample(vr);
@@ -350,11 +354,12 @@ namespace SimulatedShooting.Scene
             recoil=Mathf.MoveTowards(recoil,0,delta*20);
             if(weapon!=null)weapon.RecoilRoot.localRotation=Quaternion.Euler(-recoil,0,0);
             var frame=FrameOverride??Frame(snapshot.Data,input);
+            visionDiagnostics.Clear();
             bool tracked=frame.HeadTracked&&frame.RearHandTracked&&frame.FrontHandTracked;
             if(!tracked||tracked!=wasTracked){presence.Clear();navigation.Clear();navigationResults.Clear();}
             wasTracked=tracked;
             foreach(var actor in actors.Values)
-                if(actor.Agent.enabled&&actor.Agent.isOnNavMesh)actor.Agent.isStopped=!tracked;
+                if(actor!=null&&actor.Agent!=null&&actor.Agent.enabled&&actor.Agent.isOnNavMesh)actor.Agent.isStopped=!tracked;
             core.SetTracking(session,tracked);
             if(tracked)
             {
@@ -375,6 +380,7 @@ namespace SimulatedShooting.Scene
             UpdateUrbanPickupRifle(core.GetSnapshot(session).Data.Weapon.HoldState);
             if(!LastFrameResult.Success)return;
             LastFrameResult=tick.Advance();
+            if (EnemyVisionDiagnostics) ReportEnemyVision(frame.PlayerPosition);
             if(LastFrameResult.Success&&!grenadeResult.Success)LastFrameResult=grenadeResult;
             if(tracked&&input.ConfirmPressed)Interact();
             if(input.BackPressed)VRShooting.Unity.Bootstrap.GameMain.Instance?.Services.Combat.BackToMaps();
@@ -444,21 +450,44 @@ namespace SimulatedShooting.Scene
         void CollectPerception(Vector3 playerPosition,float seconds)
         {
             var snapshot=core.GetSnapshot(session).Data.Visual;
+            visionDiagnostics.Clear();
             foreach(var entity in snapshot.Entities)
             {
-                if(entity.Role!=CombatEntityRole.Enemy||entity.State==CombatEntityState.Dead||!actors.TryGetValue(entity.EntityId,out var actor))continue;
-                if(entity.State==CombatEntityState.Attacking)actor.TurnTowards(playerPosition,seconds);
-                var direction=playerPosition+Vector3.up*1.2f-actor.PerceptionOrigin.position;
-                bool visible=!Physics.Raycast(actor.PerceptionOrigin.position,direction.normalized,out var hit,Mathf.Max(0,direction.magnitude-.25f),~(1<<2),QueryTriggerInteraction.Ignore);
-                if(mode==TrainingMode.Urban && world is UrbanService urban)
+                if(entity.Role!=CombatEntityRole.Enemy||entity.State==CombatEntityState.Dead)continue;
+                bool restored=!actors.TryGetValue(entity.EntityId,out var actor)||actor==null;
+                if (restored)
                 {
-                    var assignment=urban.GetEnemyAssignments(session).Data.First(a=>a.EntityId==entity.EntityId);
-                    if(assignment.RoomId.Length>0)
-                    {var door=binding.Doors.First(d=>d.RoomId==assignment.RoomId);visible&=door.IsOpen;}
+                    // Repair the visual from authoritative entities, rather than permanently
+                    // leaving Visible=false when an actor was lost or not materialized.
+                    actors.Remove(entity.EntityId);
+                    ApplyVisual(snapshot);
+                    actor=actors[entity.EntityId];
                 }
-                world.Submit(new CombatInputDto{SessionId=session,EventId="perception-"+ ++sequence,Tick=Clock.Tick,Kind=CombatInputKind.Perception,
-                    EntityId=entity.EntityId,TargetId=session+".player",Position=actor.transform.position,Direction=actor.transform.forward,Flag=visible});
+                var origin=actor.PerceptionOrigin!=null?actor.PerceptionOrigin.position:
+                    actor.transform.position+Vector3.up*core.Config.EnemyChestSampleHeight;
+                var sight=CombatEnemySight.Sample(origin,playerPosition,actor.transform,player,rifle!=null?rifle.transform:null,core.Config);
+                if(sight.Visible)actor.TurnTowards(playerPosition,seconds,core.Config.EnemyTurnSpeedDegrees);
+                var accepted=world.Submit(new CombatInputDto{SessionId=session,EventId="perception-"+ ++sequence,Tick=Clock.Tick,Kind=CombatInputKind.Perception,
+                    EntityId=entity.EntityId,TargetId=session+".player",Position=actor.transform.position,Direction=actor.transform.forward,Flag=sight.Visible});
+                if(EnemyVisionDiagnostics)visionDiagnostics.Add((entity.EntityId,sight,restored,accepted.ErrorCode));
             }
+        }
+        void ReportEnemyVision(Vector3 playerPosition)
+        {
+            var entities=core.GetSnapshot(session).Data.Visual.Entities;
+            foreach(var entry in visionDiagnostics)
+            {
+                var actor=actors[entry.id];
+                var entity=entities.First(e=>e.EntityId==entry.id);
+                var angle=Vector3.Angle(actor.transform.forward,Vector3.ProjectOnPlane(playerPosition-actor.transform.position,Vector3.up));
+                Debug.Log($"[EnemyVision] tick={Clock.Tick} id={entry.id} actor=True restored={entry.restored} distance={entry.sight.Distance:F3} vertical={entry.sight.VerticalOffset:F3} inCircle={entry.sight.InCircle} head={BlockerName(entry.sight.HeadBlocker)} chest={BlockerName(entry.sight.ChestBlocker)} foot={BlockerName(entry.sight.FootBlocker)} Visible={entry.sight.Visible} submit={entry.error} State={entity.State} angle={angle:F2}",this);
+            }
+        }
+        static string BlockerName(Collider collider)
+        {
+            if(collider==null)return "clear";
+            var door=collider.GetComponentInParent<CombatDoorView>();
+            return door!=null?door.RoomId+"/"+collider.name:collider.transform.parent!=null?collider.transform.parent.name+"/"+collider.name:collider.name;
         }
         readonly RaycastHit[] supportSightHits = new RaycastHit[64];
         readonly Collider[] supportMuzzleOverlaps = new Collider[32];
@@ -535,8 +564,9 @@ namespace SimulatedShooting.Scene
             foreach(var entity in snapshot.Entities)
             {
                 if(entity.Role==CombatEntityRole.Player)continue;
-                if(!actors.TryGetValue(entity.EntityId,out var actor))
+                if(!actors.TryGetValue(entity.EntityId,out var actor)||actor==null)
                 {
+                    actors.Remove(entity.EntityId);
                     var at=entity.Position;
                     if(mode==TrainingMode.Trench && NavMesh.SamplePosition(at,out var spawnHit,1.25f,NavMesh.AllAreas))
                         at=spawnHit.position;
@@ -557,7 +587,8 @@ namespace SimulatedShooting.Scene
                 if(dead!=actor.IsDead)actor.ApplyDead(dead);
             }
             foreach(var door in snapshot.Doors)
-            {var target=binding.Doors.FirstOrDefault(d=>d.RoomId==door.RoomId);if(target!=null&&target.IsOpen!=door.Open)target.Apply(session+"-door-"+snapshot.Revision+"-"+door.RoomId,door.Open);}
+                foreach(var target in binding.Doors.Where(d=>d.RoomId==door.RoomId))
+                    if(target.IsOpen!=door.Open)target.Apply(session+"-door-"+snapshot.Revision+"-"+door.RoomId,door.Open);
         }
         public ServiceResult<Unit> Move(CombatNavigationRequestDto request)
         {

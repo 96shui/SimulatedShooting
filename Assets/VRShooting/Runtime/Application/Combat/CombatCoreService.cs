@@ -13,6 +13,7 @@ namespace VRShooting.Application.Combat
     {
         readonly ICombatClock clock;
         CombatConfigDto config;
+        public CombatConfigDto Config => config;
         readonly bool hasExplicitConfig;
         readonly WeaponControlService weapons = new WeaponControlService();
         readonly WeaponAutomaticFireService automaticFire;
@@ -431,10 +432,10 @@ namespace VRShooting.Application.Combat
         bool SeesPlayer(Enemy enemy)
         {
             var offset = position - enemy.Position;
-            return !enemy.Dead && enemy.Visible && offset.magnitude <= config.EnemyRange &&
-                // Urban can discover a player entering behind a stationary defender.
-                // Real door/geometry visibility still gates discovery; facing still gates firing.
-                (mode == TrainingMode.Urban || offset.sqrMagnitude < 1e-8 || Vector3.Angle(enemy.Forward, offset) <= config.EnemyHalfViewAngle);
+            // The scene reports multi-sample geometry visibility. Facing only gates firing.
+            return !enemy.Dead && enemy.Visible &&
+                Vector3.ProjectOnPlane(offset, Vector3.up).sqrMagnitude <= config.EnemyRange * config.EnemyRange &&
+                Mathf.Abs(offset.y) <= config.EnemyVerticalTolerance;
         }
         bool Due(Enemy enemy) => enemy.NextAttack <= clock.Now + 1e-8;
         void Suspend() { automaticFire.Cancel(session, WeaponFireStopReason.WeaponBecameInvalid); pending.Clear(); StopTimers(); }

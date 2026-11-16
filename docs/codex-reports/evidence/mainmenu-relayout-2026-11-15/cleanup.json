@@ -1,0 +1,80 @@
+{
+  "restored_tracked_batch_writes": [
+    "Assets/Resources/UI/Tactical/TrainingChinese.asset",
+    "Assets/XR/Settings/Open XR Package Settings.asset",
+    "Evidence/P3-production-M67-in-flight.png",
+    "docs/codex-reports/evidence/main-menu-hand-occlusion-20261023/main-menu-after-tracked.png",
+    "docs/codex-reports/evidence/main-menu-hand-occlusion-20261023/main-menu-after-untracked.png",
+    "docs/codex-reports/evidence/mode1-brief-results-labels-2026-11-12/03-Trench-held-rifle-no-labels.png",
+    "docs/codex-reports/evidence/mode1-brief-results-labels-2026-11-12/03-Urban-held-rifle-no-labels.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/Trench-B-right-shoulder-right-rear-left-front.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/Urban-B-left-shoulder-left-rear-right-front.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/Urban-B-right-shoulder-right-rear-left-front.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/urban-enemy-aim-and-fire.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/urban-health-10.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/urban-health-after-hit-9.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/urban-teammate-grenade-explosion.png",
+    "docs/codex-reports/evidence/range-restore-urban-20261023/urban-building-corner.png",
+    "docs/codex-reports/evidence/range-restore-urban-20261023/urban-desktop-pickup.png",
+    "docs/codex-reports/evidence/range-restore-urban-20261023/urban-vr-pickup.png",
+    "docs/codex-reports/evidence/round6-2026-11-14/grenade-no-enemy-player-forward.png",
+    "docs/codex-reports/evidence/round6-2026-11-14/left-shoulder-forward.png",
+    "docs/codex-reports/evidence/round6-2026-11-14/trench-hud-30-120.png",
+    "docs/codex-reports/evidence/round6-2026-11-14/trench-map-front.png",
+    "docs/codex-reports/evidence/round6-2026-11-14/urban-hud-30-120.png",
+    "docs/codex-reports/evidence/round6-2026-11-14/urban-map-front.png",
+    "docs/codex-reports/evidence/vr-mechanical-sight-20261023/vr-substitute-mechanical-sight.png"
+  ],
+  "removed_untracked_temporary_files": [
+    {
+      "path": "Assets/VRShooting/Editor/MainMenuRelayoutEvidence.cs",
+      "sha256": "ba2d62fd1bf727051d9777f3d196f6c9499f8632eeb35d733897260f85de805b"
+    },
+    {
+      "path": "Assets/VRShooting/Editor/MainMenuRelayoutEvidence.cs.meta",
+      "sha256": "4f7fea2d1573be996613c062c2cb9530416634980d6cee6f8b39158b4c68017c"
+    }
+  ],
+  "historical_init_test_scene_byte_checks": {
+    "Assets/InitTestScene639252044744999923.unity": true,
+    "Assets/InitTestScene639252044744999923.unity.meta": true,
+    "Assets/InitTestScene639253514584773890.unity": true,
+    "Assets/InitTestScene639253514584773890.unity.meta": true,
+    "Assets/InitTestScene639271113773156361.unity": true,
+    "Assets/InitTestScene639271113773156361.unity.meta": true,
+    "Assets/InitTestScene639271128085681542.unity": true,
+    "Assets/InitTestScene639271128085681542.unity.meta": true
+  },
+  "head": "ef5a00e4228dde18d01e672937205ef66e4fecb4",
+  "existing_pico_report_sha256": "0a737caec9b5543a1367935a2d4781fa30c7e77473ccced17dc6afd4afdd5e0c",
+  "existing_pico_report_unchanged": true,
+  "modified_tracked_files": [
+    "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "Assets/VRShooting/Runtime/Unity/UI/TacticalUIStyle.cs",
+    "Assets/VRShooting/Tests/EditMode/Application/MainMenuControlsTests.cs",
+    "Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs",
+    "docs/BDD/screens/02-游戏主界面.feature.md",
+    "docs/任务规格/阶段一-P1-100m射校原型闭环/UI/task008-ui-mainmenu-zeroing-briefing.md",
+    "docs/接口文档/01-页面导航与UI事件.md"
+  ],
+  "untracked_files": [
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/MainMenuRelayoutEvidence.cs.txt",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/Screen_MainMenu.png",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/Screen_MainMenu_Closeup.png",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/baseline-comparison.json",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/baseline-editmode.xml",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/baseline-playmode.xml",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/capture-gallery.ps1",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/compare-tests.py",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/editmode-full.xml",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/editmode-targeted.xml",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/fullname-comparison.csv",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/gallery-inspection.txt",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/make-closeup.py",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/playmode-full.xml",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/playmode-targeted.xml",
+    "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/run-unity.ps1",
+    "docs/codex-reports/mainmenu-relayout-2026-11-15.md",
+    "docs/codex-reports/pico-apk-2026-11-14.md"
+  ]
+}

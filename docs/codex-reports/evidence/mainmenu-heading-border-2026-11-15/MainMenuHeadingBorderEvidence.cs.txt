@@ -1,0 +1,111 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using SimulatedShooting.Scene;
+using TMPro;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using VRShooting.Application;
+using VRShooting.Editor;
+using VRShooting.Unity;
+using VRShooting.Unity.Bootstrap;
+using VRShooting.Unity.UI;
+
+public static class MainMenuHeadingBorderEvidence
+{
+    public static void CaptureBatch()
+    {
+        var folder = Environment.GetEnvironmentVariable("RUNTIME_GALLERY_OUT");
+        Directory.CreateDirectory(folder);
+        var scene = EditorSceneManager.NewPreviewScene();
+        try
+        {
+            var cameraRoot = new GameObject("GalleryCamera", typeof(Camera));
+            SceneManager.MoveGameObjectToScene(cameraRoot, scene);
+            var camera = cameraRoot.GetComponent<Camera>();
+            camera.scene = scene;
+            camera.clearFlags = CameraClearFlags.SolidColor;
+            camera.backgroundColor = new Color32(7, 15, 25, 255);
+            camera.orthographic = true;
+            camera.nearClipPlane = .1f;
+            camera.farClipPlane = 2000;
+            var flags = BindingFlags.NonPublic | BindingFlags.Static;
+            var main = (MainMenuUI)typeof(TacticalUIGallery).GetMethod("Create", flags)
+                .MakeGenericMethod(typeof(MainMenuUI)).Invoke(null, new object[] { scene, new List<GameObject>() });
+            main.Initialize(ApplicationServices.CreateDefault(combatScenes: new UnityCombatSceneLoader()));
+            var root = main.gameObject;
+            root.GetComponent<TrainingUICanvasAdapter>().enabled = false;
+            root.GetComponent<CanvasScaler>().enabled = false;
+            var canvas = root.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = camera;
+            var rect = (RectTransform)root.transform;
+            rect.sizeDelta = new Vector2(1920, 1080);
+            rect.pivot = new Vector2(.5f, .5f);
+            rect.position = new Vector3(960, 540, 0);
+            rect.localScale = Vector3.one;
+            foreach (var group in root.GetComponentsInChildren<CanvasGroup>(true)) group.alpha = 1;
+            foreach (var child in root.GetComponentsInChildren<Transform>(true))
+                if (child.name == "LargePanelRoot" || child.name == "MinimalHudRoot") child.gameObject.SetActive(true);
+            var pages = root.GetComponentsInChildren<RectTransform>(true).Where(t => t.name.StartsWith("Screen_")).ToArray();
+            foreach (var page in pages) page.gameObject.SetActive(false);
+            var mainPage = pages.Single(t => t.name == "Screen_MainMenu");
+            root.SetActive(true);
+            mainPage.gameObject.SetActive(true);
+            foreach (var text in mainPage.GetComponentsInChildren<TMP_Text>()) text.ForceMeshUpdate();
+            Canvas.ForceUpdateCanvases();
+            camera.orthographicSize = 540;
+            camera.transform.position = new Vector3(960, 540, -1000);
+            Capture(camera, 1920, 1080, Path.Combine(folder, "Screen_MainMenu.png"));
+            // Direct camera render of the right column; no repainted or generated pixels.
+            camera.orthographicSize = 395;
+            camera.transform.position = new Vector3(1555, 525, -1000);
+            Capture(camera, 720, 1080, Path.Combine(folder, "Screen_MainMenu_Closeup.png"));
+            File.WriteAllLines(Path.Combine(folder, "gallery-inspection.txt"),
+                mainPage.GetComponentsInChildren<RectTransform>(true)
+                    .Where(t => t.name == "Panel_MainMenu_Menu" || t.name == "Image_MainMenu_MenuFill" || t.name == "Image_MainMenu_MenuBorder" ||
+                        t.name == "Text_MainMenu_Menu" || t.GetComponent<Button>() != null)
+                    .Select(t => t.name + " min=" + t.offsetMin + " max=" + t.offsetMax +
+                        " image=" + (t.GetComponent<Image>() != null ? t.GetComponent<Image>().sprite?.name +
+                            " color=" + (Color32)t.GetComponent<Image>().color + " raycast=" + t.GetComponent<Image>().raycastTarget : "none") +
+                        " border=" + (t.GetComponent<MainMenuHeadingBorderGraphic>() != null ?
+                            ((Color32)t.GetComponent<MainMenuHeadingBorderGraphic>().color).ToString() : "none") +
+                        " outline=" + (t.GetComponent<Outline>() != null ? t.GetComponent<Outline>().enabled +
+                            " color=" + (Color32)t.GetComponent<Outline>().effectColor + " distance=" + t.GetComponent<Outline>().effectDistance : "none") +
+                        " text=" + (t.GetComponent<TMP_Text>() != null ? t.GetComponent<TMP_Text>().text +
+                            " fontSize=" + t.GetComponent<TMP_Text>().fontSize + " fontStyle=" + t.GetComponent<TMP_Text>().fontStyle +
+                            " fontWeight=" + t.GetComponent<TMP_Text>().fontWeight + " color=" + (Color32)t.GetComponent<TMP_Text>().color +
+                            " raycast=" + t.GetComponent<TMP_Text>().raycastTarget : "none")));
+            Debug.Log("Main menu heading border evidence captured.");
+        }
+        finally { EditorSceneManager.ClosePreviewScene(scene); }
+    }
+
+    static void Capture(Camera camera, int width, int height, string path)
+    {
+        var target = new RenderTexture(width, height, 24);
+        var previous = RenderTexture.active;
+        var texture = new Texture2D(width, height, TextureFormat.RGB24, false);
+        try
+        {
+            camera.targetTexture = target;
+            camera.Render();
+            RenderTexture.active = target;
+            texture.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+            texture.Apply();
+            File.WriteAllBytes(path, texture.EncodeToPNG());
+        }
+        finally
+        {
+            camera.targetTexture = null;
+            RenderTexture.active = previous;
+            UnityEngine.Object.DestroyImmediate(texture);
+            target.Release();
+            UnityEngine.Object.DestroyImmediate(target);
+        }
+    }
+}

@@ -1,0 +1,9 @@
+Button_MainMenu_Controls min=(1360.00, 780.00) max=(1750.00, 865.00) image=button_secondary_cyan color=RGBA(1.000, 1.000, 1.000, 1.000) raycast=True text=none
+Panel_MainMenu_Menu min=(1360.00, 667.00) max=(1750.00, 737.00) image=button_primary_orange color=RGBA(1.000, 1.000, 1.000, 1.000) raycast=False text=none
+Image_MainMenu_MenuFill min=(14.00, 8.00) max=(-14.00, -8.00) image= color=RGBA(0.784, 1.000, 0.416, 0.922) raycast=False text=none
+Text_MainMenu_Menu min=(30.00, 4.00) max=(-30.00, -4.00) image=none text=选择训练科目 fontSize=28 fontStyle=Bold color=RGBA(0.027, 0.063, 0.051, 1.000) raycast=False
+Button_MainMenu_OpenZeroing min=(1360.00, 539.00) max=(1750.00, 624.00) image=button_secondary_cyan color=RGBA(1.000, 1.000, 1.000, 1.000) raycast=True text=none
+Button_MainMenu_OpenMovingTarget min=(1360.00, 411.00) max=(1750.00, 496.00) image=button_secondary_cyan color=RGBA(1.000, 1.000, 1.000, 1.000) raycast=True text=none
+Button_MainMenu_Trench min=(1360.00, 283.00) max=(1750.00, 368.00) image=button_secondary_cyan color=RGBA(1.000, 1.000, 1.000, 1.000) raycast=True text=none
+Button_MainMenu_Urban min=(1360.00, 155.00) max=(1750.00, 240.00) image=button_secondary_cyan color=RGBA(1.000, 1.000, 1.000, 1.000) raycast=True text=none
+Button_MainMenu_Controls_Back min=(680.00, 35.00) max=(980.00, 105.00) image=button_secondary_cyan color=RGBA(1.000, 1.000, 1.000, 1.000) raycast=True text=none

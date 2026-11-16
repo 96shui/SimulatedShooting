@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Passed" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-15 09:44:52Z" end-time="2026-11-15 09:44:53Z" duration="1.6818456">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="323" result="Passed" start-time="2026-11-15 09:44:52Z" end-time="2026-11-15 09:44:53Z" duration="1.681846" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1249" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="215" result="Passed" start-time="2026-11-15 09:44:52Z" end-time="2026-11-15 09:44:53Z" duration="1.676572" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="60064" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1250" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="209" result="Passed" start-time="2026-11-15 09:44:52Z" end-time="2026-11-15 09:44:53Z" duration="1.675512" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1251" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="209" result="Passed" start-time="2026-11-15 09:44:52Z" end-time="2026-11-15 09:44:53Z" duration="1.674420" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1252" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="209" result="Passed" start-time="2026-11-15 09:44:52Z" end-time="2026-11-15 09:44:53Z" duration="1.673617" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1150" name="Round7EnemyVisionTests" fullname="SimulatedShooting.Tests.PlayMode.Round7EnemyVisionTests" classname="SimulatedShooting.Tests.PlayMode.Round7EnemyVisionTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-15 09:44:52Z" end-time="2026-11-15 09:44:53Z" duration="1.671121" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1151" name="Bdd36_Room11ToRoom12DiscoversTurnsAndDamagesPlayer" fullname="SimulatedShooting.Tests.PlayMode.Round7EnemyVisionTests.Bdd36_Room11ToRoom12DiscoversTurnsAndDamagesPlayer" methodname="Bdd36_Room11ToRoom12DiscoversTurnsAndDamagesPlayer" classname="SimulatedShooting.Tests.PlayMode.Round7EnemyVisionTests" runstate="Runnable" seed="815149350" result="Passed" start-time="2026-11-15 09:44:52Z" end-time="2026-11-15 09:44:53Z" duration="1.663884" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+[R7-Setup] room-12:actor=True;room-21:actor=True;room-31:actor=True;room-31:actor=True
+[R7-Path] phase=room-11 tick=2 player=(25.000, 0.000, 68.000) enemy=(23.200, 0.050, 86.800) origin=(23.146, 1.700, 86.505) actor=True doors=room-11:True,room-12:False,room-21:False,room-22:False,room-31:False oldRay=DoorLeaf state=Idle angle=15.91 health=10
+[R7-Path] phase=room-12-0 tick=4 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.146, 1.700, 86.505) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=25.26 health=10
+[R7-Path] phase=room-12-1 tick=5 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.240, 1.700, 86.503) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=7.25 health=10
+[R7-Path] phase=room-12-2 tick=6 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=10
+[R7-Path] phase=room-12-3 tick=7 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=10
+[R7-Path] phase=room-12-4 tick=8 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=10
+[R7-Path] phase=room-12-5 tick=9 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=10
+[R7-Path] phase=room-12-6 tick=10 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=10
+[R7-Path] phase=room-12-7 tick=11 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=10
+[R7-Path] phase=room-12-8 tick=12 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=10
+[R7-Path] phase=room-12-9 tick=13 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=10
+[R7-Path] phase=room-12-10 tick=14 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=10
+[R7-Path] phase=room-12-11 tick=15 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=9
+[R7-Path] phase=room-12-12 tick=16 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=9
+[R7-Path] phase=room-12-13 tick=17 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=9
+[R7-Path] phase=room-12-14 tick=18 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=9
+[R7-Path] phase=room-12-15 tick=19 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=9
+[R7-Path] phase=room-12-16 tick=20 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=9
+[R7-Path] phase=room-12-17 tick=21 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=9
+[R7-Path] phase=room-12-18 tick=22 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=9
+[R7-Path] phase=room-12-19 tick=23 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=9
+[R7-Path] phase=room-12-20 tick=24 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=9
+[R7-Path] phase=room-12-21 tick=25 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=8
+[R7-Path] phase=room-12-22 tick=26 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=8
+[R7-Path] phase=room-12-23 tick=27 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=8
+[R7-Path] phase=room-12-24 tick=28 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=8
+[R7-Path] phase=room-12-25 tick=29 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=8
+[R7-Path] phase=room-12-26 tick=30 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=8
+[R7-Path] phase=room-12-27 tick=31 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=8
+[R7-Path] phase=room-12-28 tick=32 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=8
+[R7-Path] phase=room-12-29 tick=33 player=(25.000, 0.000, 80.000) enemy=(23.200, 0.050, 86.800) origin=(23.277, 1.700, 86.510) actor=True doors=room-11:True,room-12:True,room-21:False,room-22:False,room-31:False oldRay=clear state=Attacking angle=0.02 health=8
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

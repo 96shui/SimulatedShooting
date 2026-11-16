@@ -348,12 +348,17 @@ namespace VRShooting.Tests.PlayMode.UI
             var centers = buttons.Select(button => ((RectTransform)button.transform).position.y).ToArray();
             Assert.That(centers[0] - centers[1], Is.EqualTo(centers[1] - centers[2]).Within(.1f));
             Assert.That(centers[1] - centers[2], Is.EqualTo(centers[2] - centers[3]).Within(.1f));
-            var buttonCorners = new Vector3[4]; var frameCorners = new Vector3[4];
-            ((RectTransform)buttons[3].transform).GetWorldCorners(buttonCorners);
+            var canvasScaleY = Mathf.Abs(root.transform.lossyScale.y);
+            for (var i = 0; i < centers.Length - 1; i++)
+                Assert.That((centers[i] - centers[i + 1]) / canvasScaleY, Is.EqualTo(128f).Within(.1f));
+            var panelCorners = new Vector3[4]; var frameCorners = new Vector3[4];
+            ((RectTransform)FindById("Panel_MainMenu_Menu").transform).GetWorldCorners(panelCorners);
             ((RectTransform)FindById("Panel_MainMenu_Frame").transform).GetWorldCorners(frameCorners);
             var controlsCorners = new Vector3[4];
             ((RectTransform)FindButton("Button_MainMenu_Controls").transform).GetWorldCorners(controlsCorners);
-            Assert.That(controlsCorners[1].y, Is.LessThan(buttonCorners[0].y));
+            // GetWorldCorners: 0 = bottom-left, 1 = top-left; world Y increases upwards.
+            Assert.That(controlsCorners[0].y, Is.GreaterThan(panelCorners[1].y));
+            Assert.That(controlsCorners[1].y, Is.LessThanOrEqualTo(frameCorners[1].y));
             Assert.That(controlsCorners[0].y, Is.GreaterThanOrEqualTo(frameCorners[0].y));
             Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
             for (var i = 0; i < 2; i++)

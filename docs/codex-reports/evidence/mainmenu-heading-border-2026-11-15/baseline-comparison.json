@@ -1,0 +1,101 @@
+{
+  "strict_gate_passed": true,
+  "compared_fullnames": 736,
+  "platforms": {
+    "editmode": {
+      "baseline_file": "E:\\新建文件夹 (3)\\SimulateShooting\\docs\\codex-reports\\evidence\\round7-enemy-vision-2026-11-15\\editmode-full.xml",
+      "current_file": "E:\\新建文件夹 (3)\\SimulateShooting\\docs\\codex-reports\\evidence\\mainmenu-heading-border-2026-11-15\\editmode-full.xml",
+      "baseline_sha256": "e85144c902bbca554df47fd9c0cc17c4721705150f4f2cc80c4cc1063728f6cb",
+      "current_sha256": "008d392b8310b561d84d5389d60ac486188b51c25c744cb1accd2a12af3d774b",
+      "baseline": {
+        "total": 403,
+        "Passed": 384,
+        "Failed": 19
+      },
+      "current": {
+        "total": 403,
+        "Passed": 384,
+        "Failed": 19
+      },
+      "missing_fullnames": [],
+      "added_fullnames": [],
+      "status_changes": [],
+      "new_failures": [],
+      "resolved_failures": [],
+      "failure_sets_identical": true,
+      "failed_fullnames": [
+        "SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms",
+        "SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(\"Assets/Scenes/MovingTargetRangeScene.unity\",\"MovingTargetRange\")",
+        "SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(\"Assets/Scenes/ZeroingRangeScene.unity\",\"ZeroingRange\")",
+        "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(\"Assets/Scenes/MovingTargetRangeScene.unity\")",
+        "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(\"Assets/Scenes/ZeroingRangeScene.unity\")",
+        "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SharedPrefabMuzzleMatchesActualMeshOpening",
+        "SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_ImportedMeshHasAnOpenRearApertureAndTheMeasuredFrontPost",
+        "SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_PrefabAimLineMatchesVisibleApertureAndFrontPostAtOneHundredMetres",
+        "VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Trench)",
+        "VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Urban)",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(False)",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(True)",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds",
+        "VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.QuickSwitchDisposesOnlyStaleLease_AndCannotOverwriteUrban"
+      ],
+      "failure_detail_changes": [],
+      "strict_gate_passed": true
+    },
+    "playmode": {
+      "baseline_file": "E:\\新建文件夹 (3)\\SimulateShooting\\docs\\codex-reports\\evidence\\round7-enemy-vision-2026-11-15\\playmode-full.xml",
+      "current_file": "E:\\新建文件夹 (3)\\SimulateShooting\\docs\\codex-reports\\evidence\\mainmenu-heading-border-2026-11-15\\playmode-full.xml",
+      "baseline_sha256": "8c9591ec837ab0b821ed407f2d0ef03542aa7319bf6f51ba5aa0b4868ca45939",
+      "current_sha256": "6641b37982afc302db630d902658f8766371fcd7a29d6571a6041dd7bf7db82b",
+      "baseline": {
+        "total": 333,
+        "Passed": 312,
+        "Failed": 21
+      },
+      "current": {
+        "total": 333,
+        "Passed": 312,
+        "Failed": 21
+      },
+      "missing_fullnames": [],
+      "added_fullnames": [],
+      "status_changes": [],
+      "new_failures": [],
+      "resolved_failures": [],
+      "failure_sets_identical": true,
+      "failed_fullnames": [
+        "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd14_NewTrenchAllowsContinuousMovementAndFiring",
+        "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.NewSceneInspectionWalkerCanLeaveEntry",
+        "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup",
+        "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors",
+        "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore",
+        "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd31_DayHud_RestoresTheOriginalRearRowAndFortyMetreRoute",
+        "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy",
+        "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene",
+        "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds",
+        "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_ProductionVictoryRetryAndReturn",
+        "SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound",
+        "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands",
+        "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles",
+        "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd04_PickupPromptFacesShooterAboveRifleWithoutChangingText",
+        "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd31_TargetKeepsItsDimensionsInTheOriginalRearRow",
+        "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_TrainingRifleUsesLicensedQbz191Visual",
+        "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease",
+        "VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.BuildingFailureKeepsCountsAndOldSessionInputsAreRejected",
+        "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet",
+        "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands",
+        "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce"
+      ],
+      "failure_detail_changes": [
+        "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd14_NewTrenchAllowsContinuousMovementAndFiring",
+        "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.NewSceneInspectionWalkerCanLeaveEntry"
+      ],
+      "strict_gate_passed": true
+    }
+  }
+}

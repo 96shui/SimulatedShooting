@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="41" result="Passed" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.1589081">
+  <test-suite type="TestSuite" id="1513" name="VR" fullname="VR" runstate="Runnable" testcasecount="403" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.158908" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="2018" name="VRShooting.Runtime.EditModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.EditModeTests.dll" runstate="Runnable" testcasecount="356" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.144672" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="52096" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <test-suite type="TestSuite" id="2019" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="356" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.142715" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="2020" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="356" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.140731" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="2021" name="EditMode" fullname="VRShooting.Tests.EditMode" runstate="Runnable" testcasecount="356" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.138093" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1619" name="Round6CombatTests" fullname="VRShooting.Tests.EditMode.Round6CombatTests" classname="VRShooting.Tests.EditMode.Round6CombatTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.073713" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="ParameterizedMethod" id="1625" name="Bdd35_NoEnemyGrenadeUsesPlayerForwardOrThrowerFallback" fullname="VRShooting.Tests.EditMode.Round6CombatTests.Bdd35_NoEnemyGrenadeUsesPlayerForwardOrThrowerFallback" classname="VRShooting.Tests.EditMode.Round6CombatTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.051043" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1623" name="Bdd35_NoEnemyGrenadeUsesPlayerForwardOrThrowerFallback(False)" fullname="VRShooting.Tests.EditMode.Round6CombatTests.Bdd35_NoEnemyGrenadeUsesPlayerForwardOrThrowerFallback(False)" methodname="Bdd35_NoEnemyGrenadeUsesPlayerForwardOrThrowerFallback" classname="VRShooting.Tests.EditMode.Round6CombatTests" runstate="Runnable" seed="101460023" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.034134" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1624" name="Bdd35_NoEnemyGrenadeUsesPlayerForwardOrThrowerFallback(True)" fullname="VRShooting.Tests.EditMode.Round6CombatTests.Bdd35_NoEnemyGrenadeUsesPlayerForwardOrThrowerFallback(True)" methodname="Bdd35_NoEnemyGrenadeUsesPlayerForwardOrThrowerFallback" classname="VRShooting.Tests.EditMode.Round6CombatTests" runstate="Runnable" seed="384380910" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000450" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1622" name="Bdd35_P3StartsWithFourSpares" fullname="VRShooting.Tests.EditMode.Round6CombatTests.Bdd35_P3StartsWithFourSpares" classname="VRShooting.Tests.EditMode.Round6CombatTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.018800" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1620" name="Bdd35_P3StartsWithFourSpares(Trench)" fullname="VRShooting.Tests.EditMode.Round6CombatTests.Bdd35_P3StartsWithFourSpares(Trench)" methodname="Bdd35_P3StartsWithFourSpares" classname="VRShooting.Tests.EditMode.Round6CombatTests" runstate="Runnable" seed="427656981" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.003679" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1621" name="Bdd35_P3StartsWithFourSpares(Urban)" fullname="VRShooting.Tests.EditMode.Round6CombatTests.Bdd35_P3StartsWithFourSpares(Urban)" methodname="Bdd35_P3StartsWithFourSpares" classname="VRShooting.Tests.EditMode.Round6CombatTests" runstate="Runnable" seed="457585360" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.001533" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+            </test-suite>
+            <test-suite type="TestFixture" id="1626" name="Round7EnemyVisionRuleTests" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.014128" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="ParameterizedMethod" id="1629" name="Bdd36_BackwardsEnemyDiscoversButOnlyAlignedEnemyFires" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_BackwardsEnemyDiscoversButOnlyAlignedEnemyFires" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.009052" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1627" name="Bdd36_BackwardsEnemyDiscoversButOnlyAlignedEnemyFires(Trench)" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_BackwardsEnemyDiscoversButOnlyAlignedEnemyFires(Trench)" methodname="Bdd36_BackwardsEnemyDiscoversButOnlyAlignedEnemyFires" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" seed="191314580" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.007028" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1628" name="Bdd36_BackwardsEnemyDiscoversButOnlyAlignedEnemyFires(Urban)" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_BackwardsEnemyDiscoversButOnlyAlignedEnemyFires(Urban)" methodname="Bdd36_BackwardsEnemyDiscoversButOnlyAlignedEnemyFires" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" seed="2073505041" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.001725" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-case id="1634" name="Bdd36_InjectedVisionSurvivesHealthCopyAndReachesCore" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_InjectedVisionSurvivesHealthCopyAndReachesCore" methodname="Bdd36_InjectedVisionSurvivesHealthCopyAndReachesCore" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" seed="191293311" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000527" asserts="0">
+                <properties />
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1641" name="Bdd36_InvalidVisionConfigurationIsRejected" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_InvalidVisionConfigurationIsRejected" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.001115" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1635" name="Bdd36_InvalidVisionConfigurationIsRejected(0,2.5f,1.65f,1.2f,0.15f,180)" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_InvalidVisionConfigurationIsRejected(0,2.5f,1.65f,1.2f,0.15f,180)" methodname="Bdd36_InvalidVisionConfigurationIsRejected" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" seed="517143753" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000399" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1636" name="Bdd36_InvalidVisionConfigurationIsRejected(30,-1,1.65f,1.2f,0.15f,180)" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_InvalidVisionConfigurationIsRejected(30,-1,1.65f,1.2f,0.15f,180)" methodname="Bdd36_InvalidVisionConfigurationIsRejected" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" seed="1681464528" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000046" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1637" name="Bdd36_InvalidVisionConfigurationIsRejected(30,2.5f,float.NaN,1.2f,0.15f,180)" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_InvalidVisionConfigurationIsRejected(30,2.5f,float.NaN,1.2f,0.15f,180)" methodname="Bdd36_InvalidVisionConfigurationIsRejected" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" seed="813107552" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000029" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1638" name="Bdd36_InvalidVisionConfigurationIsRejected(30,2.5f,1.65f,1.65f,0.15f,180)" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_InvalidVisionConfigurationIsRejected(30,2.5f,1.65f,1.65f,0.15f,180)" methodname="Bdd36_InvalidVisionConfigurationIsRejected" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" seed="277801434" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000025" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1639" name="Bdd36_InvalidVisionConfigurationIsRejected(30,2.5f,1.65f,1.2f,0,180)" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_InvalidVisionConfigurationIsRejected(30,2.5f,1.65f,1.2f,0,180)" methodname="Bdd36_InvalidVisionConfigurationIsRejected" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" seed="1190595680" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000026" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1640" name="Bdd36_InvalidVisionConfigurationIsRejected(30,2.5f,1.65f,1.2f,0.15f,float.PositiveInfinity)" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_InvalidVisionConfigurationIsRejected(30,2.5f,1.65f,1.2f,0.15f,float.PositiveInfinity)" methodname="Bdd36_InvalidVisionConfigurationIsRejected" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" seed="1302264107" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000029" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1633" name="Bdd36_RangeUsesHorizontalRadiusAndSeparateVerticalTolerance" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_RangeUsesHorizontalRadiusAndSeparateVerticalTolerance" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.001156" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1630" name="Bdd36_RangeUsesHorizontalRadiusAndSeparateVerticalTolerance(30.0f,2.5f,True)" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_RangeUsesHorizontalRadiusAndSeparateVerticalTolerance(30.0f,2.5f,True)" methodname="Bdd36_RangeUsesHorizontalRadiusAndSeparateVerticalTolerance" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" seed="977349245" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000626" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1631" name="Bdd36_RangeUsesHorizontalRadiusAndSeparateVerticalTolerance(30.01f,0.0f,False)" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_RangeUsesHorizontalRadiusAndSeparateVerticalTolerance(30.01f,0.0f,False)" methodname="Bdd36_RangeUsesHorizontalRadiusAndSeparateVerticalTolerance" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" seed="1769070213" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000080" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1632" name="Bdd36_RangeUsesHorizontalRadiusAndSeparateVerticalTolerance(0.0f,2.51f,False)" fullname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests.Bdd36_RangeUsesHorizontalRadiusAndSeparateVerticalTolerance(0.0f,2.51f,False)" methodname="Bdd36_RangeUsesHorizontalRadiusAndSeparateVerticalTolerance" classname="VRShooting.Tests.EditMode.Round7EnemyVisionRuleTests" runstate="Runnable" seed="143411067" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000042" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+            </test-suite>
+            <test-suite type="TestFixture" id="1642" name="Screen23_CombatCoreTests" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" testcasecount="25" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.023842" total="25" passed="25" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1652" name="Ammo_DualGrip_SingleShot_AndTimedMagazineReplacement" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Ammo_DualGrip_SingleShot_AndTimedMagazineReplacement" methodname="Ammo_DualGrip_SingleShot_AndTimedMagazineReplacement" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="408065854" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.004903" asserts="0">
+                <properties />
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1651" name="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.002739" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1649" name="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Trench)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Trench)" methodname="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1292065535" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.001985" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1650" name="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Urban)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost(Urban)" methodname="Bdd23_DiscoveredEnemyWaitsForAimAndResetsWhenTargetLost" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="2010610703" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000213" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1645" name="Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.002462" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1643" name="Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets(Trench)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets(Trench)" methodname="Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1568983533" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.001855" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1644" name="Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets(Urban)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets(Urban)" methodname="Bdd23_Task019_TwoDistinctBulletsKillEnemyAndNewSessionResets" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1413728027" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000139" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1648" name="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.002188" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1646" name="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Trench,10)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Trench,10)" methodname="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="927417054" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.001554" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1647" name="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Urban,10)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth(Urban,10)" methodname="Bdd29_BothCombatModesSurviveNineBulletsAndDieOnTenth" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="2018364040" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000244" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-case id="1664" name="DamageEventDuplicate_ConsumesOnlyOneAttackDeadline" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.DamageEventDuplicate_ConsumesOnlyOneAttackDeadline" methodname="DamageEventDuplicate_ConsumesOnlyOneAttackDeadline" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1069442517" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000349" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1663" name="DeathIsClampedAndOnce_SameBatchEnemyKillDoesNotRestorePlayer" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.DeathIsClampedAndOnce_SameBatchEnemyKillDoesNotRestorePlayer" methodname="DeathIsClampedAndOnce_SameBatchEnemyKillDoesNotRestorePlayer" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="125557844" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000595" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1668" name="DisposeDuringFeedback_DoesNotLeaveCallbacksOrThrow" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.DisposeDuringFeedback_DoesNotLeaveCallbacksOrThrow" methodname="DisposeDuringFeedback_DoesNotLeaveCallbacksOrThrow" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1698614599" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000684" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1670" name="DuplicateIdWithDifferentPayload_AndLateBatchAreRejected" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.DuplicateIdWithDifferentPayload_AndLateBatchAreRejected" methodname="DuplicateIdWithDifferentPayload_AndLateBatchAreRejected" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="2030591133" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000576" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1653" name="EmptyAmmoAndInvalidGrip_DoNotConsume" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.EmptyAmmoAndInvalidGrip_DoNotConsume" methodname="EmptyAmmoAndInvalidGrip_DoNotConsume" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="2043183214" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000517" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1656" name="HitAndShotIds_AreIdempotent_CorpsePersists" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.HitAndShotIds_AreIdempotent_CorpsePersists" methodname="HitAndShotIds_AreIdempotent_CorpsePersists" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1097987946" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000786" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1655" name="LargeTickMatchesSmallTicks_AndDoesNotAttackBeforeDiscovery" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.LargeTickMatchesSmallTicks_AndDoesNotAttackBeforeDiscovery" methodname="LargeTickMatchesSmallTicks_AndDoesNotAttackBeforeDiscovery" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1214991218" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000472" asserts="0">
+                <properties />
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1661" name="LifecycleCancelsReloadAndAttacks" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.LifecycleCancelsReloadAndAttacks" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.001350" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1658" name="LifecycleCancelsReloadAndAttacks(Paused)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.LifecycleCancelsReloadAndAttacks(Paused)" methodname="LifecycleCancelsReloadAndAttacks" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1494687759" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000378" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1659" name="LifecycleCancelsReloadAndAttacks(Completed)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.LifecycleCancelsReloadAndAttacks(Completed)" methodname="LifecycleCancelsReloadAndAttacks" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="798213099" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000146" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1660" name="LifecycleCancelsReloadAndAttacks(Cancelled)" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.LifecycleCancelsReloadAndAttacks(Cancelled)" methodname="LifecycleCancelsReloadAndAttacks" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1090462512" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000094" asserts="0">
+                  <properties />
+                </test-case>
+              </test-suite>
+              <test-case id="1665" name="NewSessionInvalidatesOldFactsAndDisposalStopsNotifications" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.NewSessionInvalidatesOldFactsAndDisposalStopsNotifications" methodname="NewSessionInvalidatesOldFactsAndDisposalStopsNotifications" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="518351281" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000257" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1671" name="OldShotCannotPenetrateMultipleEnemies_AndInvalidStartPreservesSession" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.OldShotCannotPenetrateMultipleEnemies_AndInvalidStartPreservesSession" methodname="OldShotCannotPenetrateMultipleEnemies_AndInvalidStartPreservesSession" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1094233571" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000793" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1666" name="PostureShoulderAndCornerAreServiceState" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.PostureShoulderAndCornerAreServiceState" methodname="PostureShoulderAndCornerAreServiceState" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1294940759" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000936" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1667" name="TerminalSnapshotIsImmutable_WhenTrackingChanges" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.TerminalSnapshotIsImmutable_WhenTrackingChanges" methodname="TerminalSnapshotIsImmutable_WhenTrackingChanges" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1524636707" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000363" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1662" name="TrackingLossSuspendsAttacksAndRequiresNewPerception" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.TrackingLossSuspendsAttacksAndRequiresNewPerception" methodname="TrackingLossSuspendsAttacksAndRequiresNewPerception" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="305642192" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000247" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1657" name="UnknownShotAndInvalidInput_DoNotPublishOrChange" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.UnknownShotAndInvalidInput_DoNotPublishOrChange" methodname="UnknownShotAndInvalidInput_DoNotPublishOrChange" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1392779029" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000407" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1669" name="UnrepresentableDamageAndClock_AreRejected" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.UnrepresentableDamageAndClock_AreRejected" methodname="UnrepresentableDamageAndClock_AreRejected" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1535200008" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000279" asserts="0">
+                <properties />
+              </test-case>
+              <test-case id="1654" name="VisibleRangeAngle_AndOcclusionGateAttacks" fullname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests.VisibleRangeAngle_AndOcclusionGateAttacks" methodname="VisibleRangeAngle_AndOcclusionGateAttacks" classname="VRShooting.Tests.EditMode.Screen23_CombatCoreTests" runstate="Runnable" seed="1542445475" result="Passed" start-time="2026-11-15 09:51:31Z" end-time="2026-11-15 09:51:31Z" duration="0.000416" asserts="0">
+                <properties />
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

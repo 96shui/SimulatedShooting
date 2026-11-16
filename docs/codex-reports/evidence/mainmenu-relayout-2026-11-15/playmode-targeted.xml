@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="10" result="Passed" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.4770985">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="322" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.477099" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <test-suite type="Assembly" id="1383" name="VRShooting.Runtime.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.PlayModeTests.dll" runstate="Runnable" testcasecount="108" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.470186" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="14780" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1384" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="108" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.469236" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1385" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="108" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.468458" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1386" name="PlayMode" fullname="VRShooting.Tests.PlayMode" runstate="Runnable" testcasecount="108" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.467864" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestSuite" id="1387" name="UI" fullname="VRShooting.Tests.PlayMode.UI" runstate="Runnable" testcasecount="75" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.466949" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="1299" name="Screen02_04_MainMenuZeroingBriefingUITests" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.465398" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1308" name="Bdd02_ControlsPanelOpensAndClosesWithoutLeavingMenu" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd02_ControlsPanelOpensAndClosesWithoutLeavingMenu" methodname="Bdd02_ControlsPanelOpensAndClosesWithoutLeavingMenu" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="2001512314" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.352775" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1303" name="Bdd04_BriefingPickupPromptStaysBelowFrameAndAboveStationStatus" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd04_BriefingPickupPromptStaysBelowFrameAndAboveStationStatus" methodname="Bdd04_BriefingPickupPromptStaysBelowFrameAndAboveStationStatus" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="146445734" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.027429" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1309" name="Screen02_CreatorsEntryAndPanelAreAbsentAndNavigationRemainsUsable" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_CreatorsEntryAndPanelAreAbsentAndNavigationRemainsUsable" methodname="Screen02_CreatorsEntryAndPanelAreAbsentAndNavigationRemainsUsable" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1902428391" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.010431" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1300" name="Screen02_InputInfrastructure_SupportsDesktopAndXrPointers" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_InputInfrastructure_SupportsDesktopAndXrPointers" methodname="Screen02_InputInfrastructure_SupportsDesktopAndXrPointers" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1061665618" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.007258" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1302" name="Screen02_MainMenuOpenZeroingButton_RoutesToZeroingBriefing" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_MainMenuOpenZeroingButton_RoutesToZeroingBriefing" methodname="Screen02_MainMenuOpenZeroingButton_RoutesToZeroingBriefing" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1935485485" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.006758" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1301" name="Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton" methodname="Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="865367573" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.015953" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1307" name="Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist" methodname="Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1047512879" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.005472" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1304" name="Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu" methodname="Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="681087632" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.006133" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1305" name="Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup" methodname="Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="179878215" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.017831" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1306" name="Screen04_ZeroingBriefingStartButton_IsIdempotentForRepeatedClicks" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingStartButton_IsIdempotentForRepeatedClicks" methodname="Screen04_ZeroingBriefingStartButton_IsIdempotentForRepeatedClicks" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="446617482" result="Passed" start-time="2026-11-15 09:28:00Z" end-time="2026-11-15 09:28:00Z" duration="0.007592" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

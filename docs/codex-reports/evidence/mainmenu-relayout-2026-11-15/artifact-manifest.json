@@ -1,0 +1,100 @@
+[
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/baseline-comparison.json",
+    "bytes": 479263,
+    "sha256": "fe3949cabf92bb534b38714c5281d53ad778597b8995cb882cbab8d49868d3b9"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/baseline-editmode.xml",
+    "bytes": 298654,
+    "sha256": "b92c3dd32d0c33b786c4e3806fb02571c80359c50aaade7905f61bdbad57d213"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/baseline-playmode.xml",
+    "bytes": 288096,
+    "sha256": "6c66453773a582cae5b9f3bc8f2319ffd40f04b3efa70d6630dd270aafddd127"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/capture-gallery.ps1",
+    "bytes": 1245,
+    "sha256": "00d07c4a1990838c05e91d2c9a7d63f9695014f0d6dedce1e36d2cc8e1f9dfc8"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/cleanup.json",
+    "bytes": 5376,
+    "sha256": "6afc6ca746739a70923c67df9df0752777db7f8454c213f66ad690ec626bba4b"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/compare-tests.py",
+    "bytes": 3810,
+    "sha256": "cc9ce98a1d6e90d9687d3fe3530b9d662d8057cb4a2aa75ca44fad48cdc3ee2a"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/editmode-full.xml",
+    "bytes": 299885,
+    "sha256": "cec2a0d21a66cc08e55dc1c3d283ced860304d1d35254c8781e6f415d396755b"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/editmode-targeted.xml",
+    "bytes": 8238,
+    "sha256": "57fe5ef333f440be3f14dbcac1264993154d114133b6734313299c8b52d27a2f"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/fullname-comparison.csv",
+    "bytes": 237386,
+    "sha256": "ebdf494f985dd408897072d103e49e83b00ef53347dbabe069eaff9c76ff9022"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/gallery-inspection.txt",
+    "bytes": 1430,
+    "sha256": "936dcbe64bfe4362c2f9f0d315339e118898ad810fce406791b39c9fec28a52b"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/MainMenuRelayoutEvidence.cs.txt",
+    "bytes": 4792,
+    "sha256": "ba2d62fd1bf727051d9777f3d196f6c9499f8632eeb35d733897260f85de805b"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/make-closeup.py",
+    "bytes": 707,
+    "sha256": "d59bc07518a99089d5308df6461385f74c6f5e10473df8cf9c98d5f67276d0eb"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/playmode-full.xml",
+    "bytes": 288121,
+    "sha256": "4e8e5ca774d796dad490d32f901d6618a5ddfb5ef60324880c197f3b0b90a812"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/playmode-targeted.xml",
+    "bytes": 10593,
+    "sha256": "1fe2d51c7a01ef065cdcdc659ce7b343460d224e4fd6b796df4e73ec01d1a8ae"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/run-unity.ps1",
+    "bytes": 791,
+    "sha256": "29222f3a02cbd7805f49e9d674ca8dfed1b6239cfa1fadac96c7dbd982a7c0d4"
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/Screen_MainMenu.png",
+    "bytes": 2391602,
+    "sha256": "95fa614c748da70a463edac3e4647d23e7f9f24644c442a18fc486bef7cd021d",
+    "dimensions": [
+      1920,
+      1080
+    ]
+  },
+  {
+    "path": "docs/codex-reports/evidence/mainmenu-relayout-2026-11-15/Screen_MainMenu_Closeup.png",
+    "bytes": 780378,
+    "sha256": "cfd8fc03e0f012973a9fcf8c8a56e145d20230a242ad702ca678cb22f6053469",
+    "dimensions": [
+      1920,
+      1080
+    ]
+  },
+  {
+    "path": "docs/codex-reports/mainmenu-relayout-2026-11-15.md",
+    "bytes": 18992,
+    "sha256": "f3b2c7c72ce6a8db7e1db319e1b3ed54556919c5376d3a6d16f291efd82debf5"
+  }
+]

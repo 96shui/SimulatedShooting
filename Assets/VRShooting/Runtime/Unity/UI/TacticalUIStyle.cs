@@ -37,7 +37,8 @@ namespace VRShooting.Unity.UI
             foreach (var image in root.GetComponentsInChildren<Image>(true))
             {
                 var id = image.name;
-                if ((id.StartsWith("Panel_") || (id.StartsWith("Hud_") && id.EndsWith("_Image"))) && image.GetComponent<Button>() == null && image.color.a > 0)
+                // The menu heading keeps the fill and border supplied by AddPanel.
+                if (id != "Panel_MainMenu_Menu" && (id.StartsWith("Panel_") || (id.StartsWith("Hud_") && id.EndsWith("_Image"))) && image.GetComponent<Button>() == null && image.color.a > 0)
                 {
                     image.sprite = Sprite(image.rectTransform.rect.height < 140 ? "hud_capsule" : "panel_holo_large");
                     image.type = Image.Type.Sliced;
@@ -76,7 +77,7 @@ namespace VRShooting.Unity.UI
                 if (!button.name.StartsWith("Button_")) continue;
                 var image = button.targetGraphic as Image;
                 if (image == null) continue;
-                var primary = button.name.Contains("Start") || button.name.Contains("Confirm") || button.name.Contains("SelectMap") || button.name.Contains("Continue") || button.name.Contains("OpenZeroing") || button.name.Contains("Retry");
+                var primary = button.name.Contains("Start") || button.name.Contains("Confirm") || button.name.Contains("SelectMap") || button.name.Contains("Continue") || button.name.Contains("Retry");
                 StyleButton(button, primary);
             }
         }

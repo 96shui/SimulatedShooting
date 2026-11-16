@@ -1,0 +1,50 @@
+{
+  "restored": [
+    "Assets/Resources/UI/Tactical/TrainingChinese.asset",
+    "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Prefabs/Interactors/Teleport Interactor.prefab",
+    "Assets/Samples/XR Interaction Toolkit/3.1.2/Starter Assets/Prefabs/XR Origin (XR Rig).prefab",
+    "Assets/VRTemplateAssets/Prefabs/Setup/Complete XR Origin Set Up Variant.prefab",
+    "Assets/XR/Settings/Open XR Package Settings.asset",
+    "docs/codex-reports/evidence/main-menu-hand-occlusion-20261023/main-menu-after-tracked.png",
+    "docs/codex-reports/evidence/main-menu-hand-occlusion-20261023/main-menu-after-untracked.png",
+    "docs/codex-reports/evidence/mode1-brief-results-labels-2026-11-12/03-Trench-held-rifle-no-labels.png",
+    "docs/codex-reports/evidence/mode1-brief-results-labels-2026-11-12/03-Urban-held-rifle-no-labels.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/Trench-B-right-shoulder-right-rear-left-front.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/Urban-B-left-shoulder-left-rear-right-front.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/Urban-B-right-shoulder-right-rear-left-front.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/urban-enemy-aim-and-fire.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/urban-health-10.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/urban-health-after-hit-9.png",
+    "docs/codex-reports/evidence/mode4-ai-shoulder-2026-11-12/urban-teammate-grenade-explosion.png",
+    "docs/codex-reports/evidence/range-restore-urban-20261023/urban-building-corner.png",
+    "docs/codex-reports/evidence/range-restore-urban-20261023/urban-desktop-pickup.png",
+    "docs/codex-reports/evidence/range-restore-urban-20261023/urban-vr-pickup.png",
+    "docs/codex-reports/evidence/round6-2026-11-14/grenade-no-enemy-player-forward.png",
+    "docs/codex-reports/evidence/round6-2026-11-14/left-shoulder-forward.png",
+    "docs/codex-reports/evidence/round6-2026-11-14/trench-hud-30-120.png",
+    "docs/codex-reports/evidence/round6-2026-11-14/urban-hud-30-120.png",
+    "docs/codex-reports/evidence/vr-mechanical-sight-20261023/vr-substitute-mechanical-sight.png",
+    "Evidence/P3-production-M67-in-flight.png"
+  ],
+  "removed_new_batch_files": [],
+  "protected_mainmenu_sha256": {
+    "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs": "bd3c6968857e62510245dd009348c03909309a2d452da380fba4519a0445acea",
+    "Assets/VRShooting/Runtime/Unity/UI/TacticalUIStyle.cs": "e73302464eb3a47b15aa351ea80b7faed62fddb2920ca7314104526896c93c77",
+    "Assets/VRShooting/Tests/EditMode/Application/MainMenuControlsTests.cs": "0c78a67a4a095e03428e4151829aa6e481dd50185875091e08821753b6ea7f0c",
+    "Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs": "a54a0b9af5ffd5fd470cbb634a018018eebbd43a44a7e50633ffbcd7ef743408",
+    "docs/BDD/screens/02-游戏主界面.feature.md": "8c1c26f419102af4fc0fa7d3e02a3436f0b988468b2e13631625af35121c5d90",
+    "docs/任务规格/阶段一-P1-100m射校原型闭环/UI/task008-ui-mainmenu-zeroing-briefing.md": "3a4808b6623b50095dcf120714e90c9748f97719ada913ebcb52f1dff3957e31",
+    "docs/接口文档/01-页面导航与UI事件.md": "250bb37eb9ffd4e8cca5351e948111a106af6da1a46d7e601e6ede3a8a035d11"
+  },
+  "old_evidence_identical": true,
+  "preserved_init_test_scenes": [
+    "Assets/InitTestScene639252044744999923.unity",
+    "Assets/InitTestScene639252044744999923.unity.meta",
+    "Assets/InitTestScene639253514584773890.unity",
+    "Assets/InitTestScene639253514584773890.unity.meta",
+    "Assets/InitTestScene639271113773156361.unity",
+    "Assets/InitTestScene639271113773156361.unity.meta",
+    "Assets/InitTestScene639271128085681542.unity",
+    "Assets/InitTestScene639271128085681542.unity.meta"
+  ]
+}

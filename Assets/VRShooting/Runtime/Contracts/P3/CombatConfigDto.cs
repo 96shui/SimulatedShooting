@@ -13,6 +13,11 @@ namespace VRShooting.Common
         public float EnemyAttackInterval { get; init; }
         public float EnemyRange { get; init; }
         public float EnemyHalfViewAngle { get; init; }
+        public float EnemyVerticalTolerance { get; init; }
+        public float EnemyHeadSampleHeight { get; init; }
+        public float EnemyChestSampleHeight { get; init; }
+        public float EnemyFootSampleHeight { get; init; }
+        public float EnemyTurnSpeedDegrees { get; init; }
         public float StandingSpeed { get; init; }
         public float CrouchingSpeed { get; init; }
         public float ProneSpeed { get; init; }
@@ -45,6 +50,11 @@ namespace VRShooting.Common
             EnemyAttackInterval = 1f,
             EnemyRange = 30f,
             EnemyHalfViewAngle = 60f,
+            EnemyVerticalTolerance = 2.5f,
+            EnemyHeadSampleHeight = 1.65f,
+            EnemyChestSampleHeight = 1.2f,
+            EnemyFootSampleHeight = .15f,
+            EnemyTurnSpeedDegrees = 180f,
             StandingSpeed = 1.5f,
             CrouchingSpeed = 0.9f,
             ProneSpeed = 0.4f,
@@ -84,6 +94,13 @@ namespace VRShooting.Common
             if (!Positive(EnemyAttackInterval)) return Invalid(nameof(EnemyAttackInterval));
             if (!Positive(EnemyRange)) return Invalid(nameof(EnemyRange));
             if (!Positive(EnemyHalfViewAngle)) return Invalid(nameof(EnemyHalfViewAngle));
+            if (!Positive(EnemyVerticalTolerance)) return Invalid(nameof(EnemyVerticalTolerance));
+            if (!Positive(EnemyHeadSampleHeight)) return Invalid(nameof(EnemyHeadSampleHeight));
+            if (!Positive(EnemyChestSampleHeight)) return Invalid(nameof(EnemyChestSampleHeight));
+            if (!Positive(EnemyFootSampleHeight)) return Invalid(nameof(EnemyFootSampleHeight));
+            if (!Positive(EnemyTurnSpeedDegrees)) return Invalid(nameof(EnemyTurnSpeedDegrees));
+            if (EnemyHeadSampleHeight <= EnemyChestSampleHeight || EnemyChestSampleHeight <= EnemyFootSampleHeight)
+                return Invalid("enemy sample heights");
             if (!Positive(StandingSpeed)) return Invalid(nameof(StandingSpeed));
             if (!Positive(CrouchingSpeed)) return Invalid(nameof(CrouchingSpeed));
             if (!Positive(ProneSpeed)) return Invalid(nameof(ProneSpeed));
@@ -115,15 +132,28 @@ namespace VRShooting.Common
         }
 
         // Value-copy helper used by data editors and parameterized fixtures.
-        public CombatConfigDto WithPlayerHealth(float health) => new CombatConfigDto
+        public CombatConfigDto WithPlayerHealth(float health) => Copy(health, EnemyRange, EnemyVerticalTolerance,
+            EnemyHeadSampleHeight, EnemyChestSampleHeight, EnemyFootSampleHeight, EnemyTurnSpeedDegrees);
+
+        public CombatConfigDto WithEnemyVision(float range, float verticalTolerance, float headSampleHeight,
+            float chestSampleHeight, float footSampleHeight, float turnSpeedDegrees)
+            => Copy(PlayerHealth, range, verticalTolerance, headSampleHeight, chestSampleHeight, footSampleHeight, turnSpeedDegrees);
+
+        CombatConfigDto Copy(float health, float range, float verticalTolerance, float headSampleHeight,
+            float chestSampleHeight, float footSampleHeight, float turnSpeedDegrees) => new CombatConfigDto
         {
             PlayerHealth = health,
             EnemyHealth = EnemyHealth,
             PlayerBulletDamage = PlayerBulletDamage,
             EnemyDamage = EnemyDamage,
             EnemyAttackInterval = EnemyAttackInterval,
-            EnemyRange = EnemyRange,
+            EnemyRange = range,
             EnemyHalfViewAngle = EnemyHalfViewAngle,
+            EnemyVerticalTolerance = verticalTolerance,
+            EnemyHeadSampleHeight = headSampleHeight,
+            EnemyChestSampleHeight = chestSampleHeight,
+            EnemyFootSampleHeight = footSampleHeight,
+            EnemyTurnSpeedDegrees = turnSpeedDegrees,
             StandingSpeed = StandingSpeed,
             CrouchingSpeed = CrouchingSpeed,
             ProneSpeed = ProneSpeed,

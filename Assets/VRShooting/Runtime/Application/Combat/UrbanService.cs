@@ -156,8 +156,8 @@ namespace VRShooting.Application.Combat
             {var arrival=squad.ValidateArrival(input);if(!arrival.Success)return arrival;}
             else
             {
-                if(input.Kind==CombatInputKind.Perception&&input.Flag&&enemies.TryGetValue(input.EntityId,out var enemy)&&
-                    enemy.RoomId.Length>0&&!rooms[enemy.RoomId].Open)return Fail<Unit>(ErrorCode.InvalidState);
+                // Room registration describes interaction progress, not physical line of sight.
+                // The player can already be inside a closed room or see through another entrance.
                 var accepted=core.Submit(input);if(accepted.Success)received.Add(input.EventId,input);return accepted;
             }
             received.Add(input.EventId,input);pending.Add(input);return Ok();

@@ -96,12 +96,13 @@ namespace SimulatedShooting.Scene
             Audio.minDistance=8f;Audio.maxDistance=65f;Audio.dopplerLevel=0f;Audio.priority=32;
         }
 
-        public void TurnTowards(Vector3 target,float seconds)
+        public void TurnTowards(Vector3 target,float seconds,float? speedDegrees=null)
         {
             if(actionsLocked||IsDead||seconds<=0)return;
             var direction=target-transform.position;direction.y=0;
             if(direction.sqrMagnitude<.0001f)return;
-            transform.rotation=Quaternion.RotateTowards(transform.rotation,Quaternion.LookRotation(direction),180f*seconds);
+            transform.rotation=Quaternion.RotateTowards(transform.rotation,Quaternion.LookRotation(direction),
+                (speedDegrees??VRShooting.Common.CombatConfigDto.Default.EnemyTurnSpeedDegrees)*seconds);
         }
 
         public void MatchVisualToTerrain(Terrain terrain)

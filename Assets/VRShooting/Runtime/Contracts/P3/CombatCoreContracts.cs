@@ -89,6 +89,7 @@ namespace VRShooting.Application
 {
     public interface ICombatCoreService : ICombatWorldInputPort, ICombatGrenadeExplosionPort, IDisposable
     {
+        CombatConfigDto Config { get; }
         ServiceResult<CombatCoreSnapshotDto> Start(string sessionId, TrainingMode mode, IReadOnlyList<CombatEntityVisualDto> enemies);
         ServiceResult<CombatCoreSnapshotDto> GetSnapshot(string sessionId);
         ServiceResult<Unit> SetState(string sessionId, SessionState state);

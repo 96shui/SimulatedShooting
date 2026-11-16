@@ -42,6 +42,40 @@ namespace VRShooting.Unity.UI
         }
     }
 
+    /// <summary>Texture-free heading stroke, so cyan sprite pixels cannot tint the orange border.</summary>
+    [ExecuteAlways, RequireComponent(typeof(CanvasRenderer))]
+    public sealed class MainMenuHeadingBorderGraphic : MaskableGraphic
+    {
+        protected override void OnPopulateMesh(VertexHelper vh)
+        {
+            vh.Clear();
+            var rect = GetPixelAdjustedRect();
+            const float inset = 2f, bevel = 20f, halfWidth = 1f;
+            var left = rect.xMin + inset;
+            var right = rect.xMax - inset;
+            var bottom = rect.yMin + inset;
+            var top = rect.yMax - inset;
+            var points = new[] { new Vector2(left + bevel, top), new Vector2(right - bevel, top),
+                new Vector2(right, top - bevel), new Vector2(right, bottom + bevel),
+                new Vector2(right - bevel, bottom), new Vector2(left + bevel, bottom),
+                new Vector2(left, bottom + bevel), new Vector2(left, top - bevel) };
+            for (var i = 0; i < points.Length; i++)
+            {
+                var a = points[i];
+                var b = points[(i + 1) % points.Length];
+                var direction = (b - a).normalized;
+                var normal = new Vector2(-direction.y, direction.x) * halfWidth;
+                var start = vh.currentVertCount;
+                vh.AddVert(a - normal, color, Vector2.zero);
+                vh.AddVert(a + normal, color, Vector2.zero);
+                vh.AddVert(b + normal, color, Vector2.zero);
+                vh.AddVert(b - normal, color, Vector2.zero);
+                vh.AddTriangle(start, start + 1, start + 2);
+                vh.AddTriangle(start, start + 2, start + 3);
+            }
+        }
+    }
+
     [Flags]
     public enum TrainingUIScreenGroup
     {
@@ -529,21 +563,21 @@ namespace VRShooting.Unity.UI
 
             AddPanel(parent, "Panel_MainMenu_Profile", new Vector2(120, 165), new Vector2(630, 325), new Color32(17, 29, 24, 220), new Color32(56, 84, 71, 255),
                 "本地训练\n循序训练 · 安全操作 · 精准射击");
-            AddPanel(parent, "Panel_MainMenu_Menu", new Vector2(1360, 805), new Vector2(1750, 865), new Color32(17, 29, 24, 230), new Color32(56, 84, 71, 255), "选择训练科目");
+            var controlsButton = AddButton(parent, "Button_MainMenu_Controls", "操作介绍", new Vector2(1360, 780), new Vector2(1750, 865), false);
+            controlsButton.onClick.AddListener(() => mainMenuControlsPanel.gameObject.SetActive(true));
 
-            openZeroingButton = AddButton(parent, "Button_MainMenu_OpenZeroing", "01   100m 精度射校靶", new Vector2(1360, 665), new Vector2(1750, 750), true);
+            AddPanel(parent, "Panel_MainMenu_Menu", new Vector2(1360, 667), new Vector2(1750, 737), new Color32(17, 29, 24, 230), new Color32(247, 185, 85, 255), "选择训练科目");
+
+            openZeroingButton = AddButton(parent, "Button_MainMenu_OpenZeroing", "01   100m 精度射校靶", new Vector2(1360, 539), new Vector2(1750, 624), false);
             openZeroingButton.onClick.AddListener(OnOpenZeroingClicked);
 
-            openMovingTargetButton = AddButton(parent, "Button_MainMenu_OpenMovingTarget", "02   移动目标射击", new Vector2(1360, 535), new Vector2(1750, 620), false);
+            openMovingTargetButton = AddButton(parent, "Button_MainMenu_OpenMovingTarget", "02   移动目标射击", new Vector2(1360, 411), new Vector2(1750, 496), false);
             openMovingTargetButton.onClick.AddListener(OnOpenMovingTargetClicked);
-            var trenchButton = AddButton(parent, "Button_MainMenu_Trench", "03   堑壕射击", new Vector2(1360, 405), new Vector2(1750, 490), false);
-            var urbanButton = AddButton(parent, "Button_MainMenu_Urban", "04   城镇攻防", new Vector2(1360, 275), new Vector2(1750, 360), false);
+            var trenchButton = AddButton(parent, "Button_MainMenu_Trench", "03   堑壕射击", new Vector2(1360, 283), new Vector2(1750, 368), false);
+            var urbanButton = AddButton(parent, "Button_MainMenu_Urban", "04   城镇攻防", new Vector2(1360, 155), new Vector2(1750, 240), false);
             trenchButton.interactable = urbanButton.interactable = services.CombatScenesAvailable;
             trenchButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Trench));
             urbanButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Urban));
-
-            var controlsButton = AddButton(parent, "Button_MainMenu_Controls", "操作介绍", new Vector2(1360, 155), new Vector2(1750, 225), false);
-            controlsButton.onClick.AddListener(() => mainMenuControlsPanel.gameObject.SetActive(true));
 
             AddPanel(parent, "Panel_MainMenu_BottomStatus", new Vector2(120, 55), new Vector2(1800, 115), new Color32(17, 29, 24, 210), new Color32(56, 84, 71, 255),
                 "单机训练                                     选择科目后查看任务简报");
@@ -1670,7 +1704,17 @@ namespace VRShooting.Unity.UI
             {
                 ApplySlicedSprite(image, panelSprite);
             }
-            else
+            // BDD02: retain the heading's explicit panel fill/stroke with the resolved sprite.
+            if (id == "Panel_MainMenu_Menu")
+            {
+                image.color = fill;
+                image.raycastTarget = false;
+                var borderRect = CreateRect("Image_MainMenu_MenuBorder", panel, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+                var border = borderRect.gameObject.AddComponent<MainMenuHeadingBorderGraphic>();
+                border.color = stroke;
+                border.raycastTarget = false;
+            }
+            if (panelSprite == null || id == "Panel_MainMenu_Menu")
             {
                 var outline = panel.gameObject.AddComponent<Outline>();
                 outline.effectColor = stroke;

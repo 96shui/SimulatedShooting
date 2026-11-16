@@ -1,0 +1,117 @@
+[
+  {
+    "name": "baseline-comparison.json",
+    "bytes": 15445,
+    "sha256": "60de572eb97b1333cfa80cf438c9c2fa41e3a04c5dda9bf55ff1e78ed9acb387"
+  },
+  {
+    "name": "cleanup-output.txt",
+    "bytes": 3885,
+    "sha256": "e14ea1e2b5805be93d5fc363c1f9feba575c30b1654480193988ac6e42730f53"
+  },
+  {
+    "name": "cleanup.json",
+    "bytes": 3883,
+    "sha256": "be60fd09e6b5a873824bb41bacc8a3947c27244b4fdff931e868bdda917cea97"
+  },
+  {
+    "name": "compare-tests.py",
+    "bytes": 3404,
+    "sha256": "ab910c2b1034188cdf91a8addde265073a17f798470c6d88a2b7dfd8fd6285da"
+  },
+  {
+    "name": "diagnostic-keyframes.log",
+    "bytes": 4454,
+    "sha256": "e53cfc429e9d3d232e89f0abf4755edac9dcd438a2b9adb986104ed6cb6486df"
+  },
+  {
+    "name": "editmode-full.log",
+    "bytes": 273842,
+    "sha256": "036a5914e03123055932f7f643f948fbd554541340581a82a96df82eac0510e7"
+  },
+  {
+    "name": "editmode-full.xml",
+    "bytes": 308411,
+    "sha256": "e85144c902bbca554df47fd9c0cc17c4721705150f4f2cc80c4cc1063728f6cb"
+  },
+  {
+    "name": "editmode-targeted.log",
+    "bytes": 212667,
+    "sha256": "fef1f30e8d5fbe5533a80a950973af78089175a85f1b03aae2c9321ca341af29"
+  },
+  {
+    "name": "editmode-targeted.xml",
+    "bytes": 31995,
+    "sha256": "d60220e2fc3a98b81bb684545ff014fe5d370fd99ec39795d9a26caf75e1860b"
+  },
+  {
+    "name": "extract-diagnostics.py",
+    "bytes": 2146,
+    "sha256": "fa3af8f654b1414909a6a9a3339e517e093a71d24f1019c053752c7b92a54d28"
+  },
+  {
+    "name": "fullname-comparison.csv",
+    "bytes": 112668,
+    "sha256": "53fd2989ad2fe03c09ea2b161467308874a618c24033e247297ea33e2c49d197"
+  },
+  {
+    "name": "playmode-full.log",
+    "bytes": 3030868,
+    "sha256": "1e57b85c96d4140fe9cf22b243abab40c15269d8240fd0f63b19e64c0aa815b2"
+  },
+  {
+    "name": "playmode-full.xml",
+    "bytes": 426234,
+    "sha256": "8c9591ec837ab0b821ed407f2d0ef03542aa7319bf6f51ba5aa0b4868ca45939"
+  },
+  {
+    "name": "repro-before.log",
+    "bytes": 359765,
+    "sha256": "1a866efc06fdc5f4bee3c3c3c84e83fcd7bad904adc9c83fdf52183069b8af1f"
+  },
+  {
+    "name": "repro-before.xml",
+    "bytes": 11830,
+    "sha256": "d14072cfb09a932739fc3db51d3c3f4e893a8d11ea37fb4caacae815fc497da6"
+  },
+  {
+    "name": "repro-gates-before.log",
+    "bytes": 461398,
+    "sha256": "5f1e75ca2b1d94565c006b5b348c4d65cfa69f098a7b3ab37cd74fcae73bfcaf"
+  },
+  {
+    "name": "repro-gates-before.xml",
+    "bytes": 22877,
+    "sha256": "9b53ced411ca06174425e98e511c49535c9054e97e7a04a76d98a691a1f8346f"
+  },
+  {
+    "name": "restore-batch-artifacts.py",
+    "bytes": 4321,
+    "sha256": "15d2be2713b596394325c9c239453a6d3b8072a0ba2ba33407c5da027fff6107"
+  },
+  {
+    "name": "room11-room12-after.log",
+    "bytes": 131724,
+    "sha256": "8f503dce47398f87e17db1ee2064847194ae04f2cea9a459f592eeb2a989bfc3"
+  },
+  {
+    "name": "room11-room12-before.log",
+    "bytes": 17048,
+    "sha256": "05153389c21b4d2aa1863ba1582876bca730534ba753493d9de69666fe88763c"
+  },
+  {
+    "name": "run-unity.ps1",
+    "bytes": 770,
+    "sha256": "291f968939742ab2961556270e04b0867baba75df1ab2339d5bc7b50efa895bf"
+  },
+  {
+    "name": "targeted-after.log",
+    "bytes": 2236015,
+    "sha256": "d69e7cba123f2fbeaed11487cbea79a2abf97793a307cdf9bac218abcc7cd8c1"
+  },
+  {
+    "name": "targeted-after.xml",
+    "bytes": 144826,
+    "sha256": "f5c7b9b1b1a5adff5e814b1dd9ecf973b45eab0c7f7067fec5a67351575796ef"
+  }
+]
