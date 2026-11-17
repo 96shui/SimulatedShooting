@@ -1,3 +1,4 @@
+using VRShooting.Tests.PlayMode;
 using System.Collections;
 using System.Linq;
 using NUnit.Framework;
@@ -416,7 +417,9 @@ namespace SimulatedShooting.Tests.PlayMode
             app=GameMain.Instance.Services.Combat;
             ui=GameMain.Instance.GetComponent<P3LiveUIController>().View;
             var button=Object.FindObjectsOfType<Button>(true).Single(b=>b.name=="Button_MainMenu_"+(mode==TrainingMode.Trench?"Trench":"Urban"));
-            Assert.That(button.interactable,Is.True);button.onClick.Invoke();
+            Assert.That(button.interactable,Is.True);
+            ModeIntroTestActions.EnterTraining(id => Object.FindObjectsOfType<Button>(true).Single(b => b.name == id),
+                mode == TrainingMode.Trench ? "Trench" : "Urban");
             if(mode==TrainingMode.Trench)ui.TrenchMapView.SelectButton.onClick.Invoke();else ui.UrbanMapView.SelectButton.onClick.Invoke();
             float deadline=Time.realtimeSinceStartup+45;
             while(app.Snapshot.Busy&&Time.realtimeSinceStartup<deadline)yield return null;

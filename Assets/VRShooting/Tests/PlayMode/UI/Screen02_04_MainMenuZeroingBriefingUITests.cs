@@ -28,10 +28,17 @@ namespace VRShooting.Tests.PlayMode.UI
         ApplicationServices services;
         MainMenuUI ui;
 
-        [SetUp]
-        public void SetUp()
+        [UnitySetUp]
+        public IEnumerator SetUp()
         {
-            services = ApplicationServices.CreateDefault();
+            // Scene-flow fixtures can leave a persistent GameMain. This fixture supplies its own
+            // services and must not let the mode-two callback start a real scene load through it.
+            if (VRShooting.Unity.Bootstrap.GameMain.Instance != null)
+            {
+                Object.Destroy(VRShooting.Unity.Bootstrap.GameMain.Instance.gameObject);
+                yield return null;
+            }
+            services = ApplicationServices.CreateDefault(combatScenes: new VRShooting.P3.TestSupport.CombatApplicationFixture());
             root = new GameObject("Test_MainMenuUI", typeof(RectTransform));
             root.SetActive(false);
             ui = root.AddComponent<MainMenuUI>();
@@ -41,11 +48,13 @@ namespace VRShooting.Tests.PlayMode.UI
             root.SetActive(true);
             ui.Initialize(services);
             root.GetComponent<TrainingUICanvasAdapter>().SetVrModeForTests(false);
+            yield return null;
         }
 
         [UnityTearDown]
         public IEnumerator TearDown()
         {
+            services.Combat.Dispose();
             if (root != null)
             {
                 Object.Destroy(root);
@@ -142,7 +151,24 @@ namespace VRShooting.Tests.PlayMode.UI
                 result.gameObject == button.gameObject || result.gameObject.transform.IsChildOf(button.transform)), Is.True,
                 "The tracked XR ray should hit the 100m main-menu button or one of its graphics.");
 
+            ExecuteEvents.Execute(button.gameObject, eventData, ExecuteEvents.pointerEnterHandler);
+            Assert.That(button.image.overrideSprite, Is.SameAs(button.spriteState.highlightedSprite));
+            ExecuteEvents.Execute(button.gameObject, eventData, ExecuteEvents.pointerExitHandler);
+            Assert.That(button.image.overrideSprite, Is.SameAs(button.image.sprite));
             ExecuteEvents.Execute(button.gameObject, eventData, ExecuteEvents.pointerClickHandler);
+            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
+            yield return null;
+            Canvas.ForceUpdateCanvases();
+            ModeIntroTestActions.ConfirmIntroduction(FindButton, click: enter =>
+            {
+                var center = ((RectTransform)enter.transform).TransformPoint(((RectTransform)enter.transform).rect.center);
+                eventData.rayPoints = new List<Vector3> { vrCamera.transform.position,
+                    vrCamera.transform.position + (center - vrCamera.transform.position).normalized * 5f };
+                results.Clear();
+                adapter.TrackedRaycaster.Raycast(eventData, results);
+                Assert.That(results.Any(hit => hit.gameObject == enter.gameObject), Is.True);
+                ExecuteEvents.Execute(enter.gameObject, eventData, ExecuteEvents.pointerClickHandler);
+            });
             yield return null;
 
             Assert.That(services.Router.Current, Is.EqualTo(ScreenId.ZeroingBriefing));
@@ -154,7 +180,7 @@ namespace VRShooting.Tests.PlayMode.UI
         {
             var button = FindButton("Button_MainMenu_OpenZeroing");
 
-            button.onClick.Invoke();
+            ModeIntroTestActions.EnterTraining(FindButton);
             yield return null;
 
             Assert.AreEqual(ScreenId.ZeroingBriefing, services.Router.Current);
@@ -166,7 +192,7 @@ namespace VRShooting.Tests.PlayMode.UI
         [UnityTest]
         public IEnumerator Bdd04_BriefingPickupPromptStaysBelowFrameAndAboveStationStatus()
         {
-            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
+            ModeIntroTestActions.EnterTraining(FindButton);
             yield return null;
             var prompt = (RectTransform)FindById("Training.Shared.PickupPrompt").transform;
             var station = (RectTransform)FindById("Training.Shared.FiringStationState").transform;
@@ -272,56 +298,178 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(FindById("Text_MainMenu_Subtitle").GetComponent<TMP_Text>().text, Is.EqualTo("战术训练中心"));
             Assert.That(FindById("Text_MainMenu_BottomStatus").GetComponent<TMP_Text>().text,
                 Is.EqualTo("单机训练" + new string(' ', 37) + "选择科目后查看任务简报"));
-            var panel = FindById("Panel_MainMenu_Controls");
-            Assert.That(panel, Is.Not.Null);
-            Assert.That(panel.activeSelf, Is.False);
-            FindButton("Button_MainMenu_Controls").onClick.Invoke();
-            yield return null;
-            Assert.That(panel.activeInHierarchy, Is.True);
-            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
-            var copy = string.Join("\n", panel.GetComponentsInChildren<TMP_Text>(true).Select(t => t.text));
-            // BDD35: exact mode-two copy, including the unchanged next line.
-            Assert.That(copy, Does.Contain("双手据枪，采用“跟随射击”或“等待射击”的方式对目标进行射击。\n右扳机快速扣动起射两发，继续按住可逐发连射。"));
-            Assert.That(copy, Does.Contain("右手侧握键抓枪 / 主手握持；左手侧握键副手握持。"));
-            Assert.That(copy, Does.Not.Contain("Grip"));
-            CaptureControlsPanel();
-            FindButton("Button_MainMenu_Controls_Back").onClick.Invoke();
-            yield return null;
-            Assert.That(panel.activeSelf, Is.False);
-            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
+            Assert.That(FindById("Panel_MainMenu_Controls"), Is.Null);
+            Assert.That(FindById("Button_MainMenu_Controls"), Is.Null);
+            var entries = new[] { "OpenZeroing", "OpenMovingTarget", "Trench", "Urban" };
+            var modes = new[] { "Zeroing", "MovingTarget", "Trench", "Urban" };
+            var titles = new[] { "模式一 · 100m 精度射校", "模式二 · 移动目标射击", "模式三 · 堑壕射击", "模式四 · 城镇攻防" };
+            for (var i = 0; i < modes.Length; i++)
+            {
+                var mode = modes[i];
+                var panel = FindById("Screen_ModeIntro_" + mode);
+                Assert.That(panel.activeSelf, Is.False);
+                for (var repeat = 0; repeat < 3; repeat++)
+                {
+                    FindButton("Button_MainMenu_" + entries[i]).onClick.Invoke();
+                    yield return null;
+                    Assert.That(panel.activeInHierarchy, Is.True);
+                    Assert.That(FindById("Text_ModeIntro_" + mode + "_Title").GetComponent<TMP_Text>().text, Is.EqualTo(titles[i]));
+                    Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
+                    Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
+                    Assert.That(services.Presentation.Get(string.Empty).Success, Is.False);
+                    Assert.That(services.Combat.Snapshot.Mode, Is.Null);
+                    foreach (var side in new[] { "Left", "Right" })
+                    {
+                        var label = FindById("Text_ModeIntro_" + mode + "_" + side).GetComponent<TMP_Text>();
+                        Assert.That(label.text, Does.Not.Contain("Grip").And.Not.Contain("UI").And.Not.Contain("HUD"));
+                        label.ForceMeshUpdate();
+                        Assert.That(label.isTextOverflowing, Is.False);
+                    }
+                    FindButton("Button_ModeIntro_" + mode + "_Back").onClick.Invoke();
+                    yield return null;
+                    Assert.That(panel.activeSelf, Is.False);
+                    Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
+                    Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
+                    Assert.That(services.Combat.Snapshot.Mode, Is.Null);
+                }
+            }
         }
 
-        void CaptureControlsPanel()
+        [UnityTest]
+        public IEnumerator Bdd37_FourConfirmationsPreserveOriginalRoutesAndDoNotReplay()
         {
-            var canvas = root.GetComponent<Canvas>();
-            var mode = canvas.renderMode; var previousCamera = canvas.worldCamera;
-            var cameraRoot = new GameObject("ControlsEvidenceCamera");
-            var camera = cameraRoot.AddComponent<Camera>();
-            camera.enabled = false; camera.clearFlags = CameraClearFlags.SolidColor;
-            camera.backgroundColor = Color.black; camera.cullingMask = 1 << 31;
-            var parts = root.GetComponentsInChildren<Transform>(true);
-            var layers = parts.Select(part => part.gameObject.layer).ToArray();
-            var target = new RenderTexture(1920, 1080, 24);
-            var texture = new Texture2D(1920, 1080, TextureFormat.RGB24, false);
-            var previousActive = RenderTexture.active;
-            try
+            var entries = new[] { "OpenZeroing", "OpenMovingTarget", "Trench", "Urban" };
+            var targets = new[] { ScreenId.ZeroingBriefing, ScreenId.MovingTargetSettings, ScreenId.TrenchMapSelection, ScreenId.UrbanMapSelection };
+            for (var i = 0; i < entries.Length; i++)
             {
-                foreach (var part in parts) part.gameObject.layer = 31;
-                camera.targetTexture = target;
-                canvas.renderMode = RenderMode.ScreenSpaceCamera; canvas.worldCamera = camera; canvas.planeDistance = 1;
-                Canvas.ForceUpdateCanvases();
-                foreach (var label in root.GetComponentsInChildren<TMP_Text>()) label.ForceMeshUpdate();
-                camera.Render(); RenderTexture.active = target;
-                texture.ReadPixels(new Rect(0, 0, 1920, 1080), 0, 0); texture.Apply();
-                var folder = System.IO.Path.Combine(UnityEngine.Application.dataPath, "../Logs/CodexZeroingControls");
-                System.IO.Directory.CreateDirectory(folder);
-                System.IO.File.WriteAllBytes(System.IO.Path.Combine(folder, "controls.png"), texture.EncodeToPNG());
+                ModeIntroTestActions.EnterTraining(FindButton, entries[i]);
+                yield return null;
+                Assert.That(services.Router.Current, Is.EqualTo(targets[i]));
+                var mode = i == 0 ? "Zeroing" : i == 1 ? "MovingTarget" : entries[i];
+                FindButton("Button_ModeIntro_" + mode + "_Enter").onClick.Invoke();
+                Assert.That(services.Router.Current, Is.EqualTo(targets[i]));
+                Assert.That(FindById("Screen_ModeIntro_" + mode).activeSelf, Is.False);
+                Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
+                services.Router.Open(ScreenId.MainMenu);
             }
-            finally
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd37_FourIntroPanelsPreserveLegacyFrameAndPrimaryEnterStyle()
+        {
+            // BDD37 正文自适应并可滚动且不阻断按钮；P1 UI task008。
+            foreach (var entry in new[] { "OpenZeroing", "OpenMovingTarget", "Trench", "Urban" })
             {
-                for (var i = 0; i < parts.Length; i++) parts[i].gameObject.layer = layers[i];
-                canvas.renderMode = mode; canvas.worldCamera = previousCamera; RenderTexture.active = previousActive;
-                target.Release(); Object.Destroy(target); Object.Destroy(texture); Object.Destroy(cameraRoot);
+                var mode = entry == "OpenZeroing" ? "Zeroing" : entry == "OpenMovingTarget" ? "MovingTarget" : entry;
+                FindButton("Button_MainMenu_" + entry).onClick.Invoke();
+                yield return null;
+                Canvas.ForceUpdateCanvases();
+
+                var panel = FindById("Panel_ModeIntro_" + mode);
+                var panelRect = (RectTransform)panel.transform;
+                Assert.That(panelRect.offsetMin, Is.EqualTo(new Vector2(130, 120)), mode);
+                Assert.That(panelRect.offsetMax, Is.EqualTo(new Vector2(1790, 960)), mode);
+                Assert.That(panelRect.rect.size, Is.EqualTo(new Vector2(1660, 840)), mode);
+                var panelImage = panel.GetComponent<Image>();
+                Assert.That(panelImage.sprite, Is.Not.Null, mode);
+                Assert.That(panelImage.sprite.name, Is.EqualTo("panel_holo_large"), mode);
+                Assert.That(panelImage.type, Is.EqualTo(Image.Type.Sliced), mode);
+                Assert.That(panelImage.color, Is.EqualTo(Color.white), mode);
+                Assert.That(panel.GetComponent<Outline>(), Is.Null, mode);
+
+                var title = FindById("Text_ModeIntro_" + mode + "_Title").GetComponent<TMP_Text>();
+                Assert.That(title.rectTransform.offsetMin, Is.EqualTo(new Vector2(80, 750)), mode);
+                Assert.That(title.rectTransform.offsetMax, Is.EqualTo(new Vector2(1580, 820)), mode);
+                Assert.That(title.fontSize, Is.EqualTo(38), mode);
+                var scroll = FindById("Scroll_ModeIntro_" + mode).GetComponent<ScrollRect>();
+                var scrollRect = (RectTransform)scroll.transform;
+                Assert.That(scrollRect.offsetMin, Is.EqualTo(new Vector2(75, 150)), mode);
+                Assert.That(scrollRect.offsetMax, Is.EqualTo(new Vector2(1585, 720)), mode);
+                Assert.That(scrollRect.rect.size, Is.EqualTo(new Vector2(1510, 570)), mode);
+                Assert.That(scroll.content.GetComponent<HorizontalLayoutGroup>().spacing, Is.EqualTo(60), mode);
+                foreach (var side in new[] { "Left", "Right" })
+                {
+                    var body = FindById("Text_ModeIntro_" + mode + "_" + side).GetComponent<TMP_Text>();
+                    Assert.That(body.fontSize, Is.EqualTo(26), mode + side);
+                    Assert.That(body.lineSpacing, Is.EqualTo(10), mode + side);
+                }
+
+                var enter = FindButton("Button_ModeIntro_" + mode + "_Enter");
+                var back = FindButton("Button_ModeIntro_" + mode + "_Back");
+                Assert.That(enter.image.sprite, Is.Not.Null, mode);
+                Assert.That(enter.image.sprite.name, Is.EqualTo("button_primary_orange"), mode);
+                Assert.That(back.image.sprite, Is.Not.Null, mode);
+                Assert.That(back.image.sprite.name, Is.EqualTo("button_secondary_cyan"), mode);
+                Assert.That(((RectTransform)back.transform).offsetMin, Is.EqualTo(new Vector2(460, 35)), mode);
+                Assert.That(((RectTransform)back.transform).offsetMax, Is.EqualTo(new Vector2(760, 105)), mode);
+                Assert.That(((RectTransform)enter.transform).offsetMin, Is.EqualTo(new Vector2(900, 35)), mode);
+                Assert.That(((RectTransform)enter.transform).offsetMax, Is.EqualTo(new Vector2(1200, 105)), mode);
+                back.onClick.Invoke();
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator Bdd37_BodyFitsCommonResolutionsAndOverflowScrollDoesNotCoverButtons()
+        {
+            root.GetComponent<CanvasScaler>().enabled = false;
+            root.GetComponent<TrainingUICanvasAdapter>().enabled = false;
+            root.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+            var canvasRect = (RectTransform)root.transform;
+            foreach (var resolution in new[] { new Vector2(1920,1080), new Vector2(1280,720), new Vector2(2560,1440) })
+            {
+                canvasRect.sizeDelta = new Vector2(1920,1080);
+                canvasRect.localScale = Vector3.one * (resolution.x / 1920f);
+                foreach (var entry in new[] { "OpenZeroing", "OpenMovingTarget", "Trench", "Urban" })
+                {
+                    var mode = entry == "OpenZeroing" ? "Zeroing" : entry == "OpenMovingTarget" ? "MovingTarget" : entry;
+                    FindButton("Button_MainMenu_" + entry).onClick.Invoke();
+                    yield return null;
+                    Canvas.ForceUpdateCanvases();
+                    var scroll = FindById("Scroll_ModeIntro_" + mode).GetComponent<ScrollRect>();
+                    Assert.That(scroll.vertical, Is.True);
+                    Assert.That(scroll.horizontal, Is.False);
+                    Assert.That(scroll.content.rect.height, Is.LessThanOrEqualTo(scroll.viewport.rect.height), mode + resolution);
+                    foreach (var side in new[] { "Left", "Right" })
+                    {
+                        var text = FindById("Text_ModeIntro_" + mode + "_" + side).GetComponent<TMP_Text>();
+                        text.ForceMeshUpdate();
+                        Assert.That(text.isTextOverflowing, Is.False);
+                        Assert.That(text.textInfo.characterCount, Is.EqualTo(text.text.Length));
+                        var corners = new Vector3[4]; text.rectTransform.GetWorldCorners(corners);
+                        var viewportCorners = new Vector3[4]; scroll.viewport.GetWorldCorners(viewportCorners);
+                        Assert.That(corners[0].x, Is.GreaterThanOrEqualTo(viewportCorners[0].x - .1f), mode + side);
+                        Assert.That(corners[0].y, Is.GreaterThanOrEqualTo(viewportCorners[0].y - .1f), mode + side);
+                        Assert.That(corners[2].x, Is.LessThanOrEqualTo(viewportCorners[2].x + .1f), mode + side);
+                        Assert.That(corners[2].y, Is.LessThanOrEqualTo(viewportCorners[2].y + .1f), mode + side);
+                        foreach (var action in new[] { "Back", "Enter" })
+                        {
+                            var buttonCorners = new Vector3[4];
+                            ((RectTransform)FindButton("Button_ModeIntro_" + mode + "_" + action).transform).GetWorldCorners(buttonCorners);
+                            Assert.That(corners[0].y, Is.GreaterThan(buttonCorners[2].y), mode + side + action);
+                        }
+                    }
+                    var enter = FindButton("Button_ModeIntro_" + mode + "_Enter");
+                    var back = FindButton("Button_ModeIntro_" + mode + "_Back");
+                    Assert.That(enter.transform.IsChildOf(scroll.transform), Is.False);
+                    Assert.That(back.transform.IsChildOf(scroll.transform), Is.False);
+                    var left = FindById("Text_ModeIntro_" + mode + "_Left").GetComponent<TMP_Text>();
+                    var originalSize = left.fontSize;
+                    left.fontSize = 60;
+                    yield return null;
+                    Canvas.ForceUpdateCanvases();
+                    Assert.That(scroll.content.rect.height, Is.GreaterThan(scroll.viewport.rect.height));
+                    scroll.verticalNormalizedPosition = 0;
+                    Canvas.ForceUpdateCanvases();
+                    Assert.That(scroll.verticalNormalizedPosition, Is.EqualTo(0).Within(.01f));
+                    left.ForceMeshUpdate();
+                    var last = left.textInfo.characterInfo.Last(c => c.isVisible);
+                    var lastWorld = left.rectTransform.TransformPoint(last.bottomLeft);
+                    var visibleBottom = scroll.viewport.TransformPoint(scroll.viewport.rect.min).y;
+                    Assert.That(lastWorld.y, Is.GreaterThanOrEqualTo(visibleBottom - .1f));
+                    left.fontSize = originalSize;
+                    ExecuteEvents.Execute(back.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
+                    Assert.That(FindById("Screen_ModeIntro_" + mode).activeSelf, Is.False);
+                }
             }
         }
 
@@ -350,20 +498,47 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(centers[1] - centers[2], Is.EqualTo(centers[2] - centers[3]).Within(.1f));
             var canvasScaleY = Mathf.Abs(root.transform.lossyScale.y);
             for (var i = 0; i < centers.Length - 1; i++)
-                Assert.That((centers[i] - centers[i + 1]) / canvasScaleY, Is.EqualTo(128f).Within(.1f));
+                Assert.That((centers[i] - centers[i + 1]) / canvasScaleY, Is.EqualTo(130f).Within(.1f));
             var panelCorners = new Vector3[4]; var frameCorners = new Vector3[4];
-            ((RectTransform)FindById("Panel_MainMenu_Menu").transform).GetWorldCorners(panelCorners);
+            // BDD02 / P1 UI task008: preserve the texture's blue glow without tint or extra borders.
+            var heading = FindById("Panel_MainMenu_Menu");
+            var headingRect = (RectTransform)heading.transform;
+            Assert.That(headingRect.offsetMin, Is.EqualTo(new Vector2(1360, 805)));
+            Assert.That(headingRect.offsetMax, Is.EqualTo(new Vector2(1750, 865)));
+            Assert.That(heading.GetComponent<Image>().sprite.name, Is.EqualTo("hud_capsule"));
+            Assert.That(heading.GetComponent<Image>().type, Is.EqualTo(Image.Type.Sliced));
+            Assert.That(heading.GetComponent<Image>().color, Is.EqualTo(Color.white));
+            Assert.That(heading.GetComponentsInChildren<Outline>(true), Is.Empty);
+            Assert.That(heading.GetComponentsInChildren<Graphic>(true).All(g => !g.raycastTarget), Is.True);
+            Assert.That(heading.GetComponentsInChildren<Selectable>(true), Is.Empty);
+            Assert.That(heading.GetComponentsInChildren<Component>(true).Any(c => c != null && c.GetType().Name == "MainMenuHeadingBorderGraphic"), Is.False);
+            var headingLabel = FindById("Text_MainMenu_Menu").GetComponent<TMP_Text>();
+            Assert.That(headingLabel.text, Is.EqualTo("选择训练科目"));
+            Assert.That(headingLabel.fontSize, Is.EqualTo(20f));
+            Assert.That(headingLabel.fontStyle, Is.EqualTo(FontStyles.Normal));
+            Assert.That(headingLabel.fontWeight, Is.EqualTo(FontWeight.Regular));
+            Assert.That(headingLabel.extraPadding, Is.False);
+            Assert.That(headingLabel.alignment, Is.EqualTo(TextAlignmentOptions.Left));
+            Assert.That(headingLabel.rectTransform.offsetMin, Is.EqualTo(new Vector2(30, 4)));
+            Assert.That(headingLabel.rectTransform.offsetMax, Is.EqualTo(new Vector2(-30, -4)));
+            Assert.That((Color32)headingLabel.color, Is.EqualTo(new Color32(231, 242, 235, 255)));
+            headingLabel.ForceMeshUpdate();
+            Assert.That(headingLabel.textInfo.characterInfo.Take(headingLabel.textInfo.characterCount).Count(c => c.isVisible), Is.EqualTo(6),
+                "The title must display all six glyphs with the 9a1c012 text container.");
+            Assert.That(headingLabel.isTextOverflowing, Is.False, "No ellipsis may replace the title");
+            headingRect.GetWorldCorners(panelCorners);
             ((RectTransform)FindById("Panel_MainMenu_Frame").transform).GetWorldCorners(frameCorners);
-            var controlsCorners = new Vector3[4];
-            ((RectTransform)FindButton("Button_MainMenu_Controls").transform).GetWorldCorners(controlsCorners);
-            // GetWorldCorners: 0 = bottom-left, 1 = top-left; world Y increases upwards.
-            Assert.That(controlsCorners[0].y, Is.GreaterThan(panelCorners[1].y));
-            Assert.That(controlsCorners[1].y, Is.LessThanOrEqualTo(frameCorners[1].y));
-            Assert.That(controlsCorners[0].y, Is.GreaterThanOrEqualTo(frameCorners[0].y));
+            Assert.That(panelCorners[1].y, Is.LessThanOrEqualTo(frameCorners[1].y));
+            Assert.That(panelCorners[0].y, Is.GreaterThanOrEqualTo(frameCorners[0].y));
+            var buttonCorners = new Vector3[4];
+            ((RectTransform)buttons[0].transform).GetWorldCorners(buttonCorners);
+            Assert.That(panelCorners[0].y, Is.GreaterThan(buttonCorners[1].y));
+            Assert.That(FindById("Button_MainMenu_Controls"), Is.Null);
+            Assert.That(FindById("Panel_MainMenu_Controls"), Is.Null);
             Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
             for (var i = 0; i < 2; i++)
             {
-                FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
+                ModeIntroTestActions.EnterTraining(FindButton);
                 Assert.That(services.Router.Current, Is.EqualTo(ScreenId.ZeroingBriefing));
                 Assert.That(FindById("Screen_ZeroingBriefing").activeSelf, Is.True);
                 FindButton("Button_ZeroingBriefing_Back").onClick.Invoke();

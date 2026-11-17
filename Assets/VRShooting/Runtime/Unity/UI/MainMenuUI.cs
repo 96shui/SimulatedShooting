@@ -42,40 +42,6 @@ namespace VRShooting.Unity.UI
         }
     }
 
-    /// <summary>Texture-free heading stroke, so cyan sprite pixels cannot tint the orange border.</summary>
-    [ExecuteAlways, RequireComponent(typeof(CanvasRenderer))]
-    public sealed class MainMenuHeadingBorderGraphic : MaskableGraphic
-    {
-        protected override void OnPopulateMesh(VertexHelper vh)
-        {
-            vh.Clear();
-            var rect = GetPixelAdjustedRect();
-            const float inset = 2f, bevel = 20f, halfWidth = 1f;
-            var left = rect.xMin + inset;
-            var right = rect.xMax - inset;
-            var bottom = rect.yMin + inset;
-            var top = rect.yMax - inset;
-            var points = new[] { new Vector2(left + bevel, top), new Vector2(right - bevel, top),
-                new Vector2(right, top - bevel), new Vector2(right, bottom + bevel),
-                new Vector2(right - bevel, bottom), new Vector2(left + bevel, bottom),
-                new Vector2(left, bottom + bevel), new Vector2(left, top - bevel) };
-            for (var i = 0; i < points.Length; i++)
-            {
-                var a = points[i];
-                var b = points[(i + 1) % points.Length];
-                var direction = (b - a).normalized;
-                var normal = new Vector2(-direction.y, direction.x) * halfWidth;
-                var start = vh.currentVertCount;
-                vh.AddVert(a - normal, color, Vector2.zero);
-                vh.AddVert(a + normal, color, Vector2.zero);
-                vh.AddVert(b + normal, color, Vector2.zero);
-                vh.AddVert(b - normal, color, Vector2.zero);
-                vh.AddTriangle(start, start + 1, start + 2);
-                vh.AddTriangle(start, start + 2, start + 3);
-            }
-        }
-    }
-
     [Flags]
     public enum TrainingUIScreenGroup
     {
@@ -106,7 +72,8 @@ namespace VRShooting.Unity.UI
         IDisposable screenSubscription;
         IDisposable zeroingRoundSubscription;
         RectTransform mainMenuScreen;
-        RectTransform mainMenuControlsPanel;
+        readonly Dictionary<string, RectTransform> modeIntroScreens = new Dictionary<string, RectTransform>();
+        Action pendingModeEntry;
         RectTransform zeroingBriefingScreen;
         RectTransform zeroingPickupScreen;
         RectTransform zeroingHudScreen;
@@ -361,6 +328,23 @@ namespace VRShooting.Unity.UI
             }
 
             TacticalUIStyle.Apply(transform);
+            // The shared name-based pass treats Enter as secondary; preserve the intro CTA.
+            foreach (var intro in modeIntroScreens)
+                TacticalUIStyle.StyleButton(intro.Value.Find("Panel_ModeIntro_" + intro.Key +
+                    "/Button_ModeIntro_" + intro.Key + "_Enter").GetComponent<Button>(), true);
+            // XRI sends the standard enter/exit events. Do not retain Selected after a ray click.
+            foreach (var entry in new[] { openZeroingButton, openMovingTargetButton,
+                mainMenuScreen?.Find("Button_MainMenu_Trench")?.GetComponent<Button>(),
+                mainMenuScreen?.Find("Button_MainMenu_Urban")?.GetComponent<Button>() })
+            {
+                if (entry == null) continue;
+                var navigation = entry.navigation;
+                navigation.mode = Navigation.Mode.None;
+                entry.navigation = navigation;
+                var sprites = entry.spriteState;
+                sprites.selectedSprite = entry.image.sprite;
+                entry.spriteState = sprites;
+            }
             ConfigurePresentationView();
         }
 
@@ -563,45 +547,126 @@ namespace VRShooting.Unity.UI
 
             AddPanel(parent, "Panel_MainMenu_Profile", new Vector2(120, 165), new Vector2(630, 325), new Color32(17, 29, 24, 220), new Color32(56, 84, 71, 255),
                 "本地训练\n循序训练 · 安全操作 · 精准射击");
-            var controlsButton = AddButton(parent, "Button_MainMenu_Controls", "操作介绍", new Vector2(1360, 780), new Vector2(1750, 865), false);
-            controlsButton.onClick.AddListener(() => mainMenuControlsPanel.gameObject.SetActive(true));
+            AddPanel(parent, "Panel_MainMenu_Menu", new Vector2(1360, 805), new Vector2(1750, 865), new Color32(17, 29, 24, 230), new Color32(56, 84, 71, 255), "选择训练科目");
 
-            AddPanel(parent, "Panel_MainMenu_Menu", new Vector2(1360, 667), new Vector2(1750, 737), new Color32(17, 29, 24, 230), new Color32(247, 185, 85, 255), "选择训练科目");
-
-            openZeroingButton = AddButton(parent, "Button_MainMenu_OpenZeroing", "01   100m 精度射校靶", new Vector2(1360, 539), new Vector2(1750, 624), false);
-            openZeroingButton.onClick.AddListener(OnOpenZeroingClicked);
-
-            openMovingTargetButton = AddButton(parent, "Button_MainMenu_OpenMovingTarget", "02   移动目标射击", new Vector2(1360, 411), new Vector2(1750, 496), false);
-            openMovingTargetButton.onClick.AddListener(OnOpenMovingTargetClicked);
-            var trenchButton = AddButton(parent, "Button_MainMenu_Trench", "03   堑壕射击", new Vector2(1360, 283), new Vector2(1750, 368), false);
-            var urbanButton = AddButton(parent, "Button_MainMenu_Urban", "04   城镇攻防", new Vector2(1360, 155), new Vector2(1750, 240), false);
+            openZeroingButton = AddModeEntry(parent, "OpenZeroing", "01", "100m 精度射校靶", 665);
+            openZeroingButton.onClick.AddListener(() => ShowModeIntro("Zeroing", OnOpenZeroingClicked));
+            openMovingTargetButton = AddModeEntry(parent, "OpenMovingTarget", "02", "移动目标射击", 535);
+            openMovingTargetButton.onClick.AddListener(() => ShowModeIntro("MovingTarget", OnOpenMovingTargetClicked));
+            var trenchButton = AddModeEntry(parent, "Trench", "03", "堑壕射击", 405);
+            var urbanButton = AddModeEntry(parent, "Urban", "04", "城镇攻防", 275);
             trenchButton.interactable = urbanButton.interactable = services.CombatScenesAvailable;
-            trenchButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Trench));
-            urbanButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Urban));
+            trenchButton.onClick.AddListener(() => ShowModeIntro("Trench", () => services.Combat.OpenMode(TrainingMode.Trench)));
+            urbanButton.onClick.AddListener(() => ShowModeIntro("Urban", () => services.Combat.OpenMode(TrainingMode.Urban)));
 
             AddPanel(parent, "Panel_MainMenu_BottomStatus", new Vector2(120, 55), new Vector2(1800, 115), new Color32(17, 29, 24, 210), new Color32(56, 84, 71, 255),
                 "单机训练                                     选择科目后查看任务简报");
 
-            BuildMainMenuControls(parent);
+            BuildModeIntro(parent, "Zeroing", "模式一 · 100m 精度射校",
+                "按键操作\n右手侧握键抓枪，左手侧握键辅助抓握。\n右扳机射击，单发射击。\n用界面射线选择界面按钮。\n模式一为固定射击位，不需要移动。\n每轮 4 发，共 3 轮，打完自动进入弹着分析。",
+                "界面与按钮\n顺时针 5° / 逆时针 5°：修正水平方向。\n向前 1cm / 向后 1cm：修正垂直方向。\n应用调整：按当前补偿量修正并立即判定。\n进入下一轮：本轮作废，继续下一轮。\n查看评级：三轮结束后进入最终评级。\n蓝点是当前补偿量，从靶心起步。\n弹着点分散时，四个调整按钮与应用调整会被禁用。");
+            BuildModeIntro(parent, "MovingTarget", "模式二 · 移动目标射击",
+                "按键操作\n右手侧握键抓枪，左手侧握键辅助抓握。\n右扳机射击：快速扣动一次起射两发，继续按住逐发连射。\n用界面射线选择界面按钮。\n射击位固定，不需要移动。",
+                "界面与按钮\n开局选择移动靶速度档位，确认后进入训练。\n跟随射击：准心跟随移动靶，稳住在靶上扣扳机。\n等待射击：准心提前对准，等靶子进入再扣扳机。\n抬头显示区显示剩余弹药、命中数与已用时间。\n结算页显示命中、用时与评级，可重新训练或返回主菜单。");
+            const string combatKeys = "按键操作\n右手侧握键抓枪，左手侧握键辅助抓握。\n右扳机射击；左手柄 X 换弹；左手柄 Y 切换姿态。\n右手柄 B 切换左右肩，左肩时左手为主手、用左扳机射击。\n右手柄 A 请求队友投掷手雷。\n左摇杆移动，右摇杆转向。";
+            BuildModeIntro(parent, "Trench", "模式三 · 堑壕射击", combatKeys,
+                "界面与按钮\n任务状态：显示当前阶段与剩余目标。\n弹药与备用弹匣：弹匣 30 发，备用 4 个弹匣。\n拐角射击：靠近拐角时的射击提示。\n交互提示：靠近可交互物按提示操作。\n地图选择页选地图后进入简报与无人机侦察。\n结算页显示完成情况与评级。");
+            BuildModeIntro(parent, "Urban", "模式四 · 城镇攻防", combatKeys,
+                "界面与按钮\n右摇杆按压：开门与交互。\n建筑界面：当前楼层、房间列表与搜索进度。\n靠近房门点“开门”，进房后点“检查房间”。\n街道界面：楼层入口与推进提示。\n队友会自行推进并投雷，注意别挡枪线。\n结算页显示清理进度与评级。");
         }
 
-        void BuildMainMenuControls(RectTransform parent)
+        Button AddModeEntry(RectTransform parent, string entry, string number, string name, float bottom)
         {
-            mainMenuControlsPanel = AddPanel(parent, "Panel_MainMenu_Controls", new Vector2(130, 120), new Vector2(1790, 960),
+            var button = AddButton(parent, "Button_MainMenu_" + entry, name,
+                new Vector2(1360, bottom), new Vector2(1750, bottom + 85), false);
+            var rect = (RectTransform)button.transform;
+            // Reserved rectangle for the ornament baked into the secondary button sprite.
+            var icon = CreateRect("Placeholder_MainMenu_" + entry + "_IconBounds", rect, Vector2.zero, Vector2.zero,
+                new Vector2(26, 22), new Vector2(76, 63));
+            AddTestId(icon.gameObject, icon.name);
+            var label = button.GetComponentInChildren<TMP_Text>();
+            label.alignment = TextAlignmentOptions.Left;
+            label.rectTransform.offsetMin = new Vector2(130, 8);
+            label.rectTransform.offsetMax = new Vector2(-16, -8);
+            AddLabel(rect, "Text_MainMenu_" + entry + "_Number", number, 24, FontStyles.Normal,
+                TextAlignmentOptions.Left, new Vector2(84, 8), new Vector2(124, 77), new Color32(231, 242, 235, 255));
+            return button;
+        }
+
+        void BuildModeIntro(RectTransform parent, string mode, string title, string leftCopy, string rightCopy)
+        {
+            var screen = CreateRect("Screen_ModeIntro_" + mode, parent, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            AddTestId(screen.gameObject, screen.name);
+            // Modal raycast blocker prevents clicks/scrolls from reaching the underlying menu.
+            AddImage(screen.gameObject, Color.clear).raycastTarget = true;
+            var panel = AddPanel(screen, "Panel_ModeIntro_" + mode, new Vector2(130, 120), new Vector2(1790, 960),
                 new Color32(11, 19, 16, 245), new Color32(45, 66, 56, 255));
             var textColor = new Color32(231, 242, 235, 255);
-            AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Title", "操作介绍", 38, FontStyles.Bold,
+            AddLabel(panel, "Text_ModeIntro_" + mode + "_Title", title, 38, FontStyles.Normal,
                 TextAlignmentOptions.Center, new Vector2(80, 750), new Vector2(1580, 820), textColor);
-            var left = AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Left",
-                "通用 VR 操作\n右手侧握键抓枪 / 主手握持；左手侧握键副手握持。\n右扳机射击；用 UI 射线选择按钮。\n主菜单及模式三 / 四：左摇杆移动，右摇杆转向。\n模式一 / 二为固定射击点，不可移动。\n\n模式一  ·  100m 精度射校\n每轮 4 发，共 3 轮。\n分析页使用“应用调整”“进入下一轮”或“查看评级”。\n水平 1 格 = 2cm；垂直 5 度 = 0.32cm。\n集中且计算集各点距靶心≤10cm、均值距靶心≤5cm且至少一发距靶心≤5cm，或应用调整后均值距靶心<5cm即可通过。",
-                24, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(75, 150), new Vector2(800, 720), textColor);
-            var right = AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Right",
-                "模式二  ·  移动目标\n双手据枪，采用“跟随射击”或“等待射击”的方式对目标进行射击。\n右扳机快速扣动起射两发，继续按住可逐发连射。\n\n模式三 / 四  ·  堑壕与城镇\n左手柄 X：换弹；左手柄 Y：切换姿态。\n右手柄 B：切换左右肩。\n模式四：右摇杆按压交互 / 开门。\n模式三 / 四：右手柄 A 请求队友投掷手雷。\n切换左肩后，左手为主手并使用左扳机射击，右手为副手。",
-                24, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(860, 150), new Vector2(1585, 720), textColor);
-            left.lineSpacing = right.lineSpacing = 6f;
-            var back = AddButton(mainMenuControlsPanel, "Button_MainMenu_Controls_Back", "返回", new Vector2(680, 35), new Vector2(980, 105), false);
-            back.onClick.AddListener(() => mainMenuControlsPanel.gameObject.SetActive(false));
-            mainMenuControlsPanel.gameObject.SetActive(false);
+            var scrollRoot = CreateRect("Scroll_ModeIntro_" + mode, panel, Vector2.zero, Vector2.zero,
+                new Vector2(75, 150), new Vector2(1585, 720));
+            AddTestId(scrollRoot.gameObject, scrollRoot.name);
+            var viewport = CreateRect("Viewport_ModeIntro_" + mode, scrollRoot, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            AddImage(viewport.gameObject, Color.clear).raycastTarget = true;
+            viewport.gameObject.AddComponent<RectMask2D>();
+            var content = CreateRect("Content_ModeIntro_" + mode, viewport, new Vector2(0, 1), Vector2.one, Vector2.zero, Vector2.zero);
+            content.pivot = new Vector2(.5f, 1);
+            var columns = content.gameObject.AddComponent<HorizontalLayoutGroup>();
+            columns.spacing = 60;
+            columns.childControlWidth = columns.childControlHeight = true;
+            columns.childForceExpandWidth = columns.childForceExpandHeight = true;
+            columns.childAlignment = TextAnchor.UpperLeft;
+            var fitter = content.gameObject.AddComponent<ContentSizeFitter>();
+            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            foreach (var side in new[] { "Left", "Right" })
+            {
+                var body = AddLabel(content, "Text_ModeIntro_" + mode + "_" + side, side == "Left" ? leftCopy : rightCopy,
+                    26, FontStyles.Normal, TextAlignmentOptions.TopLeft, Vector2.zero, Vector2.zero, textColor);
+                body.lineSpacing = 10;
+                body.overflowMode = TextOverflowModes.Overflow;
+                var layout = body.gameObject.AddComponent<LayoutElement>();
+                layout.minWidth = 0;
+                layout.preferredWidth = 0;
+                layout.flexibleWidth = 1;
+            }
+            var scroll = scrollRoot.gameObject.AddComponent<ScrollRect>();
+            scroll.viewport = viewport;
+            scroll.content = content;
+            scroll.horizontal = false;
+            scroll.vertical = true;
+            scroll.movementType = ScrollRect.MovementType.Clamped;
+            scroll.inertia = false;
+            scroll.scrollSensitivity = 36;
+            var back = AddButton(panel, "Button_ModeIntro_" + mode + "_Back", "返回", new Vector2(460, 35), new Vector2(760, 105), false);
+            back.onClick.AddListener(CloseModeIntro);
+            var enter = AddButton(panel, "Button_ModeIntro_" + mode + "_Enter", "进入训练", new Vector2(900, 35), new Vector2(1200, 105), true);
+            enter.onClick.AddListener(() =>
+            {
+                if (!screen.gameObject.activeInHierarchy || services.Router.Current != ScreenId.MainMenu) return;
+                var entry = pendingModeEntry;
+                CloseModeIntro();
+                entry?.Invoke();
+            });
+            modeIntroScreens.Add(mode, screen);
+            screen.gameObject.SetActive(false);
+        }
+
+        void ShowModeIntro(string mode, Action entry)
+        {
+            if (services.Router.Current != ScreenId.MainMenu || pendingModeEntry != null) return;
+            pendingModeEntry = entry;
+            var screen = modeIntroScreens[mode];
+            screen.gameObject.SetActive(true);
+            var scroll = screen.GetComponentInChildren<ScrollRect>();
+            LayoutRebuilder.ForceRebuildLayoutImmediate(scroll.content);
+            scroll.verticalNormalizedPosition = 1;
+        }
+
+        void CloseModeIntro()
+        {
+            pendingModeEntry = null;
+            foreach (var screen in modeIntroScreens.Values) screen.gameObject.SetActive(false);
         }
 
         void BuildZeroingBriefing(RectTransform parent)
@@ -953,8 +1018,7 @@ namespace VRShooting.Unity.UI
             if (screen != ActiveScreen)
                 SetZeroingInfoPanel(ZeroingInfoPanel.None);
             ActiveScreen = screen;
-            if (screen != ScreenId.MainMenu && mainMenuControlsPanel != null)
-                mainMenuControlsPanel.gameObject.SetActive(false);
+            if (screen != ScreenId.MainMenu) CloseModeIntro();
             if (mainMenuScreen != null)
             {
                 mainMenuScreen.gameObject.SetActive(screen == ScreenId.MainMenu);
@@ -1704,17 +1768,7 @@ namespace VRShooting.Unity.UI
             {
                 ApplySlicedSprite(image, panelSprite);
             }
-            // BDD02: retain the heading's explicit panel fill/stroke with the resolved sprite.
-            if (id == "Panel_MainMenu_Menu")
-            {
-                image.color = fill;
-                image.raycastTarget = false;
-                var borderRect = CreateRect("Image_MainMenu_MenuBorder", panel, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
-                var border = borderRect.gameObject.AddComponent<MainMenuHeadingBorderGraphic>();
-                border.color = stroke;
-                border.raycastTarget = false;
-            }
-            if (panelSprite == null || id == "Panel_MainMenu_Menu")
+            else
             {
                 var outline = panel.gameObject.AddComponent<Outline>();
                 outline.effectColor = stroke;

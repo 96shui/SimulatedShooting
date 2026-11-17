@@ -1,0 +1,125 @@
+--- before/Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs
++++ after/Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs
+@@ -328,6 +328,16 @@
+             }
+ 
+             TacticalUIStyle.Apply(transform);
++            // Preserve the menu heading's original text style after the shared normalization.
++            if (mainMenuScreen != null)
++            {
++                var heading = mainMenuScreen.Find("Panel_MainMenu_Menu/Text_MainMenu_Menu").GetComponent<TMP_Text>();
++                heading.fontStyle = FontStyles.Bold;
++                heading.rectTransform.offsetMin = new Vector2(20, 18);
++                heading.rectTransform.offsetMax = new Vector2(-20, -18);
++                heading.enableWordWrapping = false;
++                heading.overflowMode = TextOverflowModes.Overflow;
++            }
+             // XRI sends the standard enter/exit events. Do not retain Selected after a ray click.
+             foreach (var entry in new[] { openZeroingButton, openMovingTargetButton,
+                 mainMenuScreen?.Find("Button_MainMenu_Trench")?.GetComponent<Button>(),
+@@ -495,8 +505,6 @@
+ 
+         Sprite ResolvePanelSprite(string id, Vector2 min, Vector2 max)
+         {
+-            // The menu title uses the requested original long status strip, independent of its width.
+-            if (id == "Panel_MainMenu_Menu") return LoadGeneratedSprite("status_strip_long");
+             var width = Mathf.Abs(max.x - min.x);
+             var height = Mathf.Abs(max.y - min.y);
+ 
+@@ -1771,7 +1779,6 @@
+             if (panelSprite != null)
+             {
+                 ApplySlicedSprite(image, panelSprite);
+-                if (id == "Panel_MainMenu_Menu") image.color = fill;
+             }
+             else
+             {
+--- before/Assets/VRShooting/Tests/EditMode/Application/MainMenuControlsTests.cs
++++ after/Assets/VRShooting/Tests/EditMode/Application/MainMenuControlsTests.cs
+@@ -114,9 +114,9 @@
+         {
+             var heading = Find("Panel_MainMenu_Menu");
+             var image = heading.GetComponent<Image>();
+-            Assert.That(image.sprite.name, Is.EqualTo("status_strip_long"));
++            Assert.That(image.sprite.name, Is.EqualTo("hud_capsule"));
+             Assert.That(image.type, Is.EqualTo(Image.Type.Sliced));
+-            Assert.That((Color32)image.color, Is.EqualTo(new Color32(17, 29, 24, 230)));
++            Assert.That(image.color, Is.EqualTo(Color.white));
+             Assert.That(heading.GetComponent<Outline>(), Is.Null);
+             Assert.That(heading.transform.Find("Image_MainMenu_MenuBorder"), Is.Null);
+             Assert.That(heading.transform.Find("Image_MainMenu_MenuFill"), Is.Null);
+@@ -126,9 +126,15 @@
+             var label = Find("Text_MainMenu_Menu").GetComponent<TMP_Text>();
+             Assert.That(label.text, Is.EqualTo("选择训练科目"));
+             Assert.That(label.fontSize, Is.EqualTo(20f));
+-            Assert.That(label.fontStyle, Is.EqualTo(FontStyles.Normal));
++            Assert.That(label.fontStyle, Is.EqualTo(FontStyles.Bold));
+             Assert.That(label.fontWeight, Is.EqualTo(FontWeight.Regular));
++            Assert.That(label.alignment, Is.EqualTo(TextAlignmentOptions.Left));
++            Assert.That(label.rectTransform.offsetMin, Is.EqualTo(new Vector2(20, 18)));
++            Assert.That(label.rectTransform.offsetMax, Is.EqualTo(new Vector2(-20, -18)));
+             Assert.That((Color32)label.color, Is.EqualTo(new Color32(231, 242, 235, 255)));
++            label.ForceMeshUpdate();
++            Assert.That(label.textInfo.characterInfo.Take(label.textInfo.characterCount).Count(c => c.isVisible), Is.EqualTo(6),
++                "The title's six glyphs must be rendered within the original heading layout.");
+             foreach (var entry in Entries)
+             {
+                 var button = Find("Button_MainMenu_" + entry).GetComponent<Button>();
+--- before/Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs
++++ after/Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs
+@@ -437,7 +437,30 @@
+             for (var i = 0; i < centers.Length - 1; i++)
+                 Assert.That((centers[i] - centers[i + 1]) / canvasScaleY, Is.EqualTo(130f).Within(.1f));
+             var panelCorners = new Vector3[4]; var frameCorners = new Vector3[4];
+-            ((RectTransform)FindById("Panel_MainMenu_Menu").transform).GetWorldCorners(panelCorners);
++            // BDD02 / P1 UI task008: preserve the texture's blue glow without tint or extra borders.
++            var heading = FindById("Panel_MainMenu_Menu");
++            var headingRect = (RectTransform)heading.transform;
++            Assert.That(headingRect.offsetMin, Is.EqualTo(new Vector2(1360, 805)));
++            Assert.That(headingRect.offsetMax, Is.EqualTo(new Vector2(1750, 865)));
++            Assert.That(heading.GetComponent<Image>().sprite.name, Is.EqualTo("hud_capsule"));
++            Assert.That(heading.GetComponent<Image>().type, Is.EqualTo(Image.Type.Sliced));
++            Assert.That(heading.GetComponent<Image>().color, Is.EqualTo(Color.white));
++            Assert.That(heading.GetComponentsInChildren<Outline>(true), Is.Empty);
++            Assert.That(heading.GetComponentsInChildren<Graphic>(true).All(g => !g.raycastTarget), Is.True);
++            Assert.That(heading.GetComponentsInChildren<Selectable>(true), Is.Empty);
++            Assert.That(heading.GetComponentsInChildren<Component>(true).Any(c => c != null && c.GetType().Name == "MainMenuHeadingBorderGraphic"), Is.False);
++            var headingLabel = FindById("Text_MainMenu_Menu").GetComponent<TMP_Text>();
++            Assert.That(headingLabel.text, Is.EqualTo("选择训练科目"));
++            Assert.That(headingLabel.fontSize, Is.EqualTo(20f));
++            Assert.That(headingLabel.fontStyle, Is.EqualTo(FontStyles.Bold));
++            Assert.That(headingLabel.alignment, Is.EqualTo(TextAlignmentOptions.Left));
++            Assert.That(headingLabel.rectTransform.offsetMin, Is.EqualTo(new Vector2(20, 18)));
++            Assert.That(headingLabel.rectTransform.offsetMax, Is.EqualTo(new Vector2(-20, -18)));
++            Assert.That((Color32)headingLabel.color, Is.EqualTo(new Color32(231, 242, 235, 255)));
++            headingLabel.ForceMeshUpdate();
++            Assert.That(headingLabel.textInfo.characterInfo.Take(headingLabel.textInfo.characterCount).Count(c => c.isVisible), Is.EqualTo(6),
++                "The title must display all six glyphs, including with the original 18px vertical padding.");
++            headingRect.GetWorldCorners(panelCorners);
+             ((RectTransform)FindById("Panel_MainMenu_Frame").transform).GetWorldCorners(frameCorners);
+             Assert.That(panelCorners[1].y, Is.LessThanOrEqualTo(frameCorners[1].y));
+             Assert.That(panelCorners[0].y, Is.GreaterThanOrEqualTo(frameCorners[0].y));
+--- before/docs/BDD/screens/02-游戏主界面.feature.md
++++ after/docs/BDD/screens/02-游戏主界面.feature.md
+@@ -8,8 +8,8 @@
+   场景: 主菜单恢复标题条和四个次级入口
+     当主菜单显示
+     那么没有操作介绍总览入口或总览面板
+-    而且标题条为深色(17,29,24,230)，使用status_strip_long九宫格，无橙色描边或MainMenuHeadingBorderGraphic
+-    而且标题为“选择训练科目”，20号、Normal/Regular、颜色(231,242,235,255)，不接收射线
++    而且标题条按390×60的通用面板逻辑使用hud_capsule九宫格，Image.color为Color.white，保留贴图本身的亮蓝发光胶囊边框和深色内芯，无额外Outline或MainMenuHeadingBorderGraphic
++    而且标题为“选择训练科目”，20号、FontStyles.Bold、左对齐、内边距(20,18)至(-20,-18)、颜色(231,242,235,255)，单行完整显示六个汉字，不接收射线
+     而且01至04全部为secondary样式，没有常驻高亮
+     而且四个编号左边缘同列，误差不超过1像素，不与左侧图标或贴图装饰矩形相交
+     而且名称与编号间距相同，各行编号与名称基线一致
+--- before/docs/任务规格/阶段一-P1-100m射校原型闭环/UI/task008-ui-mainmenu-zeroing-briefing.md
++++ after/docs/任务规格/阶段一-P1-100m射校原型闭环/UI/task008-ui-mainmenu-zeroing-briefing.md
+@@ -7,7 +7,7 @@
+ 
+ ## 2026-11-16 主菜单回退与四模式操作介绍
+ 
+-按BDD02、[BDD37](../../../BDD/screens/37-各模式操作介绍.feature.md)和接口01移除旧操作总览，恢复标题深色底/原文字与status_strip_long，按最新精确坐标排列全部secondary入口。固定编号列并避开贴图装饰，普通/XR悬停进入高亮、离开复原。
++按BDD02、[BDD37](../../../BDD/screens/37-各模式操作介绍.feature.md)和接口01移除旧操作总览，标题条恢复通用hud_capsule九宫格与Color.white原色显示，以贴图本身呈现亮蓝发光边框和深色内芯，不增加描边。标题保留20号、FontStyles.Bold、左对齐、(20,18)至(-20,-18)内边距及原文字颜色，按最新精确坐标排列全部secondary入口。固定编号列并避开贴图装饰，普通/XR悬停进入高亮、离开复原。
+ 
+ 四个模式分别提供完整中文介绍，返回无服务副作用，确认复用原入口逻辑；不改P1/P2/P3训练流程或玩法。双栏正文竖直滚动自适应，按钮位于滚动区外。联调仍使用原Presentation/Router/Combat契约；P2 UI task002和P3 UI task002仅受入口前置介绍影响。先更新测试，完成EditMode/PlayMode定向与全量fullname基线比较、纯UI截图、文案对照和报告；真实VR可读性/滚动/点击列为实机验收。
+ 

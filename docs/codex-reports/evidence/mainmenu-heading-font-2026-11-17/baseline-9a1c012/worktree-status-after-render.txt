@@ -1,0 +1,3 @@
+ M Assets/Resources/UI/Tactical/TrainingChinese.asset
+ M ProjectSettings/Packages/com.unity.learn.iet-framework/Settings.json
+ M ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json

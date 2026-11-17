@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="16" result="Failed(Child)" total="16" passed="15" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-16 15:32:52Z" end-time="2026-11-16 15:32:53Z" duration="0.5355976">
+  <test-suite type="TestSuite" id="1524" name="VR" fullname="VR" runstate="Runnable" testcasecount="412" result="Failed" site="Child" start-time="2026-11-16 15:32:52Z" end-time="2026-11-16 15:32:53Z" duration="0.535598" total="16" passed="15" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="2040" name="VRShooting.Runtime.EditModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.EditModeTests.dll" runstate="Runnable" testcasecount="365" result="Failed" site="Child" start-time="2026-11-16 15:32:52Z" end-time="2026-11-16 15:32:53Z" duration="0.527703" total="16" passed="15" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="8504" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="2041" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="365" result="Failed" site="Child" start-time="2026-11-16 15:32:52Z" end-time="2026-11-16 15:32:53Z" duration="0.527349" total="16" passed="15" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="2042" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="365" result="Failed" site="Child" start-time="2026-11-16 15:32:52Z" end-time="2026-11-16 15:32:53Z" duration="0.527257" total="16" passed="15" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="2043" name="EditMode" fullname="VRShooting.Tests.EditMode" runstate="Runnable" testcasecount="365" result="Failed" site="Child" start-time="2026-11-16 15:32:52Z" end-time="2026-11-16 15:32:53Z" duration="0.527177" total="16" passed="15" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestSuite" id="2047" name="Application" fullname="VRShooting.Tests.EditMode.Application" runstate="Runnable" testcasecount="197" result="Failed" site="Child" start-time="2026-11-16 15:32:52Z" end-time="2026-11-16 15:32:53Z" duration="0.525564" total="16" passed="15" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-suite type="TestFixture" id="1811" name="MainMenuControlsTests" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" testcasecount="16" result="Failed" site="Child" start-time="2026-11-16 15:32:52Z" end-time="2026-11-16 15:32:53Z" duration="0.523563" total="16" passed="15" failed="1" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <failure>
+                  <message><![CDATA[One or more child tests had errors]]></message>
+                </failure>
+                <test-case id="1818" name="Bdd02_ControlsAboveHeadingAndAllMenuRowsStayInsideFrame" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_ControlsAboveHeadingAndAllMenuRowsStayInsideFrame" methodname="Bdd02_ControlsAboveHeadingAndAllMenuRowsStayInsideFrame" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="919588403" result="Passed" start-time="2026-11-16 15:32:52Z" end-time="2026-11-16 15:32:53Z" duration="0.151696" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1812" name="Bdd02_ControlsOpenCloseAndDescribeActualVrOperations" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_ControlsOpenCloseAndDescribeActualVrOperations" methodname="Bdd02_ControlsOpenCloseAndDescribeActualVrOperations" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="116410969" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.208951" asserts="0">
+                  <properties />
+                </test-case>
+                <test-case id="1819" name="Bdd02_HeadingUsesPrimaryVisualWithoutInteractionAndEntriesUseSecondaryVisual" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_HeadingUsesPrimaryVisualWithoutInteractionAndEntriesUseSecondaryVisual" methodname="Bdd02_HeadingUsesPrimaryVisualWithoutInteractionAndEntriesUseSecondaryVisual" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="1468132623" result="Failed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.014286" asserts="0">
+                  <properties />
+                  <failure>
+                    <message><![CDATA[  Expected: Bold
+  But was:  Normal
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_HeadingUsesPrimaryVisualWithoutInteractionAndEntriesUseSecondaryVisual () [0x0015d] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs:129
+]]></stack-trace>
+                  </failure>
+                </test-case>
+                <test-suite type="ParameterizedMethod" id="1817" name="Bdd02_TrainingButtonGeometryIsUnchanged" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.040154" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                  <properties />
+                  <test-case id="1813" name="Bdd02_TrainingButtonGeometryIsUnchanged(&quot;Button_MainMenu_OpenZeroing&quot;,665.0f,750.0f)" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(&quot;Button_MainMenu_OpenZeroing&quot;,665.0f,750.0f)" methodname="Bdd02_TrainingButtonGeometryIsUnchanged" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="2048724434" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.008596" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1814" name="Bdd02_TrainingButtonGeometryIsUnchanged(&quot;Button_MainMenu_OpenMovingTarget&quot;,535.0f,620.0f)" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(&quot;Button_MainMenu_OpenMovingTarget&quot;,535.0f,620.0f)" methodname="Bdd02_TrainingButtonGeometryIsUnchanged" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="2039374042" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.008472" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1815" name="Bdd02_TrainingButtonGeometryIsUnchanged(&quot;Button_MainMenu_Trench&quot;,405.0f,490.0f)" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(&quot;Button_MainMenu_Trench&quot;,405.0f,490.0f)" methodname="Bdd02_TrainingButtonGeometryIsUnchanged" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="785277202" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.008948" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1816" name="Bdd02_TrainingButtonGeometryIsUnchanged(&quot;Button_MainMenu_Urban&quot;,275.0f,360.0f)" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(&quot;Button_MainMenu_Urban&quot;,275.0f,360.0f)" methodname="Bdd02_TrainingButtonGeometryIsUnchanged" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="1907986124" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.008566" asserts="0">
+                    <properties />
+                  </test-case>
+                </test-suite>
+                <test-suite type="ParameterizedMethod" id="1830" name="Bdd37_ConfirmUsesOriginalEntryExactlyOnce" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_ConfirmUsesOriginalEntryExactlyOnce" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.051147" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                  <properties />
+                  <test-case id="1826" name="Bdd37_ConfirmUsesOriginalEntryExactlyOnce(&quot;OpenZeroing&quot;,&quot;Zeroing&quot;,ZeroingBriefing)" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_ConfirmUsesOriginalEntryExactlyOnce(&quot;OpenZeroing&quot;,&quot;Zeroing&quot;,ZeroingBriefing)" methodname="Bdd37_ConfirmUsesOriginalEntryExactlyOnce" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="1946959105" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.014391" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1827" name="Bdd37_ConfirmUsesOriginalEntryExactlyOnce(&quot;OpenMovingTarget&quot;,&quot;MovingTarget&quot;,MovingTargetSettings)" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_ConfirmUsesOriginalEntryExactlyOnce(&quot;OpenMovingTarget&quot;,&quot;MovingTarget&quot;,MovingTargetSettings)" methodname="Bdd37_ConfirmUsesOriginalEntryExactlyOnce" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="180101857" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.010976" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1828" name="Bdd37_ConfirmUsesOriginalEntryExactlyOnce(&quot;Trench&quot;,&quot;Trench&quot;,TrenchMapSelection)" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_ConfirmUsesOriginalEntryExactlyOnce(&quot;Trench&quot;,&quot;Trench&quot;,TrenchMapSelection)" methodname="Bdd37_ConfirmUsesOriginalEntryExactlyOnce" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="2057533809" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.014625" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1829" name="Bdd37_ConfirmUsesOriginalEntryExactlyOnce(&quot;Urban&quot;,&quot;Urban&quot;,UrbanMapSelection)" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_ConfirmUsesOriginalEntryExactlyOnce(&quot;Urban&quot;,&quot;Urban&quot;,UrbanMapSelection)" methodname="Bdd37_ConfirmUsesOriginalEntryExactlyOnce" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="2055485479" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.010436" asserts="0">
+                    <properties />
+                  </test-case>
+                </test-suite>
+                <test-case id="1820" name="Bdd37_NumberColumnHasIdenticalLeftEdgeAndClearsSpriteIcon" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_NumberColumnHasIdenticalLeftEdgeAndClearsSpriteIcon" methodname="Bdd37_NumberColumnHasIdenticalLeftEdgeAndClearsSpriteIcon" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="2141183741" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.009763" asserts="0">
+                  <properties />
+                </test-case>
+                <test-suite type="ParameterizedMethod" id="1825" name="Bdd37_PointerEnterHighlightsAndExitRestoresSecondary" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_PointerEnterHighlightsAndExitRestoresSecondary" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.040297" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                  <properties />
+                  <test-case id="1821" name="Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(&quot;OpenZeroing&quot;)" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(&quot;OpenZeroing&quot;)" methodname="Bdd37_PointerEnterHighlightsAndExitRestoresSecondary" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="1322025517" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.011730" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1822" name="Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(&quot;OpenMovingTarget&quot;)" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(&quot;OpenMovingTarget&quot;)" methodname="Bdd37_PointerEnterHighlightsAndExitRestoresSecondary" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="1869279123" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.009601" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1823" name="Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(&quot;Trench&quot;)" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(&quot;Trench&quot;)" methodname="Bdd37_PointerEnterHighlightsAndExitRestoresSecondary" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="1553574200" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.009053" asserts="0">
+                    <properties />
+                  </test-case>
+                  <test-case id="1824" name="Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(&quot;Urban&quot;)" fullname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(&quot;Urban&quot;)" methodname="Bdd37_PointerEnterHighlightsAndExitRestoresSecondary" classname="VRShooting.Tests.EditMode.Application.MainMenuControlsTests" runstate="Runnable" seed="1100401569" result="Passed" start-time="2026-11-16 15:32:53Z" end-time="2026-11-16 15:32:53Z" duration="0.008946" asserts="0">
+                    <properties />
+                  </test-case>
+                </test-suite>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

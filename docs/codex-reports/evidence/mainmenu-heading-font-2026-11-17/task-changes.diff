@@ -1,0 +1,201 @@
+--- entry/Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs
++++ final/Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs
+@@ -332,16 +332,6 @@
+             foreach (var intro in modeIntroScreens)
+                 TacticalUIStyle.StyleButton(intro.Value.Find("Panel_ModeIntro_" + intro.Key +
+                     "/Button_ModeIntro_" + intro.Key + "_Enter").GetComponent<Button>(), true);
+-            // Preserve the menu heading's original text style after the shared normalization.
+-            if (mainMenuScreen != null)
+-            {
+-                var heading = mainMenuScreen.Find("Panel_MainMenu_Menu/Text_MainMenu_Menu").GetComponent<TMP_Text>();
+-                heading.fontStyle = FontStyles.Bold;
+-                heading.rectTransform.offsetMin = new Vector2(20, 18);
+-                heading.rectTransform.offsetMax = new Vector2(-20, -18);
+-                heading.enableWordWrapping = false;
+-                heading.overflowMode = TextOverflowModes.Overflow;
+-            }
+             // XRI sends the standard enter/exit events. Do not retain Selected after a ray click.
+             foreach (var entry in new[] { openZeroingButton, openMovingTargetButton,
+                 mainMenuScreen?.Find("Button_MainMenu_Trench")?.GetComponent<Button>(),
+--- entry/Assets/VRShooting/Tests/EditMode/Application/MainMenuControlsTests.cs
++++ final/Assets/VRShooting/Tests/EditMode/Application/MainMenuControlsTests.cs
+@@ -1,8 +1,10 @@
+ using System.Linq;
+ using NUnit.Framework;
+ using TMPro;
++using UnityEditor.SceneManagement;
+ using UnityEngine;
+ using UnityEngine.EventSystems;
++using UnityEngine.SceneManagement;
+ using UnityEngine.UI;
+ using VRShooting.Application;
+ using VRShooting.Common;
+@@ -126,15 +128,18 @@
+             var label = Find("Text_MainMenu_Menu").GetComponent<TMP_Text>();
+             Assert.That(label.text, Is.EqualTo("选择训练科目"));
+             Assert.That(label.fontSize, Is.EqualTo(20f));
+-            Assert.That(label.fontStyle, Is.EqualTo(FontStyles.Bold));
++            Assert.That(label.fontStyle, Is.EqualTo(FontStyles.Normal));
+             Assert.That(label.fontWeight, Is.EqualTo(FontWeight.Regular));
++            Assert.That(label.extraPadding, Is.False);
+             Assert.That(label.alignment, Is.EqualTo(TextAlignmentOptions.Left));
+-            Assert.That(label.rectTransform.offsetMin, Is.EqualTo(new Vector2(20, 18)));
+-            Assert.That(label.rectTransform.offsetMax, Is.EqualTo(new Vector2(-20, -18)));
++            Assert.That(label.rectTransform.offsetMin, Is.EqualTo(new Vector2(30, 4)));
++            Assert.That(label.rectTransform.offsetMax, Is.EqualTo(new Vector2(-30, -4)));
+             Assert.That((Color32)label.color, Is.EqualTo(new Color32(231, 242, 235, 255)));
+             label.ForceMeshUpdate();
+             Assert.That(label.textInfo.characterInfo.Take(label.textInfo.characterCount).Count(c => c.isVisible), Is.EqualTo(6),
+                 "The title's six glyphs must be rendered within the original heading layout.");
++            Assert.That(label.isTextOverflowing, Is.False, "The restored 52px text container must not ellipsize the six glyphs");
++            AssertHeadingRasterMatchesAcceptedFont(label);
+             foreach (var entry in Entries)
+             {
+                 var button = Find("Button_MainMenu_" + entry).GetComponent<Button>();
+@@ -143,6 +148,88 @@
+                 Assert.That(button.spriteState.highlightedSprite.name, Is.EqualTo("button_secondary_cyan_highlighted"));
+                 Assert.That(button.spriteState.selectedSprite, Is.SameAs(button.image.sprite));
+                 Assert.That(button.GetComponentInChildren<TMP_Text>().color, Is.EqualTo(label.color));
++            }
++        }
++
++        void AssertHeadingRasterMatchesAcceptedFont(TMP_Text label)
++        {
++            // BDD02 / P1 UI task008. Same Camera.Render pipeline as the 9a1c012 worktree:
++            // 1920x1080, 1 design unit = 1 pixel. Actual raster baseline: 117x20px,
++            // left inset 30px, right inset 243px. Both approved Nov 12/15 PNGs agree.
++            // Render only the label into its 390x60 heading area; do not count capsule glow.
++            var originalScene = root.scene;
++            var preview = EditorSceneManager.NewPreviewScene();
++            var previous = RenderTexture.active;
++            var target = new RenderTexture(390, 60, 24);
++            var texture = new Texture2D(390, 60, TextureFormat.RGB24, false);
++            Camera camera = null;
++            try
++            {
++                SceneManager.MoveGameObjectToScene(root, preview);
++                var cameraRoot = new GameObject("HeadingRasterTestCamera", typeof(Camera));
++                SceneManager.MoveGameObjectToScene(cameraRoot, preview);
++                camera = cameraRoot.GetComponent<Camera>();
++                camera.scene = preview;
++                camera.orthographic = true;
++                camera.orthographicSize = 30;
++                camera.nearClipPlane = .1f;
++                camera.farClipPlane = 2000;
++                camera.clearFlags = CameraClearFlags.SolidColor;
++                camera.backgroundColor = Color.black;
++                camera.transform.position = new Vector3(1555, 835, -1000);
++                root.GetComponent<TrainingUICanvasAdapter>().enabled = false;
++                root.GetComponent<CanvasScaler>().enabled = false;
++                var canvas = root.GetComponent<Canvas>();
++                canvas.renderMode = RenderMode.WorldSpace;
++                canvas.worldCamera = camera;
++                var rect = (RectTransform)root.transform;
++                rect.sizeDelta = new Vector2(1920, 1080);
++                rect.pivot = new Vector2(.5f, .5f);
++                rect.position = new Vector3(960, 540, 0);
++                rect.localScale = Vector3.one;
++                foreach (var group in root.GetComponentsInChildren<CanvasGroup>(true)) group.alpha = 1;
++                foreach (var child in root.GetComponentsInChildren<Transform>(true))
++                    if (child.name == "LargePanelRoot" || child.name == "MinimalHudRoot") child.gameObject.SetActive(true);
++                foreach (var graphic in root.GetComponentsInChildren<Graphic>(true))
++                    graphic.enabled = graphic == label;
++                Canvas.ForceUpdateCanvases();
++                label.ForceMeshUpdate();
++                camera.targetTexture = target;
++                camera.Render();
++                RenderTexture.active = target;
++                texture.ReadPixels(new Rect(0, 0, 390, 60), 0, 0);
++                texture.Apply();
++                var left = 390; var right = -1; var bottom = 60; var top = -1;
++                var ink = 0; var bright = 0;
++                var pixels = texture.GetPixels32();
++                for (var y = 0; y < 60; y++)
++                    for (var x = 0; x < 390; x++)
++                    {
++                        var pixel = pixels[y * 390 + x];
++                        if (Mathf.Min(pixel.r, pixel.g, pixel.b) < 80 ||
++                            Mathf.Max(pixel.r, pixel.g, pixel.b) - Mathf.Min(pixel.r, pixel.g, pixel.b) > 45) continue;
++                        left = Mathf.Min(left, x); right = Mathf.Max(right, x);
++                        bottom = Mathf.Min(bottom, y); top = Mathf.Max(top, y);
++                        ink++;
++                        if (.2126f * pixel.r + .7152f * pixel.g + .0722f * pixel.b >= 200) bright++;
++                    }
++                Assert.That(ink, Is.GreaterThan(0), "Heading must produce visible pixels");
++                Assert.That(top - bottom + 1, Is.EqualTo(20).Within(1), "9a1c012 raster height");
++                Assert.That(left, Is.EqualTo(30).Within(1), "9a1c012 raster left inset");
++                Assert.That(389 - right, Is.EqualTo(243).Within(1), "9a1c012 raster right inset");
++                Assert.That(right - left + 1, Is.EqualTo(117).Within(1), "9a1c012 raster width");
++                Assert.That((float)bright / ink, Is.EqualTo(484f / 1291f).Within(.015f),
++                    "9a1c012 bright ink fraction catches synthetic bold without changing font size");
++            }
++            finally
++            {
++                if (camera != null) camera.targetTexture = null;
++                RenderTexture.active = previous;
++                Object.DestroyImmediate(texture);
++                target.Release();
++                Object.DestroyImmediate(target);
++                SceneManager.MoveGameObjectToScene(root, originalScene);
++                EditorSceneManager.ClosePreviewScene(preview);
+             }
+         }
+ 
+--- entry/Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs
++++ final/Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs
+@@ -515,14 +515,17 @@
+             var headingLabel = FindById("Text_MainMenu_Menu").GetComponent<TMP_Text>();
+             Assert.That(headingLabel.text, Is.EqualTo("选择训练科目"));
+             Assert.That(headingLabel.fontSize, Is.EqualTo(20f));
+-            Assert.That(headingLabel.fontStyle, Is.EqualTo(FontStyles.Bold));
++            Assert.That(headingLabel.fontStyle, Is.EqualTo(FontStyles.Normal));
++            Assert.That(headingLabel.fontWeight, Is.EqualTo(FontWeight.Regular));
++            Assert.That(headingLabel.extraPadding, Is.False);
+             Assert.That(headingLabel.alignment, Is.EqualTo(TextAlignmentOptions.Left));
+-            Assert.That(headingLabel.rectTransform.offsetMin, Is.EqualTo(new Vector2(20, 18)));
+-            Assert.That(headingLabel.rectTransform.offsetMax, Is.EqualTo(new Vector2(-20, -18)));
++            Assert.That(headingLabel.rectTransform.offsetMin, Is.EqualTo(new Vector2(30, 4)));
++            Assert.That(headingLabel.rectTransform.offsetMax, Is.EqualTo(new Vector2(-30, -4)));
+             Assert.That((Color32)headingLabel.color, Is.EqualTo(new Color32(231, 242, 235, 255)));
+             headingLabel.ForceMeshUpdate();
+             Assert.That(headingLabel.textInfo.characterInfo.Take(headingLabel.textInfo.characterCount).Count(c => c.isVisible), Is.EqualTo(6),
+-                "The title must display all six glyphs, including with the original 18px vertical padding.");
++                "The title must display all six glyphs with the 9a1c012 text container.");
++            Assert.That(headingLabel.isTextOverflowing, Is.False, "No ellipsis may replace the title");
+             headingRect.GetWorldCorners(panelCorners);
+             ((RectTransform)FindById("Panel_MainMenu_Frame").transform).GetWorldCorners(frameCorners);
+             Assert.That(panelCorners[1].y, Is.LessThanOrEqualTo(frameCorners[1].y));
+--- entry/docs/BDD/screens/02-游戏主界面.feature.md
++++ final/docs/BDD/screens/02-游戏主界面.feature.md
+@@ -9,7 +9,8 @@
+     当主菜单显示
+     那么没有操作介绍总览入口或总览面板
+     而且标题条按390×60的通用面板逻辑使用hud_capsule九宫格，Image.color为Color.white，保留贴图本身的亮蓝发光胶囊边框和深色内芯，无额外Outline或MainMenuHeadingBorderGraphic
+-    而且标题为“选择训练科目”，20号、FontStyles.Bold、左对齐、内边距(20,18)至(-20,-18)、颜色(231,242,235,255)，单行完整显示六个汉字，不接收射线
++    而且标题为“选择训练科目”，恢复9a1c012实测的20号、Normal/Regular、extraPadding=false、左对齐、内边距(30,4)至(-30,-4)、颜色(231,242,235,255)，单行完整显示六个汉字，不接收射线
++    而且1920×1080等比渲染时标题可见字形包围盒为117×20像素、左内缩30像素、右侧剩余243像素，高度及左右内缩容差各为1像素；仅恢复文字，不改变标题条蓝色边框、布局或其它文字
+     而且01至04全部为secondary样式，没有常驻高亮
+     而且四个编号左边缘同列，误差不超过1像素，不与左侧图标或贴图装饰矩形相交
+     而且名称与编号间距相同，各行编号与名称基线一致
+--- entry/docs/接口文档/01-页面导航与UI事件.md
++++ final/docs/接口文档/01-页面导航与UI事件.md
+@@ -1,4 +1,8 @@
+ # 01 页面导航与 UI 事件
++
++## 2026-11-17 主菜单标题文字恢复
++
++仅调整`Text_MainMenu_Menu`：与9a1c012渲染一致的20号Normal/Regular、extraPadding=false、左对齐、(30,4)至(-30,-4)内边距、Color32(231,242,235,255)。1920×1080下六个汉字可见字形117×20px，左内缩30px、右侧剩余243px；高度及左右内缩各允许±1px。标题仍为非交互展示，面板保持hud_capsule、Color.white、无Outline和(1360,805)至(1750,865)坐标，01–04、底部状态条与各介绍页文字不变。不新增或修改DTO、事件、服务及导航。
+ 
+ ## 2026-11-10 分析页帮助与答案互斥
+ 
+--- entry/docs/任务规格/阶段一-P1-100m射校原型闭环/UI/task008-ui-mainmenu-zeroing-briefing.md
++++ final/docs/任务规格/阶段一-P1-100m射校原型闭环/UI/task008-ui-mainmenu-zeroing-briefing.md
+@@ -7,7 +7,7 @@
+ 
+ ## 2026-11-16 主菜单回退与四模式操作介绍
+ 
+-按BDD02、[BDD37](../../../BDD/screens/37-各模式操作介绍.feature.md)和接口01移除旧操作总览，标题条恢复通用hud_capsule九宫格与Color.white原色显示，以贴图本身呈现亮蓝发光边框和深色内芯，不增加描边。标题保留20号、FontStyles.Bold、左对齐、(20,18)至(-20,-18)内边距及原文字颜色，按最新精确坐标排列全部secondary入口。固定编号列并避开贴图装饰，普通/XR悬停进入高亮、离开复原。
++按BDD02、[BDD37](../../../BDD/screens/37-各模式操作介绍.feature.md)和接口01移除旧操作总览，标题条恢复通用hud_capsule九宫格与Color.white原色显示，以贴图本身呈现亮蓝发光边框和深色内芯，不增加描边。2026-11-17文字修订：标题恢复9a1c012实测的20号、Normal/Regular、extraPadding=false、左对齐、(30,4)至(-30,-4)内边距及原文字颜色；1920×1080渲染字形117×20px、左内缩30px、右侧剩余243px，高度及左右内缩各允许±1px，完整显示六字。标题条坐标、边框及其余文字保持不变，提供独立worktree基线与前后像素对比、EditMode实际栅格断言和PlayMode回归。按最新精确坐标排列全部secondary入口。固定编号列并避开贴图装饰，普通/XR悬停进入高亮、离开复原。
+ 
+ 四个模式分别提供完整中文介绍，返回无服务副作用，确认复用原入口逻辑；不改P1/P2/P3训练流程或玩法。双栏正文竖直滚动自适应，按钮位于滚动区外。联调仍使用原Presentation/Router/Combat契约；P2 UI task002和P3 UI task002仅受入口前置介绍影响。先更新测试，完成EditMode/PlayMode定向与全量fullname基线比较、纯UI截图、文案对照和报告；真实VR可读性/滚动/点击列为实机验收。
+ 

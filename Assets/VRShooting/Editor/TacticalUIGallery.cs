@@ -69,7 +69,9 @@ namespace VRShooting.Editor
                 var range = Create<ZeroingRangeUI>(scene, objects);
                 range.Initialize(services);
                 var moving = Create<MovingTargetRangeUI>(scene, objects);
-                moving.Initialize(new MovingTargetUICommandAdapter(services));
+                // Each mode's preview owns its presentation state. Initializing the moving-target
+                // presenter must not route the main-menu preview away before intro capture.
+                moving.Initialize(new MovingTargetUICommandAdapter(ApplicationServices.CreateDefault()));
                 FillRangePreview(range, moving);
                 var combat = Create<P3CombatUIRoot>(scene, objects);
                 combat.BuildIfNeeded();
@@ -103,7 +105,7 @@ namespace VRShooting.Editor
                     // The P1 pickup page is an actual full-size runtime panel, not a Screen_ node.
                     // MovingTargetSettings, conversely, is a zero-size test ID alias.
                     var pages = root.GetComponentsInChildren<RectTransform>(true).Where(t =>
-                        (t.name.StartsWith("Screen_") || t.name == "Panel_Training_AwaitingWeaponPickup") && t.rect.width > 100).ToArray();
+                        !t.name.StartsWith("Screen_ModeIntro_") && (t.name.StartsWith("Screen_") || t.name == "Panel_Training_AwaitingWeaponPickup") && t.rect.width > 100).ToArray();
                     foreach (var page in pages) page.gameObject.SetActive(false);
                     foreach (var page in pages)
                     {
@@ -117,7 +119,7 @@ namespace VRShooting.Editor
                         }
                         CaptureFrame(page, name, folder, camera, target, names);
                         if (modeOneOnly && page.name == "Screen_MainMenu")
-                            CaptureControlsState(page, "07-controls", folder, camera, target, names);
+                            CaptureModeIntroStates(page, folder, camera, target, names);
                         if (captureStates) CaptureExtraStates(page, folder, camera, target, names);
                         if (modeOneOnly && page.name == "Screen_ZeroingImpactAnalysis")
                             CaptureSpreadState(page, folder, camera, target, names);
@@ -226,23 +228,29 @@ namespace VRShooting.Editor
             CaptureFrame(page, "05-analysis-spread", folder, camera, target, names);
         }
 
-        static void CaptureControlsState(RectTransform page, string name, string folder, Camera camera,
+        static void CaptureModeIntroStates(RectTransform page, string folder, Camera camera,
             RenderTexture target, List<string> names)
         {
-            var panel = Find(page, "Panel_MainMenu_Controls").gameObject;
-            RequireActive(page, panel.name, false);
-            try
+            foreach (var entry in new[] { "OpenZeroing", "OpenMovingTarget", "Trench", "Urban" })
             {
-                Click(page, "Button_MainMenu_Controls");
-                RequireActive(page, panel.name, true);
-                if (!panel.activeInHierarchy)
-                    throw new InvalidOperationException("Gallery controls panel has an inactive parent.");
-                CaptureFrame(page, name, folder, camera, target, names);
-            }
-            finally
-            {
-                if (panel.activeSelf) Click(page, "Button_MainMenu_Controls_Back");
+                var mode = entry == "OpenZeroing" ? "Zeroing" : entry == "OpenMovingTarget" ? "MovingTarget" : entry;
+                var panel = Find(page, "Screen_ModeIntro_" + mode).gameObject;
                 RequireActive(page, panel.name, false);
+                try
+                {
+                    Click(page, "Button_MainMenu_" + entry);
+                    RequireActive(page, panel.name, true);
+                    if (!panel.activeInHierarchy) throw new InvalidOperationException("Introduction parent must be active.");
+                    foreach (var scroll in panel.GetComponentsInChildren<ScrollRect>(true))
+                        LayoutRebuilder.ForceRebuildLayoutImmediate(scroll.content);
+                    Canvas.ForceUpdateCanvases();
+                    CaptureFrame(page, panel.name, folder, camera, target, names);
+                }
+                finally
+                {
+                    if (panel.activeSelf) Click(page, "Button_ModeIntro_" + mode + "_Back");
+                    RequireActive(page, panel.name, false);
+                }
             }
         }
 
@@ -251,7 +259,7 @@ namespace VRShooting.Editor
         {
             if (page.name == "Screen_MainMenu")
             {
-                CaptureControlsState(page, "Screen_MainMenu_ControlsOpen", folder, camera, target, names);
+                CaptureModeIntroStates(page, folder, camera, target, names);
             }
             else if (page.name == "Screen_ZeroingImpactAnalysis")
             {

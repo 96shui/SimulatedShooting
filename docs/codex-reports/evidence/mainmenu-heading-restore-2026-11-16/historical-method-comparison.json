@@ -1,0 +1,13 @@
+{
+  "Sprite ResolvePanelSprite(": {
+    "identical_to_ef5a00e": true,
+    "current_sha256": "073c4ffa13688da39a5e508da031e576732a2ee7b8982338e27818988c9d67d5",
+    "ef5a00e_sha256": "073c4ffa13688da39a5e508da031e576732a2ee7b8982338e27818988c9d67d5"
+  },
+  "RectTransform AddPanel(": {
+    "identical_to_ef5a00e": true,
+    "current_sha256": "81558a7a6c5b31cb1acdca829eff0bc2903700ec52461dc9acd53e28682e5826",
+    "ef5a00e_sha256": "81558a7a6c5b31cb1acdca829eff0bc2903700ec52461dc9acd53e28682e5826"
+  },
+  "heading_coordinates_unchanged": true
+}

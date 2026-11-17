@@ -1,0 +1,36 @@
+{
+  "head_unchanged": true,
+  "head": "9a1c01224a7e87ed84c6d54fe47cec4e46d5422a",
+  "targeted": {
+    "editmode-targeted-pass": {
+      "total": "16",
+      "passed": "16",
+      "failed": "0"
+    },
+    "playmode-targeted-final": {
+      "total": "63",
+      "passed": "63",
+      "failed": "0"
+    }
+  },
+  "full_regression_gate_passed": true,
+  "compared_fullnames": 747,
+  "protected_files_identical": 4385,
+  "temporary_editor_helper_removed": true,
+  "screenshots": [
+    {
+      "file": "Screen_MainMenu.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 2380987,
+      "sha256": "e51755206ecc435084d9cf4df7e96574d2d89d559df4a04e8dd415f16b37fafd"
+    },
+    {
+      "file": "Screen_MainMenu_Closeup.png",
+      "width": 1920,
+      "height": 1080,
+      "bytes": 1687659,
+      "sha256": "11d017f57e4f0e41d426d5cc0d635573ca832f111ed4378eaa15b0d789f03cde"
+    }
+  ]
+}

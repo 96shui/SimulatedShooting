@@ -38,6 +38,7 @@ internal static class ModeOneScreenshotAdvance
             case ScreenId.MainMenu:
                 gripReady = false;
                 Click("Button_MainMenu_OpenZeroing");
+                Click("Button_ModeIntro_Zeroing_Enter");
                 break;
             case ScreenId.ZeroingBriefing:
                 if (SceneManager.GetActiveScene().name == "ZeroingRangeScene")

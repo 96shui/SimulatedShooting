@@ -1,0 +1,193 @@
+{
+  "gate_passed": true,
+  "compared_fullnames": 752,
+  "platforms": {
+    "editmode": {
+      "files": {
+        "baseline": {
+          "path": "E:\\新建文件夹 (3)\\SimulateShooting\\docs\\codex-reports\\evidence\\mainmenu-heading-border-2026-11-15\\editmode-full.xml",
+          "sha256": "008d392b8310b561d84d5389d60ac486188b51c25c744cb1accd2a12af3d774b"
+        },
+        "entry": {
+          "path": "E:\\新建文件夹 (3)\\SimulateShooting\\docs\\codex-reports\\evidence\\mainmenu-heading-restore-2026-11-16\\editmode-full.xml",
+          "sha256": "1d562e4832042246dacaf389d8da2b36e1699ae3e81e08f2c6704291ea8547c4"
+        },
+        "current": {
+          "path": "E:\\新建文件夹 (3)\\SimulateShooting\\docs\\codex-reports\\evidence\\mode-intro-panel-frame-2026-11-16\\editmode-full.xml",
+          "sha256": "0276a5ecf6bafc4ec61659e2ff91aec8fcc7def37117f69bb607b527175d3b94"
+        }
+      },
+      "baseline": {
+        "total": 403,
+        "Passed": 384,
+        "Failed": 19
+      },
+      "entry": {
+        "total": 412,
+        "Passed": 393,
+        "Failed": 19
+      },
+      "current": {
+        "total": 412,
+        "Passed": 393,
+        "Failed": 19
+      },
+      "missing_fullnames": [
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_OpenMovingTarget\",411.0f,496.0f)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_OpenZeroing\",539.0f,624.0f)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_Trench\",283.0f,368.0f)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_Urban\",155.0f,240.0f)"
+      ],
+      "added_fullnames": [
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_OpenMovingTarget\",535.0f,620.0f)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_OpenZeroing\",665.0f,750.0f)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_Trench\",405.0f,490.0f)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_Urban\",275.0f,360.0f)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_ConfirmUsesOriginalEntryExactlyOnce(\"OpenMovingTarget\",\"MovingTarget\",MovingTargetSettings)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_ConfirmUsesOriginalEntryExactlyOnce(\"OpenZeroing\",\"Zeroing\",ZeroingBriefing)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_ConfirmUsesOriginalEntryExactlyOnce(\"Trench\",\"Trench\",TrenchMapSelection)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_ConfirmUsesOriginalEntryExactlyOnce(\"Urban\",\"Urban\",UrbanMapSelection)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_NumberColumnHasIdenticalLeftEdgeAndClearsSpriteIcon",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(\"OpenMovingTarget\")",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(\"OpenZeroing\")",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(\"Trench\")",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(\"Urban\")"
+      ],
+      "preexisting_missing_fullnames": [
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_OpenMovingTarget\",411.0f,496.0f)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_OpenZeroing\",539.0f,624.0f)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_Trench\",283.0f,368.0f)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_Urban\",155.0f,240.0f)"
+      ],
+      "preexisting_added_fullnames": [
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_OpenMovingTarget\",535.0f,620.0f)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_OpenZeroing\",665.0f,750.0f)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_Trench\",405.0f,490.0f)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd02_TrainingButtonGeometryIsUnchanged(\"Button_MainMenu_Urban\",275.0f,360.0f)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_ConfirmUsesOriginalEntryExactlyOnce(\"OpenMovingTarget\",\"MovingTarget\",MovingTargetSettings)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_ConfirmUsesOriginalEntryExactlyOnce(\"OpenZeroing\",\"Zeroing\",ZeroingBriefing)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_ConfirmUsesOriginalEntryExactlyOnce(\"Trench\",\"Trench\",TrenchMapSelection)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_ConfirmUsesOriginalEntryExactlyOnce(\"Urban\",\"Urban\",UrbanMapSelection)",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_NumberColumnHasIdenticalLeftEdgeAndClearsSpriteIcon",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(\"OpenMovingTarget\")",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(\"OpenZeroing\")",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(\"Trench\")",
+        "VRShooting.Tests.EditMode.Application.MainMenuControlsTests.Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(\"Urban\")"
+      ],
+      "this_task_added_fullnames": [],
+      "this_task_missing_fullnames": [],
+      "status_changes_from_baseline": [],
+      "status_changes_from_entry": [],
+      "new_failures": [],
+      "resolved_failures": [],
+      "failure_sets_identical": true,
+      "failed_fullnames": [
+        "SimulatedShooting.Tests.EditMode.CombatSceneTests.Bdd14_19_20_21_SavedSceneHasCompleteBindingsAndFiveRooms",
+        "SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(\"Assets/Scenes/MovingTargetRangeScene.unity\",\"MovingTargetRange\")",
+        "SimulatedShooting.Tests.EditMode.TrainingRangeSceneBindingsTests.Bdd31_RangeKeepsTheRearTargetRowAndBackground(\"Assets/Scenes/ZeroingRangeScene.unity\",\"ZeroingRange\")",
+        "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(\"Assets/Scenes/MovingTargetRangeScene.unity\")",
+        "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SavedRangeInheritsCorrectMuzzleWithoutChangingItsUiOrTarget(\"Assets/Scenes/ZeroingRangeScene.unity\")",
+        "SimulatedShooting.Tests.EditMode.TrainingRifleMuzzleAlignmentTests.SharedPrefabMuzzleMatchesActualMeshOpening",
+        "SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_ImportedMeshHasAnOpenRearApertureAndTheMeasuredFrontPost",
+        "SimulatedShooting.Tests.EditMode.VrMechanicalSightCalibrationTests.Bdd33_PrefabAimLineMatchesVisibleApertureAndFrontPostAtOneHundredMetres",
+        "VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Trench)",
+        "VRShooting.Tests.EditMode.CombatMagazineReloadTests.AutomaticFireRequiresTwoRoundsAndReloadCancelsHeldSequence(Urban)",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.DeathCompetesWithLastCheckAndKill_AndWins",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(False)",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.RandomCountEndpoints(True)",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.RemainingStreetEnemyBlocksVictory_ThenResultHasThreeFloorMaps",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.RetryResetsDoorsAndSnapshotsWithoutChangingOldResult",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.RiskyEntryAndReturnPreserveSessionAmmoAndStreetEnemies",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.Screen19_EntryRangePublishesPromptWithoutMovementOrElapsedTime",
+        "VRShooting.Tests.EditMode.Screen25_UrbanTests.SeedAndOwnershipAreStableAndCountsWithinBounds",
+        "VRShooting.Tests.EditMode.Screen26_CombatApplicationTests.QuickSwitchDisposesOnlyStaleLease_AndCannotOverwriteUrban"
+      ],
+      "failure_detail_changes": [],
+      "gate_passed": true
+    },
+    "playmode": {
+      "files": {
+        "baseline": {
+          "path": "E:\\新建文件夹 (3)\\SimulateShooting\\docs\\codex-reports\\evidence\\mainmenu-heading-border-2026-11-15\\playmode-full.xml",
+          "sha256": "6641b37982afc302db630d902658f8766371fcd7a29d6571a6041dd7bf7db82b"
+        },
+        "entry": {
+          "path": "E:\\新建文件夹 (3)\\SimulateShooting\\docs\\codex-reports\\evidence\\mainmenu-heading-restore-2026-11-16\\playmode-full.xml",
+          "sha256": "27bc29b0fa92ff34069ee05294c889115f9e092eb63a79ddd332afaa898bc36a"
+        },
+        "current": {
+          "path": "E:\\新建文件夹 (3)\\SimulateShooting\\docs\\codex-reports\\evidence\\mode-intro-panel-frame-2026-11-16\\playmode-full.xml",
+          "sha256": "4b316585b182d97232c92b03190b3115fa59aebcbdb5632d8eb514a423b40e0e"
+        }
+      },
+      "baseline": {
+        "total": 333,
+        "Passed": 312,
+        "Failed": 21
+      },
+      "entry": {
+        "total": 335,
+        "Passed": 314,
+        "Failed": 21
+      },
+      "current": {
+        "total": 336,
+        "Passed": 315,
+        "Failed": 21
+      },
+      "missing_fullnames": [],
+      "added_fullnames": [
+        "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd37_BodyFitsCommonResolutionsAndOverflowScrollDoesNotCoverButtons",
+        "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd37_FourConfirmationsPreserveOriginalRoutesAndDoNotReplay",
+        "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd37_FourIntroPanelsPreserveLegacyFrameAndPrimaryEnterStyle"
+      ],
+      "preexisting_missing_fullnames": [],
+      "preexisting_added_fullnames": [
+        "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd37_BodyFitsCommonResolutionsAndOverflowScrollDoesNotCoverButtons",
+        "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd37_FourConfirmationsPreserveOriginalRoutesAndDoNotReplay"
+      ],
+      "this_task_added_fullnames": [
+        "VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd37_FourIntroPanelsPreserveLegacyFrameAndPrimaryEnterStyle"
+      ],
+      "this_task_missing_fullnames": [],
+      "status_changes_from_baseline": [],
+      "status_changes_from_entry": [],
+      "new_failures": [],
+      "resolved_failures": [],
+      "failure_sets_identical": true,
+      "failed_fullnames": [
+        "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd14_NewTrenchAllowsContinuousMovementAndFiring",
+        "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.NewSceneInspectionWalkerCanLeaveEntry",
+        "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_17_21_HitDedupCorpseRetentionAndRetryCleanup",
+        "SimulatedShooting.Tests.PlayMode.CombatScenePlayModeTests.Bdd15_20_WallsBlockPerceptionAndSceneUnloadRemovesActors",
+        "SimulatedShooting.Tests.PlayMode.MovingTargetRangeIntegrationTests.P2_PhysicalImpactUsesCollisionPoint_EnvironmentDoesNotScore",
+        "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Bdd31_DayHud_RestoresTheOriginalRearRowAndFortyMetreRoute",
+        "SimulatedShooting.Tests.PlayMode.MovingTargetRangeSceneTests.Task003_StartAreaUsesTheExactZeroingRangeForegroundCopy",
+        "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene",
+        "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds",
+        "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_ProductionVictoryRetryAndReturn",
+        "SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound",
+        "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands",
+        "SimulatedShooting.Tests.PlayMode.ZeroingOctober07RegressionTests.Bdd30_CentralSightActuallyZerosOnTheNextRoundWithMatchingVisibleHoles",
+        "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd04_PickupPromptFacesShooterAboveRifleWithoutChangingText",
+        "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Bdd31_TargetKeepsItsDimensionsInTheOriginalRearRow",
+        "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task005_TrainingRifleUsesLicensedQbz191Visual",
+        "SimulatedShooting.Tests.PlayMode.ZeroingRangeSceneTests.Task013_DirectGrabRequiresRightRearThenLeftFrontAndDropsOnRearRelease",
+        "VRShooting.Tests.PlayMode.Screen25_UrbanPlayModeTests.BuildingFailureKeepsCountsAndOldSessionInputsAreRejected",
+        "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen18_UrbanMapSelection_RendersRangesAndStartsStreet",
+        "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen20_UrbanBuildingHud_SeparatesDoorAndCheckCommands",
+        "VRShooting.Tests.PlayMode.UI.P3UiTask002_005_008_011PlayModeTests.Screen21_UrbanResults_RendersThreeFloorMapsAndRetryOnce"
+      ],
+      "failure_detail_changes": [
+        "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.Bdd14_NewTrenchAllowsContinuousMovementAndFiring",
+        "SimulatedShooting.Tests.PlayMode.BunkersTrenchPlayModeTests.NewSceneInspectionWalkerCanLeaveEntry",
+        "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene",
+        "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds",
+        "SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_ProductionVictoryRetryAndReturn",
+        "SimulatedShooting.Tests.PlayMode.VrZeroingMechanicalSightTests.Bdd33_TrackedTwoHandVisibleSightAndTriggerCanZeroNextRound",
+        "SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands"
+      ],
+      "gate_passed": true
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "head": "9a1c012",
+  "editmode_targeted": {
+    "passed": 16,
+    "failed": 0
+  },
+  "playmode_targeted": {
+    "passed": 62,
+    "failed": 0
+  },
+  "exact_fullname_regression_gate_passed": true,
+  "new_failures": {
+    "EditMode": 0,
+    "PlayMode": 0
+  },
+  "baseline_failures_resolved": [],
+  "protected_existing_file_count": 4300,
+  "all_protected_existing_files_identical": true,
+  "runtime_changes_only": [
+    "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "Assets/VRShooting/Runtime/Unity/UI/TacticalUIStyle.cs"
+  ],
+  "tracked_changes_within_task_scope": true,
+  "task_files_sha256": {
+    "Assets/SimulatedShooting/Tests/PlayMode/BriefResultsGuidanceRegressionTests.cs": "21811d74d1805e0acc23cb39e27b7c1c1ac72005704cb9b9cb2de17b2b4bf705",
+    "Assets/SimulatedShooting/Tests/PlayMode/P3ProductionFlowTests.cs": "13922b6f75015a92c491d5d9818386c2b3b540afc4bd425975d00df2f9af6fa2",
+    "Assets/SimulatedShooting/Tests/PlayMode/SimulatedShooting.PlayModeTests.asmdef": "4aecf8a912e9485d41b1d2bbe0601aea57f802d84e595e33b2d4fa84bb710ae7",
+    "Assets/SimulatedShooting/Tests/PlayMode/XRSceneHandoffTests.cs": "0132e5d4cc0318d7a2e7e62829c6b457af39809be1396c25273e80b26f3eee06",
+    "Assets/VRShooting/Editor/ModeOneScreenshotAdvance.cs": "ce8d3f75c46770977478b8165867de35562f781a2504e691c3c1b5b2c505a2b7",
+    "Assets/VRShooting/Editor/TacticalUIGallery.cs": "ff9497580455b6050bb1d6e1ea2530644a0b43ccd37ef8f2c202788a1044eb9d",
+    "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs": "bbbc25935513c61d918405c1fe72e2adc8c83f143b7dcb4717a1d8e85c06ce27",
+    "Assets/VRShooting/Runtime/Unity/UI/TacticalUIStyle.cs": "b2d3a5ba4de01dd1aab45897c31645f3bfd55c1c77913c750e5790ff36a6a7f0",
+    "Assets/VRShooting/Tests/EditMode/Application/MainMenuControlsTests.cs": "2a5929988fdb5410f1618662cfc26dabf42553973a2e725fe3c23b243822e1b4",
+    "Assets/VRShooting/Tests/PlayMode/Flow/P1FlowPlayModeGateTests.cs": "6763e818dfaea57cf2fdab1e8cef52babb7ab56d5fbb356aba3909a011859c24",
+    "Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs": "b789af415f50fcee97973d587b2080111e13eb037e2ea8fd1e3e16e4a75be2f5",
+    "Assets/VRShooting/Tests/PlayMode/UI/Screen02_05_SceneOwnedUIFlowTests.cs": "9b12d8b2eff753deed872f848be4b0b2de80bff5a5d6fd9b37163af23db1c019",
+    "Assets/VRShooting/Tests/PlayMode/UI/Screen05_ZeroingHudUITests.cs": "f715e75b7e07fac06523c9cc7b5e76d2b1a972da4d033980f333476eeb7c7d5e",
+    "Assets/VRShooting/Tests/PlayMode/UI/Screen06_ZeroingImpactAnalysisUITests.cs": "278af640e67eca2dd034221ba0d4535c608f20afc270637a71803120b0f2ae86",
+    "Assets/VRShooting/Tests/PlayMode/UI/Screen07_ZeroingFinalRatingUITests.cs": "71ba634f27df41570f6e366c9323206914bcf314f116a18fbeae5d02b855875f",
+    "docs/BDD/README.md": "05eef5652f8b743dd9b694ff70133a1c6e83b1d2e94dc6a1da46929f15ba9433",
+    "docs/BDD/screens/02-游戏主界面.feature.md": "305408310d0c645aaf98dcd4027d702cb69f9c33a9bb934775e624aaa8b7b45f",
+    "docs/任务规格/阶段一-P1-100m射校原型闭环/UI/task008-ui-mainmenu-zeroing-briefing.md": "72a1dee4c286079b3ecb4fd624fd24620b9e3b138d4eb8cd008bae57fa64ae17",
+    "docs/接口文档/01-页面导航与UI事件.md": "61893e754e7fb4c480b365ed0d3eb493f13dd103dc10a5996cba74510ce296ea",
+    "Assets/VRShooting/Tests/PlayMode/ModeIntroTestActions.cs": "0c6f04105a1196f2387353c7e121b0aacb653f904e1c7375db05ec911636a6de",
+    "Assets/VRShooting/Tests/PlayMode/ModeIntroTestActions.cs.meta": "2bc518b6ac2d702200f797c6e4cfd168c364e447106489d40cfbc1356538d8cc",
+    "docs/BDD/screens/37-各模式操作介绍.feature.md": "9d0c0bd04cd0e2de044bd2f2804215d27285598195c9b41ce3a8a0eea4e79a97",
+    "docs/codex-reports/mode-intro-pages-2026-11-16.md": "94b544973335659ff99972dd3b2b53f5f32cedf6ed04aa8ffc77a6657424324d"
+  },
+  "report_links_valid": true,
+  "pre_existing_untracked_report_preserved": true,
+  "temporary_capture_helper_removed": true
+}

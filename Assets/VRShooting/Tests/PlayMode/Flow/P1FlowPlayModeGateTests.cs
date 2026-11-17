@@ -196,7 +196,7 @@ namespace VRShooting.Tests.PlayMode.Flow
             services = GameMain.Instance.Services;
             Assert.That(services, Is.Not.Null, "[功能A] GameMain.Services was not initialized");
 
-            ClickButton("Button_MainMenu_OpenZeroing");
+            ModeIntroTestActions.EnterTraining(id => FindById(id).GetComponent<Button>());
             yield return null;
             Assert.That(
                 FindById("Screen_ZeroingBriefing")?.activeSelf,

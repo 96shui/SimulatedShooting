@@ -1,0 +1,9 @@
+{
+  "previous_targeted_count": 62,
+  "current_targeted_count": 63,
+  "missing_previous_cases": [],
+  "added_cases": [
+    "VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests.Screen02_MainMenuConfirmWithNoVrInputSubstitute_Opens100mZeroingEntry"
+  ],
+  "all_current_passed": true
+}

@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="85" result="Failed(Child)" total="85" passed="81" failed="4" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-16 15:37:06Z" end-time="2026-11-16 15:38:05Z" duration="59.3328133">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="335" result="Failed" site="Child" start-time="2026-11-16 15:37:06Z" end-time="2026-11-16 15:38:05Z" duration="59.332813" total="85" passed="81" failed="4" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1260" name="SimulatedShooting.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll" runstate="Runnable" testcasecount="225" result="Failed" site="Child" start-time="2026-11-16 15:37:06Z" end-time="2026-11-16 15:37:59Z" duration="53.011891" total="31" passed="27" failed="4" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="32980" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1261" name="SimulatedShooting" fullname="SimulatedShooting" runstate="Runnable" testcasecount="219" result="Failed" site="Child" start-time="2026-11-16 15:37:06Z" end-time="2026-11-16 15:37:59Z" duration="53.003313" total="31" passed="27" failed="4" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1262" name="Tests" fullname="SimulatedShooting.Tests" runstate="Runnable" testcasecount="219" result="Failed" site="Child" start-time="2026-11-16 15:37:06Z" end-time="2026-11-16 15:37:59Z" duration="52.996446" total="31" passed="27" failed="4" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1263" name="PlayMode" fullname="SimulatedShooting.Tests.PlayMode" runstate="Runnable" testcasecount="219" result="Failed" site="Child" start-time="2026-11-16 15:37:06Z" end-time="2026-11-16 15:37:59Z" duration="52.989643" total="31" passed="27" failed="4" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1017" name="BriefResultsGuidanceRegressionTests" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-11-16 15:37:06Z" end-time="2026-11-16 15:37:21Z" duration="14.655167" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1018" name="Bdd04_BriefingUsesThePhysicalTargetTexture" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd04_BriefingUsesThePhysicalTargetTexture" methodname="Bdd04_BriefingUsesThePhysicalTargetTexture" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="1212262426" result="Passed" start-time="2026-11-16 15:37:06Z" end-time="2026-11-16 15:37:07Z" duration="1.169857" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1020" name="Bdd05_ModeSelectionReentryClearsAllFacesAndPreservesNewSessionHits" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd05_ModeSelectionReentryClearsAllFacesAndPreservesNewSessionHits" methodname="Bdd05_ModeSelectionReentryClearsAllFacesAndPreservesNewSessionHits" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="1424839014" result="Passed" start-time="2026-11-16 15:37:07Z" end-time="2026-11-16 15:37:09Z" duration="1.599361" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+[GameStateManager] 状态改变为: MainMenu
+[GameStateManager] 状态改变为: InGame
+]]></output>
+              </test-case>
+              <test-case id="1019" name="Bdd07_ActualRetryButtonClearsEntireTargetRowIncludingInactiveFaces" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd07_ActualRetryButtonClearsEntireTargetRowIncludingInactiveFaces" methodname="Bdd07_ActualRetryButtonClearsEntireTargetRowIncludingInactiveFaces" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="1895584248" result="Passed" start-time="2026-11-16 15:37:09Z" end-time="2026-11-16 15:37:10Z" duration="0.799332" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1021" name="Bdd11_ResultsAppearAtCurrentEyeHeightAndForwardAfterTurning" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd11_ResultsAppearAtCurrentEyeHeightAndForwardAfterTurning" methodname="Bdd11_ResultsAppearAtCurrentEyeHeightAndForwardAfterTurning" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="554678894" result="Passed" start-time="2026-11-16 15:37:10Z" end-time="2026-11-16 15:37:11Z" duration="0.995339" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Eye=(0.23, 1.67, -0.11); panel=(1.28, 1.67, 0.21); delta=(1.05, 0.00, 0.32); forward distance=1.1
+]]></output>
+              </test-case>
+              <test-case id="1022" name="Bdd29_Mode1HeldRifleHasNoGuidanceAndKeepsHud" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode1HeldRifleHasNoGuidanceAndKeepsHud" methodname="Bdd29_Mode1HeldRifleHasNoGuidanceAndKeepsHud" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="1852052811" result="Passed" start-time="2026-11-16 15:37:11Z" end-time="2026-11-16 15:37:13Z" duration="1.928744" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1023" name="Bdd29_Mode2HeldRifleHasNoGuidanceAndKeepsHud" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode2HeldRifleHasNoGuidanceAndKeepsHud" methodname="Bdd29_Mode2HeldRifleHasNoGuidanceAndKeepsHud" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="1111622987" result="Passed" start-time="2026-11-16 15:37:13Z" end-time="2026-11-16 15:37:15Z" duration="1.869026" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1024" name="Bdd29_Mode3HeldRifleHasNoGuidanceAndKeepsHud" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode3HeldRifleHasNoGuidanceAndKeepsHud" methodname="Bdd29_Mode3HeldRifleHasNoGuidanceAndKeepsHud" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="1529247342" result="Passed" start-time="2026-11-16 15:37:15Z" end-time="2026-11-16 15:37:17Z" duration="2.933249" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1025" name="Bdd29_Mode4HeldRifleHasNoGuidanceAndKeepsHud" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_Mode4HeldRifleHasNoGuidanceAndKeepsHud" methodname="Bdd29_Mode4HeldRifleHasNoGuidanceAndKeepsHud" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="1669319855" result="Passed" start-time="2026-11-16 15:37:17Z" end-time="2026-11-16 15:37:19Z" duration="1.978905" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1026" name="Bdd29_StandaloneCalloutCannotShowLinesLabelsOrEndpointDecorations" fullname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests.Bdd29_StandaloneCalloutCannotShowLinesLabelsOrEndpointDecorations" methodname="Bdd29_StandaloneCalloutCannotShowLinesLabelsOrEndpointDecorations" classname="SimulatedShooting.Tests.PlayMode.BriefResultsGuidanceRegressionTests" runstate="Runnable" seed="1841836971" result="Passed" start-time="2026-11-16 15:37:19Z" end-time="2026-11-16 15:37:21Z" duration="1.371985" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1115" name="P3ProductionFlowTests" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" testcasecount="12" result="Failed" site="Child" start-time="2026-11-16 15:37:21Z" end-time="2026-11-16 15:37:38Z" duration="17.168106" total="12" passed="9" failed="3" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1122" name="Bdd23_Trench_ProductionMagazineReload" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Trench_ProductionMagazineReload" methodname="Bdd23_Trench_ProductionMagazineReload" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="1404486496" result="Passed" start-time="2026-11-16 15:37:21Z" end-time="2026-11-16 15:37:23Z" duration="2.248251" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1123" name="Bdd23_Urban_ProductionMagazineReload" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_Urban_ProductionMagazineReload" methodname="Bdd23_Urban_ProductionMagazineReload" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="1897557268" result="Passed" start-time="2026-11-16 15:37:23Z" end-time="2026-11-16 15:37:24Z" duration="1.262629" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1126" name="Bdd23_UrbanRightStickOpensNearbyProductionDoor" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd23_UrbanRightStickOpensNearbyProductionDoor" methodname="Bdd23_UrbanRightStickOpensNearbyProductionDoor" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="95499053" result="Passed" start-time="2026-11-16 15:37:24Z" end-time="2026-11-16 15:37:25Z" duration="0.950745" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1127" name="Bdd27_DesktopThrowSpawnsVisibleM67UntilExplosion" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd27_DesktopThrowSpawnsVisibleM67UntilExplosion" methodname="Bdd27_DesktopThrowSpawnsVisibleM67UntilExplosion" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="2095647963" result="Passed" start-time="2026-11-16 15:37:25Z" end-time="2026-11-16 15:37:27Z" duration="1.557832" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1124" name="Bdd29_Trench_LeftShoulderProductionMagazineReload" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd29_Trench_LeftShoulderProductionMagazineReload" methodname="Bdd29_Trench_LeftShoulderProductionMagazineReload" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="1804836359" result="Passed" start-time="2026-11-16 15:37:27Z" end-time="2026-11-16 15:37:28Z" duration="1.610199" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1125" name="Bdd29_Urban_LeftShoulderProductionMagazineReload" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Bdd29_Urban_LeftShoulderProductionMagazineReload" methodname="Bdd29_Urban_LeftShoulderProductionMagazineReload" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="456038996" result="Passed" start-time="2026-11-16 15:37:28Z" end-time="2026-11-16 15:37:30Z" duration="1.165163" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1121" name="Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene" methodname="Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="905193956" result="Failed" start-time="2026-11-16 15:37:30Z" end-time="2026-11-16 15:37:31Z" duration="1.735016" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: UrbanStreetHud
+  But was:  UrbanBuildingHud
+]]></message>
+                  <stack-trace><![CDATA[at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Screen14_18_CancelLoadingThenSwitchModeKeepsExclusiveScene>d__10.MoveNext () [0x00197] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\P3ProductionFlowTests.cs:85
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1116" name="Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds" methodname="Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="831783727" result="Failed" label="Error" start-time="2026-11-16 15:37:31Z" end-time="2026-11-16 15:37:33Z" duration="1.808618" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[System.NullReferenceException : Object reference not set to an instance of an object]]></message>
+                  <stack-trace><![CDATA[  at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Screen14_18_DesktopSceneHasSingleOutputAndVisiblePageBounds>d__5.MoveNext () [0x003ad] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\P3ProductionFlowTests.cs:57 
+  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46 ]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1119" name="Screen17_Trench_DeathThreeRetriesTrackingAndMovement" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen17_Trench_DeathThreeRetriesTrackingAndMovement" methodname="Screen17_Trench_DeathThreeRetriesTrackingAndMovement" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="1698848994" result="Passed" start-time="2026-11-16 15:37:33Z" end-time="2026-11-16 15:37:35Z" duration="1.714946" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1117" name="Screen17_Trench_ProductionVictoryRetryAndReturn" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen17_Trench_ProductionVictoryRetryAndReturn" methodname="Screen17_Trench_ProductionVictoryRetryAndReturn" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="2093002790" result="Passed" start-time="2026-11-16 15:37:35Z" end-time="2026-11-16 15:37:36Z" duration="1.338577" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1120" name="Screen21_Urban_DeathThreeRetriesTrackingAndMovement" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_DeathThreeRetriesTrackingAndMovement" methodname="Screen21_Urban_DeathThreeRetriesTrackingAndMovement" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="1912827498" result="Passed" start-time="2026-11-16 15:37:36Z" end-time="2026-11-16 15:37:37Z" duration="0.848649" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1118" name="Screen21_Urban_ProductionVictoryRetryAndReturn" fullname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests.Screen21_Urban_ProductionVictoryRetryAndReturn" methodname="Screen21_Urban_ProductionVictoryRetryAndReturn" classname="SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests" runstate="Runnable" seed="1666162672" result="Failed" start-time="2026-11-16 15:37:37Z" end-time="2026-11-16 15:37:38Z" duration="0.922938" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Entry prompt should reflect physical range: 
+  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at SimulatedShooting.Tests.PlayMode.P3ProductionFlowTests+<Complete>d__22.MoveNext () [0x0042d] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\P3ProductionFlowTests.cs:449
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1171" name="XRSceneHandoffTests" fullname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests" classname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests" runstate="Runnable" testcasecount="10" result="Failed" site="Child" start-time="2026-11-16 15:37:38Z" end-time="2026-11-16 15:37:59Z" duration="21.151268" total="10" passed="9" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1179" name="Bdd23_Task019_TrenchReconThenTrackedHandsGrabStableRifle" fullname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd23_Task019_TrenchReconThenTrackedHandsGrabStableRifle" methodname="Bdd23_Task019_TrenchReconThenTrackedHandsGrabStableRifle" classname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests" runstate="Runnable" seed="169366805" result="Passed" start-time="2026-11-16 15:37:38Z" end-time="2026-11-16 15:37:41Z" duration="3.262446" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+Failed to get haptic capabilities of SceneHandoffController:/SceneHandoffController1, error code -1. Continuing assuming a single haptic channel.
+Failed to get haptic capabilities of SceneHandoffController:/SceneHandoffController, error code -1. Continuing assuming a single haptic channel.
+[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1173" name="Bdd34_MenuHandsHideUntilTrackedAndRecoverWithoutDisablingUi" fullname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuHandsHideUntilTrackedAndRecoverWithoutDisablingUi" methodname="Bdd34_MenuHandsHideUntilTrackedAndRecoverWithoutDisablingUi" classname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests" runstate="Runnable" seed="1502572112" result="Passed" start-time="2026-11-16 15:37:41Z" end-time="2026-11-16 15:37:43Z" duration="1.305165" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1174" name="Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands" fullname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands" methodname="Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands" classname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests" runstate="Runnable" seed="1544223593" result="Failed" start-time="2026-11-16 15:37:43Z" end-time="2026-11-16 15:37:44Z" duration="1.050709" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: 2
+  But was:  0
+]]></message>
+                  <stack-trace><![CDATA[at SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests+<Bdd34_MenuVisibilityProtectionDoesNotHideTrainingHands>d__9.MoveNext () [0x000f3] in E:\新建文件夹 (3)\SimulateShooting\Assets\SimulatedShooting\Tests\PlayMode\XRSceneHandoffTests.cs:149
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1180" name="Screen00_MovingRangeHeadAndBothHandsReceiveDevicePoses" fullname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen00_MovingRangeHeadAndBothHandsReceiveDevicePoses" methodname="Screen00_MovingRangeHeadAndBothHandsReceiveDevicePoses" classname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests" runstate="Runnable" seed="1745888956" result="Passed" start-time="2026-11-16 15:37:44Z" end-time="2026-11-16 15:37:46Z" duration="2.391145" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+Failed to get haptic capabilities of SceneHandoffController:/SceneHandoffController1, error code -1. Continuing assuming a single haptic channel.
+Failed to get haptic capabilities of SceneHandoffController:/SceneHandoffController, error code -1. Continuing assuming a single haptic channel.
+[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1176" name="Screen00_RangeAutomaticallyChoosesRunningDisplay" fullname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen00_RangeAutomaticallyChoosesRunningDisplay" methodname="Screen00_RangeAutomaticallyChoosesRunningDisplay" classname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests" runstate="Runnable" seed="1610138162" result="Passed" start-time="2026-11-16 15:37:46Z" end-time="2026-11-16 15:37:47Z" duration="1.421998" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1177" name="Screen02_MainMenuEyeHeightVisibleRaysAndTrackedTriggerRecover" fullname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen02_MainMenuEyeHeightVisibleRaysAndTrackedTriggerRecover" methodname="Screen02_MainMenuEyeHeightVisibleRaysAndTrackedTriggerRecover" classname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests" runstate="Runnable" seed="1025756444" result="Passed" start-time="2026-11-16 15:37:47Z" end-time="2026-11-16 15:37:50Z" duration="2.143781" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1175" name="Screen02_MainMenuUsesLeftMoveAndRightSnapTurnOnly" fullname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen02_MainMenuUsesLeftMoveAndRightSnapTurnOnly" methodname="Screen02_MainMenuUsesLeftMoveAndRightSnapTurnOnly" classname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests" runstate="Runnable" seed="129843003" result="Passed" start-time="2026-11-16 15:37:50Z" end-time="2026-11-16 15:37:50Z" duration="0.536324" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1172" name="Screen02_MenuRecoversEmptyAndRemovedDeviceFilters" fullname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen02_MenuRecoversEmptyAndRemovedDeviceFilters" methodname="Screen02_MenuRecoversEmptyAndRemovedDeviceFilters" classname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests" runstate="Runnable" seed="1981008749" result="Passed" start-time="2026-11-16 15:37:50Z" end-time="2026-11-16 15:37:51Z" duration="0.552147" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1181" name="Screen14_18_TrackedTriggerClicksMapsAndBriefingAcrossRigHandoff" fullname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen14_18_TrackedTriggerClicksMapsAndBriefingAcrossRigHandoff" methodname="Screen14_18_TrackedTriggerClicksMapsAndBriefingAcrossRigHandoff" classname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests" runstate="Runnable" seed="1758113124" result="Passed" start-time="2026-11-16 15:37:51Z" end-time="2026-11-16 15:37:54Z" duration="3.691110" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+              <test-case id="1178" name="Screen18_21_VrActionsAndTrackedPosesSurviveUrbanLoadAndReturn" fullname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests.Screen18_21_VrActionsAndTrackedPosesSurviveUrbanLoadAndReturn" methodname="Screen18_21_VrActionsAndTrackedPosesSurviveUrbanLoadAndReturn" classname="SimulatedShooting.Tests.PlayMode.XRSceneHandoffTests" runstate="Runnable" seed="1384657447" result="Passed" start-time="2026-11-16 15:37:54Z" end-time="2026-11-16 15:37:59Z" duration="4.792024" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                </properties>
+                <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+Failed to get haptic capabilities of SceneHandoffController:/SceneHandoffController1, error code -1. Continuing assuming a single haptic channel.
+Failed to get haptic capabilities of SceneHandoffController:/SceneHandoffController, error code -1. Continuing assuming a single haptic channel.
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+Failed to get haptic capabilities of SceneHandoffController:/SceneHandoffController1, error code -1. Continuing assuming a single haptic channel.
+Failed to get haptic capabilities of SceneHandoffController:/SceneHandoffController, error code -1. Continuing assuming a single haptic channel.
+[GameStateManager] 状态改变为: MainMenu
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1398" name="VRShooting.Runtime.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.PlayModeTests.dll" runstate="Runnable" testcasecount="110" result="Passed" start-time="2026-11-16 15:37:59Z" end-time="2026-11-16 15:38:05Z" duration="6.309270" total="54" passed="54" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="32980" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <test-suite type="TestSuite" id="1399" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="110" result="Passed" start-time="2026-11-16 15:37:59Z" end-time="2026-11-16 15:38:05Z" duration="6.308185" total="54" passed="54" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1400" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="110" result="Passed" start-time="2026-11-16 15:37:59Z" end-time="2026-11-16 15:38:05Z" duration="6.307588" total="54" passed="54" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1401" name="PlayMode" fullname="VRShooting.Tests.PlayMode" runstate="Runnable" testcasecount="110" result="Passed" start-time="2026-11-16 15:37:59Z" end-time="2026-11-16 15:38:05Z" duration="6.307063" total="54" passed="54" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestSuite" id="1405" name="Flow" fullname="VRShooting.Tests.PlayMode.Flow" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-11-16 15:37:59Z" end-time="2026-11-16 15:38:00Z" duration="0.949809" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="1390" name="P1FlowPlayModeGateTests" fullname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" classname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-16 15:37:59Z" end-time="2026-11-16 15:38:00Z" duration="0.949092" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1391" name="P1Flow_InputStub_Round1Pass_ShowsExcellentFinalRating" fullname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_InputStub_Round1Pass_ShowsExcellentFinalRating" methodname="P1Flow_InputStub_Round1Pass_ShowsExcellentFinalRating" classname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" runstate="Runnable" seed="73123988" result="Passed" start-time="2026-11-16 15:37:59Z" end-time="2026-11-16 15:37:59Z" duration="0.028597" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1392" name="P1Flow_InputStub_ThreeRoundsFail_ShowsFailFinalRating" fullname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_InputStub_ThreeRoundsFail_ShowsFailFinalRating" methodname="P1Flow_InputStub_ThreeRoundsFail_ShowsFailFinalRating" classname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" runstate="Runnable" seed="1912679155" result="Passed" start-time="2026-11-16 15:37:59Z" end-time="2026-11-16 15:37:59Z" duration="0.037302" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1393" name="P1Flow_SceneOwned_MainMenuToRange_Round1PassShowsExcellent" fullname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests.P1Flow_SceneOwned_MainMenuToRange_Round1PassShowsExcellent" methodname="P1Flow_SceneOwned_MainMenuToRange_Round1PassShowsExcellent" classname="VRShooting.Tests.PlayMode.Flow.P1FlowPlayModeGateTests" runstate="Runnable" seed="1029654802" result="Passed" start-time="2026-11-16 15:37:59Z" end-time="2026-11-16 15:38:00Z" duration="0.882047" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+[GameStateManager] 状态改变为: InGame
+]]></output>
+                </test-case>
+              </test-suite>
+            </test-suite>
+            <test-suite type="TestSuite" id="1403" name="Input" fullname="VRShooting.Tests.PlayMode.Input" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.007262" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="1382" name="Screen05_XRTrainingInputPlayModeTests" fullname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests" classname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.006738" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1383" name="Screen02_MainMenuConfirmWithNoVrInputSubstitute_Opens100mZeroingEntry" fullname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests.Screen02_MainMenuConfirmWithNoVrInputSubstitute_Opens100mZeroingEntry" methodname="Screen02_MainMenuConfirmWithNoVrInputSubstitute_Opens100mZeroingEntry" classname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests" runstate="Runnable" seed="1574724005" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.002273" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1385" name="Screen05_NoVrInputSubstitute_AimInput_IsPublishedForWeaponControl" fullname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests.Screen05_NoVrInputSubstitute_AimInput_IsPublishedForWeaponControl" methodname="Screen05_NoVrInputSubstitute_AimInput_IsPublishedForWeaponControl" classname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests" runstate="Runnable" seed="1137764450" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.002129" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1384" name="Screen05_NoVrInputSubstitute_TriggerReloadAndShoulderSwitch_ArePublishedForServiceLayer" fullname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests.Screen05_NoVrInputSubstitute_TriggerReloadAndShoulderSwitch_ArePublishedForServiceLayer" methodname="Screen05_NoVrInputSubstitute_TriggerReloadAndShoulderSwitch_ArePublishedForServiceLayer" classname="VRShooting.Tests.PlayMode.Input.Screen05_XRTrainingInputPlayModeTests" runstate="Runnable" seed="1593672039" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.001351" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+            </test-suite>
+            <test-suite type="TestSuite" id="1402" name="UI" fullname="VRShooting.Tests.PlayMode.UI" runstate="Runnable" testcasecount="77" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:05Z" duration="5.346777" total="48" passed="48" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="TestFixture" id="1312" name="Screen02_04_MainMenuZeroingBriefingUITests" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.213271" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1321" name="Bdd02_ControlsPanelOpensAndClosesWithoutLeavingMenu" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd02_ControlsPanelOpensAndClosesWithoutLeavingMenu" methodname="Bdd02_ControlsPanelOpensAndClosesWithoutLeavingMenu" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1824334373" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.039283" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1316" name="Bdd04_BriefingPickupPromptStaysBelowFrameAndAboveStationStatus" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd04_BriefingPickupPromptStaysBelowFrameAndAboveStationStatus" methodname="Bdd04_BriefingPickupPromptStaysBelowFrameAndAboveStationStatus" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1671355535" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.012122" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1323" name="Bdd37_BodyFitsCommonResolutionsAndOverflowScrollDoesNotCoverButtons" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd37_BodyFitsCommonResolutionsAndOverflowScrollDoesNotCoverButtons" methodname="Bdd37_BodyFitsCommonResolutionsAndOverflowScrollDoesNotCoverButtons" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1795806933" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.047782" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1322" name="Bdd37_FourConfirmationsPreserveOriginalRoutesAndDoNotReplay" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd37_FourConfirmationsPreserveOriginalRoutesAndDoNotReplay" methodname="Bdd37_FourConfirmationsPreserveOriginalRoutesAndDoNotReplay" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1955577915" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.018110" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1324" name="Screen02_CreatorsEntryAndPanelAreAbsentAndNavigationRemainsUsable" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_CreatorsEntryAndPanelAreAbsentAndNavigationRemainsUsable" methodname="Screen02_CreatorsEntryAndPanelAreAbsentAndNavigationRemainsUsable" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1793524469" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.015829" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1313" name="Screen02_InputInfrastructure_SupportsDesktopAndXrPointers" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_InputInfrastructure_SupportsDesktopAndXrPointers" methodname="Screen02_InputInfrastructure_SupportsDesktopAndXrPointers" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="874673708" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.010745" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1315" name="Screen02_MainMenuOpenZeroingButton_RoutesToZeroingBriefing" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_MainMenuOpenZeroingButton_RoutesToZeroingBriefing" methodname="Screen02_MainMenuOpenZeroingButton_RoutesToZeroingBriefing" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1925620784" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.011883" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1314" name="Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton" methodname="Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1942035224" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.015097" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1320" name="Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist" methodname="Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1599814857" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.009485" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1317" name="Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu" methodname="Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1454965790" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.009947" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1318" name="Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup" methodname="Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="738592465" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.010634" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1319" name="Screen04_ZeroingBriefingStartButton_IsIdempotentForRepeatedClicks" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Screen04_ZeroingBriefingStartButton_IsIdempotentForRepeatedClicks" methodname="Screen04_ZeroingBriefingStartButton_IsIdempotentForRepeatedClicks" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="1524080488" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:00Z" duration="0.010759" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1325" name="Screen02_05_SceneOwnedUIFlowTests" fullname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests" classname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:02Z" duration="1.716526" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1326" name="Screen02_05_ClickZeroingWaitsForPickupThenShowsSceneOwnedHud" fullname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_05_ClickZeroingWaitsForPickupThenShowsSceneOwnedHud" methodname="Screen02_05_ClickZeroingWaitsForPickupThenShowsSceneOwnedHud" classname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests" runstate="Runnable" seed="2127130053" result="Passed" start-time="2026-11-16 15:38:00Z" end-time="2026-11-16 15:38:01Z" duration="0.879100" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+[GameStateManager] 状态改变为: InGame
+]]></output>
+                </test-case>
+                <test-case id="1327" name="Screen02_MainScene_SwitchesBetweenDesktopAndVrUiModes" fullname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_MainScene_SwitchesBetweenDesktopAndVrUiModes" methodname="Screen02_MainScene_SwitchesBetweenDesktopAndVrUiModes" classname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests" runstate="Runnable" seed="1504955146" result="Passed" start-time="2026-11-16 15:38:01Z" end-time="2026-11-16 15:38:02Z" duration="0.294603" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+]]></output>
+                </test-case>
+                <test-case id="1328" name="Screen02_MainScene_TeleportRayCannotDisableModeSelectionUiRay" fullname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_MainScene_TeleportRayCannotDisableModeSelectionUiRay" methodname="Screen02_MainScene_TeleportRayCannotDisableModeSelectionUiRay" classname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests" runstate="Runnable" seed="1601343408" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.270812" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+]]></output>
+                </test-case>
+                <test-case id="1329" name="Screen02_MainScene_VrUsesFloorTrackingAndReadableStabilizedMenu" fullname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests.Screen02_MainScene_VrUsesFloorTrackingAndReadableStabilizedMenu" methodname="Screen02_MainScene_VrUsesFloorTrackingAndReadableStabilizedMenu" classname="VRShooting.Tests.PlayMode.UI.Screen02_05_SceneOwnedUIFlowTests" runstate="Runnable" seed="1009823767" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.271043" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <output><![CDATA[[GameStateManager] 状态改变为: MainMenu
+Could not find a device that supports eye tracking on Awake. Gaze Interactor (UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets.GazeInputManager) has subscribed to device connected events and will activate the GameObject when an eye tracking device is connected.
+]]></output>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1330" name="Screen05_ZeroingHudUITests" fullname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests" classname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.096078" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1332" name="Bdd04_RangePickupPromptAndInstructionsHaveValidSafeLayout" fullname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Bdd04_RangePickupPromptAndInstructionsHaveValidSafeLayout" methodname="Bdd04_RangePickupPromptAndInstructionsHaveValidSafeLayout" classname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests" runstate="Runnable" seed="540388881" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.016963" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1333" name="Screen05_ZeroingHud_FireRefreshesAmmoAndImpactRecord" fullname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_FireRefreshesAmmoAndImpactRecord" methodname="Screen05_ZeroingHud_FireRefreshesAmmoAndImpactRecord" classname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests" runstate="Runnable" seed="1251066488" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.020175" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1331" name="Screen05_ZeroingHud_LoadsInitialDtoValues" fullname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_LoadsInitialDtoValues" methodname="Screen05_ZeroingHud_LoadsInitialDtoValues" classname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests" runstate="Runnable" seed="1211625694" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.018346" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1334" name="Screen05_ZeroingHud_ToggleShoulderRefreshesPrompt" fullname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_ToggleShoulderRefreshesPrompt" methodname="Screen05_ZeroingHud_ToggleShoulderRefreshesPrompt" classname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests" runstate="Runnable" seed="421547474" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.018541" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1335" name="Screen05_ZeroingHud_ZeroAmmoShowsBlockedPrompt" fullname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests.Screen05_ZeroingHud_ZeroAmmoShowsBlockedPrompt" methodname="Screen05_ZeroingHud_ZeroAmmoShowsBlockedPrompt" classname="VRShooting.Tests.PlayMode.UI.Screen05_ZeroingHudUITests" runstate="Runnable" seed="755457812" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.020629" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1336" name="Screen06_ZeroingImpactAnalysisUITests" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" testcasecount="24" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:05Z" duration="3.242441" total="24" passed="24" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1359" name="Bdd04_BriefingShowsFourShotsAndBothPassPaths" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd04_BriefingShowsFourShotsAndBothPassPaths" methodname="Bdd04_BriefingShowsFourShotsAndBothPassPaths" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1345137833" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.017591" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1358" name="Bdd06_AboveSuggestsCounterclockwiseAndClockwiseMovesBlueUp" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_AboveSuggestsCounterclockwiseAndClockwiseMovesBlueUp" methodname="Bdd06_AboveSuggestsCounterclockwiseAndClockwiseMovesBlueUp" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="611157876" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.033033" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1343" name="Bdd06_AdjustmentControlsShowCurrentMechanicalValuesAndUnits" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_AdjustmentControlsShowCurrentMechanicalValuesAndUnits" methodname="Bdd06_AdjustmentControlsShowCurrentMechanicalValuesAndUnits" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1701894894" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.021657" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1341" name="Bdd06_AnswerAndSightReadoutsFollowReversedActualAdjustment" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_AnswerAndSightReadoutsFollowReversedActualAdjustment" methodname="Bdd06_AnswerAndSightReadoutsFollowReversedActualAdjustment" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1828944110" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.025894" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1340" name="Bdd06_AnswerReflectsActualPendingAndAppliedCorrectionAndResetsOnNextRound" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_AnswerReflectsActualPendingAndAppliedCorrectionAndResetsOnNextRound" methodname="Bdd06_AnswerReflectsActualPendingAndAppliedCorrectionAndResetsOnNextRound" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1976900654" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.025594" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1342" name="Bdd06_ApplyingNearZeroOffsetImmediatelyEnablesViewGrade" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_ApplyingNearZeroOffsetImmediatelyEnablesViewGrade" methodname="Bdd06_ApplyingNearZeroOffsetImmediatelyEnablesViewGrade" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1434422854" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.028133" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1354" name="Bdd06_FourImpactsShowIdenticalMarkersAndAverage" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_FourImpactsShowIdenticalMarkersAndAverage" methodname="Bdd06_FourImpactsShowIdenticalMarkersAndAverage" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1297458136" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.022279" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1360" name="Bdd06_HorizontalFractionalMean_UsesWholeClicks" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_HorizontalFractionalMean_UsesWholeClicks" methodname="Bdd06_HorizontalFractionalMean_UsesWholeClicks" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="2041401158" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.030191" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1338" name="Bdd06_InfoPanelsAreExclusiveAndKeepTheirFixedPositions" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_InfoPanelsAreExclusiveAndKeepTheirFixedPositions" methodname="Bdd06_InfoPanelsAreExclusiveAndKeepTheirFixedPositions" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="659715081" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.022490" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1339" name="Bdd06_InfoPanelsResetWhenChangingRoundLeavingAndReentering" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_InfoPanelsResetWhenChangingRoundLeavingAndReentering" methodname="Bdd06_InfoPanelsResetWhenChangingRoundLeavingAndReentering" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="851634101" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.033035" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1352" name="Bdd06_LargeSuggestedFrontSightAngleRemainsAdjustableInUi" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_LargeSuggestedFrontSightAngleRemainsAdjustableInUi" methodname="Bdd06_LargeSuggestedFrontSightAngleRemainsAdjustableInUi" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1682575447" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.022534" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1355" name="Bdd06_OffTargetShotStillAppearsInTheFourShotPlot" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_OffTargetShotStillAppearsInTheFourShotPlot" methodname="Bdd06_OffTargetShotStillAppearsInTheFourShotPlot" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1570692261" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.020787" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1337" name="Bdd06_OpeningHelpHidesAnswerButtonAndPanel" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_OpeningHelpHidesAnswerButtonAndPanel" methodname="Bdd06_OpeningHelpHidesAnswerButtonAndPanel" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="2124751417" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:02Z" duration="0.021812" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1356" name="Bdd06_SpreadDisablesAllAdjustmentsAndHidesAnswer" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_SpreadDisablesAllAdjustmentsAndHidesAnswer" methodname="Bdd06_SpreadDisablesAllAdjustmentsAndHidesAnswer" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1232117988" result="Passed" start-time="2026-11-16 15:38:02Z" end-time="2026-11-16 15:38:03Z" duration="0.030131" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1357" name="Bdd06_ThirdSpreadAllowsRatingWithoutAdjustment" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_ThirdSpreadAllowsRatingWithoutAdjustment" methodname="Bdd06_ThirdSpreadAllowsRatingWithoutAdjustment" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1603379491" result="Passed" start-time="2026-11-16 15:38:03Z" end-time="2026-11-16 15:38:03Z" duration="0.033403" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1351" name="Bdd06_VerticalLongHoldRepeatsFiveDegreesAndReleaseDoesNotAddClick" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd06_VerticalLongHoldRepeatsFiveDegreesAndReleaseDoesNotAddClick" methodname="Bdd06_VerticalLongHoldRepeatsFiveDegreesAndReleaseDoesNotAddClick" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1445415464" result="Passed" start-time="2026-11-16 15:38:03Z" end-time="2026-11-16 15:38:05Z" duration="2.472095" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1344" name="Bdd30_HelpShowsRoundAdviceNotTheEditedOrAppliedAmount" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Bdd30_HelpShowsRoundAdviceNotTheEditedOrAppliedAmount" methodname="Bdd30_HelpShowsRoundAdviceNotTheEditedOrAppliedAmount" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="218899569" result="Passed" start-time="2026-11-16 15:38:05Z" end-time="2026-11-16 15:38:05Z" duration="0.023469" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1347" name="Screen06_ApplyAdjustmentUpdatesStateAndNextRoundReturnsToHud" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ApplyAdjustmentUpdatesStateAndNextRoundReturnsToHud" methodname="Screen06_ApplyAdjustmentUpdatesStateAndNextRoundReturnsToHud" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="993633365" result="Passed" start-time="2026-11-16 15:38:05Z" end-time="2026-11-16 15:38:05Z" duration="0.023043" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1350" name="Screen06_BackToMainMenuButtonReturnsToMainMenu" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_BackToMainMenuButtonReturnsToMainMenu" methodname="Screen06_BackToMainMenuButtonReturnsToMainMenu" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1570871693" result="Passed" start-time="2026-11-16 15:38:05Z" end-time="2026-11-16 15:38:05Z" duration="0.021572" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1349" name="Screen06_FiveDegreesMoveBlueMarkerVerticallyWithoutChangingHorizontal" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_FiveDegreesMoveBlueMarkerVerticallyWithoutChangingHorizontal" methodname="Screen06_FiveDegreesMoveBlueMarkerVerticallyWithoutChangingHorizontal" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="2094748488" result="Passed" start-time="2026-11-16 15:38:05Z" end-time="2026-11-16 15:38:05Z" duration="0.022032" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1346" name="Screen06_HelpOwnsAllTipsAndResetsOnNextRound" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_HelpOwnsAllTipsAndResetsOnNextRound" methodname="Screen06_HelpOwnsAllTipsAndResetsOnNextRound" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="2131956129" result="Passed" start-time="2026-11-16 15:38:05Z" end-time="2026-11-16 15:38:05Z" duration="0.206195" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1348" name="Screen06_ManualAxisButtonsPreviewAndCommitCorrection" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ManualAxisButtonsPreviewAndCommitCorrection" methodname="Screen06_ManualAxisButtonsPreviewAndCommitCorrection" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="598349875" result="Passed" start-time="2026-11-16 15:38:05Z" end-time="2026-11-16 15:38:05Z" duration="0.023413" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1353" name="Screen06_ThirdRoundPrimaryActionOpensFinalRating" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThirdRoundPrimaryActionOpensFinalRating" methodname="Screen06_ThirdRoundPrimaryActionOpensFinalRating" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="2046624311" result="Passed" start-time="2026-11-16 15:38:05Z" end-time="2026-11-16 15:38:05Z" duration="0.033495" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1345" name="Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto" fullname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests.Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto" methodname="Screen06_ThreeShotsOpenImpactAnalysisAndRenderDto" classname="VRShooting.Tests.PlayMode.UI.Screen06_ZeroingImpactAnalysisUITests" runstate="Runnable" seed="1538792552" result="Passed" start-time="2026-11-16 15:38:05Z" end-time="2026-11-16 15:38:05Z" duration="0.021906" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1361" name="Screen07_ZeroingFinalRatingUITests" fullname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests" classname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-11-16 15:38:05Z" end-time="2026-11-16 15:38:05Z" duration="0.074407" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1364" name="Screen07_BackToModeSelectionReturnsToMainMenuFallback" fullname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests.Screen07_BackToModeSelectionReturnsToMainMenuFallback" methodname="Screen07_BackToModeSelectionReturnsToMainMenuFallback" classname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests" runstate="Runnable" seed="703550126" result="Passed" start-time="2026-11-16 15:38:05Z" end-time="2026-11-16 15:38:05Z" duration="0.025664" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1362" name="Screen07_FirstRoundPassShowsExcellentFinalRating" fullname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests.Screen07_FirstRoundPassShowsExcellentFinalRating" methodname="Screen07_FirstRoundPassShowsExcellentFinalRating" classname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests" runstate="Runnable" seed="133953805" result="Passed" start-time="2026-11-16 15:38:05Z" end-time="2026-11-16 15:38:05Z" duration="0.023949" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+                <test-case id="1363" name="Screen07_RetryReturnsToZeroingBriefing" fullname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests.Screen07_RetryReturnsToZeroingBriefing" methodname="Screen07_RetryReturnsToZeroingBriefing" classname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests" runstate="Runnable" seed="857391341" result="Passed" start-time="2026-11-16 15:38:05Z" end-time="2026-11-16 15:38:05Z" duration="0.023625" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

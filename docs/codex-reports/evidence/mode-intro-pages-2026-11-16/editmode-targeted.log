@@ -1,0 +1,1654 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Channel LicenseClient-10532 doesn't exist
+[Licensing::Module] Successfully launched the LicensingClient (PId: 54140)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-10532" at "2026-11-16T14:42:38.0480175Z"
+[Licensing::Client] Code 10 while verifying Licensing Client signature (process Id: 54140, path: "C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Resources/Licensing/Client/Unity.Licensing.Client.exe")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.16.2+bdef8f5
+  Session Id:              4b05e4cf4765416b8a46d11a28747a08
+  Correlation Id:          0a0fbf5cbd4ed55560e202de8ab8251f
+  External correlation Id: 817539239715976
+  Machine Id:              6t61Ps/rvwmcShRoGrHoofyWNlI=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-10532" (connect: 1.93s, validation: 0.13s, handshake: 0.04s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-10532-notifications" at "2026-11-16T14:42:38.2154853Z"
+[Licensing::Module] Connected to LicensingClient (PId: 54140, launch time: 0.02, total connection time: 2.10s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully updated license
+Built from '2022.3/china_unity/release' branch; Version is '2022.3.62f3c1 (1623fc0bbb97) revision 1451004'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 11  (10.0.26200) 64bit Professional' Language: 'zh' Physical Memory: 48243 MB
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Serial number assigned to: "F4-QAPZ-UKR9-9H44-XTA9-XXXX"
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+[Licensing::Client] Successfully resolved entitlement details
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Unity.exe
+-batchmode
+-projectPath
+E:\新建文件夹 (3)\SimulateShooting
+-runTests
+-testPlatform
+EditMode
+-testResults
+E:\新建文件夹 (3)\SimulateShooting\docs\codex-reports\evidence\mode-intro-pages-2026-11-16/editmode-targeted.xml
+-logFile
+E:\新建文件夹 (3)\SimulateShooting\docs\codex-reports\evidence\mode-intro-pages-2026-11-16/editmode-targeted.log
+-testFilter
+MainMenuControlsTests
+Successfully changed project path to: E:\新建文件夹 (3)\SimulateShooting
+E:/新建文件夹 (3)/SimulateShooting
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [62748]  Target information:
+
+Player connection [62748]  * "[IP] 192.168.31.104 [Port] 55504 [Flags] 2 [Guid] 1853186581 [EditorId] 1853186581 [Version] 1048832 [Id] WindowsEditor(7,Teentu) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [62748] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [62748] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[PhysX] Initialized MultithreadedTaskDispatcher with 16 workers.
+[Package Manager] UpmClient::Connect -- Connected to IPC stream "Upm-3684" after 0.4 seconds.
+[Package Manager] Done resolving packages in 1.43 seconds
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 67 packages:
+  Packages from [https://packages.unity.cn]:
+    com.unity.cloud.gltfast@6.0.1 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.cloud.gltfast@6.0.1)
+    com.unity.collab-proxy@2.12.4 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.collab-proxy@2.12.4)
+    com.unity.inputsystem@1.14.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.inputsystem@1.14.0)
+    com.unity.learn.iet-framework@4.0.4 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.learn.iet-framework@4.0.4)
+    com.unity.textmeshpro@3.0.9 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.textmeshpro@3.0.9)
+    com.unity.timeline@1.7.7 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.timeline@1.7.7)
+    com.unity.visualscripting@1.9.4 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.visualscripting@1.9.4)
+    com.unity.xr.interaction.toolkit@3.1.2 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.xr.interaction.toolkit@3.1.2)
+    com.unity.xr.management@4.5.1 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.xr.management@4.5.1)
+    com.unity.xr.openxr@1.14.3 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.xr.openxr@1.14.3)
+    com.unity.xr.core-utils@2.5.2 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.xr.core-utils@2.5.2)
+    com.unity.xr.legacyinputhelpers@2.1.12 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.xr.legacyinputhelpers@2.1.12)
+    com.unity.burst@1.8.21 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.burst@1.8.21)
+    com.unity.editorcoroutines@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.editorcoroutines@1.0.0)
+    com.unity.settings-manager@2.1.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.settings-manager@2.1.0)
+    com.unity.xr.oculus@4.5.1 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.xr.oculus@4.5.1)
+    com.unity.ide.visualstudio@2.0.22 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.ide.visualstudio@2.0.22)
+    com.unity.ide.rider@3.0.36 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.ide.rider@3.0.36)
+    com.unity.ide.vscode@1.2.5 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.ide.vscode@1.2.5)
+    com.unity.performance.profile-analyzer@1.2.3 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.performance.profile-analyzer@1.2.3)
+    com.unity.test-framework@1.1.33 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.test-framework@1.1.33)
+    com.unity.testtools.codecoverage@1.2.6 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.testtools.codecoverage@1.2.6)
+    com.unity.mathematics@1.3.1 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.mathematics@1.3.1)
+    com.unity.nuget.newtonsoft-json@3.2.1 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.nuget.newtonsoft-json@3.2.1)
+    com.unity.searcher@4.9.2 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.searcher@4.9.2)
+    com.unity.ext.nunit@1.0.6 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.ext.nunit@1.0.6)
+  Built-in packages:
+    com.unity.feature.development@1.0.1 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.feature.development@1.0.1)
+    com.unity.feature.vr@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.feature.vr@1.0.0)
+    com.unity.render-pipelines.universal@14.0.12 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.render-pipelines.universal@14.0.12)
+    com.unity.modules.ai@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.ai@1.0.0)
+    com.unity.modules.androidjni@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.androidjni@1.0.0)
+    com.unity.modules.animation@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.animation@1.0.0)
+    com.unity.modules.assetbundle@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.assetbundle@1.0.0)
+    com.unity.modules.audio@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.audio@1.0.0)
+    com.unity.modules.cloth@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.cloth@1.0.0)
+    com.unity.modules.director@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.director@1.0.0)
+    com.unity.modules.imageconversion@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.imageconversion@1.0.0)
+    com.unity.modules.imgui@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.imgui@1.0.0)
+    com.unity.modules.jsonserialize@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.jsonserialize@1.0.0)
+    com.unity.modules.particlesystem@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.particlesystem@1.0.0)
+    com.unity.modules.physics@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.physics@1.0.0)
+    com.unity.modules.physics2d@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.physics2d@1.0.0)
+    com.unity.modules.screencapture@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.screencapture@1.0.0)
+    com.unity.modules.terrain@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.terrain@1.0.0)
+    com.unity.modules.terrainphysics@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.terrainphysics@1.0.0)
+    com.unity.modules.tilemap@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.tilemap@1.0.0)
+    com.unity.modules.ui@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.ui@1.0.0)
+    com.unity.modules.uielements@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.uielements@1.0.0)
+    com.unity.modules.umbra@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.umbra@1.0.0)
+    com.unity.modules.unityanalytics@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.unityanalytics@1.0.0)
+    com.unity.modules.unitywebrequest@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.unitywebrequest@1.0.0)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.unitywebrequestassetbundle@1.0.0)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.unitywebrequestaudio@1.0.0)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.unitywebrequesttexture@1.0.0)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.unitywebrequestwww@1.0.0)
+    com.unity.modules.vehicles@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.vehicles@1.0.0)
+    com.unity.modules.video@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.video@1.0.0)
+    com.unity.modules.vr@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.vr@1.0.0)
+    com.unity.modules.wind@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.wind@1.0.0)
+    com.unity.modules.xr@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.xr@1.0.0)
+    com.unity.modules.subsystems@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.modules.subsystems@1.0.0)
+    com.unity.ugui@1.0.0 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.ugui@1.0.0)
+    com.unity.render-pipelines.core@14.0.12 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.render-pipelines.core@14.0.12)
+    com.unity.shadergraph@14.0.12 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.shadergraph@14.0.12)
+    com.unity.render-pipelines.universal-config@14.0.10 (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.render-pipelines.universal-config@14.0.10)
+  Git packages:
+    com.coplaydev.unity-mcp@https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#main (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.coplaydev.unity-mcp@11836003a5)
+    com.unity.xr.openxr.picoxr@https://github.com/Pico-Developer/PICO-Unity-OpenXR-SDK.git#3aa3e62bff41df618529eeb60ff02c29a515dafe (location: E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.xr.openxr.picoxr@3aa3e62bff)
+[Subsystems] Looking for new subsystems at path E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.xr.openxr@1.14.3
+[Subsystems] Novel subsystem found at Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path E:/新建文件夹 (3)/SimulateShooting/Assets
+[Subsystems] Discovering subsystems at path E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.xr.openxr@1.14.3
+[Subsystems] No descriptors matched for  examples in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] 1 'inputs' descriptors matched in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json
+[Subsystems] 1 'displays' descriptors matched in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json
+[Subsystems] No descriptors matched for  meshings in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] Discovering subsystems at path E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.xr.openxr.picoxr@3aa3e62bff
+[Subsystems] No descriptors matched for  examples in Library/PackageCache/com.unity.xr.openxr.picoxr@3aa3e62bff/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] No descriptors matched for  inputs in Library/PackageCache/com.unity.xr.openxr.picoxr@3aa3e62bff/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] No descriptors matched for  displays in Library/PackageCache/com.unity.xr.openxr.picoxr@3aa3e62bff/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] 1 'meshings' descriptors matched in Library/PackageCache/com.unity.xr.openxr.picoxr@3aa3e62bff/Runtime/UnitySubsystemsManifest.json
+[Subsystems] Discovering subsystems at path E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.xr.oculus@4.5.1
+[Subsystems] No descriptors matched for  examples in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] 1 'inputs' descriptors matched in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json
+[Subsystems] 1 'displays' descriptors matched in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json
+[Subsystems] No descriptors matched for  meshings in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json.
+Package Manager log level set to [2]
+[Package Manager] Done registering packages in 0.13 seconds
+[Licensing::Client] Successfully resolved entitlement details
+Refreshing native plugins compatible for Editor in 2000.22 ms, found 19 plugins.
+Preloading 1 native plugins for Editor in 0.73 ms.
+Initialize engine version: 2022.3.62f3c1 (1623fc0bbb97)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path E:/新建文件夹 (3)/SimulateShooting/Assets
+[Subsystems] Discovering subsystems at path E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.xr.openxr@1.14.3
+[Subsystems] No descriptors matched for  examples in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] 1 'inputs' descriptors matched in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json
+[Subsystems] 1 'displays' descriptors matched in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json
+[Subsystems] No descriptors matched for  meshings in Library/PackageCache/com.unity.xr.openxr@1.14.3/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] Discovering subsystems at path E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.xr.openxr.picoxr@3aa3e62bff
+[Subsystems] No descriptors matched for  examples in Library/PackageCache/com.unity.xr.openxr.picoxr@3aa3e62bff/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] No descriptors matched for  inputs in Library/PackageCache/com.unity.xr.openxr.picoxr@3aa3e62bff/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] No descriptors matched for  displays in Library/PackageCache/com.unity.xr.openxr.picoxr@3aa3e62bff/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] 1 'meshings' descriptors matched in Library/PackageCache/com.unity.xr.openxr.picoxr@3aa3e62bff/Runtime/UnitySubsystemsManifest.json
+[Subsystems] Discovering subsystems at path E:\新建文件夹 (3)\SimulateShooting\Library\PackageCache\com.unity.xr.oculus@4.5.1
+[Subsystems] No descriptors matched for  examples in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] 1 'inputs' descriptors matched in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json
+[Subsystems] 1 'displays' descriptors matched in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json
+[Subsystems] No descriptors matched for  meshings in Library/PackageCache/com.unity.xr.oculus@4.5.1/Runtime/UnitySubsystemsManifest.json.
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 4070 Ti SUPER (ID=0x2705)
+    Vendor:   NVIDIA
+    VRAM:     16061 MB
+    Driver:   32.0.16.2101
+[Licensing::Client] Successfully resolved entitlement details
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56684
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.242694 seconds.
+- Loaded All Assemblies, in  3.516 seconds
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 627 ms
+Native extension for WebGL target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.858 seconds
+Domain Reload Profiling: 4373ms
+	BeginReloadAssembly (2311ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (0ms)
+	RebuildCommonClasses (208ms)
+	RebuildNativeTypeToScriptingClass (5ms)
+	initialDomainReloadingComplete (279ms)
+	LoadAllAssembliesAndSetupDomain (712ms)
+		LoadAssemblies (2314ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (705ms)
+			TypeCache.Refresh (703ms)
+				TypeCache.ScanAssembly (560ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (1ms)
+	FinalizeReload (858ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (834ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (742ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (1ms)
+			ProcessInitializeOnLoadAttributes (65ms)
+			ProcessInitializeOnLoadMethodAttributes (23ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+The GUID inside 'Assets/TheTalesFactory/Bunkers & Trenches Pack/ReadMe & Publisher Window/Inspector Info/Icons.meta' cannot be extracted by the YAML Parser. Attempting to extract it via string matching instead. Please verify the file does not contain unexpected data.
+The .meta file Assets/TheTalesFactory/Bunkers & Trenches Pack/ReadMe & Publisher Window/Inspector Info/Icons.meta does not have a valid GUID and its corresponding Asset file will be ignored. If this file is not malformed, please add a GUID, or delete the .meta file and it will be recreated correctly
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+Starting: C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1300b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: E:/新建文件夹 (3)/SimulateShooting
+DisplayProgressbar: Compiling Scripts
+ExitCode: 4 Duration: 12s
+[ 316/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/4747638433968585886.rsp
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1300b0aE-inputdata.json
+[ 934/1251  1s] Csc Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.dll (+2 others)
+[BUSY       7s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra requires additional run (12.65 seconds), 3 items updated, 933 evaluated
+Starting: C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Data\Tools\netcorerun\netcorerun.exe "C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1300b0aE.dag.json" "Library/Bee/1300b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: E:/新建文件夹 (3)/SimulateShooting
+ExitCode: 0 Duration: 1s133ms
+Starting: C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Data\bee_backend.exe --ipc --defer-dag-verification --dagfile="Library/Bee/1300b0aE.dag" --continue-on-failure --dagfilejson="Library\Bee\1300b0aE.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: E:/新建文件夹 (3)/SimulateShooting
+ExitCode: 3 Duration: 3s720ms
+Finished compiling graph: 1255 nodes, 20566 flattened edges (15820 ToBuild, 216 ToUse), maximum node priority 1452
+[  40/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEngine.TestRunner.UnityAdditionalFile.txt
+[  60/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEngine.TestRunner.rsp2
+[ 114/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEngine.UI.UnityAdditionalFile.txt
+[ 115/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEngine.UI.rsp2
+[ 116/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEditor.TestRunner.rsp2
+[ 117/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEditor.TestRunner.UnityAdditionalFile.txt
+[ 122/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEditor.UI.UnityAdditionalFile.txt
+[ 125/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEngine.SpatialTracking.UnityAdditionalFile.txt
+[ 127/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEngine.SpatialTracking.rsp2
+[ 128/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Burst.rsp2
+[ 129/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.InputSystem.rsp2
+[ 130/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Burst.UnityAdditionalFile.txt
+[ 131/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.CoreUtils.rsp2
+[ 132/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.InputSystem.UnityAdditionalFile.txt
+[ 133/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.CoreUtils.UnityAdditionalFile.txt
+[ 134/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Core.Runtime.rsp2
+[ 135/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Core.Runtime.UnityAdditionalFile.txt
+[ 136/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Mathematics.rsp2
+[ 137/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Mathematics.UnityAdditionalFile.txt
+[ 138/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.2D.Internal.UnityAdditionalFile.txt
+[ 139/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Management.UnityAdditionalFile.txt
+[ 152/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipeline.Universal.ShaderLibrary.rsp2
+[ 153/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipeline.Universal.ShaderLibrary.UnityAdditionalFile.txt
+[ 154/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.Config.Runtime.rsp2
+[ 159/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.CoreUtils.Editor.UnityAdditionalFile.txt
+[ 160/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.CoreUtils.Editor.rsp2
+[ 170/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Burst.CodeGen.UnityAdditionalFile.txt
+[ 171/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.Runtime.UnityAdditionalFile.txt
+[ 172/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.Runtime.rsp2
+[ 173/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Burst.CodeGen.rsp2
+[ 176/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Management.Editor.UnityAdditionalFile.txt
+[ 177/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Management.Editor.rsp2
+[ 178/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEditor.UI.rsp2
+[ 181/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Core.rsp2
+[ 182/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEngine.XR.LegacyInputHelpers.UnityAdditionalFile.txt
+[ 184/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.rsp2
+[ 185/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEngine.XR.LegacyInputHelpers.rsp2
+[ 186/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Core.UnityAdditionalFile.txt
+[ 187/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.UnityAdditionalFile.txt
+[ 189/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Flow.UnityAdditionalFile.txt
+[ 191/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.TextMeshPro.rsp2
+[ 192/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Management.rsp2
+[ 195/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.2D.Internal.rsp2
+[ 197/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.rsp2
+[ 198/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.TextMeshPro.UnityAdditionalFile.txt
+[ 201/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.Config.Runtime.UnityAdditionalFile.txt
+[ 204/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/VRShooting.Contracts.UnityAdditionalFile.txt
+[ 205/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Core.Editor.UnityAdditionalFile.txt
+[ 208/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Flow.rsp2
+[ 210/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.UnityAdditionalFile.txt
+[ 211/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/4747638433968585886.rsp
+[ 212/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Editor.rsp2
+[ 215/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXRPico.rsp2
+[ 216/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Core.Editor.UnityAdditionalFile.txt
+[ 218/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Searcher.Editor.rsp2
+[ 219/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Core.Editor.rsp2
+[ 221/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXRPico.UnityAdditionalFile.txt
+[ 222/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Editor.UnityAdditionalFile.txt
+[ 224/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Flow.Editor.rsp2
+[ 230/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Core.Editor.rsp2
+[ 237/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.State.rsp2
+[ 238/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Searcher.Editor.UnityAdditionalFile.txt
+[ 239/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.State.UnityAdditionalFile.txt
+[ 240/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.PICOSupport.UnityAdditionalFile.txt
+[ 241/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.PICOSupport.rsp2
+[ 242/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.UnityAdditionalFile.txt
+[ 243/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.MetaQuestSupport.rsp2
+[ 245/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.ShaderGraph.Utilities.rsp2
+[ 246/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.ShaderGraph.Utilities.UnityAdditionalFile.txt
+[ 248/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.MetaQuestSupport.UnityAdditionalFile.txt
+[ 249/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.ShaderGraph.Editor.UnityAdditionalFile.txt
+[ 250/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Mathematics.Editor.rsp2
+[ 251/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.ShaderGraph.Editor.rsp2
+[ 252/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Mathematics.Editor.UnityAdditionalFile.txt
+[ 259/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Burst.Editor.rsp2
+[ 261/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Oculus.rsp2
+[ 262/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Flow.Editor.UnityAdditionalFile.txt
+[ 263/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Burst.Editor.UnityAdditionalFile.txt
+[ 264/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Oculus.UnityAdditionalFile.txt
+[ 265/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Settings.Editor.UnityAdditionalFile.txt
+[ 266/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Settings.Editor.rsp2
+[ 267/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.Editor.UnityAdditionalFile.txt
+[ 268/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/glTFast.rsp2
+[ 269/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.Analytics.Editor.UnityAdditionalFile.txt
+[ 270/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.Analytics.Editor.rsp2
+[ 271/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.Editor.rsp2
+[ 272/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.UnityAdditionalFile.txt
+[ 273/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.EditorCoroutines.Editor.rsp2
+[ 274/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Timeline.UnityAdditionalFile.txt
+[ 275/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.InternalAPIEditorBridge.007.UnityAdditionalFile.txt
+[ 276/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Timeline.rsp2
+[ 277/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.OculusQuestSupport.UnityAdditionalFile.txt
+[ 278/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/glTFast.UnityAdditionalFile.txt
+[ 279/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.rsp2
+[ 280/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.State.Editor.UnityAdditionalFile.txt
+[ 281/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.UnityAdditionalFile.txt
+[ 284/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.State.Editor.rsp2
+[ 294/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.InternalAPIEditorBridge.007.rsp2
+[ 295/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.rsp2
+[ 296/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.InternalAPIEngineBridge.007.rsp2
+[ 302/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.EditorCoroutines.Editor.UnityAdditionalFile.txt
+[ 313/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.OculusQuestSupport.rsp2
+[ 318/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Tutorials.Core.rsp2
+[ 321/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.RuntimeDebugger.rsp2
+[ 324/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.RuntimeDebugger.UnityAdditionalFile.txt
+[ 331/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Tutorials.Core.UnityAdditionalFile.txt
+[ 332/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.InternalAPIEngineBridge.007.UnityAdditionalFile.txt
+[ 333/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.Editor.rsp2
+[ 334/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.Editor.UnityAdditionalFile.txt
+[ 336/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.PICOSupport.Editor.rsp2
+[ 337/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.PlasticSCM.Editor.UnityAdditionalFile.txt
+[ 338/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.PICOSupport.Editor.UnityAdditionalFile.txt
+[ 341/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualStudio.Editor.rsp2
+[ 342/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/MCPForUnity.Runtime.rsp2
+[ 343/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VSCode.Editor.rsp2
+[ 344/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/PICO.Platform.UnityAdditionalFile.txt
+[ 345/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Rider.Editor.UnityAdditionalFile.txt
+[ 346/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/MCPForUnity.Runtime.UnityAdditionalFile.txt
+[ 347/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VSCode.Editor.UnityAdditionalFile.txt
+[ 348/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/PICO.Platform.rsp2
+[ 349/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Rider.Editor.rsp2
+[ 350/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.PlasticSCM.Editor.rsp2
+[ 351/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/SimulatedShooting.Runtime.UnityAdditionalFile.txt
+[ 352/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualStudio.Editor.UnityAdditionalFile.txt
+[ 353/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Tutorials.Core.Editor.UnityAdditionalFile.txt
+[ 354/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.Shaders.rsp2
+[ 355/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Timeline.Editor.UnityAdditionalFile.txt
+[ 356/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Tutorials.Core.Editor.rsp2
+[ 357/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.TextMeshPro.Editor.rsp2
+[ 358/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.SettingsProvider.Editor.UnityAdditionalFile.txt
+[ 359/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.TestTools.CodeCoverage.Editor.rsp2
+[ 360/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Timeline.Editor.rsp2
+[ 361/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.TextMeshPro.Editor.UnityAdditionalFile.txt
+[ 362/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.Shaders.UnityAdditionalFile.txt
+[ 363/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.rsp2
+[ 365/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.SettingsProvider.Editor.rsp2
+[ 366/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Performance.Profile-Analyzer.Editor.rsp2
+[ 367/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Core.ShaderLibrary.rsp2
+[ 368/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.UnityAdditionalFile.txt
+[ 369/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Core.ShaderLibrary.UnityAdditionalFile.txt
+[ 370/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.InputSystem.ForUI.rsp2
+[ 371/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.TestTools.CodeCoverage.Editor.UnityAdditionalFile.txt
+[ 372/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.InputSystem.ForUI.UnityAdditionalFile.txt
+[ 373/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.Performance.Profile-Analyzer.Editor.UnityAdditionalFile.txt
+[ 375/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEditor.XR.LegacyInputHelpers.UnityAdditionalFile.txt
+[ 377/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEditor.SpatialTracking.rsp2
+[ 378/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEditor.SpatialTracking.UnityAdditionalFile.txt
+[ 379/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/UnityEditor.XR.LegacyInputHelpers.rsp2
+[ 380/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.RuntimeDebugger.Editor.rsp2
+[ 381/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.RuntimeDebugger.Editor.UnityAdditionalFile.txt
+[ 383/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.OculusQuestSupport.Editor.rsp2
+[ 384/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.OculusQuestSupport.Editor.UnityAdditionalFile.txt
+[ 385/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.MetaQuestSupport.Editor.UnityAdditionalFile.txt
+[ 389/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Oculus.Editor.rsp2
+[ 393/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.ConformanceAutomation.rsp2
+[ 398/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.MetaQuestSupport.Editor.rsp2
+[ 401/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.ConformanceAutomation.UnityAdditionalFile.txt
+[ 416/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Oculus.Editor.UnityAdditionalFile.txt
+[ 420/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor.UnityAdditionalFile.txt
+[ 423/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.Samples.StarterAssets.UnityAdditionalFile.txt
+[ 439/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.Analytics.Hooks.Editor.UnityAdditionalFile.txt
+[ 443/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.Analytics.Hooks.Editor.rsp2
+[ 450/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Shared.Editor.UnityAdditionalFile.txt
+[ 452/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Shared.Editor.rsp2
+[ 454/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/glTFast.Export.rsp2
+[ 455/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/VRShooting.P3.TestSupport.UnityAdditionalFile.txt
+[ 457/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/glTFast.Export.UnityAdditionalFile.txt
+[ 461/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/SimulatedShooting.Editor.UnityAdditionalFile.txt
+[ 465/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/PICO.TobSupport.UnityAdditionalFile.txt
+[ 476/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/glTFast.dots.rsp2
+[ 485/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/MCPForUnity.Editor.rsp2
+[ 486/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/glTFast.dots.UnityAdditionalFile.txt
+[ 487/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/glTFast.Editor.UnityAdditionalFile.txt
+[ 489/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/glTFast.Editor.rsp2
+[ 490/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/PPv2URPConverters.rsp2
+[ 492/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/PPv2URPConverters.UnityAdditionalFile.txt
+[ 499/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/PICO.Platform.Editor.UnityAdditionalFile.txt
+[ 503/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/PICO.Platform.Editor.rsp2
+[ 504/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/PICO.TobSupport.rsp2
+[ 505/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/VRShooting.Gameplay.TestSupport.UnityAdditionalFile.txt
+[ 506/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Assembly-CSharp.UnityAdditionalFile.txt
+[ 508/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/SimulatedShooting.PlayModeTests.UnityAdditionalFile.txt
+[ 510/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.InputSystem.TestFramework.UnityAdditionalFile.txt
+[ 512/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/MCPForUnity.Editor.UnityAdditionalFile.txt
+[ 515/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.InputSystem.TestFramework.rsp2
+[ 517/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/glTFast.Newtonsoft.rsp2
+[ 518/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/glTFast.Newtonsoft.UnityAdditionalFile.txt
+[ 520/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.MockRuntime.rsp2
+[ 521/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.PlasticSCM.Editor.Entities.UnityAdditionalFile.txt
+[ 523/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.PlayModeTests.UnityAdditionalFile.txt
+[ 525/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.MockRuntime.UnityAdditionalFile.txt
+[ 532/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.CodeSamples.Tests.UnityAdditionalFile.txt
+[ 533/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.PlasticSCM.Editor.Entities.rsp2
+[ 534/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.CollabProxy.Editor.UnityAdditionalFile.txt
+[ 535/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/SimulatedShooting.EditModeTests.UnityAdditionalFile.txt
+[ 536/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.EditModeTests.UnityAdditionalFile.txt
+[ 537/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/VRShooting.P3.EditorValidation.UnityAdditionalFile.txt
+[ 538/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.InputSystem.DocCodeSamples.rsp2
+[ 539/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.CollabProxy.Editor.rsp2
+[ 540/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/18083169557732820060.rsp
+[ 541/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/2536172375347383056.rsp
+[ 542/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/18228123883807963745.rsp
+[ 543/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.InputSystem.DocCodeSamples.UnityAdditionalFile.txt
+[ 544/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Assembly-CSharp-Editor.UnityAdditionalFile.txt
+[ 545/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/15395031552315409884.rsp
+[ 546/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.PlayModeTests.rsp
+[ 547/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/17426999905933582995.rsp
+[ 548/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/14498275200965564255.rsp
+[ 549/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/14747744758468972468.rsp
+[ 550/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/2127831845093717466.rsp
+[ 551/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/2855630747675663083.rsp
+[ 552/1251  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.CodeSamples.Tests.rsp2
+[ 553/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/14336251148300618570.rsp
+[ 554/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/16514798858072012908.rsp
+[ 555/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/10577387814427837290.rsp
+[ 556/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/14369114347215902198.rsp
+[ 559/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/7231817483963024754.rsp
+[ 561/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/11292228737407533391.rsp
+[ 562/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/2905846839826360205.rsp
+[ 563/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/1786589184738026931.rsp
+[ 567/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/5776278630737689099.rsp
+[ 569/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/2648382056009964089.rsp
+[ 570/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/9972240143657512000.rsp
+[ 573/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/652630873148961136.rsp
+[ 580/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/16269887901772198438.rsp
+[ 587/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/17757397605094907995.rsp
+[ 599/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/9398608305272441014.rsp
+[ 613/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/5662794653001366287.rsp
+[ 618/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/6780291115020108750.rsp
+[ 619/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/4884205587056625317.rsp
+[ 623/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/13465028941639940531.rsp
+[ 624/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/303407743562112758.rsp
+[ 633/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/7011149844605324813.rsp
+[ 635/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/4344340468492550409.rsp
+[ 644/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/3985055929075278289.rsp
+[ 672/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/10592572341192533515.rsp
+[ 675/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/11856401118316307353.rsp
+[ 676/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/10888462760497858608.rsp
+[ 677/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/17849343244525841244.rsp
+[ 678/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/10636780158528026038.rsp
+[ 681/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/5817724259141344667.rsp
+[ 682/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/10798485937582918477.rsp
+[ 683/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/7891406495858431766.rsp
+[ 684/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/14368887405110194620.rsp
+[ 685/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/1611384070209416087.rsp
+[ 686/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/14845297235604293183.rsp
+[ 687/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/2192588629496528303.rsp
+[ 689/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/14735455890999770776.rsp
+[ 690/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/57156944320432830.rsp
+[ 691/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/7126034292673498601.rsp
+[ 692/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/9646110804841629278.rsp
+[ 693/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/3020430480085779083.rsp
+[ 695/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/3370849169011239515.rsp
+[ 696/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/10200443812552500153.rsp
+[ 699/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/5974930578599960779.rsp
+[ 700/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/1744295493734331085.rsp
+[ 701/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/13876257713880959502.rsp
+[ 702/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/11823786202897662469.rsp
+[ 703/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/1375624500095824383.rsp
+[ 704/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/2575615889380309149.rsp
+[ 705/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/1333642170808217536.rsp
+[ 706/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/3518005517008711857.rsp
+[ 707/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/9031784553133684935.rsp
+[ 708/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/12721172265487188116.rsp
+[ 709/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/15876976124637499191.rsp
+[ 710/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/701112855189227073.rsp
+[ 711/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/10514843007091821179.rsp
+[ 712/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/15184209867333330158.rsp
+[ 713/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/15763483306070338107.rsp
+[ 714/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/7306087262382725110.rsp
+[ 715/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/2760744808724484505.rsp
+[ 716/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/5570685539031683168.rsp
+[ 717/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/17570921832983363726.rsp
+[ 718/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/12681661076858783502.rsp
+[ 719/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/13966027777634868133.rsp
+[ 720/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/9557668497439746374.rsp
+[ 721/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/9569142104674744329.rsp
+[ 722/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/17184976507885984284.rsp
+[ 723/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/3837960083045025138.rsp
+[ 724/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/17097474617479503199.rsp
+[ 725/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/3525977299383787660.rsp
+[ 726/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/14232283803016090593.rsp
+[ 727/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/16323991389508385240.rsp
+[ 728/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/41017698057876984.rsp
+[ 729/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/7402756250175941108.rsp
+[ 730/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/1188188249925086948.rsp
+[ 731/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/7611903119678565411.rsp
+[ 732/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/4795088146613915798.rsp
+[ 733/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/16105365442891625930.rsp
+[ 734/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/13896911018923629923.rsp
+[ 735/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/17062328426463740352.rsp
+[ 736/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/3937067864764424448.rsp
+[ 737/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/12399615472950024215.rsp
+[ 738/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/9097835524928946318.rsp
+[ 739/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/11515818914287258962.rsp
+[ 740/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/14540844418576930643.rsp
+[ 741/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/1981472465749282022.rsp
+[ 742/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/15412915583102750522.rsp
+[ 753/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/9528647312647892727.rsp
+[ 759/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/12440361164359010406.rsp
+[ 760/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/9577744114638637122.rsp
+[ 761/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/16270248767997581834.rsp
+[ 764/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/15688719832217992005.rsp
+[ 765/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/3374228670950888938.rsp
+[ 766/1251  0s] WriteResponseFile Library/Bee/artifacts/rsp/7239542340248591632.rsp
+[ 935/1251  0s] Csc Library/Bee/artifacts/1300b0aE.dag/VRShooting.Gameplay.TestSupport.dll (+2 others)
+[ 936/1251  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[ 937/1251  0s] Csc Library/Bee/artifacts/1300b0aE.dag/SimulatedShooting.Runtime.dll (+2 others)
+[ 938/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/VRShooting.Runtime.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.dll, with 125 defines and 229 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 939/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.RenderPipelines.Universal.Config.Runtime.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.Config.Runtime.dll, with 125 defines and 225 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 940/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.OpenXR.Features.OculusQuestSupport.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.OculusQuestSupport.dll, with 125 defines and 226 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 941/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/glTFast.Newtonsoft.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/glTFast.Newtonsoft.dll, with 127 defines and 225 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 942/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.OpenXR.Features.RuntimeDebugger.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.RuntimeDebugger.dll, with 125 defines and 213 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 943/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.VisualScripting.State.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.State.dll, with 125 defines and 226 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 944/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.Mathematics.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.Mathematics.dll, with 125 defines and 224 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 945/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll, with 125 defines and 224 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 946/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.Interaction.Toolkit.Samples.StarterAssets.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.Samples.StarterAssets.dll, with 125 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 947/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/UnityEngine.UI.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/UnityEngine.UI.dll, with 131 defines and 222 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 948/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.Timeline.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.Timeline.dll, with 126 defines and 224 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 949/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.TextMeshPro.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.TextMeshPro.dll, with 126 defines and 224 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 950/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.RenderPipeline.Universal.ShaderLibrary.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipeline.Universal.ShaderLibrary.dll, with 125 defines and 225 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 951/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.InputSystem.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.InputSystem.dll, with 135 defines and 224 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 952/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/VRShooting.P3.TestSupport.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/VRShooting.P3.TestSupport.dll, with 125 defines and 211 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 953/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.OpenXR.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.dll, with 130 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 954/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/PICO.TobSupport.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/PICO.TobSupport.dll, with 126 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 955/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/SimulatedShooting.Runtime.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/SimulatedShooting.Runtime.dll, with 125 defines and 230 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 956/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.OpenXR.Features.MetaQuestSupport.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.MetaQuestSupport.dll, with 125 defines and 225 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 957/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.Tutorials.Core.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.Tutorials.Core.dll, with 125 defines and 224 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 958/1251  0s] Csc Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.PlayModeTests.dll (+2 others)
+[ 959/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/VRShooting.Gameplay.TestSupport.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/VRShooting.Gameplay.TestSupport.dll, with 125 defines and 213 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 960/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.OpenXRPico.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXRPico.dll, with 126 defines and 226 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 961/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/MCPForUnity.Runtime.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/MCPForUnity.Runtime.dll, with 125 defines and 224 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 962/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.Oculus.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Oculus.dll, with 128 defines and 226 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 963/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/UnityEngine.SpatialTracking.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/UnityEngine.SpatialTracking.dll, with 125 defines and 224 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 964/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.Management.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Management.dll, with 126 defines and 224 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 965/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.VisualScripting.Core.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Core.dll, with 130 defines and 225 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 966/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/VRShooting.Runtime.PlayModeTests.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.PlayModeTests.dll, with 125 defines and 219 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 967/1251  0s] Csc Library/Bee/artifacts/1300b0aE.dag/SimulatedShooting.PlayModeTests.dll (+2 others)
+[ 968/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.RenderPipelines.Universal.2D.Internal.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.2D.Internal.dll, with 125 defines and 224 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 969/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/PICO.Platform.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/PICO.Platform.dll, with 126 defines and 225 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 970/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.RenderPipelines.Universal.Shaders.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.Shaders.dll, with 125 defines and 224 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 971/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.InputSystem.TestFramework.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.InputSystem.TestFramework.dll, with 126 defines and 211 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 972/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/glTFast.dots.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/glTFast.dots.dll, with 126 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 973/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.OpenXR.Features.PICOSupport.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.PICOSupport.dll, with 125 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 974/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.OpenXR.Features.ConformanceAutomation.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.ConformanceAutomation.dll, with 125 defines and 225 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 975/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/glTFast.Export.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/glTFast.Export.dll, with 127 defines and 228 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 976/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.CoreUtils.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.CoreUtils.dll, with 131 defines and 226 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 977/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.RenderPipelines.Core.ShaderLibrary.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Core.ShaderLibrary.dll, with 125 defines and 224 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 978/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.Burst.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.Burst.dll, with 125 defines and 212 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 979/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/VRShooting.Contracts.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/VRShooting.Contracts.dll, with 125 defines and 224 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 980/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.RenderPipelines.Universal.Runtime.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.Runtime.dll, with 131 defines and 230 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 981/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/SimulatedShooting.PlayModeTests.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/SimulatedShooting.PlayModeTests.dll, with 125 defines and 217 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 982/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/UnityEngine.XR.LegacyInputHelpers.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/UnityEngine.XR.LegacyInputHelpers.dll, with 125 defines and 225 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 983/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.InputSystem.ForUI.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.InputSystem.ForUI.dll, with 125 defines and 225 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 984/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.ShaderGraph.Utilities.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.ShaderGraph.Utilities.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 985/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.OpenXR.Features.MockRuntime.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.MockRuntime.dll, with 125 defines and 214 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 986/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.VisualScripting.Shared.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Shared.Editor.dll, with 123 defines and 240 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 987/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.RenderPipelines.Core.Runtime.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Core.Runtime.dll, with 128 defines and 225 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 988/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.VisualScripting.Flow.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Flow.dll, with 133 defines and 226 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 989/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.VisualScripting.State.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.State.Editor.dll, with 123 defines and 239 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 990/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 991/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 992/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.OpenXR.Features.MetaQuestSupport.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.MetaQuestSupport.Editor.dll, with 124 defines and 238 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 993/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/glTFast.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/glTFast.Editor.dll, with 125 defines and 237 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 994/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.Settings.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.Settings.Editor.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 995/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.Tutorials.Core.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.Tutorials.Core.Editor.dll, with 123 defines and 239 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 996/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.RenderPipelines.Universal.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Universal.Editor.dll, with 125 defines and 242 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 997/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/UnityEditor.UI.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/UnityEditor.UI.dll, with 126 defines and 233 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 998/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.InternalAPIEngineBridge.007.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.InternalAPIEngineBridge.007.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[ 999/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/UnityEditor.SpatialTracking.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/UnityEditor.SpatialTracking.dll, with 124 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1000/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.RenderPipelines.Core.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.RenderPipelines.Core.Editor.dll, with 124 defines and 236 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1001/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/VRShooting.P3.EditorValidation.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/VRShooting.P3.EditorValidation.dll, with 123 defines and 221 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1002/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.Samples.StarterAssets.Editor.dll, with 124 defines and 239 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1003/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.CollabProxy.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.CollabProxy.Editor.dll, with 123 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1004/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.OpenXR.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Editor.dll, with 125 defines and 226 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1005/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.Interaction.Toolkit.Analytics.Hooks.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.Analytics.Hooks.Editor.dll, with 127 defines and 243 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1006/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/PPv2URPConverters.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/PPv2URPConverters.dll, with 123 defines and 238 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1007/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.TestTools.CodeCoverage.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.TestTools.CodeCoverage.Editor.dll, with 127 defines and 225 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1008/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.InputSystem.DocCodeSamples.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.InputSystem.DocCodeSamples.dll, with 123 defines and 222 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1009/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.Burst.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.Burst.Editor.dll, with 123 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1010/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.ShaderGraph.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.ShaderGraph.Editor.dll, with 123 defines and 238 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1011/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.Mathematics.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.Mathematics.Editor.dll, with 123 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1012/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.CoreUtils.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.CoreUtils.Editor.dll, with 125 defines and 236 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1013/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/UnityEditor.XR.LegacyInputHelpers.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/UnityEditor.XR.LegacyInputHelpers.dll, with 127 defines and 238 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1014/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.InternalAPIEditorBridge.007.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.InternalAPIEditorBridge.007.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1015/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.PlasticSCM.Editor.Entities.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.PlasticSCM.Editor.Entities.dll, with 123 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1016/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.Timeline.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.Timeline.Editor.dll, with 124 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1017/1251  1s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/glTFast.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/glTFast.dll, with 133 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1018/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.Searcher.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.Searcher.Editor.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1019/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.Interaction.Toolkit.CodeSamples.Tests.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.CodeSamples.Tests.dll, with 123 defines and 222 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1020/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.Oculus.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Oculus.Editor.dll, with 125 defines and 238 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1021/1251  1s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.Interaction.Toolkit.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.dll, with 134 defines and 232 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1022/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/MCPForUnity.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/MCPForUnity.Editor.dll, with 123 defines and 223 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1024/1251  0s] CopyFiles Library/ScriptAssemblies/VRShooting.Runtime.dll
+[1037/1251  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.Runtime.dll
+[1043/1251  0s] CopyFiles Library/ScriptAssemblies/VRShooting.Gameplay.TestSupport.dll
+[1050/1251  0s] CopyFiles Library/ScriptAssemblies/VRShooting.Runtime.PlayModeTests.dll
+[1054/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/PICO.Platform.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/PICO.Platform.Editor.dll, with 124 defines and 238 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1055/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.VisualScripting.Flow.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Flow.Editor.dll, with 125 defines and 238 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1056/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.OpenXR.Features.PICOSupport.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.PICOSupport.Editor.dll, with 123 defines and 237 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1062/1251  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.dll
+[1142/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.OpenXR.Features.OculusQuestSupport.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.OculusQuestSupport.Editor.dll, with 123 defines and 237 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1143/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.TextMeshPro.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.TextMeshPro.Editor.dll, with 123 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1151/1251  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.PlayModeTests.pdb
+[1153/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.EditorCoroutines.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.EditorCoroutines.Editor.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1154/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.Management.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Management.Editor.dll, with 125 defines and 237 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1168/1251  0s] CopyFiles Library/ScriptAssemblies/VRShooting.Runtime.PlayModeTests.pdb
+[1175/1251  0s] CopyFiles Library/ScriptAssemblies/VRShooting.Gameplay.TestSupport.pdb
+[1182/1251  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.Runtime.pdb
+[1199/1251  0s] CopyFiles Library/ScriptAssemblies/VRShooting.Runtime.pdb
+[1201/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.Performance.Profile-Analyzer.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.Performance.Profile-Analyzer.Editor.dll, with 123 defines and 234 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1208/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.Interaction.Toolkit.Analytics.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.Analytics.Editor.dll, with 123 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1210/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.VisualScripting.Core.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.Core.Editor.dll, with 123 defines and 235 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1212/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.VisualScripting.SettingsProvider.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.VisualScripting.SettingsProvider.Editor.dll, with 123 defines and 239 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1215/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.OpenXR.Features.RuntimeDebugger.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.OpenXR.Features.RuntimeDebugger.Editor.dll, with 123 defines and 237 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1217/1251  1s] Csc Library/Bee/artifacts/1300b0aE.dag/SimulatedShooting.Editor.dll (+2 others)
+[1225/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.PlasticSCM.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.PlasticSCM.Editor.dll, with 123 defines and 225 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1227/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Unity.XR.Interaction.Toolkit.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Unity.XR.Interaction.Toolkit.Editor.dll, with 126 defines and 239 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1232/1251  0s] Csc Library/Bee/artifacts/1300b0aE.dag/SimulatedShooting.EditModeTests.dll (+2 others)
+[1233/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/SimulatedShooting.EditModeTests.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/SimulatedShooting.EditModeTests.dll, with 123 defines and 227 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1234/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/SimulatedShooting.Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/SimulatedShooting.Editor.dll, with 123 defines and 247 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1235/1251  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.EditModeTests.pdb
+[1236/1251  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.Editor.pdb
+[1237/1251  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.EditModeTests.dll
+[1238/1251  0s] CopyFiles Library/ScriptAssemblies/SimulatedShooting.Editor.dll
+[1239/1251  0s] Csc Library/Bee/artifacts/1300b0aE.dag/Assembly-CSharp.dll (+2 others)
+[1240/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Assembly-CSharp.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Assembly-CSharp.dll, with 125 defines and 294 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1241/1251  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.pdb
+[1242/1251  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp.dll
+[1243/1251  0s] Csc Library/Bee/artifacts/1300b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
+[1244/1251  0s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Assembly-CSharp-Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Assembly-CSharp-Editor.dll, with 123 defines and 319 references
+
+processors: zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[1245/1251  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb
+[1246/1251  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+[1247/1251  1s] Csc Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.EditModeTests.dll (+2 others)
+##### CommandLine
+"C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.EditModeTests.rsp" "@Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.EditModeTests.rsp2"
+##### Contents of Library\Bee\artifacts\1300b0aE.dag\VRShooting.Runtime.EditModeTests.rsp
+-target:library
+-out:"Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.EditModeTests.dll"
+-refout:"Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.EditModeTests.ref.dll"
+-define:UNITY_2022_3_62
+-define:UNITY_2022_3
+-define:UNITY_2022
+-define:UNITY_5_3_OR_NEWER
+-define:UNITY_5_4_OR_NEWER
+-define:UNITY_5_5_OR_NEWER
+-define:UNITY_5_6_OR_NEWER
+-define:UNITY_2017_1_OR_NEWER
+-define:UNITY_2017_2_OR_NEWER
+-define:UNITY_2017_3_OR_NEWER
+-define:UNITY_2017_4_OR_NEWER
+-define:UNITY_2018_1_OR_NEWER
+-define:UNITY_2018_2_OR_NEWER
+-define:UNITY_2018_3_OR_NEWER
+-define:UNITY_2018_4_OR_NEWER
+-define:UNITY_2019_1_OR_NEWER
+-define:UNITY_2019_2_OR_NEWER
+-define:UNITY_2019_3_OR_NEWER
+-define:UNITY_2019_4_OR_NEWER
+-define:UNITY_2020_1_OR_NEWER
+-define:UNITY_2020_2_OR_NEWER
+-define:UNITY_2020_3_OR_NEWER
+-define:UNITY_2021_1_OR_NEWER
+-define:UNITY_2021_2_OR_NEWER
+-define:UNITY_2021_3_OR_NEWER
+-define:UNITY_2022_1_OR_NEWER
+-define:UNITY_2022_2_OR_NEWER
+-define:UNITY_2022_3_OR_NEWER
+-define:UNITY_INCLUDE_TESTS
+-define:ENABLE_AR
+-define:ENABLE_AUDIO
+-define:ENABLE_CACHING
+-define:ENABLE_CLOTH
+-define:ENABLE_EVENT_QUEUE
+-define:ENABLE_MICROPHONE
+-define:ENABLE_MULTIPLE_DISPLAYS
+-define:ENABLE_PHYSICS
+-define:ENABLE_TEXTURE_STREAMING
+-define:ENABLE_LZMA
+-define:ENABLE_UNITYEVENTS
+-define:ENABLE_VR
+-define:ENABLE_WEBCAM
+-define:ENABLE_UNITYWEBREQUEST
+-define:ENABLE_WWW
+-define:ENABLE_CLOUD_SERVICES
+-define:ENABLE_CLOUD_SERVICES_ADS
+-define:ENABLE_CLOUD_SERVICES_USE_WEBREQUEST
+-define:ENABLE_CLOUD_SERVICES_CRASH_REPORTING
+-define:ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING
+-define:ENABLE_CLOUD_SERVICES_PURCHASING
+-define:ENABLE_CLOUD_SERVICES_ANALYTICS
+-define:ENABLE_CLOUD_SERVICES_BUILD
+-define:ENABLE_EDITOR_GAME_SERVICES
+-define:ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT
+-define:ENABLE_CLOUD_LICENSE
+-define:ENABLE_EDITOR_HUB_LICENSE
+-define:ENABLE_WEBSOCKET_CLIENT
+-define:ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API
+-define:ENABLE_DIRECTOR_AUDIO
+-define:ENABLE_DIRECTOR_TEXTURE
+-define:ENABLE_MANAGED_JOBS
+-define:ENABLE_MANAGED_TRANSFORM_JOBS
+-define:ENABLE_MANAGED_ANIMATION_JOBS
+-define:ENABLE_MANAGED_AUDIO_JOBS
+-define:ENABLE_RUNTIME_PERMISSIONS
+-define:ENABLE_ENGINE_CODE_STRIPPING
+-define:ENABLE_ONSCREEN_KEYBOARD
+-define:ENABLE_MANAGED_UNITYTLS
+-define:INCLUDE_DYNAMIC_GI
+-define:ENABLE_SCRIPTING_GC_WBARRIERS
+-define:PLATFORM_SUPPORTS_MONO
+-define:ENABLE_VIDEO
+-define:ENABLE_ACCELERATOR_CLIENT_DEBUGGING
+-define:ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION
+-define:ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT
+-define:ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE
+-define:PLATFORM_ANDROID
+-define:TEXTCORE_1_0_OR_NEWER
+-define:UNITY_ANDROID
+-define:UNITY_ANDROID_API
+-define:ENABLE_EGL
+-define:ENABLE_NETWORK
+-define:ENABLE_RUNTIME_GI
+-define:ENABLE_CRUNCH_TEXTURE_COMPRESSION
+-define:UNITY_CAN_SHOW_SPLASH_SCREEN
+-define:UNITY_HAS_GOOGLEVR
+-define:UNITY_HAS_TANGO
+-define:ENABLE_SPATIALTRACKING
+-define:ENABLE_ETC_COMPRESSION
+-define:PLATFORM_EXTENDS_VULKAN_DEVICE
+-define:PLATFORM_HAS_MULTIPLE_SWAPCHAINS
+-define:UNITY_ANDROID_SUPPORTS_SHADOWFILES
+-define:PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP
+-define:ENABLE_UNITYADS_RUNTIME
+-define:UNITY_UNITYADS_API
+-define:ENABLE_MONO
+-define:NET_4_6
+-define:NET_UNITY_4_8
+-define:ENABLE_PROFILER
+-define:DEBUG
+-define:TRACE
+-define:UNITY_ASSERTIONS
+-define:UNITY_EDITOR
+-define:UNITY_EDITOR_64
+-define:UNITY_EDITOR_WIN
+-define:ENABLE_UNITY_COLLECTIONS_CHECKS
+-define:ENABLE_BURST_AOT
+-define:UNITY_TEAM_LICENSE
+-define:ENABLE_CUSTOM_RENDER_TEXTURE
+-define:ENABLE_DIRECTOR
+-define:ENABLE_LOCALIZATION
+-define:ENABLE_SPRITES
+-define:ENABLE_TERRAIN
+-define:ENABLE_TILEMAP
+-define:ENABLE_TIMELINE
+-define:ENABLE_INPUT_SYSTEM
+-define:TEXTCORE_FONT_ENGINE_1_5_OR_NEWER
+-define:USE_INPUT_SYSTEM_POSE_CONTROL
+-define:UNITY_POST_PROCESSING_STACK_V2
+-define:USE_STICK_CONTROL_THUMBSTICKS
+-define:CSHARP_7_OR_LATER
+-define:CSHARP_7_3_OR_NEWER
+-define:UNITY_EDITOR_ONLY_COMPILATION
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEditor.Graphs.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.DeviceSimulatorModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.DiagnosticsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.EditorToolbarModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.GraphViewModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.PresetsUIModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.QuickSearchModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.SceneTemplateModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.SceneViewModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.TextCoreFontEngineModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.TextCoreTextEngineModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.UIBuilderModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.UIElementsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.UIElementsSamplesModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.AccessibilityModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.AndroidJNIModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.AnimationModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.ARModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.AssetBundleModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.AudioModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.ContentLoadModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.CrashReportingModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.DirectorModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.DSPGraphModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.GameCenterModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.GIModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.GridModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.HotReloadModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.ImageConversionModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.IMGUIModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.InputLegacyModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.InputModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.JSONSerializeModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.LocalizationModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.NVIDIAModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.ParticleSystemModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.PerformanceReportingModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.Physics2DModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.PhysicsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.ProfilerModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.PropertiesModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.RuntimeInitializeOnLoadManagerInitializerModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.ScreenCaptureModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.SharedInternalsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteMaskModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.SpriteShapeModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.StreamingModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.SubstanceModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.SubsystemsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.TerrainPhysicsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreFontEngineModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.TextCoreTextEngineModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.TextRenderingModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.TilemapModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.TLSModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.UIElementsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.UIModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.UmbraModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsCommonModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityAnalyticsModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityConnectModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityCurlModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityTestProtocolModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAssetBundleModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestAudioModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestTextureModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.UnityWebRequestWWWModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.VehiclesModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.VFXModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.VideoModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.VirtualTexturingModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.VRModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.WindModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Gradle.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.GradleProject.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/PlaybackEngines/AndroidPlayer/Unity.Android.Types.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/Microsoft.Win32.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/netstandard.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.AppContext.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Buffers.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Collections.Concurrent.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Collections.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Collections.NonGeneric.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Collections.Specialized.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.ComponentModel.Annotations.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.ComponentModel.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.ComponentModel.EventBasedAsync.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.ComponentModel.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.ComponentModel.TypeConverter.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Console.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Data.Common.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Diagnostics.Contracts.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Diagnostics.Debug.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Diagnostics.FileVersionInfo.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Diagnostics.Process.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Diagnostics.StackTrace.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Diagnostics.TextWriterTraceListener.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Diagnostics.Tools.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Diagnostics.TraceSource.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Drawing.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Dynamic.Runtime.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Globalization.Calendars.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Globalization.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Globalization.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.IO.Compression.ZipFile.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.IO.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.IO.FileSystem.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.IO.FileSystem.DriveInfo.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.IO.FileSystem.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.IO.FileSystem.Watcher.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.IO.IsolatedStorage.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.IO.MemoryMappedFiles.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.IO.Pipes.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.IO.UnmanagedMemoryStream.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Linq.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Linq.Expressions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Linq.Parallel.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Linq.Queryable.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Memory.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Net.Http.Rtc.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Net.NameResolution.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Net.NetworkInformation.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Net.Ping.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Net.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Net.Requests.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Net.Security.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Net.Sockets.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Net.WebHeaderCollection.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Net.WebSockets.Client.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Net.WebSockets.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.ObjectModel.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Reflection.DispatchProxy.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Reflection.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Reflection.Emit.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Reflection.Emit.ILGeneration.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Reflection.Emit.Lightweight.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Reflection.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Reflection.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Resources.Reader.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Resources.ResourceManager.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Resources.Writer.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Runtime.CompilerServices.VisualC.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Runtime.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Runtime.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Runtime.Handles.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Runtime.InteropServices.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Runtime.InteropServices.RuntimeInformation.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Runtime.InteropServices.WindowsRuntime.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Runtime.Numerics.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Runtime.Serialization.Formatters.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Runtime.Serialization.Json.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Runtime.Serialization.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Runtime.Serialization.Xml.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Security.Claims.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Security.Cryptography.Algorithms.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Security.Cryptography.Csp.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Security.Cryptography.Encoding.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Security.Cryptography.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Security.Cryptography.X509Certificates.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Security.Principal.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Security.SecureString.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.ServiceModel.Duplex.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.ServiceModel.Http.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.ServiceModel.NetTcp.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.ServiceModel.Primitives.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.ServiceModel.Security.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Text.Encoding.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Text.Encoding.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Text.RegularExpressions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Threading.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Threading.Overlapped.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Threading.Tasks.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Threading.Tasks.Extensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Threading.Tasks.Parallel.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Threading.Thread.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Threading.ThreadPool.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Threading.Timer.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.ValueTuple.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Xml.ReaderWriter.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Xml.XDocument.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Xml.XmlDocument.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Xml.XmlSerializer.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Xml.XPath.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Xml.XPath.XDocument.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/Microsoft.CSharp.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/mscorlib.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.ComponentModel.Composition.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.Core.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.Data.DataSetExtensions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.Data.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.Drawing.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.IO.Compression.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.IO.Compression.FileSystem.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.Net.Http.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.Numerics.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.Numerics.Vectors.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.Runtime.Serialization.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.Transactions.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.Xml.dll"
+-r:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/UnityReferenceAssemblies/unity-4.8-api/System.Xml.Linq.dll"
+-r:"Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll"
+-r:"Library/Bee/artifacts/1300b0aE.dag/Unity.TextMeshPro.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aE.dag/UnityEditor.TestRunner.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aE.dag/UnityEditor.UI.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aE.dag/UnityEngine.TestRunner.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aE.dag/UnityEngine.UI.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aE.dag/VRShooting.Contracts.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aE.dag/VRShooting.Gameplay.TestSupport.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aE.dag/VRShooting.P3.TestSupport.ref.dll"
+-r:"Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.ref.dll"
+-analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
+-analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
+"Assets/VRShooting/Tests/EditMode/Application/GameEventBusTests.cs"
+"Assets/VRShooting/Tests/EditMode/Application/MainMenuControlsTests.cs"
+"Assets/VRShooting/Tests/EditMode/Application/MovingTargetHudServiceTests.cs"
+"Assets/VRShooting/Tests/EditMode/Application/MovingTargetProgressCoordinatorTests.cs"
+"Assets/VRShooting/Tests/EditMode/Application/MovingTargetRulesTests.cs"
+"Assets/VRShooting/Tests/EditMode/Application/MovingTargetServiceTests.cs"
+"Assets/VRShooting/Tests/EditMode/Application/Screen00_TrainingPresentationServiceTests.cs"
+"Assets/VRShooting/Tests/EditMode/Application/Screen09_TrainingWeaponFireCoordinatorTests.cs"
+"Assets/VRShooting/Tests/EditMode/Application/Screen09_WeaponAutomaticFireServiceTests.cs"
+"Assets/VRShooting/Tests/EditMode/Application/TrainingSessionServiceTests.cs"
+"Assets/VRShooting/Tests/EditMode/Application/UIRouterTests.cs"
+"Assets/VRShooting/Tests/EditMode/Application/WeaponControlServiceTests.cs"
+"Assets/VRShooting/Tests/EditMode/Application/ZeroingHudServiceTests.cs"
+"Assets/VRShooting/Tests/EditMode/Application/ZeroingRulesTests.cs"
+"Assets/VRShooting/Tests/EditMode/Application/ZeroingServiceTests.cs"
+"Assets/VRShooting/Tests/EditMode/BddTestNamingConvention.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/CombatMagazineReloadTests.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/CombatSummaryFileStoreTests.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/DroneReconServiceTests.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/DtoDefaultValueTests.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/ErrorCodeTests.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/Round6CombatTests.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/Round7EnemyVisionRuleTests.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/Screen22_P3ContractTests.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/Screen23_CombatCoreTests.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/Screen24_TrenchTests.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/Screen25_UrbanTests.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/Screen26_CombatApplicationTests.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/ServiceResultTests.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/SquadGrenadeTacticTests.cs"
+"Assets/VRShooting/Tests/EditMode/Infrastructure/TrenchPreparationTests.cs"
+"Assets/VRShooting/Tests/EditMode/Input/Screen05_XRTrainingInputTests.cs"
+"Assets/VRShooting/Tests/EditMode/UI/BustTargetMappingTests.cs"
+-langversion:9.0
+/deterministic
+/optimize+
+/debug:portable
+/nologo
+/RuntimeMetadataVersion:v4.0.30319
+/nowarn:0169
+/nowarn:0649
+/nowarn:0282
+/nowarn:1701
+/nowarn:1702
+/utf8output
+/preferreduilang:en-US
+/additionalfile:"Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.EditModeTests.UnityAdditionalFile.txt"
+##### Custom Environment Variables
+DOTNET_MULTILEVEL_LOOKUP=0
+##### ExitCode
+1
+##### Output
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(182,90): error CS0246: The type or namespace name 'ScreenId' could not be found (are you missing a using directive or an assembly reference?)
+
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(178,45): error CS0103: The name 'ScreenId' does not exist in the current context
+
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(179,55): error CS0103: The name 'ScreenId' does not exist in the current context
+
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(180,39): error CS0103: The name 'ScreenId' does not exist in the current context
+
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(181,37): error CS0103: The name 'ScreenId' does not exist in the current context
+*** Tundra build failed (3.70 seconds), 434 items updated, 1251 evaluated
+## Script Compilation Error for: Csc Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.EditModeTests.dll (+2 others)
+## CmdLine: "C:\Program Files\Unity\Hub\Editor\2022.3.62f3c1\Editor\Data\NetCoreRuntime\dotnet.exe" exec "C:/Program Files/Unity/Hub/Editor/2022.3.62f3c1/Editor/Data/DotNetSdkRoslyn/csc.dll" /nostdlib /noconfig /shared "@Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.EditModeTests.rsp" "@Library/Bee/artifacts/1300b0aE.dag/VRShooting.Runtime.EditModeTests.rsp2"
+## Output:
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(182,90): error CS0246: The type or namespace name 'ScreenId' could not be found (are you missing a using directive or an assembly reference?)
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(178,45): error CS0103: The name 'ScreenId' does not exist in the current context
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(179,55): error CS0103: The name 'ScreenId' does not exist in the current context
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(180,39): error CS0103: The name 'ScreenId' does not exist in the current context
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(181,37): error CS0103: The name 'ScreenId' does not exist in the current context
+
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(182,90): error CS0246: The type or namespace name 'ScreenId' could not be found (are you missing a using directive or an assembly reference?)
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(178,45): error CS0103: The name 'ScreenId' does not exist in the current context
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(179,55): error CS0103: The name 'ScreenId' does not exist in the current context
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(180,39): error CS0103: The name 'ScreenId' does not exist in the current context
+Assets\VRShooting\Tests\EditMode\Application\MainMenuControlsTests.cs(181,37): error CS0103: The name 'ScreenId' does not exist in the current context
+AssetDatabase: script compilation time: 18.050102s
+Scripts have compiler errors.
+Exiting without the bug reporter. Application will terminate with return code 1

@@ -1,0 +1,12 @@
+{
+  "reviewed_files": [
+    "Screen_MainMenu.png",
+    "Screen_MainMenu_Closeup.png"
+  ],
+  "blue_luminous_capsule_border": true,
+  "dark_inner_core": true,
+  "all_six_white_title_glyphs_visible": true,
+  "blue_border_matches_four_training_entries": true,
+  "extra_outline_or_custom_border": false,
+  "rendering": "direct Unity Camera.Render; no image edits"
+}

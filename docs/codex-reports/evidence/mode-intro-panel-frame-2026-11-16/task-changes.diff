@@ -1,0 +1,130 @@
+--- entry/Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs
++++ current/Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs
+@@ -328,6 +328,10 @@
+             }
+ 
+             TacticalUIStyle.Apply(transform);
++            // The shared name-based pass treats Enter as secondary; preserve the intro CTA.
++            foreach (var intro in modeIntroScreens)
++                TacticalUIStyle.StyleButton(intro.Value.Find("Panel_ModeIntro_" + intro.Key +
++                    "/Button_ModeIntro_" + intro.Key + "_Enter").GetComponent<Button>(), true);
+             // Preserve the menu heading's original text style after the shared normalization.
+             if (mainMenuScreen != null)
+             {
+@@ -607,12 +611,6 @@
+             AddImage(screen.gameObject, Color.clear).raycastTarget = true;
+             var panel = AddPanel(screen, "Panel_ModeIntro_" + mode, new Vector2(130, 120), new Vector2(1790, 960),
+                 new Color32(11, 19, 16, 245), new Color32(45, 66, 56, 255));
+-            var panelImage = panel.GetComponent<Image>();
+-            panelImage.sprite = null;
+-            panelImage.color = new Color32(11, 19, 16, 245);
+-            var outline = panel.gameObject.AddComponent<Outline>();
+-            outline.effectColor = new Color32(45, 66, 56, 255);
+-            outline.effectDistance = new Vector2(2, -2);
+             var textColor = new Color32(231, 242, 235, 255);
+             AddLabel(panel, "Text_ModeIntro_" + mode + "_Title", title, 38, FontStyles.Normal,
+                 TextAlignmentOptions.Center, new Vector2(80, 750), new Vector2(1580, 820), textColor);
+@@ -652,7 +650,7 @@
+             scroll.scrollSensitivity = 36;
+             var back = AddButton(panel, "Button_ModeIntro_" + mode + "_Back", "返回", new Vector2(460, 35), new Vector2(760, 105), false);
+             back.onClick.AddListener(CloseModeIntro);
+-            var enter = AddButton(panel, "Button_ModeIntro_" + mode + "_Enter", "进入训练", new Vector2(900, 35), new Vector2(1200, 105), false);
++            var enter = AddButton(panel, "Button_ModeIntro_" + mode + "_Enter", "进入训练", new Vector2(900, 35), new Vector2(1200, 105), true);
+             enter.onClick.AddListener(() =>
+             {
+                 if (!screen.gameObject.activeInHierarchy || services.Router.Current != ScreenId.MainMenu) return;
+--- entry/Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs
++++ current/Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs
+@@ -355,6 +355,60 @@
+         }
+ 
+         [UnityTest]
++        public IEnumerator Bdd37_FourIntroPanelsPreserveLegacyFrameAndPrimaryEnterStyle()
++        {
++            // BDD37 正文自适应并可滚动且不阻断按钮；P1 UI task008。
++            foreach (var entry in new[] { "OpenZeroing", "OpenMovingTarget", "Trench", "Urban" })
++            {
++                var mode = entry == "OpenZeroing" ? "Zeroing" : entry == "OpenMovingTarget" ? "MovingTarget" : entry;
++                FindButton("Button_MainMenu_" + entry).onClick.Invoke();
++                yield return null;
++                Canvas.ForceUpdateCanvases();
++
++                var panel = FindById("Panel_ModeIntro_" + mode);
++                var panelRect = (RectTransform)panel.transform;
++                Assert.That(panelRect.offsetMin, Is.EqualTo(new Vector2(130, 120)), mode);
++                Assert.That(panelRect.offsetMax, Is.EqualTo(new Vector2(1790, 960)), mode);
++                Assert.That(panelRect.rect.size, Is.EqualTo(new Vector2(1660, 840)), mode);
++                var panelImage = panel.GetComponent<Image>();
++                Assert.That(panelImage.sprite, Is.Not.Null, mode);
++                Assert.That(panelImage.sprite.name, Is.EqualTo("panel_holo_large"), mode);
++                Assert.That(panelImage.type, Is.EqualTo(Image.Type.Sliced), mode);
++                Assert.That(panelImage.color, Is.EqualTo(Color.white), mode);
++                Assert.That(panel.GetComponent<Outline>(), Is.Null, mode);
++
++                var title = FindById("Text_ModeIntro_" + mode + "_Title").GetComponent<TMP_Text>();
++                Assert.That(title.rectTransform.offsetMin, Is.EqualTo(new Vector2(80, 750)), mode);
++                Assert.That(title.rectTransform.offsetMax, Is.EqualTo(new Vector2(1580, 820)), mode);
++                Assert.That(title.fontSize, Is.EqualTo(38), mode);
++                var scroll = FindById("Scroll_ModeIntro_" + mode).GetComponent<ScrollRect>();
++                var scrollRect = (RectTransform)scroll.transform;
++                Assert.That(scrollRect.offsetMin, Is.EqualTo(new Vector2(75, 150)), mode);
++                Assert.That(scrollRect.offsetMax, Is.EqualTo(new Vector2(1585, 720)), mode);
++                Assert.That(scrollRect.rect.size, Is.EqualTo(new Vector2(1510, 570)), mode);
++                Assert.That(scroll.content.GetComponent<HorizontalLayoutGroup>().spacing, Is.EqualTo(60), mode);
++                foreach (var side in new[] { "Left", "Right" })
++                {
++                    var body = FindById("Text_ModeIntro_" + mode + "_" + side).GetComponent<TMP_Text>();
++                    Assert.That(body.fontSize, Is.EqualTo(26), mode + side);
++                    Assert.That(body.lineSpacing, Is.EqualTo(10), mode + side);
++                }
++
++                var enter = FindButton("Button_ModeIntro_" + mode + "_Enter");
++                var back = FindButton("Button_ModeIntro_" + mode + "_Back");
++                Assert.That(enter.image.sprite, Is.Not.Null, mode);
++                Assert.That(enter.image.sprite.name, Is.EqualTo("button_primary_orange"), mode);
++                Assert.That(back.image.sprite, Is.Not.Null, mode);
++                Assert.That(back.image.sprite.name, Is.EqualTo("button_secondary_cyan"), mode);
++                Assert.That(((RectTransform)back.transform).offsetMin, Is.EqualTo(new Vector2(460, 35)), mode);
++                Assert.That(((RectTransform)back.transform).offsetMax, Is.EqualTo(new Vector2(760, 105)), mode);
++                Assert.That(((RectTransform)enter.transform).offsetMin, Is.EqualTo(new Vector2(900, 35)), mode);
++                Assert.That(((RectTransform)enter.transform).offsetMax, Is.EqualTo(new Vector2(1200, 105)), mode);
++                back.onClick.Invoke();
++            }
++        }
++
++        [UnityTest]
+         public IEnumerator Bdd37_BodyFitsCommonResolutionsAndOverflowScrollDoesNotCoverButtons()
+         {
+             root.GetComponent<CanvasScaler>().enabled = false;
+@@ -383,7 +437,16 @@
+                         Assert.That(text.textInfo.characterCount, Is.EqualTo(text.text.Length));
+                         var corners = new Vector3[4]; text.rectTransform.GetWorldCorners(corners);
+                         var viewportCorners = new Vector3[4]; scroll.viewport.GetWorldCorners(viewportCorners);
+-                        Assert.That(corners[0].y, Is.GreaterThanOrEqualTo(viewportCorners[0].y - .1f));
++                        Assert.That(corners[0].x, Is.GreaterThanOrEqualTo(viewportCorners[0].x - .1f), mode + side);
++                        Assert.That(corners[0].y, Is.GreaterThanOrEqualTo(viewportCorners[0].y - .1f), mode + side);
++                        Assert.That(corners[2].x, Is.LessThanOrEqualTo(viewportCorners[2].x + .1f), mode + side);
++                        Assert.That(corners[2].y, Is.LessThanOrEqualTo(viewportCorners[2].y + .1f), mode + side);
++                        foreach (var action in new[] { "Back", "Enter" })
++                        {
++                            var buttonCorners = new Vector3[4];
++                            ((RectTransform)FindButton("Button_ModeIntro_" + mode + "_" + action).transform).GetWorldCorners(buttonCorners);
++                            Assert.That(corners[0].y, Is.GreaterThan(buttonCorners[2].y), mode + side + action);
++                        }
+                     }
+                     var enter = FindButton("Button_ModeIntro_" + mode + "_Enter");
+                     var back = FindButton("Button_ModeIntro_" + mode + "_Back");
+--- entry/docs/BDD/screens/37-各模式操作介绍.feature.md
++++ current/docs/BDD/screens/37-各模式操作介绍.feature.md
+@@ -36,8 +36,10 @@
+     而且全中文，不使用“同模式一”等跨页省略；仅保留键位字母与数值单位
+ 
+   场景: 正文自适应并可滚动且不阻断按钮
+-    那么面板沿用深色底(11,19,16,245)、边线(45,66,56)、居中标题、左右正文与底部双按钮
++    那么面板沿用旧“操作介绍”页的AddPanel参数：深色底(11,19,16,245)、边线(45,66,56)，保留panel_holo_large原色九宫格贴图的蓝色发光外框与内部深色科技网格，不清空贴图、不额外染色、不添加Outline
++    而且保持38号居中标题、26号正文、lineSpacing为10、两栏间距60与底部双按钮；“进入训练”使用button_primary_orange黄色高亮，“返回”保留button_secondary_cyan
+     而且面板位于(130,120)至(1790,960)，正文使用竖直ScrollRect，关闭横向滚动
++    而且面板尺寸为1660×840，标题位于(80,750)至(1580,820)，滚动区位于(75,150)至(1585,720)，返回位于(460,35)至(760,105)，进入训练位于(900,35)至(1200,105)
+     而且内容按两栏文本首选高度自适应，常规字号下1920×1080、1280×720与2560×1440均一屏完整显示
+     当字号增大使正文超出时
+     那么可竖直滚动到最后一行，无文字截断、重叠或压住按钮

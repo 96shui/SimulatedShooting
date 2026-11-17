@@ -1,0 +1,148 @@
+{
+  "mainmenu_total": {
+    "changed_pixels": 2226,
+    "max_channel_delta": 231,
+    "bbox_inclusive": [
+      1379,
+      236,
+      1506,
+      255
+    ]
+  },
+  "mainmenu_outside_heading_changed_pixels": 0,
+  "entry01": {
+    "changed_pixels": 0,
+    "max_channel_delta": 0,
+    "bbox_inclusive": null
+  },
+  "entry02": {
+    "changed_pixels": 0,
+    "max_channel_delta": 0,
+    "bbox_inclusive": null
+  },
+  "entry03": {
+    "changed_pixels": 0,
+    "max_channel_delta": 0,
+    "bbox_inclusive": null
+  },
+  "entry04": {
+    "changed_pixels": 0,
+    "max_channel_delta": 0,
+    "bbox_inclusive": null
+  },
+  "bottom_status": {
+    "changed_pixels": 0,
+    "max_channel_delta": 0,
+    "bbox_inclusive": null
+  },
+  "Screen_MainMenu_WithoutHeadingText": {
+    "changed_pixels": 0,
+    "max_channel_delta": 0,
+    "bbox_inclusive": null
+  },
+  "Screen_ModeIntro_Zeroing": {
+    "changed_pixels": 0,
+    "max_channel_delta": 0,
+    "bbox_inclusive": null
+  },
+  "Screen_ModeIntro_MovingTarget": {
+    "changed_pixels": 0,
+    "max_channel_delta": 0,
+    "bbox_inclusive": null
+  },
+  "Screen_ModeIntro_Trench": {
+    "changed_pixels": 0,
+    "max_channel_delta": 0,
+    "bbox_inclusive": null
+  },
+  "Screen_ModeIntro_Urban": {
+    "changed_pixels": 0,
+    "max_channel_delta": 0,
+    "bbox_inclusive": null
+  },
+  "baseline_vs_final_isolated_center_aligned_390x70": {
+    "changed_pixels": 0,
+    "max_channel_delta": 0,
+    "bbox_inclusive": null
+  },
+  "isolated_font_metrics": {
+    "baseline-9a1c012": {
+      "path": "docs\\codex-reports\\evidence\\mainmenu-heading-font-2026-11-17\\baseline-9a1c012\\HeadingTextOnly.png",
+      "panel_box": [
+        1360,
+        343,
+        1750,
+        413
+      ],
+      "glyph_bbox_local": [
+        30,
+        26,
+        146,
+        45
+      ],
+      "width": 117,
+      "height": 20,
+      "left_inset": 30,
+      "right_inset": 243,
+      "ink_pixels": 1291,
+      "bright_pixels": 484,
+      "bright_fraction_of_glyph_bbox": 0.206838,
+      "bright_fraction_of_panel": 0.017729,
+      "mean_ink_luminance": 178.4276,
+      "mean_bright_luminance": 220.0667,
+      "stroke_width_proxy": 2.351548
+    },
+    "before": {
+      "path": "docs\\codex-reports\\evidence\\mainmenu-heading-font-2026-11-17\\before\\HeadingTextOnly.png",
+      "panel_box": [
+        1360,
+        215,
+        1750,
+        275
+      ],
+      "glyph_bbox_local": [
+        19,
+        21,
+        144,
+        40
+      ],
+      "width": 126,
+      "height": 20,
+      "left_inset": 19,
+      "right_inset": 245,
+      "ink_pixels": 1846,
+      "bright_pixels": 1076,
+      "bright_fraction_of_glyph_bbox": 0.426984,
+      "bright_fraction_of_panel": 0.045983,
+      "mean_ink_luminance": 200.8442,
+      "mean_bright_luminance": 233.0011,
+      "stroke_width_proxy": 4.896552
+    },
+    "after": {
+      "path": "docs\\codex-reports\\evidence\\mainmenu-heading-font-2026-11-17\\after\\HeadingTextOnly.png",
+      "panel_box": [
+        1360,
+        215,
+        1750,
+        275
+      ],
+      "glyph_bbox_local": [
+        30,
+        21,
+        146,
+        40
+      ],
+      "width": 117,
+      "height": 20,
+      "left_inset": 30,
+      "right_inset": 243,
+      "ink_pixels": 1291,
+      "bright_pixels": 484,
+      "bright_fraction_of_glyph_bbox": 0.206838,
+      "bright_fraction_of_panel": 0.020684,
+      "mean_ink_luminance": 178.4276,
+      "mean_bright_luminance": 220.0667,
+      "stroke_width_proxy": 2.351548
+    }
+  }
+}

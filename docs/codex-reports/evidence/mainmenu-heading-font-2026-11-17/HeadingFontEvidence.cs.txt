@@ -1,0 +1,143 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using SimulatedShooting.Scene;
+using TMPro;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using VRShooting.Application;
+using VRShooting.Editor;
+using VRShooting.Unity;
+using VRShooting.Unity.Bootstrap;
+using VRShooting.Unity.UI;
+
+public static class HeadingFontEvidence
+{
+    public static void CaptureBatch()
+    {
+        var folder = Environment.GetEnvironmentVariable("RUNTIME_GALLERY_OUT");
+        Directory.CreateDirectory(folder);
+        var scene = EditorSceneManager.NewPreviewScene();
+        ApplicationServices services = null;
+        try
+        {
+            var cameraRoot = new GameObject("HeadingFontEvidenceCamera", typeof(Camera));
+            SceneManager.MoveGameObjectToScene(cameraRoot, scene);
+            var camera = cameraRoot.GetComponent<Camera>();
+            camera.scene = scene;
+            camera.clearFlags = CameraClearFlags.SolidColor;
+            camera.backgroundColor = new Color32(7, 15, 25, 255);
+            camera.orthographic = true;
+            camera.nearClipPlane = .1f;
+            camera.farClipPlane = 2000;
+            var main = (MainMenuUI)typeof(TacticalUIGallery).GetMethod("Create", BindingFlags.NonPublic | BindingFlags.Static)
+                .MakeGenericMethod(typeof(MainMenuUI)).Invoke(null, new object[] { scene, new List<GameObject>() });
+            services = ApplicationServices.CreateDefault(combatScenes: new UnityCombatSceneLoader());
+            main.Initialize(services);
+            var root = main.gameObject;
+            root.GetComponent<TrainingUICanvasAdapter>().enabled = false;
+            root.GetComponent<CanvasScaler>().enabled = false;
+            var canvas = root.GetComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = camera;
+            var rect = (RectTransform)root.transform;
+            rect.sizeDelta = new Vector2(1920, 1080);
+            rect.pivot = new Vector2(.5f, .5f);
+            rect.position = new Vector3(960, 540, 0);
+            rect.localScale = Vector3.one;
+            foreach (var group in root.GetComponentsInChildren<CanvasGroup>(true)) group.alpha = 1;
+            foreach (var child in root.GetComponentsInChildren<Transform>(true))
+                if (child.name == "LargePanelRoot" || child.name == "MinimalHudRoot") child.gameObject.SetActive(true);
+            var pages = root.GetComponentsInChildren<RectTransform>(true).Where(t => t.name.StartsWith("Screen_")).ToArray();
+            foreach (var page in pages) page.gameObject.SetActive(false);
+            var mainPage = pages.Single(t => t.name == "Screen_MainMenu");
+            root.SetActive(true);
+            mainPage.gameObject.SetActive(true);
+            Refresh(mainPage);
+            camera.orthographicSize = 540;
+            camera.transform.position = new Vector3(960, 540, -1000);
+            Capture(camera, Path.Combine(folder, "Screen_MainMenu.png"));
+            var heading = mainPage.GetComponentsInChildren<Image>().Single(i => i.name == "Panel_MainMenu_Menu");
+            var label = heading.GetComponentInChildren<TMP_Text>();
+            var bounds = label.textInfo.characterInfo.Take(label.textInfo.characterCount).Where(c => c.isVisible).ToArray();
+            File.WriteAllLines(Path.Combine(folder, "gallery-inspection.txt"), new[] {
+                "render=Unity Camera.Render; same preview-scene pipeline as 2026-11-16; RGB24 1920x1080",
+                "heading.sprite=" + heading.sprite.name, "heading.color=" + (Color32)heading.color,
+                "heading.min=" + heading.rectTransform.offsetMin, "heading.max=" + heading.rectTransform.offsetMax,
+                "heading.outlines=" + heading.GetComponentsInChildren<Outline>(true).Length,
+                "label.text=" + label.text, "label.font=" + label.font.name,
+                "label.size=" + label.fontSize, "label.style=" + label.fontStyle,
+                "label.weight=" + label.fontWeight, "label.extraPadding=" + label.extraPadding,
+                "label.min=" + label.rectTransform.offsetMin, "label.max=" + label.rectTransform.offsetMax,
+                "label.color=" + (Color32)label.color, "label.overflow=" + label.overflowMode,
+                "label.isTextOverflowing=" + label.isTextOverflowing, "label.visibleGlyphs=" + bounds.Length,
+                "label.glyphBottomLeft=" + string.Join(";", bounds.Select(c => c.bottomLeft.ToString("F5"))),
+                "label.glyphTopRight=" + string.Join(";", bounds.Select(c => c.topRight.ToString("F5")))
+            });
+            // Background-only frame proves the panel pixels did not change with the label.
+            label.enabled = false;
+            Capture(camera, Path.Combine(folder, "Screen_MainMenu_WithoutHeadingText.png"));
+            label.enabled = true;
+            // Isolate the actual rendered glyphs from different historical panel colors.
+            var graphics = mainPage.GetComponentsInChildren<Graphic>().Where(g => g != label && g.enabled).ToArray();
+            foreach (var graphic in graphics) graphic.enabled = false;
+            camera.backgroundColor = Color.black;
+            Capture(camera, Path.Combine(folder, "HeadingTextOnly.png"));
+            camera.backgroundColor = new Color32(7, 15, 25, 255);
+            foreach (var graphic in graphics) graphic.enabled = true;
+            camera.orthographicSize = 325;
+            camera.transform.position = new Vector3(1555, 570, -1000);
+            Capture(camera, Path.Combine(folder, "Screen_MainMenu_Closeup.png"));
+            camera.orthographicSize = 540;
+            camera.transform.position = new Vector3(960, 540, -1000);
+            foreach (var intro in pages.Where(p => p.name.StartsWith("Screen_ModeIntro_")))
+            {
+                intro.gameObject.SetActive(true);
+                Refresh(intro);
+                Capture(camera, Path.Combine(folder, intro.name + ".png"));
+                intro.gameObject.SetActive(false);
+            }
+            if (bounds.Length != 6) throw new InvalidOperationException("Heading must render six visible glyphs");
+        }
+        finally
+        {
+            services?.Combat.Dispose();
+            EditorSceneManager.ClosePreviewScene(scene);
+        }
+    }
+
+    static void Refresh(Transform page)
+    {
+        Canvas.ForceUpdateCanvases();
+        foreach (var text in page.GetComponentsInChildren<TMP_Text>()) text.ForceMeshUpdate();
+        Canvas.ForceUpdateCanvases();
+    }
+
+    static void Capture(Camera camera, string path)
+    {
+        var target = new RenderTexture(1920, 1080, 24);
+        var previous = RenderTexture.active;
+        var texture = new Texture2D(1920, 1080, TextureFormat.RGB24, false);
+        try
+        {
+            camera.targetTexture = target;
+            camera.Render();
+            RenderTexture.active = target;
+            texture.ReadPixels(new Rect(0, 0, 1920, 1080), 0, 0);
+            texture.Apply();
+            File.WriteAllBytes(path, texture.EncodeToPNG());
+        }
+        finally
+        {
+            camera.targetTexture = null;
+            RenderTexture.active = previous;
+            UnityEngine.Object.DestroyImmediate(texture);
+            target.Release();
+            UnityEngine.Object.DestroyImmediate(target);
+        }
+    }
+}

@@ -66,7 +66,7 @@ namespace VRShooting.Tests.PlayMode.UI
             Assert.That(mainMenu, Is.Not.Null, "MainScene should contain a scene-owned MainMenuUI.");
             Assert.AreEqual(SceneManager.GetActiveScene(), mainMenu.gameObject.scene);
 
-            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
+            ModeIntroTestActions.EnterTraining(FindButton);
             yield return null;
 
             Assert.That(FindById("Screen_ZeroingBriefing").activeSelf, Is.True, "Clicking 100m should show the zeroing briefing screen.");

@@ -1,0 +1,184 @@
+{
+  "accepted-2026-11-15": {
+    "path": "docs\\codex-reports\\evidence\\mainmenu-heading-border-2026-11-15\\Screen_MainMenu.png",
+    "panel_box": [
+      1360,
+      343,
+      1750,
+      413
+    ],
+    "glyph_bbox_local": [
+      30,
+      26,
+      146,
+      45
+    ],
+    "width": 117,
+    "height": 20,
+    "left_inset": 30,
+    "right_inset": 243,
+    "ink_pixels": 1291,
+    "bright_pixels": 484,
+    "bright_fraction_of_glyph_bbox": 0.206838,
+    "bright_fraction_of_panel": 0.017729,
+    "mean_ink_luminance": 178.4276,
+    "mean_bright_luminance": 220.0667,
+    "stroke_width_proxy": 2.351548
+  },
+  "original-2026-11-12": {
+    "path": "docs\\codex-reports\\evidence\\ui-chinese-copy-2026-11-12\\gallery\\Screen_MainMenu.png",
+    "panel_box": [
+      1360,
+      215,
+      1750,
+      285
+    ],
+    "glyph_bbox_local": [
+      30,
+      21,
+      146,
+      40
+    ],
+    "width": 117,
+    "height": 20,
+    "left_inset": 30,
+    "right_inset": 243,
+    "ink_pixels": 1291,
+    "bright_pixels": 484,
+    "bright_fraction_of_glyph_bbox": 0.206838,
+    "bright_fraction_of_panel": 0.017729,
+    "mean_ink_luminance": 179.0441,
+    "mean_bright_luminance": 220.0972,
+    "stroke_width_proxy": 2.351548
+  },
+  "reported-2026-11-16": {
+    "path": "docs\\codex-reports\\evidence\\mainmenu-heading-restore-2026-11-16\\Screen_MainMenu.png",
+    "panel_box": [
+      1360,
+      215,
+      1750,
+      275
+    ],
+    "glyph_bbox_local": [
+      19,
+      21,
+      144,
+      40
+    ],
+    "width": 126,
+    "height": 20,
+    "left_inset": 19,
+    "right_inset": 245,
+    "ink_pixels": 1839,
+    "bright_pixels": 1097,
+    "bright_fraction_of_glyph_bbox": 0.435317,
+    "bright_fraction_of_panel": 0.04688,
+    "mean_ink_luminance": 201.9035,
+    "mean_bright_luminance": 232.567,
+    "stroke_width_proxy": 4.877984
+  },
+  "baseline-9a1c012": {
+    "path": "docs\\codex-reports\\evidence\\mainmenu-heading-font-2026-11-17\\baseline-9a1c012\\Screen_MainMenu.png",
+    "panel_box": [
+      1360,
+      343,
+      1750,
+      413
+    ],
+    "glyph_bbox_local": [
+      30,
+      26,
+      146,
+      45
+    ],
+    "width": 117,
+    "height": 20,
+    "left_inset": 30,
+    "right_inset": 243,
+    "ink_pixels": 1291,
+    "bright_pixels": 484,
+    "bright_fraction_of_glyph_bbox": 0.206838,
+    "bright_fraction_of_panel": 0.017729,
+    "mean_ink_luminance": 178.4276,
+    "mean_bright_luminance": 220.0667,
+    "stroke_width_proxy": 2.351548
+  },
+  "before": {
+    "path": "docs\\codex-reports\\evidence\\mainmenu-heading-font-2026-11-17\\before\\Screen_MainMenu.png",
+    "panel_box": [
+      1360,
+      215,
+      1750,
+      275
+    ],
+    "glyph_bbox_local": [
+      19,
+      21,
+      144,
+      40
+    ],
+    "width": 126,
+    "height": 20,
+    "left_inset": 19,
+    "right_inset": 245,
+    "ink_pixels": 1839,
+    "bright_pixels": 1097,
+    "bright_fraction_of_glyph_bbox": 0.435317,
+    "bright_fraction_of_panel": 0.04688,
+    "mean_ink_luminance": 201.9035,
+    "mean_bright_luminance": 232.567,
+    "stroke_width_proxy": 4.877984
+  },
+  "probe-normal": {
+    "path": "docs\\codex-reports\\evidence\\mainmenu-heading-font-2026-11-17\\probe-normal\\Screen_MainMenu.png",
+    "panel_box": [
+      1360,
+      215,
+      1750,
+      275
+    ],
+    "glyph_bbox_local": [
+      20,
+      21,
+      136,
+      40
+    ],
+    "width": 117,
+    "height": 20,
+    "left_inset": 20,
+    "right_inset": 253,
+    "ink_pixels": 1283,
+    "bright_pixels": 491,
+    "bright_fraction_of_glyph_bbox": 0.209829,
+    "bright_fraction_of_panel": 0.020983,
+    "mean_ink_luminance": 179.8119,
+    "mean_bright_luminance": 220.1631,
+    "stroke_width_proxy": 2.341241
+  },
+  "after": {
+    "path": "docs\\codex-reports\\evidence\\mainmenu-heading-font-2026-11-17\\after\\Screen_MainMenu.png",
+    "panel_box": [
+      1360,
+      215,
+      1750,
+      275
+    ],
+    "glyph_bbox_local": [
+      30,
+      21,
+      146,
+      40
+    ],
+    "width": 117,
+    "height": 20,
+    "left_inset": 30,
+    "right_inset": 243,
+    "ink_pixels": 1291,
+    "bright_pixels": 490,
+    "bright_fraction_of_glyph_bbox": 0.209402,
+    "bright_fraction_of_panel": 0.02094,
+    "mean_ink_luminance": 179.3908,
+    "mean_bright_luminance": 219.973,
+    "stroke_width_proxy": 2.351548
+  }
+}

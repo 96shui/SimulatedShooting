@@ -1,3 +1,4 @@
+using VRShooting.Tests.PlayMode;
 using System.Collections;
 using System.Linq;
 using NUnit.Framework;
@@ -231,7 +232,11 @@ namespace SimulatedShooting.Tests.PlayMode
             var ui=Object.FindObjectOfType<MainMenuUI>();
             var button=ui.GetComponentsInChildren<Button>(true).Single(b=>b.name=="Button_MainMenu_OpenZeroing");
             yield return ClickWithController(button,camera);
-            Assert.That(GameMain.Instance.Services.Router.Current,Is.EqualTo(ScreenId.ZeroingBriefing),"The real tracked trigger must route the main-menu button");
+            Assert.That(GameMain.Instance.Services.Router.Current,Is.EqualTo(ScreenId.MainMenu),"The tracked trigger opens the introduction before routing");
+            yield return null;
+            var enter = ModeIntroTestActions.FindEnterTrainingButton(id => ui.GetComponentsInChildren<Button>(true).Single(b => b.name == id));
+            yield return ClickWithController(enter,camera);
+            Assert.That(GameMain.Instance.Services.Router.Current,Is.EqualTo(ScreenId.ZeroingBriefing),"The real tracked trigger must confirm the introduction and route to briefing");
         }
 
         [UnityTest] public IEnumerator Screen18_21_VrActionsAndTrackedPosesSurviveUrbanLoadAndReturn()

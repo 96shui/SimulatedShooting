@@ -1,0 +1,33 @@
+Text_ModeIntro_Zeroing_Title text=模式一 · 100m 精度射校 font=38 rect=(x:-750.00, y:-35.00, width:1500.00, height:70.00) preferredHeight=50.16 overflow=False
+Text_ModeIntro_Zeroing_Left text=按键操作 | 右手侧握键抓枪，左手侧握键辅助抓握。 | 右扳机射击，单发射击。 | 用界面射线选择界面按钮。 | 模式一为固定射击位，不需要移动。 | 每轮 4 发，共 3 轮，打完自动进入弹着分析。 font=26 rect=(x:-362.50, y:-146.37, width:725.00, height:292.73) preferredHeight=218.9 overflow=False
+Text_ModeIntro_Zeroing_Right text=界面与按钮 | 顺时针 5° / 逆时针 5°：修正水平方向。 | 向前 1cm / 向后 1cm：修正垂直方向。 | 应用调整：按当前补偿量修正并立即判定。 | 进入下一轮：本轮作废，继续下一轮。 | 查看评级：三轮结束后进入最终评级。 | 蓝点是当前补偿量，从靶心起步。 | 弹着点分散时，四个调整按钮与应用调整会被禁用。 font=26 rect=(x:-362.50, y:-146.37, width:725.00, height:292.73) preferredHeight=292.73 overflow=False
+Text_ModeIntro_Zeroing_Back text=返回 font=24 rect=(x:-142.00, y:-27.00, width:284.00, height:54.00) preferredHeight=31.68 overflow=False
+Text_ModeIntro_Zeroing_Enter text=进入训练 font=24 rect=(x:-142.00, y:-27.00, width:284.00, height:54.00) preferredHeight=31.68 overflow=False
+Zeroing viewport=(x:-755.00, y:-285.00, width:1510.00, height:570.00) content=(x:-755.00, y:-292.73, width:1510.00, height:292.73) horizontal=False
+Text_ModeIntro_MovingTarget_Title text=模式二 · 移动目标射击 font=38 rect=(x:-750.00, y:-35.00, width:1500.00, height:70.00) preferredHeight=50.16 overflow=False
+Text_ModeIntro_MovingTarget_Left text=按键操作 | 右手侧握键抓枪，左手侧握键辅助抓握。 | 右扳机射击：快速扣动一次起射两发，继续按住逐发连射。 | 用界面射线选择界面按钮。 | 射击位固定，不需要移动。 font=26 rect=(x:-362.50, y:-109.45, width:725.00, height:218.90) preferredHeight=181.98 overflow=False
+Text_ModeIntro_MovingTarget_Right text=界面与按钮 | 开局选择移动靶速度档位，确认后进入训练。 | 跟随射击：准心跟随移动靶，稳住在靶上扣扳机。 | 等待射击：准心提前对准，等靶子进入再扣扳机。 | 抬头显示区显示剩余弹药、命中数与已用时间。 | 结算页显示命中、用时与评级，可重新训练或返回主菜单。 font=26 rect=(x:-362.50, y:-109.45, width:725.00, height:218.90) preferredHeight=218.9 overflow=False
+Text_ModeIntro_MovingTarget_Back text=返回 font=24 rect=(x:-142.00, y:-27.00, width:284.00, height:54.00) preferredHeight=31.68 overflow=False
+Text_ModeIntro_MovingTarget_Enter text=进入训练 font=24 rect=(x:-142.00, y:-27.00, width:284.00, height:54.00) preferredHeight=31.68 overflow=False
+MovingTarget viewport=(x:-755.00, y:-285.00, width:1510.00, height:570.00) content=(x:-755.00, y:-218.90, width:1510.00, height:218.90) horizontal=False
+Text_ModeIntro_Trench_Title text=模式三 · 堑壕射击 font=38 rect=(x:-750.00, y:-35.00, width:1500.00, height:70.00) preferredHeight=50.16 overflow=False
+Text_ModeIntro_Trench_Left text=按键操作 | 右手侧握键抓枪，左手侧握键辅助抓握。 | 右扳机射击；左手柄 X 换弹；左手柄 Y 切换姿态。 | 右手柄 B 切换左右肩，左肩时左手为主手、用左扳机射击。 | 右手柄 A 请求队友投掷手雷。 | 左摇杆移动，右摇杆转向。 font=26 rect=(x:-362.50, y:-127.91, width:725.00, height:255.81) preferredHeight=218.9 overflow=False
+Text_ModeIntro_Trench_Right text=界面与按钮 | 任务状态：显示当前阶段与剩余目标。 | 弹药与备用弹匣：弹匣 30 发，备用 4 个弹匣。 | 拐角射击：靠近拐角时的射击提示。 | 交互提示：靠近可交互物按提示操作。 | 地图选择页选地图后进入简报与无人机侦察。 | 结算页显示完成情况与评级。 font=26 rect=(x:-362.50, y:-127.91, width:725.00, height:255.81) preferredHeight=255.81 overflow=False
+Text_ModeIntro_Trench_Back text=返回 font=24 rect=(x:-142.00, y:-27.00, width:284.00, height:54.00) preferredHeight=31.68 overflow=False
+Text_ModeIntro_Trench_Enter text=进入训练 font=24 rect=(x:-142.00, y:-27.00, width:284.00, height:54.00) preferredHeight=31.68 overflow=False
+Trench viewport=(x:-755.00, y:-285.00, width:1510.00, height:570.00) content=(x:-755.00, y:-255.81, width:1510.00, height:255.81) horizontal=False
+Text_ModeIntro_Urban_Title text=模式四 · 城镇攻防 font=38 rect=(x:-750.00, y:-35.00, width:1500.00, height:70.00) preferredHeight=50.16 overflow=False
+Text_ModeIntro_Urban_Left text=按键操作 | 右手侧握键抓枪，左手侧握键辅助抓握。 | 右扳机射击；左手柄 X 换弹；左手柄 Y 切换姿态。 | 右手柄 B 切换左右肩，左肩时左手为主手、用左扳机射击。 | 右手柄 A 请求队友投掷手雷。 | 左摇杆移动，右摇杆转向。 font=26 rect=(x:-362.50, y:-127.91, width:725.00, height:255.81) preferredHeight=218.9 overflow=False
+Text_ModeIntro_Urban_Right text=界面与按钮 | 右摇杆按压：开门与交互。 | 建筑界面：当前楼层、房间列表与搜索进度。 | 靠近房门点“开门”，进房后点“检查房间”。 | 街道界面：楼层入口与推进提示。 | 队友会自行推进并投雷，注意别挡枪线。 | 结算页显示清理进度与评级。 font=26 rect=(x:-362.50, y:-127.91, width:725.00, height:255.81) preferredHeight=255.81 overflow=False
+Text_ModeIntro_Urban_Back text=返回 font=24 rect=(x:-142.00, y:-27.00, width:284.00, height:54.00) preferredHeight=31.68 overflow=False
+Text_ModeIntro_Urban_Enter text=进入训练 font=24 rect=(x:-142.00, y:-27.00, width:284.00, height:54.00) preferredHeight=31.68 overflow=False
+Urban viewport=(x:-755.00, y:-285.00, width:1510.00, height:570.00) content=(x:-755.00, y:-255.81, width:1510.00, height:255.81) horizontal=False
+Panel_MainMenu_Menu min=(1360.00, 805.00) max=(1750.00, 865.00) sprite=status_strip_long color=RGBA(0.067, 0.114, 0.094, 0.902)
+Placeholder_MainMenu_OpenZeroing_IconBounds min=(26.00, 22.00) max=(76.00, 63.00) sprite= color=
+Text_MainMenu_OpenZeroing_Number min=(84.00, 8.00) max=(124.00, 77.00) sprite= color=
+Placeholder_MainMenu_OpenMovingTarget_IconBounds min=(26.00, 22.00) max=(76.00, 63.00) sprite= color=
+Text_MainMenu_OpenMovingTarget_Number min=(84.00, 8.00) max=(124.00, 77.00) sprite= color=
+Placeholder_MainMenu_Trench_IconBounds min=(26.00, 22.00) max=(76.00, 63.00) sprite= color=
+Text_MainMenu_Trench_Number min=(84.00, 8.00) max=(124.00, 77.00) sprite= color=
+Placeholder_MainMenu_Urban_IconBounds min=(26.00, 22.00) max=(76.00, 63.00) sprite= color=
+Text_MainMenu_Urban_Number min=(84.00, 8.00) max=(124.00, 77.00) sprite= color=

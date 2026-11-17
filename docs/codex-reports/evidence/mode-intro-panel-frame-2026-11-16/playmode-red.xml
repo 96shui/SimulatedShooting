@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Failed(Child)" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-16 16:03:24Z" end-time="2026-11-16 16:03:24Z" duration="0.252249">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="336" result="Failed" site="Child" start-time="2026-11-16 16:03:24Z" end-time="2026-11-16 16:03:24Z" duration="0.252249" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1399" name="VRShooting.Runtime.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.PlayModeTests.dll" runstate="Runnable" testcasecount="111" result="Failed" site="Child" start-time="2026-11-16 16:03:24Z" end-time="2026-11-16 16:03:24Z" duration="0.246198" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="51436" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1400" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="111" result="Failed" site="Child" start-time="2026-11-16 16:03:24Z" end-time="2026-11-16 16:03:24Z" duration="0.245461" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1401" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="111" result="Failed" site="Child" start-time="2026-11-16 16:03:24Z" end-time="2026-11-16 16:03:24Z" duration="0.244864" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1402" name="PlayMode" fullname="VRShooting.Tests.PlayMode" runstate="Runnable" testcasecount="111" result="Failed" site="Child" start-time="2026-11-16 16:03:24Z" end-time="2026-11-16 16:03:24Z" duration="0.244247" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestSuite" id="1403" name="UI" fullname="VRShooting.Tests.PlayMode.UI" runstate="Runnable" testcasecount="78" result="Failed" site="Child" start-time="2026-11-16 16:03:24Z" end-time="2026-11-16 16:03:24Z" duration="0.243473" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-suite type="TestFixture" id="1312" name="Screen02_04_MainMenuZeroingBriefingUITests" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" testcasecount="13" result="Failed" site="Child" start-time="2026-11-16 16:03:24Z" end-time="2026-11-16 16:03:24Z" duration="0.241594" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <failure>
+                  <message><![CDATA[One or more child tests had errors]]></message>
+                </failure>
+                <test-case id="1323" name="Bdd37_FourIntroPanelsPreserveLegacyFrameAndPrimaryEnterStyle" fullname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests.Bdd37_FourIntroPanelsPreserveLegacyFrameAndPrimaryEnterStyle" methodname="Bdd37_FourIntroPanelsPreserveLegacyFrameAndPrimaryEnterStyle" classname="VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests" runstate="Runnable" seed="658265698" result="Failed" start-time="2026-11-16 16:03:24Z" end-time="2026-11-16 16:03:24Z" duration="0.234286" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  Zeroing
+  Expected: not null
+  But was:  null
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.PlayMode.UI.Screen02_04_MainMenuZeroingBriefingUITests+<Bdd37_FourIntroPanelsPreserveLegacyFrameAndPrimaryEnterStyle>d__16.MoveNext () [0x00189] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\PlayMode\UI\Screen02_04_MainMenuZeroingBriefingUITests.cs:374
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                  </failure>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

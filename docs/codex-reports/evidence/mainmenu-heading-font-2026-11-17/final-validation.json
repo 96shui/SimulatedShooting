@@ -1,0 +1,43 @@
+{
+  "head": "9a1c01224a7e87ed84c6d54fe47cec4e46d5422a",
+  "branch": "main",
+  "unity_process_count": 0,
+  "worktree_removed": true,
+  "temporary_editor_helper_removed": true,
+  "production_change_exactly_title_override_removal": true,
+  "baseline_sources": {
+    "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs": {
+      "matches_commit_source": true,
+      "archive_sha256": "3bb64087ab68b1c97e40fa600ca75578b3ea2448414695bebc72ed35fa2aa23a"
+    },
+    "Assets/VRShooting/Runtime/Unity/UI/TacticalUIStyle.cs": {
+      "matches_commit_source": true,
+      "archive_sha256": "96380309247d86ff53d4015d0850c00fc18e8ea8a21100f5c67f30ec515dae78"
+    }
+  },
+  "protected_file_count": 4477,
+  "all_protected_files_identical": true,
+  "preserved_tracked_init_test_scenes": [
+    "Assets/InitTestScene639252044744999923.unity",
+    "Assets/InitTestScene639252044744999923.unity.meta",
+    "Assets/InitTestScene639253514584773890.unity",
+    "Assets/InitTestScene639253514584773890.unity.meta",
+    "Assets/InitTestScene639271113773156361.unity",
+    "Assets/InitTestScene639271113773156361.unity.meta",
+    "Assets/InitTestScene639271128085681542.unity",
+    "Assets/InitTestScene639271128085681542.unity.meta"
+  ],
+  "changed_authorized_files": [
+    "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "Assets/VRShooting/Tests/EditMode/Application/MainMenuControlsTests.cs",
+    "Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs",
+    "docs/BDD/screens/02-游戏主界面.feature.md",
+    "docs/任务规格/阶段一-P1-100m射校原型闭环/UI/task008-ui-mainmenu-zeroing-briefing.md",
+    "docs/接口文档/01-页面导航与UI事件.md"
+  ],
+  "failure_gate_passed": true,
+  "inventory_gate_passed": true,
+  "baseline_font_isolated_rgb_changed_pixels": 0,
+  "outside_heading_changed_pixels": 0,
+  "report_exists": true
+}

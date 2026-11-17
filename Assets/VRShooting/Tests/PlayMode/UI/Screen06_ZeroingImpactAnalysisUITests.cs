@@ -705,7 +705,7 @@ namespace VRShooting.Tests.PlayMode.UI
         [UnityTest]
         public IEnumerator Bdd04_BriefingShowsFourShotsAndBothPassPaths()
         {
-            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
+            ModeIntroTestActions.EnterTraining(FindButton);
             yield return null;
             var text = FindById("Panel_ZeroingBriefing_Rules").GetComponentInChildren<TMP_Text>(true).text;
             Assert.That(text, Does.Contain("4发").And.Contain("集中").And.Contain("≤10cm").And.Contain("<5cm"));
@@ -714,7 +714,7 @@ namespace VRShooting.Tests.PlayMode.UI
 
         IEnumerator OpenAnalysisWithImpacts(params Vector3[] points)
         {
-            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
+            ModeIntroTestActions.EnterTraining(FindButton);
             yield return null;
             FindButton("Button_ZeroingBriefing_Start").onClick.Invoke();
             yield return null;
@@ -777,7 +777,7 @@ namespace VRShooting.Tests.PlayMode.UI
 
         IEnumerator OpenHudAndCompleteRoundAt(Vector3 point, bool rawAim = false)
         {
-            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
+            ModeIntroTestActions.EnterTraining(FindButton);
             yield return null;
             FindButton("Button_ZeroingBriefing_Start").onClick.Invoke();
             yield return null;

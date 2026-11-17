@@ -1,0 +1,76 @@
+{
+  "Screen_MainMenu.png": {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 2371720,
+    "sha256": "16cd61fea8239b17992333af654ae7babb5dc0ed66bdca5a383a4c5ac2fb5040"
+  },
+  "Screen_MainMenu_Closeup.png": {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 1664618,
+    "sha256": "53a62b5bb93009e99a825160457eb4a0bcc55cfdb099a9200220e01c42973224"
+  },
+  "Screen_MainMenu_Hover.png": {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 2372430,
+    "sha256": "01c3d167ee3854214688308d9978dcd94303921476a9201c256d2d3de8a7a0c8"
+  },
+  "Screen_ModeIntro_MovingTarget.png": {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 878744,
+    "sha256": "9bb08b0ebf9a01d9add062914a23c5135cd63cf52a38c6967a53a241785024e4"
+  },
+  "Screen_ModeIntro_Trench.png": {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 883396,
+    "sha256": "a0a0aaa37726140a0993c10049b0f477edce8ab045962499350d025d45e3da39"
+  },
+  "Screen_ModeIntro_Urban.png": {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 885128,
+    "sha256": "14520246dd4ed11f47132954351a3819428e11fa57be290c38a9fab8115d5e33"
+  },
+  "Screen_ModeIntro_Zeroing.png": {
+    "width": 1920,
+    "height": 1080,
+    "bytes": 894820,
+    "sha256": "3552e96eaad7c6648f5b1db67240b6f3b51a93c5c58f8aed056407f4fc55603f"
+  },
+  "hover_pixel_difference": {
+    "bbox": [
+      1364,
+      334,
+      1746,
+      411
+    ],
+    "changed_pixels": 26663,
+    "within_01_button": true
+  },
+  "final_reusable_gallery_verification": {
+    "Screen_MainMenu.png": {
+      "gallery_tool_bytes_identical": true,
+      "sha256": "16cd61fea8239b17992333af654ae7babb5dc0ed66bdca5a383a4c5ac2fb5040"
+    },
+    "Screen_ModeIntro_Zeroing.png": {
+      "gallery_tool_bytes_identical": true,
+      "sha256": "3552e96eaad7c6648f5b1db67240b6f3b51a93c5c58f8aed056407f4fc55603f"
+    },
+    "Screen_ModeIntro_MovingTarget.png": {
+      "gallery_tool_bytes_identical": true,
+      "sha256": "9bb08b0ebf9a01d9add062914a23c5135cd63cf52a38c6967a53a241785024e4"
+    },
+    "Screen_ModeIntro_Trench.png": {
+      "gallery_tool_bytes_identical": true,
+      "sha256": "a0a0aaa37726140a0993c10049b0f477edce8ab045962499350d025d45e3da39"
+    },
+    "Screen_ModeIntro_Urban.png": {
+      "gallery_tool_bytes_identical": true,
+      "sha256": "14520246dd4ed11f47132954351a3819428e11fa57be290c38a9fab8115d5e33"
+    }
+  }
+}

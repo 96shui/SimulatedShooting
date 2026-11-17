@@ -1,0 +1,226 @@
+{
+  "Heading_Font_Comparison.png": {
+    "size": [
+      800,
+      380
+    ],
+    "sha256": "8716dcc5e44cd281435e13ee6053eb01e41c2db74b51aa13945ffbf9863015db"
+  },
+  "Screen_MainMenu.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "7a44ca25a12e811133ceb609bb0203a53a6abd33592ebc1107492eeca1ec7774"
+  },
+  "Screen_MainMenu_9a1c012.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "9576977b6bae578b39f4e2d7b100695601b775edaf026e9c52f66f11f4d940b4"
+  },
+  "Screen_MainMenu_Closeup.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "00536e92c07dd7ba676e64ae02863fcee3408b1c2d9209f5949c1090bb45300c"
+  },
+  "after/HeadingTextOnly.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "31797fbe2fd2654c02cc398c96ea3a8e3bd0c0d4dd2a20376ed17dbd902e5bea"
+  },
+  "after/Screen_MainMenu.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "7a44ca25a12e811133ceb609bb0203a53a6abd33592ebc1107492eeca1ec7774"
+  },
+  "after/Screen_MainMenu_Closeup.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "00536e92c07dd7ba676e64ae02863fcee3408b1c2d9209f5949c1090bb45300c"
+  },
+  "after/Screen_MainMenu_WithoutHeadingText.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "ce782b01814b12d76689ba4998250e951d4dad627cf0d631a003978892ee1760"
+  },
+  "after/Screen_ModeIntro_MovingTarget.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "2e2136947fb69996bdf4eff70aff9dfa1cf57b7e023cf3dfd2c2babc40267fef"
+  },
+  "after/Screen_ModeIntro_Trench.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "8ea541d7bb769b04c61c790043d961c24a923b97529c0c02d0c41a733e376426"
+  },
+  "after/Screen_ModeIntro_Urban.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "56acdb0795dc88dcaff56ee084cdf4fe0d7fc8110a163b10cd018086e327c4ca"
+  },
+  "after/Screen_ModeIntro_Zeroing.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "15661e3af77ee2ec35fa4e45d38b4529041455d32ae5b87826c536b6b0c272da"
+  },
+  "baseline-9a1c012/HeadingTextOnly.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "31f9ce3c5f498883037f19a7659f0391e19d27647a4a8bd53327ba6ab04b93a0"
+  },
+  "baseline-9a1c012/Screen_MainMenu.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "9576977b6bae578b39f4e2d7b100695601b775edaf026e9c52f66f11f4d940b4"
+  },
+  "baseline-9a1c012/Screen_MainMenu_Closeup.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "45ccec397d9c52005086e1da2608525adde5a8aa7428d51b4bd31687cd4274ff"
+  },
+  "baseline-9a1c012/Screen_MainMenu_WithoutHeadingText.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "39bbdb2f3e13ee0b4231b180bd92a5ab7ee58e23a9ac0f4061fbbe6934bf2cbd"
+  },
+  "before/HeadingTextOnly.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "3f2e375713fdf4e1ab48f01f654a6c35f052dab5f8ca62494f7872a056e4be7e"
+  },
+  "before/Screen_MainMenu.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "e51755206ecc435084d9cf4df7e96574d2d89d559df4a04e8dd415f16b37fafd"
+  },
+  "before/Screen_MainMenu_Closeup.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "11d017f57e4f0e41d426d5cc0d635573ca832f111ed4378eaa15b0d789f03cde"
+  },
+  "before/Screen_MainMenu_WithoutHeadingText.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "ce782b01814b12d76689ba4998250e951d4dad627cf0d631a003978892ee1760"
+  },
+  "before/Screen_ModeIntro_MovingTarget.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "2e2136947fb69996bdf4eff70aff9dfa1cf57b7e023cf3dfd2c2babc40267fef"
+  },
+  "before/Screen_ModeIntro_Trench.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "8ea541d7bb769b04c61c790043d961c24a923b97529c0c02d0c41a733e376426"
+  },
+  "before/Screen_ModeIntro_Urban.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "56acdb0795dc88dcaff56ee084cdf4fe0d7fc8110a163b10cd018086e327c4ca"
+  },
+  "before/Screen_ModeIntro_Zeroing.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "15661e3af77ee2ec35fa4e45d38b4529041455d32ae5b87826c536b6b0c272da"
+  },
+  "probe-normal/HeadingTextOnly.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "aeb4931208239de6cceace092f4961a0b8b28e8934f7a646aea8ab5aa72c27da"
+  },
+  "probe-normal/Screen_MainMenu.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "db52d249510d9669c07c20cbff9c3c4eebf1bcc613a62e86c182422a5dd1423e"
+  },
+  "probe-normal/Screen_MainMenu_Closeup.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "647beb37a47a20ef06567f21a6d6dfeaf57685e2c377744febfc81ea79063f36"
+  },
+  "probe-normal/Screen_MainMenu_WithoutHeadingText.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "ce782b01814b12d76689ba4998250e951d4dad627cf0d631a003978892ee1760"
+  },
+  "probe-normal/Screen_ModeIntro_MovingTarget.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "2e2136947fb69996bdf4eff70aff9dfa1cf57b7e023cf3dfd2c2babc40267fef"
+  },
+  "probe-normal/Screen_ModeIntro_Trench.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "8ea541d7bb769b04c61c790043d961c24a923b97529c0c02d0c41a733e376426"
+  },
+  "probe-normal/Screen_ModeIntro_Urban.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "56acdb0795dc88dcaff56ee084cdf4fe0d7fc8110a163b10cd018086e327c4ca"
+  },
+  "probe-normal/Screen_ModeIntro_Zeroing.png": {
+    "size": [
+      1920,
+      1080
+    ],
+    "sha256": "15661e3af77ee2ec35fa4e45d38b4529041455d32ae5b87826c536b6b0c272da"
+  }
+}

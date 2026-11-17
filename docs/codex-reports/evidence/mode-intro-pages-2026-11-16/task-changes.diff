@@ -1,0 +1,1306 @@
+diff --git a/Assets/SimulatedShooting/Tests/PlayMode/BriefResultsGuidanceRegressionTests.cs b/Assets/SimulatedShooting/Tests/PlayMode/BriefResultsGuidanceRegressionTests.cs
+index ec40142..a1d143e 100644
+--- a/Assets/SimulatedShooting/Tests/PlayMode/BriefResultsGuidanceRegressionTests.cs
++++ b/Assets/SimulatedShooting/Tests/PlayMode/BriefResultsGuidanceRegressionTests.cs
+@@ -1,3 +1,4 @@
++using VRShooting.Tests.PlayMode;
+ using System.Collections;
+ using System.Linq;
+ using NUnit.Framework;
+@@ -41,7 +42,7 @@ namespace SimulatedShooting.Tests.PlayMode
+ 
+         [UnityTest] public IEnumerator Bdd04_BriefingUsesThePhysicalTargetTexture()
+         {
+-            Click("Button_MainMenu_OpenZeroing");
++            ModeIntroTestActions.EnterTraining(id => Ui(id).GetComponent<Button>());
+             yield return null;
+             var plot = Ui("Screen_ZeroingBriefing").GetComponentsInChildren<TacticalTargetPlot>(true).Single();
+             Assert.That(Ui("Text_ZeroingBriefing_TargetSize").GetComponent<TMP_Text>().text, Is.EqualTo("50cm x 50cm"));
+@@ -130,7 +131,7 @@ namespace SimulatedShooting.Tests.PlayMode
+             yield return null;
+             // The retained-scene path also exercises inactive targets before any scene unloading can hide the bug.
+             if (surfaces.All(s=>s!=null)) AssertCleared(surfaces);
+-            Click("Button_MainMenu_OpenZeroing");
++            ModeIntroTestActions.EnterTraining(id => Ui(id).GetComponent<Button>());
+             yield return null;
+             Click("Button_ZeroingBriefing_Start");
+             yield return null;
+diff --git a/Assets/SimulatedShooting/Tests/PlayMode/P3ProductionFlowTests.cs b/Assets/SimulatedShooting/Tests/PlayMode/P3ProductionFlowTests.cs
+index 58caa38..14a2c98 100644
+--- a/Assets/SimulatedShooting/Tests/PlayMode/P3ProductionFlowTests.cs
++++ b/Assets/SimulatedShooting/Tests/PlayMode/P3ProductionFlowTests.cs
+@@ -1,3 +1,4 @@
++using VRShooting.Tests.PlayMode;
+ using System.Collections;
+ using System.Linq;
+ using NUnit.Framework;
+@@ -416,7 +417,9 @@ namespace SimulatedShooting.Tests.PlayMode
+             app=GameMain.Instance.Services.Combat;
+             ui=GameMain.Instance.GetComponent<P3LiveUIController>().View;
+             var button=Object.FindObjectsOfType<Button>(true).Single(b=>b.name=="Button_MainMenu_"+(mode==TrainingMode.Trench?"Trench":"Urban"));
+-            Assert.That(button.interactable,Is.True);button.onClick.Invoke();
++            Assert.That(button.interactable,Is.True);
++            ModeIntroTestActions.EnterTraining(id => Object.FindObjectsOfType<Button>(true).Single(b => b.name == id),
++                mode == TrainingMode.Trench ? "Trench" : "Urban");
+             if(mode==TrainingMode.Trench)ui.TrenchMapView.SelectButton.onClick.Invoke();else ui.UrbanMapView.SelectButton.onClick.Invoke();
+             float deadline=Time.realtimeSinceStartup+45;
+             while(app.Snapshot.Busy&&Time.realtimeSinceStartup<deadline)yield return null;
+diff --git a/Assets/SimulatedShooting/Tests/PlayMode/SimulatedShooting.PlayModeTests.asmdef b/Assets/SimulatedShooting/Tests/PlayMode/SimulatedShooting.PlayModeTests.asmdef
+index 68bf8e6..7f2a9f4 100644
+--- a/Assets/SimulatedShooting/Tests/PlayMode/SimulatedShooting.PlayModeTests.asmdef
++++ b/Assets/SimulatedShooting/Tests/PlayMode/SimulatedShooting.PlayModeTests.asmdef
+@@ -8,7 +8,8 @@
+     "Unity.XR.CoreUtils",
+     "VRShooting.Contracts",
+     "Unity.InputSystem",
+-    "Unity.TextMeshPro"
++    "Unity.TextMeshPro",
++    "VRShooting.Runtime.PlayModeTests"
+   ],
+   "optionalUnityReferences": [
+     "TestAssemblies"
+diff --git a/Assets/SimulatedShooting/Tests/PlayMode/XRSceneHandoffTests.cs b/Assets/SimulatedShooting/Tests/PlayMode/XRSceneHandoffTests.cs
+index 28e7f0b..40ff6f0 100644
+--- a/Assets/SimulatedShooting/Tests/PlayMode/XRSceneHandoffTests.cs
++++ b/Assets/SimulatedShooting/Tests/PlayMode/XRSceneHandoffTests.cs
+@@ -1,3 +1,4 @@
++using VRShooting.Tests.PlayMode;
+ using System.Collections;
+ using System.Linq;
+ using NUnit.Framework;
+@@ -231,7 +232,11 @@ namespace SimulatedShooting.Tests.PlayMode
+             var ui=Object.FindObjectOfType<MainMenuUI>();
+             var button=ui.GetComponentsInChildren<Button>(true).Single(b=>b.name=="Button_MainMenu_OpenZeroing");
+             yield return ClickWithController(button,camera);
+-            Assert.That(GameMain.Instance.Services.Router.Current,Is.EqualTo(ScreenId.ZeroingBriefing),"The real tracked trigger must route the main-menu button");
++            Assert.That(GameMain.Instance.Services.Router.Current,Is.EqualTo(ScreenId.MainMenu),"The tracked trigger opens the introduction before routing");
++            yield return null;
++            var enter = ModeIntroTestActions.FindEnterTrainingButton(id => ui.GetComponentsInChildren<Button>(true).Single(b => b.name == id));
++            yield return ClickWithController(enter,camera);
++            Assert.That(GameMain.Instance.Services.Router.Current,Is.EqualTo(ScreenId.ZeroingBriefing),"The real tracked trigger must confirm the introduction and route to briefing");
+         }
+ 
+         [UnityTest] public IEnumerator Screen18_21_VrActionsAndTrackedPosesSurviveUrbanLoadAndReturn()
+diff --git a/Assets/VRShooting/Editor/ModeOneScreenshotAdvance.cs b/Assets/VRShooting/Editor/ModeOneScreenshotAdvance.cs
+index 287d3cc..bdbad07 100644
+--- a/Assets/VRShooting/Editor/ModeOneScreenshotAdvance.cs
++++ b/Assets/VRShooting/Editor/ModeOneScreenshotAdvance.cs
+@@ -38,6 +38,7 @@ internal static class ModeOneScreenshotAdvance
+             case ScreenId.MainMenu:
+                 gripReady = false;
+                 Click("Button_MainMenu_OpenZeroing");
++                Click("Button_ModeIntro_Zeroing_Enter");
+                 break;
+             case ScreenId.ZeroingBriefing:
+                 if (SceneManager.GetActiveScene().name == "ZeroingRangeScene")
+diff --git a/Assets/VRShooting/Editor/TacticalUIGallery.cs b/Assets/VRShooting/Editor/TacticalUIGallery.cs
+index 4af72c1..c86e00a 100644
+--- a/Assets/VRShooting/Editor/TacticalUIGallery.cs
++++ b/Assets/VRShooting/Editor/TacticalUIGallery.cs
+@@ -69,7 +69,9 @@ namespace VRShooting.Editor
+                 var range = Create<ZeroingRangeUI>(scene, objects);
+                 range.Initialize(services);
+                 var moving = Create<MovingTargetRangeUI>(scene, objects);
+-                moving.Initialize(new MovingTargetUICommandAdapter(services));
++                // Each mode's preview owns its presentation state. Initializing the moving-target
++                // presenter must not route the main-menu preview away before intro capture.
++                moving.Initialize(new MovingTargetUICommandAdapter(ApplicationServices.CreateDefault()));
+                 FillRangePreview(range, moving);
+                 var combat = Create<P3CombatUIRoot>(scene, objects);
+                 combat.BuildIfNeeded();
+@@ -103,7 +105,7 @@ namespace VRShooting.Editor
+                     // The P1 pickup page is an actual full-size runtime panel, not a Screen_ node.
+                     // MovingTargetSettings, conversely, is a zero-size test ID alias.
+                     var pages = root.GetComponentsInChildren<RectTransform>(true).Where(t =>
+-                        (t.name.StartsWith("Screen_") || t.name == "Panel_Training_AwaitingWeaponPickup") && t.rect.width > 100).ToArray();
++                        !t.name.StartsWith("Screen_ModeIntro_") && (t.name.StartsWith("Screen_") || t.name == "Panel_Training_AwaitingWeaponPickup") && t.rect.width > 100).ToArray();
+                     foreach (var page in pages) page.gameObject.SetActive(false);
+                     foreach (var page in pages)
+                     {
+@@ -117,7 +119,7 @@ namespace VRShooting.Editor
+                         }
+                         CaptureFrame(page, name, folder, camera, target, names);
+                         if (modeOneOnly && page.name == "Screen_MainMenu")
+-                            CaptureControlsState(page, "07-controls", folder, camera, target, names);
++                            CaptureModeIntroStates(page, folder, camera, target, names);
+                         if (captureStates) CaptureExtraStates(page, folder, camera, target, names);
+                         if (modeOneOnly && page.name == "Screen_ZeroingImpactAnalysis")
+                             CaptureSpreadState(page, folder, camera, target, names);
+@@ -226,23 +228,29 @@ namespace VRShooting.Editor
+             CaptureFrame(page, "05-analysis-spread", folder, camera, target, names);
+         }
+ 
+-        static void CaptureControlsState(RectTransform page, string name, string folder, Camera camera,
++        static void CaptureModeIntroStates(RectTransform page, string folder, Camera camera,
+             RenderTexture target, List<string> names)
+         {
+-            var panel = Find(page, "Panel_MainMenu_Controls").gameObject;
+-            RequireActive(page, panel.name, false);
+-            try
+-            {
+-                Click(page, "Button_MainMenu_Controls");
+-                RequireActive(page, panel.name, true);
+-                if (!panel.activeInHierarchy)
+-                    throw new InvalidOperationException("Gallery controls panel has an inactive parent.");
+-                CaptureFrame(page, name, folder, camera, target, names);
+-            }
+-            finally
++            foreach (var entry in new[] { "OpenZeroing", "OpenMovingTarget", "Trench", "Urban" })
+             {
+-                if (panel.activeSelf) Click(page, "Button_MainMenu_Controls_Back");
++                var mode = entry == "OpenZeroing" ? "Zeroing" : entry == "OpenMovingTarget" ? "MovingTarget" : entry;
++                var panel = Find(page, "Screen_ModeIntro_" + mode).gameObject;
+                 RequireActive(page, panel.name, false);
++                try
++                {
++                    Click(page, "Button_MainMenu_" + entry);
++                    RequireActive(page, panel.name, true);
++                    if (!panel.activeInHierarchy) throw new InvalidOperationException("Introduction parent must be active.");
++                    foreach (var scroll in panel.GetComponentsInChildren<ScrollRect>(true))
++                        LayoutRebuilder.ForceRebuildLayoutImmediate(scroll.content);
++                    Canvas.ForceUpdateCanvases();
++                    CaptureFrame(page, panel.name, folder, camera, target, names);
++                }
++                finally
++                {
++                    if (panel.activeSelf) Click(page, "Button_ModeIntro_" + mode + "_Back");
++                    RequireActive(page, panel.name, false);
++                }
+             }
+         }
+ 
+@@ -251,7 +259,7 @@ namespace VRShooting.Editor
+         {
+             if (page.name == "Screen_MainMenu")
+             {
+-                CaptureControlsState(page, "Screen_MainMenu_ControlsOpen", folder, camera, target, names);
++                CaptureModeIntroStates(page, folder, camera, target, names);
+             }
+             else if (page.name == "Screen_ZeroingImpactAnalysis")
+             {
+diff --git a/Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs b/Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs
+index 08b06d9..8d2a363 100644
+--- a/Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs
++++ b/Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs
+@@ -42,40 +42,6 @@ namespace VRShooting.Unity.UI
+         }
+     }
+ 
+-    /// <summary>Texture-free heading stroke, so cyan sprite pixels cannot tint the orange border.</summary>
+-    [ExecuteAlways, RequireComponent(typeof(CanvasRenderer))]
+-    public sealed class MainMenuHeadingBorderGraphic : MaskableGraphic
+-    {
+-        protected override void OnPopulateMesh(VertexHelper vh)
+-        {
+-            vh.Clear();
+-            var rect = GetPixelAdjustedRect();
+-            const float inset = 2f, bevel = 20f, halfWidth = 1f;
+-            var left = rect.xMin + inset;
+-            var right = rect.xMax - inset;
+-            var bottom = rect.yMin + inset;
+-            var top = rect.yMax - inset;
+-            var points = new[] { new Vector2(left + bevel, top), new Vector2(right - bevel, top),
+-                new Vector2(right, top - bevel), new Vector2(right, bottom + bevel),
+-                new Vector2(right - bevel, bottom), new Vector2(left + bevel, bottom),
+-                new Vector2(left, bottom + bevel), new Vector2(left, top - bevel) };
+-            for (var i = 0; i < points.Length; i++)
+-            {
+-                var a = points[i];
+-                var b = points[(i + 1) % points.Length];
+-                var direction = (b - a).normalized;
+-                var normal = new Vector2(-direction.y, direction.x) * halfWidth;
+-                var start = vh.currentVertCount;
+-                vh.AddVert(a - normal, color, Vector2.zero);
+-                vh.AddVert(a + normal, color, Vector2.zero);
+-                vh.AddVert(b + normal, color, Vector2.zero);
+-                vh.AddVert(b - normal, color, Vector2.zero);
+-                vh.AddTriangle(start, start + 1, start + 2);
+-                vh.AddTriangle(start, start + 2, start + 3);
+-            }
+-        }
+-    }
+-
+     [Flags]
+     public enum TrainingUIScreenGroup
+     {
+@@ -106,7 +72,8 @@ namespace VRShooting.Unity.UI
+         IDisposable screenSubscription;
+         IDisposable zeroingRoundSubscription;
+         RectTransform mainMenuScreen;
+-        RectTransform mainMenuControlsPanel;
++        readonly Dictionary<string, RectTransform> modeIntroScreens = new Dictionary<string, RectTransform>();
++        Action pendingModeEntry;
+         RectTransform zeroingBriefingScreen;
+         RectTransform zeroingPickupScreen;
+         RectTransform zeroingHudScreen;
+@@ -361,6 +328,19 @@ namespace VRShooting.Unity.UI
+             }
+ 
+             TacticalUIStyle.Apply(transform);
++            // XRI sends the standard enter/exit events. Do not retain Selected after a ray click.
++            foreach (var entry in new[] { openZeroingButton, openMovingTargetButton,
++                mainMenuScreen?.Find("Button_MainMenu_Trench")?.GetComponent<Button>(),
++                mainMenuScreen?.Find("Button_MainMenu_Urban")?.GetComponent<Button>() })
++            {
++                if (entry == null) continue;
++                var navigation = entry.navigation;
++                navigation.mode = Navigation.Mode.None;
++                entry.navigation = navigation;
++                var sprites = entry.spriteState;
++                sprites.selectedSprite = entry.image.sprite;
++                entry.spriteState = sprites;
++            }
+             ConfigurePresentationView();
+         }
+ 
+@@ -515,6 +495,8 @@ namespace VRShooting.Unity.UI
+ 
+         Sprite ResolvePanelSprite(string id, Vector2 min, Vector2 max)
+         {
++            // The menu title uses the requested original long status strip, independent of its width.
++            if (id == "Panel_MainMenu_Menu") return LoadGeneratedSprite("status_strip_long");
+             var width = Mathf.Abs(max.x - min.x);
+             var height = Mathf.Abs(max.y - min.y);
+ 
+@@ -563,45 +545,132 @@ namespace VRShooting.Unity.UI
+ 
+             AddPanel(parent, "Panel_MainMenu_Profile", new Vector2(120, 165), new Vector2(630, 325), new Color32(17, 29, 24, 220), new Color32(56, 84, 71, 255),
+                 "本地训练\n循序训练 · 安全操作 · 精准射击");
+-            var controlsButton = AddButton(parent, "Button_MainMenu_Controls", "操作介绍", new Vector2(1360, 780), new Vector2(1750, 865), false);
+-            controlsButton.onClick.AddListener(() => mainMenuControlsPanel.gameObject.SetActive(true));
+-
+-            AddPanel(parent, "Panel_MainMenu_Menu", new Vector2(1360, 667), new Vector2(1750, 737), new Color32(17, 29, 24, 230), new Color32(247, 185, 85, 255), "选择训练科目");
+-
+-            openZeroingButton = AddButton(parent, "Button_MainMenu_OpenZeroing", "01   100m 精度射校靶", new Vector2(1360, 539), new Vector2(1750, 624), false);
+-            openZeroingButton.onClick.AddListener(OnOpenZeroingClicked);
+-
+-            openMovingTargetButton = AddButton(parent, "Button_MainMenu_OpenMovingTarget", "02   移动目标射击", new Vector2(1360, 411), new Vector2(1750, 496), false);
+-            openMovingTargetButton.onClick.AddListener(OnOpenMovingTargetClicked);
+-            var trenchButton = AddButton(parent, "Button_MainMenu_Trench", "03   堑壕射击", new Vector2(1360, 283), new Vector2(1750, 368), false);
+-            var urbanButton = AddButton(parent, "Button_MainMenu_Urban", "04   城镇攻防", new Vector2(1360, 155), new Vector2(1750, 240), false);
++            AddPanel(parent, "Panel_MainMenu_Menu", new Vector2(1360, 805), new Vector2(1750, 865), new Color32(17, 29, 24, 230), new Color32(56, 84, 71, 255), "选择训练科目");
++
++            openZeroingButton = AddModeEntry(parent, "OpenZeroing", "01", "100m 精度射校靶", 665);
++            openZeroingButton.onClick.AddListener(() => ShowModeIntro("Zeroing", OnOpenZeroingClicked));
++            openMovingTargetButton = AddModeEntry(parent, "OpenMovingTarget", "02", "移动目标射击", 535);
++            openMovingTargetButton.onClick.AddListener(() => ShowModeIntro("MovingTarget", OnOpenMovingTargetClicked));
++            var trenchButton = AddModeEntry(parent, "Trench", "03", "堑壕射击", 405);
++            var urbanButton = AddModeEntry(parent, "Urban", "04", "城镇攻防", 275);
+             trenchButton.interactable = urbanButton.interactable = services.CombatScenesAvailable;
+-            trenchButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Trench));
+-            urbanButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Urban));
++            trenchButton.onClick.AddListener(() => ShowModeIntro("Trench", () => services.Combat.OpenMode(TrainingMode.Trench)));
++            urbanButton.onClick.AddListener(() => ShowModeIntro("Urban", () => services.Combat.OpenMode(TrainingMode.Urban)));
+ 
+             AddPanel(parent, "Panel_MainMenu_BottomStatus", new Vector2(120, 55), new Vector2(1800, 115), new Color32(17, 29, 24, 210), new Color32(56, 84, 71, 255),
+                 "单机训练                                     选择科目后查看任务简报");
+ 
+-            BuildMainMenuControls(parent);
++            BuildModeIntro(parent, "Zeroing", "模式一 · 100m 精度射校",
++                "按键操作\n右手侧握键抓枪，左手侧握键辅助抓握。\n右扳机射击，单发射击。\n用界面射线选择界面按钮。\n模式一为固定射击位，不需要移动。\n每轮 4 发，共 3 轮，打完自动进入弹着分析。",
++                "界面与按钮\n顺时针 5° / 逆时针 5°：修正水平方向。\n向前 1cm / 向后 1cm：修正垂直方向。\n应用调整：按当前补偿量修正并立即判定。\n进入下一轮：本轮作废，继续下一轮。\n查看评级：三轮结束后进入最终评级。\n蓝点是当前补偿量，从靶心起步。\n弹着点分散时，四个调整按钮与应用调整会被禁用。");
++            BuildModeIntro(parent, "MovingTarget", "模式二 · 移动目标射击",
++                "按键操作\n右手侧握键抓枪，左手侧握键辅助抓握。\n右扳机射击：快速扣动一次起射两发，继续按住逐发连射。\n用界面射线选择界面按钮。\n射击位固定，不需要移动。",
++                "界面与按钮\n开局选择移动靶速度档位，确认后进入训练。\n跟随射击：准心跟随移动靶，稳住在靶上扣扳机。\n等待射击：准心提前对准，等靶子进入再扣扳机。\n抬头显示区显示剩余弹药、命中数与已用时间。\n结算页显示命中、用时与评级，可重新训练或返回主菜单。");
++            const string combatKeys = "按键操作\n右手侧握键抓枪，左手侧握键辅助抓握。\n右扳机射击；左手柄 X 换弹；左手柄 Y 切换姿态。\n右手柄 B 切换左右肩，左肩时左手为主手、用左扳机射击。\n右手柄 A 请求队友投掷手雷。\n左摇杆移动，右摇杆转向。";
++            BuildModeIntro(parent, "Trench", "模式三 · 堑壕射击", combatKeys,
++                "界面与按钮\n任务状态：显示当前阶段与剩余目标。\n弹药与备用弹匣：弹匣 30 发，备用 4 个弹匣。\n拐角射击：靠近拐角时的射击提示。\n交互提示：靠近可交互物按提示操作。\n地图选择页选地图后进入简报与无人机侦察。\n结算页显示完成情况与评级。");
++            BuildModeIntro(parent, "Urban", "模式四 · 城镇攻防", combatKeys,
++                "界面与按钮\n右摇杆按压：开门与交互。\n建筑界面：当前楼层、房间列表与搜索进度。\n靠近房门点“开门”，进房后点“检查房间”。\n街道界面：楼层入口与推进提示。\n队友会自行推进并投雷，注意别挡枪线。\n结算页显示清理进度与评级。");
++        }
++
++        Button AddModeEntry(RectTransform parent, string entry, string number, string name, float bottom)
++        {
++            var button = AddButton(parent, "Button_MainMenu_" + entry, name,
++                new Vector2(1360, bottom), new Vector2(1750, bottom + 85), false);
++            var rect = (RectTransform)button.transform;
++            // Reserved rectangle for the ornament baked into the secondary button sprite.
++            var icon = CreateRect("Placeholder_MainMenu_" + entry + "_IconBounds", rect, Vector2.zero, Vector2.zero,
++                new Vector2(26, 22), new Vector2(76, 63));
++            AddTestId(icon.gameObject, icon.name);
++            var label = button.GetComponentInChildren<TMP_Text>();
++            label.alignment = TextAlignmentOptions.Left;
++            label.rectTransform.offsetMin = new Vector2(130, 8);
++            label.rectTransform.offsetMax = new Vector2(-16, -8);
++            AddLabel(rect, "Text_MainMenu_" + entry + "_Number", number, 24, FontStyles.Normal,
++                TextAlignmentOptions.Left, new Vector2(84, 8), new Vector2(124, 77), new Color32(231, 242, 235, 255));
++            return button;
+         }
+ 
+-        void BuildMainMenuControls(RectTransform parent)
++        void BuildModeIntro(RectTransform parent, string mode, string title, string leftCopy, string rightCopy)
+         {
+-            mainMenuControlsPanel = AddPanel(parent, "Panel_MainMenu_Controls", new Vector2(130, 120), new Vector2(1790, 960),
++            var screen = CreateRect("Screen_ModeIntro_" + mode, parent, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
++            AddTestId(screen.gameObject, screen.name);
++            // Modal raycast blocker prevents clicks/scrolls from reaching the underlying menu.
++            AddImage(screen.gameObject, Color.clear).raycastTarget = true;
++            var panel = AddPanel(screen, "Panel_ModeIntro_" + mode, new Vector2(130, 120), new Vector2(1790, 960),
+                 new Color32(11, 19, 16, 245), new Color32(45, 66, 56, 255));
++            var panelImage = panel.GetComponent<Image>();
++            panelImage.sprite = null;
++            panelImage.color = new Color32(11, 19, 16, 245);
++            var outline = panel.gameObject.AddComponent<Outline>();
++            outline.effectColor = new Color32(45, 66, 56, 255);
++            outline.effectDistance = new Vector2(2, -2);
+             var textColor = new Color32(231, 242, 235, 255);
+-            AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Title", "操作介绍", 38, FontStyles.Bold,
++            AddLabel(panel, "Text_ModeIntro_" + mode + "_Title", title, 38, FontStyles.Normal,
+                 TextAlignmentOptions.Center, new Vector2(80, 750), new Vector2(1580, 820), textColor);
+-            var left = AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Left",
+-                "通用 VR 操作\n右手侧握键抓枪 / 主手握持；左手侧握键副手握持。\n右扳机射击；用 UI 射线选择按钮。\n主菜单及模式三 / 四：左摇杆移动，右摇杆转向。\n模式一 / 二为固定射击点，不可移动。\n\n模式一  ·  100m 精度射校\n每轮 4 发，共 3 轮。\n分析页使用“应用调整”“进入下一轮”或“查看评级”。\n水平 1 格 = 2cm；垂直 5 度 = 0.32cm。\n集中且计算集各点距靶心≤10cm、均值距靶心≤5cm且至少一发距靶心≤5cm，或应用调整后均值距靶心<5cm即可通过。",
+-                24, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(75, 150), new Vector2(800, 720), textColor);
+-            var right = AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Right",
+-                "模式二  ·  移动目标\n双手据枪，采用“跟随射击”或“等待射击”的方式对目标进行射击。\n右扳机快速扣动起射两发，继续按住可逐发连射。\n\n模式三 / 四  ·  堑壕与城镇\n左手柄 X：换弹；左手柄 Y：切换姿态。\n右手柄 B：切换左右肩。\n模式四：右摇杆按压交互 / 开门。\n模式三 / 四：右手柄 A 请求队友投掷手雷。\n切换左肩后，左手为主手并使用左扳机射击，右手为副手。",
+-                24, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(860, 150), new Vector2(1585, 720), textColor);
+-            left.lineSpacing = right.lineSpacing = 6f;
+-            var back = AddButton(mainMenuControlsPanel, "Button_MainMenu_Controls_Back", "返回", new Vector2(680, 35), new Vector2(980, 105), false);
+-            back.onClick.AddListener(() => mainMenuControlsPanel.gameObject.SetActive(false));
+-            mainMenuControlsPanel.gameObject.SetActive(false);
++            var scrollRoot = CreateRect("Scroll_ModeIntro_" + mode, panel, Vector2.zero, Vector2.zero,
++                new Vector2(75, 150), new Vector2(1585, 720));
++            AddTestId(scrollRoot.gameObject, scrollRoot.name);
++            var viewport = CreateRect("Viewport_ModeIntro_" + mode, scrollRoot, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
++            AddImage(viewport.gameObject, Color.clear).raycastTarget = true;
++            viewport.gameObject.AddComponent<RectMask2D>();
++            var content = CreateRect("Content_ModeIntro_" + mode, viewport, new Vector2(0, 1), Vector2.one, Vector2.zero, Vector2.zero);
++            content.pivot = new Vector2(.5f, 1);
++            var columns = content.gameObject.AddComponent<HorizontalLayoutGroup>();
++            columns.spacing = 60;
++            columns.childControlWidth = columns.childControlHeight = true;
++            columns.childForceExpandWidth = columns.childForceExpandHeight = true;
++            columns.childAlignment = TextAnchor.UpperLeft;
++            var fitter = content.gameObject.AddComponent<ContentSizeFitter>();
++            fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
++            foreach (var side in new[] { "Left", "Right" })
++            {
++                var body = AddLabel(content, "Text_ModeIntro_" + mode + "_" + side, side == "Left" ? leftCopy : rightCopy,
++                    26, FontStyles.Normal, TextAlignmentOptions.TopLeft, Vector2.zero, Vector2.zero, textColor);
++                body.lineSpacing = 10;
++                body.overflowMode = TextOverflowModes.Overflow;
++                var layout = body.gameObject.AddComponent<LayoutElement>();
++                layout.minWidth = 0;
++                layout.preferredWidth = 0;
++                layout.flexibleWidth = 1;
++            }
++            var scroll = scrollRoot.gameObject.AddComponent<ScrollRect>();
++            scroll.viewport = viewport;
++            scroll.content = content;
++            scroll.horizontal = false;
++            scroll.vertical = true;
++            scroll.movementType = ScrollRect.MovementType.Clamped;
++            scroll.inertia = false;
++            scroll.scrollSensitivity = 36;
++            var back = AddButton(panel, "Button_ModeIntro_" + mode + "_Back", "返回", new Vector2(460, 35), new Vector2(760, 105), false);
++            back.onClick.AddListener(CloseModeIntro);
++            var enter = AddButton(panel, "Button_ModeIntro_" + mode + "_Enter", "进入训练", new Vector2(900, 35), new Vector2(1200, 105), false);
++            enter.onClick.AddListener(() =>
++            {
++                if (!screen.gameObject.activeInHierarchy || services.Router.Current != ScreenId.MainMenu) return;
++                var entry = pendingModeEntry;
++                CloseModeIntro();
++                entry?.Invoke();
++            });
++            modeIntroScreens.Add(mode, screen);
++            screen.gameObject.SetActive(false);
++        }
++
++        void ShowModeIntro(string mode, Action entry)
++        {
++            if (services.Router.Current != ScreenId.MainMenu || pendingModeEntry != null) return;
++            pendingModeEntry = entry;
++            var screen = modeIntroScreens[mode];
++            screen.gameObject.SetActive(true);
++            var scroll = screen.GetComponentInChildren<ScrollRect>();
++            LayoutRebuilder.ForceRebuildLayoutImmediate(scroll.content);
++            scroll.verticalNormalizedPosition = 1;
++        }
++
++        void CloseModeIntro()
++        {
++            pendingModeEntry = null;
++            foreach (var screen in modeIntroScreens.Values) screen.gameObject.SetActive(false);
+         }
+ 
+         void BuildZeroingBriefing(RectTransform parent)
+@@ -953,8 +1022,7 @@ namespace VRShooting.Unity.UI
+             if (screen != ActiveScreen)
+                 SetZeroingInfoPanel(ZeroingInfoPanel.None);
+             ActiveScreen = screen;
+-            if (screen != ScreenId.MainMenu && mainMenuControlsPanel != null)
+-                mainMenuControlsPanel.gameObject.SetActive(false);
++            if (screen != ScreenId.MainMenu) CloseModeIntro();
+             if (mainMenuScreen != null)
+             {
+                 mainMenuScreen.gameObject.SetActive(screen == ScreenId.MainMenu);
+@@ -1703,18 +1771,9 @@ namespace VRShooting.Unity.UI
+             if (panelSprite != null)
+             {
+                 ApplySlicedSprite(image, panelSprite);
++                if (id == "Panel_MainMenu_Menu") image.color = fill;
+             }
+-            // BDD02: retain the heading's explicit panel fill/stroke with the resolved sprite.
+-            if (id == "Panel_MainMenu_Menu")
+-            {
+-                image.color = fill;
+-                image.raycastTarget = false;
+-                var borderRect = CreateRect("Image_MainMenu_MenuBorder", panel, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+-                var border = borderRect.gameObject.AddComponent<MainMenuHeadingBorderGraphic>();
+-                border.color = stroke;
+-                border.raycastTarget = false;
+-            }
+-            if (panelSprite == null || id == "Panel_MainMenu_Menu")
++            else
+             {
+                 var outline = panel.gameObject.AddComponent<Outline>();
+                 outline.effectColor = stroke;
+diff --git a/Assets/VRShooting/Runtime/Unity/UI/TacticalUIStyle.cs b/Assets/VRShooting/Runtime/Unity/UI/TacticalUIStyle.cs
+index 4923593..0fdd138 100644
+--- a/Assets/VRShooting/Runtime/Unity/UI/TacticalUIStyle.cs
++++ b/Assets/VRShooting/Runtime/Unity/UI/TacticalUIStyle.cs
+@@ -37,8 +37,8 @@ namespace VRShooting.Unity.UI
+             foreach (var image in root.GetComponentsInChildren<Image>(true))
+             {
+                 var id = image.name;
+-                // The menu heading keeps the fill and border supplied by AddPanel.
+-                if (id != "Panel_MainMenu_Menu" && (id.StartsWith("Panel_") || (id.StartsWith("Hud_") && id.EndsWith("_Image"))) && image.GetComponent<Button>() == null && image.color.a > 0)
++                // Preserve the menu title and introduction panels supplied by AddPanel.
++                if (id != "Panel_MainMenu_Menu" && !id.StartsWith("Panel_ModeIntro_") && (id.StartsWith("Panel_") || (id.StartsWith("Hud_") && id.EndsWith("_Image"))) && image.GetComponent<Button>() == null && image.color.a > 0)
+                 {
+                     image.sprite = Sprite(image.rectTransform.rect.height < 140 ? "hud_capsule" : "panel_holo_large");
+                     image.type = Image.Type.Sliced;
+diff --git a/Assets/VRShooting/Tests/EditMode/Application/MainMenuControlsTests.cs b/Assets/VRShooting/Tests/EditMode/Application/MainMenuControlsTests.cs
+index e6192ef..dacc218 100644
+--- a/Assets/VRShooting/Tests/EditMode/Application/MainMenuControlsTests.cs
++++ b/Assets/VRShooting/Tests/EditMode/Application/MainMenuControlsTests.cs
+@@ -2,60 +2,85 @@ using System.Linq;
+ using NUnit.Framework;
+ using TMPro;
+ using UnityEngine;
++using UnityEngine.EventSystems;
+ using UnityEngine.UI;
+ using VRShooting.Application;
++using VRShooting.Common;
++using VRShooting.P3.TestSupport;
+ using VRShooting.Unity;
+ using VRShooting.Unity.UI;
+ 
+ namespace VRShooting.Tests.EditMode.Application
+ {
+-    // BDD02 and task008: generated menu controls use the same UI and raycast path.
++    // BDD02/37, P1/UI task008: local introductions do not issue training commands before confirmation.
+     public class MainMenuControlsTests
+     {
+         GameObject root;
++        ApplicationServices services;
++        static readonly string[] Entries = { "OpenZeroing", "OpenMovingTarget", "Trench", "Urban" };
++        static readonly string[] Modes = { "Zeroing", "MovingTarget", "Trench", "Urban" };
++        static readonly string[] Titles = { "模式一 · 100m 精度射校", "模式二 · 移动目标射击", "模式三 · 堑壕射击", "模式四 · 城镇攻防" };
+ 
+         [SetUp]
+         public void SetUp()
+         {
++            services = ApplicationServices.CreateDefault(combatScenes: new CombatApplicationFixture());
+             root = new GameObject("ControlsTest", typeof(RectTransform));
+-            root.AddComponent<MainMenuUI>().Initialize(ApplicationServices.CreateDefault());
++            root.AddComponent<MainMenuUI>().Initialize(services);
+         }
+ 
+         [TearDown]
+         public void TearDown()
+         {
++            services.Combat.Dispose();
+             Object.DestroyImmediate(root);
+         }
+ 
+         [Test]
+         public void Bdd02_ControlsOpenCloseAndDescribeActualVrOperations()
+         {
+-            var panel = Find("Panel_MainMenu_Controls");
+-            Assert.That(panel.activeSelf, Is.False);
+-            Assert.That(Find("Button_MainMenu_Controls").GetComponent<Button>(), Is.Not.Null);
+-            Find("Button_MainMenu_Controls").GetComponent<Button>().onClick.Invoke();
+-            Assert.That(panel.activeSelf, Is.True);
+-            var body = panel.GetComponentsInChildren<TMP_Text>(true);
+-            var text = string.Join("\n", body.Select(label => label.text));
+-            foreach (var word in new[] { "抓枪", "射击", "手雷", "换弹", "姿态", "切换左右肩", "模式一", "模式二", "模式三" })
+-                Assert.That(text, Does.Contain(word), word);
+-            Assert.That(text, Does.Contain("模式三").And.Contain("固定射击点"));
+-            foreach (var label in body) Assert.That(label.fontSize, Is.GreaterThanOrEqualTo(20f), label.name);
+-            Canvas.ForceUpdateCanvases();
+-            foreach (var label in body.Where(label => label.name == "Text_MainMenu_Controls_Left" || label.name == "Text_MainMenu_Controls_Right"))
++            foreach (var id in new[] { "Button_MainMenu_Controls", "Panel_MainMenu_Controls", "Text_MainMenu_Controls_Title",
++                "Text_MainMenu_Controls_Left", "Text_MainMenu_Controls_Right", "Button_MainMenu_Controls_Back" })
++                Assert.That(root.GetComponentsInChildren<Transform>(true).Any(t => t.name == id), Is.False, id);
++            for (var i = 0; i < Modes.Length; i++)
+             {
+-                label.ForceMeshUpdate();
+-                Assert.That(label.isTextOverflowing, Is.False, label.name + " must fit on a single screen");
++                var panel = Find("Screen_ModeIntro_" + Modes[i]);
++                Assert.That(panel.activeSelf, Is.False);
++                for (var attempt = 0; attempt < 3; attempt++)
++                {
++                    Click("Button_MainMenu_" + Entries[i]);
++                    Assert.That(panel.activeInHierarchy, Is.True);
++                    Assert.That(Find("Text_ModeIntro_" + Modes[i] + "_Title").GetComponent<TMP_Text>().text, Is.EqualTo(Titles[i]));
++                    Assert.That(Find("Button_ModeIntro_" + Modes[i] + "_Enter").GetComponent<Button>().interactable, Is.True);
++                    var text = Copy(Modes[i]);
++                    foreach (var word in new[] { "按键操作", "界面与按钮", "侧握键抓枪", "辅助抓握", "右扳机射击" })
++                        Assert.That(text, Does.Contain(word), Modes[i] + word);
++                    Assert.That(text.Split('\n').Length, Is.InRange(10, 14), "Explicit copy lines including both headings");
++                    Assert.That(text.Replace("cm", "").Replace("100m", ""), Does.Not.Match("[a-zA-Z]{2,}"), "Only key letters and units are retained after excluding units below");
++                    Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
++                    Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
++                    Assert.That(services.Presentation.Get(string.Empty).Success, Is.False);
++                    Assert.That(services.Combat.Snapshot.Mode, Is.Null);
++                    Click("Button_ModeIntro_" + Modes[i] + "_Back");
++                    Assert.That(panel.activeSelf, Is.False);
++                    Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
++                    Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
++                    Assert.That(services.Combat.Snapshot.Mode, Is.Null);
++                }
+             }
+-            Find("Button_MainMenu_Controls_Back").GetComponent<Button>().onClick.Invoke();
+-            Assert.That(panel.activeSelf, Is.False);
++            foreach (var mode in new[] { "Trench", "Urban" })
++                foreach (var word in new[] { "X 换弹", "Y 切换姿态", "B 切换左右肩", "A 请求队友投掷手雷", "左摇杆移动", "右摇杆转向", "左扳机射击" })
++                    Assert.That(Copy(mode), Does.Contain(word), mode + word);
++            foreach (var word in new[] { "顺时针 5°", "逆时针 5°", "水平方向", "向前 1cm", "向后 1cm", "垂直方向", "立即判定", "本轮作废", "蓝点", "禁用", "每轮 4 发", "共 3 轮" })
++                Assert.That(Copy("Zeroing"), Does.Contain(word), word);
++            foreach (var word in new[] { "起射两发", "逐发连射", "速度档位", "跟随射击", "等待射击", "剩余弹药", "命中数", "已用时间", "重新训练", "返回主菜单" })
++                Assert.That(Copy("MovingTarget"), Does.Contain(word), word);
+         }
+ 
+-        // BDD02 2026-11-15: preserve dimensions at the revised menu positions.
+-        [TestCase("Button_MainMenu_OpenZeroing", 539f, 624f)]
+-        [TestCase("Button_MainMenu_OpenMovingTarget", 411f, 496f)]
+-        [TestCase("Button_MainMenu_Trench", 283f, 368f)]
+-        [TestCase("Button_MainMenu_Urban", 155f, 240f)]
++        [TestCase("Button_MainMenu_OpenZeroing", 665f, 750f)]
++        [TestCase("Button_MainMenu_OpenMovingTarget", 535f, 620f)]
++        [TestCase("Button_MainMenu_Trench", 405f, 490f)]
++        [TestCase("Button_MainMenu_Urban", 275f, 360f)]
+         public void Bdd02_TrainingButtonGeometryIsUnchanged(string id, float bottom, float top)
+         {
+             var rect = Find(id).GetComponent<RectTransform>();
+@@ -66,77 +91,109 @@ namespace VRShooting.Tests.EditMode.Application
+         [Test]
+         public void Bdd02_ControlsAboveHeadingAndAllMenuRowsStayInsideFrame()
+         {
+-            var controls = Find("Button_MainMenu_Controls").GetComponent<RectTransform>();
+             var heading = Find("Panel_MainMenu_Menu").GetComponent<RectTransform>();
+-            Assert.That(controls.offsetMin, Is.EqualTo(new Vector2(1360, 780)));
+-            Assert.That(controls.offsetMax, Is.EqualTo(new Vector2(1750, 865)));
+-            Assert.That(heading.offsetMin, Is.EqualTo(new Vector2(1360, 667)));
+-            Assert.That(heading.offsetMax, Is.EqualTo(new Vector2(1750, 737)));
+-            Assert.That(controls.offsetMax.y, Is.GreaterThan(heading.offsetMax.y));
+-
+-            var rows = new[] { controls, heading }.Concat(new[] { "Button_MainMenu_OpenZeroing",
+-                "Button_MainMenu_OpenMovingTarget", "Button_MainMenu_Trench", "Button_MainMenu_Urban" }
+-                .Select(id => Find(id).GetComponent<RectTransform>())).ToArray();
++            Assert.That(heading.offsetMin, Is.EqualTo(new Vector2(1360, 805)));
++            Assert.That(heading.offsetMax, Is.EqualTo(new Vector2(1750, 865)));
++            var rows = new[] { heading }.Concat(Entries.Select(e => Find("Button_MainMenu_" + e).GetComponent<RectTransform>())).ToArray();
+             var frame = Find("Panel_MainMenu_Frame").GetComponent<RectTransform>();
+             var status = Find("Panel_MainMenu_BottomStatus").GetComponent<RectTransform>();
+             for (var i = 0; i < rows.Length; i++)
+             {
+                 var row = rows[i];
+-                Assert.That(row.offsetMin.x, Is.GreaterThanOrEqualTo(frame.offsetMin.x), row.name);
+-                Assert.That(row.offsetMax.x, Is.LessThanOrEqualTo(frame.offsetMax.x), row.name);
+-                Assert.That(row.offsetMin.y, Is.GreaterThanOrEqualTo(frame.offsetMin.y), row.name);
+-                Assert.That(row.offsetMax.y, Is.LessThanOrEqualTo(frame.offsetMax.y), row.name);
+-                Assert.That(row.offsetMin.y, Is.GreaterThan(status.offsetMax.y), row.name);
+-                if (i > 0)
+-                    Assert.That(rows[i - 1].offsetMin.y - row.offsetMax.y, Is.EqualTo(43f), row.name);
++                Assert.That(row.offsetMin.x, Is.GreaterThanOrEqualTo(frame.offsetMin.x));
++                Assert.That(row.offsetMax.x, Is.LessThanOrEqualTo(frame.offsetMax.x));
++                Assert.That(row.offsetMin.y, Is.GreaterThanOrEqualTo(frame.offsetMin.y));
++                Assert.That(row.offsetMax.y, Is.LessThanOrEqualTo(frame.offsetMax.y));
++                Assert.That(row.offsetMin.y, Is.GreaterThan(status.offsetMax.y));
++                if (i > 0) Assert.That(rows[i - 1].offsetMin.y - row.offsetMax.y, Is.EqualTo(i == 1 ? 55f : 45f));
+             }
+         }
+ 
+         [Test]
+-        // Keep the historical method name/fullname for exact baseline comparison (BDD02).
+         public void Bdd02_HeadingUsesPrimaryVisualWithoutInteractionAndEntriesUseSecondaryVisual()
+         {
+             var heading = Find("Panel_MainMenu_Menu");
+             var image = heading.GetComponent<Image>();
+-            Assert.That(image.sprite, Is.Not.Null);
+-            Assert.That(image.sprite.name, Is.EqualTo("hud_capsule"));
++            Assert.That(image.sprite.name, Is.EqualTo("status_strip_long"));
+             Assert.That(image.type, Is.EqualTo(Image.Type.Sliced));
+-            Assert.That((Color32)image.color, Is.EqualTo(new Color32(17, 29, 24, 230)), "Dark panel fill.");
+-            Assert.That(heading.transform.Find("Image_MainMenu_MenuFill"), Is.Null, "No extra green fill layer.");
+-            var outline = heading.GetComponent<Outline>();
+-            Assert.That(outline, Is.Not.Null);
+-            Assert.That(outline.enabled, Is.True);
+-            Assert.That((Color32)outline.effectColor, Is.EqualTo(new Color32(247, 185, 85, 255)));
+-            Assert.That(outline.effectDistance, Is.EqualTo(new Vector2(2f, -2f)));
+-            var border = heading.GetComponentInChildren<MainMenuHeadingBorderGraphic>(true);
+-            Assert.That(border, Is.Not.Null, "Render the orange stroke without multiplying cyan sprite pixels.");
+-            Assert.That(border.GetComponent<CanvasRenderer>(), Is.Not.Null);
+-            Assert.That((Color32)border.color, Is.EqualTo(new Color32(247, 185, 85, 255)));
++            Assert.That((Color32)image.color, Is.EqualTo(new Color32(17, 29, 24, 230)));
++            Assert.That(heading.GetComponent<Outline>(), Is.Null);
++            Assert.That(heading.transform.Find("Image_MainMenu_MenuBorder"), Is.Null);
++            Assert.That(heading.transform.Find("Image_MainMenu_MenuFill"), Is.Null);
++            Assert.That(root.GetComponentsInChildren<Component>(true).Any(c => c != null && c.GetType().Name == "MainMenuHeadingBorderGraphic"), Is.False);
+             Assert.That(heading.GetComponentsInChildren<Selectable>(true), Is.Empty);
+-            Assert.That(heading.GetComponentsInChildren<Graphic>(true).All(graphic => !graphic.raycastTarget), Is.True);
++            Assert.That(heading.GetComponentsInChildren<Graphic>(true).All(g => !g.raycastTarget), Is.True);
+             var label = Find("Text_MainMenu_Menu").GetComponent<TMP_Text>();
+             Assert.That(label.text, Is.EqualTo("选择训练科目"));
+             Assert.That(label.fontSize, Is.EqualTo(20f));
+             Assert.That(label.fontStyle, Is.EqualTo(FontStyles.Normal));
+             Assert.That(label.fontWeight, Is.EqualTo(FontWeight.Regular));
+             Assert.That((Color32)label.color, Is.EqualTo(new Color32(231, 242, 235, 255)));
++            foreach (var entry in Entries)
++            {
++                var button = Find("Button_MainMenu_" + entry).GetComponent<Button>();
++                Assert.That(button.image.sprite.name, Is.EqualTo("button_secondary_cyan"));
++                Assert.That(button.image.color, Is.EqualTo(Color.white));
++                Assert.That(button.spriteState.highlightedSprite.name, Is.EqualTo("button_secondary_cyan_highlighted"));
++                Assert.That(button.spriteState.selectedSprite, Is.SameAs(button.image.sprite));
++                Assert.That(button.GetComponentInChildren<TMP_Text>().color, Is.EqualTo(label.color));
++            }
++        }
+ 
+-            var secondary = Find("Button_MainMenu_OpenMovingTarget").GetComponent<Image>();
+-            Assert.That(secondary.sprite.name, Is.EqualTo("button_secondary_cyan"));
+-            foreach (var id in new[] { "Button_MainMenu_OpenZeroing", "Button_MainMenu_Trench",
+-                "Button_MainMenu_Urban", "Button_MainMenu_Controls" })
++        [Test]
++        public void Bdd37_NumberColumnHasIdenticalLeftEdgeAndClearsSpriteIcon()
++        {
++            Canvas.ForceUpdateCanvases();
++            float? firstLeft = null;
++            foreach (var entry in Entries)
+             {
+-                var entry = Find(id);
+-                var entryImage = entry.GetComponent<Image>();
+-                Assert.That(entryImage.sprite, Is.SameAs(secondary.sprite), id);
+-                Assert.That(entryImage.color, Is.EqualTo(secondary.color), id);
+-                Assert.That(entry.GetComponent<Button>().spriteState.highlightedSprite,
+-                    Is.SameAs(secondary.GetComponent<Button>().spriteState.highlightedSprite), id);
+-                Assert.That(entry.GetComponentInChildren<TMP_Text>().color,
+-                    Is.EqualTo(secondary.GetComponentInChildren<TMP_Text>().color), id);
++                var number = Find("Text_MainMenu_" + entry + "_Number").GetComponent<TMP_Text>();
++                var name = Find("Text_MainMenu_" + entry).GetComponent<TMP_Text>();
++                number.ForceMeshUpdate(); name.ForceMeshUpdate();
++                var left = number.rectTransform.TransformPoint(number.textInfo.characterInfo[0].bottomLeft).x;
++                if (firstLeft.HasValue) Assert.That(left, Is.EqualTo(firstLeft.Value).Within(1f));
++                firstLeft = left;
++                var icon = Find("Placeholder_MainMenu_" + entry + "_IconBounds").GetComponent<RectTransform>();
++                Assert.That(number.rectTransform.offsetMin.x, Is.GreaterThan(icon.offsetMax.x));
++                Assert.That(name.rectTransform.offsetMin.x - number.rectTransform.offsetMax.x, Is.EqualTo(6f));
++                Assert.That(name.textInfo.lineInfo[0].baseline, Is.EqualTo(number.textInfo.lineInfo[0].baseline).Within(.1f));
+             }
+         }
+ 
++        [TestCase("OpenZeroing")]
++        [TestCase("OpenMovingTarget")]
++        [TestCase("Trench")]
++        [TestCase("Urban")]
++        public void Bdd37_PointerEnterHighlightsAndExitRestoresSecondary(string entry)
++        {
++            var button = Find("Button_MainMenu_" + entry).GetComponent<Button>();
++            var data = new PointerEventData(EventSystem.current);
++            var normal = button.image.sprite;
++            ExecuteEvents.Execute(button.gameObject, data, ExecuteEvents.pointerEnterHandler);
++            Assert.That(button.image.overrideSprite, Is.SameAs(button.spriteState.highlightedSprite));
++            ExecuteEvents.Execute(button.gameObject, data, ExecuteEvents.pointerExitHandler);
++            Assert.That(button.image.overrideSprite, Is.SameAs(normal));
++            Assert.That(button.navigation.mode, Is.EqualTo(Navigation.Mode.None));
++        }
++
++        [TestCase("OpenZeroing", "Zeroing", ScreenId.ZeroingBriefing)]
++        [TestCase("OpenMovingTarget", "MovingTarget", ScreenId.MovingTargetSettings)]
++        [TestCase("Trench", "Trench", ScreenId.TrenchMapSelection)]
++        [TestCase("Urban", "Urban", ScreenId.UrbanMapSelection)]
++        public void Bdd37_ConfirmUsesOriginalEntryExactlyOnce(string entry, string mode, ScreenId expected)
++        {
++            var events = 0;
++            services.EventBus.Subscribe<VRShooting.Application.Events.ScreenChangedEvent>(_ => events++);
++            Click("Button_MainMenu_" + entry);
++            Click("Button_ModeIntro_" + mode + "_Enter");
++            Assert.That(services.Router.Current, Is.EqualTo(expected));
++            Assert.That(Find("Screen_ModeIntro_" + mode).activeSelf, Is.False);
++            Click("Button_ModeIntro_" + mode + "_Enter");
++            Assert.That(events, Is.EqualTo(1));
++        }
++
++        string Copy(string mode) => string.Join("\n", new[] { "Left", "Right" }.Select(side => Find("Text_ModeIntro_" + mode + "_" + side).GetComponent<TMP_Text>().text));
++        void Click(string id) => Find(id).GetComponent<Button>().onClick.Invoke();
+         GameObject Find(string id)
+         {
+             var found = root.GetComponentsInChildren<UITestId>(true).FirstOrDefault(candidate => candidate.Id == id);
+diff --git a/Assets/VRShooting/Tests/PlayMode/Flow/P1FlowPlayModeGateTests.cs b/Assets/VRShooting/Tests/PlayMode/Flow/P1FlowPlayModeGateTests.cs
+index f2d89ca..bcad959 100644
+--- a/Assets/VRShooting/Tests/PlayMode/Flow/P1FlowPlayModeGateTests.cs
++++ b/Assets/VRShooting/Tests/PlayMode/Flow/P1FlowPlayModeGateTests.cs
+@@ -196,7 +196,7 @@ namespace VRShooting.Tests.PlayMode.Flow
+             services = GameMain.Instance.Services;
+             Assert.That(services, Is.Not.Null, "[功能A] GameMain.Services was not initialized");
+ 
+-            ClickButton("Button_MainMenu_OpenZeroing");
++            ModeIntroTestActions.EnterTraining(id => FindById(id).GetComponent<Button>());
+             yield return null;
+             Assert.That(
+                 FindById("Screen_ZeroingBriefing")?.activeSelf,
+diff --git a/Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs b/Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs
+index a932b57..0801621 100644
+--- a/Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs
++++ b/Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs
+@@ -28,10 +28,17 @@ namespace VRShooting.Tests.PlayMode.UI
+         ApplicationServices services;
+         MainMenuUI ui;
+ 
+-        [SetUp]
+-        public void SetUp()
++        [UnitySetUp]
++        public IEnumerator SetUp()
+         {
+-            services = ApplicationServices.CreateDefault();
++            // Scene-flow fixtures can leave a persistent GameMain. This fixture supplies its own
++            // services and must not let the mode-two callback start a real scene load through it.
++            if (VRShooting.Unity.Bootstrap.GameMain.Instance != null)
++            {
++                Object.Destroy(VRShooting.Unity.Bootstrap.GameMain.Instance.gameObject);
++                yield return null;
++            }
++            services = ApplicationServices.CreateDefault(combatScenes: new VRShooting.P3.TestSupport.CombatApplicationFixture());
+             root = new GameObject("Test_MainMenuUI", typeof(RectTransform));
+             root.SetActive(false);
+             ui = root.AddComponent<MainMenuUI>();
+@@ -41,11 +48,13 @@ namespace VRShooting.Tests.PlayMode.UI
+             root.SetActive(true);
+             ui.Initialize(services);
+             root.GetComponent<TrainingUICanvasAdapter>().SetVrModeForTests(false);
++            yield return null;
+         }
+ 
+         [UnityTearDown]
+         public IEnumerator TearDown()
+         {
++            services.Combat.Dispose();
+             if (root != null)
+             {
+                 Object.Destroy(root);
+@@ -142,7 +151,24 @@ namespace VRShooting.Tests.PlayMode.UI
+                 result.gameObject == button.gameObject || result.gameObject.transform.IsChildOf(button.transform)), Is.True,
+                 "The tracked XR ray should hit the 100m main-menu button or one of its graphics.");
+ 
++            ExecuteEvents.Execute(button.gameObject, eventData, ExecuteEvents.pointerEnterHandler);
++            Assert.That(button.image.overrideSprite, Is.SameAs(button.spriteState.highlightedSprite));
++            ExecuteEvents.Execute(button.gameObject, eventData, ExecuteEvents.pointerExitHandler);
++            Assert.That(button.image.overrideSprite, Is.SameAs(button.image.sprite));
+             ExecuteEvents.Execute(button.gameObject, eventData, ExecuteEvents.pointerClickHandler);
++            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
++            yield return null;
++            Canvas.ForceUpdateCanvases();
++            ModeIntroTestActions.ConfirmIntroduction(FindButton, click: enter =>
++            {
++                var center = ((RectTransform)enter.transform).TransformPoint(((RectTransform)enter.transform).rect.center);
++                eventData.rayPoints = new List<Vector3> { vrCamera.transform.position,
++                    vrCamera.transform.position + (center - vrCamera.transform.position).normalized * 5f };
++                results.Clear();
++                adapter.TrackedRaycaster.Raycast(eventData, results);
++                Assert.That(results.Any(hit => hit.gameObject == enter.gameObject), Is.True);
++                ExecuteEvents.Execute(enter.gameObject, eventData, ExecuteEvents.pointerClickHandler);
++            });
+             yield return null;
+ 
+             Assert.That(services.Router.Current, Is.EqualTo(ScreenId.ZeroingBriefing));
+@@ -154,7 +180,7 @@ namespace VRShooting.Tests.PlayMode.UI
+         {
+             var button = FindButton("Button_MainMenu_OpenZeroing");
+ 
+-            button.onClick.Invoke();
++            ModeIntroTestActions.EnterTraining(FindButton);
+             yield return null;
+ 
+             Assert.AreEqual(ScreenId.ZeroingBriefing, services.Router.Current);
+@@ -166,7 +192,7 @@ namespace VRShooting.Tests.PlayMode.UI
+         [UnityTest]
+         public IEnumerator Bdd04_BriefingPickupPromptStaysBelowFrameAndAboveStationStatus()
+         {
+-            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
++            ModeIntroTestActions.EnterTraining(FindButton);
+             yield return null;
+             var prompt = (RectTransform)FindById("Training.Shared.PickupPrompt").transform;
+             var station = (RectTransform)FindById("Training.Shared.FiringStationState").transform;
+@@ -272,56 +298,115 @@ namespace VRShooting.Tests.PlayMode.UI
+             Assert.That(FindById("Text_MainMenu_Subtitle").GetComponent<TMP_Text>().text, Is.EqualTo("战术训练中心"));
+             Assert.That(FindById("Text_MainMenu_BottomStatus").GetComponent<TMP_Text>().text,
+                 Is.EqualTo("单机训练" + new string(' ', 37) + "选择科目后查看任务简报"));
+-            var panel = FindById("Panel_MainMenu_Controls");
+-            Assert.That(panel, Is.Not.Null);
+-            Assert.That(panel.activeSelf, Is.False);
+-            FindButton("Button_MainMenu_Controls").onClick.Invoke();
+-            yield return null;
+-            Assert.That(panel.activeInHierarchy, Is.True);
+-            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
+-            var copy = string.Join("\n", panel.GetComponentsInChildren<TMP_Text>(true).Select(t => t.text));
+-            // BDD35: exact mode-two copy, including the unchanged next line.
+-            Assert.That(copy, Does.Contain("双手据枪，采用“跟随射击”或“等待射击”的方式对目标进行射击。\n右扳机快速扣动起射两发，继续按住可逐发连射。"));
+-            Assert.That(copy, Does.Contain("右手侧握键抓枪 / 主手握持；左手侧握键副手握持。"));
+-            Assert.That(copy, Does.Not.Contain("Grip"));
+-            CaptureControlsPanel();
+-            FindButton("Button_MainMenu_Controls_Back").onClick.Invoke();
+-            yield return null;
+-            Assert.That(panel.activeSelf, Is.False);
+-            Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
++            Assert.That(FindById("Panel_MainMenu_Controls"), Is.Null);
++            Assert.That(FindById("Button_MainMenu_Controls"), Is.Null);
++            var entries = new[] { "OpenZeroing", "OpenMovingTarget", "Trench", "Urban" };
++            var modes = new[] { "Zeroing", "MovingTarget", "Trench", "Urban" };
++            var titles = new[] { "模式一 · 100m 精度射校", "模式二 · 移动目标射击", "模式三 · 堑壕射击", "模式四 · 城镇攻防" };
++            for (var i = 0; i < modes.Length; i++)
++            {
++                var mode = modes[i];
++                var panel = FindById("Screen_ModeIntro_" + mode);
++                Assert.That(panel.activeSelf, Is.False);
++                for (var repeat = 0; repeat < 3; repeat++)
++                {
++                    FindButton("Button_MainMenu_" + entries[i]).onClick.Invoke();
++                    yield return null;
++                    Assert.That(panel.activeInHierarchy, Is.True);
++                    Assert.That(FindById("Text_ModeIntro_" + mode + "_Title").GetComponent<TMP_Text>().text, Is.EqualTo(titles[i]));
++                    Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
++                    Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
++                    Assert.That(services.Presentation.Get(string.Empty).Success, Is.False);
++                    Assert.That(services.Combat.Snapshot.Mode, Is.Null);
++                    foreach (var side in new[] { "Left", "Right" })
++                    {
++                        var label = FindById("Text_ModeIntro_" + mode + "_" + side).GetComponent<TMP_Text>();
++                        Assert.That(label.text, Does.Not.Contain("Grip").And.Not.Contain("UI").And.Not.Contain("HUD"));
++                        label.ForceMeshUpdate();
++                        Assert.That(label.isTextOverflowing, Is.False);
++                    }
++                    FindButton("Button_ModeIntro_" + mode + "_Back").onClick.Invoke();
++                    yield return null;
++                    Assert.That(panel.activeSelf, Is.False);
++                    Assert.That(services.Router.Current, Is.EqualTo(ScreenId.MainMenu));
++                    Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
++                    Assert.That(services.Combat.Snapshot.Mode, Is.Null);
++                }
++            }
+         }
+ 
+-        void CaptureControlsPanel()
++        [UnityTest]
++        public IEnumerator Bdd37_FourConfirmationsPreserveOriginalRoutesAndDoNotReplay()
+         {
+-            var canvas = root.GetComponent<Canvas>();
+-            var mode = canvas.renderMode; var previousCamera = canvas.worldCamera;
+-            var cameraRoot = new GameObject("ControlsEvidenceCamera");
+-            var camera = cameraRoot.AddComponent<Camera>();
+-            camera.enabled = false; camera.clearFlags = CameraClearFlags.SolidColor;
+-            camera.backgroundColor = Color.black; camera.cullingMask = 1 << 31;
+-            var parts = root.GetComponentsInChildren<Transform>(true);
+-            var layers = parts.Select(part => part.gameObject.layer).ToArray();
+-            var target = new RenderTexture(1920, 1080, 24);
+-            var texture = new Texture2D(1920, 1080, TextureFormat.RGB24, false);
+-            var previousActive = RenderTexture.active;
+-            try
++            var entries = new[] { "OpenZeroing", "OpenMovingTarget", "Trench", "Urban" };
++            var targets = new[] { ScreenId.ZeroingBriefing, ScreenId.MovingTargetSettings, ScreenId.TrenchMapSelection, ScreenId.UrbanMapSelection };
++            for (var i = 0; i < entries.Length; i++)
+             {
+-                foreach (var part in parts) part.gameObject.layer = 31;
+-                camera.targetTexture = target;
+-                canvas.renderMode = RenderMode.ScreenSpaceCamera; canvas.worldCamera = camera; canvas.planeDistance = 1;
+-                Canvas.ForceUpdateCanvases();
+-                foreach (var label in root.GetComponentsInChildren<TMP_Text>()) label.ForceMeshUpdate();
+-                camera.Render(); RenderTexture.active = target;
+-                texture.ReadPixels(new Rect(0, 0, 1920, 1080), 0, 0); texture.Apply();
+-                var folder = System.IO.Path.Combine(UnityEngine.Application.dataPath, "../Logs/CodexZeroingControls");
+-                System.IO.Directory.CreateDirectory(folder);
+-                System.IO.File.WriteAllBytes(System.IO.Path.Combine(folder, "controls.png"), texture.EncodeToPNG());
++                ModeIntroTestActions.EnterTraining(FindButton, entries[i]);
++                yield return null;
++                Assert.That(services.Router.Current, Is.EqualTo(targets[i]));
++                var mode = i == 0 ? "Zeroing" : i == 1 ? "MovingTarget" : entries[i];
++                FindButton("Button_ModeIntro_" + mode + "_Enter").onClick.Invoke();
++                Assert.That(services.Router.Current, Is.EqualTo(targets[i]));
++                Assert.That(FindById("Screen_ModeIntro_" + mode).activeSelf, Is.False);
++                Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
++                services.Router.Open(ScreenId.MainMenu);
+             }
+-            finally
++        }
++
++        [UnityTest]
++        public IEnumerator Bdd37_BodyFitsCommonResolutionsAndOverflowScrollDoesNotCoverButtons()
++        {
++            root.GetComponent<CanvasScaler>().enabled = false;
++            root.GetComponent<TrainingUICanvasAdapter>().enabled = false;
++            root.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
++            var canvasRect = (RectTransform)root.transform;
++            foreach (var resolution in new[] { new Vector2(1920,1080), new Vector2(1280,720), new Vector2(2560,1440) })
+             {
+-                for (var i = 0; i < parts.Length; i++) parts[i].gameObject.layer = layers[i];
+-                canvas.renderMode = mode; canvas.worldCamera = previousCamera; RenderTexture.active = previousActive;
+-                target.Release(); Object.Destroy(target); Object.Destroy(texture); Object.Destroy(cameraRoot);
++                canvasRect.sizeDelta = new Vector2(1920,1080);
++                canvasRect.localScale = Vector3.one * (resolution.x / 1920f);
++                foreach (var entry in new[] { "OpenZeroing", "OpenMovingTarget", "Trench", "Urban" })
++                {
++                    var mode = entry == "OpenZeroing" ? "Zeroing" : entry == "OpenMovingTarget" ? "MovingTarget" : entry;
++                    FindButton("Button_MainMenu_" + entry).onClick.Invoke();
++                    yield return null;
++                    Canvas.ForceUpdateCanvases();
++                    var scroll = FindById("Scroll_ModeIntro_" + mode).GetComponent<ScrollRect>();
++                    Assert.That(scroll.vertical, Is.True);
++                    Assert.That(scroll.horizontal, Is.False);
++                    Assert.That(scroll.content.rect.height, Is.LessThanOrEqualTo(scroll.viewport.rect.height), mode + resolution);
++                    foreach (var side in new[] { "Left", "Right" })
++                    {
++                        var text = FindById("Text_ModeIntro_" + mode + "_" + side).GetComponent<TMP_Text>();
++                        text.ForceMeshUpdate();
++                        Assert.That(text.isTextOverflowing, Is.False);
++                        Assert.That(text.textInfo.characterCount, Is.EqualTo(text.text.Length));
++                        var corners = new Vector3[4]; text.rectTransform.GetWorldCorners(corners);
++                        var viewportCorners = new Vector3[4]; scroll.viewport.GetWorldCorners(viewportCorners);
++                        Assert.That(corners[0].y, Is.GreaterThanOrEqualTo(viewportCorners[0].y - .1f));
++                    }
++                    var enter = FindButton("Button_ModeIntro_" + mode + "_Enter");
++                    var back = FindButton("Button_ModeIntro_" + mode + "_Back");
++                    Assert.That(enter.transform.IsChildOf(scroll.transform), Is.False);
++                    Assert.That(back.transform.IsChildOf(scroll.transform), Is.False);
++                    var left = FindById("Text_ModeIntro_" + mode + "_Left").GetComponent<TMP_Text>();
++                    var originalSize = left.fontSize;
++                    left.fontSize = 60;
++                    yield return null;
++                    Canvas.ForceUpdateCanvases();
++                    Assert.That(scroll.content.rect.height, Is.GreaterThan(scroll.viewport.rect.height));
++                    scroll.verticalNormalizedPosition = 0;
++                    Canvas.ForceUpdateCanvases();
++                    Assert.That(scroll.verticalNormalizedPosition, Is.EqualTo(0).Within(.01f));
++                    left.ForceMeshUpdate();
++                    var last = left.textInfo.characterInfo.Last(c => c.isVisible);
++                    var lastWorld = left.rectTransform.TransformPoint(last.bottomLeft);
++                    var visibleBottom = scroll.viewport.TransformPoint(scroll.viewport.rect.min).y;
++                    Assert.That(lastWorld.y, Is.GreaterThanOrEqualTo(visibleBottom - .1f));
++                    left.fontSize = originalSize;
++                    ExecuteEvents.Execute(back.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerClickHandler);
++                    Assert.That(FindById("Screen_ModeIntro_" + mode).activeSelf, Is.False);
++                }
+             }
+         }
+ 
+@@ -350,20 +435,21 @@ namespace VRShooting.Tests.PlayMode.UI
+             Assert.That(centers[1] - centers[2], Is.EqualTo(centers[2] - centers[3]).Within(.1f));
+             var canvasScaleY = Mathf.Abs(root.transform.lossyScale.y);
+             for (var i = 0; i < centers.Length - 1; i++)
+-                Assert.That((centers[i] - centers[i + 1]) / canvasScaleY, Is.EqualTo(128f).Within(.1f));
++                Assert.That((centers[i] - centers[i + 1]) / canvasScaleY, Is.EqualTo(130f).Within(.1f));
+             var panelCorners = new Vector3[4]; var frameCorners = new Vector3[4];
+             ((RectTransform)FindById("Panel_MainMenu_Menu").transform).GetWorldCorners(panelCorners);
+             ((RectTransform)FindById("Panel_MainMenu_Frame").transform).GetWorldCorners(frameCorners);
+-            var controlsCorners = new Vector3[4];
+-            ((RectTransform)FindButton("Button_MainMenu_Controls").transform).GetWorldCorners(controlsCorners);
+-            // GetWorldCorners: 0 = bottom-left, 1 = top-left; world Y increases upwards.
+-            Assert.That(controlsCorners[0].y, Is.GreaterThan(panelCorners[1].y));
+-            Assert.That(controlsCorners[1].y, Is.LessThanOrEqualTo(frameCorners[1].y));
+-            Assert.That(controlsCorners[0].y, Is.GreaterThanOrEqualTo(frameCorners[0].y));
++            Assert.That(panelCorners[1].y, Is.LessThanOrEqualTo(frameCorners[1].y));
++            Assert.That(panelCorners[0].y, Is.GreaterThanOrEqualTo(frameCorners[0].y));
++            var buttonCorners = new Vector3[4];
++            ((RectTransform)buttons[0].transform).GetWorldCorners(buttonCorners);
++            Assert.That(panelCorners[0].y, Is.GreaterThan(buttonCorners[1].y));
++            Assert.That(FindById("Button_MainMenu_Controls"), Is.Null);
++            Assert.That(FindById("Panel_MainMenu_Controls"), Is.Null);
+             Assert.That(services.TrainingSessions.HasActiveSession, Is.False);
+             for (var i = 0; i < 2; i++)
+             {
+-                FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
++                ModeIntroTestActions.EnterTraining(FindButton);
+                 Assert.That(services.Router.Current, Is.EqualTo(ScreenId.ZeroingBriefing));
+                 Assert.That(FindById("Screen_ZeroingBriefing").activeSelf, Is.True);
+                 FindButton("Button_ZeroingBriefing_Back").onClick.Invoke();
+diff --git a/Assets/VRShooting/Tests/PlayMode/UI/Screen02_05_SceneOwnedUIFlowTests.cs b/Assets/VRShooting/Tests/PlayMode/UI/Screen02_05_SceneOwnedUIFlowTests.cs
+index 8bd5791..366543f 100644
+--- a/Assets/VRShooting/Tests/PlayMode/UI/Screen02_05_SceneOwnedUIFlowTests.cs
++++ b/Assets/VRShooting/Tests/PlayMode/UI/Screen02_05_SceneOwnedUIFlowTests.cs
+@@ -66,7 +66,7 @@ namespace VRShooting.Tests.PlayMode.UI
+             Assert.That(mainMenu, Is.Not.Null, "MainScene should contain a scene-owned MainMenuUI.");
+             Assert.AreEqual(SceneManager.GetActiveScene(), mainMenu.gameObject.scene);
+ 
+-            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
++            ModeIntroTestActions.EnterTraining(FindButton);
+             yield return null;
+ 
+             Assert.That(FindById("Screen_ZeroingBriefing").activeSelf, Is.True, "Clicking 100m should show the zeroing briefing screen.");
+diff --git a/Assets/VRShooting/Tests/PlayMode/UI/Screen05_ZeroingHudUITests.cs b/Assets/VRShooting/Tests/PlayMode/UI/Screen05_ZeroingHudUITests.cs
+index 4c0ad94..cc8dd73 100644
+--- a/Assets/VRShooting/Tests/PlayMode/UI/Screen05_ZeroingHudUITests.cs
++++ b/Assets/VRShooting/Tests/PlayMode/UI/Screen05_ZeroingHudUITests.cs
+@@ -151,7 +151,7 @@ namespace VRShooting.Tests.PlayMode.UI
+ 
+         IEnumerator StartZeroingHud()
+         {
+-            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
++            ModeIntroTestActions.EnterTraining(FindButton);
+             yield return null;
+ 
+             FindButton("Button_ZeroingBriefing_Start").onClick.Invoke();
+diff --git a/Assets/VRShooting/Tests/PlayMode/UI/Screen06_ZeroingImpactAnalysisUITests.cs b/Assets/VRShooting/Tests/PlayMode/UI/Screen06_ZeroingImpactAnalysisUITests.cs
+index b8690a3..8345042 100644
+--- a/Assets/VRShooting/Tests/PlayMode/UI/Screen06_ZeroingImpactAnalysisUITests.cs
++++ b/Assets/VRShooting/Tests/PlayMode/UI/Screen06_ZeroingImpactAnalysisUITests.cs
+@@ -705,7 +705,7 @@ namespace VRShooting.Tests.PlayMode.UI
+         [UnityTest]
+         public IEnumerator Bdd04_BriefingShowsFourShotsAndBothPassPaths()
+         {
+-            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
++            ModeIntroTestActions.EnterTraining(FindButton);
+             yield return null;
+             var text = FindById("Panel_ZeroingBriefing_Rules").GetComponentInChildren<TMP_Text>(true).text;
+             Assert.That(text, Does.Contain("4发").And.Contain("集中").And.Contain("≤10cm").And.Contain("<5cm"));
+@@ -714,7 +714,7 @@ namespace VRShooting.Tests.PlayMode.UI
+ 
+         IEnumerator OpenAnalysisWithImpacts(params Vector3[] points)
+         {
+-            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
++            ModeIntroTestActions.EnterTraining(FindButton);
+             yield return null;
+             FindButton("Button_ZeroingBriefing_Start").onClick.Invoke();
+             yield return null;
+@@ -777,7 +777,7 @@ namespace VRShooting.Tests.PlayMode.UI
+ 
+         IEnumerator OpenHudAndCompleteRoundAt(Vector3 point, bool rawAim = false)
+         {
+-            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
++            ModeIntroTestActions.EnterTraining(FindButton);
+             yield return null;
+             FindButton("Button_ZeroingBriefing_Start").onClick.Invoke();
+             yield return null;
+diff --git a/Assets/VRShooting/Tests/PlayMode/UI/Screen07_ZeroingFinalRatingUITests.cs b/Assets/VRShooting/Tests/PlayMode/UI/Screen07_ZeroingFinalRatingUITests.cs
+index 63e486f..ae37b01 100644
+--- a/Assets/VRShooting/Tests/PlayMode/UI/Screen07_ZeroingFinalRatingUITests.cs
++++ b/Assets/VRShooting/Tests/PlayMode/UI/Screen07_ZeroingFinalRatingUITests.cs
+@@ -111,7 +111,7 @@ namespace VRShooting.Tests.PlayMode.UI
+ 
+         IEnumerator OpenHudAndCompletePassingRound()
+         {
+-            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
++            ModeIntroTestActions.EnterTraining(FindButton);
+             yield return null;
+             FindButton("Button_ZeroingBriefing_Start").onClick.Invoke();
+             yield return null;
+diff --git a/docs/BDD/README.md b/docs/BDD/README.md
+index 2f845ea..5a2b37d 100644
+--- a/docs/BDD/README.md
++++ b/docs/BDD/README.md
+@@ -36,6 +36,8 @@
+ 
+ 未标注阶段的新增 BDD 默认不得进入实现，必须先补阶段标签和验收口径。
+ 
++2026-11-16：[37-各模式操作介绍](screens/37-各模式操作介绍.feature.md) 与 BDD02 定义主菜单回退及四个模式入口前的本地介绍页，覆盖旧总览入口。
++
+ ## 文档索引
+ 
+ | draw.io 页面 | BDD 文档 | 覆盖范围 |
+diff --git "a/docs/BDD/screens/02-\346\270\270\346\210\217\344\270\273\347\225\214\351\235\242.feature.md" "b/docs/BDD/screens/02-\346\270\270\346\210\217\344\270\273\347\225\214\351\235\242.feature.md"
+index 152d77d..8214564 100644
+--- "a/docs/BDD/screens/02-\346\270\270\346\210\217\344\270\273\347\225\214\351\235\242.feature.md"
++++ "b/docs/BDD/screens/02-\346\270\270\346\210\217\344\270\273\347\225\214\351\235\242.feature.md"
+@@ -1,15 +1,25 @@
+ # 02 游戏主界面
+ 
+-## 2026-11-09 操作介绍（覆盖历史菜单布局冲突）
+-场景: 主菜单打开并关闭操作介绍
+-  假如主菜单显示，操作介绍面板默认隐藏
+-  那么右侧从上到下显示“操作介绍”、深色面板 + 橙色边框的“选择训练科目”标题条和 01→04 科目入口，01 使用与 02/03/04 相同的次要按钮样式
+-  当玩家用原有 UI 射线点击“操作介绍”
+-  那么显示标题、分组正文和返回按钮；点击返回关闭面板
+-  而且正文只描述实际 VR 手柄功能及模式差异，不展示桌面调试键
+-  而且模式一、二固定射击点无摇杆移动；模式三、四切换左肩后主副手和射击扳机相应切换。
+-  而且右手 A 手雷命令只在模式三请求队友投掷；右摇杆按压的开门交互只在模式四生效。
+-  稳定 ID：Button_MainMenu_Controls、Panel_MainMenu_Controls、Button_MainMenu_Controls_Back。
++## 2026-11-16 主菜单回退与各模式介绍（覆盖下文历史冲突）
++
++删除 `Button_MainMenu_Controls`、`Panel_MainMenu_Controls` 及全部子节点。四个入口先打开各自介绍；只有介绍的“进入训练”才执行原有入口处理。详见 [BDD37](37-各模式操作介绍.feature.md)。
++
++```gherkin
++  场景: 主菜单恢复标题条和四个次级入口
++    当主菜单显示
++    那么没有操作介绍总览入口或总览面板
++    而且标题条为深色(17,29,24,230)，使用status_strip_long九宫格，无橙色描边或MainMenuHeadingBorderGraphic
++    而且标题为“选择训练科目”，20号、Normal/Regular、颜色(231,242,235,255)，不接收射线
++    而且01至04全部为secondary样式，没有常驻高亮
++    而且四个编号左边缘同列，误差不超过1像素，不与左侧图标或贴图装饰矩形相交
++    而且名称与编号间距相同，各行编号与名称基线一致
++    当普通或XR指针进入任一入口
++    那么该入口显示highlighted贴图
++    当指针离开
++    那么立即恢复secondary贴图，点击后也不驻留高亮
++```
++
++1920×1080，y向上，x均为1360–1750：标题805–865；01为665–750；02为535–620；03为405–490；04为275–360。按本次明确坐标，01–04中心间距130px、空隙45px，标题与01空隙55px（覆盖历史128px/43px）。Frame与底栏不变。
+ 
+ 2026-11-08：删除主菜单“关于制作人”的入口和整个面板；保留四个训练入口、路由及其他点击遮挡层，对应 task008。
+ 
+@@ -21,7 +31,7 @@
+ 
+ 2026-10-25修订：主菜单模式四按钮显示“04   城镇攻防”，去掉“（开发中）”，保留现有入口与交互状态。
+ 
+-本轮不新增或运行自动化测试；交付记录列明编译、人工链路检查及VR调试项目。
++历史不运行测试条款已由2026-11-16定向与全量回归要求覆盖。
+ 
+ 
+ 来源：draw.io 页面 `p02 02 游戏主界面`
+@@ -48,13 +58,13 @@
+ 
+   场景: 进入 100m 精度射校靶
+     当玩家选择“100m精度射校靶”
+-    那么系统应进入“100m任务说明”界面
++    那么先显示模式一操作介绍，点击“进入训练”后进入“100m任务说明”界面
+     而且当前训练模式应记录为 100m 精度射校靶
+ 
+   场景: 无 VR 设备时进入 100m 精度射校靶
+     假如当前使用输入替身或 XR Device Simulator
+     当测试输入确认“100m精度射校靶”
+-    那么系统应进入“100m任务说明”界面
++    那么先显示模式一操作介绍，点击“进入训练”后进入“100m任务说明”界面
+     而且路由状态应与真实 XR 输入一致
+ 
+   场景: SteamVR 手柄后扳机点击主菜单
+@@ -87,23 +97,23 @@
+     假如主菜单已进入VR模式且头手跟踪有效
+     那么未命中按钮时左右UI射线仍可见，不缩成手边0.25m的短线
+     当任一手柄射线指向100m入口并按下、松开后扳机
+-    那么XRUIInputModule收到真实输入并导航到任务说明，不能用按钮回调替代验收
++    那么XRUIInputModule收到真实输入并打开模式一介绍，再以射线点击“进入训练”导航到任务说明，不能用按钮回调替代验收
+     当返回主菜单时共享Input Actions被其他场景禁用
+     那么主菜单恢复当前XR Rig的动作和UI Press，不遗留失效射线
+ 
+   场景: 进入移动目标射击设置
+     当玩家选择“移动目标射击”
+-    那么系统应进入“移动靶设置”界面
++    那么先显示模式二操作介绍，点击“进入训练”后进入原“移动靶设置”流程
+     而且当前训练模式应记录为移动目标射击
+ 
+   场景: 进入堑壕射击地图选择
+     当玩家选择“堑壕射击”
+-    那么系统应进入“堑壕地图选择”界面
++    那么先显示模式三操作介绍，点击“进入训练”后进入“堑壕地图选择”界面
+     而且当前训练模式应记录为堑壕射击
+ 
+   场景: 进入城镇攻防地图选择
+     当玩家选择“城镇攻防”
+-    那么系统应进入“城镇地图选择”界面
++    那么先显示模式四操作介绍，点击“进入训练”后进入“城镇地图选择”界面
+     而且当前训练模式应记录为城镇攻防
+ 
+   场景: 主菜单不再提供制作人入口
+@@ -125,44 +135,6 @@
+ - 主菜单按钮应绑定到 UI 路由，不直接创建训练逻辑。
+ - 若线框图仍含“武器库”“设置”入口，实现时隐藏或移除，不绑定路由。
+ 
+-## 2026-11-15 主菜单入口重排
+-
+-本节覆盖历史“科目坐标不变”“操作介绍在科目下方”的布局条款，对应 P1/UI task008 和接口01；仅调整右侧入口的坐标与视觉层级。
+-
+-```gherkin
+-  场景: 主菜单右侧入口重排与深色面板橙色边框标题条
+-    当主菜单显示
+-    那么从上到下依次显示“操作介绍”、“选择训练科目”、01、02、03、04
+-    而且“操作介绍”保持次要按钮样式，01 使用与 02/03/04 相同的次要按钮样式
+-    而且“选择训练科目”沿用 AddPanel + ResolvePanelSprite 的 hud_capsule 九宫格，为深色面板 Color32(17,29,24,230) + 橙色边框 Color32(247,185,85,255)，无额外填充内芯
+-    而且标题文字恢复原来的 20 号、Normal/Regular、Color32(231,242,235,255)，内容仍为“选择训练科目”
+-    而且标题条及文字保持 Panel_MainMenu_Menu 和 Text_MainMenu_Menu 测试 ID，无 Button 或其他 Selectable，不接收 UI 射线
+-    而且所有行均在 Frame 内、彼此间隔 43px、不重叠、不触及底部状态条，01–04 中心间距为 128px
+-    而且原有页面路由、点击行为和 CombatScenesAvailable 控制保持不变
+-```
+-
+-参考分辨率 1920×1080，y 向上，所有行 x 范围均为 1360–1750：
+-
+-| TestId | offsetMin.y | offsetMax.y |
+-|---|---:|---:|
+-| Button_MainMenu_Controls | 780 | 865 |
+-| Panel_MainMenu_Menu | 667 | 737 |
+-| Button_MainMenu_OpenZeroing | 539 | 624 |
+-| Button_MainMenu_OpenMovingTarget | 411 | 496 |
+-| Button_MainMenu_Trench | 283 | 368 |
+-| Button_MainMenu_Urban | 155 | 240 |
+-
+-Frame 保持 (1300,130)–(1810,920)，底部状态条保持 (120,55)–(1800,115)。左侧档案、主副标题及操作介绍面板内部保持原样。EditMode `MainMenuControlsTests` 验证精确坐标、视觉与非交互属性；PlayMode `Screen02_04_MainMenuZeroingBriefingUITests` 验证世界坐标顺序、边界、等距和原有导航。VR 实机继续核对标题条可读性、按钮射线点击与误触。
++## 2026-11-16 验收追溯
+ 
+-## 2026-11-12 玩家可见文案中文化
+-
+-```gherkin
+-  场景: 主菜单与操作介绍使用中文文案
+-    当主菜单显示
+-    那么副标题应为“战术训练中心”
+-    而且底部显示“单机训练”及“选择科目后查看任务简报”，保留原有空格排版
+-    当玩家打开操作介绍
+-    那么正文包含“右手侧握键抓枪 / 主手握持；左手侧握键副手握持。”
+-    而且不显示英文副标题或 Grip
+-    而且按键字母、VR、UI、单位及原有布局保持不变
+-```
++EditMode `MainMenuControlsTests` 验证删除项、精确坐标、编号列与图标保留区、标题样式、悬停及四页开关/内容；PlayMode `Screen02_04_MainMenuZeroingBriefingUITests` 验证四页返回无副作用、原入口导航、XR指针、滚动与分辨率。原有训练流程测试统一通过公共 `ModeIntroTestActions` 穿过介绍页。
+diff --git "a/docs/\344\273\273\345\212\241\350\247\204\346\240\274/\351\230\266\346\256\265\344\270\200-P1-100m\345\260\204\346\240\241\345\216\237\345\236\213\351\227\255\347\216\257/UI/task008-ui-mainmenu-zeroing-briefing.md" "b/docs/\344\273\273\345\212\241\350\247\204\346\240\274/\351\230\266\346\256\265\344\270\200-P1-100m\345\260\204\346\240\241\345\216\237\345\236\213\351\227\255\347\216\257/UI/task008-ui-mainmenu-zeroing-briefing.md"
+index 52f20a0..dc85098 100644
+--- "a/docs/\344\273\273\345\212\241\350\247\204\346\240\274/\351\230\266\346\256\265\344\270\200-P1-100m\345\260\204\346\240\241\345\216\237\345\236\213\351\227\255\347\216\257/UI/task008-ui-mainmenu-zeroing-briefing.md"
++++ "b/docs/\344\273\273\345\212\241\350\247\204\346\240\274/\351\230\266\346\256\265\344\270\200-P1-100m\345\260\204\346\240\241\345\216\237\345\236\213\351\227\255\347\216\257/UI/task008-ui-mainmenu-zeroing-briefing.md"
+@@ -5,8 +5,11 @@
+ ## 2026-11-09 取枪提示复核
+ BDD04、接口01：主菜单简报与靶场取枪页分别生成的同名取枪提示均应位于各自面板外底部安全区，状态文字和取枪页内容正常显示；保留提示文案、显示条件及既有按钮坐标，提供两种页面的无VR验证。
+ 
+-## 2026-11-09 追加：主菜单操作介绍
+-按 BDD02/04 和接口01，新增操作介绍按钮、默认隐藏的分组文字面板及返回按钮；复用 UI 射线，入口坐标以 BDD02 最新布局修订为准。正文核对真实 VR 输入、固定靶场和左肩模式，不列桌面键；模式一说明同时列出两条通过路径。EditMode、PlayMode 覆盖开关、关键字、布局与原有菜单门禁；VR 实机复核可读性和射线点击。
++## 2026-11-16 主菜单回退与四模式操作介绍
++
++按BDD02、[BDD37](../../../BDD/screens/37-各模式操作介绍.feature.md)和接口01移除旧操作总览，恢复标题深色底/原文字与status_strip_long，按最新精确坐标排列全部secondary入口。固定编号列并避开贴图装饰，普通/XR悬停进入高亮、离开复原。
++
++四个模式分别提供完整中文介绍，返回无服务副作用，确认复用原入口逻辑；不改P1/P2/P3训练流程或玩法。双栏正文竖直滚动自适应，按钮位于滚动区外。联调仍使用原Presentation/Router/Combat契约；P2 UI task002和P3 UI task002仅受入口前置介绍影响。先更新测试，完成EditMode/PlayMode定向与全量fullname基线比较、纯UI截图、文案对照和报告；真实VR可读性/滚动/点击列为实机验收。
+ 
+ 2026-11-08：按BDD02和接口01移除制作人按钮、面板及其全部子节点，保留其他入口和路由；PlayMode断言全部不存在并继续验证任务说明打开/返回及菜单导航。
+ 
+@@ -109,9 +112,3 @@ UI
+ ## 2026-11-12 文案中文化
+ 
+ 按 BDD02/04 与接口01删除主菜单和简报英文副标题，Grip 显示为侧握键；保留键位、单位、布局和交互。更新现有 PlayMode 文案断言并提供真实画廊截图。
+-
+-## 2026-11-15 B 批：主菜单入口重排与深色面板橙色边框标题条
+-
+-本次属于 P1/UI task008 的既有主菜单修订，按 BDD02 同日节和接口01实施。右侧布局按操作介绍 → 选择训练科目 → 01→04 排列，坐标以 BDD02 表为准；六行间隙43px、科目中心间距128px，总纵向155–865。标题条为深色面板 + 橙色边框，沿用 AddPanel + ResolvePanelSprite 的 hud_capsule 九宫格，填充 Color32(17,29,24,230)、边框 Color32(247,185,85,255)，删除额外填充内芯；文字恢复原来的20号、Normal/Regular、Color32(231,242,235,255)。保持 Panel_MainMenu_Menu/Text_MainMenu_Menu，不可点击且不接收射线；01 改为与02–04一致的次要样式，操作介绍继续使用次要样式。保持既有路由、门禁和操作介绍内容。
+-
+-交付：更新 MainMenuUI 与最终样式应用规则；先更新两类既有测试的精确布局断言并补充视觉、非交互和边界断言；两个指定类全通过，EditMode/PlayMode 全量按完整测试名逐条对照给定基线，新增失败为0，不删除或跳过用例。输出1920×1080纯UI全景及右侧放大图、坐标和断言变更记录。联调对象仍为功能A的既有路由服务；不新增场景或玩法前置依赖。VR 实机核对可读性和射线点击，自动化结果不替代实机体验。
+diff --git "a/docs/\346\216\245\345\217\243\346\226\207\346\241\243/01-\351\241\265\351\235\242\345\257\274\350\210\252\344\270\216UI\344\272\213\344\273\266.md" "b/docs/\346\216\245\345\217\243\346\226\207\346\241\243/01-\351\241\265\351\235\242\345\257\274\350\210\252\344\270\216UI\344\272\213\344\273\266.md"
+index 3bd803a..ef897b7 100644
+--- "a/docs/\346\216\245\345\217\243\346\226\207\346\241\243/01-\351\241\265\351\235\242\345\257\274\350\210\252\344\270\216UI\344\272\213\344\273\266.md"
++++ "b/docs/\346\216\245\345\217\243\346\226\207\346\241\243/01-\351\241\265\351\235\242\345\257\274\350\210\252\344\270\216UI\344\272\213\344\273\266.md"
+@@ -7,8 +7,14 @@
+ ## 2026-11-09 分析答案与取枪提示
+ `Button_ZeroingImpactAnalysis_Answer` 与帮助同排右侧、同尺寸，点击切换 `Panel_ZeroingImpactAnalysis_Answer`，默认隐藏；帮助与答案的显隐以2026-11-10互斥修订为准。数据来自当前分析DTO，调整、应用、重新进入时刷新；离开分析或下一轮自动收起，不改变导航门禁或其他按钮坐标。`Text_TrainingShared_PickupPrompt` 的主菜单简报与靶场取枪页两个实例均保持各自面板框外的底部安全区，靶场页绝对定位文字不得被小胶囊样式覆盖；不更改文案或显隐逻辑。世界提示的文字正读且不挡枪械。
+ 
+-## 2026-11-09 主菜单操作介绍
+-`Button_MainMenu_Controls` 打开默认隐藏的 `Panel_MainMenu_Controls`；`Button_MainMenu_Controls_Back` 关闭该面板，均保持当前 MainMenu 路由。复用现有 UI 按钮/射线及稳定测试 ID；入口坐标以 BDD02 最新布局修订为准。内容只反映实际 VR 绑定和各模式固定点/切肩差异，不新增玩法命令。
++## 2026-11-16 各模式操作介绍
++
++删除旧总览按钮、面板及其子节点，不新增 ScreenId、UIEventId 或服务DTO。四个现有入口先打开 UI 本地 `Screen_ModeIntro_<Zeroing|MovingTarget|Trench|Urban>`，当前路由仍为MainMenu，不调用Presentation.Enter、Combat.OpenMode或会话命令。
++
++- `Button_ModeIntro_<模式>_Back` 仅关闭本地介绍并清除待确认回调，不写路由、历史栈或会话；反复打开返回保持幂等。
++- `Button_ModeIntro_<模式>_Enter` 先关闭介绍、消费待确认回调，再执行该入口原有处理：模式一OnOpenZeroingClicked（Presentation.Enter + MainMenu_OpenZeroing）；模式二OnOpenMovingTargetClicked（原设置路由与场景加载）；模式三/四原Combat.OpenMode（对应地图选择），后续流程保持原样。
++- 同时最多打开一页；路由离开主菜单时自动清除介绍及待确认回调。重复确认不能重放处理；CombatScenesAvailable仍控制03/04是否可用。
++- 正文ScrollRect仅竖直滚动、按文本首选高度自适应，双按钮在滚动区外；透明全屏遮挡层避免点击穿透主菜单。稳定ID见BDD37。
+ 
+ 2026-11-08：移除主菜单制作人入口及其完整面板，不新增服务或路由；四个训练入口和其他点击遮挡层保持原有行为。
+ 
+@@ -160,8 +166,4 @@ Urban_ExitBuilding返回街道；OpenRoomDoor/MarkRoomSearched更新当前HUD。
+ 
+ ## 2026-11-12 中文显示文案
+ 
+-主菜单副标题为“战术训练中心”，底部删除英文副标题并保留“单机训练”和“选择科目后查看任务简报”之间原有空格排版；任务简报标题为“任务简报”。操作介绍使用“右手侧握键抓枪 / 主手握持；左手侧握键副手握持。”，按键、VR/UI、单位保持原样。仅修改显示文字，不改变布局和事件。
+-
+-## 2026-11-15 主菜单入口重排
+-
+-按 BDD02 同日修订，右侧顺序为操作介绍 → 深色面板 + 橙色边框标题条 → 01→04；精确坐标见 BDD02 表。Panel_MainMenu_Menu 是纯展示 Image，沿用 Text_MainMenu_Menu，无 Button/Selectable，所有 Graphic.raycastTarget=false；沿用 AddPanel + ResolvePanelSprite 的 hud_capsule 九宫格，填充 Color32(17,29,24,230)、边框 Color32(247,185,85,255)，无额外填充内芯；文字恢复 20 号、Normal/Regular、Color32(231,242,235,255)。01 与 02/03/04、操作介绍均为次要样式。UI 层仅变更布局和样式，不新增或修改 DTO、服务、事件、错误码、TrainingMode 或路由，CombatScenesAvailable 门禁保持原行为。操作介绍面板内部、左侧档案、主副标题和底部状态条保持原样。
++主菜单副标题为“战术训练中心”，底部删除英文副标题并保留“单机训练”和“选择科目后查看任务简报”之间原有空格排版；任务简报标题为“任务简报”。各模式介绍按2026-11-16与BDD37使用完整中文操作，界面射线、抬头显示区不保留英文缩写。

@@ -1,0 +1,1954 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.TextCore.LowLevel;
+using UnityEngine.UI;
+using VRShooting.Application;
+using VRShooting.Application.Events;
+using VRShooting.Common;
+using VRShooting.Contracts;
+using VRShooting.Unity.Bootstrap;
+
+namespace VRShooting.Unity.UI
+{
+    /// <summary>
+    /// Main scene UI for mode entry and 100m zeroing briefing.
+    /// </summary>
+    public sealed class MainMenuUI : TrainingUIRoot
+    {
+        protected override TrainingUIScreenGroup ScreenGroup => TrainingUIScreenGroup.MainMenu;
+
+        protected override string RootObjectName => nameof(MainMenuUI);
+
+        public static MainMenuUI EnsureExistsInScene(ApplicationServices applicationServices = null)
+        {
+            var ui = FindObjectOfType<MainMenuUI>(true);
+            if (ui == null)
+            {
+                var uiRoot = new GameObject(nameof(MainMenuUI), typeof(RectTransform));
+                ui = uiRoot.AddComponent<MainMenuUI>();
+            }
+
+            var services = applicationServices ?? GameMain.Instance?.Services;
+            if (services != null && !ui.IsInitialized)
+            {
+                ui.Initialize(services);
+            }
+
+            return ui;
+        }
+    }
+
+    /// <summary>Texture-free heading stroke, so cyan sprite pixels cannot tint the orange border.</summary>
+    [ExecuteAlways, RequireComponent(typeof(CanvasRenderer))]
+    public sealed class MainMenuHeadingBorderGraphic : MaskableGraphic
+    {
+        protected override void OnPopulateMesh(VertexHelper vh)
+        {
+            vh.Clear();
+            var rect = GetPixelAdjustedRect();
+            const float inset = 2f, bevel = 20f, halfWidth = 1f;
+            var left = rect.xMin + inset;
+            var right = rect.xMax - inset;
+            var bottom = rect.yMin + inset;
+            var top = rect.yMax - inset;
+            var points = new[] { new Vector2(left + bevel, top), new Vector2(right - bevel, top),
+                new Vector2(right, top - bevel), new Vector2(right, bottom + bevel),
+                new Vector2(right - bevel, bottom), new Vector2(left + bevel, bottom),
+                new Vector2(left, bottom + bevel), new Vector2(left, top - bevel) };
+            for (var i = 0; i < points.Length; i++)
+            {
+                var a = points[i];
+                var b = points[(i + 1) % points.Length];
+                var direction = (b - a).normalized;
+                var normal = new Vector2(-direction.y, direction.x) * halfWidth;
+                var start = vh.currentVertCount;
+                vh.AddVert(a - normal, color, Vector2.zero);
+                vh.AddVert(a + normal, color, Vector2.zero);
+                vh.AddVert(b + normal, color, Vector2.zero);
+                vh.AddVert(b - normal, color, Vector2.zero);
+                vh.AddTriangle(start, start + 1, start + 2);
+                vh.AddTriangle(start, start + 2, start + 3);
+            }
+        }
+    }
+
+    [Flags]
+    public enum TrainingUIScreenGroup
+    {
+        MainMenu = 1,
+        ZeroingRange = 2
+    }
+
+    /// <summary>
+    /// Shared generated UI implementation for scene-owned training screens.
+    /// </summary>
+    public abstract class TrainingUIRoot : MonoBehaviour
+    {
+        const string ZeroingMapId = "zeroing-range-100m";
+        const string ZeroingWeaponId = "training-rifle";
+
+        enum ZeroingInfoPanel { None, Help, Answer }
+        ZeroingInfoPanel zeroingInfoPanel;
+
+        [SerializeField]
+        bool buildOnAwake = true;
+
+        [SerializeField]
+        TMP_FontAsset fontAsset;
+
+        readonly Dictionary<string, Sprite> generatedSpriteCache = new Dictionary<string, Sprite>();
+
+        ApplicationServices services;
+        IDisposable screenSubscription;
+        IDisposable zeroingRoundSubscription;
+        RectTransform mainMenuScreen;
+        RectTransform mainMenuControlsPanel;
+        RectTransform zeroingBriefingScreen;
+        RectTransform zeroingPickupScreen;
+        RectTransform zeroingHudScreen;
+        RectTransform zeroingImpactAnalysisScreen;
+        RectTransform zeroingFinalRatingScreen;
+        RectTransform largePanelRoot;
+        RectTransform minimalHudRoot;
+        RectTransform zeroingStabilityFill;
+        readonly List<RectTransform> zeroingImpactDots = new List<RectTransform>();
+        readonly List<GameObject> zeroingMissLabels = new List<GameObject>();
+        bool zeroingAnalysisSpreadRejected;
+        RectTransform zeroingAverageCenter;
+        RectTransform zeroingAdjustedCenter;
+        Button openZeroingButton;
+        Button openMovingTargetButton;
+        Button startButton;
+        Button backButton;
+        Button applyAdjustmentButton;
+        readonly List<Button> zeroingAdjustmentButtons = new List<Button>();
+        readonly Dictionary<Button, Color> zeroingButtonGraphicColors = new Dictionary<Button, Color>();
+        readonly Dictionary<Button, Color> zeroingButtonTextColors = new Dictionary<Button, Color>();
+        Button nextRoundButton;
+        Button impactBackToMainMenuButton;
+        Button finalRetryButton;
+        Button finalBackToModeSelectionButton;
+        TextMeshProUGUI zeroingRoundText;
+        TextMeshProUGUI zeroingDistanceText;
+        TextMeshProUGUI zeroingAmmoText;
+        TextMeshProUGUI zeroingStabilityText;
+        TextMeshProUGUI zeroingImpactRecordText;
+        TextMeshProUGUI zeroingShoulderText;
+        TextMeshProUGUI zeroingSightText;
+        TextMeshProUGUI zeroingPromptText;
+        TextMeshProUGUI zeroingAnalysisFrontSightText;
+        TextMeshProUGUI zeroingAnalysisRearSightText;
+        TextMeshProUGUI zeroingAnalysisSuggestionText;
+        Button zeroingAnalysisHelpButton;
+        Button zeroingAnalysisAnswerButton;
+        RectTransform zeroingAnalysisAnswerPanel;
+        TextMeshProUGUI zeroingAnalysisAnswerText;
+        TextMeshProUGUI zeroingAnalysisAppliedText;
+        TextMeshProUGUI zeroingAnalysisCorrectionXText;
+        TextMeshProUGUI zeroingAnalysisCorrectionYText;
+        TextMeshProUGUI zeroingAnalysisPreviewText;
+        TextMeshProUGUI zeroingAnalysisCoordinatesText;
+        TextMeshProUGUI zeroingFinalGradeText;
+        TextMeshProUGUI zeroingFinalRoundsText;
+        TextMeshProUGUI zeroingFinalThumbnailsText;
+        readonly List<TacticalTargetPlot> finalTargetPlots = new List<TacticalTargetPlot>();
+        TacticalTargetPlot hudTargetPlot;
+        readonly List<Vector2> hudImpactPoints = new List<Vector2>();
+        IDisposable hudShotSubscription, hudRoundSubscription;
+        TextMeshProUGUI pickupPromptText;
+        TextMeshProUGUI firingStationStateText;
+        Image zeroingPromptBackground;
+        TrainingPresentationView presentationView;
+        TrainingPresentationPresenter presentationPresenter;
+        bool isBuilt;
+#if UNITY_EDITOR
+        static TMP_FontAsset generatedEditorFontAsset;
+#endif
+
+        protected abstract TrainingUIScreenGroup ScreenGroup { get; }
+
+        protected abstract string RootObjectName { get; }
+
+        public ScreenId ActiveScreen { get; private set; } = ScreenId.MainMenu;
+
+        public string LastError { get; private set; } = string.Empty;
+
+        public Button OpenZeroingButton => openZeroingButton;
+
+        public Button OpenMovingTargetButton => openMovingTargetButton;
+
+        public Button StartButton => startButton;
+
+        public Button BackButton => backButton;
+
+        public bool IsInitialized => services != null;
+
+        void Awake()
+        {
+            TrainingUIHost.EnsureExists();
+            if (!buildOnAwake)
+            {
+                return;
+            }
+
+            TryInitializeFromGameMain();
+        }
+
+        void Start()
+        {
+            if (!buildOnAwake || services != null)
+            {
+                return;
+            }
+
+            TryInitializeFromGameMain();
+        }
+
+        void TryInitializeFromGameMain()
+        {
+            if (services != null)
+            {
+                return;
+            }
+
+            var gameMain = GameMain.Instance;
+            if (gameMain == null || gameMain.Services == null)
+            {
+                return;
+            }
+
+            Initialize(gameMain.Services);
+        }
+
+        void OnDestroy()
+        {
+            screenSubscription?.Dispose();
+            zeroingRoundSubscription?.Dispose();
+            hudShotSubscription?.Dispose();
+            hudRoundSubscription?.Dispose();
+            if (presentationPresenter != null)
+            {
+                presentationPresenter.SnapshotApplied -= OnPresentationSnapshotApplied;
+            }
+            if (services?.Hud != null)
+            {
+                services.Hud.HudUpdated -= RenderHud;
+            }
+        }
+
+        public void Initialize(ApplicationServices applicationServices)
+        {
+            services = applicationServices ?? ApplicationServices.CreateDefault();
+            LastError = string.Empty;
+
+            if (isBuilt)
+            {
+                ShowScreen(services.Router.Current);
+                presentationPresenter?.Refresh();
+                return;
+            }
+
+            ClearChildren(transform);
+            BuildCanvas();
+            SubscribeRouter();
+            SubscribeHud();
+            SubscribeZeroing();
+            isBuilt = true;
+            ShowScreen(services.Router.Current);
+            InitializePresentation();
+        }
+
+        void SubscribeRouter()
+        {
+            screenSubscription?.Dispose();
+            screenSubscription = services.EventBus.Subscribe<ScreenChangedEvent>(evt => ShowScreen(evt.CurrentScreen));
+        }
+
+        void SubscribeHud()
+        {
+            services.Hud.HudUpdated -= RenderHud;
+            services.Hud.HudUpdated += RenderHud;
+        }
+
+        void SubscribeZeroing()
+        {
+            zeroingRoundSubscription?.Dispose();
+            zeroingRoundSubscription = services.EventBus.Subscribe<ZeroingRoundCompletedEvent>(OnZeroingRoundCompleted);
+            hudShotSubscription?.Dispose();
+            hudRoundSubscription?.Dispose();
+            hudShotSubscription = services.EventBus.Subscribe<ZeroingShotRecordedEvent>(evt =>
+            {
+                if (!services.TrainingSessions.HasActiveSession || evt.SessionId != services.TrainingSessions.Current.SessionId) return;
+                if (!evt.Shot.MissedTargetPlane && TacticalTargetPlot.IsOnTarget(evt.Shot.ImpactPointCm)) hudImpactPoints.Add(evt.Shot.ImpactPointCm);
+                hudTargetPlot?.SetImpacts(hudImpactPoints);
+            });
+            hudRoundSubscription = services.EventBus.Subscribe<ZeroingRoundStartedEvent>(evt =>
+            {
+                hudImpactPoints.Clear();
+                hudTargetPlot?.SetImpacts(hudImpactPoints);
+            });
+        }
+
+        void BuildCanvas()
+        {
+            var canvas = gameObject.GetComponent<Canvas>();
+            if (canvas == null)
+            {
+                canvas = gameObject.AddComponent<Canvas>();
+            }
+
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.sortingOrder = 10;
+
+            var scaler = gameObject.GetComponent<CanvasScaler>();
+            if (scaler == null)
+            {
+                scaler = gameObject.AddComponent<CanvasScaler>();
+            }
+
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(1920f, 1080f);
+            scaler.matchWidthOrHeight = 0.5f;
+
+            var canvasAdapter = gameObject.GetComponent<TrainingUICanvasAdapter>();
+            if (canvasAdapter == null)
+            {
+                canvasAdapter = gameObject.AddComponent<TrainingUICanvasAdapter>();
+            }
+
+            canvasAdapter.Configure(canvas);
+
+            gameObject.name = RootObjectName;
+            AddTestId(gameObject, RootObjectName);
+
+            largePanelRoot = CreateRect("LargePanelRoot", transform as RectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            AddTestId(largePanelRoot.gameObject, "Training.Shared.LargePanelRoot");
+            largePanelRoot.gameObject.AddComponent<CanvasGroup>();
+            largePanelRoot.gameObject.SetActive(false);
+
+            minimalHudRoot = CreateRect("MinimalHudRoot", transform as RectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            AddTestId(minimalHudRoot.gameObject, "Training.Shared.MinimalHudRoot");
+            minimalHudRoot.gameObject.AddComponent<CanvasGroup>();
+            minimalHudRoot.gameObject.SetActive(false);
+
+            if ((ScreenGroup & TrainingUIScreenGroup.MainMenu) != 0)
+            {
+                mainMenuScreen = CreateScreen(transform as RectTransform, "Screen_MainMenu");
+                BuildMainMenu(mainMenuScreen);
+
+                zeroingBriefingScreen = CreateScreen(largePanelRoot, "Screen_ZeroingBriefing");
+                BuildZeroingBriefing(zeroingBriefingScreen);
+                BuildSharedStatus(zeroingBriefingScreen);
+            }
+
+            if ((ScreenGroup & TrainingUIScreenGroup.ZeroingRange) != 0)
+            {
+                zeroingPickupScreen = CreateScreen(largePanelRoot, "Panel_Training_AwaitingWeaponPickup");
+                BuildAwaitingWeaponPickup(zeroingPickupScreen);
+
+                zeroingHudScreen = CreateHudScreen(minimalHudRoot, "Screen_ZeroingHud");
+                BuildZeroingHud(zeroingHudScreen);
+
+                zeroingImpactAnalysisScreen = CreateHudScreen(largePanelRoot, "Screen_ZeroingImpactAnalysis");
+                BuildZeroingImpactAnalysis(zeroingImpactAnalysisScreen);
+
+                zeroingFinalRatingScreen = CreateHudScreen(largePanelRoot, "Screen_ZeroingFinalRating");
+                BuildZeroingFinalRating(zeroingFinalRatingScreen);
+            }
+
+            TacticalUIStyle.Apply(transform);
+            ConfigurePresentationView();
+        }
+
+        RectTransform CreateScreen(RectTransform parent, string name)
+        {
+            var screen = CreateRect(name, parent, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            AddImage(screen.gameObject, new Color32(7, 16, 13, 242));
+            AddTestId(screen.gameObject, name);
+            return screen;
+        }
+
+        RectTransform CreateHudScreen(RectTransform parent, string name)
+        {
+            var screen = CreateRect(name, parent, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            AddTestId(screen.gameObject, name);
+            return screen;
+        }
+
+        void BuildSharedStatus(RectTransform parent)
+        {
+            pickupPromptText = AddLabel(parent, "Text_TrainingShared_PickupPrompt", "确认设置后开始训练", 24,
+                FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(610, 930), new Vector2(1310, 975),
+                new Color32(247, 185, 85, 255));
+            OverrideTestId(pickupPromptText.gameObject, "Training.Shared.PickupPrompt");
+            firingStationStateText = AddLabel(parent, "Text_TrainingShared_FiringStationState", "射击位：等待绑定", 18,
+                FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(610, 980), new Vector2(1310, 1020),
+                new Color32(143, 217, 255, 255));
+            OverrideTestId(firingStationStateText.gameObject, "Training.Shared.FiringStationState");
+        }
+
+        void BuildAwaitingWeaponPickup(RectTransform parent)
+        {
+            AddPanel(parent, "Panel_Training_AwaitingWeaponPickup_Content", new Vector2(360, 235), new Vector2(1560, 825),
+                new Color32(11, 19, 16, 235), new Color32(45, 156, 255, 255));
+            AddLabel(parent, "Text_Training_AwaitingWeaponPickup_Title", "100m精度射校靶", 52,
+                FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(520, 300), new Vector2(1400, 390),
+                new Color32(231, 242, 235, 255));
+            AddLabel(parent, "Text_Training_AwaitingWeaponPickup_Rules",
+                "卧姿固定射击位  ·  单发射  ·  每轮4发  ·  共3轮\n右手近距握住后握把后，大型界面将自动隐藏",
+                28, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(480, 430), new Vector2(1440, 570),
+                new Color32(143, 217, 255, 255));
+            pickupPromptText = AddLabel(parent, "Text_TrainingShared_PickupPrompt", "请用右手近距取枪", 24,
+                FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(610, 615), new Vector2(1310, 700),
+                new Color32(247, 185, 85, 255));
+            OverrideTestId(pickupPromptText.gameObject, "Training.Shared.PickupPrompt");
+            firingStationStateText = AddLabel(parent, "Text_TrainingShared_FiringStationState", "射击位：等待绑定", 20,
+                FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(610, 720), new Vector2(1310, 765),
+                new Color32(143, 217, 255, 255));
+            OverrideTestId(firingStationStateText.gameObject, "Training.Shared.FiringStationState");
+            startButton = AddButton(parent, "Button_ZeroingBriefing_Start", "确认并开始", new Vector2(805, 785), new Vector2(1115, 860), true);
+            startButton.onClick.AddListener(OnStartZeroingClicked);
+        }
+
+        void ConfigurePresentationView()
+        {
+            presentationView = gameObject.GetComponent<TrainingPresentationView>();
+            if (presentationView == null)
+            {
+                presentationView = gameObject.AddComponent<TrainingPresentationView>();
+            }
+
+            var bindings = new List<TrainingPresentationPanelBinding>();
+            if (zeroingBriefingScreen != null)
+            {
+                bindings.Add(new TrainingPresentationPanelBinding(ScreenId.ZeroingBriefing, zeroingBriefingScreen.gameObject));
+            }
+            else if (zeroingPickupScreen != null)
+            {
+                bindings.Add(new TrainingPresentationPanelBinding(ScreenId.ZeroingBriefing, zeroingPickupScreen.gameObject));
+            }
+
+            if (zeroingHudScreen != null)
+            {
+                bindings.Add(new TrainingPresentationPanelBinding(ScreenId.ZeroingHud, zeroingHudScreen.gameObject));
+            }
+            if (zeroingImpactAnalysisScreen != null)
+            {
+                bindings.Add(new TrainingPresentationPanelBinding(ScreenId.ZeroingImpactAnalysis, zeroingImpactAnalysisScreen.gameObject));
+            }
+            if (zeroingFinalRatingScreen != null)
+            {
+                bindings.Add(new TrainingPresentationPanelBinding(ScreenId.ZeroingFinalRating, zeroingFinalRatingScreen.gameObject));
+            }
+
+            presentationView.Configure(
+                largePanelRoot.gameObject,
+                minimalHudRoot.gameObject,
+                pickupPromptText,
+                firingStationStateText,
+                startButton,
+                nextRoundButton,
+                finalRetryButton,
+                bindings);
+        }
+
+        void InitializePresentation()
+        {
+            presentationPresenter = gameObject.GetComponent<TrainingPresentationPresenter>();
+            if (presentationPresenter == null)
+            {
+                presentationPresenter = gameObject.AddComponent<TrainingPresentationPresenter>();
+            }
+
+            presentationPresenter.SnapshotApplied -= OnPresentationSnapshotApplied;
+            presentationPresenter.SnapshotApplied += OnPresentationSnapshotApplied;
+            presentationPresenter.Initialize(presentationView, services.Presentation);
+        }
+
+        void OnPresentationSnapshotApplied(TrainingPresentationDto snapshot)
+        {
+            ShowScreen(snapshot.ActiveScreen);
+            if (services != null && services.Router.Current != snapshot.ActiveScreen)
+            {
+                services.Router.Open(snapshot.ActiveScreen, new NavigationArgs
+                {
+                    Mode = snapshot.Mode,
+                    SessionId = snapshot.SessionId
+                });
+            }
+        }
+
+        Sprite LoadGeneratedSprite(string spriteName)
+        {
+            if (string.IsNullOrEmpty(spriteName))
+            {
+                return null;
+            }
+
+            if (generatedSpriteCache.TryGetValue(spriteName, out var cached))
+            {
+                return cached;
+            }
+
+            var sprite = Resources.Load<Sprite>("UI/TrainingGenerated/Sprites/" + spriteName);
+            generatedSpriteCache[spriteName] = sprite;
+            return sprite;
+        }
+
+        static void ApplySlicedSprite(Image image, Sprite sprite)
+        {
+            if (image == null || sprite == null)
+            {
+                return;
+            }
+
+            image.sprite = sprite;
+            image.type = Image.Type.Sliced;
+            image.color = Color.white;
+            image.raycastTarget = false;
+            image.pixelsPerUnitMultiplier = 1f;
+        }
+
+        Sprite ResolvePanelSprite(string id, Vector2 min, Vector2 max)
+        {
+            var width = Mathf.Abs(max.x - min.x);
+            var height = Mathf.Abs(max.y - min.y);
+
+            if (id.IndexOf("Status", StringComparison.OrdinalIgnoreCase) >= 0 || id.IndexOf("Bottom", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return LoadGeneratedSprite(width > 700f ? "status_strip_long" : "status_strip_short");
+            }
+
+            if (id.IndexOf("Prompt", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return LoadGeneratedSprite("button_primary_orange");
+            }
+
+            if (height <= 130f)
+            {
+                return LoadGeneratedSprite(width > 520f ? "status_strip_long" : "hud_capsule");
+            }
+
+            return LoadGeneratedSprite(width > 700f || height > 260f ? "panel_holo_large" : "panel_holo_medium");
+        }
+
+        Image AddIcon(RectTransform parent, string id, string spriteName, Vector2 min, Vector2 max)
+        {
+            var rect = CreateRect(id, parent, Vector2.zero, Vector2.zero, min, max);
+            AddTestId(rect.gameObject, id);
+            var image = AddImage(rect.gameObject, Color.white);
+            var sprite = LoadGeneratedSprite(spriteName);
+            if (sprite != null)
+            {
+                image.sprite = sprite;
+                image.type = Image.Type.Simple;
+                image.preserveAspect = true;
+                image.raycastTarget = false;
+            }
+
+            return image;
+        }
+
+        void BuildMainMenu(RectTransform parent)
+        {
+            var hall = TacticalUIStyle.Artwork(parent, "Placeholder_MainMenu_BaseHall", TacticalUITheme.Current != null ? TacticalUITheme.Current.Hall : null, Vector2.zero, new Vector2(1920, 1080));
+            AddTestId(hall.gameObject, hall.name);
+            AddPanel(parent, "Panel_MainMenu_Frame", new Vector2(1300, 130), new Vector2(1810, 920), new Color32(11, 19, 16, 220), new Color32(45, 66, 56, 255));
+            AddLabel(parent, "Text_MainMenu_Title", "VR 射击训练系统", 58, FontStyles.Normal, TextAlignmentOptions.Left, new Vector2(120, 835), new Vector2(1240, 930), new Color32(231, 242, 235, 255));
+            AddLabel(parent, "Text_MainMenu_Subtitle", "战术训练中心", 24, FontStyles.Normal, TextAlignmentOptions.Left, new Vector2(125, 785), new Vector2(1150, 830), new Color32(143, 217, 255, 255));
+
+            AddPanel(parent, "Panel_MainMenu_Profile", new Vector2(120, 165), new Vector2(630, 325), new Color32(17, 29, 24, 220), new Color32(56, 84, 71, 255),
+                "本地训练\n循序训练 · 安全操作 · 精准射击");
+            var controlsButton = AddButton(parent, "Button_MainMenu_Controls", "操作介绍", new Vector2(1360, 780), new Vector2(1750, 865), false);
+            controlsButton.onClick.AddListener(() => mainMenuControlsPanel.gameObject.SetActive(true));
+
+            AddPanel(parent, "Panel_MainMenu_Menu", new Vector2(1360, 667), new Vector2(1750, 737), new Color32(17, 29, 24, 230), new Color32(247, 185, 85, 255), "选择训练科目");
+
+            openZeroingButton = AddButton(parent, "Button_MainMenu_OpenZeroing", "01   100m 精度射校靶", new Vector2(1360, 539), new Vector2(1750, 624), false);
+            openZeroingButton.onClick.AddListener(OnOpenZeroingClicked);
+
+            openMovingTargetButton = AddButton(parent, "Button_MainMenu_OpenMovingTarget", "02   移动目标射击", new Vector2(1360, 411), new Vector2(1750, 496), false);
+            openMovingTargetButton.onClick.AddListener(OnOpenMovingTargetClicked);
+            var trenchButton = AddButton(parent, "Button_MainMenu_Trench", "03   堑壕射击", new Vector2(1360, 283), new Vector2(1750, 368), false);
+            var urbanButton = AddButton(parent, "Button_MainMenu_Urban", "04   城镇攻防", new Vector2(1360, 155), new Vector2(1750, 240), false);
+            trenchButton.interactable = urbanButton.interactable = services.CombatScenesAvailable;
+            trenchButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Trench));
+            urbanButton.onClick.AddListener(() => services.Combat.OpenMode(TrainingMode.Urban));
+
+            AddPanel(parent, "Panel_MainMenu_BottomStatus", new Vector2(120, 55), new Vector2(1800, 115), new Color32(17, 29, 24, 210), new Color32(56, 84, 71, 255),
+                "单机训练                                     选择科目后查看任务简报");
+
+            BuildMainMenuControls(parent);
+        }
+
+        void BuildMainMenuControls(RectTransform parent)
+        {
+            mainMenuControlsPanel = AddPanel(parent, "Panel_MainMenu_Controls", new Vector2(130, 120), new Vector2(1790, 960),
+                new Color32(11, 19, 16, 245), new Color32(45, 66, 56, 255));
+            var textColor = new Color32(231, 242, 235, 255);
+            AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Title", "操作介绍", 38, FontStyles.Bold,
+                TextAlignmentOptions.Center, new Vector2(80, 750), new Vector2(1580, 820), textColor);
+            var left = AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Left",
+                "通用 VR 操作\n右手侧握键抓枪 / 主手握持；左手侧握键副手握持。\n右扳机射击；用 UI 射线选择按钮。\n主菜单及模式三 / 四：左摇杆移动，右摇杆转向。\n模式一 / 二为固定射击点，不可移动。\n\n模式一  ·  100m 精度射校\n每轮 4 发，共 3 轮。\n分析页使用“应用调整”“进入下一轮”或“查看评级”。\n水平 1 格 = 2cm；垂直 5 度 = 0.32cm。\n集中且计算集各点距靶心≤10cm、均值距靶心≤5cm且至少一发距靶心≤5cm，或应用调整后均值距靶心<5cm即可通过。",
+                24, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(75, 150), new Vector2(800, 720), textColor);
+            var right = AddLabel(mainMenuControlsPanel, "Text_MainMenu_Controls_Right",
+                "模式二  ·  移动目标\n双手据枪，采用“跟随射击”或“等待射击”的方式对目标进行射击。\n右扳机快速扣动起射两发，继续按住可逐发连射。\n\n模式三 / 四  ·  堑壕与城镇\n左手柄 X：换弹；左手柄 Y：切换姿态。\n右手柄 B：切换左右肩。\n模式四：右摇杆按压交互 / 开门。\n模式三 / 四：右手柄 A 请求队友投掷手雷。\n切换左肩后，左手为主手并使用左扳机射击，右手为副手。",
+                24, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(860, 150), new Vector2(1585, 720), textColor);
+            left.lineSpacing = right.lineSpacing = 6f;
+            var back = AddButton(mainMenuControlsPanel, "Button_MainMenu_Controls_Back", "返回", new Vector2(680, 35), new Vector2(980, 105), false);
+            back.onClick.AddListener(() => mainMenuControlsPanel.gameObject.SetActive(false));
+            mainMenuControlsPanel.gameObject.SetActive(false);
+        }
+
+        void BuildZeroingBriefing(RectTransform parent)
+        {
+            AddPanel(parent, "Panel_ZeroingBriefing_Frame", new Vector2(110, 60), new Vector2(1390, 820), new Color32(11, 19, 16, 215), new Color32(45, 156, 255, 255));
+            var rangeArt = TacticalUIStyle.Artwork(parent, "Placeholder_ZeroingBriefing_Range", TacticalUIStyle.Sprite("icon_framed_reticle_large"), new Vector2(1440, 325), new Vector2(1790, 675));
+            AddTestId(rangeArt.gameObject, rangeArt.name);
+            AddLabel(parent, "Text_ZeroingBriefing_Header", "任务简报", 26, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(180, 95), new Vector2(780, 145), new Color32(231, 242, 235, 255));
+            AddLabel(parent, "Text_ZeroingBriefing_Title", "100m精度射校靶", 54, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(190, 190), new Vector2(760, 280), new Color32(231, 242, 235, 255));
+
+            AddPanel(parent, "Panel_ZeroingBriefing_Rules", new Vector2(190, 305), new Vector2(740, 745), new Color32(17, 29, 24, 225), new Color32(56, 84, 71, 255),
+                "射击距离：100m\n射击模式：单发射\n每轮弹数：4发\n训练轮次：共3轮\n目标规格：50cm x 50cm 胸靶\n10环直径：10cm\n集中：各点距均值<10cm，两两间距<15cm\n通过条件：集中且各点距靶心≤10cm、均值距靶心≤5cm、至少一发距靶心≤5cm；或集中且调整后均值距靶心<5cm");
+
+            AddPanel(parent, "Panel_ZeroingBriefing_Target", new Vector2(840, 210), new Vector2(1325, 745), new Color32(10, 21, 18, 210), new Color32(45, 156, 255, 255), string.Empty);
+            AddLabel(parent, "Text_ZeroingBriefing_TargetTitle", "胸靶示意图", 26, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(900, 230), new Vector2(1265, 285), new Color32(77, 213, 255, 255));
+            BuildTargetDiagram(parent);
+
+            startButton = AddButton(parent, "Button_ZeroingBriefing_Start", "开始射击", new Vector2(510, 850), new Vector2(820, 925), true);
+            startButton.onClick.AddListener(OnStartZeroingClicked);
+
+            backButton = AddButton(parent, "Button_ZeroingBriefing_Back", "返回", new Vector2(870, 850), new Vector2(1180, 925), false);
+            backButton.onClick.AddListener(OnBackClicked);
+
+            AddPanel(parent, "Panel_ZeroingBriefing_SafetyNote", new Vector2(105, 980), new Vector2(900, 1030), new Color32(17, 29, 24, 230), new Color32(56, 84, 71, 255),
+                "请确认武器处于安全状态，佩戴护具，听从指挥。");
+            AddPanel(parent, "Panel_ZeroingBriefing_Status", new Vector2(960, 980), new Vector2(1815, 1030), new Color32(17, 29, 24, 230), new Color32(56, 84, 71, 255),
+                "固定射击位  /  单发模式  /  完成后查看弹着分析");
+
+        }
+
+        void BuildTargetDiagram(RectTransform parent)
+        {
+            // Uses the same calibrated artwork as ChestTarget_ReferenceFace and the results plots.
+            var target = CreateRect("Image_ZeroingBriefing_Target", parent, Vector2.zero, Vector2.zero,
+                new Vector2(925, 375), new Vector2(1240, 690));
+            var plot = target.gameObject.AddComponent<TacticalTargetPlot>();
+            plot.raycastTarget = false;
+            AddTestId(target.gameObject, target.name);
+            AddLabel(parent, "Text_ZeroingBriefing_TargetSize", "50cm x 50cm", 20, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(930, 700), new Vector2(1230, 740), new Color32(77, 213, 255, 255));
+        }
+
+        void BuildZeroingHud(RectTransform parent)
+        {
+            AddPanel(parent, "Panel_ZeroingHud_Round", new Vector2(60, 60), new Vector2(350, 175), new Color32(12, 28, 36, 205), new Color32(45, 156, 255, 255));
+            AddIcon(parent, "Icon_ZeroingHud_Round", "icon_reticle", new Vector2(82, 80), new Vector2(152, 150));
+            zeroingRoundText = AddLabel(parent, "Text_ZeroingHud_Round", "轮次 --/--", 30, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(150, 78), new Vector2(325, 155), new Color32(231, 242, 235, 255));
+
+            AddPanel(parent, "Panel_ZeroingHud_Distance", new Vector2(810, 75), new Vector2(1110, 155), new Color32(12, 28, 36, 205), new Color32(45, 156, 255, 255));
+            zeroingDistanceText = AddLabel(parent, "Text_ZeroingHud_Distance", "距离 --", 30, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(835, 88), new Vector2(1085, 145), new Color32(143, 217, 255, 255));
+
+            AddPanel(parent, "Panel_ZeroingHud_Ammo", new Vector2(1530, 60), new Vector2(1810, 175), new Color32(12, 28, 36, 205), new Color32(45, 156, 255, 255));
+            zeroingAmmoText = AddLabel(parent, "Text_ZeroingHud_Ammo", "弹数 --/--", 30, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(1555, 78), new Vector2(1730, 155), new Color32(231, 242, 235, 255));
+            AddIcon(parent, "Icon_ZeroingHud_Ammo", "icon_bullets", new Vector2(1725, 82), new Vector2(1792, 150));
+
+            var stabilityPanel = AddPanel(parent, "Hud_Zeroing_Stability", new Vector2(80, 785), new Vector2(555, 905), new Color32(12, 28, 36, 200), new Color32(45, 156, 255, 255));
+            AddLabel(stabilityPanel, "Text_ZeroingHud_StabilityLabel", "稳定度", 24, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(28, 14), new Vector2(-28, -70), new Color32(231, 242, 235, 255), true);
+            zeroingStabilityText = AddLabel(stabilityPanel, "Text_ZeroingHud_StabilityValue", "--", 20, FontStyles.Bold, TextAlignmentOptions.Right, new Vector2(28, 14), new Vector2(-28, -70), new Color32(200, 255, 106, 255), true);
+            var stabilityBar = CreateRect("Hud_Zeroing_StabilityBar", stabilityPanel, Vector2.zero, Vector2.zero, new Vector2(28, 70), new Vector2(420, 92));
+            AddTestId(stabilityBar.gameObject, "Hud_Zeroing_StabilityBar");
+            AddImage(stabilityBar.gameObject, new Color32(33, 64, 75, 230));
+            zeroingStabilityFill = CreateRect("Hud_Zeroing_StabilityFill", stabilityBar, Vector2.zero, new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
+            AddTestId(zeroingStabilityFill.gameObject, "Hud_Zeroing_StabilityFill");
+            AddImage(zeroingStabilityFill.gameObject, new Color32(89, 224, 255, 245));
+
+            var recordPanel = AddPanel(parent, "Hud_Zeroing_ImpactRecord", new Vector2(1430, 300), new Vector2(1840, 845), new Color32(12, 28, 36, 190), new Color32(45, 156, 255, 255));
+            AddLabel(recordPanel, "Text_ZeroingHud_ImpactTitle", "弹着记录", 30, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(35, 25), new Vector2(-35, -465), new Color32(143, 217, 255, 255), true);
+            BuildHudTargetPlaceholder(recordPanel);
+            zeroingImpactRecordText = AddLabel(recordPanel, "Text_ZeroingHud_ImpactRecord", "弹着记录待同步", 26, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(35, 430), new Vector2(-35, -28), new Color32(77, 213, 255, 255), true);
+
+            AddPanel(parent, "Panel_ZeroingHud_Shoulder", new Vector2(80, 925), new Vector2(390, 995), new Color32(12, 28, 36, 190), new Color32(56, 84, 71, 255));
+            zeroingShoulderText = AddLabel(parent, "Text_ZeroingHud_Shoulder", "肩侧 --", 24, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(95, 936), new Vector2(375, 985), new Color32(231, 242, 235, 255));
+
+            AddPanel(parent, "Hud_Zeroing_Sights", new Vector2(80, 655), new Vector2(555, 760), new Color32(12, 28, 36, 200), new Color32(45, 156, 255, 255));
+            zeroingSightText = AddLabel(parent, "Text_ZeroingHud_Sights", "瞄具状态待同步", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(95, 665), new Vector2(540, 750), new Color32(231, 242, 235, 255));
+
+            var promptPanel = AddPanel(parent, "Panel_ZeroingHud_Prompt", new Vector2(760, 880), new Vector2(1160, 960), new Color32(200, 255, 106, 230), new Color32(247, 185, 85, 255));
+            zeroingPromptBackground = promptPanel.GetComponent<Image>();
+            zeroingPromptText = AddLabel(promptPanel, "Text_ZeroingHud_Prompt", "稳定据枪", 42, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(18, 10), new Vector2(-18, -10), new Color32(7, 16, 13, 255), true);
+        }
+
+        void BuildZeroingImpactAnalysis(RectTransform parent)
+        {
+            AddPanel(parent, "Placeholder_ZeroingImpactAnalysis_BlurredRange", DrawioMin(35, 45, 730, 500), DrawioMax(35, 45, 730, 500), new Color32(5, 13, 23, 230), new Color32(73, 107, 90, 255));
+            AddPanel(parent, "Panel_ZeroingImpactAnalysis_Modal", DrawioMin(160, 65, 480, 480), DrawioMax(160, 65, 480, 480), new Color32(11, 19, 16, 235), new Color32(45, 156, 255, 255));
+            AddLabel(parent, "Text_ZeroingImpactAnalysis_Title", "本轮弹着分析", 40, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(210, 100, 380, 45), DrawioMax(210, 100, 380, 45), new Color32(231, 242, 235, 255));
+
+            var target = AddPanel(parent, "Placeholder_ZeroingImpactAnalysis_Target", DrawioMin(205, 160, 170, 210), DrawioMax(205, 160, 170, 210), new Color32(17, 29, 24, 225), new Color32(200, 255, 106, 255));
+            AddLabel(target, "Text_ZeroingImpactAnalysis_TargetTitle", "50cm x 50cm 胸靶", 22, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(35, 325), new Vector2(373, 365), new Color32(77, 213, 255, 255));
+            BuildAnalysisTargetDiagram(target);
+
+            var data = AddPanel(parent, "Panel_ZeroingImpactAnalysis_Data", DrawioMin(405, 155, 190, 230), DrawioMax(405, 155, 190, 230), new Color32(17, 29, 24, 225), new Color32(56, 84, 71, 255));
+            zeroingAnalysisFrontSightText = AddLabel(data, "Text_ZeroingImpactAnalysis_FrontSight", "准心柱：--", 22, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(28, 285), new Vector2(428, 340), new Color32(247, 185, 85, 255));
+            zeroingAnalysisRearSightText = AddLabel(data, "Text_ZeroingImpactAnalysis_RearSight", "觇孔：--", 22, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(28, 215), new Vector2(428, 270), new Color32(247, 185, 85, 255));
+            zeroingAnalysisFrontSightText.rectTransform.offsetMin = new Vector2(28, 70);
+            zeroingAnalysisFrontSightText.rectTransform.offsetMax = new Vector2(428, 115);
+            zeroingAnalysisRearSightText.rectTransform.offsetMin = new Vector2(28, 18);
+            zeroingAnalysisRearSightText.rectTransform.offsetMax = new Vector2(428, 63);
+            var help = AddButton(data, "Button_ZeroingImpactAnalysis_Help", "帮助", new Vector2(28, 285), new Vector2(160, 342), false);
+            zeroingAnalysisHelpButton = help;
+            zeroingAnalysisAnswerButton = AddButton(data, "Button_ZeroingImpactAnalysis_Answer", "答案", new Vector2(176, 285), new Vector2(308, 342), false);
+            zeroingAnalysisSuggestionText = AddLabel(data, "Text_ZeroingImpactAnalysis_Suggestion",
+                "弹着点偏左时觇孔向前调整，弹着点偏右时觇孔向后调整，100m射击距离时觇孔调整一格为两厘米。\n\n弹着点偏上时逆时针调整准心柱，弹着点偏下时顺时针调整准心柱，100m射击距离时准心柱调整一圈约为23厘米，每次调整5度约0.32厘米。",
+                19, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(28, 120), new Vector2(428, 270), new Color32(143, 217, 255, 255));
+            zeroingAnalysisSuggestionText.enableAutoSizing = true;
+            zeroingAnalysisSuggestionText.fontSizeMin = 15;
+            zeroingAnalysisSuggestionText.fontSizeMax = 19;
+            // Keep the complete help readable above the controls when expanded.
+            zeroingAnalysisSuggestionText.rectTransform.offsetMax = new Vector2(428, 270);
+            zeroingAnalysisSuggestionText.gameObject.SetActive(false);
+            zeroingAnalysisCoordinatesText = AddLabel(data, "Text_ZeroingImpactAnalysis_Coordinates", "", 19, FontStyles.Normal, TextAlignmentOptions.TopLeft, new Vector2(28, 120), new Vector2(428, 270), new Color32(231, 242, 235, 255));
+            zeroingAnalysisCoordinatesText.enableAutoSizing = true;
+            zeroingAnalysisCoordinatesText.fontSizeMin = 13;
+            zeroingAnalysisCoordinatesText.fontSizeMax = 19;
+            help.onClick.AddListener(() => SetZeroingInfoPanel(
+                zeroingInfoPanel == ZeroingInfoPanel.Help ? ZeroingInfoPanel.None : ZeroingInfoPanel.Help));
+            zeroingAnalysisAnswerPanel = AddPanel(parent, "Panel_ZeroingImpactAnalysis_Answer", new Vector2(1450, 300), new Vector2(1830, 850), new Color32(11, 19, 16, 245), new Color32(45, 156, 255, 255));
+            zeroingAnalysisAnswerText = AddLabel(zeroingAnalysisAnswerPanel, "Text_ZeroingImpactAnalysis_AnswerContent", "", 22, FontStyles.Bold, TextAlignmentOptions.TopLeft, new Vector2(18, 18), new Vector2(362, 490), new Color32(231, 242, 235, 255));
+            zeroingAnalysisAnswerText.enableAutoSizing = true;
+            zeroingAnalysisAnswerText.fontSizeMin = 16;
+            zeroingAnalysisAnswerText.fontSizeMax = 22;
+            zeroingAnalysisAnswerButton.onClick.AddListener(() => SetZeroingInfoPanel(
+                zeroingInfoPanel == ZeroingInfoPanel.Answer ? ZeroingInfoPanel.None : ZeroingInfoPanel.Answer));
+            var adjustPanel = AddPanel(parent, "Panel_ZeroingImpactAnalysis_ManualAdjust", DrawioMin(205, 390, 390, 82), DrawioMax(205, 390, 390, 82), new Color32(17, 29, 24, 235), new Color32(45, 156, 255, 255));
+            zeroingAnalysisPreviewText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_PreviewAverage", "计算集均值(黄) / 当前补偿(蓝) · 按住连续调节", 22, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(20, 112), new Vector2(915, 145), new Color32(200, 255, 106, 255));
+            SetZeroingInfoPanel(ZeroingInfoPanel.None);
+            AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_HorizontalLabel", "觇孔", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(18, 24), new Vector2(113, 100), new Color32(231, 242, 235, 255));
+            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalMinus", "向后\n1格", new Vector2(122, 25), new Vector2(196, 96), ZeroingAdjustmentAxis.Horizontal, -1);
+            zeroingAnalysisCorrectionXText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_CorrectionX", "", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(202, 25), new Vector2(312, 96), new Color32(143, 217, 255, 255));
+            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_HorizontalPlus", "向前\n1格", new Vector2(318, 25), new Vector2(392, 96), ZeroingAdjustmentAxis.Horizontal, 1);
+            AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_VerticalLabel", "准心柱", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(475, 24), new Vector2(570, 100), new Color32(231, 242, 235, 255));
+            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_VerticalMinus", "顺时针\n5°", new Vector2(578, 25), new Vector2(652, 96), ZeroingAdjustmentAxis.Vertical, 1);
+            zeroingAnalysisCorrectionYText = AddLabel(adjustPanel, "Text_ZeroingImpactAnalysis_CorrectionY", "", 23, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(658, 25), new Vector2(768, 96), new Color32(143, 217, 255, 255));
+            AddAdjustmentButton(adjustPanel, "Button_ZeroingImpactAnalysis_VerticalPlus", "逆时针\n5°", new Vector2(774, 25), new Vector2(848, 96), ZeroingAdjustmentAxis.Vertical, -1);
+            foreach (var text in new[] { zeroingAnalysisCorrectionXText, zeroingAnalysisCorrectionYText })
+                if (text != null) { text.enableAutoSizing = true; text.fontSizeMin = 12; text.fontSizeMax = 23; }
+
+            zeroingAnalysisAppliedText = AddLabel(parent, "Text_ZeroingImpactAnalysis_AppliedState", "等待应用调整", 20, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(285, 478, 245, 24), DrawioMax(285, 478, 245, 24), new Color32(143, 217, 255, 255));
+            applyAdjustmentButton = AddButton(parent, "Button_ZeroingImpactAnalysis_ApplyAdjustment", "应用调整", DrawioMin(280, 505, 110, 38), DrawioMax(280, 505, 110, 38), true);
+            applyAdjustmentButton.onClick.AddListener(OnApplyAdjustmentClicked);
+            nextRoundButton = AddButton(parent, "Button_ZeroingImpactAnalysis_NextRound", "进入下一轮", DrawioMin(415, 505, 120, 38), DrawioMax(415, 505, 120, 38), false);
+            impactBackToMainMenuButton = AddButton(parent, "Button_ZeroingImpactAnalysis_BackToMainMenu", "返回主菜单", DrawioMin(545, 505, 90, 38), DrawioMax(545, 505, 90, 38), false);
+            impactBackToMainMenuButton.onClick.AddListener(OnImpactBackToMainMenuClicked);
+        }
+
+        void AddAdjustmentButton(RectTransform parent, string id, string label, Vector2 min, Vector2 max,
+            ZeroingAdjustmentAxis axis, int direction)
+        {
+            var button = AddButton(parent, id, label, min, max, false);
+            button.gameObject.AddComponent<RepeatingAdjustmentButton>().Configure(button, () => OnAdjustImpactPoint(axis, direction));
+            var buttonText = button.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (buttonText != null) { buttonText.enableWordWrapping = false; buttonText.enableAutoSizing = true; buttonText.fontSizeMin = 12; buttonText.fontSizeMax = 22; }
+            zeroingAdjustmentButtons.Add(button);
+        }
+
+        void SetZeroingInfoPanel(ZeroingInfoPanel panel)
+        {
+            zeroingInfoPanel = panel;
+            var showHelp = !zeroingAnalysisSpreadRejected && panel == ZeroingInfoPanel.Help;
+            var showAnswer = !zeroingAnalysisSpreadRejected && panel == ZeroingInfoPanel.Answer;
+            if (zeroingAnalysisCoordinatesText != null) zeroingAnalysisCoordinatesText.gameObject.SetActive(!showHelp);
+            foreach (var tip in new[] { zeroingAnalysisFrontSightText, zeroingAnalysisRearSightText,
+                zeroingAnalysisSuggestionText, zeroingAnalysisPreviewText })
+                if (tip != null) tip.gameObject.SetActive(showHelp);
+            if (zeroingAnalysisHelpButton != null)
+            {
+                zeroingAnalysisHelpButton.gameObject.SetActive(!zeroingAnalysisSpreadRejected && !showAnswer);
+                SetButtonLabel(zeroingAnalysisHelpButton, showHelp ? "收起帮助" : "帮助");
+            }
+            if (zeroingAnalysisAnswerButton != null) zeroingAnalysisAnswerButton.gameObject.SetActive(!zeroingAnalysisSpreadRejected && !showHelp);
+            if (zeroingAnalysisAnswerPanel != null) zeroingAnalysisAnswerPanel.gameObject.SetActive(showAnswer);
+        }
+
+        void BuildZeroingFinalRating(RectTransform parent)
+        {
+            AddPanel(parent, "Placeholder_ZeroingFinalRating_Range", DrawioMin(35, 45, 730, 500), DrawioMax(35, 45, 730, 500), new Color32(5, 13, 23, 230), new Color32(73, 107, 90, 255));
+            AddPanel(parent, "Panel_ZeroingFinalRating_Panel", DrawioMin(130, 85, 540, 390), DrawioMax(130, 85, 540, 390), new Color32(11, 19, 16, 235), new Color32(45, 156, 255, 255));
+            AddLabel(parent, "Text_ZeroingFinalRating_Title", "100m射校 训练结算", 38, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(205, 98, 390, 48), DrawioMax(205, 98, 390, 48), new Color32(231, 242, 235, 255));
+
+            AddPanel(parent, "Panel_ZeroingFinalRating_Grade", DrawioMin(165, 160, 150, 120), DrawioMax(165, 160, 150, 120), new Color32(17, 29, 24, 230), new Color32(247, 185, 85, 255));
+            zeroingFinalGradeText = AddLabel(parent, "Text_ZeroingFinalRating_Grade", "--", 56, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(172, 182, 136, 76), DrawioMax(172, 182, 136, 76), new Color32(247, 185, 85, 255));
+
+            var rounds = AddPanel(parent, "Panel_ZeroingFinalRating_Rounds", DrawioMin(345, 150, 270, 140), DrawioMax(345, 150, 270, 140), new Color32(17, 29, 24, 225), new Color32(56, 84, 71, 255));
+            zeroingFinalRoundsText = AddLabel(rounds, "Text_ZeroingFinalRating_Rounds", "三轮射击记录", 22, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(28, 24), new Vector2(620, 230), new Color32(231, 242, 235, 255));
+            zeroingFinalRoundsText.enableAutoSizing = true;
+            zeroingFinalRoundsText.fontSizeMin = 10;
+            zeroingFinalRoundsText.fontSizeMax = 22;
+
+            var thumbs = AddPanel(parent, "Placeholder_ZeroingFinalRating_ImpactThumbnails", DrawioMin(345, 310, 270, 70), DrawioMax(345, 310, 270, 70), new Color32(17, 29, 24, 210), new Color32(73, 107, 90, 255));
+            zeroingFinalThumbnailsText = AddLabel(thumbs, "Text_ZeroingFinalRating_ImpactThumbnails", "三轮弹着分布", 16, FontStyles.Normal, TextAlignmentOptions.Left, new Vector2(365, 16), new Vector2(628, 108), new Color32(143, 217, 255, 255));
+            for (var round = 0; round < 3; round++)
+            {
+                var plotRect = CreateRect("Image_ZeroingFinalRating_Target_Round" + (round + 1), thumbs, Vector2.zero, Vector2.zero,
+                    new Vector2(24 + round * 112, 16), new Vector2(120 + round * 112, 112));
+                var plot = plotRect.gameObject.AddComponent<TacticalTargetPlot>();
+                plot.raycastTarget = false;
+                finalTargetPlots.Add(plot);
+                AddTestId(plotRect.gameObject, plotRect.name);
+            }
+
+            finalRetryButton = AddButton(parent, "Button_ZeroingFinalRating_Retry", "重新训练", DrawioMin(270, 415, 110, 38), DrawioMax(270, 415, 110, 38), true);
+            finalBackToModeSelectionButton = AddButton(parent, "Button_ZeroingFinalRating_BackToModeSelection", "返回模式选择", DrawioMin(405, 415, 130, 38), DrawioMax(405, 415, 130, 38), false);
+            finalBackToModeSelectionButton.onClick.AddListener(OnFinalBackToModeSelectionClicked);
+        }
+
+        void BuildAnalysisTargetDiagram(RectTransform parent)
+        {
+            var center = new Vector2(204f, 190f);
+            var face = CreateRect("Image_ZeroingImpactAnalysis_Target", parent, Vector2.zero, Vector2.zero,
+                center - Vector2.one * 127.5f, center + Vector2.one * 127.5f);
+            face.gameObject.AddComponent<TacticalTargetPlot>().raycastTarget = false;
+            AddTestId(face.gameObject, face.name);
+
+            AddLabel(parent, "Text_ZeroingImpactAnalysis_TargetCenter", "10环", 18, FontStyles.Bold, TextAlignmentOptions.Center, center - new Vector2(50, 24), center + new Vector2(50, 24), new Color32(7, 16, 13, 255));
+            zeroingImpactDots.Clear();
+            zeroingMissLabels.Clear();
+            for (var i = 0; i < ZeroingRules.ShotsPerRound; i++)
+            {
+                var dot = CreateRect("Image_ZeroingImpactAnalysis_Impact_" + (i + 1), parent, Vector2.zero, Vector2.zero, center - new Vector2(9, 9), center + new Vector2(9, 9));
+                AddTestId(dot.gameObject, dot.gameObject.name);
+                AddImage(dot.gameObject, new Color32(255, 92, 68, 255));
+                var outline = dot.gameObject.AddComponent<Outline>();
+                outline.effectColor = new Color32(255, 225, 160, 255);
+                outline.effectDistance = new Vector2(2f, -2f);
+                zeroingImpactDots.Add(dot);
+                var missed = AddLabel(dot, "Text_ZeroingImpactAnalysis_Missed_" + (i + 1), "脱靶", 14,
+                    FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(16, -4), new Vector2(70, 24), new Color32(190, 190, 190, 255));
+                missed.gameObject.SetActive(false);
+                zeroingMissLabels.Add(missed.gameObject);
+                dot.gameObject.SetActive(false);
+            }
+            zeroingAverageCenter = CreateRect("Image_ZeroingImpactAnalysis_AverageCenter", parent, Vector2.zero, Vector2.zero, center - new Vector2(7, 7), center + new Vector2(7, 7));
+            AddTestId(zeroingAverageCenter.gameObject, zeroingAverageCenter.gameObject.name);
+            AddImage(zeroingAverageCenter.gameObject, new Color32(255, 210, 66, 255));
+            var averageOutline = zeroingAverageCenter.gameObject.AddComponent<Outline>();
+            averageOutline.effectColor = new Color32(7, 16, 13, 255);
+            averageOutline.effectDistance = new Vector2(2f, -2f);
+            zeroingAverageCenter.gameObject.SetActive(false);
+            zeroingAdjustedCenter = CreateRect("Image_ZeroingImpactAnalysis_AdjustedCenter", parent, Vector2.zero, Vector2.zero, center - new Vector2(12, 12), center + new Vector2(12, 12));
+            AddTestId(zeroingAdjustedCenter.gameObject, zeroingAdjustedCenter.gameObject.name);
+            AddImage(zeroingAdjustedCenter.gameObject, new Color32(77, 213, 255, 245));
+            var adjustedOutline = zeroingAdjustedCenter.gameObject.AddComponent<Outline>();
+            adjustedOutline.effectColor = new Color32(7, 16, 13, 255);
+            adjustedOutline.effectDistance = new Vector2(3f, -3f);
+            zeroingAdjustedCenter.gameObject.SetActive(false);
+        }
+
+        void BuildHudTargetPlaceholder(RectTransform parent)
+        {
+            var target = CreateRect("Placeholder_ZeroingHud_TargetPaper", parent, Vector2.zero, Vector2.zero, new Vector2(65, 105), new Vector2(345, 395));
+            AddTestId(target.gameObject, "Placeholder_ZeroingHud_TargetPaper");
+            hudTargetPlot = target.gameObject.AddComponent<TacticalTargetPlot>();
+            hudTargetPlot.raycastTarget = false;
+        }
+
+        void OnOpenZeroingClicked()
+        {
+            LastError = string.Empty;
+            var presentation = services.Presentation.Enter(TrainingMode.Zeroing100m);
+            if (!presentation.Success)
+            {
+                LastError = presentation.Message;
+                return;
+            }
+
+            var result = services.Router.HandleUIEvent(UIEventId.MainMenu_OpenZeroing, ScreenId.MainMenu);
+            if (!result.Success)
+            {
+                LastError = result.Message;
+            }
+        }
+
+        void OnOpenMovingTargetClicked()
+        {
+            LastError = string.Empty;
+
+            var presentation = services.Presentation.Enter(TrainingMode.MovingTarget);
+            if (!presentation.Success)
+            {
+                LastError = presentation.Message;
+                return;
+            }
+
+            var result = services.Router.HandleUIEvent(UIEventId.MainMenu_OpenMovingTarget, ScreenId.MainMenu);
+            if (!result.Success)
+            {
+                LastError = result.Message;
+                return;
+            }
+
+            var gameMain = GameMain.Instance;
+            if (gameMain?.GameState != null)
+            {
+                gameMain.GameState.ChangeState(GameState.InGame, GameStateManager.MovingTargetSceneName);
+            }
+        }
+
+        void OnStartZeroingClicked()
+        {
+            LastError = string.Empty;
+
+            var currentPresentation = services.Presentation.Get(string.Empty);
+            if (!currentPresentation.Success)
+            {
+                var entered = services.Presentation.Enter(TrainingMode.Zeroing100m);
+                if (!entered.Success)
+                {
+                    LastError = entered.Message;
+                    return;
+                }
+            }
+
+            var zeroingSession = services.Zeroing.StartSession(RandomSeed.CreateRandom(), ZeroingWeaponId);
+            if (!zeroingSession.Success)
+            {
+                LastError = zeroingSession.Message;
+                return;
+            }
+
+            var presentation = services.Presentation.ConfirmStart(zeroingSession.Data.SessionId);
+            if (!presentation.Success)
+            {
+                LastError = presentation.Message;
+                return;
+            }
+
+            var gameMain = GameMain.Instance;
+            if (gameMain?.GameState != null)
+            {
+                gameMain.GameState.ChangeState(GameState.InGame, GameStateManager.ZeroingRangeSceneName);
+            }
+        }
+
+        void OnBackClicked()
+        {
+            var result = services.Router.HandleUIEvent(UIEventId.Common_Back, ScreenId.ZeroingBriefing);
+            if (!result.Success)
+            {
+                LastError = result.Message;
+                return;
+            }
+
+            services.Presentation.Exit(services.TrainingSessions.HasActiveSession
+                ? services.TrainingSessions.Current.SessionId
+                : string.Empty);
+        }
+
+        void ShowScreen(ScreenId screen)
+        {
+            if (screen != ActiveScreen)
+                SetZeroingInfoPanel(ZeroingInfoPanel.None);
+            ActiveScreen = screen;
+            if (screen != ScreenId.MainMenu && mainMenuControlsPanel != null)
+                mainMenuControlsPanel.gameObject.SetActive(false);
+            if (mainMenuScreen != null)
+            {
+                mainMenuScreen.gameObject.SetActive(screen == ScreenId.MainMenu);
+            }
+
+            if (zeroingBriefingScreen != null)
+            {
+                zeroingBriefingScreen.gameObject.SetActive(screen == ScreenId.ZeroingBriefing);
+            }
+
+            if (zeroingPickupScreen != null)
+            {
+                zeroingPickupScreen.gameObject.SetActive(screen == ScreenId.ZeroingBriefing);
+            }
+
+            if (zeroingHudScreen != null)
+            {
+                zeroingHudScreen.gameObject.SetActive(screen == ScreenId.ZeroingHud);
+            }
+
+            if (zeroingImpactAnalysisScreen != null)
+            {
+                zeroingImpactAnalysisScreen.gameObject.SetActive(screen == ScreenId.ZeroingImpactAnalysis);
+            }
+
+            if (zeroingFinalRatingScreen != null)
+            {
+                zeroingFinalRatingScreen.gameObject.SetActive(screen == ScreenId.ZeroingFinalRating);
+            }
+
+            if (screen == ScreenId.ZeroingHud)
+            {
+                RefreshHud();
+            }
+
+            if (screen == ScreenId.ZeroingImpactAnalysis)
+            {
+                RefreshImpactAnalysis();
+            }
+
+            if (screen == ScreenId.ZeroingFinalRating)
+            {
+                RefreshFinalRating();
+            }
+        }
+
+        void OnZeroingRoundCompleted(ZeroingRoundCompletedEvent evt)
+        {
+            if (services == null || !services.TrainingSessions.HasActiveSession || services.TrainingSessions.Current.SessionId != evt.SessionId)
+            {
+                return;
+            }
+
+            if (services.Router.Current != ScreenId.ZeroingHud)
+            {
+                return;
+            }
+
+            var route = services.Router.Open(ScreenId.ZeroingImpactAnalysis, new NavigationArgs
+            {
+                Mode = TrainingMode.Zeroing100m,
+                SessionId = evt.SessionId,
+                ReturnToScreen = ScreenId.ZeroingHud.ToString()
+            });
+            if (!route.Success)
+            {
+                LastError = route.Message;
+                return;
+            }
+        }
+
+        void RefreshHud()
+        {
+            if (services == null || !services.TrainingSessions.HasActiveSession)
+            {
+                return;
+            }
+
+            var result = services.Hud.GetHud(services.TrainingSessions.Current.SessionId);
+            if (result.Success)
+            {
+                RenderHud(result.Data);
+            }
+        }
+
+        void RenderHud(HudDto hud)
+        {
+            if (hud.HudType != HudType.Zeroing)
+            {
+                return;
+            }
+
+            var round = FindLine(hud, "round");
+            var distance = FindLine(hud, "distance");
+            var ammo = FindLine(hud, "ammo");
+            var stability = FindLine(hud, "stability");
+            var impactRecord = FindLine(hud, "impactRecord");
+            var shoulder = FindLine(hud, "shoulder");
+            var rearSight = FindLine(hud, "rearSight");
+            var frontSight = FindLine(hud, "frontSight");
+
+            SetLabel(zeroingRoundText, round, "轮次 --/--");
+            SetLabel(zeroingDistanceText, distance, "距离 --");
+            SetLabel(zeroingAmmoText, ammo, "弹数 --/--");
+            SetLabel(zeroingStabilityText, stability, "--", false);
+            SetLabel(zeroingImpactRecordText, impactRecord, "弹着记录待同步", false);
+            SetLabel(zeroingShoulderText, shoulder, "肩侧 --");
+            if (zeroingSightText != null) zeroingSightText.text = "觇孔：" + rearSight.Value + "\n准心柱：" + frontSight.Value;
+
+            var ratio = ParsePercent01(stability.Value);
+            if (zeroingStabilityFill != null)
+            {
+                zeroingStabilityFill.anchorMax = new Vector2(ratio, 1f);
+            }
+
+            var prompt = hud.Prompts != null && hud.Prompts.Count > 0 ? hud.Prompts[0].Text : (hud.CanShoot ? "稳定据枪" : "禁止射击");
+            if (zeroingPromptText != null)
+            {
+                zeroingPromptText.text = prompt;
+                zeroingPromptText.color = hud.CanShoot ? new Color32(232, 249, 255, 255) : new Color32(255, 225, 180, 255);
+            }
+
+            if (zeroingPromptBackground != null)
+            {
+                zeroingPromptBackground.color = zeroingPromptBackground.sprite != null
+                    ? (hud.CanShoot ? Color.white : new Color32(255, 120, 92, 255))
+                    : (hud.CanShoot ? new Color32(200, 255, 106, 230) : new Color32(50, 28, 24, 230));
+            }
+        }
+
+        void RefreshImpactAnalysis()
+        {
+            if (services == null || !services.TrainingSessions.HasActiveSession)
+            {
+                return;
+            }
+
+            var result = services.Zeroing.CompleteRound(services.TrainingSessions.Current.SessionId);
+            if (!result.Success)
+            {
+                LastError = result.Message;
+                return;
+            }
+
+            RenderImpactAnalysis(result.Data);
+        }
+
+        void RenderImpactAnalysis(ZeroingRoundAnalysisDto analysis)
+        {
+            zeroingAnalysisSpreadRejected = analysis.SpreadRejected;
+            if (zeroingAnalysisSpreadRejected) SetZeroingInfoPanel(ZeroingInfoPanel.None);
+            else SetZeroingInfoPanel(zeroingInfoPanel);
+            if (impactBackToMainMenuButton != null) impactBackToMainMenuButton.gameObject.SetActive(!analysis.SpreadRejected);
+            if (zeroingAnalysisCoordinatesText != null)
+                zeroingAnalysisCoordinatesText.text = analysis.SpreadRejected
+                    ? "弹着点过于分散，本次射击无参考价值，不可用于调整，请进行下一轮。\n" + FormatImpactDots(analysis)
+                    : "红：弹着点（横向向右，纵向向上）\n" + FormatImpactDots(analysis) + "\n" + FormatReferencePoints(analysis);
+            if (zeroingAnalysisSuggestionText != null)
+                zeroingAnalysisSuggestionText.text = "本轮建议（估算）：" + FormatSuggestion(analysis) +
+                    "\n\n觇孔每次调整1格，1格为2厘米；准心柱每次调整5度约0.32厘米。实际待应用量以控件和答案为准。";
+            SetAnalysisText(zeroingAnalysisFrontSightText, "准心柱", FormatMechanicalCorrection(analysis.CurrentAdjustment.FrontSightDegrees, "顺时针", "逆时针", "°", "0"));
+            SetAnalysisText(zeroingAnalysisRearSightText, "觇孔", FormatMechanicalCorrection(analysis.CurrentAdjustment.RearSightClicks, "向前", "向后", " 格", "0"));
+            if (zeroingAnalysisAnswerText != null) zeroingAnalysisAnswerText.text = FormatAnswer(analysis);
+            if (zeroingAnalysisCorrectionXText != null)
+                zeroingAnalysisCorrectionXText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.x / ZeroingRules.CmPerRearSightClick, "向前", "向后", "格", "0");
+            if (zeroingAnalysisCorrectionYText != null)
+                zeroingAnalysisCorrectionYText.text = FormatMechanicalCorrection(analysis.ProposedCorrectionCm.y / ZeroingRules.CmPerFrontSightDegree, "顺时针", "逆时针", "°", "0");
+            if (zeroingAnalysisPreviewText != null)
+                zeroingAnalysisPreviewText.text = "计算集均值(黄) / 当前补偿(蓝) " + FormatCorrectionPair(analysis.ProposedCorrectionCm) + " · 按住连续调节";
+            if (zeroingAnalysisAppliedText != null)
+            {
+                zeroingAnalysisAppliedText.text = analysis.SpreadRejected ? "弹着分散，请进行下一轮" : analysis.PassedTenRing
+                    ? (analysis.AdjustmentApplied ? "调整已应用 · 本轮通过" : "本轮通过")
+                    : (analysis.AdjustmentApplied ? "调整已应用 · 未通过" : "应用后均值距靶心小于5cm可通过");
+                zeroingAnalysisAppliedText.color = analysis.AdjustmentApplied
+                    ? new Color32(200, 255, 106, 255)
+                    : new Color32(143, 217, 255, 255);
+            }
+
+            if (applyAdjustmentButton != null)
+            {
+                SetAnalysisButtonEnabled(applyAdjustmentButton, !analysis.AdjustmentApplied && !analysis.SpreadRejected && !analysis.PassedTenRing);
+                var label = applyAdjustmentButton.GetComponentInChildren<TextMeshProUGUI>(true);
+                if (label != null)
+                {
+                    label.text = analysis.AdjustmentApplied ? "已应用" : "应用调整";
+                }
+            }
+
+            foreach (var button in zeroingAdjustmentButtons)
+                SetAnalysisButtonEnabled(button, !analysis.AdjustmentApplied && !analysis.SpreadRejected && !analysis.PassedTenRing);
+
+            if (nextRoundButton != null)
+            {
+                nextRoundButton.interactable = analysis.FinalResultAvailable || analysis.AdjustmentApplied || analysis.SpreadRejected;
+                SetButtonLabel(nextRoundButton, ResolveImpactPrimaryActionLabel(analysis));
+            }
+
+            RenderImpactDots(analysis);
+        }
+
+        void SetAnalysisButtonEnabled(Button button, bool enabled)
+        {
+            var graphic = button.targetGraphic;
+            var label = button.GetComponentInChildren<TextMeshProUGUI>(true);
+            if (graphic != null && !zeroingButtonGraphicColors.ContainsKey(button)) zeroingButtonGraphicColors[button] = graphic.color;
+            if (label != null && !zeroingButtonTextColors.ContainsKey(button)) zeroingButtonTextColors[button] = label.color;
+            button.interactable = enabled;
+            if (graphic != null) graphic.color = enabled ? zeroingButtonGraphicColors[button] : new Color32(100, 100, 100, 180);
+            if (label != null) label.color = enabled ? zeroingButtonTextColors[button] : new Color32(145, 145, 145, 255);
+        }
+
+        void RenderImpactDots(ZeroingRoundAnalysisDto analysis)
+        {
+            var targetRegion = new Rect(76.5f, 62.5f, 255f, 255f);
+            for (var i = 0; i < zeroingImpactDots.Count; i++)
+            {
+                var recorded = analysis.Shots != null && i < analysis.Shots.Count;
+                zeroingImpactDots[i].gameObject.SetActive(recorded);
+                var onTarget = recorded && !analysis.Shots[i].MissedTargetPlane && TacticalTargetPlot.IsOnTarget(analysis.Shots[i].ImpactPointCm);
+                zeroingMissLabels[i].SetActive(recorded && !onTarget);
+                var image = zeroingImpactDots[i].GetComponent<Image>();
+                image.color = !onTarget ? new Color32(100, 100, 100, 255) : new Color32(255, 92, 68, 255);
+                var outline = zeroingImpactDots[i].GetComponent<Outline>();
+                outline.effectColor = !onTarget ? new Color32(200, 200, 200, 255) : new Color32(255, 225, 160, 255);
+                if (!recorded) continue;
+
+                // A non-projectable shot has no meaningful face coordinate. Place its
+                // labelled marker in a separate strip, never at a fabricated target point.
+                var pos = onTarget
+                    ? TacticalTargetPlot.MapImpactPointCm(targetRegion, analysis.Shots[i].ImpactPointCm)
+                    : new Vector2(targetRegion.xMin + 20f + i * 60f, targetRegion.yMin - 20f);
+                zeroingImpactDots[i].offsetMin = pos - new Vector2(9f, 9f);
+                zeroingImpactDots[i].offsetMax = pos + new Vector2(9f, 9f);
+            }
+            if (zeroingAverageCenter != null)
+            {
+                var average = analysis.AverageOffsetCm;
+                var pos = TacticalTargetPlot.MapImpactPointCm(targetRegion, average);
+                zeroingAverageCenter.offsetMin = pos - new Vector2(4f, 4f);
+                zeroingAverageCenter.offsetMax = pos + new Vector2(4f, 4f);
+                zeroingAverageCenter.gameObject.SetActive(analysis.CalculationSetAvailable && TacticalTargetPlot.IsOnTarget(average));
+            }
+            if (zeroingAdjustedCenter != null)
+            {
+                var preview = analysis.ProposedCorrectionCm;
+                var pos = TacticalTargetPlot.MapImpactPointCm(targetRegion, preview);
+                zeroingAdjustedCenter.sizeDelta = new Vector2(8f, 8f);
+                zeroingAdjustedCenter.anchoredPosition = pos;
+                zeroingAdjustedCenter.gameObject.SetActive(!analysis.SpreadRejected && TacticalTargetPlot.IsOnTarget(preview));
+            }
+        }
+
+        void OnAdjustImpactPoint(ZeroingAdjustmentAxis axis, int direction)
+        {
+            if (services == null || !services.TrainingSessions.HasActiveSession)
+                return;
+            var sessionId = services.TrainingSessions.Current.SessionId;
+            var analysis = services.Zeroing.CompleteRound(sessionId);
+            if (!analysis.Success)
+            {
+                LastError = analysis.Message;
+                return;
+            }
+            var adjusted = services.Zeroing.AdjustImpactPoint(sessionId, analysis.Data.RoundIndex, axis, direction);
+            if (!adjusted.Success)
+            {
+                LastError = adjusted.Message;
+                return;
+            }
+            RenderImpactAnalysis(adjusted.Data);
+        }
+
+        void OnApplyAdjustmentClicked()
+        {
+            if (!services.TrainingSessions.HasActiveSession)
+            {
+                return;
+            }
+
+            var analysis = services.Zeroing.CompleteRound(services.TrainingSessions.Current.SessionId);
+            if (!analysis.Success)
+            {
+                LastError = analysis.Message;
+                return;
+            }
+
+            var applied = services.Zeroing.ApplyAdjustment(analysis.Data.SessionId, analysis.Data.RoundIndex);
+            if (!applied.Success)
+            {
+                LastError = applied.Message;
+                return;
+            }
+
+            services.Router.HandleUIEvent(UIEventId.Zeroing_ApplyAdjustment, ScreenId.ZeroingImpactAnalysis);
+            RenderImpactAnalysis(applied.Data);
+        }
+
+        void OnImpactBackToMainMenuClicked()
+        {
+            var sessionId = services.TrainingSessions.HasActiveSession
+                ? services.TrainingSessions.Current.SessionId
+                : string.Empty;
+            EndCurrentSession(SessionEndReason.Cancelled);
+            var route = services.Router.HandleUIEvent(UIEventId.Zeroing_BackToMainMenu, ScreenId.ZeroingImpactAnalysis, new NavigationArgs
+            {
+                ReturnToScreen = ScreenId.MainMenu.ToString()
+            });
+
+            if (!route.Success)
+            {
+                LastError = route.Message;
+                return;
+            }
+
+            services.Presentation.Exit(sessionId);
+            ReturnToMainSceneIfNeeded();
+        }
+
+        void RefreshFinalRating()
+        {
+            if (services == null || !services.TrainingSessions.HasActiveSession)
+            {
+                return;
+            }
+
+            var result = services.Zeroing.GetFinalResult(services.TrainingSessions.Current.SessionId);
+            if (!result.Success)
+            {
+                LastError = result.Message;
+                return;
+            }
+
+            RenderFinalRating(result.Data);
+        }
+
+        void RenderFinalRating(ZeroingResultDto result)
+        {
+            for (var round = 0; round < finalTargetPlots.Count; round++)
+            {
+                var analysis = FindAnalysis(result, round + 1);
+                var points = new List<Vector2>();
+                if (analysis.HasValue && analysis.Value.Shots != null)
+                    foreach (var shot in analysis.Value.Shots)
+                        if (!shot.MissedTargetPlane && TacticalTargetPlot.IsOnTarget(shot.ImpactPointCm)) points.Add(shot.ImpactPointCm);
+                finalTargetPlots[round].SetImpacts(points, analysis.HasValue ? analysis.Value.DiscardedShotIndex : -1);
+                var hasHits = analysis.HasValue && HasProjectedShots(analysis.Value);
+                finalTargetPlots[round].SetReferencePoints(analysis.HasValue && analysis.Value.CalculationSetAvailable ? (Vector2?)analysis.Value.AverageOffsetCm : null,
+                    analysis.HasValue && !analysis.Value.SpreadRejected ? (Vector2?)analysis.Value.ProposedCorrectionCm : null);
+            }
+            if (zeroingFinalGradeText != null)
+            {
+                zeroingFinalGradeText.text = FormatGrade(result.Grade);
+            }
+
+            if (zeroingFinalRoundsText != null)
+            {
+                zeroingFinalRoundsText.text = FormatRoundRecords(result);
+            }
+
+            if (zeroingFinalThumbnailsText != null)
+            {
+                zeroingFinalThumbnailsText.text = FormatThumbnailSummary(result);
+            }
+        }
+
+        void OnFinalBackToModeSelectionClicked()
+        {
+            var sessionId = services.TrainingSessions.HasActiveSession
+                ? services.TrainingSessions.Current.SessionId
+                : string.Empty;
+            EndCurrentSession(SessionEndReason.Completed);
+            var route = services.Router.HandleUIEvent(UIEventId.Zeroing_BackToModeSelection, ScreenId.ZeroingFinalRating, new NavigationArgs
+            {
+                ReturnToScreen = ScreenId.MainMenu.ToString()
+            });
+
+            if (!route.Success)
+            {
+                LastError = route.Message;
+                return;
+            }
+
+            services.Presentation.Exit(sessionId);
+            ReturnToMainSceneIfNeeded();
+        }
+
+        void ReturnToMainSceneIfNeeded()
+        {
+            if (transform.parent != null)
+            {
+                return;
+            }
+
+            if (SceneManager.GetActiveScene().name != "ZeroingRangeScene")
+            {
+                return;
+            }
+
+            var gameMain = GameMain.Instance;
+            if (gameMain?.GameState != null)
+            {
+                gameMain.GameState.ChangeState(GameState.MainMenu);
+            }
+        }
+
+        void EndCurrentSession(SessionEndReason reason)
+        {
+            if (services == null || !services.TrainingSessions.HasActiveSession)
+            {
+                return;
+            }
+
+            var result = services.TrainingSessions.End(services.TrainingSessions.Current.SessionId, reason);
+            if (!result.Success)
+            {
+                LastError = result.Message;
+            }
+        }
+
+        static void SetButtonLabel(Button button, string text)
+        {
+            var label = button != null ? button.GetComponentInChildren<TextMeshProUGUI>(true) : null;
+            if (label != null)
+            {
+                label.text = text;
+            }
+        }
+
+        static string ResolveImpactPrimaryActionLabel(ZeroingRoundAnalysisDto analysis)
+        {
+            return analysis.FinalResultAvailable || analysis.PassedTenRing ? "查看评级" : "进入下一轮";
+        }
+
+        static string FormatGrade(ResultGrade grade)
+        {
+            switch (grade)
+            {
+                case ResultGrade.Excellent:
+                    return "优秀";
+                case ResultGrade.Good:
+                    return "良好";
+                case ResultGrade.Pass:
+                    return "及格";
+                case ResultGrade.Fail:
+                    return "不及格";
+                default:
+                    return "未评级";
+            }
+        }
+
+        static string FormatRoundRecords(ZeroingResultDto result)
+        {
+            var lines = new List<string> { "三轮射击记录" };
+            for (var round = 1; round <= 3; round++)
+            {
+                var analysis = FindAnalysis(result, round);
+                if (!analysis.HasValue)
+                {
+                    lines.Add("第" + round + "轮：未使用");
+                    continue;
+                }
+
+                var shots = analysis.Value.Shots != null ? analysis.Value.Shots.Count : 0;
+                lines.Add("第" + round + "轮：" + shots + "发 " + FormatImpactDots(analysis.Value) + "\n" + FormatReferencePoints(analysis.Value));
+            }
+
+            return string.Join("\n", lines);
+        }
+
+        static string FormatThumbnailSummary(ZeroingResultDto result)
+        {
+            var lines = new List<string>();
+            for (var round = 1; round <= 3; round++)
+            {
+                var analysis = FindAnalysis(result, round);
+                if (!analysis.HasValue)
+                {
+                    continue;
+                }
+
+                lines.Add("第" + round + "轮：" + (analysis.Value.Shots?.Count ?? 0) + "发 · " + (analysis.Value.PassedTenRing ? "通过" : "未通过"));
+            }
+
+            return lines.Count == 0 ? "暂无弹着记录" : string.Join("\n", lines);
+        }
+
+        static string FormatImpactDots(ZeroingRoundAnalysisDto analysis)
+        {
+            if (analysis.Shots == null || analysis.Shots.Count == 0)
+            {
+                return "暂无";
+            }
+
+            var parts = new List<string>();
+            for (var i = 0; i < analysis.Shots.Count; i++)
+            {
+                parts.Add("#" + analysis.Shots[i].ShotIndex + " " +
+                    (analysis.Shots[i].MissedTargetPlane || !TacticalTargetPlot.IsOnTarget(analysis.Shots[i].ImpactPointCm) ? "未命中靶面" : FormatOffsetPair(analysis.Shots[i].ImpactPointCm)));
+            }
+
+            return string.Join("；", parts);
+        }
+
+        static string FormatReferencePoints(ZeroingRoundAnalysisDto analysis)
+        {
+            if (!HasProjectedShots(analysis)) return "无有效命中，无法计算平均点";
+            return "计算集均值(黄) " + FormatOffsetPair(analysis.AverageOffsetCm) + "\n当前补偿(蓝) " + FormatOffsetPair(analysis.ProposedCorrectionCm);
+        }
+
+        static ZeroingRoundAnalysisDto? FindAnalysis(ZeroingResultDto result, int round)
+        {
+            if (result.Rounds == null)
+            {
+                return null;
+            }
+
+            for (var i = 0; i < result.Rounds.Count; i++)
+            {
+                if (result.Rounds[i].RoundIndex == round)
+                {
+                    return result.Rounds[i];
+                }
+            }
+
+            return null;
+        }
+
+        static string FormatCorrectionPair(Vector2 offset)
+        {
+            return "(" + offset.x.ToString("0.##", CultureInfo.InvariantCulture) + "cm, "
+                + offset.y.ToString("0.##", CultureInfo.InvariantCulture) + "cm)";
+        }
+
+        static string FormatOffsetPair(Vector2 offset)
+        {
+            return "(" + offset.x.ToString("0.#", CultureInfo.InvariantCulture) + "cm, "
+                + offset.y.ToString("0.#", CultureInfo.InvariantCulture) + "cm)";
+        }
+
+        static HudTextLineDto FindLine(HudDto hud, string key)
+        {
+            if (hud.TextLines == null)
+            {
+                return default;
+            }
+
+            for (var i = 0; i < hud.TextLines.Count; i++)
+            {
+                if (hud.TextLines[i].Key == key)
+                {
+                    return hud.TextLines[i];
+                }
+            }
+
+            return default;
+        }
+
+        static Vector2 DrawioMin(float x, float y, float width, float height)
+        {
+            return new Vector2(x * 2.4f, 1080f - (y + height) * 1.8f);
+        }
+
+        static Vector2 DrawioMax(float x, float y, float width, float height)
+        {
+            return new Vector2((x + width) * 2.4f, 1080f - y * 1.8f);
+        }
+
+        static void SetAnalysisText(TextMeshProUGUI label, string name, string value)
+        {
+            if (label != null)
+            {
+                label.text = name + "：" + value;
+            }
+        }
+
+        static string FormatVerticalOffset(float y)
+        {
+            if (Mathf.Abs(y) < 0.01f)
+            {
+                return "居中 0cm";
+            }
+
+            return (y > 0f ? "偏上 " : "偏下 ") + FormatCm(y);
+        }
+
+        static string FormatHorizontalOffset(float x)
+        {
+            if (Mathf.Abs(x) < 0.01f)
+            {
+                return "居中 0cm";
+            }
+
+            return (x < 0f ? "偏左 " : "偏右 ") + FormatCm(x);
+        }
+
+        static string FormatMechanicalCorrection(float value, string positive, string negative, string unit, string numberFormat = "0.#")
+        {
+            if (Mathf.Abs(value) < .001f) return "0" + unit;
+            return (value > 0 ? positive : negative) + " " + Mathf.Abs(value).ToString(numberFormat, CultureInfo.InvariantCulture) + unit;
+        }
+
+        static string FormatAnswer(ZeroingRoundAnalysisDto analysis)
+        {
+            var amount = analysis.ProposedAdjustment;
+            var passes = analysis.PredictedOffsetPasses;
+            return "当前固定偏移：" + FormatOffsetPair(analysis.FixedImpactOffsetCm) +
+                   "\n\n" + (analysis.AdjustmentApplied ? "已应用" : "待应用") + "调整：\n觇孔：" +
+                   FormatMechanicalCorrection(amount.RearSightClicks, "向前", "向后", " 格", "0") +
+                   "\n准心柱：" + FormatMechanicalCorrection(amount.FrontSightDegrees, "顺时针", "逆时针", "°", "0") +
+                   "\n\n调整后均值距靶心：" + analysis.PredictedOffsetMagnitudeCm.ToString("0.0000", CultureInfo.InvariantCulture) + " cm\n" +
+                   (analysis.PassedTenRing ? "本轮已通过" : passes ? "小于5cm，应用后通过" : "不小于5cm，尚未通过") +
+                   "\n\n评级：第1轮通过=优秀\n第2轮=良好，第3轮=及格";
+        }
+        static string FormatFrontSight(ZeroingRoundAnalysisDto analysis)
+        {
+            if (analysis.VerticalDirection == VerticalAdjustmentDirection.None)
+            {
+                return "无需调整";
+            }
+
+            var direction = analysis.VerticalDirection == VerticalAdjustmentDirection.CounterClockwise ? "逆时针" : "顺时针";
+            return direction + " " + analysis.FrontSightDegreesToAdjust.ToString("0", CultureInfo.InvariantCulture) + "°";
+        }
+
+        static string FormatRearSight(ZeroingRoundAnalysisDto analysis)
+        {
+            if (analysis.HorizontalDirection == HorizontalAdjustmentDirection.None)
+            {
+                return "无需调整";
+            }
+
+            var direction = analysis.HorizontalDirection == HorizontalAdjustmentDirection.Forward ? "向前" : "向后";
+            return direction + " " + analysis.RearSightClicksToAdjust.ToString(CultureInfo.InvariantCulture) + "格";
+        }
+
+        static string FormatSuggestion(ZeroingRoundAnalysisDto analysis)
+        {
+            if (!HasProjectedShots(analysis)) return "未形成有效靶面弹着，请重新对准靶标。";
+            if (analysis.VerticalDirection == VerticalAdjustmentDirection.None && analysis.HorizontalDirection == HorizontalAdjustmentDirection.None)
+            {
+                return "本轮弹着居中，应用确认后进入下一步。";
+            }
+
+            return FormatVerticalOffset(analysis.AverageOffsetCm.y) + "，准星柱" + FormatFrontSight(analysis) + "；"
+                + FormatHorizontalOffset(analysis.AverageOffsetCm.x) + "，觇孔" + FormatRearSight(analysis) + "。";
+        }
+
+        static bool HasProjectedShots(ZeroingRoundAnalysisDto analysis)
+        {
+            if (analysis.Shots != null)
+                foreach (var shot in analysis.Shots)
+                    if (!shot.MissedTargetPlane && TacticalTargetPlot.IsOnTarget(shot.ImpactPointCm)) return true;
+            return false;
+        }
+
+        static string FormatCm(float value)
+        {
+            return Mathf.Abs(value).ToString("0.#", CultureInfo.InvariantCulture) + "cm";
+        }
+
+        static string FormatSignedCm(float value)
+        {
+            return value.ToString("+0.#;-0.#;0", CultureInfo.InvariantCulture) + "cm";
+        }
+
+        static void SetLabel(TextMeshProUGUI label, HudTextLineDto line, string fallback, bool includeLabel = true)
+        {
+            if (label == null)
+            {
+                return;
+            }
+
+            if (string.IsNullOrEmpty(line.Key))
+            {
+                label.text = fallback;
+                return;
+            }
+
+            label.text = includeLabel ? line.Label + " " + line.Value : line.Value;
+        }
+
+        static float ParsePercent01(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return 1f;
+            }
+
+            var normalized = value.Trim().TrimEnd('%');
+            if (!float.TryParse(normalized, NumberStyles.Float, CultureInfo.InvariantCulture, out var percent))
+            {
+                return 1f;
+            }
+
+            return Mathf.Clamp01(percent / 100f);
+        }
+
+        static RectTransform CreateRect(string name, Transform parent, Vector2 anchorMin, Vector2 anchorMax, Vector2 offsetMin, Vector2 offsetMax)
+        {
+            var go = new GameObject(name, typeof(RectTransform));
+            go.transform.SetParent(parent, false);
+            var rect = go.GetComponent<RectTransform>();
+            rect.anchorMin = anchorMin;
+            rect.anchorMax = anchorMax;
+            rect.offsetMin = offsetMin;
+            rect.offsetMax = offsetMax;
+            return rect;
+        }
+
+        static Image AddImage(GameObject go, Color color)
+        {
+            var image = go.GetComponent<Image>();
+            if (image == null)
+            {
+                image = go.AddComponent<Image>();
+            }
+
+            image.color = color;
+            return image;
+        }
+
+        static void AddTestId(GameObject go, string id)
+        {
+            var testId = go.GetComponent<UITestId>();
+            if (testId == null)
+            {
+                testId = go.AddComponent<UITestId>();
+            }
+
+            testId.SetId(id);
+        }
+
+        static void OverrideTestId(GameObject go, string id)
+        {
+            AddTestId(go, id);
+        }
+
+        RectTransform AddPanel(RectTransform parent, string id, Vector2 min, Vector2 max, Color fill, Color stroke, string text = "")
+        {
+            var panel = CreateRect(id, parent, Vector2.zero, Vector2.zero, min, max);
+            var image = AddImage(panel.gameObject, fill);
+            AddTestId(panel.gameObject, id);
+
+            var panelSprite = ResolvePanelSprite(id, min, max);
+            if (panelSprite != null)
+            {
+                ApplySlicedSprite(image, panelSprite);
+            }
+            // BDD02: retain the heading's explicit panel fill/stroke with the resolved sprite.
+            if (id == "Panel_MainMenu_Menu")
+            {
+                image.color = fill;
+                image.raycastTarget = false;
+                var borderRect = CreateRect("Image_MainMenu_MenuBorder", panel, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+                var border = borderRect.gameObject.AddComponent<MainMenuHeadingBorderGraphic>();
+                border.color = stroke;
+                border.raycastTarget = false;
+            }
+            if (panelSprite == null || id == "Panel_MainMenu_Menu")
+            {
+                var outline = panel.gameObject.AddComponent<Outline>();
+                outline.effectColor = stroke;
+                outline.effectDistance = new Vector2(2f, -2f);
+            }
+
+            if (!string.IsNullOrEmpty(text))
+            {
+                var textId = id.StartsWith("Panel_", StringComparison.Ordinal)
+                    ? id.Replace("Panel_", "Text_")
+                    : "Text_" + id;
+                AddLabel(panel, textId, text, 20, FontStyles.Bold, TextAlignmentOptions.Left, new Vector2(20, 18), new Vector2(-20, -18), new Color32(231, 242, 235, 255), true);
+            }
+
+            return panel;
+        }
+
+        TextMeshProUGUI AddLabel(RectTransform parent, string id, string text, float size, FontStyles style, TextAlignmentOptions alignment, Vector2 min, Vector2 max, Color color, bool stretchOffsets = false)
+        {
+            var label = CreateRect(id, parent, stretchOffsets ? Vector2.zero : Vector2.zero, stretchOffsets ? Vector2.one : Vector2.zero, min, max);
+            AddTestId(label.gameObject, id);
+            var tmp = label.gameObject.AddComponent<TextMeshProUGUI>();
+            var resolvedFont = ResolveFontAsset();
+            if (resolvedFont != null)
+            {
+                tmp.font = resolvedFont;
+            }
+
+            tmp.text = text;
+            tmp.fontSize = size;
+            // Synthetic bold on dense CJK SDF atlases can create blocky white halos.
+            tmp.fontStyle = style & ~FontStyles.Bold;
+            tmp.fontWeight = FontWeight.Regular;
+            tmp.alignment = alignment;
+            tmp.color = color;
+            tmp.extraPadding = true;
+            ResetTextMaterialEffects(tmp);
+            tmp.enableWordWrapping = true;
+            tmp.overflowMode = TextOverflowModes.Ellipsis;
+            return tmp;
+        }
+
+        static void ResetTextMaterialEffects(TextMeshProUGUI tmp)
+        {
+            if (TacticalUITheme.Current != null && tmp.font == TacticalUITheme.Current.Font)
+            {
+                tmp.fontSharedMaterial = tmp.font.material;
+                return;
+            }
+            var sourceMaterial = tmp.fontSharedMaterial;
+            if (sourceMaterial == null)
+            {
+                return;
+            }
+
+            var material = new Material(sourceMaterial)
+            {
+                name = sourceMaterial.name + " TrainingUIClean"
+            };
+
+            if (material.HasProperty(ShaderUtilities.ID_OutlineWidth))
+            {
+                material.SetFloat(ShaderUtilities.ID_OutlineWidth, 0f);
+            }
+
+            if (material.HasProperty(ShaderUtilities.ID_UnderlayOffsetX))
+            {
+                material.SetFloat(ShaderUtilities.ID_UnderlayOffsetX, 0f);
+            }
+
+            if (material.HasProperty(ShaderUtilities.ID_UnderlayOffsetY))
+            {
+                material.SetFloat(ShaderUtilities.ID_UnderlayOffsetY, 0f);
+            }
+
+            if (material.HasProperty(ShaderUtilities.ID_UnderlayDilate))
+            {
+                material.SetFloat(ShaderUtilities.ID_UnderlayDilate, 0f);
+            }
+
+            if (material.HasProperty(ShaderUtilities.ID_UnderlaySoftness))
+            {
+                material.SetFloat(ShaderUtilities.ID_UnderlaySoftness, 0f);
+            }
+
+            material.DisableKeyword(ShaderUtilities.Keyword_Outline);
+            material.DisableKeyword(ShaderUtilities.Keyword_Underlay);
+            tmp.fontSharedMaterial = material;
+            tmp.outlineWidth = 0f;
+        }
+
+        TMP_FontAsset ResolveFontAsset()
+        {
+            var theme = TacticalUITheme.Current;
+            if (theme != null && theme.Font != null) return theme.Font;
+#if UNITY_EDITOR
+            if (fontAsset == null)
+            {
+                fontAsset = UnityEditor.AssetDatabase.LoadAssetAtPath<TMP_FontAsset>("Assets/VRShooting/Art/Fonts/MSYH SDF.asset");
+            }
+
+            if (fontAsset == null || fontAsset.atlasPadding < 4)
+            {
+                var generatedFont = ResolveGeneratedEditorFontAsset();
+                if (generatedFont != null)
+                {
+                    return generatedFont;
+                }
+            }
+#endif
+
+            if (fontAsset != null)
+            {
+                return fontAsset;
+            }
+
+            return null;
+        }
+
+#if UNITY_EDITOR
+        static TMP_FontAsset ResolveGeneratedEditorFontAsset()
+        {
+            if (generatedEditorFontAsset != null)
+            {
+                return generatedEditorFontAsset;
+            }
+
+            var sourceFont = UnityEditor.AssetDatabase.LoadAssetAtPath<Font>("Assets/VRShooting/Art/Fonts/MSYH.TTC");
+            if (sourceFont == null)
+            {
+                sourceFont = Font.CreateDynamicFontFromOSFont(new[]
+                {
+                    "Microsoft YaHei UI",
+                    "Microsoft YaHei",
+                    "SimHei",
+                    "Noto Sans CJK SC",
+                    "Arial Unicode MS"
+                }, 90);
+            }
+
+            if (sourceFont == null)
+            {
+                return null;
+            }
+
+            generatedEditorFontAsset = TMP_FontAsset.CreateFontAsset(
+                sourceFont,
+                90,
+                9,
+                GlyphRenderMode.SDFAA,
+                4096,
+                4096,
+                AtlasPopulationMode.Dynamic,
+                true);
+            generatedEditorFontAsset.name = "MSYH Runtime SDF";
+            generatedEditorFontAsset.atlasPopulationMode = AtlasPopulationMode.Dynamic;
+            return generatedEditorFontAsset;
+        }
+#endif
+
+        Button AddButton(RectTransform parent, string id, string label, Vector2 min, Vector2 max, bool primary)
+        {
+            var rect = CreateRect(id, parent, Vector2.zero, Vector2.zero, min, max);
+            AddTestId(rect.gameObject, id);
+            var image = AddImage(rect.gameObject, primary ? new Color32(200, 255, 106, 235) : new Color32(20, 37, 31, 235));
+            var normalSprite = LoadGeneratedSprite(primary ? "button_primary_orange" : "button_secondary_cyan");
+            if (normalSprite != null)
+            {
+                ApplySlicedSprite(image, normalSprite);
+                image.raycastTarget = true;
+            }
+            else
+            {
+                var outline = rect.gameObject.AddComponent<Outline>();
+                outline.effectColor = primary ? new Color32(247, 185, 85, 255) : new Color32(107, 138, 119, 255);
+                outline.effectDistance = new Vector2(2f, -2f);
+            }
+
+            var button = rect.gameObject.AddComponent<Button>();
+            button.targetGraphic = image;
+            if (normalSprite != null)
+            {
+                button.transition = Selectable.Transition.SpriteSwap;
+                button.spriteState = new SpriteState
+                {
+                    highlightedSprite = LoadGeneratedSprite(primary ? "button_primary_orange_highlighted" : "button_secondary_cyan_highlighted"),
+                    pressedSprite = LoadGeneratedSprite(primary ? "button_primary_orange_pressed" : "button_secondary_cyan_pressed"),
+                    selectedSprite = LoadGeneratedSprite(primary ? "button_primary_orange_highlighted" : "button_secondary_cyan_highlighted"),
+                    disabledSprite = normalSprite
+                };
+
+                var colors = button.colors;
+                colors.normalColor = Color.white;
+                colors.highlightedColor = Color.white;
+                colors.pressedColor = Color.white;
+                colors.selectedColor = Color.white;
+                colors.disabledColor = new Color(1f, 1f, 1f, 0.35f);
+                button.colors = colors;
+            }
+            else
+            {
+                var colors = button.colors;
+                colors.normalColor = image.color;
+                colors.highlightedColor = primary ? new Color32(220, 255, 150, 255) : new Color32(35, 62, 54, 255);
+                colors.pressedColor = primary ? new Color32(170, 220, 70, 255) : new Color32(10, 24, 20, 255);
+                button.colors = colors;
+            }
+
+            AddLabel(rect, id.Replace("Button_", "Text_"), label, 24, FontStyles.Bold, TextAlignmentOptions.Center, new Vector2(8, 8), new Vector2(-8, -8), primary ? new Color32(255, 202, 92, 255) : new Color32(231, 242, 235, 255), true);
+            return button;
+        }
+
+        static void DisableButton(Button button)
+        {
+            button.interactable = false;
+            var colors = button.colors;
+            colors.disabledColor = new Color32(20, 37, 31, 140);
+            button.colors = colors;
+        }
+
+        static void ClearChildren(Transform parent)
+        {
+            for (var i = parent.childCount - 1; i >= 0; i--)
+            {
+                var child = parent.GetChild(i);
+                if (UnityEngine.Application.isPlaying)
+                {
+                    Destroy(child.gameObject);
+                }
+                else
+                {
+                    DestroyImmediate(child.gameObject);
+                }
+            }
+        }
+    }
+}

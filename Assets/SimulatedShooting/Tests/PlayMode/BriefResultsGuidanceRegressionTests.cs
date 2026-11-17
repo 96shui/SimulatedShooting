@@ -1,3 +1,4 @@
+using VRShooting.Tests.PlayMode;
 using System.Collections;
 using System.Linq;
 using NUnit.Framework;
@@ -41,7 +42,7 @@ namespace SimulatedShooting.Tests.PlayMode
 
         [UnityTest] public IEnumerator Bdd04_BriefingUsesThePhysicalTargetTexture()
         {
-            Click("Button_MainMenu_OpenZeroing");
+            ModeIntroTestActions.EnterTraining(id => Ui(id).GetComponent<Button>());
             yield return null;
             var plot = Ui("Screen_ZeroingBriefing").GetComponentsInChildren<TacticalTargetPlot>(true).Single();
             Assert.That(Ui("Text_ZeroingBriefing_TargetSize").GetComponent<TMP_Text>().text, Is.EqualTo("50cm x 50cm"));
@@ -130,7 +131,7 @@ namespace SimulatedShooting.Tests.PlayMode
             yield return null;
             // The retained-scene path also exercises inactive targets before any scene unloading can hide the bug.
             if (surfaces.All(s=>s!=null)) AssertCleared(surfaces);
-            Click("Button_MainMenu_OpenZeroing");
+            ModeIntroTestActions.EnterTraining(id => Ui(id).GetComponent<Button>());
             yield return null;
             Click("Button_ZeroingBriefing_Start");
             yield return null;

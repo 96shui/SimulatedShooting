@@ -1,0 +1,69 @@
+{
+  "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs": {
+    "entry_sha256": "7b411601bb5ddf1d8b5646df67e2a2e452651c41791d259414b8e4f2e2654fb4",
+    "final_sha256": "2b0688deee122ac4e9df88c99af51c71c46e118476b0fba31a0efcd5cc389dd1"
+  },
+  "Assets/VRShooting/Tests/EditMode/Application/MainMenuControlsTests.cs": {
+    "entry_sha256": "1865580396ec8fbad6a7d22ce27c34c3bc4ad6a781b4a4d9386c71dbf82eb912",
+    "final_sha256": "d386db4c92b0a9151431195e48b81696b119af9fb7b139c1a17f496b257617e2",
+    "entry_testcase_attributes": [
+      "\n        [TestCase(\"Button_MainMenu_OpenZeroing\", 665f, 750f)]",
+      "        [TestCase(\"Button_MainMenu_OpenMovingTarget\", 535f, 620f)]",
+      "        [TestCase(\"Button_MainMenu_Trench\", 405f, 490f)]",
+      "        [TestCase(\"Button_MainMenu_Urban\", 275f, 360f)]",
+      "\n        [TestCase(\"OpenZeroing\")]",
+      "        [TestCase(\"OpenMovingTarget\")]",
+      "        [TestCase(\"Trench\")]",
+      "        [TestCase(\"Urban\")]",
+      "\n        [TestCase(\"OpenZeroing\", \"Zeroing\", ScreenId.ZeroingBriefing)]",
+      "        [TestCase(\"OpenMovingTarget\", \"MovingTarget\", ScreenId.MovingTargetSettings)]",
+      "        [TestCase(\"Trench\", \"Trench\", ScreenId.TrenchMapSelection)]",
+      "        [TestCase(\"Urban\", \"Urban\", ScreenId.UrbanMapSelection)]"
+    ],
+    "entry_public_test_methods": [
+      "SetUp",
+      "TearDown",
+      "Bdd02_ControlsOpenCloseAndDescribeActualVrOperations",
+      "Bdd02_TrainingButtonGeometryIsUnchanged",
+      "Bdd02_ControlsAboveHeadingAndAllMenuRowsStayInsideFrame",
+      "Bdd02_HeadingUsesPrimaryVisualWithoutInteractionAndEntriesUseSecondaryVisual",
+      "Bdd37_NumberColumnHasIdenticalLeftEdgeAndClearsSpriteIcon",
+      "Bdd37_PointerEnterHighlightsAndExitRestoresSecondary",
+      "Bdd37_ConfirmUsesOriginalEntryExactlyOnce"
+    ]
+  },
+  "Assets/VRShooting/Tests/PlayMode/UI/Screen02_04_MainMenuZeroingBriefingUITests.cs": {
+    "entry_sha256": "0da8eb066f69a18c5853548d7e5e234595a5c8d9523a3ee4b9080df632cbb16e",
+    "final_sha256": "8ccc5b37e908a733fce6f1a66ff7be08a408e5ffc5991619051dde4f83d761f3",
+    "entry_testcase_attributes": [],
+    "entry_public_test_methods": [
+      "SetUp",
+      "TearDown",
+      "Screen02_InputInfrastructure_SupportsDesktopAndXrPointers",
+      "Screen02_VrTrackedRay_HitsAndClicksOpenZeroingButton",
+      "Screen02_MainMenuOpenZeroingButton_RoutesToZeroingBriefing",
+      "Bdd04_BriefingPickupPromptStaysBelowFrameAndAboveStationStatus",
+      "Screen04_ZeroingBriefingBackButton_ReturnsToMainMenu",
+      "Screen04_ZeroingBriefingStartButton_CreatesSessionAndWaitsForWeaponPickup",
+      "Screen04_ZeroingBriefingStartButton_IsIdempotentForRepeatedClicks",
+      "Screen04_ZeroingBriefing_RequiredTextAndTestIdsExist",
+      "Bdd02_ControlsPanelOpensAndClosesWithoutLeavingMenu",
+      "Bdd37_FourConfirmationsPreserveOriginalRoutesAndDoNotReplay",
+      "Bdd37_FourIntroPanelsPreserveLegacyFrameAndPrimaryEnterStyle",
+      "Bdd37_BodyFitsCommonResolutionsAndOverflowScrollDoesNotCoverButtons",
+      "Screen02_CreatorsEntryAndPanelAreAbsentAndNavigationRemainsUsable"
+    ]
+  },
+  "docs/BDD/screens/02-游戏主界面.feature.md": {
+    "entry_sha256": "48190d25d91304c478e020ee331bea6acf9619a0e0b8ce8329b1c3a570687e8f",
+    "final_sha256": "d04b1044d7352e696a80e10345200e2912898aeefa6d06569f40e73173f81c29"
+  },
+  "docs/任务规格/阶段一-P1-100m射校原型闭环/UI/task008-ui-mainmenu-zeroing-briefing.md": {
+    "entry_sha256": "af9d6445524df59b0631810f40f14a792230cfd5df180bb9a362fa1618a810c3",
+    "final_sha256": "9b308c83072bf123a46b810948737c08b09e4eab119a80cd9f1be0339cb2e074"
+  },
+  "docs/接口文档/01-页面导航与UI事件.md": {
+    "entry_sha256": "61893e754e7fb4c480b365ed0d3eb493f13dd103dc10a5996cba74510ce296ea",
+    "final_sha256": "afcf815718d8298773fd5efd31a6228e9ee82e5417132e41c900ccccb9ac017a"
+  }
+}

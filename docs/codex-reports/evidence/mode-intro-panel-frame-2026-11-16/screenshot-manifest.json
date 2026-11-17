@@ -1,0 +1,37 @@
+[
+  {
+    "file": "Screen_MainMenu.png",
+    "width": 1920,
+    "height": 1080,
+    "bytes": 2380987,
+    "sha256": "e51755206ecc435084d9cf4df7e96574d2d89d559df4a04e8dd415f16b37fafd"
+  },
+  {
+    "file": "Screen_ModeIntro_Zeroing.png",
+    "width": 1920,
+    "height": 1080,
+    "bytes": 1992788,
+    "sha256": "15661e3af77ee2ec35fa4e45d38b4529041455d32ae5b87826c536b6b0c272da"
+  },
+  {
+    "file": "Screen_ModeIntro_MovingTarget.png",
+    "width": 1920,
+    "height": 1080,
+    "bytes": 1979309,
+    "sha256": "2e2136947fb69996bdf4eff70aff9dfa1cf57b7e023cf3dfd2c2babc40267fef"
+  },
+  {
+    "file": "Screen_ModeIntro_Trench.png",
+    "width": 1920,
+    "height": 1080,
+    "bytes": 1983287,
+    "sha256": "8ea541d7bb769b04c61c790043d961c24a923b97529c0c02d0c41a733e376426"
+  },
+  {
+    "file": "Screen_ModeIntro_Urban.png",
+    "width": 1920,
+    "height": 1080,
+    "bytes": 1981558,
+    "sha256": "56acdb0795dc88dcaff56ee084cdf4fe0d7fc8110a163b10cd018086e327c4ca"
+  }
+]

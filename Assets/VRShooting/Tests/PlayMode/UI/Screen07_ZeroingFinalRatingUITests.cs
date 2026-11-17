@@ -111,7 +111,7 @@ namespace VRShooting.Tests.PlayMode.UI
 
         IEnumerator OpenHudAndCompletePassingRound()
         {
-            FindButton("Button_MainMenu_OpenZeroing").onClick.Invoke();
+            ModeIntroTestActions.EnterTraining(FindButton);
             yield return null;
             FindButton("Button_ZeroingBriefing_Start").onClick.Invoke();
             yield return null;

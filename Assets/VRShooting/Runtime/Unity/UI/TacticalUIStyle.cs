@@ -37,8 +37,8 @@ namespace VRShooting.Unity.UI
             foreach (var image in root.GetComponentsInChildren<Image>(true))
             {
                 var id = image.name;
-                // The menu heading keeps the fill and border supplied by AddPanel.
-                if (id != "Panel_MainMenu_Menu" && (id.StartsWith("Panel_") || (id.StartsWith("Hud_") && id.EndsWith("_Image"))) && image.GetComponent<Button>() == null && image.color.a > 0)
+                // Preserve the menu title and introduction panels supplied by AddPanel.
+                if (id != "Panel_MainMenu_Menu" && !id.StartsWith("Panel_ModeIntro_") && (id.StartsWith("Panel_") || (id.StartsWith("Hud_") && id.EndsWith("_Image"))) && image.GetComponent<Button>() == null && image.color.a > 0)
                 {
                     image.sprite = Sprite(image.rectTransform.rect.height < 140 ? "hud_capsule" : "panel_holo_large");
                     image.type = Image.Type.Sliced;
