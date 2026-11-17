@@ -58,8 +58,9 @@ namespace VRShooting.Editor
                     new Vector2(805f, 760f), new Vector2(1115f, 840f), "进入下一轮");
 
                 var results = CreatePanel("Screen_ZeroingFinalRating", largeRoot, new Color32(8, 22, 28, 235));
-                CreateText("Text_ZeroingFinalRating_Title", results.transform, "100m射校 训练结算",
+                var resultsTitle = CreateText("Text_ZeroingFinalRating_Title", results.transform, "100m精度射校靶 · 训练结算",
                     new Vector2(510f, 190f), new Vector2(1410f, 280f), 46f);
+                resultsTitle.enableWordWrapping = false;
                 var retry = CreateButton("Button_ZeroingFinalRating_Retry", results.transform,
                     new Vector2(805f, 760f), new Vector2(1115f, 840f), "重新训练");
 

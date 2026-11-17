@@ -843,7 +843,8 @@ namespace VRShooting.Unity.UI
         {
             AddPanel(parent, "Placeholder_ZeroingFinalRating_Range", DrawioMin(35, 45, 730, 500), DrawioMax(35, 45, 730, 500), new Color32(5, 13, 23, 230), new Color32(73, 107, 90, 255));
             AddPanel(parent, "Panel_ZeroingFinalRating_Panel", DrawioMin(130, 85, 540, 390), DrawioMax(130, 85, 540, 390), new Color32(11, 19, 16, 235), new Color32(45, 156, 255, 255));
-            AddLabel(parent, "Text_ZeroingFinalRating_Title", "100m射校 训练结算", 38, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(205, 98, 390, 48), DrawioMax(205, 98, 390, 48), new Color32(231, 242, 235, 255));
+            var title = AddLabel(parent, "Text_ZeroingFinalRating_Title", "100m精度射校靶 · 训练结算", 38, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(154, 98, 492, 48), DrawioMax(154, 98, 492, 48), new Color32(231, 242, 235, 255));
+            title.enableWordWrapping = false;
 
             AddPanel(parent, "Panel_ZeroingFinalRating_Grade", DrawioMin(165, 160, 150, 120), DrawioMax(165, 160, 150, 120), new Color32(17, 29, 24, 230), new Color32(247, 185, 85, 255));
             zeroingFinalGradeText = AddLabel(parent, "Text_ZeroingFinalRating_Grade", "--", 56, FontStyles.Bold, TextAlignmentOptions.Center, DrawioMin(172, 182, 136, 76), DrawioMax(172, 182, 136, 76), new Color32(247, 185, 85, 255));

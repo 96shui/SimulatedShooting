@@ -1,0 +1,88 @@
+{
+    "titles": [
+        {
+            "source": "runtime-ZeroingFinalRating",
+            "text": "100m精度射校靶 · 训练结算",
+            "font": "TrainingChinese",
+            "overflowMode": "Ellipsis",
+            "fontStyle": "Normal",
+            "fontSize": 38.0,
+            "rectWidth": 936.0,
+            "rectHeight": 86.39996337890625,
+            "availableWidth": 936.0,
+            "preferredWidth": 476.1300048828125,
+            "meshWidth": 473.57745361328127,
+            "leftPanelPadding": 180.0,
+            "rightPanelPadding": 180.0001220703125,
+            "leftGlyphWhitespace": 232.88124084472657,
+            "rightGlyphWhitespace": 229.54129028320313,
+            "rectMin": {
+                "x": 492.0,
+                "y": 817.2000732421875
+            },
+            "rectMax": {
+                "x": 1428.0,
+                "y": 903.5999755859375
+            },
+            "panelMin": {
+                "x": 312.0,
+                "y": 225.0
+            },
+            "panelMax": {
+                "x": 1608.0001220703125,
+                "y": 927.0
+            },
+            "lines": 1,
+            "characterCount": 16,
+            "visibleGlyphs": 14,
+            "expectedGlyphs": 14,
+            "overflowing": false,
+            "truncated": false,
+            "wordWrapping": true,
+            "autoSizing": false,
+            "allCharactersVisible": true
+        },
+        {
+            "source": "runtime-MovingTargetResults",
+            "text": "移动目标射击 · 训练结算",
+            "font": "TrainingChinese",
+            "overflowMode": "Overflow",
+            "fontStyle": "Normal",
+            "fontSize": 48.0,
+            "rectWidth": 920.0,
+            "rectHeight": 75.0,
+            "availableWidth": 920.0,
+            "preferredWidth": 519.969970703125,
+            "meshWidth": 521.34375,
+            "leftPanelPadding": 255.0,
+            "rightPanelPadding": 255.0,
+            "leftGlyphWhitespace": 199.14068603515626,
+            "rightGlyphWhitespace": 199.51556396484376,
+            "rectMin": {
+                "x": 500.0,
+                "y": 845.0
+            },
+            "rectMax": {
+                "x": 1420.0,
+                "y": 920.0
+            },
+            "panelMin": {
+                "x": 245.0,
+                "y": 105.0
+            },
+            "panelMax": {
+                "x": 1675.0,
+                "y": 955.0
+            },
+            "lines": 1,
+            "characterCount": 13,
+            "visibleGlyphs": 11,
+            "expectedGlyphs": 11,
+            "overflowing": false,
+            "truncated": false,
+            "wordWrapping": true,
+            "autoSizing": false,
+            "allCharactersVisible": true
+        }
+    ]
+}

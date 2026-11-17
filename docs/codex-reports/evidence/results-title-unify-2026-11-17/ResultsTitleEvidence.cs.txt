@@ -1,0 +1,191 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using TMPro;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using VRShooting.Application;
+using VRShooting.Editor;
+using VRShooting.Unity;
+using VRShooting.Unity.Bootstrap;
+using VRShooting.Unity.UI;
+
+// Temporary editor entry point. Uses the repository's TacticalUIGallery creation,
+// fixture and preview-camera pipeline; never saves a scene or edits runtime data.
+public static class ResultsTitleEvidence
+{
+    const BindingFlags PrivateStatic = BindingFlags.NonPublic | BindingFlags.Static;
+    [Serializable] public class Measurement
+    {
+        public string source, text, font, overflowMode, fontStyle;
+        public float fontSize, rectWidth, rectHeight, availableWidth, preferredWidth, meshWidth;
+        public float leftPanelPadding, rightPanelPadding, leftGlyphWhitespace, rightGlyphWhitespace;
+        public Vector2 rectMin, rectMax, panelMin, panelMax;
+        public int lines, characterCount, visibleGlyphs, expectedGlyphs;
+        public bool overflowing, truncated, wordWrapping, autoSizing, allCharactersVisible;
+    }
+    [Serializable] public class Measurements { public Measurement[] titles; }
+
+    public static void CaptureBatch()
+    {
+        var output = Environment.GetEnvironmentVariable("RUNTIME_GALLERY_OUT");
+        var probe = Environment.GetEnvironmentVariable("RESULTS_TITLE_PROBE") == "1";
+        Directory.CreateDirectory(output);
+        var scene = EditorSceneManager.NewPreviewScene();
+        var services = new List<ApplicationServices>();
+        try
+        {
+            var cameraRoot = new GameObject("ResultsTitleEvidenceCamera", typeof(Camera));
+            SceneManager.MoveGameObjectToScene(cameraRoot, scene);
+            var camera = cameraRoot.GetComponent<Camera>();
+            camera.scene = scene;
+            camera.clearFlags = CameraClearFlags.SolidColor;
+            camera.backgroundColor = new Color32(7, 15, 25, 255);
+            camera.orthographic = true;
+            camera.orthographicSize = 540;
+            camera.nearClipPlane = .1f;
+            camera.farClipPlane = 2000;
+            camera.transform.position = new Vector3(960, 540, -1000);
+            var objects = new List<GameObject>();
+            var zeroing = Create<ZeroingRangeUI>(scene, objects);
+            var p1 = ApplicationServices.CreateDefault(); services.Add(p1);
+            zeroing.Initialize(p1);
+            var moving = Create<MovingTargetRangeUI>(scene, objects);
+            var p2 = ApplicationServices.CreateDefault(); services.Add(p2);
+            moving.Initialize(new MovingTargetUICommandAdapter(p2));
+            typeof(TacticalUIGallery).GetMethod("FillRangePreview", PrivateStatic)
+                .Invoke(null, new object[] {zeroing, moving});
+            foreach (var root in objects) Prepare(root, camera);
+            var measurements = new List<Measurement>();
+            var roots = new[] { zeroing.gameObject, moving.gameObject };
+            var ids = new[] { "ZeroingFinalRating", "MovingTargetResults" };
+            var expected = new[] { "100m精度射校靶 · 训练结算", "移动目标射击 · 训练结算" };
+            for (var i = 0; i < roots.Length; i++)
+            {
+                var root = roots[i];
+                root.SetActive(true);
+                var page = root.GetComponentsInChildren<RectTransform>(true).Single(t => t.name == "Screen_" + ids[i]);
+                page.gameObject.SetActive(true);
+                var title = page.GetComponentsInChildren<TMP_Text>(true).Single(t => t.name == "Text_" + ids[i] + "_Title");
+                if (probe) title.text = expected[i];
+                Refresh(page);
+                var panel = page.GetComponentsInChildren<RectTransform>(true).Single(t => t.name == (i == 0 ? "Panel_ZeroingFinalRating_Panel" : "Panel_MovingTargetResults_Content"));
+                measurements.Add(Measure(title, panel, "runtime-" + ids[i]));
+                Capture(camera, Path.Combine(output, "Screen_" + ids[i] + ".png"));
+                if (i == 0)
+                {
+                    // An additional real 1920x1080 camera render, centered on the title.
+                    camera.orthographicSize = 230;
+                    camera.transform.position = new Vector3(title.transform.position.x, title.transform.position.y, -1000);
+                    Capture(camera, Path.Combine(output, "Screen_ZeroingFinalRating_Title_Closeup.png"));
+                    camera.orthographicSize = 540;
+                    camera.transform.position = new Vector3(960, 540, -1000);
+                }
+                root.SetActive(false);
+            }
+            if (!probe)
+            {
+                Task002SharedUiPrefabBuilder.Build();
+                var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(Task002SharedUiPrefabBuilder.PrefabPath);
+                var shared = UnityEngine.Object.Instantiate(prefab);
+                shared.SetActive(false);
+                SceneManager.MoveGameObjectToScene(shared, scene);
+                Prepare(shared, camera);
+                shared.SetActive(true);
+                var title = shared.GetComponentsInChildren<TMP_Text>(true).Single(t => t.name == "Text_ZeroingFinalRating_Title");
+                title.transform.parent.gameObject.SetActive(true);
+                Refresh(title.transform.parent);
+                measurements.Add(Measure(title, (RectTransform)title.transform.parent, "Task002SharedUiPrefabBuilder"));
+                Capture(camera, Path.Combine(output, "SharedWorldSpace_ZeroingFinalRating.png"));
+            }
+            File.WriteAllText(Path.Combine(output, "title-measurements.json"), JsonUtility.ToJson(new Measurements { titles = measurements.ToArray() }, true));
+            if (!probe && measurements.Any(m => m.overflowing || m.truncated || m.lines != 1 || !m.allCharactersVisible || m.preferredWidth > m.availableWidth))
+                throw new InvalidOperationException("A results title does not fit; see title-measurements.json");
+            if (!probe && measurements.Any(m => m.text != expected[m.source.Contains("MovingTarget") ? 1 : 0]))
+                throw new InvalidOperationException("Results title text mismatch");
+        }
+        finally
+        {
+            foreach (var s in services) s.Combat.Dispose();
+            EditorSceneManager.ClosePreviewScene(scene);
+        }
+    }
+
+    static T Create<T>(Scene scene, List<GameObject> objects) where T : Component =>
+        (T)typeof(TacticalUIGallery).GetMethod("Create", PrivateStatic).MakeGenericMethod(typeof(T))
+            .Invoke(null, new object[] {scene, objects});
+
+    static void Prepare(GameObject root, Camera camera)
+    {
+        var adapter = root.GetComponent<TrainingUICanvasAdapter>();
+        if (adapter != null) adapter.enabled = false;
+        var scaler = root.GetComponent<CanvasScaler>();
+        if (scaler != null) scaler.enabled = false;
+        var canvas = root.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.WorldSpace; canvas.worldCamera = camera;
+        var rect = (RectTransform)root.transform;
+        rect.sizeDelta = new Vector2(1920, 1080); rect.pivot = new Vector2(.5f, .5f);
+        rect.position = new Vector3(960, 540, 0); rect.localScale = Vector3.one;
+        foreach (var group in root.GetComponentsInChildren<CanvasGroup>(true)) group.alpha = 1;
+        foreach (var child in root.GetComponentsInChildren<Transform>(true))
+            if (child.name == "LargePanelRoot" || child.name == "MinimalHudRoot") child.gameObject.SetActive(true);
+        foreach (var page in root.GetComponentsInChildren<RectTransform>(true).Where(t => t.name.StartsWith("Screen_")))
+            page.gameObject.SetActive(false);
+        root.SetActive(false);
+    }
+
+    static void Refresh(Transform page)
+    {
+        Canvas.ForceUpdateCanvases();
+        foreach (var text in page.GetComponentsInChildren<TMP_Text>()) text.ForceMeshUpdate();
+        Canvas.ForceUpdateCanvases();
+    }
+
+    static Measurement Measure(TMP_Text title, RectTransform panel, string source)
+    {
+        var rect = title.rectTransform;
+        var panelMin = rect.parent == panel ? Vector2.zero : panel.offsetMin;
+        var panelMax = rect.parent == panel ? panel.rect.size : panel.offsetMax;
+        var chars = title.textInfo.characterInfo.Take(title.textInfo.characterCount).ToArray();
+        var visible = chars.Where(c => c.isVisible).ToArray();
+        return new Measurement {
+            source=source, text=title.text, font=title.font.name, fontStyle=title.fontStyle.ToString(),
+            fontSize=title.fontSize, rectWidth=rect.rect.width, rectHeight=rect.rect.height,
+            availableWidth=rect.rect.width-title.margin.x-title.margin.z,
+            preferredWidth=title.GetPreferredValues(title.text, Mathf.Infinity, Mathf.Infinity).x,
+            meshWidth=visible.Max(c => c.topRight.x)-visible.Min(c => c.bottomLeft.x),
+            rectMin=rect.offsetMin, rectMax=rect.offsetMax, panelMin=panelMin, panelMax=panelMax,
+            leftPanelPadding=rect.offsetMin.x-panelMin.x, rightPanelPadding=panelMax.x-rect.offsetMax.x,
+            leftGlyphWhitespace=visible.Min(c => c.bottomLeft.x)-rect.rect.xMin,
+            rightGlyphWhitespace=rect.rect.xMax-visible.Max(c => c.topRight.x),
+            lines=title.textInfo.lineCount, characterCount=title.textInfo.characterCount,
+            visibleGlyphs=visible.Length, expectedGlyphs=title.text.Count(c => !char.IsWhiteSpace(c)),
+            overflowing=title.isTextOverflowing, truncated=title.isTextTruncated,
+            overflowMode=title.overflowMode.ToString(), wordWrapping=title.enableWordWrapping, autoSizing=title.enableAutoSizing,
+            allCharactersVisible=chars.Length == title.text.Length && chars.Where(c => !char.IsWhiteSpace(c.character)).All(c => c.isVisible)
+        };
+    }
+
+    static void Capture(Camera camera, string path)
+    {
+        var target = new RenderTexture(1920, 1080, 24);
+        var previous = RenderTexture.active;
+        var texture = new Texture2D(1920, 1080, TextureFormat.RGB24, false);
+        try
+        {
+            camera.targetTexture = target; camera.Render(); RenderTexture.active = target;
+            texture.ReadPixels(new Rect(0, 0, 1920, 1080), 0, 0); texture.Apply();
+            File.WriteAllBytes(path, texture.EncodeToPNG());
+        }
+        finally
+        {
+            camera.targetTexture = null; RenderTexture.active = previous;
+            UnityEngine.Object.DestroyImmediate(texture); target.Release(); UnityEngine.Object.DestroyImmediate(target);
+        }
+    }
+}

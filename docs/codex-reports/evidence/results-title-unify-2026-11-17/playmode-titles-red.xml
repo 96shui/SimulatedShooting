@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="2" result="Failed(Child)" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-17 01:00:37Z" end-time="2026-11-17 01:00:37Z" duration="0.3405024">
+  <test-suite type="TestSuite" id="1000" name="VR" fullname="VR" runstate="Runnable" testcasecount="336" result="Failed" site="Child" start-time="2026-11-17 01:00:37Z" end-time="2026-11-17 01:00:37Z" duration="0.340502" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+    <properties />
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1399" name="VRShooting.Runtime.PlayModeTests.dll" fullname="E:/新建文件夹 (3)/SimulateShooting/Library/ScriptAssemblies/VRShooting.Runtime.PlayModeTests.dll" runstate="Runnable" testcasecount="111" result="Failed" site="Child" start-time="2026-11-17 01:00:37Z" end-time="2026-11-17 01:00:37Z" duration="0.333542" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="70724" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1400" name="VRShooting" fullname="VRShooting" runstate="Runnable" testcasecount="111" result="Failed" site="Child" start-time="2026-11-17 01:00:37Z" end-time="2026-11-17 01:00:37Z" duration="0.332638" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1401" name="Tests" fullname="VRShooting.Tests" runstate="Runnable" testcasecount="111" result="Failed" site="Child" start-time="2026-11-17 01:00:37Z" end-time="2026-11-17 01:00:37Z" duration="0.331709" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1402" name="PlayMode" fullname="VRShooting.Tests.PlayMode" runstate="Runnable" testcasecount="111" result="Failed" site="Child" start-time="2026-11-17 01:00:37Z" end-time="2026-11-17 01:00:37Z" duration="0.331018" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestSuite" id="1403" name="UI" fullname="VRShooting.Tests.PlayMode.UI" runstate="Runnable" testcasecount="78" result="Failed" site="Child" start-time="2026-11-17 01:00:37Z" end-time="2026-11-17 01:00:37Z" duration="0.329459" total="2" passed="0" failed="2" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-suite type="TestFixture" id="1362" name="Screen07_ZeroingFinalRatingUITests" fullname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests" classname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests" runstate="Runnable" testcasecount="3" result="Failed" site="Child" start-time="2026-11-17 01:00:37Z" end-time="2026-11-17 01:00:37Z" duration="0.305736" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <failure>
+                  <message><![CDATA[One or more child tests had errors]]></message>
+                </failure>
+                <test-case id="1363" name="Screen07_FirstRoundPassShowsExcellentFinalRating" fullname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests.Screen07_FirstRoundPassShowsExcellentFinalRating" methodname="Screen07_FirstRoundPassShowsExcellentFinalRating" classname="VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests" runstate="Runnable" seed="583998516" result="Failed" start-time="2026-11-17 01:00:37Z" end-time="2026-11-17 01:00:37Z" duration="0.299364" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  BDD07: full mode name and shared results separator.
+  Expected string length 16 but was 11. Strings differ at index 4.
+  Expected: "100m精度射校靶 · 训练结算"
+  But was:  "100m射校 训练结算"
+  ---------------^
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.PlayMode.UI.Screen07_ZeroingFinalRatingUITests+<Screen07_FirstRoundPassShowsExcellentFinalRating>d__7.MoveNext () [0x0009a] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\PlayMode\UI\Screen07_ZeroingFinalRatingUITests.cs:68
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                  </failure>
+                </test-case>
+              </test-suite>
+              <test-suite type="TestFixture" id="1366" name="Screen08_09_11_MovingTargetUIFlowTests" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" testcasecount="12" result="Failed" site="Child" start-time="2026-11-17 01:00:37Z" end-time="2026-11-17 01:00:37Z" duration="0.021753" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <failure>
+                  <message><![CDATA[One or more child tests had errors]]></message>
+                </failure>
+                <test-case id="1372" name="Screen11_CompletionShowsVariableSequencesAndRetrySendsOneCommand" fullname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests.Screen11_CompletionShowsVariableSequencesAndRetrySendsOneCommand" methodname="Screen11_CompletionShowsVariableSequencesAndRetrySendsOneCommand" classname="VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests" runstate="Runnable" seed="766613697" result="Failed" start-time="2026-11-17 01:00:37Z" end-time="2026-11-17 01:00:37Z" duration="0.020524" asserts="0">
+                  <properties>
+                    <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  </properties>
+                  <failure>
+                    <message><![CDATA[  BDD11: menu mode name and shared results separator.
+  Expected string length 13 but was 7. Strings differ at index 2.
+  Expected: "移动目标射击 · 训练结算"
+  But was:  "移动靶训练结算"
+  -------------^
+]]></message>
+                    <stack-trace><![CDATA[at VRShooting.Tests.PlayMode.UI.Screen08_09_11_MovingTargetUIFlowTests+<Screen11_CompletionShowsVariableSequencesAndRetrySendsOneCommand>d__10.MoveNext () [0x000c7] in E:\新建文件夹 (3)\SimulateShooting\Assets\VRShooting\Tests\PlayMode\UI\Screen08_09_11_MovingTargetUIFlowTests.cs:175
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+]]></stack-trace>
+                  </failure>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

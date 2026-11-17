@@ -171,6 +171,26 @@ namespace VRShooting.Tests.PlayMode.UI
 
             Assert.That(ui.LargePanelRoot.activeSelf, Is.True);
             Assert.That(ui.MinimalHudRoot.activeSelf, Is.False);
+            var title = FindText("Text_MovingTargetResults_Title");
+            Assert.That(title.text, Is.EqualTo("移动目标射击 · 训练结算"), "BDD11: menu mode name and shared results separator.");
+            Canvas.ForceUpdateCanvases();
+            title.ForceMeshUpdate();
+            Assert.That(title.enableWordWrapping, Is.False);
+            Assert.That(title.fontSize, Is.GreaterThanOrEqualTo(28));
+            Assert.That(title.alignment, Is.EqualTo(TextAlignmentOptions.Center));
+            Assert.That(title.GetPreferredValues(title.text, Mathf.Infinity, Mathf.Infinity).x,
+                Is.LessThanOrEqualTo(title.rectTransform.rect.width - title.margin.x - title.margin.z));
+            Assert.That(title.isTextOverflowing, Is.False, "BDD11: no ellipsis or clipping.");
+            Assert.That(title.textInfo.lineCount, Is.EqualTo(1));
+            Assert.That(title.textInfo.characterCount, Is.EqualTo(title.text.Length));
+            Assert.That(title.textInfo.characterInfo[0].isVisible, Is.True);
+            Assert.That(title.textInfo.characterInfo[title.text.Length - 1].isVisible, Is.True);
+            Assert.That(title.textInfo.characterInfo[title.text.Length - 1].character, Is.EqualTo('算'));
+            var panel = FindById("Panel_MovingTargetResults_Content").GetComponent<RectTransform>();
+            var leftPadding = title.rectTransform.offsetMin.x - panel.offsetMin.x;
+            var rightPadding = panel.offsetMax.x - title.rectTransform.offsetMax.x;
+            Assert.That(leftPadding, Is.GreaterThanOrEqualTo(24));
+            Assert.That(rightPadding, Is.EqualTo(leftPadding).Within(.01f));
             Assert.That(FindText("Text_MovingTargetResults_Summary").text, Does.Contain("总射击：8"));
             Assert.That(FindText("Text_MovingTargetResults_Summary").text, Does.Contain("命中：4"));
             Assert.That(FindText("Text_MovingTargetResults_Sequences").text, Does.Contain("快速两发"));

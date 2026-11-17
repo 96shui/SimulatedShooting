@@ -1,0 +1,62 @@
+{
+  "render": "Unity Camera.Render / TacticalUIGallery preview scene / RGB24",
+  "coordinate_system": "PNG top-left origin; rectangles have exclusive right/bottom",
+  "ink_rule": "min(R,G,B)>=140 and max(R,G,B)-min(R,G,B)<=40 inside actual title RectTransform",
+  "screenshots": [
+    {
+      "file": "Screen_ZeroingFinalRating.png",
+      "image_size": [
+        1920,
+        1080
+      ],
+      "title_roi_exclusive": [
+        370,
+        177,
+        1550,
+        262
+      ],
+      "ink_bbox_exclusive": [
+        726,
+        203,
+        1197,
+        240
+      ],
+      "ink_width": 471,
+      "ink_height": 37,
+      "left_rect_whitespace": 356.4000244140625,
+      "right_rect_whitespace": 353.4000244140625,
+      "left_panel_whitespace": 414.0,
+      "right_panel_whitespace": 411.0001220703125,
+      "ink_pixels": 6174,
+      "sha256": "eae255d60f50a854793515568eda04b2453daf4190ad3ff0e4aa8134225ba4cd"
+    },
+    {
+      "file": "Screen_MovingTargetResults.png",
+      "image_size": [
+        1920,
+        1080
+      ],
+      "title_roi_exclusive": [
+        500,
+        160,
+        1420,
+        235
+      ],
+      "ink_bbox_exclusive": [
+        701,
+        177,
+        1219,
+        223
+      ],
+      "ink_width": 518,
+      "ink_height": 46,
+      "left_rect_whitespace": 201.0,
+      "right_rect_whitespace": 201.0,
+      "left_panel_whitespace": 456.0,
+      "right_panel_whitespace": 456.0,
+      "ink_pixels": 8242,
+      "sha256": "a7116babb680162110473584e1031275425adb8a57bcc43895233f5bbf8822fd"
+    }
+  ],
+  "closeup_sha256": "76d2a8c0a9b159eafab2b33680cc19f52aba818c18947297d2cf8971094d4766"
+}

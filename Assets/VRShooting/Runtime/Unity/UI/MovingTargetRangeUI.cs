@@ -239,8 +239,9 @@ namespace VRShooting.Unity.UI
         void BuildResults(RectTransform parent)
         {
             AddPanel(parent, "Panel_MovingTargetResults_Content", new Vector2(245, 105), new Vector2(1675, 955));
-            AddLabel(parent, "Text_MovingTargetResults_Title", "移动靶训练结算", 48, FontStyles.Bold,
+            var title = AddLabel(parent, "Text_MovingTargetResults_Title", "移动目标射击 · 训练结算", 48, FontStyles.Bold,
                 new Vector2(500, 145), new Vector2(1420, 225), new Color32(231, 242, 235, 255));
+            title.enableWordWrapping = false;
             resultSummaryText = AddLabel(parent, "Text_MovingTargetResults_Summary", string.Empty, 27, FontStyles.Bold,
                 new Vector2(350, 250), new Vector2(1570, 430), new Color32(143, 217, 255, 255));
             resultSequencesText = AddLabel(parent, "Text_MovingTargetResults_Sequences", string.Empty, 20, FontStyles.Normal,

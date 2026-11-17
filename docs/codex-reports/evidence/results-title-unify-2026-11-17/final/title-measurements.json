@@ -1,0 +1,130 @@
+{
+    "titles": [
+        {
+            "source": "runtime-ZeroingFinalRating",
+            "text": "100m精度射校靶 · 训练结算",
+            "font": "TrainingChinese",
+            "overflowMode": "Ellipsis",
+            "fontStyle": "Normal",
+            "fontSize": 38.0,
+            "rectWidth": 1180.800048828125,
+            "rectHeight": 86.39996337890625,
+            "availableWidth": 1180.800048828125,
+            "preferredWidth": 476.1300048828125,
+            "meshWidth": 473.57745361328127,
+            "leftPanelPadding": 57.5999755859375,
+            "rightPanelPadding": 57.60009765625,
+            "leftGlyphWhitespace": 355.28125,
+            "rightGlyphWhitespace": 351.9413146972656,
+            "rectMin": {
+                "x": 369.5999755859375,
+                "y": 817.2000732421875
+            },
+            "rectMax": {
+                "x": 1550.4000244140625,
+                "y": 903.5999755859375
+            },
+            "panelMin": {
+                "x": 312.0,
+                "y": 225.0
+            },
+            "panelMax": {
+                "x": 1608.0001220703125,
+                "y": 927.0
+            },
+            "lines": 1,
+            "characterCount": 16,
+            "visibleGlyphs": 14,
+            "expectedGlyphs": 14,
+            "overflowing": false,
+            "truncated": false,
+            "wordWrapping": false,
+            "autoSizing": false,
+            "allCharactersVisible": true
+        },
+        {
+            "source": "runtime-MovingTargetResults",
+            "text": "移动目标射击 · 训练结算",
+            "font": "TrainingChinese",
+            "overflowMode": "Overflow",
+            "fontStyle": "Normal",
+            "fontSize": 48.0,
+            "rectWidth": 920.0,
+            "rectHeight": 75.0,
+            "availableWidth": 920.0,
+            "preferredWidth": 519.969970703125,
+            "meshWidth": 521.34375,
+            "leftPanelPadding": 255.0,
+            "rightPanelPadding": 255.0,
+            "leftGlyphWhitespace": 199.14068603515626,
+            "rightGlyphWhitespace": 199.51556396484376,
+            "rectMin": {
+                "x": 500.0,
+                "y": 845.0
+            },
+            "rectMax": {
+                "x": 1420.0,
+                "y": 920.0
+            },
+            "panelMin": {
+                "x": 245.0,
+                "y": 105.0
+            },
+            "panelMax": {
+                "x": 1675.0,
+                "y": 955.0
+            },
+            "lines": 1,
+            "characterCount": 13,
+            "visibleGlyphs": 11,
+            "expectedGlyphs": 11,
+            "overflowing": false,
+            "truncated": false,
+            "wordWrapping": false,
+            "autoSizing": false,
+            "allCharactersVisible": true
+        },
+        {
+            "source": "Task002SharedUiPrefabBuilder",
+            "text": "100m精度射校靶 · 训练结算",
+            "font": "MSYH SDF",
+            "overflowMode": "Overflow",
+            "fontStyle": "Normal",
+            "fontSize": 46.0,
+            "rectWidth": 900.0,
+            "rectHeight": 90.0,
+            "availableWidth": 900.0,
+            "preferredWidth": 576.3300170898438,
+            "meshWidth": 573.7197265625,
+            "leftPanelPadding": 510.0,
+            "rightPanelPadding": 510.0,
+            "leftGlyphWhitespace": 165.16168212890626,
+            "rightGlyphWhitespace": 161.11859130859376,
+            "rectMin": {
+                "x": 510.0,
+                "y": 190.0
+            },
+            "rectMax": {
+                "x": 1410.0,
+                "y": 280.0
+            },
+            "panelMin": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "panelMax": {
+                "x": 1920.0,
+                "y": 1080.0
+            },
+            "lines": 1,
+            "characterCount": 16,
+            "visibleGlyphs": 14,
+            "expectedGlyphs": 14,
+            "overflowing": false,
+            "truncated": false,
+            "wordWrapping": false,
+            "autoSizing": false,
+            "allCharactersVisible": true
+        }
+    ]
+}

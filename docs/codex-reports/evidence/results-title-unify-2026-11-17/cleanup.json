@@ -1,0 +1,31 @@
+{
+  "restored": [
+    "Assets/Resources/UI/Tactical/TrainingChinese.asset",
+    "Assets/VRShooting/Prefabs/UI/Training_SharedWorldSpaceUI.prefab"
+  ],
+  "removed_new_batch_files": [],
+  "protected_file_count": 4551,
+  "all_protected_files_identical": true,
+  "preserved_init_test_scenes": [
+    "Assets/InitTestScene639252044744999923.unity",
+    "Assets/InitTestScene639252044744999923.unity.meta",
+    "Assets/InitTestScene639253514584773890.unity",
+    "Assets/InitTestScene639253514584773890.unity.meta",
+    "Assets/InitTestScene639271113773156361.unity",
+    "Assets/InitTestScene639271113773156361.unity.meta",
+    "Assets/InitTestScene639271128085681542.unity",
+    "Assets/InitTestScene639271128085681542.unity.meta"
+  ],
+  "task_changed_files": [
+    "Assets/VRShooting/Editor/Task002SharedUiPrefabBuilder.cs",
+    "Assets/VRShooting/Runtime/Unity/UI/MainMenuUI.cs",
+    "Assets/VRShooting/Runtime/Unity/UI/MovingTargetRangeUI.cs",
+    "Assets/VRShooting/Tests/PlayMode/UI/Screen07_ZeroingFinalRatingUITests.cs",
+    "Assets/VRShooting/Tests/PlayMode/UI/Screen08_09_11_MovingTargetUIFlowTests.cs",
+    "docs/BDD/screens/07-射校最终评级.feature.md",
+    "docs/BDD/screens/09-移动靶HUD.feature.md",
+    "docs/BDD/screens/11-移动靶结算.feature.md",
+    "docs/任务规格/阶段一-P1-100m射校原型闭环/UI/task011-ui-final-rating.md",
+    "docs/任务规格/阶段二-P2-移动靶闭环/UI/task005-moving-target-ui-flow.md"
+  ]
+}
